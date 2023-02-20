@@ -68,3 +68,37 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!-- All Page lists -->
+Employee	
+    Home Page	
+    Menu	
+        Login
+            login
+            signup
+            forgot password
+        Signup
+            login
+            signup
+        Employer
+        Employee Menu
+        Profile
+        Notification
+        Logo
+    Search
+    Job List
+        Company Name with Logo
+        Job title
+        Experience
+        Location
+        Description
+        Skills required
+        Salary
+        full/part time
+        Apply Button	
+    Job Filter
+        filter by location
+        filter by Category
+    Job by top employer
+    Blog
+    Stastics
