@@ -60,7 +60,7 @@ export default function JobDetails() {
                       {/* <!-- media date end --> */}
                     </div>
                   </div>
-                  <div class="row pt-9">
+                  <div class="row pt-9 text-left">
                     <div class="col-12">
                       {/* <!-- card-btn-group start --> */}
                       <div class="card-btn-group">
@@ -83,7 +83,7 @@ export default function JobDetails() {
                   </div>
                 </div>
                 {/* <!-- End Single Featured Job --> */}
-                <div class="job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts">
+                <div class="text-left pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts">
                   <div class="row mb-7">
                     <div class="col-md-4 mb-md-0 mb-6">
                       <div class="media justify-content-md-start">
@@ -189,7 +189,7 @@ export default function JobDetails() {
                     </div>
                   </div>
                 </div>
-                <div class="job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 light-mode-texts">
+                <div class="text-left pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 light-mode-texts">
                   <div class="row">
                     <div class="col-xl-11 col-md-12 pr-xxl-9 pr-xl-10 pr-lg-20">
                       <div class="">

@@ -1,13 +1,13 @@
 // import logo from './logo.svg';
 import React from "react";
-import './App.css';
-import EmployeeLayout from './components/employee/layout';
-
+import "./App.css";
+import EmployerLayout from "./components/employer/layout";
 
 function App() {
   return (
     <div className="App">
-      <EmployeeLayout />
+      {/* <EmployeeLayout /> */}
+      <EmployerLayout />
     </div>
   );
 }
