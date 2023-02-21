@@ -165,12 +165,12 @@ export default function SingUp(props) {
                           </a>
                         </span>
                       </label>
-                      <a
+                      {/* <a
                         href="#"
                         className="font-size-3 text-dodger line-height-reset"
                       >
                         Forget Password
-                      </a>
+                      </a> */}
                     </div>
                     <div className="form-group mb-8">
                       <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
@@ -178,9 +178,9 @@ export default function SingUp(props) {
                       </button>
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Don’t have an account?{" "}
+                      Already have an account?{" "}
                       <a href="#" className="text-primary">
-                        Create a free account
+                        Login
                       </a>
                     </p>
                   </form>

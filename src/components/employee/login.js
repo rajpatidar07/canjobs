@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import SingUp from "./singUp";
 
 export default function Login(props) {
+  const [showSingUp, setShowSingUp] = useState(false);
+
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -155,9 +159,17 @@ export default function Login(props) {
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Don’t have an account?{" "}
-                      <a href="#" className="text-primary">
+                      <Link
+                        className="text-primary"
+                        to={""}
+                        onClick={() => setShowSingUp(true)}
+                      >
                         Create a free account
-                      </a>
+                      </Link>
+                      <SingUp
+                        show={showSingUp}
+                        close={() => setShowSingUp(false)}
+                      />
                     </p>
                   </form>
                 </div>
