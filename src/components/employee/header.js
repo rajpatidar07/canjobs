@@ -202,6 +202,11 @@ function EmployeeHeader() {
                     Home
                   </a>
                 </li>
+                <li>
+                  <a className="nav-link" href="/jobapplied">
+                    Jobs Applied
+                  </a>
+                </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/search">
                     Jobs
