@@ -23,10 +23,24 @@ function AccountDetails(props) {
           <form action="https://finestwp.co/">
             <div className="form-group">
               <label
+                htmlFor="Username"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                Username:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Username Name"
+                id="Username"
+              />
+            </div>
+            <div className="form-group">
+              <label
                 htmlFor="email"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                E-mail
+                E-mail:
               </label>
               <input
                 type="email"
@@ -37,43 +51,51 @@ function AccountDetails(props) {
             </div>
             <div className="form-group">
               <label
-                htmlFor="password"
+                htmlFor="Role"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Password
+                Role:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Role "
+                id="Role"
+              />
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="Reporting_Manager"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                Reporting Manager:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Reporting Manager"
+                id="Reporting_Manager"
+              />
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="mobile"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                Mobile Number:
               </label>
               <div className="position-relative">
                 <input
-                  type="password"
+                  type="tel"
                   className="form-control"
-                  id="password"
-                  placeholder="Enter password"
+                  id="mobile"
+                  placeholder="Enter mobile number"
                 />
-                <a
-                  href="#"
-                  className="show-password pos-abs-cr fas mr-6 text-black-2"
-                  data-show-pass="password"
-                ></a>
               </div>
-            </div>
-            <div className="form-group d-flex flex-wrap justify-content-between">
-              <label
-                htmlFor="terms-check"
-                className="gr-check-input d-flex  mr-3"
-              >
-                <input className="d-none" type="checkbox" id="terms-check" />
-                <span className="checkbox mr-5"></span>
-                <span className="font-size-3 mb-0 line-height-reset mb-1 d-block">
-                  Remember password
-                </span>
-              </label>
-              <a href="#" className="font-size-3 text-dodger line-height-reset">
-                Forget Password
-              </a>
             </div>
             <div className="form-group mb-8">
               <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                Log in{" "}
+                Submit
               </button>
             </div>
           </form>
