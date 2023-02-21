@@ -103,7 +103,7 @@ function JobSearchPage() {
             {/* <!-- Main Body --> */}
             <div className="col-12 col-xl-9 col-lg-9 col-md-8 col-xs-8">
               {/* <!-- form --> */}
-              <form action="https://finestwp.co/" className="search-form">
+              <form className="search-form">
                 <div className="filter-search-form-2 search-1-adjustment bg-white rounded-sm shadow-7 pr-6 py-6 pl-6">
                   <div className="filter-inputs">
                     <div className="form-group position-relative w-lg-45 w-xl-40 w-xxl-45">

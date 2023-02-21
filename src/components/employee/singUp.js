@@ -90,7 +90,7 @@ export default function SingUp(props) {
                   <div className="or-devider">
                     <span className="font-size-3 line-height-reset">Or</span>
                   </div>
-                  <form action="https://finestwp.co/">
+                  <form>
                     <div className="form-group">
                       <label
                         htmlFor="email2"

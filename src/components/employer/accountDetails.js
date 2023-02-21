@@ -19,8 +19,9 @@ function AccountDetails(props) {
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
-        <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
-          <form action="https://finestwp.co/">
+        <div className="bg-white-2 h-100 px-11 pt-7">
+          <form>
+            <h5 className="text-center pt-2">Account detail</h5>
             <div className="form-group">
               <label
                 htmlFor="Username"

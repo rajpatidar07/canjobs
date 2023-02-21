@@ -458,7 +458,7 @@ const UserProfile = () => {
                     aria-labelledby="profile-tab"
                   >
                     <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">
-                      <form action="https://finestwp.co/">
+                      <form>
                         <div className="row">
                           <div className="col-12 mb-7">
                             <label
