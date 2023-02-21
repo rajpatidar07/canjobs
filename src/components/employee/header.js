@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Login from "./login";
+import SingUp from "./singUp";
 
 function EmployeeHeader() {
-  const [showModal, setShowModal] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSingUp, setShowSingUp] = useState(false);
 
-  const loginModal = () => {
-    setShowModal(true);
-  };
-  console.log("hello", showModal);
   return (
     <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
       <div className="container">
@@ -224,29 +222,24 @@ function EmployeeHeader() {
             </button>
           </div>
           <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+            {/* <!-- Modal for Login--> */}
             <Link
               className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-              //   href="/login"
-              onClick={loginModal}
-              //   data-toggle="modal"
-              //   data-target="#login"
+              to={""}
+              onClick={() => setShowLogin(true)}
             >
               Log in
             </Link>
-            {showModal === true ? (
-              <Login onClose={() => setShowModal(false)} />
-            ) : (
-              console.log("False")
-            )}
-
-            <a
-              className="btn btn-primary text-uppercase font-size-3"
-              href="javacript:"
-              data-toggle="modal"
-              data-target="#signup"
+            <Login show={showLogin} close={() => setShowLogin(false)} />
+            {/* <!-- Modal for SingUp--> */}
+            <Link
+              className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+              to={""}
+              onClick={() => setShowSingUp(true)}
             >
               Sign up
-            </a>
+            </Link>
+            <SingUp show={showSingUp} close={() => setShowSingUp(false)} />
           </div>
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
