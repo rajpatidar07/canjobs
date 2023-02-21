@@ -1,12 +1,11 @@
 import React from "react";
 import EmployeeHeader from './header';
 import EmployeeFooter from './footer';
+import JobBox from "./jobbox";
 function EmployeeHomePage() {
     return (
         <div className="site-wrapper overflow-hidden ">
             <EmployeeHeader />
-
-
             {/* <!-- Hero Area --> */}
             <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
                 <div className="pos-abs-tr h-100">
@@ -14,17 +13,6 @@ function EmployeeHomePage() {
                 </div>
                 <div className="container position-static">
                     <div className="row position-relative align-items-center position-static">
-                        {/* <div className="col-xxl-7 col-xl-8 col-lg-9 pt-lg-23 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-            <div className="row">
-              <div className="col-xxl-8 col-xl-7 col-md-8 col-sm-10">
-                <div className="text-primary font-size-5 font-weight-semibold mb-7">
-                  #4923 jobs are available right now
-                </div>
-                <h1 className="font-size-11 mb-9 text-black-2">Find the most exciting jobs.</h1>
-                <p className="font-size-5">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative to</p>
-              </div>
-            </div>
-          </div> */}
                         {/* <!-- Hero Form --> */}
                         <div className="col-lg-12 col-12 translateY-25 pt-lg-23 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
                             <form action="http://localhost:3000/" className="search-form" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
@@ -54,10 +42,131 @@ function EmployeeHomePage() {
                             </form>
                         </div>
                         {/* <!-- End Hero Form --> */}
+                        <div className="row m-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-secondary">Jobs by location</h4>
+                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
+                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
+                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
+                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             {/* <!-- Hero Area --> */}
+            {/* <!-- featuredJobOne Area --> */}
+            <section className="bg-athens pt-12 pt-lg-24 pb-7 pb-lg-25">
+                <div className="container">
+                    {/* <!-- Section Title --> */}
+                    <div className="row justify-content-center mb-lg-16 mb-11">
+                        <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
+                            <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">Featured Jobs</h2>
+                            <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">Leverage agile frameworks to provide a robust synopsis for high level overviews to start.</p>
+                        </div>
+                    </div>
+                    {/* <!-- Section Title End --> */}
+                    <div className="row justify-content-center">
+                        <JobBox />
+                        <JobBox />
+                        <JobBox />
+                        <JobBox />
+                    </div>
+                </div>
+            </section>
+            {/* <!-- featuredJobOne Area --> */}
+            {/* <!-- ContentOne Area --> */}
+            <section className="pt-13 pt-lg-30 pb-13 pb-lg-30">
+                <div className="container">
+                    <div className="row align-items-center justify-content-center">
+                        <div className="col-lg-6 col-md-8 col-sm-10 col-xs-11 mb-9 mb-lg-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+                            {/* <!-- content-1 left-content start --> */}
+                            <div className="position-relative pr-lg-20 pr-xs-15 pr-9 ">
+                                {/* <!-- content img start --> */}
+                                <img src="image/l2/png/content-2-img1.png" alt="" className="w-100" />
+                                {/* <!-- content img end --> */}
+                                {/* <!-- abs-content start --> */}
+                                <div className="abs-content pos-abs-br bg-white shadow-2 pl-7 pt-8 pb-1 pr-11 max-width-px-311 rounded mb-15 mb-xs-18 mb-lg-15 mb-xl-18">
+                                    {/* <!-- media start --> */}
+                                    <div className="media mb-5">
+                                        {/* <!-- check-mark start --> */}
+                                        <span className="check-mark bg-yellow-2 circle-41">
+                                            <i className="fas fa-check text-white  font-size-6"></i>
+                                        </span>
+                                        {/* <!-- check-mark end --> */}
+                                        {/* <!-- media body start --> */}
+                                        <div className="media-body pl-5">
+                                            <h6 className="mb-0 font-size-3 text-green text-uppercase">Job alert!</h6>
+                                            <p className="mb-0 font-size-4 text-black-2">104 new jobs are available in this week!</p>
+                                        </div>
+                                        {/* <!-- media body start --> */}
+                                    </div>
+                                    {/* <!-- media end --> */}
+                                </div>
+                                {/* <!-- abs-content end --> */}
+                            </div>
+                            {/* <!-- content-1 left-content end --> */}
+                        </div>
+                        <div className="col-xl-5 col-lg-6 col-md-8 col-xs-10" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+                            {/* <!-- content-1 start --> */}
+                            <div className="content-1 pl-xl-5 pl-xxl-11 pr-xxl-10">
+                                {/* <!-- content-1 section-title start --> */}
+                                <h2 className="font-size-9 mb-md-15 mb-13">Help you to get the <br className="d-none d-sm-block" />
+                                    best job that fits you</h2>
+                                {/* <!-- content-1 section-title end --> */}
+                                {/* <!-- media start --> */}
+                                <div className="media mb-11">
+                                    {/* <!-- media icon start --> */}
+                                    <div className="media-icon px-6 py-5 bg-green-opacity-2 rounded-5">
+                                        <i className="icon icon-layout-11 text-green"></i>
+                                    </div>
+                                    {/* <!-- media icon start --> */}
+                                    {/* <!-- media body start --> */}
+                                    <div className="media-body pl-7">
+                                        <h5 className="mb-5 h5">#1 Jobs site in UK</h5>
+                                        <p className="mb-0 font-size-4 text-default-color">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative</p>
+                                    </div>
+                                    {/* <!-- media body start --> */}
+                                </div>
+                                {/* <!-- media end --> */}
+                                {/* <!-- media start --> */}
+                                <div className="media mb-11">
+                                    {/* <!-- media icon start --> */}
+                                    <div className="media-icon px-6 py-5 bg-yellow-2-opacity-2 rounded-5">
+                                        <i className="fa fa-search text-yellow-2"></i>
+                                    </div>
+                                    {/* <!-- media icon start --> */}
+                                    {/* <!-- media body start --> */}
+                                    <div className="media-body pl-7">
+                                        <h5 className="mb-5 h5">Seamless searching</h5>
+                                        <p className="mb-0 font-size-4 text-default-color">Capitalize on low hanging fruit to identify a ballpark value added activity to beta test.</p>
+                                    </div>
+                                    {/* <!-- media body start --> */}
+                                </div>
+                                {/* <!-- media end --> */}
+                                {/* <!-- media start --> */}
+                                <div className="media">
+                                    {/* <!-- media icon start --> */}
+                                    <div className="media-icon px-6 py-5 bg-red-opacity-2 rounded-5">
+                                        <i className="fa fa-industry text-red"></i>
+                                    </div>
+                                    {/* <!-- media icon start --> */}
+                                    {/* <!-- media body start --> */}
+                                    <div className="media-body pl-7">
+                                        <h5 className="mb-5 h5">Hired in top companies</h5>
+                                        <p className="mb-0 font-size-4 text-default-color">Podcasting operational change management inside of workflows to establish.</p>
+                                    </div>
+                                    {/* <!-- media body start --> */}
+                                </div>
+                                {/* <!-- media end --> */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* <!-- ContentOne Area --> */}
             {/* <!-- category Area --> */}
             <div className="pb-13 pb-lg-25 bg-gradient-2">
                 {/* <!-- Company Area Start --> */}
@@ -243,407 +352,7 @@ function EmployeeHomePage() {
                 </div>
             </div>
             {/* <!-- category Area --> */}
-            {/* <!-- ContentOne Area --> */}
-            <section className="pt-13 pt-lg-30 pb-13 pb-lg-30">
-                <div className="container">
-                    <div className="row align-items-center justify-content-center">
-                        <div className="col-lg-6 col-md-8 col-sm-10 col-xs-11 mb-9 mb-lg-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- content-1 left-content start --> */}
-                            <div className="position-relative pr-lg-20 pr-xs-15 pr-9 ">
-                                {/* <!-- content img start --> */}
-                                <img src="image/l2/png/content-2-img1.png" alt="" className="w-100" />
-                                {/* <!-- content img end --> */}
-                                {/* <!-- abs-content start --> */}
-                                <div className="abs-content pos-abs-br bg-white shadow-2 pl-7 pt-8 pb-1 pr-11 max-width-px-311 rounded mb-15 mb-xs-18 mb-lg-15 mb-xl-18">
-                                    {/* <!-- media start --> */}
-                                    <div className="media mb-5">
-                                        {/* <!-- check-mark start --> */}
-                                        <span className="check-mark bg-yellow-2 circle-41">
-                                            <i className="fas fa-check text-white  font-size-6"></i>
-                                        </span>
-                                        {/* <!-- check-mark end --> */}
-                                        {/* <!-- media body start --> */}
-                                        <div className="media-body pl-5">
-                                            <h6 className="mb-0 font-size-3 text-green text-uppercase">Job alert!</h6>
-                                            <p className="mb-0 font-size-4 text-black-2">104 new jobs are available in this week!</p>
-                                        </div>
-                                        {/* <!-- media body start --> */}
-                                    </div>
-                                    {/* <!-- media end --> */}
-                                </div>
-                                {/* <!-- abs-content end --> */}
-                            </div>
-                            {/* <!-- content-1 left-content end --> */}
-                        </div>
-                        <div className="col-xl-5 col-lg-6 col-md-8 col-xs-10" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- content-1 start --> */}
-                            <div className="content-1 pl-xl-5 pl-xxl-11 pr-xxl-10">
-                                {/* <!-- content-1 section-title start --> */}
-                                <h2 className="font-size-9 mb-md-15 mb-13">Help you to get the <br className="d-none d-sm-block" />
-                                    best job that fits you</h2>
-                                {/* <!-- content-1 section-title end --> */}
-                                {/* <!-- media start --> */}
-                                <div className="media mb-11">
-                                    {/* <!-- media icon start --> */}
-                                    <div className="media-icon px-6 py-5 bg-green-opacity-2 rounded-5">
-                                        <i className="icon icon-layout-11 text-green"></i>
-                                    </div>
-                                    {/* <!-- media icon start --> */}
-                                    {/* <!-- media body start --> */}
-                                    <div className="media-body pl-7">
-                                        <h5 className="mb-5 h5">#1 Jobs site in UK</h5>
-                                        <p className="mb-0 font-size-4 text-default-color">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative</p>
-                                    </div>
-                                    {/* <!-- media body start --> */}
-                                </div>
-                                {/* <!-- media end --> */}
-                                {/* <!-- media start --> */}
-                                <div className="media mb-11">
-                                    {/* <!-- media icon start --> */}
-                                    <div className="media-icon px-6 py-5 bg-yellow-2-opacity-2 rounded-5">
-                                        <i className="fa fa-search text-yellow-2"></i>
-                                    </div>
-                                    {/* <!-- media icon start --> */}
-                                    {/* <!-- media body start --> */}
-                                    <div className="media-body pl-7">
-                                        <h5 className="mb-5 h5">Seamless searching</h5>
-                                        <p className="mb-0 font-size-4 text-default-color">Capitalize on low hanging fruit to identify a ballpark value added activity to beta test.</p>
-                                    </div>
-                                    {/* <!-- media body start --> */}
-                                </div>
-                                {/* <!-- media end --> */}
-                                {/* <!-- media start --> */}
-                                <div className="media">
-                                    {/* <!-- media icon start --> */}
-                                    <div className="media-icon px-6 py-5 bg-red-opacity-2 rounded-5">
-                                        <i className="fa fa-industry text-red"></i>
-                                    </div>
-                                    {/* <!-- media icon start --> */}
-                                    {/* <!-- media body start --> */}
-                                    <div className="media-body pl-7">
-                                        <h5 className="mb-5 h5">Hired in top companies</h5>
-                                        <p className="mb-0 font-size-4 text-default-color">Podcasting operational change management inside of workflows to establish.</p>
-                                    </div>
-                                    {/* <!-- media body start --> */}
-                                </div>
-                                {/* <!-- media end --> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* <!-- ContentOne Area --> */}
-            {/* <!-- featuredJobOne Area --> */}
-            <section className="bg-athens pt-12 pt-lg-24 pb-7 pb-lg-25">
-                <div className="container">
-                    {/* <!-- Section Title --> */}
-                    <div className="row justify-content-center mb-lg-16 mb-11">
-                        <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
-                            <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">Featured Jobs</h2>
-                            <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">Leverage agile frameworks to provide a robust synopsis for high level overviews to start.</p>
-                        </div>
-                    </div>
-                    {/* <!-- Section Title End --> */}
-                    <div className="row justify-content-center">
-                        <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- Single Featured Job --> */}
-                            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="media align-items-center">
-                                            <div className="square-72 d-block mr-8">
-                                                <img src="image/l2/png/featured-job-logo-1.png" alt="" />
-                                            </div>
-                                            <div>
-                                                <h3 className="mb-0"><a className="font-size-6 heading-default-color" href="http://localhost:3000/">UI/UX Designer</a></h3>
-                                                <a href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2">Apple INC</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 text-right pt-7 pt-md-5">
-                                        <div className="media justify-content-md-end">
-                                            <div className="image mr-5 mt-2">
-                                                <img src="image/svg/icon-fire-rounded.svg" alt="" />
-                                            </div>
-                                            <p className="font-weight-bold font-size-7 text-hit-gray mb-0"><span
-                                                className="text-black-2">120-150K</span> PLN</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row pt-8">
-                                    <div className="col-md-7">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap">
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Visual Design</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Wireframing</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Scrum</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-5">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-loaction-pin-black.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Berlyn, UK</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-suitecase.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Full-time</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-clock.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">9d ago</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End Single Featured Job --> */}
-                        </div>
-                        <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- Single Featured Job --> */}
-                            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="media align-items-center">
-                                            <div className="square-72 d-block mr-8">
-                                                <img src="image/l2/png/featured-job-logo-2.png" alt="" />
-                                            </div>
-                                            <div>
-                                                <h3 className="mb-0"><a className="font-size-6 heading-default-color" href="http://localhost:3000/">UI/UX Designer</a></h3>
-                                                <a href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2">Apple INC</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 text-right pt-7 pt-md-5">
-                                        <div className="media justify-content-md-end">
-                                            <div className="image mr-5 mt-2">
-                                                <img src="image/svg/icon-fire-rounded.svg" alt="" />
-                                            </div>
-                                            <p className="font-weight-bold font-size-7 text-hit-gray mb-0"><span
-                                                className="text-black-2">120-150K</span> PLN</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row pt-8">
-                                    <div className="col-md-7">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap">
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Agile</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Wireframing</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Prototyping</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-5">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-loaction-pin-black.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Berlyn, UK</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-suitecase.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Full-time</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-clock.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">9d ago</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End Single Featured Job --> */}
-                        </div>
-                        <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- Single Featured Job --> */}
-                            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="media align-items-center">
-                                            <div className="square-72 d-block mr-8">
-                                                <img src="image/l2/png/featured-job-logo-3.png" alt="" />
-                                            </div>
-                                            <div>
-                                                <h3 className="mb-0"><a className="font-size-6 heading-default-color" href="http://localhost:3000/">iOS Developer</a></h3>
-                                                <a href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2">Shopify</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 text-right pt-7 pt-md-5">
-                                        <div className="media justify-content-md-end">
-                                            <div className="image mr-5 mt-2">
-                                                <img src="image/svg/icon-fire-rounded.svg" alt="" />
-                                            </div>
-                                            <p className="font-weight-bold font-size-7 text-hit-gray mb-0"><span
-                                                className="text-black-2">100-120K</span> PLN</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row pt-8">
-                                    <div className="col-md-7">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap">
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Swift</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Objective C</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">X Code</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-5">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-loaction-pin-black.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Berlyn, UK</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-suitecase.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Full-time</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-clock.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">9d ago</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End Single Featured Job --> */}
-                        </div>
-                        <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- Single Featured Job --> */}
-                            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="media align-items-center">
-                                            <div className="square-72 d-block mr-8">
-                                                <img src="image/l2/png/featured-job-logo-4.png" alt="" />
-                                            </div>
-                                            <div>
-                                                <h3 className="mb-0"><a className="font-size-6 heading-default-color" href="http://localhost:3000/">Creative Director</a></h3>
-                                                <a href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2">Facebook</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 text-right pt-7 pt-md-5">
-                                        <div className="media justify-content-md-end">
-                                            <div className="image mr-5 mt-2">
-                                                <img src="image/svg/icon-fire-rounded.svg" alt="" />
-                                            </div>
-                                            <p className="font-weight-bold font-size-7 text-hit-gray mb-0"><span
-                                                className="text-black-2">80-90K</span> PLN</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row pt-8">
-                                    <div className="col-md-7">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap">
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Agile</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Wireframing</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">Prototyping</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-5">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-loaction-pin-black.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Berlyn, UK</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-suitecase.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Full-time</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-clock.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">9d ago</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End Single Featured Job --> */}
-                        </div>
-                        <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- Single Featured Job --> */}
-                            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="media align-items-center">
-                                            <div className="square-72 d-block mr-8">
-                                                <img src="image/l2/png/featured-job-logo-5.png" alt="" />
-                                            </div>
-                                            <div>
-                                                <h3 className="mb-0"><a className="font-size-6 heading-default-color" href="http://localhost:3000/">Software Engineer</a></h3>
-                                                <a href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2">Oculus</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 text-right pt-7 pt-md-5">
-                                        <div className="media justify-content-md-end">
-                                            <div className="image mr-5 mt-2">
-                                                <img src="image/svg/icon-fire-rounded.svg" alt="" />
-                                            </div>
-                                            <p className="font-weight-bold font-size-7 text-hit-gray mb-0"><span
-                                                className="text-black-2">80-90K</span> PLN</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row pt-8">
-                                    <div className="col-md-7">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap">
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">C++</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">JavaScprit</a>
-                                            </li>
-                                            <li>
-                                                <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2" href="http://localhost:3000/">ReactJS</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-5">
-                                        <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-loaction-pin-black.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Berlyn, UK</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-suitecase.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">Full-time</span>
-                                            </li>
-                                            <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                                                <span className="mr-4" ><img src="image/svg/icon-clock.svg" alt="" /></span>
-                                                <span className="font-weight-semibold">9d ago</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End Single Featured Job --> */}
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* <!-- featuredJobOne Area --> */}
+
             {/* <!-- Blog area function start --> */}
             <div className="pt-11 pt-lg-24 pb-11 pb-lg-24">
                 <div className="container">
