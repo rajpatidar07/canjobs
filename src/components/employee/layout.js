@@ -4,6 +4,7 @@ import EmployeeHomePage from "./home";
 import JobSearchPage from "./jobsearch";
 import JobDetails from "./JobDetails";
 import JobApplied from "./jobApplied";
+import UserProfile from "./userProfile";
 
 const EmployeeLayout = () => {
   return (
@@ -13,6 +14,7 @@ const EmployeeLayout = () => {
         <Route path="/search" element={<JobSearchPage />} />
         <Route path="/jobdetails" element={<JobDetails />} />
         <Route path="/jobapplied" element={<JobApplied />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   );

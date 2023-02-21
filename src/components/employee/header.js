@@ -141,7 +141,7 @@ function EmployeeHeader() {
                                                 </li>
                                                 <li className="drop-menu-item">
                                                     <a href="search-list-2.html">
-                                                        Search List 02
+                                                        Search List 02rounded-circle overflow-hidden
                                                     </a>
                                                 </li>
                                             </ul>
