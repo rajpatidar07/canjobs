@@ -2,12 +2,13 @@
 import React from "react";
 import "./App.css";
 import EmployerLayout from "./components/employer/layout";
+import EmployeeLayout from "./components/employee/layout";
 
 function App() {
   return (
     <div className="App">
-      {/* <EmployeeLayout /> */}
-      <EmployerLayout />
+      <EmployeeLayout />
+      {/*<EmployerLayout />*/}
     </div>
   );
 }

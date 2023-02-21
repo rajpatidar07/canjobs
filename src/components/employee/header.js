@@ -246,6 +246,17 @@ function EmployeeHeader() {
             </button>
             <SingUp show={showSingUp} close={() => setShowSingUp(false)} />
           </div>
+          <div className="">
+            <Link className="nav-link" to="/profile">
+              <div className="rounded-circle overflow-hidden">
+                <img
+                  src="image/l2/jpg/gallery-img25.jpg"
+                  width={50}
+                  height={50}
+                ></img>
+              </div>
+            </Link>
+          </div>
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
             className="navbar-toggler btn-close-off-canvas  hamburger-icon border-0"
