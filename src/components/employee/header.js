@@ -232,13 +232,13 @@ function EmployeeHeader() {
             </Link>
             <Login show={showLogin} close={() => setShowLogin(false)} />
             {/* <!-- Modal for SingUp--> */}
-            <Link
-              className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+            <button
+              className="btn btn-primary"
               to={""}
               onClick={() => setShowSingUp(true)}
             >
               Sign up
-            </Link>
+            </button>
             <SingUp show={showSingUp} close={() => setShowSingUp(false)} />
           </div>
           {/* <!-- Mobile Menu Hamburger--> */}

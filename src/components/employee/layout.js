@@ -2,8 +2,7 @@ import React from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployeeHomePage from "./home";
 import JobSearchPage from "./jobsearch";
-import Login from "./login";
-import SingUp from "./singUp";
+import JobDetails from "./JobDetails";
 
 const EmployeeLayout = () => {
   return (
@@ -11,8 +10,7 @@ const EmployeeLayout = () => {
       <Routes>
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/search" element={<JobSearchPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/singup" element={<SingUp />} />
+        <Route path="/jobdetails" element={<JobDetails />} />
       </Routes>
     </BrowserRouter>
   );
