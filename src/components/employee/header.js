@@ -141,7 +141,7 @@ function EmployeeHeader() {
                                                 </li>
                                                 <li className="drop-menu-item">
                                                     <a href="search-list-2.html">
-                                                        Search List 02
+                                                        Search List 02rounded-circle overflow-hidden
                                                     </a>
                                                 </li>
                                             </ul>
@@ -245,6 +245,17 @@ function EmployeeHeader() {
               Sign up
             </button>
             <SingUp show={showSingUp} close={() => setShowSingUp(false)} />
+          </div>
+          <div className="">
+            <Link className="nav-link" to="/profile">
+              <div className="rounded-circle overflow-hidden">
+                <img
+                  src="image/l2/jpg/gallery-img25.jpg"
+                  width={50}
+                  height={50}
+                ></img>
+              </div>
+            </Link>
           </div>
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
