@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Login from "./login";
+
 function EmployeeHeader() {
-    return (
-        <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
-            <div className="container">
-                <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
-                    {/* <!-- Brand Logo--> */}
-                    <div className="brand-logo">
-                        <a href="/">
-                            {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
-                            <img src="image/logo-main-black.png" alt="" className="light-version-logo default-logo" />
-                            {/* <!-- Dark version logo (logo must be White)--> */}
-                            <img src="image/logo-main-white.png" alt="" className="dark-version-logo" />
-                        </a>
-                    </div>
-                    <div className="collapse navbar-collapse" id="mobile-menu">
-                        <div className="navbar-nav-wrapper">
-                            <ul className="navbar-nav main-menu">
-                                {/* <li className="nav-item dropdown active">
+  const [showModal, setShowModal] = useState(false);
+
+  const loginModal = () => {
+    setShowModal(true);
+  };
+  console.log("hello", showModal);
+  return (
+    <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
+      <div className="container">
+        <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
+          {/* <!-- Brand Logo--> */}
+          <div className="brand-logo">
+            <a href="/">
+              {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
+              <img
+                src="image/logo-main-black.png"
+                alt=""
+                className="light-version-logo default-logo"
+              />
+              {/* <!-- Dark version logo (logo must be White)--> */}
+              <img
+                src="image/logo-main-white.png"
+                alt=""
+                className="dark-version-logo"
+              />
+            </a>
+          </div>
+          <div className="collapse navbar-collapse" id="mobile-menu">
+            <div className="navbar-nav-wrapper">
+              <ul className="navbar-nav main-menu">
+                {/* <li className="nav-item dropdown active">
                                     <a className="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown" href="#features" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home <i className="icon icon-small-down"></i></a>
                                     <ul className="gr-menu-dropdown dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li className="drop-menu-item">
@@ -182,40 +199,76 @@ function EmployeeHeader() {
                                         </li>
                                     </ul>
                                 </li> */}
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/">Home</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/search">Jobs</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <button className="d-block d-lg-none offcanvas-btn-close focus-reset" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="true" aria-label="Toggle navigation">
-                            <i className="gr-cross-icon"></i>
-                        </button>
-                    </div>
-                    <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
-                        <a className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="javacript:" data-toggle="modal" data-target="#login">
-                            Log in
-                        </a>
-                        <a className="btn btn-primary text-uppercase font-size-3" href="javacript:" data-toggle="modal" data-target="#signup">
-                            Sign up
-                        </a>
-                    </div>
-                    {/* <!-- Mobile Menu Hamburger--> */}
-                    <button className="navbar-toggler btn-close-off-canvas  hamburger-icon border-0" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
-                        {/* <!-- <i className="icon icon-simple-remove icon-close"></i> --> */}
-                        <span className="hamburger hamburger--squeeze js-hamburger">
-                            <span className="hamburger-box">
-                                <span className="hamburger-inner"></span>
-                            </span>
-                        </span>
-                    </button>
-                    {/* <!--/.Mobile Menu Hamburger Ends--> */}
-                </nav>
+                <li className="nav-item">
+                  <a className="nav-link" href="/">
+                    Home
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/search">
+                    Jobs
+                  </a>
+                </li>
+              </ul>
             </div>
-        </header>
+            <button
+              className="d-block d-lg-none offcanvas-btn-close focus-reset"
+              type="button"
+              data-toggle="collapse"
+              data-target="#mobile-menu"
+              aria-controls="mobile-menu"
+              aria-expanded="true"
+              aria-label="Toggle navigation"
+            >
+              <i className="gr-cross-icon"></i>
+            </button>
+          </div>
+          <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+            <Link
+              className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+              //   href="/login"
+              onClick={loginModal}
+              //   data-toggle="modal"
+              //   data-target="#login"
+            >
+              Log in
+            </Link>
+            {showModal === true ? (
+              <Login onClose={() => setShowModal(false)} />
+            ) : (
+              console.log("False")
+            )}
 
-    );
+            <a
+              className="btn btn-primary text-uppercase font-size-3"
+              href="javacript:"
+              data-toggle="modal"
+              data-target="#signup"
+            >
+              Sign up
+            </a>
+          </div>
+          {/* <!-- Mobile Menu Hamburger--> */}
+          <button
+            className="navbar-toggler btn-close-off-canvas  hamburger-icon border-0"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mobile-menu"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            {/* <!-- <i className="icon icon-simple-remove icon-close"></i> --> */}
+            <span className="hamburger hamburger--squeeze js-hamburger">
+              <span className="hamburger-box">
+                <span className="hamburger-inner"></span>
+              </span>
+            </span>
+          </button>
+          {/* <!--/.Mobile Menu Hamburger Ends--> */}
+        </nav>
+      </div>
+    </header>
+  );
 }
 export default EmployeeHeader;
