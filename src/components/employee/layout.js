@@ -4,7 +4,7 @@ import EmployeeHomePage from "./home";
 import JobSearchPage from "./jobsearch";
 import JobDetails from "./JobDetails";
 import JobApplied from "./jobApplied";
-import UserProfile from "../employee/profle/userProfile";
+import UserProfile from "../employee/profile/userProfile";
 
 const EmployeeLayout = () => {
   return (

@@ -10,6 +10,10 @@ import CareerProfile from "./modals/careerProfile";
 import EducationDetails from "./modals/educationDetails";
 import Projects from "./modals/projects";
 import Patent from "./modals/patent";
+import Certificate from "./modals/certificate";
+import ItSkills from "./modals/itSkills";
+import OnlineProfile from "./modals/onlineProfile";
+import WorkSample from "./modals/workSample";
 
 const UserProfile = () => {
   const [show, setShow] = useState(false);
@@ -20,10 +24,15 @@ const UserProfile = () => {
   const [showEducation, setShowEducation] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [showPatents, setShowPatents] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
+  const [showItSkills, setShowItSkills] = useState(false);
+  const [showOnlineProfile, setShowOnlineProfile] = useState(false);
+  const [showWorkSample, setShowWorkSample] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
+    /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
       <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32">
@@ -48,6 +57,7 @@ const UserProfile = () => {
           <div className="row text-left">
             <div className="col-12 col-xxl-3 col-lg-4 col-md-5 mb-11 mb-lg-0">
               <div className="pl-lg-5">
+                {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 py-11 text-center border-bottom border-mercury">
                     <a className="mb-4" href="#">
@@ -160,6 +170,7 @@ const UserProfile = () => {
 
             <div className="col-12 col-xxl-6 col-lg-8 col-md-7 order-2 order-xl-1">
               <div className="bg-white rounded-4 shadow-9">
+                {/*----Profile Header----*/}
                 <ul
                   className="nav border-bottom border-mercury pl-12"
                   id="myTab"
@@ -261,8 +272,75 @@ const UserProfile = () => {
                       close={() => setShowPatents(false)}
                     />
                   </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      // id="Education-tab"
+                      // data-toggle="tab"
+                      href="#"
+                      // role="tab"
+                      // aria-controls="Education"
+                      // aria-selected="false"
+                      onClick={() => setShowCertificate(true)}
+                    >
+                      Certificate
+                    </a>
+                    <Certificate
+                      show={showCertificate}
+                      close={() => setShowCertificate(false)}
+                    />
+                  </li>{" "}
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      id="skills-tab"
+                      data-toggle="tab"
+                      href="#skills"
+                      role="tab"
+                      aria-controls="skills"
+                      aria-selected="false"
+                    >
+                      It Skills
+                    </a>
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      // id="skills-tab"
+                      // data-toggle="tab"
+                      href="#"
+                      // role="tab"
+                      // aria-controls="skills"
+                      // aria-selected="false"
+                      onClick={() => setShowOnlineProfile(true)}
+                    >
+                      Online profile
+                    </a>
+                    <OnlineProfile
+                      show={showOnlineProfile}
+                      close={() => setShowOnlineProfile(false)}
+                    />
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      // id="skills-tab"
+                      // data-toggle="tab"
+                      href="#"
+                      // role="tab"
+                      // aria-controls="skills"
+                      // aria-selected="false"
+                      onClick={() => setShowWorkSample(true)}
+                    >
+                      Work Sample
+                    </a>
+                    <WorkSample
+                      show={showWorkSample}
+                      close={() => setShowWorkSample(false)}
+                    />
+                  </li>
                 </ul>
-
+                {/*---Profile Details----*/}
                 <div className="tab-content" id="myTabContent">
                   <div
                     className="tab-pane fade show active"
@@ -270,6 +348,7 @@ const UserProfile = () => {
                     role="tabpanel"
                     aria-labelledby="home-tab"
                   >
+                    {/*----About Employee----*/}
                     <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
                         About
@@ -286,11 +365,25 @@ const UserProfile = () => {
                         Shell, PERL, Regular expressions, Python, Active-script.
                       </p>
                     </div>
-
-                    <div className="border-top pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
-                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                        Skills
-                      </h4>
+                    {/*----Employee's Skills----*/}
+                    <div
+                      id="skills"
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex justify-content-md-between flex-wrap"
+                    >
+                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                        Skill{" "}
+                      </h4>{" "}
+                      <a
+                        href="#"
+                        className="font-size-3"
+                        onClick={() => setShowItSkills(true)}
+                      >
+                        <span className="text-end text-primary">Edit </span>
+                      </a>
+                      <ItSkills
+                        show={showItSkills}
+                        close={() => setShowItSkills(false)}
+                      />
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
                         <li>
                           <a
@@ -350,6 +443,7 @@ const UserProfile = () => {
                         </li>
                       </ul>
                     </div>
+                    {/*----Employee's Career Profile----*/}
                     <div
                       id="Career_Profile"
                       className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex align-items-center justify-content-md-between flex-wrap"
@@ -462,7 +556,7 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
-
+                    {/*----Employee's Education Profile----*/}
                     <div
                       id="Education"
                       className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex justify-content-md-between flex-wrap"
@@ -563,6 +657,7 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
+                    {/*----Employee's Employement Profile----*/}
                     <div
                       className="border-top p-5 pl-xs-12 pt-7 pb-5"
                       id="employement"
@@ -597,6 +692,7 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
+                    {/*----Employee's Personal Details----*/}
                     <div
                       className="border-top p-5 pl-xs-12 pt-7 pb-5"
                       id="personal_details"
@@ -729,6 +825,7 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
+                    {/*----Employee's Projects----*/}
                     <div
                       className="border-top p-5 pl-xs-12 pt-7 pb-5"
                       id="Projects"
@@ -853,7 +950,7 @@ const UserProfile = () => {
                 </div>
               </div>
             </div>
-
+            {/*----Other Experts----*/}
             <div className="col-12 col-xxl-3 col-md-4 offset-xxl-0 offset-lg-4 offset-md-5 order-3 order-xl-2 mt-xxl-0 mt-md-12">
               <div className="pl-lg-5">
                 <h4 className="font-size-6 font-weight-semibold mb-0">
