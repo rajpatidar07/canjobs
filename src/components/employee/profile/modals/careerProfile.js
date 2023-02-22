@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function CompanyInfo(props) {
+function CareerProfile(props) {
   return (
     <>
       <Modal
@@ -21,65 +21,65 @@ function CompanyInfo(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white-2 h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2">Company Info</h5>
+            <h5 className="text-center pt-2">Career Profile</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Company_Name"
+                  htmlFor="Current_Industry"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  My company is here :
+                  Current Industry
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="company Name"
-                  id="Company_Name"
+                  placeholder="Current Industry"
+                  id="Current_Industry"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="needs"
+                  htmlFor="Department"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  To fulfill own hiring needs :
+                  Department :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="needs"
-                  id="needs"
+                  placeholder="Department "
+                  id="Department"
                 />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="recruitment"
+                  htmlFor="Role_Category"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  As a recruitment consultant :
+                  Role Category :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="recruitment"
-                  id="recruitment"
+                  placeholder="Role Category"
+                  id="Role_Category"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Name_as_per_kyc"
+                  htmlFor="job_Role"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company name (as per KYC documents) :
+                  Job Role :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Name as per kyc"
-                  id="Name_as_per_kyc"
+                  placeholder="Job Role"
+                  id="job_Role"
                 />
               </div>
             </div>
@@ -87,32 +87,32 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Your_designation"
+                  htmlFor="Desired_Job_Type"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Your designation :
+                  Job Type :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     className="form-control"
-                    id="Your_designation"
-                    placeholder="Your designation"
+                    id="Desired_Job_Type"
+                    placeholder="Job Type"
                   />
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Pin_code"
+                  htmlFor="Preferred_Shift"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pin code :
+                  Preferred Shift :
                 </label>
                 <input
-                  type="text"
+                  type="time"
                   className="form-control"
-                  placeholder="Pin code"
-                  id="Pin_code"
+                  placeholder="Preferred Shift"
+                  id="Preferred_Shift"
                 />
               </div>
             </div>
@@ -120,30 +120,30 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Street_address"
+                  htmlFor="Preferred_Work_Location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Street address :
+                  Preferred Work Location (Max 10) :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Street address"
-                  id="Street_address"
+                  placeholder="Preferred Work Location"
+                  id="Preferred_Work_Location"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="terms_&_condition"
+                  htmlFor="Expected_Salary"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Terms & condition :
+                  Expected Salary :
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
-                  placeholder="terms & condition"
-                  id="terms_&_condition"
+                  placeholder="Expected Salary"
+                  id="Expected_Salary"
                 />
               </div>
             </div>
@@ -160,4 +160,4 @@ function CompanyInfo(props) {
   );
 }
 
-export default CompanyInfo;
+export default CareerProfile;

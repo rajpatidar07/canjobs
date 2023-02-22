@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function CompanyInfo(props) {
+function EducationDetails(props) {
   return (
     <>
       <Modal
@@ -21,65 +21,65 @@ function CompanyInfo(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white-2 h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2">Company Info</h5>
+            <h5 className="text-center pt-2">Education Details</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Company_Name"
+                  htmlFor="Education"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  My company is here :
+                  Education :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="company Name"
-                  id="Company_Name"
+                  placeholder="Education"
+                  id="Education"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="needs"
+                  htmlFor="University_Institute"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  To fulfill own hiring needs :
+                  University/Institute :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="needs"
-                  id="needs"
+                  placeholder="University/Institute "
+                  id="University_Institute"
                 />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="recruitment"
+                  htmlFor="Course"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  As a recruitment consultant :
+                  Course :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="recruitment"
-                  id="recruitment"
+                  placeholder="Course"
+                  id="Course"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Name_as_per_kyc"
+                  htmlFor="Specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company name (as per KYC documents) :
+                  Specialization :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Name as per kyc"
-                  id="Name_as_per_kyc"
+                  placeholder="Specialization"
+                  id="Specialization"
                 />
               </div>
             </div>
@@ -87,32 +87,32 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Your_designation"
+                  htmlFor="Course_Type"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Your designation :
+                  Course Type :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     className="form-control"
-                    id="Your_designation"
-                    placeholder="Your designation"
+                    id="Course_Type"
+                    placeholder="Course Type"
                   />
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Pin_code"
+                  htmlFor="Course duration"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pin code :
+                  Course duration :
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
-                  placeholder="Pin code"
-                  id="Pin_code"
+                  placeholder="Course duration"
+                  id="Course duration"
                 />
               </div>
             </div>
@@ -120,30 +120,30 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Street_address"
+                  htmlFor="Grading_System"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Street address :
+                  Grading System :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Street address"
-                  id="Street_address"
+                  placeholder="Grading System"
+                  id="Grading_System"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="terms_&_condition"
+                  htmlFor="Expected_Salary"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Terms & condition :
+                  Expected Salary :
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
-                  placeholder="terms & condition"
-                  id="terms_&_condition"
+                  placeholder="Expected Salary"
+                  id="Expected_Salary"
                 />
               </div>
             </div>
@@ -160,4 +160,4 @@ function CompanyInfo(props) {
   );
 }
 
-export default CompanyInfo;
+export default EducationDetails;

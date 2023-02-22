@@ -1,12 +1,25 @@
 import React, { useState } from "react";
-
-import EmployeeHeader from "./header";
-import EmployeeFooter from "./footer";
+import EmployeeHeader from "../header";
+import EmployeeFooter from "../footer";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Registration from "./modals/registration";
+import EmployementDetails from "./modals/employementDetails";
+import PersonalDetails from "./modals/personalDetails";
+import CareerProfile from "./modals/careerProfile";
+import EducationDetails from "./modals/educationDetails";
+import Projects from "./modals/projects";
+import Patent from "./modals/patent";
 
 const UserProfile = () => {
   const [show, setShow] = useState(false);
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
+  const [showPersonalDetails, setShowPersonalDetails] = useState(false);
+  const [showCareerProfile, setShowCareerProfile] = useState(false);
+  const [showEducation, setShowEducation] = useState(false);
+  const [showProjects, setShowProjects] = useState(false);
+  const [showPatents, setShowPatents] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -32,7 +45,7 @@ const UserProfile = () => {
             </div>
           </div>
 
-          <div className="row">
+          <div className="row text-left">
             <div className="col-12 col-xxl-3 col-lg-4 col-md-5 mb-11 mb-lg-0">
               <div className="pl-lg-5">
                 <div className="bg-white shadow-9 rounded-4">
@@ -48,9 +61,14 @@ const UserProfile = () => {
                       <a
                         className="text-black-2 font-size-6 font-weight-semibold"
                         href="#"
+                        onClick={() => setShowRegistration(true)}
                       >
                         David Henricks
                       </a>
+                      <Registration
+                        show={showRegistration}
+                        close={() => setShowRegistration(false)}
+                      />
                     </h4>
                     <p className="mb-8">
                       <a className="text-gray font-size-4" href="#">
@@ -163,15 +181,85 @@ const UserProfile = () => {
                   <li className="tab-menu-items nav-item pr-12">
                     <a
                       className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="profile-tab"
+                      id="employement-tab"
                       data-toggle="tab"
-                      href="#profile"
+                      href="#employement"
                       role="tab"
-                      aria-controls="profile"
+                      aria-controls="employement"
                       aria-selected="false"
                     >
-                      Contact
+                      Employment
                     </a>
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      id="personal_details-tab"
+                      data-toggle="tab"
+                      href="#personal_details"
+                      role="tab"
+                      aria-controls="personal_details"
+                      aria-selected="false"
+                    >
+                      Personal Details
+                    </a>
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      id="Career_Profile-tab"
+                      data-toggle="tab"
+                      href="#Career_Profile"
+                      role="tab"
+                      aria-controls="Career_Profile"
+                      aria-selected="false"
+                    >
+                      Career Profile
+                    </a>
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      id="Projects-tab"
+                      data-toggle="tab"
+                      href="#Projects"
+                      role="tab"
+                      aria-controls="Projects"
+                      aria-selected="false"
+                    >
+                      Projects
+                    </a>
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      id="Education-tab"
+                      data-toggle="tab"
+                      href="#Education"
+                      role="tab"
+                      aria-controls="Education"
+                      aria-selected="false"
+                    >
+                      Education
+                    </a>
+                  </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      // id="Education-tab"
+                      // data-toggle="tab"
+                      href="#"
+                      // role="tab"
+                      // aria-controls="Education"
+                      // aria-selected="false"
+                      onClick={() => setShowPatents(true)}
+                    >
+                      Patent
+                    </a>
+                    <Patent
+                      show={showPatents}
+                      close={() => setShowPatents(false)}
+                    />
                   </li>
                 </ul>
 
@@ -262,12 +350,24 @@ const UserProfile = () => {
                         </li>
                       </ul>
                     </div>
-
-                    <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
-                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                        Work Exprerience
+                    <div
+                      id="Career_Profile"
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex align-items-center justify-content-md-between flex-wrap"
+                    >
+                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                        Career Profile
                       </h4>
-
+                      <a
+                        href="#"
+                        className="font-size-3"
+                        onClick={() => setShowCareerProfile(true)}
+                      >
+                        <span className="text-end text-primary">Edit </span>
+                      </a>
+                      <CareerProfile
+                        show={showCareerProfile}
+                        close={() => setShowCareerProfile(false)}
+                      />
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
                           <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
@@ -363,11 +463,24 @@ const UserProfile = () => {
                       </div>
                     </div>
 
-                    <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
-                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
+                    <div
+                      id="Education"
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex justify-content-md-between flex-wrap"
+                    >
+                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                         Education
                       </h4>
-
+                      <a
+                        href="#"
+                        className="font-size-3"
+                        onClick={() => setShowEducation(true)}
+                      >
+                        <span className="text-end text-primary">Edit </span>
+                      </a>
+                      <EducationDetails
+                        show={showEducation}
+                        close={() => setShowEducation(false)}
+                      />
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
                           <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
@@ -445,6 +558,218 @@ const UserProfile = () => {
                                 </span>
                                 New York, USA
                               </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5"
+                      id="employement"
+                    >
+                      <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                          Employment Details
+                        </h4>
+                        <a
+                          href="#"
+                          className="font-size-3"
+                          onClick={() => setShowEmplyomentDetails(true)}
+                        >
+                          <span className="text-end text-primary">Aad +</span>
+                        </a>
+                        <EmployementDetails
+                          show={showEmplyomentDetails}
+                          close={() => setShowEmplyomentDetails(false)}
+                        />
+                      </div>
+
+                      <div className="w-100">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
+                          <div className="w-100 mt-n2 text-left">
+                            <h3 className="mb-0">
+                              <a className="font-size-6 text-black-2" href="#">
+                                Fresh Graduate
+                              </a>
+                            </h3>
+                            <small>Fresher</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5"
+                      id="personal_details"
+                    >
+                      <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                          Personal Details
+                        </h4>
+                        <a
+                          href="#"
+                          className="font-size-3"
+                          onClick={() => setShowPersonalDetails(true)}
+                        >
+                          <span className="text-end text-primary">Edit </span>
+                        </a>
+                        <PersonalDetails
+                          show={showPersonalDetails}
+                          close={() => setShowPersonalDetails(false)}
+                        />
+                      </div>
+
+                      <div className="w-100">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
+                          <div className="w-100 mt-n2 text-left">
+                            <div className="px-4 pt-lg-5 pt-9 pt-xl-9 pb-5">
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Date of Birth
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  03/03/2001
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">Gender</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Male{" "}
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Nationality / Citizenship
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  New York , USA
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Marital Status
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  single
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Driving License
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  indian issued
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Current Location
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Indore
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Languages Known
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Hindi / English{" "}
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Visa Status For Current Location
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Citizen
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">Religion</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Hindus
+                                </h5>
+                              </div>
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">E-mail</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0">
+                                  <a
+                                    className="text-black-2 text-break"
+                                    href="mailto:name_ac@gmail.com"
+                                  >
+                                    name_ac@gmail.com
+                                  </a>
+                                </h5>
+                              </div>
+
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">Phone</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0">
+                                  <a
+                                    className="text-black-2 text-break"
+                                    href="tel:+999565562"
+                                  >
+                                    +999 565 562
+                                  </a>
+                                </h5>
+                              </div>
+
+                              <div className="mb-3">
+                                <p className="font-size-4 mb-0">
+                                  Website Linked
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0">
+                                  <a className="text-break" href="#">
+                                    www.nameac.com
+                                  </a>
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5"
+                      id="Projects"
+                    >
+                      <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                          Projects
+                        </h4>
+                        <a
+                          href="#"
+                          className="font-size-3"
+                          onClick={() => setShowProjects(true)}
+                        >
+                          <span className="text-end text-primary">Edit </span>
+                        </a>
+                        <Projects
+                          show={showProjects}
+                          close={() => setShowProjects(false)}
+                        />
+                      </div>
+
+                      <div className="w-100">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
+                          <div className="w-100 mt-n2 text-left">
+                            <div className="px-4 pt-lg-5 pt-9 pt-xl-9 pb-5">
+                              <div className="mb-3">
+                                <h5 className="font-size-4 mb-0">
+                                  Home Project
+                                </h5>
+                                <p className="font-size-4 font-weight-semibold mb-0  text-break">
+                                  ABC
+                                </p>
+                              </div>
+                              <div className="mb-3">
+                                <h5 className="font-size-4 mb-0">
+                                  Industry Project
+                                </h5>
+                                <p className="font-size-4 font-weight-semibold mb-0  text-break">
+                                  Fresher
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>

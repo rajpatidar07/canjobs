@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function CompanyInfo(props) {
+function Registration(props) {
   return (
     <>
       <Modal
@@ -21,65 +21,65 @@ function CompanyInfo(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white-2 h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2">Company Info</h5>
+            <h5 className="text-center pt-2">Registration</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Company_Name"
+                  htmlFor="Full_Name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  My company is here :
+                  Full Name:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="company Name"
-                  id="Company_Name"
+                  placeholder="Full Name"
+                  id="Full_Name"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="needs"
+                  htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  To fulfill own hiring needs :
+                  Email Id :
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  placeholder="needs"
-                  id="needs"
+                  placeholder="email"
+                  id="email"
                 />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="recruitment"
+                  htmlFor="Password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  As a recruitment consultant :
+                  Password :
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
-                  placeholder="recruitment"
-                  id="recruitment"
+                  placeholder="Password"
+                  id="Password"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Name_as_per_kyc"
+                  htmlFor="Mobile_Number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company name (as per KYC documents) :
+                  Mobile Number :
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   className="form-control"
-                  placeholder="Name as per kyc"
-                  id="Name_as_per_kyc"
+                  placeholder="Mobile Number"
+                  id="Mobile_Number"
                 />
               </div>
             </div>
@@ -87,32 +87,32 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Your_designation"
+                  htmlFor="Work_Status"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Your designation :
+                  Work Status :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     className="form-control"
-                    id="Your_designation"
-                    placeholder="Your designation"
+                    id="Work_Status"
+                    placeholder="Work Status"
                   />
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Pin_code"
+                  htmlFor="Resume"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pin code :
+                  Resume :
                 </label>
                 <input
-                  type="text"
+                  type="file"
                   className="form-control"
-                  placeholder="Pin code"
-                  id="Pin_code"
+                  placeholder="Resume"
+                  id="Resume"
                 />
               </div>
             </div>
@@ -120,30 +120,16 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Street_address"
+                  htmlFor="More_details"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Street address :
+                  More detail can be add as input as per resume :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Street address"
-                  id="Street_address"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="terms_&_condition"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Terms & condition :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="terms & condition"
-                  id="terms_&_condition"
+                  placeholder="More details"
+                  id="More_details"
                 />
               </div>
             </div>
@@ -160,4 +146,4 @@ function CompanyInfo(props) {
   );
 }
 
-export default CompanyInfo;
+export default Registration;

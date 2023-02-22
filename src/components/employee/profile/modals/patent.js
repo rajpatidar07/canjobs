@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function CompanyInfo(props) {
+function Patent(props) {
   return (
     <>
       <Modal
@@ -21,65 +21,65 @@ function CompanyInfo(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white-2 h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2">Company Info</h5>
+            <h5 className="text-center pt-2">Add Patent </h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Company_Name"
+                  htmlFor="Patent_Title"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  My company is here :
+                  Patent Title :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="company Name"
-                  id="Company_Name"
+                  placeholder="Patent Title"
+                  id="Patent_Title"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="needs"
+                  htmlFor="URL"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  To fulfill own hiring needs :
+                  URL :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="needs"
-                  id="needs"
+                  placeholder="URL"
+                  id="URL"
                 />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="recruitment"
+                  htmlFor="Patent_Office"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  As a recruitment consultant :
+                  Patent Office :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="recruitment"
-                  id="recruitment"
+                  placeholder="Patent Office"
+                  id="Patent_Office"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Name_as_per_kyc"
+                  htmlFor="Status"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company name (as per KYC documents) :
+                  Status :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Name as per kyc"
-                  id="Name_as_per_kyc"
+                  placeholder="Status"
+                  id="Status"
                 />
               </div>
             </div>
@@ -87,32 +87,32 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Your_designation"
+                  htmlFor="Application Number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Your designation :
+                  Application Number :
                 </label>
                 <div className="position-relative">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
-                    id="Your_designation"
-                    placeholder="Your designation"
+                    id="Application_Number"
+                    placeholder="Application Number"
                   />
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Pin_code"
+                  htmlFor="Issue_Date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pin code :
+                  Issue Date :
                 </label>
                 <input
-                  type="text"
+                  type="dae"
                   className="form-control"
-                  placeholder="Pin code"
-                  id="Pin_code"
+                  placeholder="Issue Date"
+                  id="Issue_Date"
                 />
               </div>
             </div>
@@ -120,30 +120,16 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Street_address"
+                  htmlFor="Description"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Street address :
+                  Description :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Street address"
-                  id="Street_address"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="terms_&_condition"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Terms & condition :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="terms & condition"
-                  id="terms_&_condition"
+                  placeholder="Description"
+                  id="Description"
                 />
               </div>
             </div>
@@ -160,4 +146,4 @@ function CompanyInfo(props) {
   );
 }
 
-export default CompanyInfo;
+export default Patent;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function CompanyInfo(props) {
+function EmployementDetails(props) {
   return (
     <>
       <Modal
@@ -21,65 +21,65 @@ function CompanyInfo(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white-2 h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2">Company Info</h5>
+            <h5 className="text-center pt-2">Add Employment</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Company_Name"
+                  htmlFor="Current_employment"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  My company is here :
+                  Is this your current employment ?
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="company Name"
-                  id="Company_Name"
+                  placeholder=" Is this your current employment ?"
+                  id="Current_employment"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="needs"
+                  htmlFor="Employment_Type"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  To fulfill own hiring needs :
+                  Employment Type:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="needs"
-                  id="needs"
+                  placeholder="Employment Type"
+                  id="Employment_Type"
                 />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="recruitment"
+                  htmlFor="Current_Company_Name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  As a recruitment consultant :
+                  Current Company Name :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="recruitment"
-                  id="recruitment"
+                  placeholder="Current Company Name"
+                  id="Current_Company_Name"
                 />
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Name_as_per_kyc"
+                  htmlFor="Current_Designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company name (as per KYC documents) :
+                  Current Designation :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Name as per kyc"
-                  id="Name_as_per_kyc"
+                  placeholder="Current Designation"
+                  id="Current_Designation"
                 />
               </div>
             </div>
@@ -87,32 +87,32 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Your_designation"
+                  htmlFor="Joining_Date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Your designation :
+                  Joining Date :
                 </label>
                 <div className="position-relative">
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
-                    id="Your_designation"
-                    placeholder="Your designation"
+                    id="Joining_Date"
+                    placeholder="Joining Date"
                   />
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Pin_code"
+                  htmlFor="Job_Profile"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pin code :
+                  Job Profile :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Pin code"
-                  id="Pin_code"
+                  placeholder="Job Profile"
+                  id="Job_Profile"
                 />
               </div>
             </div>
@@ -120,30 +120,16 @@ function CompanyInfo(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Street_address"
+                  htmlFor="Notice_Period"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Street address :
+                  Notice Period :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Street address"
-                  id="Street_address"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="terms_&_condition"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Terms & condition :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="terms & condition"
-                  id="terms_&_condition"
+                  placeholder="Notice Period"
+                  id="Notice_Period"
                 />
               </div>
             </div>
@@ -160,4 +146,4 @@ function CompanyInfo(props) {
   );
 }
 
-export default CompanyInfo;
+export default EmployementDetails;
