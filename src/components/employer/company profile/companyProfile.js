@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import AccountDetails from "./accountDetails";
-import EmployerFooter from "./footer";
-import EmployerHeader from "./header";
+import EmployerFooter from "../footer";
+import EmployerHeader from "../header";
+import CompanyDetails from "./companyDetails";
+import KycComplianceDetails from "./kycComplianceDetails";
+import CompanyInfo from "./companyInfo";
 
 function CompanyProfile() {
   const [showAccountDetails, setShowAccountDetails] = useState(false);
+  const [showCompanyDetails, setShowCompanyDetails] = useState(false);
+  const [showKycComplainDetails, setShowKycComplainDetails] = useState(false);
+  const [showCompanyInfo, setShowCompanyInfo] = useState(false);
 
   return (
     <div>
@@ -98,9 +104,14 @@ function CompanyProfile() {
                       //   role="tab"
                       //   aria-controls="profile"
                       //   aria-selected="false"
+                      onClick={() => setShowCompanyDetails(true)}
                     >
                       Company Details
                     </a>
+                    <CompanyDetails
+                      show={showCompanyDetails}
+                      close={() => setShowCompanyDetails(false)}
+                    />
                   </li>
                   <li className="tab-menu-items nav-item pr-12">
                     <a
@@ -111,9 +122,15 @@ function CompanyProfile() {
                       //   role="tab"
                       //   aria-controls="profile"
                       //   aria-selected="false"
+                      onClick={() => setShowKycComplainDetails(true)}
                     >
                       KYC Compliance Details
                     </a>
+
+                    <KycComplianceDetails
+                      show={showKycComplainDetails}
+                      close={() => setShowKycComplainDetails(false)}
+                    />
                   </li>
                   <li className="tab-menu-items nav-item pr-12">
                     <a
@@ -124,9 +141,14 @@ function CompanyProfile() {
                       //   role="tab"
                       //   aria-controls="profile"
                       //   aria-selected="false"
+                      onClick={() => setShowCompanyInfo(true)}
                     >
                       Company Info
                     </a>
+                    <CompanyInfo
+                      show={showCompanyInfo}
+                      close={() => setShowCompanyInfo(false)}
+                    />
                   </li>
                 </ul>
                 {/* <!-- Tab Content --> */}

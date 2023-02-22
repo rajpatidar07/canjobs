@@ -12,14 +12,14 @@ function AccountDetails(props) {
       >
         <button
           type="button"
-          className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+          className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
           data-dismiss="modal"
           onClick={props.close}
         >
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
-        <div className="bg-white-2 h-100 px-11 pt-7">
+        <div className="bg-white-2 h-100 px-11 pt-7 overflow-y-hidden">
           <form>
             <h5 className="text-center pt-2">Account detail</h5>
             <div className="form-group">
@@ -27,7 +27,7 @@ function AccountDetails(props) {
                 htmlFor="Username"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Username:
+                Username :
               </label>
               <input
                 type="text"
@@ -41,7 +41,7 @@ function AccountDetails(props) {
                 htmlFor="email"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                E-mail:
+                E-mail :
               </label>
               <input
                 type="email"
@@ -55,7 +55,7 @@ function AccountDetails(props) {
                 htmlFor="Role"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Role:
+                Role :
               </label>
               <input
                 type="text"
@@ -69,7 +69,7 @@ function AccountDetails(props) {
                 htmlFor="Reporting_Manager"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Reporting Manager:
+                Reporting Manager :
               </label>
               <input
                 type="text"
@@ -83,7 +83,7 @@ function AccountDetails(props) {
                 htmlFor="mobile"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Mobile Number:
+                Mobile Number :
               </label>
               <div className="position-relative">
                 <input

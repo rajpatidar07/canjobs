@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployerHomePage from "./home";
-import CompanyProfile from "./companyProfile";
+import CompanyProfile from "./company profile/companyProfile";
 
 const EmployerLayout = () => {
   return (
