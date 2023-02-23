@@ -14,6 +14,7 @@ import Certificate from "./modals/certificate";
 import ItSkills from "./modals/itSkills";
 import OnlineProfile from "./modals/onlineProfile";
 import WorkSample from "./modals/workSample";
+import CustomButton from "../../comman/button";
 
 const UserProfile = () => {
   const [show, setShow] = useState(false);
@@ -60,7 +61,17 @@ const UserProfile = () => {
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 py-11 text-center border-bottom border-mercury">
-                    <a className="mb-4" href="#">
+                    <a className="mb-4" href="">
+                      <input
+                        type="file"
+                        id="file"
+                        style={{ display: "none" }}
+                      />
+                      <label htmlFor="file">
+                        <span className="z-2 position-absolute  mt-15 mx-4  rounded-3 fas fa-pencil-alt">
+                          {" "}
+                        </span>
+                      </label>
                       <img
                         className="circle-54"
                         src="image/l3/png/pro-img.png"
@@ -85,37 +96,91 @@ const UserProfile = () => {
                         Product Designer
                       </a>
                     </p>
-                    <div className="icon-link d-flex align-items-center justify-content-center flex-wrap">
-                      <a
-                        className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                        href="#"
-                      >
-                        <i className="fab fa-linkedin-in"></i>
-                      </a>
-                      <a
-                        className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                        href="#"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a
-                        className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                        href="#"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a
-                        className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                        href="#"
-                      >
-                        <i className="fab fa-dribbble"></i>
-                      </a>
-                      <a
-                        className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                        href="#"
-                      >
-                        <i className="fab fa-behance"></i>
-                      </a>
+                    <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
+                      {/*----Employee's Skills----*/}
+                      <div className="row">
+                        <div className="col">
+                          {" "}
+                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left ">
+                            Skill{" "}
+                          </h4>{" "}
+                        </div>
+                        <div className="col"></div>
+                        <div className="col"></div>
+                        <div className="col"></div>
+                        <div className="col"></div>
+                        <div className="col mb-7 mt-5">
+                          {" "}
+                          <CustomButton
+                            className="btn-primary rounded"
+                            onClick={() => setShowItSkills(true)}
+                          >
+                            Edit
+                          </CustomButton>
+                        </div>
+                        <ItSkills
+                          show={showItSkills}
+                          close={() => setShowItSkills(false)}
+                        />
+                      </div>
+                      <ul className="list-unstyled d-flex align-items-center flex-wrap">
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            Agile
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            Wireframing
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            Prototyping
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            Information
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            Waterfall Model
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            New Layout
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            href="#"
+                          >
+                            Browsing
+                          </a>
+                        </li>
+                      </ul>
                     </div>
                   </div>
 
@@ -164,6 +229,144 @@ const UserProfile = () => {
                       </h5>
                     </div>
                   </div>
+                  {/*----Employee's Personal Details----*/}
+                  <div className="px-5 d-flex align-items-center justify-content-md-between flex-wrap">
+                    <div className="row">
+                      <div className="col-5">
+                        {" "}
+                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left ">
+                          Personal Details{" "}
+                        </h4>{" "}
+                      </div>
+                      <div className="col"></div>
+                      <div className="col mb-7 mt-5">
+                        {" "}
+                        <CustomButton
+                          className="btn-primary rounded"
+                          onClick={() => setShowPersonalDetails(true)}
+                        >
+                          Edit
+                        </CustomButton>
+                      </div>
+                      <PersonalDetails
+                        show={showPersonalDetails}
+                        close={() => setShowPersonalDetails(false)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-100">
+                    <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
+                      <div className="w-100 mt-n2 text-left">
+                        <div className="px-4 pt-lg-5 pt-9 pt-xl-9 pb-5">
+                          <div className="mb-3">
+                            <div className="row">
+                              <div className="col-5">
+                                <p className="font-size-4 mb-0">Age</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  23{" "}
+                                </h5>
+                              </div>
+                              <div className="col-7">
+                                <p className="font-size-4 mb-0">Gender</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Male{" "}
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mb-3"></div>
+                          <div className="mb-3">
+                            <div className="row">
+                              <div className="col-5">
+                                <p className="font-size-4 mb-0">Category</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  General{" "}
+                                </h5>
+                              </div>
+                              <div className="col-7">
+                                <p className="font-size-4 mb-0">
+                                  Marital Status
+                                </p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  single{" "}
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mb-3">
+                            <div className="row">
+                              <div className="col-5">
+                                <p className="font-size-4 mb-0">Disablity</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  No{" "}
+                                </h5>
+                              </div>
+                              <div className="col-7">
+                                <p className="font-size-4 mb-0">Career Break</p>
+                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                                  Np{" "}
+                                </h5>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mb-3">
+                            <p className="font-size-4 mb-0">
+                              Languages Known
+                              <a
+                                className="mb-4 px-8"
+                                href="#"
+                                onClick={() => setShowPersonalDetails(true)}
+                              >
+                                <span className="fas fa-pencil-alt"> </span>
+                              </a>
+                            </p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                              Hindi / English{" "}
+                            </h5>
+                          </div>
+                          <div className="mb-3">
+                            <p className="font-size-4 mb-0">
+                              Permanent Address
+                            </p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                              24, near ram bag hoshangabad
+                            </h5>
+                          </div>
+                          <div className="mb-3">
+                            <p className="font-size-4 mb-0">Homwtown</p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
+                              Hoshangabad
+                            </h5>
+                          </div>
+                          <div className="mb-3">
+                            <p className="font-size-4 mb-0">Pincode</p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0">
+                              4501366
+                            </h5>
+                          </div>
+
+                          <div className="mb-3">
+                            <p className="font-size-4 mb-0">
+                              Work Permit of Usa
+                            </p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0">
+                              Yes
+                            </h5>
+                          </div>
+
+                          <div className="mb-3">
+                            <p className="font-size-4 mb-0">
+                              Work Permit of other country
+                            </p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0">
+                              No
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,7 +392,7 @@ const UserProfile = () => {
                       Overview
                     </a>
                   </li>
-                  <li className="tab-menu-items nav-item pr-12">
+                  {/* <li className="tab-menu-items nav-item pr-12">
                     <a
                       className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                       id="employement-tab"
@@ -338,7 +541,7 @@ const UserProfile = () => {
                       show={showWorkSample}
                       close={() => setShowWorkSample(false)}
                     />
-                  </li>
+                  </li> */}
                 </ul>
                 {/*---Profile Details----*/}
                 <div className="tab-content" id="myTabContent">
@@ -365,84 +568,6 @@ const UserProfile = () => {
                         Shell, PERL, Regular expressions, Python, Active-script.
                       </p>
                     </div>
-                    {/*----Employee's Skills----*/}
-                    <div
-                      id="skills"
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex justify-content-md-between flex-wrap"
-                    >
-                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                        Skill{" "}
-                      </h4>{" "}
-                      <a
-                        href="#"
-                        className="font-size-3"
-                        onClick={() => setShowItSkills(true)}
-                      >
-                        <span className="text-end text-primary">Edit </span>
-                      </a>
-                      <ItSkills
-                        show={showItSkills}
-                        close={() => setShowItSkills(false)}
-                      />
-                      <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            Agile
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            Wireframing
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            Prototyping
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            Information
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            Waterfall Model
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            New Layout
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            href="#"
-                          >
-                            Browsing
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
                     {/*----Employee's Career Profile----*/}
                     <div
                       id="Career_Profile"
@@ -451,13 +576,12 @@ const UserProfile = () => {
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                         Career Profile
                       </h4>
-                      <a
-                        href="#"
-                        className="font-size-3"
+                      <CustomButton
+                        className="btn-primary rounded"
                         onClick={() => setShowCareerProfile(true)}
                       >
-                        <span className="text-end text-primary">Edit </span>
-                      </a>
+                        Edit
+                      </CustomButton>
                       <CareerProfile
                         show={showCareerProfile}
                         close={() => setShowCareerProfile(false)}
@@ -564,13 +688,12 @@ const UserProfile = () => {
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                         Education
                       </h4>
-                      <a
-                        href="#"
-                        className="font-size-3"
+                      <CustomButton
+                        className="btn-primary rounded"
                         onClick={() => setShowEducation(true)}
                       >
-                        <span className="text-end text-primary">Edit </span>
-                      </a>
+                        Edit
+                      </CustomButton>
                       <EducationDetails
                         show={showEducation}
                         close={() => setShowEducation(false)}
@@ -666,13 +789,12 @@ const UserProfile = () => {
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                           Employment Details
                         </h4>
-                        <a
-                          href="#"
-                          className="font-size-3"
+                        <CustomButton
+                          className="btn-primary rounded"
                           onClick={() => setShowEmplyomentDetails(true)}
                         >
-                          <span className="text-end text-primary">Aad +</span>
-                        </a>
+                          Edit
+                        </CustomButton>
                         <EmployementDetails
                           show={showEmplyomentDetails}
                           close={() => setShowEmplyomentDetails(false)}
@@ -692,139 +814,6 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
-                    {/*----Employee's Personal Details----*/}
-                    <div
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5"
-                      id="personal_details"
-                    >
-                      <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                          Personal Details
-                        </h4>
-                        <a
-                          href="#"
-                          className="font-size-3"
-                          onClick={() => setShowPersonalDetails(true)}
-                        >
-                          <span className="text-end text-primary">Edit </span>
-                        </a>
-                        <PersonalDetails
-                          show={showPersonalDetails}
-                          close={() => setShowPersonalDetails(false)}
-                        />
-                      </div>
-
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="w-100 mt-n2 text-left">
-                            <div className="px-4 pt-lg-5 pt-9 pt-xl-9 pb-5">
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Date of Birth
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  03/03/2001
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">Gender</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Male{" "}
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Nationality / Citizenship
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  New York , USA
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Marital Status
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  single
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Driving License
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  indian issued
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Current Location
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Indore
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Languages Known
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Hindi / English{" "}
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Visa Status For Current Location
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Citizen
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">Religion</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Hindus
-                                </h5>
-                              </div>
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">E-mail</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0">
-                                  <a
-                                    className="text-black-2 text-break"
-                                    href="mailto:name_ac@gmail.com"
-                                  >
-                                    name_ac@gmail.com
-                                  </a>
-                                </h5>
-                              </div>
-
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">Phone</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0">
-                                  <a
-                                    className="text-black-2 text-break"
-                                    href="tel:+999565562"
-                                  >
-                                    +999 565 562
-                                  </a>
-                                </h5>
-                              </div>
-
-                              <div className="mb-3">
-                                <p className="font-size-4 mb-0">
-                                  Website Linked
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0">
-                                  <a className="text-break" href="#">
-                                    www.nameac.com
-                                  </a>
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                     {/*----Employee's Projects----*/}
                     <div
                       className="border-top p-5 pl-xs-12 pt-7 pb-5"
@@ -834,13 +823,12 @@ const UserProfile = () => {
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                           Projects
                         </h4>
-                        <a
-                          href="#"
-                          className="font-size-3"
+                        <CustomButton
+                          className="btn-primary rounded"
                           onClick={() => setShowProjects(true)}
                         >
-                          <span className="text-end text-primary">Edit </span>
-                        </a>
+                          Edit
+                        </CustomButton>
                         <Projects
                           show={showProjects}
                           close={() => setShowProjects(false)}
@@ -1117,11 +1105,11 @@ const UserProfile = () => {
           </div>
         </div>
         <>
-          <Button variant="primary" onClick={handleShow}>
+          {/* <Button variant="primary" onClick={handleShow}>
             Launch demo modal
-          </Button>
+          </Button> */}
 
-          <Modal show={show} onHide={handleClose}>
+          {/* <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
@@ -1136,7 +1124,7 @@ const UserProfile = () => {
                 Save Changes
               </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </>
       </div>
       <EmployeeFooter />
