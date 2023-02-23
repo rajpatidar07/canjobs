@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-<<<<<<< HEAD
 import EmployeeHomePage from "./home";
 import JobSearchPage from "./jobsearch";
 import JobDetails from "./JobDetails";
@@ -22,22 +21,5 @@ const EmployeeLayout = () => {
     </BrowserRouter>
   );
 };
-=======
-import EmployeeHomePage from './home';
-import JobSearchPage from './jobsearch';
-import JobSearch from './search';
-
-
-const EmployeeLayout = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<EmployeeHomePage />} />
-                <Route path="/search" element={<JobSearch />} />
-            </Routes>
-        </BrowserRouter>
-    )
-}
->>>>>>> f8d985ae0ec1e29e1118db760650a970d7ae7f9d
 
 export default EmployeeLayout;

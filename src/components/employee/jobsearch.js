@@ -3,7 +3,6 @@ import EmployeeHeader from "./header";
 import EmployeeFooter from "./footer";
 import { Link } from "react-router-dom";
 function JobSearchPage() {
-<<<<<<< HEAD
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
@@ -12,17 +11,6 @@ function JobSearchPage() {
           <div className="row">
             <div className="col-12 col-xl-3 col-lg-3 col-md-4 col-xs-8">
               {/* <!-- Sidebar Start --> */}
-=======
-    // eslint-disable-next-line no-use-before-define
-    return (
-        <div className="site-wrapper overflow-hidden ">
-            <EmployeeHeader />
-            <div className="bg-default-1 pt-26 pt-lg-28 pb-13 pb-lg-25">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12 col-xl-3 col-lg-3 col-md-4 col-xs-8">
-                            {/* <!-- Sidebar Start --> */}
->>>>>>> f8d985ae0ec1e29e1118db760650a970d7ae7f9d
 
               <div className="widgets mb-11">
                 <h4 className="font-size-6 font-weight-semibold mb-6">

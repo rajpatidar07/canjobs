@@ -7,6 +7,16 @@ function EmployerHeader() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSingUp, setShowSingUp] = useState(false);
 
+  /*-- Function to switch login to singup --*/
+  const SingUpClick = () => {
+    setShowSingUp(true);
+    setShowLogin(false);
+  };
+  /*-- Function to switch singup to login--*/
+  const LoginClick = () => {
+    setShowLogin(true);
+    setShowSingUp(false);
+  };
   return (
     <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
       <div className="container">
@@ -245,7 +255,11 @@ function EmployerHeader() {
             >
               Log in
             </Link>
-            <Login show={showLogin} close={() => setShowLogin(false)} />
+            <Login
+              show={showLogin}
+              singUpClick={SingUpClick}
+              close={() => setShowLogin(false)}
+            />
             {/* <!-- Modal for SingUp--> */}
             <button
               className="btn btn-primary"
@@ -254,7 +268,57 @@ function EmployerHeader() {
             >
               Sign up
             </button>
-            <SingUp show={showSingUp} close={() => setShowSingUp(false)} />
+            <SingUp
+              show={showSingUp}
+              loginClick={LoginClick}
+              close={() => setShowSingUp(false)}
+            />
+          </div>
+          <div>
+            <div className="dropdown show-gr-dropdown py-5">
+              <a
+                className="proile media ml-7 flex-y-center"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <div className="">
+                  <img
+                    className="rounded-circle"
+                    src="image/l3/png/testimonial.png"
+                    width={50}
+                    height={50}
+                  />
+                </div>
+                <i className="fas fa-chevron-down heading-default-color ml-6"></i>
+              </a>
+              <div
+                className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+                aria-labelledby="dropdownMenuLink"
+              >
+                <a
+                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                  href="#"
+                >
+                  Settings{" "}
+                </a>
+                <a
+                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                  href="#"
+                >
+                  Edit Profile
+                </a>
+                <a
+                  className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                  href="#"
+                >
+                  Log Out
+                </a>
+              </div>
+            </div>
           </div>
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
