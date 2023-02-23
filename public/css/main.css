@@ -613,7 +613,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 
   .main-menu>li>.nav-link:before {
     content: "";
-    background: #00b074;
+    background: #FA474A;
     width: 100%;
     height: 2px;
     top: 0;

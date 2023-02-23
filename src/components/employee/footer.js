@@ -26,7 +26,7 @@ function EmployeeFooter() {
                 </div>
             </div>
             <div className="container  pt-12 pt-lg-19 pb-10 pb-lg-19">
-                <div className="row">
+                <div className="row text-left">
                     <div className="col-lg-4 col-sm-6 mb-lg-0 mb-9">
                         {/* <!-- footer logo start --> */}
                         <img src="image/logo-main-white.png" alt="" className="footer-logo mb-14" />
@@ -36,7 +36,7 @@ function EmployeeFooter() {
                             <img src="image/l1/png/message.png" className="align-self-center mr-3" alt="" />
                             <div className="media-body pl-5">
                                 <p className="mb-0 font-size-4 text-white">Contact us at</p>
-                                <a className="mb-0 font-size-4 font-weight-bold" href="mailto:support@uxtheme.net">support@uxtheme.net</a>
+                                <a className="mb-0 font-size-4 font-weight-bold" href="mailto:support@canjobs.net">support@canjobs.net</a>
                             </div>
                         </div>
                         {/* <!-- media start --> */}

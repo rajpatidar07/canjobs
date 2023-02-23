@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployeeHomePage from './home';
-import JobSearchPage from './jobsearch';
+// import JobSearchPage from './jobsearch';
 import JobSearch from './search';
 
 

@@ -10,7 +10,7 @@ function JobSearch() {
       <div>
         <EmployeeHeader />
         {/* <!-- Main Content Start --> */}
-        <div className="bg-black-2 mt-15 mt-lg-22 pt-18 pt-lg-13 pb-13">
+        <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row">
               <div className="col-12">

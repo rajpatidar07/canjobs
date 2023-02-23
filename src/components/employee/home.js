@@ -34,31 +34,18 @@ function EmployeeHomePage() {
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button><button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
                             </div>
                         </div>
                         <div className="card job_filter_card">
                             <div className="card-body row m-0">
                                 <h4 className="card-title text-dark text-left mb-7 w-100">Jobs by Category</h4>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button><button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
-                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Hospitality</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Transportation</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mechanical</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Medical</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Education</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Driving</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Other</button>
                             </div>
                         </div>
                     </div>
@@ -88,220 +75,143 @@ function EmployeeHomePage() {
             </section>
             {/* <!-- featuredJobOne Area --> */}
 
-            {/* <!-- category Area --> */}
-            <div className="pb-13 pb-lg-25 bg-gradient-2">
-                {/* <!-- Company Area Start --> */}
-                <div className="pt-29 pt-lg-30 pb-10 pb-lg-22">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="section-title mb-9 text-center">
-                                    <h5 className="font-size-5 font-weight-normal text-gray">
-                                        Get hired in top companies
-                                    </h5>
-                                </div>
+            {/* <!-- Category Area --> */}
+            <div className="pt-11 pt-lg-26 pb-lg-16" data-aos="fade-left" data-aos-duration="800" data-aos-delay="400" data-aos-once="true">
+                <div className="container">
+                    {/* <!-- Section Top --> */}
+                    <div className="row align-items-center pb-14">
+                        {/* <!-- Section Title --> */}
+                        <div className="col-12 col-lg-6">
+                            <div className="text-center text-lg-left mb-13 mb-lg-0">
+                                <h2 className="font-size-9 font-weight-bold">Explore by category</h2>
                             </div>
                         </div>
-                        {/* <!-- Brand Logos --> */}
-                        <div className="row align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-1.png" alt="" />
+                        {/* <!-- Section Button --> */}
+                        {/* <div className="col-12 col-lg-6">
+                            <div className="text-center text-lg-right">
+                                <a className="btn btn-outline-green text-uppercase" href="#">Explore All</a>
                             </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="300" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-2.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="500" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-3.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="700" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-4.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="900" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-5.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="1200" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-6.png" alt="" />
-                            </div>
-
-                        </div>
-                        <div className="row align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
-
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="500" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-3.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="700" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-4.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}{/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-1.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="300" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-2.png" alt="" />
-                            </div>
-
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="900" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-5.png" alt="" />
-                            </div>
-                            {/* <!-- Single Brand --> */}
-                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="1200" data-aos-once="true">
-                                <img src="image/l1/png/brand-light-logo-6.png" alt="" />
-                            </div>
-
-                        </div>
-                        {/* <!-- End Brand Logos --> */}
+                        </div> */}
+                        {/* <!-- Section Button End --> */}
                     </div>
-                </div>
-                {/* <!-- Company Area End --> */}
-                <div className="">
-                    <div className="container">
-                        <hr className="pt-13 pt-lg-20" />
-                        {/* <!-- Section Top --> */}
-                        <div className="row align-items-center justify-content-center">
-                            {/* <!-- Section Title --> */}
-                            <div className="col-12 col-xl-6 col-lg-7 col-md-9">
-                                <div className="text-center mb-12 mb-lg-17">
-                                    <h2 className="font-size-10 font-weight-bold mb-8">Explore by category</h2>
-                                    <p className="font-size-5 px-5 px-lg-7 px-xl-9 px-xxl-15 mb-6">Leverage agile frameworks to provide a
-                                        robust synopsis for high level overviews to start.</p>
+                    {/* <!-- End Section Top --> */}
+                    <div className="row justify-content-center">
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-blue bg-blue-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-briefcase"></i>
                                 </div>
-                            </div>
-                        </div>
-                        {/* <!-- End Section Top --> */}
-                        <div className="row justify-content-center" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-blue square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-briefcase"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Business Development</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-spray square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-headset"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Customer Service</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-coral square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-layer-group"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Development</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-red square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-pen-nib"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Design</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-orange square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-rocket"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Marketing &amp; Management</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-yellow square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-location-arrow"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Sales &amp; Communication</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-turquoise square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="icon icon-sidebar-2"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Project Management</h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                            {/* <!-- Single Category --> */}
-                            <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                                <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
-                                    <div className="text-white bg-green square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
-                                        <i className="fa fa-user"></i>
-                                    </div>
-                                    {/* <!-- Category Content --> */}
-                                    <div className="">
-                                        <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Human Resource </h5>
-                                        <p className="font-size-4 font-weight-normal text-gray"><span>415</span> Vacancy</p>
-                                    </div>
-                                </a>
-                            </div>
-                            {/* <!-- End Single Category --> */}
-                        </div>
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="text-center pt-5 pt-lg-13">
-                                    <a className="btn btn-outline-black-2 btn-lg text-uppercase" href="http://localhost:3000/">Explore All</a>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Business Development</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>415</span> Vacancy</p>
                                 </div>
-                            </div>
+                            </a>
                         </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-spray bg-spray-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-headset"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Customer Service</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>235</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-coral bg-coral-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-layer-group"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Development</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>624</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-red bg-red-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-pen-nib"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Design</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>174</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-orange bg-orange-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-rocket"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Marketing &amp; Management</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>268</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-yellow bg-yellow-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-location-arrow"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Sales &amp; Communication</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>156</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-turquoise bg-turquoise-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="icon icon-sidebar-2"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Project Management</h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>162</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
+                        {/* <!-- Single Category --> */}
+                        <div className="category_box col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
+                            <a href="http://localhost:3000/" className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100">
+                                <div className="text-green bg-green-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+                                    <i className="fa fa-user"></i>
+                                </div>
+                                {/* <!-- Category Content --> */}
+                                <div className="text-left category_text_box">
+                                    <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">Human Resource </h5>
+                                    <p className="font-size-4 font-weight-bold text-secondary"><span>84</span> Vacancy</p>
+                                </div>
+                            </a>
+                        </div>
+                        {/* <!-- End Single Category --> */}
                     </div>
                 </div>
             </div>
-            {/* <!-- category Area --> */}
+            {/* <!-- End Category Area --> */}
 
             {/* <!-- Blog area function start --> */}
             <div className="pt-11 pt-lg-24 pb-11 pb-lg-24">
@@ -321,7 +231,7 @@ function EmployeeHomePage() {
                         {/* <!-- single blog start --> */}
                         <div className="col-xl-4 col-md-6 mb-xl-0 mb-13" data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
                             {/* <!-- card start --> */}
-                            <div className="card bg-transparent border-0">
+                            <div className="card bg-transparent border-0 text-left">
                                 {/* <!-- card img start --> */}
                                 <img src="image/l2/png/blog-img1.png" className="card-img-top" alt="..." />
                                 {/* <!-- card img end --> */}
@@ -352,7 +262,7 @@ function EmployeeHomePage() {
                         {/* <!-- single blog start --> */}
                         <div className="col-xl-4 col-md-6 mb-xl-0 mb-13" data-aos="fade-up" data-aos-duration="700" data-aos-once="true">
                             {/* <!-- card start --> */}
-                            <div className="card bg-transparent border-0">
+                            <div className="card bg-transparent border-0 text-left">
                                 {/* <!-- card img start --> */}
                                 <a href="http://localhost:3000/"><img src="image/l2/png/blog-img2.png" className="card-img-top" alt="..." /></a>
                                 {/* <!-- card img end --> */}
@@ -383,7 +293,7 @@ function EmployeeHomePage() {
                         {/* <!-- single blog start --> */}
                         <div className="col-xl-4 col-md-6" data-aos="fade-left" data-aos-duration="500" data-aos-once="true">
                             {/* <!-- card start --> */}
-                            <div className="card bg-transparent border-0">
+                            <div className="card bg-transparent border-0 text-left">
                                 {/* <!-- card img start --> */}
                                 <a href="http://localhost:3000/"><img src="image/l2/png/blog-img3.png" className="card-img-top" alt="..." /></a>
                                 {/* <!-- card img end --> */}
@@ -415,116 +325,7 @@ function EmployeeHomePage() {
                 </div>
             </div>
             {/* <!-- Blog area function end --> */}
-            {/* <!-- ContentTwo Area --> */}
-            <section className="bg-green position-relative">
-                <div className="w-lg-50 ml-lg-auto">
-                    {/* <!-- gallery start --> */}
-                    <div className="gallery" data-aos="fade-left" data-aos-duration="800" data-aos-delay="300" data-aos-once="true">
-                        {/* <!-- this content will absolute from right and top --> */}
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img1.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img2.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img3.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img4.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img5.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img6.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img7.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img8.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img9.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img10.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img11.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img12.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img13.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img14.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img15.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img16.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img17.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img18.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img19.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img20.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img21.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img22.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img23.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img24.jpg" alt="" />
-                        </div>
-                        <div className="single-item">
-                            <img src="image/l2/jpg/gallery-img25.jpg" alt="" />
-                        </div>
-                    </div>
-                    {/* <!-- gallery end --> */}
-                </div>
-                <div className="container pos-lg-abs-c pt-11 pb-13 py-lg-0">
-                    <div className="row">
-                        <div className="col-xxl-5 col-lg-6 col-md-8 mx-auto mx-lg-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- content-2 start --> */}
-                            <div className="content-2 pr-lg-5 pr-xl-18 pr-xxl-10 text-center text-lg-left">
-                                {/* <!-- content-2 section title start --> */}
-                                <p className="text-white font-size-4 font-weight-semibold mb-8">
-                                    Looking for an expert for your company?
-                                </p>
-                                <h2 className="font-size-9 text-white mb-8">
-                                    Get applications from the world best talents.
-                                </h2>
-                                <p className="text-white font-size-5 mb-12">
-                                    Capitalize on low hanging fruit to identify a ballpark value added activity to beta test.
-                                    Override the digital divide with additional clickthroughs from DevOps.
-                                </p>
-                                {/* <!-- content-2 section title end --> */}
-                                {/* <!-- content-2 btn start --> */}
-                                <a className="btn btn-white btn-h-60 text-black-2 w-180 rounded-5 text-uppercase mx-auto mx-lg-0" href="http://localhost:3000/">Post a Job</a>
-                                {/* <!-- content-2 btn end --> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* <!-- ContentTwo Area --> */}
+
             <EmployeeFooter />
         </div>
     );
