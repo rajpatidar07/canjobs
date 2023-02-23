@@ -3,17 +3,17 @@ import EmployeeHeader from "../header";
 import EmployeeFooter from "../footer";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Registration from "./modals/registration";
-import EmployementDetails from "./modals/employementDetails";
-import PersonalDetails from "./modals/personalDetails";
-import CareerProfile from "./modals/careerProfile";
-import EducationDetails from "./modals/educationDetails";
-import Projects from "./modals/projects";
-import Patent from "./modals/patent";
-import Certificate from "./modals/certificate";
-import ItSkills from "./modals/itSkills";
-import OnlineProfile from "./modals/onlineProfile";
-import WorkSample from "./modals/workSample";
+import Registration from "./modals/registrationModal";
+import EmployementDetails from "./modals/employementDetailsModal";
+import PersonalDetails from "./modals/personalDetailsModal";
+import CareerProfile from "./modals/careerProfileModal";
+import EducationDetails from "./modals/educationDetailsModal";
+import Projects from "./modals/projectsModal";
+import Patent from "./modals/patentModal";
+import Certificate from "./modals/certificateModal";
+import ItSkills from "./modals/itSkillsModal";
+import OnlineProfile from "./modals/onlineProfileModal";
+import WorkSample from "./modals/workSampleModal";
 import CustomButton from "../../comman/button";
 
 const UserProfile = () => {

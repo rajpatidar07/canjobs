@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SingUp from "./singup";
+import SingUp from "./singupModal";
 
 export default function Login(props) {
   const [showSingUp, setShowSingUp] = useState(false);

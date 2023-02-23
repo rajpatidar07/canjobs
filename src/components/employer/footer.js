@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Login from "./login";
-import SingUp from "./singup";
+import Login from "./loginModal";
+import SingUp from "./singupModal";
 
 function EmployerFooter() {
   const [showLogin, setShowLogin] = useState(false);
