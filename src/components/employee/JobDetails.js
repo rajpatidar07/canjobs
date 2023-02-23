@@ -12,10 +12,7 @@ export default function JobDetails() {
             {/* <!-- back Button --> */}
             <div class="col-xl-10 col-lg-11 mt-4 ml-xxl-32 ml-xl-15 dark-mode-texts">
               <div class="mb-9">
-                <a
-                  class="d-flex align-items-center ml-4"
-                  href="dashboard-main.html"
-                >
+                <a class="d-flex align-items-center ml-4" href="/search">
                   {" "}
                   <i class="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                   <span class="text-uppercase font-size-3 font-weight-bold text-gray">
