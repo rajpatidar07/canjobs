@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import AccountDetails from "./accountDetails";
 import EmployerFooter from "../footer";
 import EmployerHeader from "../header";
-import CompanyDetails from "./companyDetails";
-import KycComplianceDetails from "./kycComplianceDetails";
-import CompanyInfo from "./companyInfo";
+import AccountDetails from "./modal/accountDetails";
+import CompanyDetails from "./modal/companyDetails";
+import KycComplianceDetails from "./modal/kycComplianceDetails";
+import CompanyInfo from "./modal/companyInfo";
 
 function CompanyProfile() {
   const [showAccountDetails, setShowAccountDetails] = useState(false);

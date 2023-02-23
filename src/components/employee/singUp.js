@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function SingUp(props) {
   return (
@@ -165,12 +166,6 @@ export default function SingUp(props) {
                           </a>
                         </span>
                       </label>
-                      {/* <a
-                        href="#"
-                        className="font-size-3 text-dodger line-height-reset"
-                      >
-                        Forget Password
-                      </a> */}
                     </div>
                     <div className="form-group mb-8">
                       <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
@@ -179,9 +174,13 @@ export default function SingUp(props) {
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Already have an account?{" "}
-                      <a href="#" className="text-primary">
+                      <Link
+                        to=""
+                        className="text-primary"
+                        onClick={props.loginClick}
+                      >
                         Login
-                      </a>
+                      </Link>
                     </p>
                   </form>
                 </div>

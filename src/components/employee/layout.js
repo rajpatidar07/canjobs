@@ -5,6 +5,7 @@ import JobSearchPage from "./jobsearch";
 import JobDetails from "./JobDetails";
 import JobApplied from "./jobApplied";
 import UserProfile from "../employee/profile/userProfile";
+import RecommendedJobs from "./recommendedJobs";
 
 const EmployeeLayout = () => {
   return (
@@ -15,6 +16,7 @@ const EmployeeLayout = () => {
         <Route path="/jobdetails" element={<JobDetails />} />
         <Route path="/jobapplied" element={<JobApplied />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/recommendedjobs" element={<RecommendedJobs />} />
       </Routes>
     </BrowserRouter>
   );

@@ -29,6 +29,7 @@ const UserProfile = () => {
   const [showItSkills, setShowItSkills] = useState(false);
   const [showOnlineProfile, setShowOnlineProfile] = useState(false);
   const [showWorkSample, setShowWorkSample] = useState(false);
+  const [showAppliedJobs, setShowAppliedJobs] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -62,20 +63,18 @@ const UserProfile = () => {
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 py-11 text-center border-bottom border-mercury">
                     <a className="mb-4" href="">
-                      <input
-                        type="file"
-                        id="file"
-                        style={{ display: "none" }}
-                      />
+                      <input type="file" id="file" className="d-none" />
                       <label htmlFor="file">
-                        <span className="z-2 position-absolute  mt-15 mx-4  rounded-3 fas fa-pencil-alt">
+                        <span className="z-2 position-absolute  mt-8 mx-20  rounded-3 fas fa-edit text-gray">
                           {" "}
                         </span>
                       </label>
                       <img
-                        className="circle-54"
+                        className="rounded-circle"
                         src="image/l3/png/pro-img.png"
                         alt=""
+                        width={"100px"}
+                        height={"100px"}
                       />
                     </a>
                     <h4 className="mb-0">
@@ -112,7 +111,7 @@ const UserProfile = () => {
                         <div className="col mb-7 mt-5">
                           {" "}
                           <CustomButton
-                            className="btn-primary rounded"
+                            className="font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowItSkills(true)}
                           >
                             Edit
@@ -242,7 +241,7 @@ const UserProfile = () => {
                       <div className="col mb-7 mt-5">
                         {" "}
                         <CustomButton
-                          className="btn-primary rounded"
+                          className="font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowPersonalDetails(true)}
                         >
                           Edit
@@ -381,17 +380,41 @@ const UserProfile = () => {
                 >
                   <li className="tab-menu-items nav-item pr-12">
                     <a
-                      className="active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      className={
+                        showAppliedJobs === true
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                          : " active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      }
                       id="home-tab"
                       data-toggle="tab"
                       href="#home"
                       role="tab"
                       aria-controls="home"
                       aria-selected="true"
+                      onClick={() => setShowAppliedJobs(false)}
                     >
                       Overview
                     </a>
                   </li>
+                  <li className="tab-menu-items nav-item pr-12">
+                    <a
+                      className={
+                        showAppliedJobs === false
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                          : " active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      }
+                      id="appliedJobs"
+                      data-toggle="tab"
+                      href="#appliedJobs"
+                      role="tab"
+                      aria-controls="appliedJobs"
+                      aria-selected="true"
+                      onClick={() => setShowAppliedJobs(true)}
+                    >
+                      Applied Jobs
+                    </a>
+                  </li>
+
                   {/* <li className="tab-menu-items nav-item pr-12">
                     <a
                       className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
@@ -544,7 +567,12 @@ const UserProfile = () => {
                   </li> */}
                 </ul>
                 {/*---Profile Details----*/}
-                <div className="tab-content" id="myTabContent">
+                <div
+                  className={
+                    showAppliedJobs === false ? "tab-content" : "d-none"
+                  }
+                  id="myTabContent"
+                >
                   <div
                     className="tab-pane fade show active"
                     id="home"
@@ -577,7 +605,7 @@ const UserProfile = () => {
                         Career Profile
                       </h4>
                       <CustomButton
-                        className="btn-primary rounded"
+                        className="font-size-3 rounded-3 btn-primary border-0"
                         onClick={() => setShowCareerProfile(true)}
                       >
                         Edit
@@ -689,7 +717,7 @@ const UserProfile = () => {
                         Education
                       </h4>
                       <CustomButton
-                        className="btn-primary rounded"
+                        className="font-size-3 rounded-3 btn-primary border-0"
                         onClick={() => setShowEducation(true)}
                       >
                         Edit
@@ -790,7 +818,7 @@ const UserProfile = () => {
                           Employment Details
                         </h4>
                         <CustomButton
-                          className="btn-primary rounded"
+                          className="font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowEmplyomentDetails(true)}
                         >
                           Edit
@@ -824,7 +852,7 @@ const UserProfile = () => {
                           Projects
                         </h4>
                         <CustomButton
-                          className="btn-primary rounded"
+                          className="font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowProjects(true)}
                         >
                           Edit
@@ -936,6 +964,362 @@ const UserProfile = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              {/* <!-- Sidebar End --> */}
+              <div
+                className={
+                  showAppliedJobs === true
+                    ? "row justify-content-center p-8"
+                    : "d-none"
+                }
+                id="appliedJobs"
+                role="tabpanel"
+                aria-labelledby="appliedJobs"
+              >
+                {/* <!-- Top Start --> */}
+                <div className="mb-5">
+                  <h4 className="font-size-7 mb-9">Applied Jobs</h4>
+                  <div className="row justify-content-center">
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                      {/* <!-- Single Featured Job --> */}
+                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                        <div className="media align-items-center">
+                          <div className="square-52 bg-indigo mr-8 rounded">
+                            <a href="#">
+                              <img src="image/l3/png/fimize.png" alt="" />
+                            </a>
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-size-3 text-default-color line-height-2"
+                            >
+                              Fimize
+                            </a>
+                            <h3 className="font-size-5 mb-0">
+                              <a
+                                className="heading-default-color font-weight-semibold"
+                                href="#"
+                              >
+                                Senior Marketing Expert
+                              </a>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="d-flex pt-17">
+                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                London
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                Full-time
+                              </a>
+                            </li>
+                          </ul>
+                          <a
+                            href="javascript:"
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
+                          ></a>
+                        </div>
+                      </div>
+                      {/* <!-- End Single Featured Job --> */}
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                      {/* <!-- Single Featured Job --> */}
+                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                        <div className="media align-items-center">
+                          <div className="square-52 bg-regent mr-8 rounded">
+                            <a href="#">
+                              <img src="image/svg/icon-shark-2.svg" alt="" />
+                            </a>
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-size-3 text-default-color line-height-2"
+                            >
+                              Shark
+                            </a>
+                            <h3 className="font-size-5 mb-0">
+                              <a
+                                className="heading-default-color font-weight-semibold"
+                                href="#"
+                              >
+                                3D ui / ux frontend developer
+                              </a>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="d-flex pt-17">
+                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                California
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                Remote
+                              </a>
+                            </li>
+                          </ul>
+                          <a
+                            href="javascript:"
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
+                          ></a>
+                        </div>
+                      </div>
+                      {/* <!-- End Single Featured Job --> */}
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                      {/* <!-- Single Featured Job --> */}
+                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                        <div className="media align-items-center">
+                          <div className="square-52 bg-orange-2 mr-8 rounded">
+                            <a href="#">
+                              <img src="image/svg/icon-thunder.svg" alt="" />
+                            </a>
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-size-3 text-default-color line-height-2"
+                            >
+                              Thunder
+                            </a>
+                            <h3 className="font-size-5 mb-0">
+                              <a
+                                className="heading-default-color font-weight-semibold"
+                                href="#"
+                              >
+                                Product Manager
+                              </a>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="d-flex pt-17">
+                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                London
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                Full-time
+                              </a>
+                            </li>
+                          </ul>
+                          <a
+                            href="javascript:"
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
+                          ></a>
+                        </div>
+                      </div>
+                      {/* <!-- End Single Featured Job --> */}
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                      {/* <!-- Single Featured Job --> */}
+                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                        <div className="media align-items-center">
+                          <div className="square-52 bg-helio mr-8 rounded">
+                            <a href="#">
+                              <img src="image/l3/png/asios.png" alt="" />
+                            </a>
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-size-3 text-default-color line-height-2"
+                            >
+                              Shark
+                            </a>
+                            <h3 className="font-size-5 mb-0">
+                              <a
+                                className="heading-default-color font-weight-semibold"
+                                href="#"
+                              >
+                                Front-end Developer
+                              </a>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="d-flex pt-17">
+                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                Alabama
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                Full-time
+                              </a>
+                            </li>
+                          </ul>
+                          <a
+                            href="javascript:"
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
+                          ></a>
+                        </div>
+                      </div>
+                      {/* <!-- End Single Featured Job --> */}
+                    </div>
+                  </div>
+                </div>
+                {/* <!-- Top End --> */}
+                {/* <!-- Bottom Start --> */}
+                <div className="">
+                  <h4 className="font-size-7 mb-9">Saved Jobs</h4>
+                  <div className="row justify-content-center">
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                      {/* <!-- Single Featured Job --> */}
+                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                        <div className="media align-items-center">
+                          <div className="square-52 bg-orange-2 mr-8 rounded">
+                            <a href="#">
+                              <img src="image/svg/icon-thunder.svg" alt="" />
+                            </a>
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-size-3 text-default-color line-height-2"
+                            >
+                              Thunder
+                            </a>
+                            <h3 className="font-size-5 mb-0">
+                              <a
+                                className="heading-default-color font-weight-semibold"
+                                href="#"
+                              >
+                                Product Manager
+                              </a>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="d-flex pt-17">
+                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                New York
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                Part-time
+                              </a>
+                            </li>
+                          </ul>
+                          <a
+                            href="javascript:"
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
+                          ></a>
+                        </div>
+                      </div>
+                      {/* <!-- End Single Featured Job --> */}
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                      {/* <!-- Single Featured Job --> */}
+                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                        <div className="media align-items-center">
+                          <div className="square-52 bg-helio mr-8 rounded">
+                            <a href="#">
+                              <img src="image/l3/png/asios.png" alt="" />
+                            </a>
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-size-3 text-default-color line-height-2"
+                            >
+                              Shark
+                            </a>
+                            <h3 className="font-size-5 mb-0">
+                              <a
+                                className="heading-default-color font-weight-semibold"
+                                href="#"
+                              >
+                                Front-end Developer
+                              </a>
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="d-flex pt-17">
+                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                Alabama
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="#"
+                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                Full-time
+                              </a>
+                            </li>
+                          </ul>
+                          <a
+                            href="javascript:"
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
+                          ></a>
+                        </div>
+                      </div>
+                      {/* <!-- End Single Featured Job --> */}
+                    </div>
+                  </div>
+                </div>
+                {/* <!-- Bottom End --> */}
               </div>
             </div>
             {/*----Other Experts----*/}
