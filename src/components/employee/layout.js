@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployeeHomePage from './home';
 import JobSearchPage from './jobsearch';
+import JobSearch from './search';
 
 
 const EmployeeLayout = () => {
@@ -10,7 +11,7 @@ const EmployeeLayout = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<EmployeeHomePage />} />
-                <Route path="/search" element={<JobSearchPage />} />
+                <Route path="/search" element={<JobSearch />} />
             </Routes>
         </BrowserRouter>
     )

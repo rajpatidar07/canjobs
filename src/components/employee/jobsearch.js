@@ -2,6 +2,7 @@ import React from "react";
 import EmployeeHeader from './header';
 import EmployeeFooter from './footer';
 function JobSearchPage() {
+    // eslint-disable-next-line no-use-before-define
     return (
         <div className="site-wrapper overflow-hidden ">
             <EmployeeHeader />

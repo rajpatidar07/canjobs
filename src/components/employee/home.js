@@ -2,55 +2,63 @@ import React from "react";
 import EmployeeHeader from './header';
 import EmployeeFooter from './footer';
 import JobBox from "./jobbox";
+import SearchForm from "./search_form";
+// eslint-disable-next-line no-use-before-define
 function EmployeeHomePage() {
     return (
         <div className="site-wrapper overflow-hidden ">
             <EmployeeHeader />
             {/* <!-- Hero Area --> */}
             <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
-                <div className="pos-abs-tr h-100">
+                {/* <div className="pos-abs-tr h-100">
                     <img src="image/patterns/globe-pattern.png" alt="" className="h-100" />
-                </div>
-                <div className="container position-static">
-                    <div className="row position-relative align-items-center position-static">
+                </div> */}
+                <div className="container position-static hero_container">
+                    <div className="row position-relative align-items-center justify-content-center position-static w-80">
                         {/* <!-- Hero Form --> */}
-                        <div className="col-lg-12 col-12 translateY-25 pt-lg-23 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
-                            <form action="http://localhost:3000/" className="search-form" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
-                                <div className="filter-search-form-2 bg-white rounded-lg shadow-7 pr-10 py-7 pl-10">
-                                    <div className="filter-inputs">
-                                        <div className="form-group position-relative">
-                                            <input className="form-control focus-reset pl-13" type="text" id="keyword" placeholder="Type Job title, keywords" />
-                                            <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6"><i className="icon icon-zoom-2 text-primary font-weight-bold"></i></span>
-                                        </div>
-                                        {/* <!-- .select-city starts --> */}
-                                        <div className="form-group position-relative">
-                                            <select name="country" id="country" className="nice-select pl-13 h-100 arrow-3 font-size-4">
-                                                <option data-display="City, state, zip code or (Remote)">City</option>
-                                                <option value="">United States of America</option>
-                                                <option value="">United Arab Emirates</option>
-                                                <option value="">Bangladesh</option>
-                                                <option value="">Pakistan</option>
-                                            </select>
-                                            <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6"><i className="icon icon-pin-3 text-primary font-weight-bold"></i></span>
-                                        </div>
-                                        {/* <!-- ./select-city ends --> */}
-                                    </div>
-                                    <div className="button-block">
-                                        <button className="btn btn-primary line-height-reset h-100 btn-submit w-100 text-uppercase">Search</button>
-                                    </div>
-                                </div>
-                            </form>
+                        <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
+                            <SearchForm />
                         </div>
                         {/* <!-- End Hero Form --> */}
-                        <div className="row m-0">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title text-secondary">Jobs by location</h4>
-                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
-                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
-                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
-                                    <a type="a" class="btn-outline-info mb-1 mr-1">Canada</a>
-                                </div>
+
+                    </div>
+                    <div className="row m-0 job_filter_block">
+                        <div className="card job_filter_card">
+                            <div className="card-body row m-0">
+                                <h4 className="card-title text-dark text-left mb-7 w-100">Jobs by Location</h4>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button><button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
+                            </div>
+                        </div>
+                        <div className="card job_filter_card">
+                            <div className="card-body row m-0">
+                                <h4 className="card-title text-dark text-left mb-7 w-100">Jobs by Category</h4>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button><button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">UK</button>
+                                <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mexico</button>
                             </div>
                         </div>
                     </div>
@@ -58,7 +66,7 @@ function EmployeeHomePage() {
             </div>
             {/* <!-- Hero Area --> */}
             {/* <!-- featuredJobOne Area --> */}
-            <section className="bg-athens pt-12 pt-lg-24 pb-7 pb-lg-25">
+            <section className="bg-athens pt-12 pt-lg-32 pb-7 pb-lg-25">
                 <div className="container">
                     {/* <!-- Section Title --> */}
                     <div className="row justify-content-center mb-lg-16 mb-11">
@@ -73,100 +81,13 @@ function EmployeeHomePage() {
                         <JobBox />
                         <JobBox />
                         <JobBox />
+                        <JobBox />
+                        <JobBox />
                     </div>
                 </div>
             </section>
             {/* <!-- featuredJobOne Area --> */}
-            {/* <!-- ContentOne Area --> */}
-            <section className="pt-13 pt-lg-30 pb-13 pb-lg-30">
-                <div className="container">
-                    <div className="row align-items-center justify-content-center">
-                        <div className="col-lg-6 col-md-8 col-sm-10 col-xs-11 mb-9 mb-lg-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- content-1 left-content start --> */}
-                            <div className="position-relative pr-lg-20 pr-xs-15 pr-9 ">
-                                {/* <!-- content img start --> */}
-                                <img src="image/l2/png/content-2-img1.png" alt="" className="w-100" />
-                                {/* <!-- content img end --> */}
-                                {/* <!-- abs-content start --> */}
-                                <div className="abs-content pos-abs-br bg-white shadow-2 pl-7 pt-8 pb-1 pr-11 max-width-px-311 rounded mb-15 mb-xs-18 mb-lg-15 mb-xl-18">
-                                    {/* <!-- media start --> */}
-                                    <div className="media mb-5">
-                                        {/* <!-- check-mark start --> */}
-                                        <span className="check-mark bg-yellow-2 circle-41">
-                                            <i className="fas fa-check text-white  font-size-6"></i>
-                                        </span>
-                                        {/* <!-- check-mark end --> */}
-                                        {/* <!-- media body start --> */}
-                                        <div className="media-body pl-5">
-                                            <h6 className="mb-0 font-size-3 text-green text-uppercase">Job alert!</h6>
-                                            <p className="mb-0 font-size-4 text-black-2">104 new jobs are available in this week!</p>
-                                        </div>
-                                        {/* <!-- media body start --> */}
-                                    </div>
-                                    {/* <!-- media end --> */}
-                                </div>
-                                {/* <!-- abs-content end --> */}
-                            </div>
-                            {/* <!-- content-1 left-content end --> */}
-                        </div>
-                        <div className="col-xl-5 col-lg-6 col-md-8 col-xs-10" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
-                            {/* <!-- content-1 start --> */}
-                            <div className="content-1 pl-xl-5 pl-xxl-11 pr-xxl-10">
-                                {/* <!-- content-1 section-title start --> */}
-                                <h2 className="font-size-9 mb-md-15 mb-13">Help you to get the <br className="d-none d-sm-block" />
-                                    best job that fits you</h2>
-                                {/* <!-- content-1 section-title end --> */}
-                                {/* <!-- media start --> */}
-                                <div className="media mb-11">
-                                    {/* <!-- media icon start --> */}
-                                    <div className="media-icon px-6 py-5 bg-green-opacity-2 rounded-5">
-                                        <i className="icon icon-layout-11 text-green"></i>
-                                    </div>
-                                    {/* <!-- media icon start --> */}
-                                    {/* <!-- media body start --> */}
-                                    <div className="media-body pl-7">
-                                        <h5 className="mb-5 h5">#1 Jobs site in UK</h5>
-                                        <p className="mb-0 font-size-4 text-default-color">Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative</p>
-                                    </div>
-                                    {/* <!-- media body start --> */}
-                                </div>
-                                {/* <!-- media end --> */}
-                                {/* <!-- media start --> */}
-                                <div className="media mb-11">
-                                    {/* <!-- media icon start --> */}
-                                    <div className="media-icon px-6 py-5 bg-yellow-2-opacity-2 rounded-5">
-                                        <i className="fa fa-search text-yellow-2"></i>
-                                    </div>
-                                    {/* <!-- media icon start --> */}
-                                    {/* <!-- media body start --> */}
-                                    <div className="media-body pl-7">
-                                        <h5 className="mb-5 h5">Seamless searching</h5>
-                                        <p className="mb-0 font-size-4 text-default-color">Capitalize on low hanging fruit to identify a ballpark value added activity to beta test.</p>
-                                    </div>
-                                    {/* <!-- media body start --> */}
-                                </div>
-                                {/* <!-- media end --> */}
-                                {/* <!-- media start --> */}
-                                <div className="media">
-                                    {/* <!-- media icon start --> */}
-                                    <div className="media-icon px-6 py-5 bg-red-opacity-2 rounded-5">
-                                        <i className="fa fa-industry text-red"></i>
-                                    </div>
-                                    {/* <!-- media icon start --> */}
-                                    {/* <!-- media body start --> */}
-                                    <div className="media-body pl-7">
-                                        <h5 className="mb-5 h5">Hired in top companies</h5>
-                                        <p className="mb-0 font-size-4 text-default-color">Podcasting operational change management inside of workflows to establish.</p>
-                                    </div>
-                                    {/* <!-- media body start --> */}
-                                </div>
-                                {/* <!-- media end --> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* <!-- ContentOne Area --> */}
+
             {/* <!-- category Area --> */}
             <div className="pb-13 pb-lg-25 bg-gradient-2">
                 {/* <!-- Company Area Start --> */}
@@ -207,6 +128,35 @@ function EmployeeHomePage() {
                             <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="1200" data-aos-once="true">
                                 <img src="image/l1/png/brand-light-logo-6.png" alt="" />
                             </div>
+
+                        </div>
+                        <div className="row align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
+
+                            {/* <!-- Single Brand --> */}
+                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="500" data-aos-once="true">
+                                <img src="image/l1/png/brand-light-logo-3.png" alt="" />
+                            </div>
+                            {/* <!-- Single Brand --> */}
+                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="700" data-aos-once="true">
+                                <img src="image/l1/png/brand-light-logo-4.png" alt="" />
+                            </div>
+                            {/* <!-- Single Brand --> */}{/* <!-- Single Brand --> */}
+                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-once="true">
+                                <img src="image/l1/png/brand-light-logo-1.png" alt="" />
+                            </div>
+                            {/* <!-- Single Brand --> */}
+                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="300" data-aos-once="true">
+                                <img src="image/l1/png/brand-light-logo-2.png" alt="" />
+                            </div>
+
+                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="900" data-aos-once="true">
+                                <img src="image/l1/png/brand-light-logo-5.png" alt="" />
+                            </div>
+                            {/* <!-- Single Brand --> */}
+                            <div className="single-brand-logo mx-5 my-6" data-aos="fade-in" data-aos-duration="800" data-aos-delay="1200" data-aos-once="true">
+                                <img src="image/l1/png/brand-light-logo-6.png" alt="" />
+                            </div>
+
                         </div>
                         {/* <!-- End Brand Logos --> */}
                     </div>

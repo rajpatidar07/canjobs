@@ -1,5 +1,6 @@
 import React from "react";
 function EmployeeHeader() {
+    // eslint-disable-next-line no-use-before-define
     return (
         <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
             <div className="container">
@@ -193,6 +194,7 @@ function EmployeeHeader() {
                         <button className="d-block d-lg-none offcanvas-btn-close focus-reset" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="true" aria-label="Toggle navigation">
                             <i className="gr-cross-icon"></i>
                         </button>
+
                     </div>
                     <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                         <a className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="javacript:" data-toggle="modal" data-target="#login">
@@ -211,6 +213,21 @@ function EmployeeHeader() {
                             </span>
                         </span>
                     </button>
+                    <div>
+                        <div class="dropdown show-gr-dropdown py-5">
+                            <a class="proile media ml-7 flex-y-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="circle-40">
+                                    <img src="image/header-profile.png" alt="" />
+                                </div>
+                                <i class="fas fa-chevron-down heading-default-color ml-6"></i>
+                            </a>
+                            <div class="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase" href="dashboard-settings.html">Settings </a>
+                                <a class="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase" href="candidate-profile-main.html">Edit Profile</a>
+                                <a class="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase" href="#">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
                     {/* <!--/.Mobile Menu Hamburger Ends--> */}
                 </nav>
             </div>
