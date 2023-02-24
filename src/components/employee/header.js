@@ -58,88 +58,6 @@ function EmployeeHeader() {
                 </li>
               </ul>
             </div> */}
-            <div className="dropdown show-gr-dropdown py-5">
-              <h4 className="proile media ml-7 flex-y-center">
-                Employee{" "}
-                <i className="fas fa-chevron-down heading-default-color ml-6"></i>
-              </h4>
-              <div
-                className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                aria-labelledby="dropdownMenuLink"
-              >
-                <Link
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/"}
-                >
-                  Home{" "}
-                </Link>
-                <Link
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/profile"}
-                >
-                  Profile
-                </Link>
-                <Link
-                  className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/jobdetails"}
-                >
-                  JOb Details
-                </Link>
-                <Link
-                  className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/search"}
-                >
-                  JOb search
-                </Link>
-                <Link
-                  to={"/recommendedjobs "}
-                  className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                >
-                  Recommended JOb
-                </Link>
-              </div>
-            </div>
-            <div className="dropdown show-gr-dropdown py-5">
-              <h4 className="proile media ml-7 flex-y-center">
-                Employer{" "}
-                <i className="fas fa-chevron-down heading-default-color ml-6"></i>
-              </h4>
-              <div
-                className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                aria-labelledby="dropdownMenuLink"
-              >
-                <Link
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/employerhome"}
-                >
-                  Home{" "}
-                </Link>
-                <Link
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/companyprofile"}
-                >
-                  Company Profile
-                </Link>
-                <Link
-                  className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/employeesearch"}
-                >
-                  Employee Search
-                </Link>
-                <Link
-                  className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/managejobs"}
-                >
-                  Manage Jobs
-                </Link>
-                <Link
-                  className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to={"/response"}
-                >
-                  Response
-                </Link>
-              </div>
-            </div>
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"
               type="button"
@@ -151,6 +69,88 @@ function EmployeeHeader() {
             >
               <i className="gr-cross-icon"></i>
             </button>
+          </div>
+          <div className="dropdown show-gr-dropdown py-5">
+            <Link className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset">
+              Employee{" "}
+              <i className="fas fa-chevron-down heading-default-color ml-6"></i>
+            </Link>
+            <div
+              className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+              aria-labelledby="dropdownMenuLink"
+            >
+              <Link
+                className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/"}
+              >
+                Home{" "}
+              </Link>
+              <Link
+                className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/profile"}
+              >
+                Profile
+              </Link>
+              <Link
+                className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/jobdetails"}
+              >
+                JOb Details
+              </Link>
+              <Link
+                className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/search"}
+              >
+                JOb search
+              </Link>
+              <Link
+                to={"/recommendedjobs "}
+                className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+              >
+                Recommended JOb
+              </Link>
+            </div>
+          </div>
+          <div className="dropdown show-gr-dropdown py-5">
+            <Link className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset">
+              Employer{" "}
+              <i className="fas fa-chevron-down heading-default-color ml-6"></i>
+            </Link>
+            <div
+              className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+              aria-labelledby="dropdownMenuLink"
+            >
+              <Link
+                className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/employerhome"}
+              >
+                Home{" "}
+              </Link>
+              <Link
+                className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/companyprofile"}
+              >
+                Company Profile
+              </Link>
+              <Link
+                className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/employeesearch"}
+              >
+                Employee Search
+              </Link>
+              <Link
+                className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/managejobs"}
+              >
+                Manage Jobs
+              </Link>
+              <Link
+                className="dropdown-item py-2  font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                to={"/response"}
+              >
+                Response
+              </Link>
+            </div>
           </div>
           <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
             {/* <!-- Modal for Login--> */}
@@ -184,7 +184,7 @@ function EmployeeHeader() {
             <div className="dropdown show-gr-dropdown py-5">
               <a
                 className="proile media ml-7 flex-y-center"
-                href="#"
+                href=""
                 role="button"
                 id="dropdownMenuLink"
                 data-toggle="dropdown"
@@ -207,7 +207,7 @@ function EmployeeHeader() {
               >
                 <a
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="#"
+                  href=""
                 >
                   Settings{" "}
                 </a>
@@ -219,7 +219,7 @@ function EmployeeHeader() {
                 </a>
                 <a
                   className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="#"
+                  href=""
                 >
                   Log Out
                 </a>

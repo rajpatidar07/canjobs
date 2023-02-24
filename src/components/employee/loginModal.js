@@ -65,7 +65,7 @@ export default function Login(props) {
                   >
                     <div className="col-4 col-xs-12">
                       <a
-                        href="#"
+                        href=""
                         className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-2"></i>{" "}
@@ -76,7 +76,7 @@ export default function Login(props) {
                     </div>
                     <div className="col-4 col-xs-12">
                       <a
-                        href="#"
+                        href=""
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
@@ -87,7 +87,7 @@ export default function Login(props) {
                     </div>
                     <div className="col-4 col-xs-12">
                       <a
-                        href="#"
+                        href=""
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
@@ -136,7 +136,7 @@ export default function Login(props) {
                           placeholder="Enter password"
                         />
                         <a
-                          href="#"
+                          href=""
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password"
                         ></a>
@@ -158,7 +158,7 @@ export default function Login(props) {
                         </span>
                       </label>
                       <Link
-                        href="#"
+                        href=""
                         className="font-size-3 text-dodger line-height-reset"
                         onClick={() => setShowForgotPassword(true)}
                       >
@@ -210,7 +210,7 @@ export default function Login(props) {
                         <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
-                          <a href="#" className="text-primary">
+                          <a href="" className="text-primary">
                             Terms & Conditions
                           </a>
                         </span>

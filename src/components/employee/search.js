@@ -52,9 +52,7 @@ function JobSearch() {
                         id="country"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Salary Range">
-                          Job Skills
-                        </option>
+                        <option data-display="Salary Range">Job Skills</option>
                         <option value="">United States of America</option>
                         <option value="">United Arab Emirates</option>
                         <option value="">Bangladesh</option>
@@ -164,7 +162,7 @@ function JobSearch() {
                   <div className="text-center pt-5 pt-lg-13">
                     <a
                       className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      href="#"
+                      href=""
                     >
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
@@ -189,12 +187,29 @@ function JobSearch() {
                           <div className="col-12">
                             {/* <!-- media start --> */}
                             <div className="media align-items-center company_box col-md-6 p-0">
-                              <a className="text_box text-left" href="http://localhost:3000/">
-                                <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
+                              <a
+                                className="text_box text-left"
+                                href="http://localhost:3000/"
+                              >
+                                <img
+                                  className="company_logo"
+                                  src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                                  alt=""
+                                />
                               </a>
-                              <a className="text_box text-left w-100" href="http://localhost:3000/">
-                                <p href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2 m-0">Apple INC</p>
-                                <h3 className="mb-0 font-size-6 heading-dark-color">UI/UX Designer</h3>
+                              <a
+                                className="text_box text-left w-100"
+                                href="http://localhost:3000/"
+                              >
+                                <p
+                                  href="http://localhost:3000/"
+                                  className="font-size-3 text-default-color line-height-2 m-0"
+                                >
+                                  Apple INC
+                                </p>
+                                <h3 className="mb-0 font-size-6 heading-dark-color">
+                                  UI/UX Designer
+                                </h3>
                               </a>
                             </div>
                             {/* <!-- media end --> */}
@@ -205,13 +220,13 @@ function JobSearch() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -304,7 +319,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Editing
                                   </a>
@@ -312,7 +327,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -320,7 +335,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     XD
                                   </a>
@@ -328,7 +343,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     User Persona
                                   </a>
@@ -336,7 +351,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Sketch
                                   </a>
@@ -424,7 +439,7 @@ function JobSearch() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -475,13 +490,13 @@ function JobSearch() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -575,7 +590,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Visual Design
                                   </a>
@@ -583,7 +598,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -591,7 +606,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     XD
                                   </a>
@@ -599,7 +614,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     User Persona
                                   </a>
@@ -607,7 +622,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Sketch
                                   </a>
@@ -695,7 +710,7 @@ function JobSearch() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -746,13 +761,13 @@ function JobSearch() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -846,7 +861,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Swift{" "}
                                   </a>
@@ -854,7 +869,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Objective C
                                   </a>
@@ -862,7 +877,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     X Code
                                   </a>
@@ -870,7 +885,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     WooCommerce
                                   </a>
@@ -878,7 +893,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Coding
                                   </a>
@@ -966,7 +981,7 @@ function JobSearch() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -1017,13 +1032,13 @@ function JobSearch() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1117,7 +1132,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Agile
                                   </a>
@@ -1125,7 +1140,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -1133,7 +1148,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Prototyping
                                   </a>
@@ -1141,7 +1156,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Slack
                                   </a>
@@ -1149,7 +1164,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Director
                                   </a>
@@ -1237,7 +1252,7 @@ function JobSearch() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -1288,13 +1303,13 @@ function JobSearch() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1388,7 +1403,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     C++
                                   </a>
@@ -1396,7 +1411,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Java Scprit
                                   </a>
@@ -1404,7 +1419,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     React JS
                                   </a>
@@ -1412,7 +1427,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Vue
                                   </a>
@@ -1420,7 +1435,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Angular
                                   </a>
@@ -1508,7 +1523,7 @@ function JobSearch() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -1559,13 +1574,13 @@ function JobSearch() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1659,7 +1674,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Agile
                                   </a>
@@ -1667,7 +1682,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -1675,7 +1690,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Prototyping
                                   </a>
@@ -1683,7 +1698,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     User Persona
                                   </a>
@@ -1691,7 +1706,7 @@ function JobSearch() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Sketch
                                   </a>
@@ -1779,7 +1794,7 @@ function JobSearch() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>

@@ -5,12 +5,19 @@ import KycComplianceDetails from "./modal/kycComplianceDetails";
 import CompanyInfo from "./modal/companyInfoModal";
 import EmployeeHeader from "../../employee/header";
 import EmployeeFooter from "../../employee/footer";
-
+import CustomButton from "../../comman/button";
+import { Link } from "react-router-dom";
 function CompanyProfile() {
+  const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false);
+  const [showCompanyDetailsModal, setShowCompanyDetailsModal] = useState(false);
+  const [
+    showKycComplainDetailsModal,
+    setShowKycComplainDetailsModal,
+  ] = useState(false);
+  const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showAccountDetails, setShowAccountDetails] = useState(false);
   const [showCompanyDetails, setShowCompanyDetails] = useState(false);
   const [showKycComplainDetails, setShowKycComplainDetails] = useState(false);
-  const [showCompanyInfo, setShowCompanyInfo] = useState(false);
 
   return (
     <div>
@@ -21,7 +28,7 @@ function CompanyProfile() {
           <div className="row justify-content-center">
             <div className="col-12 mt-13 dark-mode-texts">
               <div className="mb-9">
-                <a className="d-flex align-items-center ml-4" href="#">
+                <a className="d-flex align-items-center ml-4" href="">
                   {" "}
                   <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                   <span className="text-uppercase font-size-3 font-weight-bold text-gray">
@@ -37,7 +44,7 @@ function CompanyProfile() {
             <div className="col-12 col-xl-9 col-lg-8">
               <div className="bg-white rounded-4 pt-11 shadow-9">
                 <div className="d-xs-flex align-items-center pl-xs-12 mb-8 text-center text-xs-left">
-                  <a className="mr-xs-7 mb-5 mb-xs-0" href="#">
+                  <a className="mr-xs-7 mb-5 mb-xs-0" href="">
                     <img
                       className="square-72 rounded-6"
                       src="image/l2/png/featured-job-logo-1.png"
@@ -48,7 +55,7 @@ function CompanyProfile() {
                     <h2 className="mt-xs-n5">
                       <a
                         className="font-size-6 text-black-2 font-weight-semibold"
-                        href="#"
+                        href=""
                       >
                         Airbnb INC.
                       </a>
@@ -65,90 +72,74 @@ function CompanyProfile() {
                   role="tablist"
                 >
                   <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="home-tab"
-                      data-toggle="tab"
-                      href="#home"
-                      role="tab"
-                      aria-controls="home"
-                      aria-selected="true"
+                    <Link
+                      className={
+                        showAccountDetails === false &&
+                        showCompanyDetails === false &&
+                        showKycComplainDetails === false
+                          ? "active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                          : " text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      }
+                      onClick={() => (
+                        setShowCompanyDetails(false),
+                        setShowKycComplainDetails(false),
+                        setShowAccountDetails(false)
+                      )}
+                      to={""}
                     >
                       Company
-                    </a>
+                    </Link>
                   </li>
                   <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      //   id="profile-tab"
-                      //   data-toggle="tab"
-                      //   href="#profile"
-                      //   role="tab"
-                      //   aria-controls="profile"
-                      //   aria-selected="false"
-                      onClick={() => setShowAccountDetails(true)}
+                    <Link
+                      className={
+                        showAccountDetails === true
+                          ? "active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      }
+                      to={""}
+                      onClick={() => (
+                        setShowCompanyDetails(false),
+                        setShowKycComplainDetails(false),
+                        setShowAccountDetails(true)
+                      )}
                     >
                       Account Details
-                    </a>
-                    <AccountDetails
-                      show={showAccountDetails}
-                      close={() => setShowAccountDetails(false)}
-                    />
+                    </Link>
                   </li>
                   <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      //   id="profile-tab"
-                      //   data-toggle="tab"
-                      //   href="#profile"
-                      //   role="tab"
-                      //   aria-controls="profile"
-                      //   aria-selected="false"
-                      onClick={() => setShowCompanyDetails(true)}
+                    <Link
+                      className={
+                        showCompanyDetails === true
+                          ? "active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      }
+                      to={""}
+                      onClick={() => (
+                        setShowCompanyDetails(true),
+                        setShowKycComplainDetails(false),
+                        setShowAccountDetails(false)
+                      )}
                     >
                       Company Details
-                    </a>
-                    <CompanyDetails
-                      show={showCompanyDetails}
-                      close={() => setShowCompanyDetails(false)}
-                    />
+                    </Link>
                   </li>
                   <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      //   id="profile-tab"
-                      //   data-toggle="tab"
-                      //   href="#profile"
-                      //   role="tab"
-                      //   aria-controls="profile"
-                      //   aria-selected="false"
-                      onClick={() => setShowKycComplainDetails(true)}
+                    <Link
+                      className={
+                        showKycComplainDetails === true
+                          ? "active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
+                      }
+                      to={""}
+                      onClick={() => (
+                        setShowCompanyDetails(false),
+                        setShowKycComplainDetails(true),
+                        setShowAccountDetails(false)
+                      )}
                     >
-                      KYC Compliance Details
-                    </a>
-
-                    <KycComplianceDetails
-                      show={showKycComplainDetails}
-                      close={() => setShowKycComplainDetails(false)}
-                    />
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      //   id="profile-tab"
-                      //   data-toggle="tab"
-                      //   href="#profile"
-                      //   role="tab"
-                      //   aria-controls="profile"
-                      //   aria-selected="false"
-                      onClick={() => setShowCompanyInfo(true)}
-                    >
-                      Company Info
-                    </a>
-                    <CompanyInfo
-                      show={showCompanyInfo}
-                      close={() => setShowCompanyInfo(false)}
-                    />
+                      KYC Details
+                    </Link>
                   </li>
                 </ul>
                 {/* <!-- Tab Content --> */}
@@ -193,25 +184,25 @@ function CompanyProfile() {
                           <div className="icon-link d-flex align-items-center">
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href="#"
+                              href=""
                             >
                               <i className="fab fa-linkedin-in"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href="#"
+                              href=""
                             >
                               <i className="fab fa-facebook-f"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href="#"
+                              href=""
                             >
                               <i className="fab fa-twitter"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href="#"
+                              href=""
                             >
                               <i className="fa fa-globe"></i>
                             </a>
@@ -232,38 +223,332 @@ function CompanyProfile() {
                     </div>
                     {/* <!-- Middle Body End --> */}
                     {/* <!-- Excerpt Start --> */}
-                    <h4 className="font-size-6 mb-7 text-black-2 font-weight-semibold text-left">
-                      About Airbnb
-                    </h4>
-                    <div className="pt-5 text-left">
-                      <p className="font-size-4 mb-8">
-                        If you’re like most of my clients, you know creative
-                        content marketing and killer copywriting are fundamental
-                        to the success of your business.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        But with so much to do to keep your business growing,
-                        you don’t have time to learn how to write sales copy
-                        that actually sells, or create a content marketing
-                        strategy that resonates with your target audience.
-                      </p>
-                      <p className="font-size-4  mb-8">
-                        You’ve been disappointed with your traffic and
-                        conversions so far, but with an overwhelming number of
-                        things to do, you’ve put off doing anything about it
-                        until now.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        So you’ve come to Upwork, looking for someone that can
-                        craft creative content and killer sales copy to help you
-                        reach more people and make more sales.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        But your troubles aren’t over just yet; it isn’t easy to
-                        find someone who can create the high-quality content you
-                        need. But your troubles aren’t over just yet.
-                      </p>
-                    </div>
+                    {/* <!-- Company Info  --> */}
+                    {showAccountDetails === false &&
+                    showCompanyDetails === false &&
+                    showKycComplainDetails === false ? (
+                      <div>
+                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                            About Airbnb
+                          </h4>
+                          <CustomButton
+                            className="font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowCompanyInfoModal(true)}
+                          >
+                            Edit
+                          </CustomButton>
+                          <CompanyInfo
+                            show={showCompanyInfoModal}
+                            close={() => setShowCompanyInfoModal(false)}
+                          />
+                        </div>
+                        <div className="pt-5 text-left">
+                          <p className="font-size-4 mb-8">
+                            If you’re like most of my clients, you know creative
+                            content marketing and killer copywriting are
+                            fundamental to the success of your business.
+                          </p>
+                          <p className="font-size-4 mb-8">
+                            But with so much to do to keep your business
+                            growing, you don’t have time to learn how to write
+                            sales copy that actually sells, or create a content
+                            marketing strategy that resonates with your target
+                            audience.
+                          </p>
+                          <p className="font-size-4  mb-8">
+                            You’ve been disappointed with your traffic and
+                            conversions so far, but with an overwhelming number
+                            of things to do, you’ve put off doing anything about
+                            it until now.
+                          </p>
+                          <p className="font-size-4 mb-8">
+                            So you’ve come to Upwork, looking for someone that
+                            can craft creative content and killer sales copy to
+                            help you reach more people and make more sales.
+                          </p>
+                          <p className="font-size-4 mb-8">
+                            But your troubles aren’t over just yet; it isn’t
+                            easy to find someone who can create the high-quality
+                            content you need. But your troubles aren’t over just
+                            yet.
+                          </p>
+                        </div>
+                      </div>
+                    ) : null}
+
+                    {/* <!-- Account Details --> */}
+                    {showAccountDetails === true ? (
+                      <div className=" border-top">
+                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                            Account Details
+                          </h4>
+                          <CustomButton
+                            className="font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowAccountDetailsModal(true)}
+                          >
+                            Edit
+                          </CustomButton>
+                          <AccountDetails
+                            show={showAccountDetailsModal}
+                            close={() => setShowAccountDetailsModal(false)}
+                          />
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              User Name
+                            </h5>
+                            <p className="font-size-4 mb-8">Shan Maxio</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              E-mail
+                            </h5>
+                            <p className="font-size-4 mb-8">Shan23@gmail.com</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Role
+                            </h5>
+                            <p className="font-size-4 mb-8">Data analytics</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Reporting Manager
+                            </h5>
+                            <p className="font-size-4 mb-8">Shaq Aasif</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                    {/* <!-- Company Details --> */}
+                    {showCompanyDetails === true ? (
+                      <div className=" border-top">
+                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                            Company Details
+                          </h4>
+                          <CustomButton
+                            className="font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowCompanyDetailsModal(true)}
+                          >
+                            Edit
+                          </CustomButton>
+                          <CompanyDetails
+                            show={showCompanyDetailsModal}
+                            close={() => setShowCompanyDetailsModal(false)}
+                          />
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Company Type
+                            </h5>
+                            <p className="font-size-4 mb-8">It</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Industry
+                            </h5>
+                            <p className="font-size-4 mb-8">It</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Contact Person
+                            </h5>
+                            <p className="font-size-4 mb-8">Shaq Muqlit</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Alias
+                            </h5>
+                            <p className="font-size-4 mb-8">Baba</p>
+                          </div>
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Contact Person's Designation
+                            </h5>
+                            <p className="font-size-4 mb-8">Manager</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Website Url
+                            </h5>
+                            <p className="font-size-4 mb-8">www.skjd.com</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Profile for Hot Vacancies
+                            </h5>
+                            <p className="font-size-4 mb-8">
+                              Frontend developer
+                            </p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Profile for Classifieds
+                            </h5>
+                            <p className="font-size-4 mb-8">BCA / MCA / BE</p>
+                          </div>
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Phone Number 1
+                            </h5>
+                            <p className="font-size-4 mb-8">+ 632 740 4445</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Phone Number 2
+                            </h5>
+                            <p className="font-size-4 mb-8">+ 852 987 9510</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Fax Number
+                            </h5>
+                            <p className="font-size-4 mb-8">Fax Number :</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Tax Number :
+                            </h5>
+                            <p className="font-size-4 mb-8">963201100145785</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                    {/* <!-- KYC Details --> */}
+                    {showKycComplainDetails === true ? (
+                      <div className=" border-top">
+                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
+                            KYC Details
+                          </h4>
+                          <CustomButton
+                            className="font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowKycComplainDetailsModal(true)}
+                          >
+                            Edit
+                          </CustomButton>
+                          <KycComplianceDetails
+                            show={showKycComplainDetailsModal}
+                            close={() => setShowKycComplainDetailsModal(false)}
+                          />
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              KYC Status
+                            </h5>
+                            <p className="font-size-4 mb-8">Active</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              PAN Number
+                            </h5>
+                            <p className="font-size-4 mb-8">01236574110</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Name on PAN Card
+                            </h5>
+                            <p className="font-size-4 mb-8">Shaq Muqlit</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Date on PAN Card
+                            </h5>
+                            <p className="font-size-4 mb-8">28/03/2024</p>
+                          </div>
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Address Label
+                            </h5>
+                            <p className="font-size-4 mb-8">Near C21</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Address
+                            </h5>
+                            <p className="font-size-4 mb-8">Royal valley</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              State
+                            </h5>
+                            <p className="font-size-4 mb-8">U.P</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              City
+                            </h5>
+                            <p className="font-size-4 mb-8">Indore</p>
+                          </div>
+                        </div>
+                        <div className="pt-5 text-left row">
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Pincode
+                            </h5>
+                            <p className="font-size-4 mb-8">204445</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              GSTIN
+                            </h5>
+                            <p className="font-size-4 mb-8">Smart building</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Fax Number
+                            </h5>
+                            <p className="font-size-4 mb-8">Fax Number :</p>
+                          </div>
+                          <div className="col-md-3">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Tax Number :
+                            </h5>
+                            <p className="font-size-4 mb-8">963201100145785</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
                     {/* <!-- Excerpt End --> */}
                   </div>
                   <div
@@ -303,25 +588,25 @@ function CompanyProfile() {
                           <div className="icon-link d-flex align-items-center">
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href="#"
+                              href=""
                             >
                               <i className="fab fa-linkedin"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href="#"
+                              href=""
                             >
                               <i className="fab fa-facebook-f"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href="#"
+                              href=""
                             >
                               <i className="fab fa-twitter"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href="#"
+                              href=""
                             >
                               <i className="fa fa-globe"></i>
                             </a>
@@ -389,7 +674,7 @@ function CompanyProfile() {
                 <ul className="list-unstyled">
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="#">
+                    <a className="media align-items-center py-9" href="">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"
@@ -408,7 +693,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="#">
+                    <a className="media align-items-center py-9" href="">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"
@@ -427,7 +712,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="#">
+                    <a className="media align-items-center py-9" href="">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"
@@ -446,7 +731,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="#">
+                    <a className="media align-items-center py-9" href="">
                       <div className="mr-5">
                         <img
                           className="square-72 rounded-5"
@@ -465,7 +750,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="">
-                    <a className="media align-items-center py-9" href="#">
+                    <a className="media align-items-center py-9" href="">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"

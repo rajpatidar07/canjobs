@@ -13,10 +13,7 @@ export default function JobApplied() {
           <div className="row">
             <div className="col-12 mt-13 dark-mode-texts">
               <div className="mb-9">
-                <a
-                  className="d-flex align-items-center ml-4"
-                  href="dashboard-main.html"
-                >
+                <a className="d-flex align-items-center ml-4" href="">
                   {" "}
                   <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                   <span className="text-uppercase font-size-3 font-weight-bold text-gray">
@@ -35,7 +32,7 @@ export default function JobApplied() {
                   {/* <!-- Top Start --> */}
                   <div className="bg-white shadow-9 rounded-4">
                     <div className="px-5 py-11 text-center border-bottom border-mercury">
-                      <a className="mb-4" href="#">
+                      <a className="mb-4" href="">
                         <img
                           className="circle-54"
                           src="image/l3/png/pro-img.png"
@@ -45,44 +42,44 @@ export default function JobApplied() {
                       <h4 className="mb-0">
                         <a
                           className="text-black-2 font-size-6 font-weight-semibold"
-                          href="#"
+                          href=""
                         >
                           David Henricks
                         </a>
                       </h4>
                       <p className="mb-8">
-                        <a className="text-gray font-size-4" href="#">
+                        <a className="text-gray font-size-4" href="">
                           Product Designer
                         </a>
                       </p>
                       <div className="icon-link d-flex align-items-center justify-content-center flex-wrap">
                         <a
                           className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                          href="#"
+                          href=""
                         >
                           <i className="fab fa-linkedin-in"></i>
                         </a>
                         <a
                           className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                          href="#"
+                          href=""
                         >
                           <i className="fab fa-facebook-f"></i>
                         </a>
                         <a
                           className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                          href="#"
+                          href=""
                         >
                           <i className="fab fa-twitter"></i>
                         </a>
                         <a
                           className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                          href="#"
+                          href=""
                         >
                           <i className="fab fa-dribbble"></i>
                         </a>
                         <a
                           className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                          href="#"
+                          href=""
                         >
                           <i className="fab fa-behance"></i>
                         </a>
@@ -106,10 +103,7 @@ export default function JobApplied() {
                       <div className="mb-7">
                         <p className="font-size-4 mb-0">E-mail</p>
                         <h5 className="font-size-4 font-weight-semibold mb-0">
-                          <a
-                            className="text-black-2 text-break"
-                            href="mailto:name_ac@gmail.com"
-                          >
+                          <a className="text-black-2 text-break" href="">
                             name_ac@gmail.com
                           </a>
                         </h5>
@@ -119,10 +113,7 @@ export default function JobApplied() {
                       <div className="mb-7">
                         <p className="font-size-4 mb-0">Phone</p>
                         <h5 className="font-size-4 font-weight-semibold mb-0">
-                          <a
-                            className="text-black-2 text-break"
-                            href="tel:+999565562"
-                          >
+                          <a className="text-black-2 text-break" href="">
                             +999 565 562
                           </a>
                         </h5>
@@ -132,7 +123,7 @@ export default function JobApplied() {
                       <div className="mb-7">
                         <p className="font-size-4 mb-0">Website Linked</p>
                         <h5 className="font-size-4 font-weight-semibold mb-0">
-                          <a className="text-break" href="#">
+                          <a className="text-break" href="">
                             www.nameac.com
                           </a>
                         </h5>
@@ -155,13 +146,13 @@ export default function JobApplied() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-indigo mr-8 rounded">
-                          <a href="#">
+                          <a href="">
                             <img src="image/l3/png/fimize.png" alt="" />
                           </a>
                         </div>
                         <div>
                           <a
-                            href="#"
+                            href=""
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Fimize
@@ -169,7 +160,7 @@ export default function JobApplied() {
                           <h3 className="font-size-6 mb-0">
                             <a
                               className="heading-default-color font-weight-semibold"
-                              href="#"
+                              href=""
                             >
                               Senior Marketing Expert
                             </a>
@@ -180,7 +171,7 @@ export default function JobApplied() {
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -189,7 +180,7 @@ export default function JobApplied() {
                           </li>
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -198,7 +189,7 @@ export default function JobApplied() {
                           </li>
                         </ul>
                         <a
-                          href="javascript:"
+                          href=""
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
                         ></a>
                       </div>
@@ -210,13 +201,13 @@ export default function JobApplied() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-regent mr-8 rounded">
-                          <a href="#">
+                          <a href="">
                             <img src="image/svg/icon-shark-2.svg" alt="" />
                           </a>
                         </div>
                         <div>
                           <a
-                            href="#"
+                            href=""
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Shark
@@ -224,7 +215,7 @@ export default function JobApplied() {
                           <h3 className="font-size-6 mb-0">
                             <a
                               className="heading-default-color font-weight-semibold"
-                              href="#"
+                              href=""
                             >
                               3D Artist
                             </a>
@@ -235,7 +226,7 @@ export default function JobApplied() {
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -244,7 +235,7 @@ export default function JobApplied() {
                           </li>
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -253,7 +244,7 @@ export default function JobApplied() {
                           </li>
                         </ul>
                         <a
-                          href="javascript:"
+                          href=""
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                         ></a>
                       </div>
@@ -265,13 +256,13 @@ export default function JobApplied() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-orange-2 mr-8 rounded">
-                          <a href="#">
+                          <a href="">
                             <img src="image/svg/icon-thunder.svg" alt="" />
                           </a>
                         </div>
                         <div>
                           <a
-                            href="#"
+                            href=""
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Thunder
@@ -279,7 +270,7 @@ export default function JobApplied() {
                           <h3 className="font-size-6 mb-0">
                             <a
                               className="heading-default-color font-weight-semibold"
-                              href="#"
+                              href=""
                             >
                               Product Manager
                             </a>
@@ -290,7 +281,7 @@ export default function JobApplied() {
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -299,7 +290,7 @@ export default function JobApplied() {
                           </li>
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -308,7 +299,7 @@ export default function JobApplied() {
                           </li>
                         </ul>
                         <a
-                          href="javascript:"
+                          href=""
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                         ></a>
                       </div>
@@ -320,13 +311,13 @@ export default function JobApplied() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-helio mr-8 rounded">
-                          <a href="#">
+                          <a href="">
                             <img src="image/l3/png/asios.png" alt="" />
                           </a>
                         </div>
                         <div>
                           <a
-                            href="#"
+                            href=""
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Shark
@@ -334,7 +325,7 @@ export default function JobApplied() {
                           <h3 className="font-size-6 mb-0">
                             <a
                               className="heading-default-color font-weight-semibold"
-                              href="#"
+                              href=""
                             >
                               Front-end Developer
                             </a>
@@ -345,7 +336,7 @@ export default function JobApplied() {
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -354,7 +345,7 @@ export default function JobApplied() {
                           </li>
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -363,7 +354,7 @@ export default function JobApplied() {
                           </li>
                         </ul>
                         <a
-                          href="javascript:"
+                          href=""
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
                         ></a>
                       </div>
@@ -382,13 +373,13 @@ export default function JobApplied() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-orange-2 mr-8 rounded">
-                          <a href="#">
+                          <a href="">
                             <img src="image/svg/icon-thunder.svg" alt="" />
                           </a>
                         </div>
                         <div>
                           <a
-                            href="#"
+                            href=""
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Thunder
@@ -396,7 +387,7 @@ export default function JobApplied() {
                           <h3 className="font-size-6 mb-0">
                             <a
                               className="heading-default-color font-weight-semibold"
-                              href="#"
+                              href=""
                             >
                               Product Manager
                             </a>
@@ -407,7 +398,7 @@ export default function JobApplied() {
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -416,7 +407,7 @@ export default function JobApplied() {
                           </li>
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -425,7 +416,7 @@ export default function JobApplied() {
                           </li>
                         </ul>
                         <a
-                          href="javascript:"
+                          href=""
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                         ></a>
                       </div>
@@ -437,13 +428,13 @@ export default function JobApplied() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-helio mr-8 rounded">
-                          <a href="#">
+                          <a href="">
                             <img src="image/l3/png/asios.png" alt="" />
                           </a>
                         </div>
                         <div>
                           <a
-                            href="#"
+                            href=""
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Shark
@@ -451,7 +442,7 @@ export default function JobApplied() {
                           <h3 className="font-size-6 mb-0">
                             <a
                               className="heading-default-color font-weight-semibold"
-                              href="#"
+                              href=""
                             >
                               Front-end Developer
                             </a>
@@ -462,7 +453,7 @@ export default function JobApplied() {
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -471,7 +462,7 @@ export default function JobApplied() {
                           </li>
                           <li>
                             <a
-                              href="#"
+                              href=""
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -480,7 +471,7 @@ export default function JobApplied() {
                           </li>
                         </ul>
                         <a
-                          href="javascript:"
+                          href=""
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                         ></a>
                       </div>

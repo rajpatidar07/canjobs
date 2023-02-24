@@ -18,27 +18,27 @@ function JobSearchPage() {
                 </h4>
                 <ul className="list-unstyled filter-check-list">
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Full Time
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Part Time
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Contract
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Internship
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Temporary
                     </a>
                   </li>
@@ -50,22 +50,22 @@ function JobSearchPage() {
                 </h4>
                 <ul className="list-unstyled filter-check-list">
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       All
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Senior
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Mid
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Junior
                     </a>
                   </li>
@@ -77,22 +77,22 @@ function JobSearchPage() {
                 </h4>
                 <ul className="list-unstyled filter-check-list">
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Anytime
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Last day
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Last 3 days
                     </a>
                   </li>
                   <li className="mb-2">
-                    <a href="#" className="toggle-item">
+                    <a href="" className="toggle-item">
                       Last week
                     </a>
                   </li>
@@ -155,13 +155,13 @@ function JobSearchPage() {
                   <div className="d-flex align-items-center result-view-type">
                     <a
                       className="heading-default-color pl-5 font-size-6 hover-text-hitgray active"
-                      href="search-list-1.html"
+                      href=""
                     >
                       <i className="fa fa-list-ul"></i>
                     </a>
                     <a
                       className="heading-default-color pl-5 font-size-6 hover-text-hitgray"
-                      href="search-grid.html"
+                      href=""
                     >
                       <i className="fa fa-th-large"></i>
                     </a>
@@ -190,7 +190,7 @@ function JobSearchPage() {
                               </a>
                             </h3>
                             <a
-                              href="#"
+                              href=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               AirBnb
@@ -263,13 +263,13 @@ function JobSearchPage() {
                               <div className="d-flex align-items-center result-view-type">
                                 <a
                                   className="heading-default-color pl-5 font-size-6 hover-text-hitgray active"
-                                  href="search-list-1.html"
+                                  href=""
                                 >
                                   <i className="fa fa-list-ul"></i>
                                 </a>
                                 <a
                                   className="heading-default-color pl-5 font-size-6 hover-text-hitgray"
-                                  href="search-grid.html"
+                                  href=""
                                 >
                                   <i className="fa fa-th-large"></i>
                                 </a>
@@ -291,13 +291,13 @@ function JobSearchPage() {
                                         <h3 className="mb-0">
                                           <a
                                             className="font-size-6 heading-default-color"
-                                            href="#"
+                                            href=""
                                           >
                                             Product Designer
                                           </a>
                                         </h3>
                                         <a
-                                          href="#"
+                                          href=""
                                           className="font-size-3 text-default-color line-height-2"
                                         >
                                           AirBnb
@@ -328,7 +328,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Agile
                                         </a>
@@ -336,7 +336,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Wireframing
                                         </a>
@@ -344,7 +344,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Prototyping
                                         </a>
@@ -408,13 +408,13 @@ function JobSearchPage() {
                                         <h3 className="mb-0">
                                           <a
                                             className="font-size-6 heading-default-color"
-                                            href="#"
+                                            href=""
                                           >
                                             UI/UX Designer
                                           </a>
                                         </h3>
                                         <a
-                                          href="#"
+                                          href=""
                                           className="font-size-3 text-default-color line-height-2"
                                         >
                                           Apple INC
@@ -445,7 +445,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Visual Design
                                         </a>
@@ -453,7 +453,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Wireframing
                                         </a>
@@ -461,7 +461,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Scrum
                                         </a>
@@ -525,13 +525,13 @@ function JobSearchPage() {
                                         <h3 className="mb-0">
                                           <a
                                             className="font-size-6 heading-default-color"
-                                            href="#"
+                                            href=""
                                           >
                                             iOS Developer
                                           </a>
                                         </h3>
                                         <a
-                                          href="#"
+                                          href=""
                                           className="font-size-3 text-default-color line-height-2"
                                         >
                                           Shopify
@@ -562,7 +562,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Swift
                                         </a>
@@ -570,7 +570,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Objective C
                                         </a>
@@ -578,7 +578,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           X Code
                                         </a>
@@ -642,13 +642,13 @@ function JobSearchPage() {
                                         <h3 className="mb-0">
                                           <a
                                             className="font-size-6 heading-default-color"
-                                            href="#"
+                                            href=""
                                           >
                                             Creative Director
                                           </a>
                                         </h3>
                                         <a
-                                          href="#"
+                                          href=""
                                           className="font-size-3 text-default-color line-height-2"
                                         >
                                           Facebook
@@ -679,7 +679,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Agile
                                         </a>
@@ -687,7 +687,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Wireframing
                                         </a>
@@ -695,7 +695,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Prototyping
                                         </a>
@@ -759,13 +759,13 @@ function JobSearchPage() {
                                         <h3 className="mb-0">
                                           <a
                                             className="font-size-6 heading-default-color"
-                                            href="#"
+                                            href=""
                                           >
                                             Software Engineer
                                           </a>
                                         </h3>
                                         <a
-                                          href="#"
+                                          href=""
                                           className="font-size-3 text-default-color line-height-2"
                                         >
                                           Oculus
@@ -796,7 +796,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           C++
                                         </a>
@@ -804,7 +804,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           JavaScprit
                                         </a>
@@ -812,7 +812,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           ReactJS
                                         </a>
@@ -876,13 +876,13 @@ function JobSearchPage() {
                                         <h3 className="mb-0">
                                           <a
                                             className="font-size-6 heading-default-color"
-                                            href="#"
+                                            href=""
                                           >
                                             Product Designer
                                           </a>
                                         </h3>
                                         <a
-                                          href="#"
+                                          href=""
                                           className="font-size-3 text-default-color line-height-2"
                                         >
                                           AirBnb
@@ -913,7 +913,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Agile
                                         </a>
@@ -921,7 +921,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Wireframing
                                         </a>
@@ -929,7 +929,7 @@ function JobSearchPage() {
                                       <li>
                                         <a
                                           className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                                          href="#"
+                                          href=""
                                         >
                                           Prototyping
                                         </a>
@@ -980,7 +980,7 @@ function JobSearchPage() {
                             <div className="text-center pt-5 pt-lg-13">
                               <a
                                 className="text-green font-weight-bold text-uppercase font-size-3"
-                                href="#"
+                                href=""
                               >
                                 Load More{" "}
                                 <i className="fas fa-sort-down ml-3"></i>
@@ -997,7 +997,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Swift
                             </a>
@@ -1005,7 +1005,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Objective C
                             </a>
@@ -1013,7 +1013,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               X Code
                             </a>
@@ -1069,13 +1069,13 @@ function JobSearchPage() {
                             <h3 className="mb-0">
                               <a
                                 className="font-size-6 heading-default-color"
-                                href="#"
+                                href=""
                               >
                                 Creative Director
                               </a>
                             </h3>
                             <a
-                              href="#"
+                              href=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Facebook
@@ -1100,7 +1100,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Agile
                             </a>
@@ -1108,7 +1108,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Wireframing
                             </a>
@@ -1116,7 +1116,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Prototyping
                             </a>
@@ -1172,13 +1172,13 @@ function JobSearchPage() {
                             <h3 className="mb-0">
                               <a
                                 className="font-size-6 heading-default-color"
-                                href="#"
+                                href=""
                               >
                                 Software Engineer
                               </a>
                             </h3>
                             <a
-                              href="#"
+                              href=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Oculus
@@ -1203,7 +1203,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               C++
                             </a>
@@ -1211,7 +1211,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               JavaScprit
                             </a>
@@ -1219,7 +1219,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               ReactJS
                             </a>
@@ -1275,13 +1275,13 @@ function JobSearchPage() {
                             <h3 className="mb-0">
                               <a
                                 className="font-size-6 heading-default-color"
-                                href="#"
+                                href=""
                               >
                                 Product Designer
                               </a>
                             </h3>
                             <a
-                              href="#"
+                              href=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               AirBnb
@@ -1306,7 +1306,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Agile
                             </a>
@@ -1314,7 +1314,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Wireframing
                             </a>
@@ -1322,7 +1322,7 @@ function JobSearchPage() {
                           <li>
                             <a
                               className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                              href="#"
+                              href=""
                             >
                               Prototyping
                             </a>
@@ -1365,7 +1365,7 @@ function JobSearchPage() {
                 <div className="text-center pt-5 pt-lg-13">
                   <a
                     className="text-green font-weight-bold text-uppercase font-size-3"
-                    href="#"
+                    href=""
                   >
                     Load More <i className="fas fa-sort-down ml-3"></i>
                   </a>

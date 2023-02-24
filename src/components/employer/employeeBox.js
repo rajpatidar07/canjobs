@@ -96,7 +96,7 @@ function EmployeeBox() {
           <div className="media justify-content-md-end col-md-4">
             <a
               className="btn btn-secondary text-uppercase font-size-3"
-              href="javacript:"
+              href=""
               data-toggle="modal"
               data-target="#signup"
             >

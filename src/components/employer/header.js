@@ -112,7 +112,7 @@ function EmployerHeader() {
             <div className="dropdown show-gr-dropdown py-5">
               <a
                 className="proile media ml-7 flex-y-center"
-                href="#"
+                href=""
                 role="button"
                 id="dropdownMenuLink"
                 data-toggle="dropdown"
@@ -135,19 +135,19 @@ function EmployerHeader() {
               >
                 <a
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="#"
+                  href=""
                 >
                   Settings{" "}
                 </a>
                 <a
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="#"
+                  href=""
                 >
                   Edit Profile
                 </a>
                 <a
                   className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="#"
+                  href=""
                 >
                   Log Out
                 </a>

@@ -161,7 +161,7 @@ function Response() {
                   <div className="text-center pt-5 pt-lg-13">
                     <a
                       className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      href="#"
+                      href=""
                     >
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
@@ -299,7 +299,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Editing
                                   </a>
@@ -307,7 +307,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -315,7 +315,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     XD
                                   </a>
@@ -323,7 +323,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     User Persona
                                   </a>
@@ -331,7 +331,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Sketch
                                   </a>
@@ -419,7 +419,7 @@ function Response() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -470,13 +470,13 @@ function Response() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -570,7 +570,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Visual Design
                                   </a>
@@ -578,7 +578,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -586,7 +586,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     XD
                                   </a>
@@ -594,7 +594,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     User Persona
                                   </a>
@@ -602,7 +602,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Sketch
                                   </a>
@@ -690,7 +690,7 @@ function Response() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -741,13 +741,13 @@ function Response() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -841,7 +841,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Swift{" "}
                                   </a>
@@ -849,7 +849,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Objective C
                                   </a>
@@ -857,7 +857,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     X Code
                                   </a>
@@ -865,7 +865,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     WooCommerce
                                   </a>
@@ -873,7 +873,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Coding
                                   </a>
@@ -961,7 +961,7 @@ function Response() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -1012,13 +1012,13 @@ function Response() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1112,7 +1112,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Agile
                                   </a>
@@ -1120,7 +1120,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -1128,7 +1128,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Prototyping
                                   </a>
@@ -1136,7 +1136,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Slack
                                   </a>
@@ -1144,7 +1144,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Director
                                   </a>
@@ -1232,7 +1232,7 @@ function Response() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -1283,13 +1283,13 @@ function Response() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1383,7 +1383,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     C++
                                   </a>
@@ -1391,7 +1391,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Java Scprit
                                   </a>
@@ -1399,7 +1399,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     React JS
                                   </a>
@@ -1407,7 +1407,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Vue
                                   </a>
@@ -1415,7 +1415,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Angular
                                   </a>
@@ -1503,7 +1503,7 @@ function Response() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
@@ -1554,13 +1554,13 @@ function Response() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
+                                href=""
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1654,7 +1654,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Agile
                                   </a>
@@ -1662,7 +1662,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Wire-framing
                                   </a>
@@ -1670,7 +1670,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Prototyping
                                   </a>
@@ -1678,7 +1678,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     User Persona
                                   </a>
@@ -1686,7 +1686,7 @@ function Response() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="#"
+                                    href=""
                                   >
                                     Sketch
                                   </a>
@@ -1774,7 +1774,7 @@ function Response() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
+                                href=""
                               >
                                 Apply to this job
                               </a>

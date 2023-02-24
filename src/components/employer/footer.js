@@ -81,10 +81,7 @@ function EmployerFooter() {
               />
               <div className="media-body pl-5">
                 <p className="mb-0 font-size-4 text-white">Contact us at</p>
-                <a
-                  className="mb-0 font-size-4 font-weight-bold"
-                  href="mailto:support@uxtheme.net"
-                >
+                <a className="mb-0 font-size-4 font-weight-bold" href="">
                   support@uxtheme.net
                 </a>
               </div>
