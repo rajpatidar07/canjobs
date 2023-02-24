@@ -47,7 +47,7 @@ function EmployerHeader() {
                   </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="">
+                  <a className="nav-link" href="/managejobs">
                     Manage Jobs
                   </a>
                 </li>

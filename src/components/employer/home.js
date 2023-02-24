@@ -1,7 +1,7 @@
 import React from "react";
 import EmployerFooter from "./footer";
 import EmployerHeader from "./header";
-import JobBox from "./employeeBox";
+import EmployeeBox from "./employeeBox";
 import SearchForm from "./searchForm";
 function home() {
   return (
@@ -235,12 +235,12 @@ function home() {
           </div>
           {/* <!-- Section Title End --> */}
           <div className="row justify-content-center">
-            <JobBox />
-            <JobBox />
-            <JobBox />
-            <JobBox />
-            <JobBox />
-            <JobBox />
+            <EmployeeBox />
+            <EmployeeBox />
+            <EmployeeBox />
+            <EmployeeBox />
+            <EmployeeBox />
+            <EmployeeBox />
           </div>
         </div>
       </section>
