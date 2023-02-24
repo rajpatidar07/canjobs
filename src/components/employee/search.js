@@ -5,12 +5,13 @@ import JobBox from "./jobbox";
 import SearchForm from "./search_form";
 
 function JobSearch() {
+  // eslint-disable-next-line no-use-before-define
   return (
     <>
       <div>
         <EmployeeHeader />
         {/* <!-- Main Content Start --> */}
-        <div className="bg-black-2 mt-15 mt-lg-22 pt-18 pt-lg-13 pb-13">
+        <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row">
               <div className="col-12">
@@ -29,7 +30,7 @@ function JobSearch() {
                 </h2>
                 <form
                   className="mb-8"
-                  action="https://finestwp.co/demos/html/jobcamp/index.html"
+                  action="https://canjobs.com/demos/html/jobcamp/index.html"
                 >
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">

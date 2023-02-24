@@ -1,7 +1,7 @@
 import React from "react";
 function JobBox() {
     return (
-        <div className="col-xxl-12 col-xl-12 col-lg-12 mb-8 job_box " data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+        <div className="col-xxl-12 col-xl-12 col-lg-12 mb-8 job_box p-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
             {/* <!-- Single Featured Job --> */}
             <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green">
                 <div className="row job_header m-0">
