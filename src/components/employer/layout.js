@@ -3,7 +3,7 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployerHomePage from "./home";
 import CompanyProfile from "./company profile/companyProfile";
 import EmployeeSearch from "./employeeSearch";
-import ManageJobs from "./manageJobs";
+import ManageJobs from "./manageJobs/manageJobs";
 
 const EmployerLayout = () => {
   return (

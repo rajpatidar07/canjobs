@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import AddJobsModal from "./manageJobs/addJobsModal";
+
 function JobBox() {
+  let [showAddJobModal, setShowAddJobModal] = useState(false);
+
   return (
     <div
       className="col-xxl-12 col-xl-12 col-lg-12 mb-8 job_box "
@@ -94,14 +99,17 @@ function JobBox() {
           </div>
 
           <div className="media justify-content-md-end col-md-4">
-            <a
-              class="btn btn-secondary text-uppercase font-size-3"
-              href="javacript:"
-              data-toggle="modal"
-              data-target="#signup"
+            <Link
+              className="btn btn-secondary text-uppercase font-size-3"
+              to=""
+              onClick={() => setShowAddJobModal(true)}
             >
               Edit
-            </a>
+            </Link>
+            <AddJobsModal
+              show={showAddJobModal}
+              close={() => setShowAddJobModal(false)}
+            />
           </div>
         </div>
       </div>
