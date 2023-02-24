@@ -63,7 +63,7 @@ function EmployeeFooter() {
         </div>
       </div>
       <div className="container  pt-12 pt-lg-19 pb-10 pb-lg-19">
-        <div className="row">
+        <div className="row text-left">
           <div className="col-lg-4 col-sm-6 mb-lg-0 mb-9">
             {/* <!-- footer logo start --> */}
             <img
