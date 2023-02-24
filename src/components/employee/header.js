@@ -32,10 +32,10 @@ function EmployeeHeader() {
 
                     </div>
                     <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
-                        <a className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="/" data-toggle="modal" data-target="#login">
+                        <a className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset disabled" href="/" data-toggle="modal" data-target="#login">
                             Log in
                         </a>
-                        <a className="btn btn-primary text-uppercase font-size-3" href="/" data-toggle="modal" data-target="#signup">
+                        <a className="btn btn-primary text-uppercase font-size-3 disabled" href="/" data-toggle="modal" data-target="#signup">
                             Sign up
                         </a>
                     </div>
