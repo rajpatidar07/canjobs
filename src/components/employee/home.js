@@ -23,9 +23,9 @@ function EmployeeHomePage() {
 
                     </div>
                     <div className="row m-0 job_filter_block">
-                        <div className="card job_filter_card">
-                            <div className="card-body row m-0">
-                                <h4 className="card-title text-dark text-left mb-7 w-100">Jobs by Location</h4>
+                        <div className="card job_filter_card ">
+                            <div className="card-body row m-0 text-center justify-content-center">
+                                <h4 className="card-title text-dark text-center mb-7 w-100">Jobs by Location</h4>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Canada</button>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">USA</button>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
@@ -36,9 +36,9 @@ function EmployeeHomePage() {
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">India</button>
                             </div>
                         </div>
-                        <div className="card job_filter_card">
-                            <div className="card-body row m-0">
-                                <h4 className="card-title text-dark text-left mb-7 w-100">Jobs by Category</h4>
+                        <div className="card job_filter_card ">
+                            <div className="card-body row m-0 text-center justify-content-center">
+                                <h4 className="card-title text-dark text-center mb-7 w-100">Jobs by Category</h4>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Hospitality</button>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Transportation</button>
                                 <button type="button" className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4">Mechanical</button>

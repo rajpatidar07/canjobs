@@ -5,6 +5,7 @@ import JobBox from "./jobbox";
 import SearchForm from "./search_form";
 
 function JobSearch() {
+  // eslint-disable-next-line no-use-before-define
   return (
     <>
       <div>
@@ -29,7 +30,7 @@ function JobSearch() {
                 </h2>
                 <form
                   className="mb-8"
-                  action="https://finestwp.co/demos/html/jobcamp/index.html"
+                  action="https://canjobs.com/demos/html/jobcamp/index.html"
                 >
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">

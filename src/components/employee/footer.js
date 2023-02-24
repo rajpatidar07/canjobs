@@ -1,5 +1,6 @@
 import React from "react";
 function EmployeeFooter() {
+    // eslint-disable-next-line no-use-before-define
     return (
         <footer className="footer bg-ebony-clay dark-mode-texts">
             <div className="container">
