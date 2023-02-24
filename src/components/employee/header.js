@@ -50,7 +50,7 @@ function EmployeeHeader() {
                     </button>
                     <div>
                         <div class="dropdown show-gr-dropdown py-5">
-                            <a class="proile media ml-7 flex-y-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="proile media ml-7 flex-y-center" href="http://localhost:3000/" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="circle-40">
                                     <img src="image/header-profile.png" alt="" />
                                 </div>
