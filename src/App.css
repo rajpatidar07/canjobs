@@ -51,6 +51,12 @@ p {
   max-height: 28px;
 }
 
+/* header */
+.main-menu>li>.nav-link {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+
 /* Border Radius css */
 
 .rounded-70 {
@@ -102,6 +108,7 @@ p {
   position: absolute;
   left: 0;
   right: 0;
+  bottom: -14%;
   max-width: 1024px;
 }
 
@@ -153,3 +160,24 @@ p {
 }
 
 @media (min-width: 768px) {}
+
+/* CATEGORY BOX */
+.category_box a {
+  position: relative;
+}
+
+.category_box .category_text_box p {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  text-transform: lowercase;
+  margin: 0;
+  max-width: 80px;
+  line-height: 1;
+  text-align: right;
+  font-size: 12px;
+}
+
+.category_box .category_text_box p span {
+  font-size: 40px;
+}

@@ -1,151 +1,21 @@
 import React from "react";
-import EmployerFooter from "./footer";
-import EmployerHeader from "./header";
-import JobBox from "./jobBox";
+import EmployerFooter from "../footer";
+import EmployerHeader from "../header";
+import JobBox from "../jobBox";
 
 function ManageJobs() {
   return (
     <>
       {/* <!-- Main Content Start --> */}
-      <div class="bg-default-1 pt-26 pt-lg-28 pb-13 pb-lg-25">
-        <EmployerHeader />
+      <div className="bg-default-1 pt-26 pt-lg-28 pb-13 pb-lg-25">
         {/* <!-- Main Content Start --> */}
-        <div className="bg-black-2 mt-15 mt-lg-22 pt-18 pt-lg-13 pb-13">
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                {/* <!-- form --> */}
-                <form className="search-form">
-                  <div className="filter-search-form-2 bg-white rounded-sm shadow-7 pr-6 py-7 pl-6  search-1-adjustment">
-                    <div className="filter-inputs">
-                      <div className="form-group position-relative w-xl-50">
-                        <input
-                          className="form-control focus-reset pl-13"
-                          type="text"
-                          id="keyword"
-                          placeholder="Type Job title, keywords"
-                        />
-                        <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
-                          <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
-                        </span>
-                      </div>
-                      {/* <!-- .select-city starts --> */}
-                      <div className="form-group position-relative w-lg-50">
-                        <select
-                          name="country"
-                          id="country"
-                          className="form-control font-size-4 pl-13 h-100 arrow-3"
-                        >
-                          <option data-display="City, state, zip code or (Remote)">
-                            City, state, zip code or (Remote){" "}
-                          </option>
-                          <option value="">United States of America</option>
-                          <option value="">United Arab Emirates</option>
-                          <option value="">Bangladesh</option>
-                          <option value="">Pakistan</option>
-                        </select>
-                        <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
-                          <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
-                        </span>
-                      </div>
-                      {/* <!-- ./select-city ends --> */}
-                    </div>
-                    <div className="button-block">
-                      <button className="btn btn-primary btn-medium line-height-reset h-100 btn-submit w-100 text-uppercase">
-                        Search
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        <EmployerHeader />
         <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
           <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12 col-lg-10 col-xl-12">
-                <h2 className="font-size-8 mb-6">
-                  You’re searching "UI Designer"
-                </h2>
-                <form
-                  className="mb-8"
-                  action="https://finestwp.co/demos/html/jobcamp/index.html"
-                >
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="country"
-                        id="country"
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option data-display="Job Type">Job Type</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
-                      </select>
-                    </div>
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="country"
-                        id="country"
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option data-display="Salary Range">
-                          Salary Range
-                        </option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
-                      </select>
-                    </div>
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="country"
-                        id="country"
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option data-display="Experience Level ">
-                          Experience Level{" "}
-                        </option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
-                      </select>
-                    </div>
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="country"
-                        id="country"
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option data-display="Posted Time">Posted Time</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
-                      </select>
-                    </div>
-                  </div>
-                </form>
-                <div className="d-flex align-items-center justify-content-between mb-6">
-                  <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                    <span className="text-black-2">120</span> matched jobs
-                  </h5>
-                  <div className="card-btn-group mx-10">
-                    <a
-                      className="btn btn-secondary text-uppercase btn-medium rounded-3 w-100 mr-4 mb-5"
-                      href="#"
-                    >
-                      Add Job
-                    </a>
-                  </div>
-                </div>
-              </div>
+            <div className="w-100 text-left pb-3 px-5">
+              <button className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4 mt-6 ">
+                Add jobs
+              </button>
             </div>
             <div className="row justify-content-center position-static">
               <div className="col-12 col-xxl-8 col-xl-7 col-lg-10">
@@ -156,24 +26,14 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <a
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-                      aria-selected="true "
-                    >
-                      <JobBox />
-                      <JobBox />
-                      <JobBox />
-                      <JobBox />
-                      <JobBox />
-                      <JobBox />
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </a>
+                    <JobBox />
+                    <JobBox />
+                    <JobBox />
+                    <JobBox />
+                    <JobBox />
+                    <JobBox />
+                    <JobBox />
+                    {/* <!-- End Single Featured Job --> */}
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <a
@@ -227,15 +87,6 @@ function ManageJobs() {
                         </div>
                         <div className="row pt-9">
                           <div className="col-12">
-                            {/* <!-- card-btn-group start --> */}
-                            <div className="card-btn-group">
-                              <a
-                                className="btn btn-secondary text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
-                              >
-                                Edit Job
-                              </a>
-                            </div>
                             {/* <!-- card-btn-group end --> */}
                           </div>
                         </div>
@@ -442,12 +293,6 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
-                              <a
-                                className="btn btn-secondary text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="#"
-                              >
-                                Edit
-                              </a>
                             </div>
                           </div>
                         </div>
