@@ -11,6 +11,7 @@ import CompanyProfile from "../employer/company profile/companyProfile";
 import ManageJobs from "../employer/manageJobs/manageJobs";
 import EmployeeSearch from "../employer/employeeSearch";
 import Response from "../employer/response";
+import AdminDashboard from "../admin/dashboard";
 const EmployeeLayout = () => {
   return (
     <BrowserRouter>
@@ -28,6 +29,9 @@ const EmployeeLayout = () => {
         <Route path="/employeesearch" element={<EmployeeSearch />} />
         <Route path="/managejobs" element={<ManageJobs />} />
         <Route path="/response" element={<Response />} />
+        {/* Admin */}
+        <Route path="/dashboard" element={<AdminDashboard />} />
+
       </Routes>
     </BrowserRouter>
   );
