@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import EmployerFooter from "../footer";
-import EmployerHeader from "../header";
 import AccountDetails from "./modal/accountDetailsModal";
 import CompanyDetails from "./modal/companyDetailsModal";
 import KycComplianceDetails from "./modal/kycComplianceDetails";
 import CompanyInfo from "./modal/companyInfoModal";
+import EmployeeHeader from "../../employee/header";
+import EmployeeFooter from "../../employee/footer";
 
 function CompanyProfile() {
   const [showAccountDetails, setShowAccountDetails] = useState(false);
@@ -14,7 +14,7 @@ function CompanyProfile() {
 
   return (
     <div>
-      <EmployerHeader />
+      <EmployeeHeader />
       <div className="bg-default-2 pt-16 pt-lg-22 pb-lg-27">
         <div className="container">
           {/* <!-- back Button --> */}
@@ -489,7 +489,7 @@ function CompanyProfile() {
           </div>
         </div>
       </div>
-      <EmployerFooter />
+      <EmployeeFooter />
     </div>
   );
 }

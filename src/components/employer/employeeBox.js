@@ -95,12 +95,12 @@ function EmployeeBox() {
 
           <div className="media justify-content-md-end col-md-4">
             <a
-              class="btn btn-secondary text-uppercase font-size-3"
+              className="btn btn-secondary text-uppercase font-size-3"
               href="javacript:"
               data-toggle="modal"
               data-target="#signup"
             >
-              Select
+              Connect
             </a>
           </div>
         </div>

@@ -1,12 +1,12 @@
 import React from "react";
-import EmployerFooter from "./footer";
-import EmployerHeader from "./header";
+import EmployeeFooter from "../employee/footer";
+import EmployeeHeader from "../employee/header";
 import EmployeeBox from "./employeeBox";
 import SearchForm from "./searchForm";
 function home() {
   return (
     <div>
-      <EmployerHeader />
+      <EmployeeHeader />
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         {/* <div className="pos-abs-tr h-100">
                     <img src="image/patterns/globe-pattern.png" alt="" className="h-100" />
@@ -982,7 +982,7 @@ function home() {
         </div>
       </section>
       {/* <!-- ContentTwo Area --> */}
-      <EmployerFooter />
+      <EmployeeFooter />
     </div>
   );
 }

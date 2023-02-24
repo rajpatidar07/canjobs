@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import EmployeeFooter from "../../employee/footer";
-import EmployeeHeader from "../../employee/header";
-import JobBox from "../jobBox";
-import AddJobsModal from "./addJobsModal";
-import SearchForm from "../../employee/search_form";
+import React from "react";
+import EmployeeFooter from "../employee/footer";
+import EmployeeHeader from "../employee/header";
+import JobBoxResponse from "./jobBoxResponse";
+import SearchForm from "../employee/search_form";
 
-function ManageJobs() {
-  let [showAddJobModal, setShowAddJobModal] = useState(false);
+function Response() {
   return (
     <>
       <div>
@@ -76,18 +74,6 @@ function ManageJobs() {
                       </select>
                     </div>
                   </div>
-                  <div className="px-5 mx-2 float-left">
-                    <button
-                      onClick={() => setShowAddJobModal(true)}
-                      className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4 mt-6 "
-                    >
-                      Add jobs
-                    </button>
-                  </div>
-                  <AddJobsModal
-                    show={showAddJobModal}
-                    close={() => setShowAddJobModal(false)}
-                  />
                 </form>
                 <div className="d-flex align-items-center justify-content-between mb-6">
                   <h5 className="font-size-4 font-weight-normal text-gray">
@@ -106,31 +92,71 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link">
+                    <a
+                      className="mb-8 p-0 w-100 active nav-link active"
+                      id="tab-nav-1"
+                      data-toggle="tab"
+                      href="#tab-pane-1"
+                      role="tab"
+                      aria-controls="tab-pane-1"
+                      aria-selected="true "
+                    >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
+                    </a>
+                    <a
+                      className="mb-8 p-0 w-100 active nav-link"
+                      id="tab-nav-1"
+                      data-toggle="tab"
+                      href="#tab-pane-1"
+                      role="tab"
+                      aria-controls="tab-pane-1"
+                      aria-selected="true "
+                    >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
+                    </a>
+                    <a
+                      className="mb-8 p-0 w-100 active nav-link"
+                      id="tab-nav-1"
+                      data-toggle="tab"
+                      href="#tab-pane-1"
+                      role="tab"
+                      aria-controls="tab-pane-1"
+                      aria-selected="true "
+                    >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
+                    </a>
+                    <a
+                      className="mb-8 p-0 w-100 active nav-link"
+                      id="tab-nav-1"
+                      data-toggle="tab"
+                      href="#tab-pane-1"
+                      role="tab"
+                      aria-controls="tab-pane-1"
+                      aria-selected="true "
+                    >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
+                    </a>
+                    <a
+                      className="mb-8 p-0 w-100 active nav-link"
+                      id="tab-nav-1"
+                      data-toggle="tab"
+                      href="#tab-pane-1"
+                      role="tab"
+                      aria-controls="tab-pane-1"
+                      aria-selected="true "
+                    >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    </a>
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <a
@@ -391,6 +417,12 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
+                              <a
+                                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
+                                href="#"
+                              >
+                                Apply to this job
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -656,6 +688,12 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
+                              <a
+                                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
+                                href="#"
+                              >
+                                Apply to this job
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -921,6 +959,12 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
+                              <a
+                                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
+                                href="#"
+                              >
+                                Apply to this job
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -1186,6 +1230,12 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
+                              <a
+                                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
+                                href="#"
+                              >
+                                Apply to this job
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -1451,6 +1501,12 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
+                              <a
+                                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
+                                href="#"
+                              >
+                                Apply to this job
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -1716,6 +1772,12 @@ function ManageJobs() {
                                   features
                                 </li>
                               </ul>
+                              <a
+                                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
+                                href="#"
+                              >
+                                Apply to this job
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -1734,4 +1796,4 @@ function ManageJobs() {
   );
 }
 
-export default ManageJobs;
+export default Response;
