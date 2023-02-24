@@ -123,8 +123,8 @@ p {
     max-width: 100%;
   }
 
-  .job_filter_block .card.job_filter_card {
-
+  .job_filter_block .card.job_filter_card,
+  .filter-search-form-2 .filter-inputs .form-group {
     max-width: 100%;
   }
 
