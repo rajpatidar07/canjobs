@@ -26,7 +26,7 @@ const UserProfile = () => {
       <EmployeeHeader />
       <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32">
         <div className="container">
-          <div className="row justify-content-center">
+          {/* <div className="row justify-content-center">
             <div className="col-12 dark-mode-texts">
               <div className="mb-9">
                 <a
@@ -41,24 +41,24 @@ const UserProfile = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="row text-left">
-            <div className="col-12 col-xxl-3 col-lg-4 col-md-5 mb-11 mb-lg-0">
+            <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0">
               <div className="pl-lg-5">
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
-                  <div className="px-5 py-11 text-center border-bottom border-mercury">
-                    <a className="mb-4" href="http://localhost:3000/">
-                      <input type="file" id="file" className="d-none" />
-                      <label htmlFor="file">
-                        <span className="z-2 position-absolute  mt-8 mx-20  rounded-3 fas fa-edit text-gray">
+                  <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
+                    <a className="mb-4 position-relative" href="http://localhost:3000/">
+                      <input type="file" id="ImgUploadInput" className="d-none" />
+                      <label className="image_upload_btn m-0" htmlFor="ImgUploadInput">
+                        <span className="fas fa-pen text-gray">
                           {" "}
                         </span>
                       </label>
                       <img
                         className="rounded-circle"
-                        src="image/l3/png/pro-img.png"
+                        src="image/l2/jpg/gallery-img25.jpg"
                         alt=""
                         width={"100px"}
                         height={"100px"}
@@ -67,55 +67,94 @@ const UserProfile = () => {
                     <h4 className="mb-0">
                       <a
                         className="text-black-2 font-size-6 font-weight-semibold"
-                        href="http://localhost:3000/"
                         onClick={() => setShowRegistration(true)}
                       >
-                        David Henricks
+                        David Henricks <span className="age_gender font-size-3 text-smoke">(Male 29)</span>
                       </a>
                       <Registration
                         show={showRegistration}
                         close={() => setShowRegistration(false)}
                       />
                     </h4>
-                    <p className="mb-8">
-                      <a
-                        className="text-gray font-size-4"
-                        href="http://localhost:3000/"
-                      >
-                        Product Designer
-                      </a>
+                    <p className="mb-8 text-gray font-size-4">
+                      Product Designer
                     </p>
+
+                  </div>
+                  <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
+                    <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                      <span>Personal Info</span>
+                      <CustomButton
+                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                        onClick={() => setShowRegistration(true)}
+                      />
+                    </h4>
+                    <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <img class="mr-1" height={"16px"} src="image/icons/envelope.svg" alt="Email" />
+                          name_ac@domain.com
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <img class="mr-1" height={"16px"} src="image/icons/mobile-button.svg" alt="Mobile Number" />
+                          +91-0987654321
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <img class="mr-1" height={"16px"} src="image/icons/marker.svg" alt="Location" />
+                          New York, USA
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <img class="mr-1" height={"16px"} src="image/icons/language.svg" alt="language" />
+                          Hindi, English
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <img class="mr-1" height={"16px"} src="image/icons/address-book.svg" alt="Address" />
+                          45, Universal Tower
+                          Scheme 54, PU4,
+                          Indore, MP (452001)
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <b>Work Permit of Canada:</b> Yes
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span class="font-size-3 text-smoke  mr-3">
+                          <b>Work Permit of Other Country:</b> No
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10">
+                    <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                      <span>Skill</span>
+                      <CustomButton
+                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                        onClick={() => setShowItSkills(true)}
+                      />
+                    </h4>
                     <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
                       {/*----Employee's Skills----*/}
-                      <div className="row">
-                        <div className="col">
-                          {" "}
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left ">
-                            Skill{" "}
-                          </h4>{" "}
-                        </div>
-                        <div className="col"></div>
-                        <div className="col"></div>
-                        <div className="col"></div>
-                        <div className="col"></div>
-                        <div className="col mb-7 mt-5">
-                          {" "}
-                          <CustomButton
-                            className="font-size-3 rounded-3 btn-primary border-0"
-                            onClick={() => setShowItSkills(true)}
-                          >
-                            Edit
-                          </CustomButton>
-                        </div>
-                        <ItSkills
-                          show={showItSkills}
-                          close={() => setShowItSkills(false)}
-                        />
-                      </div>
+
+                      <ItSkills
+                        show={showItSkills}
+                        close={() => setShowItSkills(false)}
+                      />
+
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             Agile
@@ -123,7 +162,7 @@ const UserProfile = () => {
                         </li>
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             Wireframing
@@ -131,7 +170,7 @@ const UserProfile = () => {
                         </li>
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             Prototyping
@@ -139,7 +178,7 @@ const UserProfile = () => {
                         </li>
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             Information
@@ -147,7 +186,7 @@ const UserProfile = () => {
                         </li>
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             Waterfall Model
@@ -155,7 +194,7 @@ const UserProfile = () => {
                         </li>
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             New Layout
@@ -163,7 +202,7 @@ const UserProfile = () => {
                         </li>
                         <li>
                           <a
-                            className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                             href="http://localhost:3000/"
                           >
                             Browsing
@@ -172,194 +211,11 @@ const UserProfile = () => {
                       </ul>
                     </div>
                   </div>
-                  <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-5">
-                    <h5 className="text-black-2 mb-8 font-size-5">
-                      Contact Info
-                    </h5>
-
-                    <div className="mb-7">
-                      <p className="font-size-4 mb-0">Location</p>
-                      <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                        New York , USA
-                      </h5>
-                    </div>
-
-                    <div className="mb-7">
-                      <p className="font-size-4 mb-0">E-mail</p>
-                      <h5 className="font-size-4 font-weight-semibold mb-0">
-                        <a
-                          className="text-black-2 text-break"
-                          href="mailto:name_ac@gmail.com"
-                        >
-                          name_ac@gmail.com
-                        </a>
-                      </h5>
-                    </div>
-
-                    <div className="mb-7">
-                      <p className="font-size-4 mb-0">Phone</p>
-                      <h5 className="font-size-4 font-weight-semibold mb-0">
-                        <a
-                          className="text-black-2 text-break"
-                          href="http://localhost:3000/"
-                        >
-                          +999 565 562
-                        </a>
-                      </h5>
-                    </div>
-
-                    <div className="mb-7">
-                      <p className="font-size-4 mb-0">Website Linked</p>
-                      <h5 className="font-size-4 font-weight-semibold mb-0">
-                        <a className="text-break" href="http://localhost:3000/">
-                          www.nameac.com
-                        </a>
-                      </h5>
-                    </div>
-                  </div>
-                  {/*----Employee's Personal Details----*/}
-                  <div className="px-5 d-flex align-items-center justify-content-md-between flex-wrap">
-                    <div className="row">
-                      <div className="col-5">
-                        {" "}
-                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left ">
-                          Personal Details{" "}
-                        </h4>{" "}
-                      </div>
-                      <div className="col"></div>
-                      <div className="col mb-7 mt-5">
-                        {" "}
-                        <CustomButton
-                          className="font-size-3 rounded-3 btn-primary border-0"
-                          onClick={() => setShowPersonalDetails(true)}
-                        >
-                          Edit
-                        </CustomButton>
-                      </div>
-                      <PersonalDetails
-                        show={showPersonalDetails}
-                        close={() => setShowPersonalDetails(false)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="w-100">
-                    <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                      <div className="w-100 mt-n2 text-left">
-                        <div className="px-4 pt-lg-5 pt-9 pt-xl-9 pb-5">
-                          <div className="mb-3">
-                            <div className="row">
-                              <div className="col-5">
-                                <p className="font-size-4 mb-0">Age</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  23{" "}
-                                </h5>
-                              </div>
-                              <div className="col-7">
-                                <p className="font-size-4 mb-0">Gender</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Male{" "}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="mb-3"></div>
-                          <div className="mb-3">
-                            <div className="row">
-                              <div className="col-5">
-                                <p className="font-size-4 mb-0">Category</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  General{" "}
-                                </h5>
-                              </div>
-                              <div className="col-7">
-                                <p className="font-size-4 mb-0">
-                                  Marital Status
-                                </p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  single{" "}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="mb-3">
-                            <div className="row">
-                              <div className="col-5">
-                                <p className="font-size-4 mb-0">Disablity</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  No{" "}
-                                </h5>
-                              </div>
-                              <div className="col-7">
-                                <p className="font-size-4 mb-0">Career Break</p>
-                                <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                                  Np{" "}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="mb-3">
-                            <p className="font-size-4 mb-0">
-                              Languages Known
-                              <a
-                                className="mb-4 px-8"
-                                href="http://localhost:3000/"
-                                onClick={() => setShowPersonalDetails(true)}
-                              >
-                                <span className="fas fa-pencil-alt"> </span>
-                              </a>
-                            </p>
-                            <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                              Hindi / English{" "}
-                            </h5>
-                          </div>
-                          <div className="mb-3">
-                            <p className="font-size-4 mb-0">
-                              Permanent Address
-                            </p>
-                            <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                              24, near ram bag hoshangabad
-                            </h5>
-                          </div>
-                          <div className="mb-3">
-                            <p className="font-size-4 mb-0">Homwtown</p>
-                            <h5 className="font-size-4 font-weight-semibold mb-0 text-black-2 text-break">
-                              Hoshangabad
-                            </h5>
-                          </div>
-                          <div className="mb-3">
-                            <p className="font-size-4 mb-0">Pincode</p>
-                            <h5 className="font-size-4 font-weight-semibold mb-0">
-                              4501366
-                            </h5>
-                          </div>
-
-                          <div className="mb-3">
-                            <p className="font-size-4 mb-0">
-                              Work Permit of Usa
-                            </p>
-                            <h5 className="font-size-4 font-weight-semibold mb-0">
-                              Yes
-                            </h5>
-                          </div>
-
-                          <div className="mb-3">
-                            <p className="font-size-4 mb-0">
-                              Work Permit of other country
-                            </p>
-                            <h5 className="font-size-4 font-weight-semibold mb-0">
-                              No
-                            </h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-12 col-xxl-6 col-lg-8 col-md-7 order-2 order-xl-1">
+            <div className="col-12 col-xxl-8 col-lg-8 col-md-7 order-2 order-xl-1">
               <div className="bg-white rounded-4 shadow-9">
                 {/*----Profile Header----*/}
                 <ul
@@ -376,7 +232,6 @@ const UserProfile = () => {
                       }
                       id="home-tab"
                       data-toggle="tab"
-                      href="#home"
                       role="tab"
                       aria-controls="home"
                       aria-selected="true"
@@ -394,7 +249,6 @@ const UserProfile = () => {
                       }
                       id="appliedJobs"
                       data-toggle="tab"
-                      href="#appliedJobs"
                       role="tab"
                       aria-controls="appliedJobs"
                       aria-selected="true"
@@ -443,227 +297,232 @@ const UserProfile = () => {
                         Career Profile
                       </h4>
                       <CustomButton
-                        className="font-size-3 rounded-3 btn-primary border-0"
+                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                         onClick={() => setShowCareerProfile(true)}
-                      >
-                        Edit
-                      </CustomButton>
+                      />
                       <CareerProfile
                         show={showCareerProfile}
                         close={() => setShowCareerProfile(false)}
                       />
                       <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                            <img
-                              src="image/l2/png/featured-job-logo-1.png"
-                              alt=""
-                            />
-                          </div>
-                          <div className="w-100 mt-n2">
-                            <h3 className="mb-0">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                          <div className="media align-items-center company_box col-md-6 p-0">
+                            <a className="text_box text-left" href="http://localhost:3000/">
+                              <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
+                            </a>
+                            <div className="text_box text-left w-100 mt-n2">
+                              <h3 className="mb-0">
+                                <a
+                                  className="font-size-6 text-black-2 font-weight-semibold"
+                                  href="http://localhost:3000/"
+                                >
+                                  Lead Product Designer
+                                </a>
+                              </h3>
                               <a
-                                className="font-size-6 text-black-2 font-weight-semibold"
                                 href="http://localhost:3000/"
+                                className="font-size-4 text-default-color line-height-2"
                               >
-                                Lead Product Designer
+                                Airabnb
                               </a>
-                            </h3>
+
+                            </div>
+
+                          </div>
+                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
                               href="http://localhost:3000/"
-                              className="font-size-4 text-default-color line-height-2"
+                              className="font-size-4 text-gray w-100"
                             >
-                              Airabnb
+                              Jun 2017 - April 2020- 3 years
                             </a>
-                            <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-4 text-gray mr-5"
+                            <a
+                              href="http://localhost:3000/"
+                              className="font-size-3 text-gray w-100"
+                            >
+                              <span
+                                className="mr-4"
+                                style={{ marginTop: "-2px" }}
                               >
-                                Jun 2017 - April 2020- 3 years
-                              </a>
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray"
-                              >
-                                <span
-                                  className="mr-4"
-                                  style={{ marginTop: "-2px" }}
-                                >
-                                  <img
-                                    src="image/svg/icon-loaction-pin-black.svg"
-                                    alt=""
-                                  />
-                                </span>
-                                New York, USA
-                              </a>
-                            </div>
+                                <img
+                                  src="image/svg/icon-loaction-pin-black.svg"
+                                  alt=""
+                                />
+                              </span>
+                              New York, USA
+                            </a>
                           </div>
                         </div>
                       </div>
-
                       <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                            <img
-                              src="image/l1/png/feature-brand-1.png"
-                              alt=""
-                            />
-                          </div>
-                          <div className="w-100 mt-n2">
-                            <h3 className="mb-0">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                          <div className="media align-items-center company_box col-md-6 p-0">
+                            <a className="text_box text-left" href="http://localhost:3000/">
+                              <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
+                            </a>
+                            <div className="text_box text-left w-100 mt-n2">
+                              <h3 className="mb-0">
+                                <a
+                                  className="font-size-6 text-black-2 font-weight-semibold"
+                                  href="http://localhost:3000/"
+                                >
+                                  Lead Product Designer
+                                </a>
+                              </h3>
                               <a
-                                className="font-size-6 text-black-2 font-weight-semibold"
                                 href="http://localhost:3000/"
+                                className="font-size-4 text-default-color line-height-2"
                               >
-                                Senior UI/UX Designer
+                                Airabnb
                               </a>
-                            </h3>
+
+                            </div>
+
+                          </div>
+                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
                               href="http://localhost:3000/"
-                              className="font-size-4 text-default-color line-height-2"
+                              className="font-size-4 text-gray w-100"
                             >
-                              Google Inc
+                              Jun 2017 - April 2020- 3 years
                             </a>
-                            <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray mr-5"
+                            <a
+                              href="http://localhost:3000/"
+                              className="font-size-3 text-gray w-100"
+                            >
+                              <span
+                                className="mr-4"
+                                style={{ marginTop: "-2px" }}
                               >
-                                Jun 2017 - April 2020- 3 years
-                              </a>
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray"
-                              >
-                                <span
-                                  className="mr-4"
-                                  style={{ marginTop: "-2px" }}
-                                >
-                                  <img
-                                    src="image/svg/icon-loaction-pin-black.svg"
-                                    alt=""
-                                  />
-                                </span>
-                                New York, USA
-                              </a>
-                            </div>
+                                <img
+                                  src="image/svg/icon-loaction-pin-black.svg"
+                                  alt=""
+                                />
+                              </span>
+                              New York, USA
+                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
                     {/*----Employee's Education Profile----*/}
                     <div
-                      id="Education"
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex justify-content-md-between flex-wrap"
+                      id="Career_Profile"
+                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex align-items-center justify-content-md-between flex-wrap"
                     >
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                         Education
                       </h4>
                       <CustomButton
-                        className="font-size-3 rounded-3 btn-primary border-0"
+                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                         onClick={() => setShowEducation(true)}
-                      >
-                        Edit
-                      </CustomButton>
+                      />
                       <EducationDetails
                         show={showEducation}
                         close={() => setShowEducation(false)}
                       />
                       <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                            <img src="image/svg/harvard.svg" alt="" />
-                          </div>
-                          <div className="w-100 mt-n2">
-                            <h3 className="mb-0">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                          <div className="media align-items-center company_box p-0">
+                            <a className="text_box text-left" href="http://localhost:3000/">
+                              <img className="company_logo" src="image/svg/harvard.svg" alt="" />
+                            </a>
+                            <div className="text_box text-left w-100 mt-n2">
+                              <h3 className="mb-0">
+                                <a
+                                  className="font-size-6 text-black-2 font-weight-semibold"
+                                  href="http://localhost:3000/"
+                                >
+                                  Masters in Art Design
+                                </a>
+                              </h3>
                               <a
-                                className="font-size-6 text-black-2"
                                 href="http://localhost:3000/"
+                                className="font-size-4 text-default-color line-height-2"
                               >
-                                Masters in Art Design
+                                Harvard University
                               </a>
-                            </h3>
+
+                            </div>
+
+                          </div>
+                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
                               href="http://localhost:3000/"
-                              className="font-size-4 text-default-color line-height-2"
+                              className="font-size-4 text-gray w-100"
                             >
-                              Harvard University
+                              Jun 2017 - April 2020- 3 years
                             </a>
-                            <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray mr-5"
+                            <a
+                              href="http://localhost:3000/"
+                              className="font-size-3 text-gray w-100"
+                            >
+                              <span
+                                className="mr-4"
+                                style={{ marginTop: "-2px" }}
                               >
-                                Jun 2017 - April 2020- 3 years
-                              </a>
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray"
-                              >
-                                <span
-                                  className="mr-4"
-                                  style={{ marginTop: "-2px" }}
-                                >
-                                  <img
-                                    src="image/svg/icon-loaction-pin-black.svg"
-                                    alt=""
-                                  />
-                                </span>
-                                Brylin, USA
-                              </a>
-                            </div>
+                                <img
+                                  src="image/svg/icon-loaction-pin-black.svg"
+                                  alt=""
+                                />
+                              </span>
+                              New York, USA
+                            </a>
                           </div>
                         </div>
                       </div>
-
                       <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                            <img src="image/svg/mit.svg" alt="" />
-                          </div>
-                          <div className="w-100 mt-n2">
-                            <h3 className="mb-0">
+                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                          <div className="media align-items-center company_box p-0">
+                            <a className="text_box text-left" href="http://localhost:3000/">
+                              <img className="company_logo" src="image/svg/mit.svg" alt="" />
+                            </a>
+                            <div className="text_box text-left w-100 mt-n2">
+                              <h3 className="mb-0">
+                                <a
+                                  className="font-size-6 text-black-2 font-weight-semibold"
+                                  href="http://localhost:3000/"
+                                >
+                                  Bachelor in Software Engineering
+                                </a>
+                              </h3>
                               <a
-                                className="font-size-6 text-black-2"
                                 href="http://localhost:3000/"
+                                className="font-size-4 text-default-color line-height-2"
                               >
-                                Bachelor in Software Engineering{" "}
+                                Manipal Institute of Technology
                               </a>
-                            </h3>
+
+                            </div>
+
+                          </div>
+                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
                               href="http://localhost:3000/"
-                              className="font-size-4 text-default-color line-height-2"
+                              className="font-size-4 text-gray w-100"
                             >
-                              Manipal Institute of Technology
+                              Jun 2017 - April 2020- 3 years
                             </a>
-                            <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray mr-5"
+                            <a
+                              href="http://localhost:3000/"
+                              className="font-size-3 text-gray w-100"
+                            >
+                              <span
+                                className="mr-4"
+                                style={{ marginTop: "-2px" }}
                               >
-                                Fed 2012 - April 2016 - 4 years
-                              </a>
-                              <a
-                                href="http://localhost:3000/"
-                                className="font-size-3 text-gray"
-                              >
-                                <span
-                                  className="mr-4"
-                                  style={{ marginTop: "-2px" }}
-                                >
-                                  <img
-                                    src="image/svg/icon-loaction-pin-black.svg"
-                                    alt=""
-                                  />
-                                </span>
-                                New York, USA
-                              </a>
-                            </div>
+                                <img
+                                  src="image/svg/icon-loaction-pin-black.svg"
+                                  alt=""
+                                />
+                              </span>
+                              New York, USA
+                            </a>
                           </div>
                         </div>
                       </div>
                     </div>
+
                     {/*----Employee's Employement Profile----*/}
                     <div
                       className="border-top p-5 pl-xs-12 pt-7 pb-5"
@@ -674,11 +533,9 @@ const UserProfile = () => {
                           Employment Details
                         </h4>
                         <CustomButton
-                          className="font-size-3 rounded-3 btn-primary border-0"
+                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowEmplyomentDetails(true)}
-                        >
-                          Edit
-                        </CustomButton>
+                        />
                         <EmployementDetails
                           show={showEmplyomentDetails}
                           close={() => setShowEmplyomentDetails(false)}
@@ -711,11 +568,9 @@ const UserProfile = () => {
                           Projects
                         </h4>
                         <CustomButton
-                          className="font-size-3 rounded-3 btn-primary border-0"
+                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowProjects(true)}
-                        >
-                          Edit
-                        </CustomButton>
+                        />
                         <Projects
                           show={showProjects}
                           close={() => setShowProjects(false)}
@@ -1181,170 +1036,7 @@ const UserProfile = () => {
                 {/* <!-- Bottom End --> */}
               </div>
             </div>
-            {/*----Other Experts----*/}
-            <div className="col-12 col-xxl-3 col-md-4 offset-xxl-0 offset-lg-4 offset-md-5 order-3 order-xl-2 mt-xxl-0 mt-md-12">
-              <div className="pl-lg-5">
-                <h4 className="font-size-6 font-weight-semibold mb-0">
-                  Other experts
-                </h4>
-                <ul className="list-unstyled">
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9 flex-wrap"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-3"
-                          src="image/l3/png/team-member-1.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <h4 className="mb-0 font-size-5 font-weight-semibold">
-                          David Herison
-                        </h4>
-                        <p className="mb-0 font-size-3 heading-default-color">
-                          UX/UI Designer
-                        </p>
-                        <span className="font-size-3 text-smoke">
-                          <img
-                            className="mr-2"
-                            src="image/svg/icon-loaction-pin-black.svg"
-                            alt=""
-                          />
-                          New York, USA
-                        </span>
-                      </div>
-                    </a>
-                  </li>
 
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9 flex-wrap"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-3"
-                          src="image/l3/png/team-member-2.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <h4 className="mb-0 font-size-5 font-weight-semibold">
-                          Mark Zanitos
-                        </h4>
-                        <p className="mb-0 font-size-3 heading-default-color">
-                          Lead Product Designer
-                        </p>
-                        <span className="font-size-3 text-smoke">
-                          <img
-                            className="mr-2"
-                            src="image/svg/icon-loaction-pin-black.svg"
-                            alt=""
-                          />
-                          New York, USA
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9 flex-wrap"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-3"
-                          src="image/l3/png/team-member-3.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <h4 className="mb-0 font-size-5 font-weight-semibold">
-                          Anna Frankin
-                        </h4>
-                        <p className="mb-0 font-size-3 heading-default-color">
-                          Visual Designer
-                        </p>
-                        <span className="font-size-3 text-smoke">
-                          <img
-                            className="mr-2"
-                            src="image/svg/icon-loaction-pin-black.svg"
-                            alt=""
-                          />
-                          New York, USA
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9 flex-wrap"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-3"
-                          src="image/l3/png/team-member-4.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <h4 className="mb-0 font-size-5 font-weight-semibold">
-                          Jhony Vino
-                        </h4>
-                        <p className="mb-0 font-size-3 heading-default-color">
-                          Creative Director
-                        </p>
-                        <span className="font-size-3 text-smoke">
-                          <img
-                            className="mr-2"
-                            src="image/svg/icon-loaction-pin-black.svg"
-                            alt=""
-                          />
-                          New York, USA
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li className="">
-                    <a
-                      className="media align-items-center py-9 flex-wrap"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-3"
-                          src="image/l3/png/team-member-5.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <h4 className="mb-0 font-size-5 font-weight-semibold">
-                          Aniasta Hemberg
-                        </h4>
-                        <p className="mb-0 font-size-3 heading-default-color">
-                          Creative Director
-                        </p>
-                        <span className="font-size-3 text-smoke">
-                          <img
-                            className="mr-2"
-                            src="image/svg/icon-loaction-pin-black.svg"
-                            alt=""
-                          />
-                          New York, USA
-                        </span>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
         <>
