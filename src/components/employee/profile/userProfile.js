@@ -1,38 +1,25 @@
 import React, { useState } from "react";
 import EmployeeHeader from "../header";
 import EmployeeFooter from "../footer";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Registration from "./modals/registrationModal";
 import EmployementDetails from "./modals/employementDetailsModal";
 import PersonalDetails from "./modals/personalDetailsModal";
 import CareerProfile from "./modals/careerProfileModal";
 import EducationDetails from "./modals/educationDetailsModal";
 import Projects from "./modals/projectsModal";
-import Patent from "./modals/patentModal";
-import Certificate from "./modals/certificateModal";
 import ItSkills from "./modals/itSkillsModal";
-import OnlineProfile from "./modals/onlineProfileModal";
-import WorkSample from "./modals/workSampleModal";
 import CustomButton from "../../comman/button";
 
 const UserProfile = () => {
-  // const [show, setShow] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showCareerProfile, setShowCareerProfile] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
-  // const [showPatents, setShowPatents] = useState(false);
-  // const [showCertificate, setShowCertificate] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
-  // const [showOnlineProfile, setShowOnlineProfile] = useState(false);
-  // const [showWorkSample, setShowWorkSample] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
@@ -179,7 +166,6 @@ const UserProfile = () => {
                       </ul>
                     </div>
                   </div>
-
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-5">
                     <h5 className="text-black-2 mb-8 font-size-5">
                       Contact Info
@@ -408,157 +394,6 @@ const UserProfile = () => {
                       Applied Jobs
                     </a>
                   </li>
-
-                  {/* <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="employement-tab"
-                      data-toggle="tab"
-                      href="#employement"
-                      role="tab"
-                      aria-controls="employement"
-                      aria-selected="false"
-                    >
-                      Employment
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="personal_details-tab"
-                      data-toggle="tab"
-                      href="#personal_details"
-                      role="tab"
-                      aria-controls="personal_details"
-                      aria-selected="false"
-                    >
-                      Personal Details
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="Career_Profile-tab"
-                      data-toggle="tab"
-                      href="#Career_Profile"
-                      role="tab"
-                      aria-controls="Career_Profile"
-                      aria-selected="false"
-                    >
-                      Career Profile
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="Projects-tab"
-                      data-toggle="tab"
-                      href="#Projects"
-                      role="tab"
-                      aria-controls="Projects"
-                      aria-selected="false"
-                    >
-                      Projects
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="Education-tab"
-                      data-toggle="tab"
-                      href="#Education"
-                      role="tab"
-                      aria-controls="Education"
-                      aria-selected="false"
-                    >
-                      Education
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="Education-tab"
-                      // data-toggle="tab"
-                      href=""
-                      // role="tab"
-                      // aria-controls="Education"
-                      // aria-selected="false"
-                      onClick={() => setShowPatents(true)}
-                    >
-                      Patent
-                    </a>
-                    <Patent
-                      show={showPatents}
-                      close={() => setShowPatents(false)}
-                    />
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="Education-tab"
-                      // data-toggle="tab"
-                      href=""
-                      // role="tab"
-                      // aria-controls="Education"
-                      // aria-selected="false"
-                      onClick={() => setShowCertificate(true)}
-                    >
-                      Certificate
-                    </a>
-                    <Certificate
-                      show={showCertificate}
-                      close={() => setShowCertificate(false)}
-                    />
-                  </li>{" "}
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="skills-tab"
-                      data-toggle="tab"
-                      href="#skills"
-                      role="tab"
-                      aria-controls="skills"
-                      aria-selected="false"
-                    >
-                      It Skills
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="skills-tab"
-                      // data-toggle="tab"
-                      href=""
-                      // role="tab"
-                      // aria-controls="skills"
-                      // aria-selected="false"
-                      onClick={() => setShowOnlineProfile(true)}
-                    >
-                      Online profile
-                    </a>
-                    <OnlineProfile
-                      show={showOnlineProfile}
-                      close={() => setShowOnlineProfile(false)}
-                    />
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="skills-tab"
-                      // data-toggle="tab"
-                      href=""
-                      // role="tab"
-                      // aria-controls="skills"
-                      // aria-selected="false"
-                      onClick={() => setShowWorkSample(true)}
-                    >
-                      Work Sample
-                    </a>
-                    <WorkSample
-                      show={showWorkSample}
-                      close={() => setShowWorkSample(false)}
-                    />
-                  </li> */}
                 </ul>
                 {/*---Profile Details----*/}
                 <div

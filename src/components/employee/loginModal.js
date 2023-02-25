@@ -197,28 +197,9 @@ export default function Login(props) {
                         id="email2"
                       />
                     </div>
-                    <div className="form-group d-flex flex-wrap justify-content-between mb-1">
-                      <label
-                        htmlFor="terms-check2"
-                        className="gr-check-input d-flex  mr-3"
-                      >
-                        <input
-                          className="d-none"
-                          type="checkbox"
-                          id="terms-check2"
-                        />
-                        <span className="checkbox mr-5"></span>
-                        <span className="font-size-3 mb-0 line-height-reset d-block">
-                          Agree to the{" "}
-                          <a href="" className="text-primary">
-                            Terms & Conditions
-                          </a>
-                        </span>
-                      </label>
-                    </div>
                     <div className="form-group mb-8">
                       <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                        Submit{" "}
+                        Sent email{" "}
                       </button>
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
