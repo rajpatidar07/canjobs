@@ -152,6 +152,14 @@ function EmployeeHeader() {
               </Link>
             </div>
           </div>
+          <div className="py-5">
+            <Link
+              to={"/dashboard"}
+              className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+            >
+              Admin{" "}
+            </Link>
+          </div>
           <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
             {/* <!-- Modal for Login--> */}
             <Link

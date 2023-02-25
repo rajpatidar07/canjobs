@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
 
-function AddJobsModal(props) {
+function AddModal(props) {
   return (
     <>
       <Modal
@@ -376,4 +376,4 @@ function AddJobsModal(props) {
   );
 }
 
-export default AddJobsModal;
+export default AddModal;
