@@ -819,7 +819,7 @@ function RecommendedJobs() {
                   <div className="text-center pt-5 pt-lg-13">
                     <a
                       className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      href=""
+                      href="http://localhost:3000/"
                     >
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
@@ -872,13 +872,13 @@ function RecommendedJobs() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -972,7 +972,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Editing
                                   </a>
@@ -980,7 +980,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
                                   </a>
@@ -988,7 +988,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     XD
                                   </a>
@@ -996,7 +996,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     User Persona
                                   </a>
@@ -1004,7 +1004,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Sketch
                                   </a>
@@ -1092,7 +1092,7 @@ function RecommendedJobs() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
@@ -1143,13 +1143,13 @@ function RecommendedJobs() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1243,7 +1243,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Visual Design
                                   </a>
@@ -1251,7 +1251,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
                                   </a>
@@ -1259,7 +1259,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     XD
                                   </a>
@@ -1267,7 +1267,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     User Persona
                                   </a>
@@ -1275,7 +1275,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Sketch
                                   </a>
@@ -1363,7 +1363,7 @@ function RecommendedJobs() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
@@ -1414,13 +1414,13 @@ function RecommendedJobs() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1514,7 +1514,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Swift{" "}
                                   </a>
@@ -1522,7 +1522,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Objective C
                                   </a>
@@ -1530,7 +1530,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     X Code
                                   </a>
@@ -1538,7 +1538,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     WooCommerce
                                   </a>
@@ -1546,7 +1546,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Coding
                                   </a>
@@ -1634,7 +1634,7 @@ function RecommendedJobs() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
@@ -1685,13 +1685,13 @@ function RecommendedJobs() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -1785,7 +1785,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Agile
                                   </a>
@@ -1793,7 +1793,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
                                   </a>
@@ -1801,7 +1801,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Prototyping
                                   </a>
@@ -1809,7 +1809,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Slack
                                   </a>
@@ -1817,7 +1817,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Director
                                   </a>
@@ -1905,7 +1905,7 @@ function RecommendedJobs() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
@@ -1956,13 +1956,13 @@ function RecommendedJobs() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -2056,7 +2056,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     C++
                                   </a>
@@ -2064,7 +2064,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Java Scprit
                                   </a>
@@ -2072,7 +2072,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     React JS
                                   </a>
@@ -2080,7 +2080,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Vue
                                   </a>
@@ -2088,7 +2088,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Angular
                                   </a>
@@ -2176,7 +2176,7 @@ function RecommendedJobs() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
@@ -2227,13 +2227,13 @@ function RecommendedJobs() {
                             <div className="card-btn-group">
                               <a
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>
                               <a
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
@@ -2327,7 +2327,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Agile
                                   </a>
@@ -2335,7 +2335,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
                                   </a>
@@ -2343,7 +2343,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Prototyping
                                   </a>
@@ -2351,7 +2351,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     User Persona
                                   </a>
@@ -2359,7 +2359,7 @@ function RecommendedJobs() {
                                 <li>
                                   <a
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href=""
+                                    href="http://localhost:3000/"
                                   >
                                     Sketch
                                   </a>
@@ -2447,7 +2447,7 @@ function RecommendedJobs() {
                               </ul>
                               <a
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href=""
+                                href="http://localhost:3000/"
                               >
                                 Apply to this job
                               </a>

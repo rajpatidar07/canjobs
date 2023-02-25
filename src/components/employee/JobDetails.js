@@ -63,13 +63,13 @@ export default function JobDetails() {
                       <div class="card-btn-group">
                         <a
                           class="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                          href=""
+                          href="http://localhost:3000/"
                         >
                           Apply to this job
                         </a>
                         <a
                           class="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                          href=""
+                          href="http://localhost:3000/"
                         >
                           <i class="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                           Save job
@@ -240,7 +240,7 @@ export default function JobDetails() {
                         </ul>
                         <a
                           class="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                          href=""
+                          href="http://localhost:3000/"
                         >
                           Apply to this job
                         </a>
