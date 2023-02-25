@@ -17,7 +17,7 @@ const AdminDashboard = () => {
                     <div class="row mb-7">
                         <div class="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
                             {/* <!-- Single Category --> */}
-                            <a href="#" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
+                            <a href="http://localhost:3000/" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
                                 <div class="text-blue bg-blue-opacity-1 circle-56 font-size-6 mr-7">
                                     <i class="fas fa-briefcase"></i>
                                 </div>
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
                         </div>
                         <div class="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
                             {/* <!-- Single Category --> */}
-                            <a href="#" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
+                            <a href="http://localhost:3000/" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
                                 <div class="text-pink bg-pink-opacity-1 circle-56 font-size-6 mr-7">
                                     <i class="fas fa-user"></i>
                                 </div>
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
                         </div>
                         <div class="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
                             {/* <!-- Single Category --> */}
-                            <a href="#" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
+                            <a href="http://localhost:3000/" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
                                 <div class="text-orange bg-orange-opacity-1 circle-56 font-size-6 mr-7">
                                     <i class="fas fa-eye"></i>
                                 </div>
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
                         </div>
                         <div class="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
                             {/* <!-- Single Category --> */}
-                            <a href="#" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
+                            <a href="http://localhost:3000/" class="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8">
                                 <div class="text-egg-blue bg-egg-blue-opacity-1 circle-56 font-size-6 mr-7">
                                     <i class="fas fa-mouse-pointer"></i>
                                 </div>
@@ -128,7 +128,7 @@ const AdminDashboard = () => {
                                                 <div class=""><a href="contact.html" class="font-size-3 font-weight-bold text-green text-uppercase">Contact</a></div>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100 pr-0">
-                                                <div class=""><a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
+                                                <div class=""><a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -153,7 +153,7 @@ const AdminDashboard = () => {
                                                 <div class=""><a href="contact.html" class="font-size-3 font-weight-bold text-green text-uppercase">Contact</a></div>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100 pr-0">
-                                                <div class=""><a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
+                                                <div class=""><a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -178,7 +178,7 @@ const AdminDashboard = () => {
                                                 <div class=""><a href="contact.html" class="font-size-3 font-weight-bold text-green text-uppercase">Contact</a></div>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100 pr-0">
-                                                <div class=""><a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
+                                                <div class=""><a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
                                                 <div class=""><a href="contact.html" class="font-size-3 font-weight-bold text-green text-uppercase">Contact</a></div>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100 pr-0">
-                                                <div class=""><a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
+                                                <div class=""><a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -228,7 +228,7 @@ const AdminDashboard = () => {
                                                 <div class=""><a href="contact.html" class="font-size-3 font-weight-bold text-green text-uppercase">Contact</a></div>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100 pr-0">
-                                                <div class=""><a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
+                                                <div class=""><a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Reject</a></div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -238,17 +238,17 @@ const AdminDashboard = () => {
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination pagination-hover-primary rounded-0 ml-n2">
                                         <li class="page-item rounded-0 flex-all-center">
-                                            <a class="page-link rounded-0 border-0 px-3active" href="#" aria-label="Previous">
+                                            <a class="page-link rounded-0 border-0 px-3active" href="http://localhost:3000/" aria-label="Previous">
                                                 <i class="fas fa-chevron-left"></i>
                                             </a>
                                         </li>
-                                        <li class="page-item"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="#">3</a></li>
-                                        <li class="page-item disabled"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="#">...</a></li>
-                                        <li class="page-item "><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="#">7</a></li>
+                                        <li class="page-item"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="http://localhost:3000/">1</a></li>
+                                        <li class="page-item"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="http://localhost:3000/">2</a></li>
+                                        <li class="page-item"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="http://localhost:3000/">3</a></li>
+                                        <li class="page-item disabled"><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="http://localhost:3000/">...</a></li>
+                                        <li class="page-item "><a class="page-link border-0 font-size-4 font-weight-semibold px-3" href="http://localhost:3000/">7</a></li>
                                         <li class="page-item rounded-0 flex-all-center">
-                                            <a class="page-link rounded-0 border-0 px-3" href="#" aria-label="Next">
+                                            <a class="page-link rounded-0 border-0 px-3" href="http://localhost:3000/" aria-label="Next">
                                                 <i class="fas fa-chevron-right"></i>
                                             </a>
                                         </li>
@@ -308,10 +308,10 @@ const AdminDashboard = () => {
                                                 <h3 class="font-size-4 font-weight-bold text-black-2 mb-0">47</h3>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-80">
-                                                <a href="#" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100">
-                                                <a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -333,10 +333,10 @@ const AdminDashboard = () => {
                                                 <h3 class="font-size-4 font-weight-bold text-black-2 mb-0">145</h3>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-80">
-                                                <a href="#" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100">
-                                                <a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -358,10 +358,10 @@ const AdminDashboard = () => {
                                                 <h3 class="font-size-4 font-weight-bold text-black-2 mb-0">62</h3>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-80">
-                                                <a href="#" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100">
-                                                <a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
                                             </td>
                                         </tr>
                                         <tr class="border border-color-2">
@@ -383,10 +383,10 @@ const AdminDashboard = () => {
                                                 <h3 class="font-size-4 font-weight-bold text-black-2 mb-0">184</h3>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-80">
-                                                <a href="#" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-green text-uppercase">Edit</a>
                                             </td>
                                             <td class="table-y-middle py-7 min-width-px-100">
-                                                <a href="#" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
+                                                <a href="http://localhost:3000/" class="font-size-3 font-weight-bold text-red-2 text-uppercase">Delete</a>
                                             </td>
                                         </tr>
                                     </tbody>

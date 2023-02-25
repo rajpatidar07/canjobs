@@ -184,7 +184,7 @@ function EmployeeHeader() {
             <div className="dropdown show-gr-dropdown py-5">
               <a
                 className="proile media ml-7 flex-y-center"
-                href=""
+                href="http://localhost:3000/"
                 role="button"
                 id="dropdownMenuLink"
                 data-toggle="dropdown"
@@ -207,7 +207,7 @@ function EmployeeHeader() {
               >
                 <a
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href=""
+                  href="http://localhost:3000/"
                 >
                   Settings{" "}
                 </a>
@@ -219,7 +219,7 @@ function EmployeeHeader() {
                 </a>
                 <a
                   className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href=""
+                  href="http://localhost:3000/"
                 >
                   Log Out
                 </a>

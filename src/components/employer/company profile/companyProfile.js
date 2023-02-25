@@ -28,7 +28,7 @@ function CompanyProfile() {
           <div className="row justify-content-center">
             <div className="col-12 mt-13 dark-mode-texts">
               <div className="mb-9">
-                <a className="d-flex align-items-center ml-4" href="">
+                <a className="d-flex align-items-center ml-4" href="http://localhost:3000/">
                   {" "}
                   <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                   <span className="text-uppercase font-size-3 font-weight-bold text-gray">
@@ -44,7 +44,7 @@ function CompanyProfile() {
             <div className="col-12 col-xl-9 col-lg-8">
               <div className="bg-white rounded-4 pt-11 shadow-9">
                 <div className="d-xs-flex align-items-center pl-xs-12 mb-8 text-center text-xs-left">
-                  <a className="mr-xs-7 mb-5 mb-xs-0" href="">
+                  <a className="mr-xs-7 mb-5 mb-xs-0" href="http://localhost:3000/">
                     <img
                       className="square-72 rounded-6"
                       src="image/l2/png/featured-job-logo-1.png"
@@ -55,7 +55,7 @@ function CompanyProfile() {
                     <h2 className="mt-xs-n5">
                       <a
                         className="font-size-6 text-black-2 font-weight-semibold"
-                        href=""
+                        href="http://localhost:3000/"
                       >
                         Airbnb INC.
                       </a>
@@ -75,16 +75,16 @@ function CompanyProfile() {
                     <Link
                       className={
                         showAccountDetails === false &&
-                        showCompanyDetails === false &&
-                        showKycComplainDetails === false
+                          showCompanyDetails === false &&
+                          showKycComplainDetails === false
                           ? "active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                           : " text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                       }
-                      onClick={() => (
-                        setShowCompanyDetails(false),
-                        setShowKycComplainDetails(false),
+                      onClick={() => {
+                        setShowCompanyDetails(false)
+                        setShowKycComplainDetails(false)
                         setShowAccountDetails(false)
-                      )}
+                      }}
                       to={""}
                     >
                       Company
@@ -184,25 +184,25 @@ function CompanyProfile() {
                           <div className="icon-link d-flex align-items-center">
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fab fa-linkedin-in"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fab fa-facebook-f"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fab fa-twitter"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fa fa-globe"></i>
                             </a>
@@ -225,8 +225,8 @@ function CompanyProfile() {
                     {/* <!-- Excerpt Start --> */}
                     {/* <!-- Company Info  --> */}
                     {showAccountDetails === false &&
-                    showCompanyDetails === false &&
-                    showKycComplainDetails === false ? (
+                      showCompanyDetails === false &&
+                      showKycComplainDetails === false ? (
                       <div>
                         <div className="d-flex align-items-center justify-content-md-between flex-wrap">
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
@@ -588,25 +588,25 @@ function CompanyProfile() {
                           <div className="icon-link d-flex align-items-center">
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fab fa-linkedin"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fab fa-facebook-f"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fab fa-twitter"></i>
                             </a>
                             <a
                               className="text-smoke circle-32 bg-concrete mr-5"
-                              href=""
+                              href="http://localhost:3000/"
                             >
                               <i className="fa fa-globe"></i>
                             </a>
@@ -674,7 +674,7 @@ function CompanyProfile() {
                 <ul className="list-unstyled">
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="">
+                    <a className="media align-items-center py-9" href="http://localhost:3000/">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"
@@ -693,7 +693,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="">
+                    <a className="media align-items-center py-9" href="http://localhost:3000/">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"
@@ -712,7 +712,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="">
+                    <a className="media align-items-center py-9" href="http://localhost:3000/">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"
@@ -731,7 +731,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="border-bottom">
-                    <a className="media align-items-center py-9" href="">
+                    <a className="media align-items-center py-9" href="http://localhost:3000/">
                       <div className="mr-5">
                         <img
                           className="square-72 rounded-5"
@@ -750,7 +750,7 @@ function CompanyProfile() {
                   {/* <!-- Single List End --> */}
                   {/* <!-- Single List --> */}
                   <li className="">
-                    <a className="media align-items-center py-9" href="">
+                    <a className="media align-items-center py-9" href="http://localhost:3000/">
                       <div className="mr-7">
                         <img
                           className="square-72 rounded-5"

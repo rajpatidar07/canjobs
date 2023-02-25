@@ -115,7 +115,7 @@ function AllComponents() {
                           aria-labelledby="navbarDropdown21"
                         >
                           <li className="drop-menu-item">
-                            <a href="">Dashboard Main</a>
+                            <a href="http://localhost:3000/">Dashboard Main</a>
                           </li>
                           <li className="drop-menu-item">
                             <a href="dashboard-settings.html">Settings</a>

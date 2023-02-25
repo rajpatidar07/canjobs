@@ -292,7 +292,7 @@ function JobBoxResponse() {
                   <li className="page-item rounded-0 flex-all-center">
                     <a
                       className="page-link rounded-0 border-0 px-3active"
-                      href=""
+                      href="http://localhost:3000/"
                       aria-label="Previous"
                     >
                       <i className="fas fa-chevron-left"></i>
@@ -301,7 +301,7 @@ function JobBoxResponse() {
                   <li className="page-item">
                     <a
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href=""
+                      href="http://localhost:3000/"
                     >
                       1
                     </a>
@@ -309,7 +309,7 @@ function JobBoxResponse() {
                   <li className="page-item">
                     <a
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href=""
+                      href="http://localhost:3000/"
                     >
                       2
                     </a>
@@ -317,7 +317,7 @@ function JobBoxResponse() {
                   <li className="page-item">
                     <a
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href=""
+                      href="http://localhost:3000/"
                     >
                       3
                     </a>
@@ -325,7 +325,7 @@ function JobBoxResponse() {
                   <li className="page-item disabled">
                     <a
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href=""
+                      href="http://localhost:3000/"
                     >
                       ...
                     </a>
@@ -333,7 +333,7 @@ function JobBoxResponse() {
                   <li className="page-item ">
                     <a
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href=""
+                      href="http://localhost:3000/"
                     >
                       7
                     </a>
@@ -341,7 +341,7 @@ function JobBoxResponse() {
                   <li className="page-item rounded-0 flex-all-center">
                     <a
                       className="page-link rounded-0 border-0 px-3"
-                      href=""
+                      href="http://localhost:3000/"
                       aria-label="Next"
                     >
                       <i className="fas fa-chevron-right"></i>
