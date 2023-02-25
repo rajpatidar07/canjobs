@@ -1,38 +1,25 @@
 import React, { useState } from "react";
 import EmployeeHeader from "../header";
 import EmployeeFooter from "../footer";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Registration from "./modals/registrationModal";
 import EmployementDetails from "./modals/employementDetailsModal";
 import PersonalDetails from "./modals/personalDetailsModal";
 import CareerProfile from "./modals/careerProfileModal";
 import EducationDetails from "./modals/educationDetailsModal";
 import Projects from "./modals/projectsModal";
-import Patent from "./modals/patentModal";
-import Certificate from "./modals/certificateModal";
 import ItSkills from "./modals/itSkillsModal";
-import OnlineProfile from "./modals/onlineProfileModal";
-import WorkSample from "./modals/workSampleModal";
 import CustomButton from "../../comman/button";
 
 const UserProfile = () => {
-  // const [show, setShow] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showCareerProfile, setShowCareerProfile] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
-  // const [showPatents, setShowPatents] = useState(false);
-  // const [showCertificate, setShowCertificate] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
-  // const [showOnlineProfile, setShowOnlineProfile] = useState(false);
-  // const [showWorkSample, setShowWorkSample] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
@@ -42,7 +29,10 @@ const UserProfile = () => {
           <div className="row justify-content-center">
             <div className="col-12 dark-mode-texts">
               <div className="mb-9">
-                <a className="d-flex align-items-center ml-4" href="http://localhost:3000/">
+                <a
+                  className="d-flex align-items-center ml-4"
+                  href="http://localhost:3000/"
+                >
                   {" "}
                   <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                   <span className="text-uppercase font-size-3 font-weight-bold text-gray">
@@ -88,7 +78,10 @@ const UserProfile = () => {
                       />
                     </h4>
                     <p className="mb-8">
-                      <a className="text-gray font-size-4" href="http://localhost:3000/">
+                      <a
+                        className="text-gray font-size-4"
+                        href="http://localhost:3000/"
+                      >
                         Product Designer
                       </a>
                     </p>
@@ -179,7 +172,6 @@ const UserProfile = () => {
                       </ul>
                     </div>
                   </div>
-
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-5">
                     <h5 className="text-black-2 mb-8 font-size-5">
                       Contact Info
@@ -207,7 +199,10 @@ const UserProfile = () => {
                     <div className="mb-7">
                       <p className="font-size-4 mb-0">Phone</p>
                       <h5 className="font-size-4 font-weight-semibold mb-0">
-                        <a className="text-black-2 text-break" href="http://localhost:3000/">
+                        <a
+                          className="text-black-2 text-break"
+                          href="http://localhost:3000/"
+                        >
                           +999 565 562
                         </a>
                       </h5>
@@ -408,157 +403,6 @@ const UserProfile = () => {
                       Applied Jobs
                     </a>
                   </li>
-
-                  {/* <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="employement-tab"
-                      data-toggle="tab"
-                      href="#employement"
-                      role="tab"
-                      aria-controls="employement"
-                      aria-selected="false"
-                    >
-                      Employment
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="personal_details-tab"
-                      data-toggle="tab"
-                      href="#personal_details"
-                      role="tab"
-                      aria-controls="personal_details"
-                      aria-selected="false"
-                    >
-                      Personal Details
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="Career_Profile-tab"
-                      data-toggle="tab"
-                      href="#Career_Profile"
-                      role="tab"
-                      aria-controls="Career_Profile"
-                      aria-selected="false"
-                    >
-                      Career Profile
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="Projects-tab"
-                      data-toggle="tab"
-                      href="#Projects"
-                      role="tab"
-                      aria-controls="Projects"
-                      aria-selected="false"
-                    >
-                      Projects
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="Education-tab"
-                      data-toggle="tab"
-                      href="#Education"
-                      role="tab"
-                      aria-controls="Education"
-                      aria-selected="false"
-                    >
-                      Education
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="Education-tab"
-                      // data-toggle="tab"
-                      href="http://localhost:3000/"
-                      // role="tab"
-                      // aria-controls="Education"
-                      // aria-selected="false"
-                      onClick={() => setShowPatents(true)}
-                    >
-                      Patent
-                    </a>
-                    <Patent
-                      show={showPatents}
-                      close={() => setShowPatents(false)}
-                    />
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="Education-tab"
-                      // data-toggle="tab"
-                      href="http://localhost:3000/"
-                      // role="tab"
-                      // aria-controls="Education"
-                      // aria-selected="false"
-                      onClick={() => setShowCertificate(true)}
-                    >
-                      Certificate
-                    </a>
-                    <Certificate
-                      show={showCertificate}
-                      close={() => setShowCertificate(false)}
-                    />
-                  </li>{" "}
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      id="skills-tab"
-                      data-toggle="tab"
-                      href="#skills"
-                      role="tab"
-                      aria-controls="skills"
-                      aria-selected="false"
-                    >
-                      It Skills
-                    </a>
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="skills-tab"
-                      // data-toggle="tab"
-                      href="http://localhost:3000/"
-                      // role="tab"
-                      // aria-controls="skills"
-                      // aria-selected="false"
-                      onClick={() => setShowOnlineProfile(true)}
-                    >
-                      Online profile
-                    </a>
-                    <OnlineProfile
-                      show={showOnlineProfile}
-                      close={() => setShowOnlineProfile(false)}
-                    />
-                  </li>
-                  <li className="tab-menu-items nav-item pr-12">
-                    <a
-                      className="text-uppercase font-size-3 font-weight-bold text-default-color py-3"
-                      // id="skills-tab"
-                      // data-toggle="tab"
-                      href="http://localhost:3000/"
-                      // role="tab"
-                      // aria-controls="skills"
-                      // aria-selected="false"
-                      onClick={() => setShowWorkSample(true)}
-                    >
-                      Work Sample
-                    </a>
-                    <WorkSample
-                      show={showWorkSample}
-                      close={() => setShowWorkSample(false)}
-                    />
-                  </li> */}
                 </ul>
                 {/*---Profile Details----*/}
                 <div
@@ -632,10 +476,16 @@ const UserProfile = () => {
                               Airabnb
                             </a>
                             <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a href="http://localhost:3000/" className="font-size-4 text-gray mr-5">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-4 text-gray mr-5"
+                              >
                                 Jun 2017 - April 2020- 3 years
                               </a>
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray"
+                              >
                                 <span
                                   className="mr-4"
                                   style={{ marginTop: "-2px" }}
@@ -676,10 +526,16 @@ const UserProfile = () => {
                               Google Inc
                             </a>
                             <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray mr-5">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray mr-5"
+                              >
                                 Jun 2017 - April 2020- 3 years
                               </a>
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray"
+                              >
                                 <span
                                   className="mr-4"
                                   style={{ marginTop: "-2px" }}
@@ -721,7 +577,10 @@ const UserProfile = () => {
                           </div>
                           <div className="w-100 mt-n2">
                             <h3 className="mb-0">
-                              <a className="font-size-6 text-black-2" href="http://localhost:3000/">
+                              <a
+                                className="font-size-6 text-black-2"
+                                href="http://localhost:3000/"
+                              >
                                 Masters in Art Design
                               </a>
                             </h3>
@@ -732,10 +591,16 @@ const UserProfile = () => {
                               Harvard University
                             </a>
                             <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray mr-5">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray mr-5"
+                              >
                                 Jun 2017 - April 2020- 3 years
                               </a>
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray"
+                              >
                                 <span
                                   className="mr-4"
                                   style={{ marginTop: "-2px" }}
@@ -759,7 +624,10 @@ const UserProfile = () => {
                           </div>
                           <div className="w-100 mt-n2">
                             <h3 className="mb-0">
-                              <a className="font-size-6 text-black-2" href="http://localhost:3000/">
+                              <a
+                                className="font-size-6 text-black-2"
+                                href="http://localhost:3000/"
+                              >
                                 Bachelor in Software Engineering{" "}
                               </a>
                             </h3>
@@ -770,10 +638,16 @@ const UserProfile = () => {
                               Manipal Institute of Technology
                             </a>
                             <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray mr-5">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray mr-5"
+                              >
                                 Fed 2012 - April 2016 - 4 years
                               </a>
-                              <a href="http://localhost:3000/" className="font-size-3 text-gray">
+                              <a
+                                href="http://localhost:3000/"
+                                className="font-size-3 text-gray"
+                              >
                                 <span
                                   className="mr-4"
                                   style={{ marginTop: "-2px" }}
@@ -815,7 +689,10 @@ const UserProfile = () => {
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
                           <div className="w-100 mt-n2 text-left">
                             <h3 className="mb-0">
-                              <a className="font-size-6 text-black-2" href="http://localhost:3000/">
+                              <a
+                                className="font-size-6 text-black-2"
+                                href="http://localhost:3000/"
+                              >
                                 Fresh Graduate
                               </a>
                             </h3>
