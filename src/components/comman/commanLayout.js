@@ -3,7 +3,7 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployeeHomePage from "../employee//home";
 import JobDetails from "../employee/JobDetails";
 import JobApplied from "../employee/jobApplied";
-import UserProfile from "../employee/profile/userProfile";
+import UserProfile from "../employee/profile/profile";
 import RecommendedJobs from "../employee/recommendedJobs";
 import EmployerHomePage from "../employer/home";
 import JobSearch from "../employee/search";

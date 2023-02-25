@@ -70,7 +70,7 @@ function EmployeeHeader() {
               <i className="gr-cross-icon"></i>
             </button>
           </div>
-          <div className="dropdown show-gr-dropdown py-5">
+          <div className="dropdown show-gr-dropdown py-7">
             <Link className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset">
               Employee{" "}
               <i className="fas fa-chevron-down heading-default-color ml-6"></i>
@@ -111,7 +111,7 @@ function EmployeeHeader() {
               </Link>
             </div>
           </div>
-          <div className="dropdown show-gr-dropdown py-5">
+          <div className="dropdown show-gr-dropdown py-7">
             <Link className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset">
               Employer{" "}
               <i className="fas fa-chevron-down heading-default-color ml-6"></i>

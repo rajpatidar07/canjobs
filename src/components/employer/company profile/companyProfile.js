@@ -98,11 +98,11 @@ function CompanyProfile() {
                           : "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                       }
                       to={""}
-                      onClick={() => (
-                        setShowCompanyDetails(false),
-                        setShowKycComplainDetails(false),
+                      onClick={() => {
+                        setShowCompanyDetails(false)
+                        setShowKycComplainDetails(false)
                         setShowAccountDetails(true)
-                      )}
+                      }}
                     >
                       Account Details
                     </Link>
@@ -115,11 +115,11 @@ function CompanyProfile() {
                           : "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                       }
                       to={""}
-                      onClick={() => (
-                        setShowCompanyDetails(true),
-                        setShowKycComplainDetails(false),
+                      onClick={() => {
+                        setShowCompanyDetails(true)
+                        setShowKycComplainDetails(false)
                         setShowAccountDetails(false)
-                      )}
+                      }}
                     >
                       Company Details
                     </Link>
@@ -132,11 +132,11 @@ function CompanyProfile() {
                           : "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                       }
                       to={""}
-                      onClick={() => (
-                        setShowCompanyDetails(false),
-                        setShowKycComplainDetails(true),
+                      onClick={() => {
+                        setShowCompanyDetails(false)
+                        setShowKycComplainDetails(true)
                         setShowAccountDetails(false)
-                      )}
+                      }}
                     >
                       KYC Details
                     </Link>
@@ -773,9 +773,9 @@ function CompanyProfile() {
             {/* <!-- end Sidebar --> */}
           </div>
         </div>
-      </div>
+      </div >
       <EmployeeFooter />
-    </div>
+    </div >
   );
 }
 

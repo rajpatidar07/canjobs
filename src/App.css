@@ -38,6 +38,10 @@
   --text-main-color: #2b3940;
 }
 
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
 p {
   font-size: 16px;
 }
@@ -176,4 +180,40 @@ p {
 
 .category_box .category_text_box p span {
   font-size: 40px;
+}
+
+/* ALL FORM INPUT */
+.form-group label {
+  font-weight: 500;
+  font-size: 12px;
+  margin: 0;
+  position: absolute;
+  top: -7px;
+  z-index: 1;
+  left: 18px;
+  background: #fff;
+  padding: 0 5px;
+}
+
+input:-internal-autofill-selected {
+  background-color: #fff !important;
+}
+
+/* PROFILE PAGE */
+.personal_info_box {
+  gap: 10px 5px;
+}
+
+label.image_upload_btn {
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  background: #ccc;
+  width: 24px;
+  height: 24px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 24px;
+  cursor: pointer;
 }

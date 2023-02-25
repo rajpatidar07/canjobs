@@ -1,7 +1,6 @@
 // import logo from './logo.svg';
 import React from "react";
 import "./App.css";
-import EmployerLayout from "./components/employer/layout";
 import EmployeeLayout from "./components/employee/layout";
 import CommanLayout from "./components/comman/commanLayout";
 

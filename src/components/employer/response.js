@@ -99,7 +99,7 @@ function Response() {
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+                      aria-selected="true"
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
@@ -112,7 +112,7 @@ function Response() {
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+                      aria-selected="true"
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
@@ -125,7 +125,7 @@ function Response() {
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+                      aria-selected="true"
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
@@ -138,7 +138,7 @@ function Response() {
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+                      aria-selected="true"
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
@@ -151,7 +151,7 @@ function Response() {
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+                      aria-selected="true"
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
