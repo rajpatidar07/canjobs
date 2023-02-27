@@ -233,33 +233,44 @@ function CompanyProfile() {
                           />
                         </div>
                         <div className="pt-5 text-left row">
-                          <div className="col-md-3">
+                          <div className="col-md-4">
                             {" "}
                             <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                              User Name
+                              Name
                             </h5>
                             <p className="font-size-4 mb-8">Shan Maxio</p>
                           </div>
-                          <div className="col-md-3">
+                          <div className="col-md-4">
                             {" "}
                             <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                              E-mail
+                              Account No.
                             </h5>
-                            <p className="font-size-4 mb-8">Shan23@gmail.com</p>
+                            <p className="font-size-4 mb-8">xxxxxxxxxx25</p>
                           </div>
-                          <div className="col-md-3">
+                          <div className="col-md-4">
                             {" "}
                             <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                              Role
+                              IFSC code
                             </h5>
-                            <p className="font-size-4 mb-8">Data analytics</p>
+                            <p className="font-size-4 mb-8">CRB4152S</p>
                           </div>
-                          <div className="col-md-3">
+                          <div className="col-md-4">
                             {" "}
                             <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                              Reporting Manager
+                              Bank Name
                             </h5>
-                            <p className="font-size-4 mb-8">Shaq Aasif</p>
+                            <p className="font-size-4 mb-8">
+                              Canera National Bank
+                            </p>
+                          </div>
+                          <div className="col-md-4">
+                            {" "}
+                            <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
+                              Branch Name
+                            </h5>
+                            <p className="font-size-4 mb-8">
+                              Vijay Nagar, Indore
+                            </p>
                           </div>
                         </div>
                       </div>

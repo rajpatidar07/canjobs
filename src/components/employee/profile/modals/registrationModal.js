@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Registration(props) {
   return (
@@ -22,14 +23,14 @@ function Registration(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
             <h5 className="text-center pt-2">Registration</h5>
-            <div className="row">
+            <div className="row pt-5">
               {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Full_Name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Full Name:
+                  Full Name<span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
@@ -43,7 +44,7 @@ function Registration(props) {
                   htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Email Id :
+                  Email Id <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="email"
@@ -59,7 +60,7 @@ function Registration(props) {
                   htmlFor="Password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Password :
+                  Password <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="password"
@@ -73,7 +74,7 @@ function Registration(props) {
                   htmlFor="Mobile_Number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Mobile Number :
+                  Mobile Number<span className="text-danger">*</span> :
                 </label>
                 <input
                   type="tel"
@@ -84,29 +85,33 @@ function Registration(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
-                <label
-                  htmlFor="Work_Status"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Work Status :
+                <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset ">
+                  What is your experience level?
+                  <span className="text-danger">*</span>
                 </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Work_Status"
-                    placeholder="Work Status"
-                  />
+                <div className="row font-size-3 mt-5">
+                  <Link to={""}>
+                    <span className="text-dark rounded-pill mb-1 border mx-2 p-3">
+                      I have work experience
+                    </span>
+                  </Link>
+                  <Link to={""}>
+                    <span className="text-dark rounded-pill mb-1 border mx-2 p-3">
+                      I am fresher
+                    </span>
+                  </Link>
                 </div>
               </div>
+            </div>
+            <div className="row">
+              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Resume"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Resume :
+                  Resume <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="file"
@@ -115,9 +120,6 @@ function Registration(props) {
                   id="Resume"
                 />
               </div>
-            </div>
-            <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="More_details"
@@ -133,8 +135,19 @@ function Registration(props) {
                 />
               </div>
             </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="col">
+              <input type="checkbox" id="t&r" className="text-black-2 pt-5" />
+              <label
+                htmlFor="t&r"
+                className="font-size-3 
+                line-height-reset text-black-2 mx-5 pt-3"
+              >
+                I agree to Terms And Conditions & Privacy Policy governing the
+                use of Naukrigulf.com
+              </label>
+            </div>
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

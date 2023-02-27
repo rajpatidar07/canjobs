@@ -4,7 +4,6 @@ import EmployeeFooter from "../footer";
 import Registration from "./modals/registrationModal";
 import EmployementDetails from "./modals/employementDetailsModal";
 import PersonalDetails from "./modals/personalDetailsModal";
-import CareerProfile from "./modals/careerProfileModal";
 import EducationDetails from "./modals/educationDetailsModal";
 import Projects from "./modals/projectsModal";
 import ItSkills from "./modals/itSkillsModal";
@@ -15,7 +14,6 @@ const UserProfile = () => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
-  const [showCareerProfile, setShowCareerProfile] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
@@ -50,12 +48,20 @@ const UserProfile = () => {
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
-                    <a className="mb-4 position-relative" href="http://localhost:3000/">
-                      <input type="file" id="ImgUploadInput" className="d-none" />
-                      <label className="image_upload_btn m-0" htmlFor="ImgUploadInput">
-                        <span className="fas fa-pen text-gray">
-                          {" "}
-                        </span>
+                    <a
+                      className="mb-4 position-relative"
+                      href="http://localhost:3000/"
+                    >
+                      <input
+                        type="file"
+                        id="ImgUploadInput"
+                        className="d-none"
+                      />
+                      <label
+                        className="image_upload_btn m-0"
+                        htmlFor="ImgUploadInput"
+                      >
+                        <span className="fas fa-pen text-gray"> </span>
                       </label>
                       <img
                         className="rounded-circle"
@@ -70,7 +76,10 @@ const UserProfile = () => {
                         className="text-black-2 font-size-6 font-weight-semibold"
                         onClick={() => setShowRegistration(true)}
                       >
-                        David Henricks <span className="age_gender font-size-3 text-smoke">(Male 29)</span>
+                        David Henricks{" "}
+                        <span className="age_gender font-size-3 text-smoke">
+                          (Male 29)
+                        </span>
                       </Link>
                       <Registration
                         show={showRegistration}
@@ -80,57 +89,83 @@ const UserProfile = () => {
                     <p className="mb-8 text-gray font-size-4">
                       Product Designer
                     </p>
-
                   </div>
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Personal Info</span>
                       <CustomButton
                         className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowRegistration(true)}
+                        onClick={() => setShowPersonalDetails(true)}
+                      />
+                      <PersonalDetails
+                        show={showPersonalDetails}
+                        close={() => setShowPersonalDetails(false)}
                       />
                     </h4>
                     <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
-                          <img class="mr-1" height={"16px"} src="image/icons/envelope.svg" alt="Email" />
+                        <span className="font-size-3 text-smoke  mr-3">
+                          <img
+                            className="mr-1"
+                            height={"16px"}
+                            src="image/icons/envelope.svg"
+                            alt="Email"
+                          />
                           name_ac@domain.com
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
-                          <img class="mr-1" height={"16px"} src="image/icons/mobile-button.svg" alt="Mobile Number" />
+                        <span className="font-size-3 text-smoke  mr-3">
+                          <img
+                            className="mr-1"
+                            height={"16px"}
+                            src="image/icons/mobile-button.svg"
+                            alt="Mobile Number"
+                          />
                           +91-0987654321
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
-                          <img class="mr-1" height={"16px"} src="image/icons/marker.svg" alt="Location" />
+                        <span className="font-size-3 text-smoke  mr-3">
+                          <img
+                            className="mr-1"
+                            height={"16px"}
+                            src="image/icons/marker.svg"
+                            alt="Location"
+                          />
                           New York, USA
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
-                          <img class="mr-1" height={"16px"} src="image/icons/language.svg" alt="language" />
+                        <span className="font-size-3 text-smoke  mr-3">
+                          <img
+                            className="mr-1"
+                            height={"16px"}
+                            src="image/icons/language.svg"
+                            alt="language"
+                          />
                           Hindi, English
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
-                          <img class="mr-1" height={"16px"} src="image/icons/address-book.svg" alt="Address" />
-                          45, Universal Tower
-                          Scheme 54, PU4,
-                          Indore, MP (452001)
+                        <span className="font-size-3 text-smoke  mr-3">
+                          <img
+                            className="mr-1"
+                            height={"16px"}
+                            src="image/icons/address-book.svg"
+                            alt="Address"
+                          />
+                          45, Universal Tower Scheme 54, PU4, Indore, MP
+                          (452001)
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-3">
                           <b>Work Permit of Canada:</b> Yes
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span class="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-3">
                           <b>Work Permit of Other Country:</b> No
                         </span>
                       </div>
@@ -297,19 +332,18 @@ const UserProfile = () => {
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                         Career Profile
                       </h4>
-                      <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowCareerProfile(true)}
-                      />
-                      <CareerProfile
-                        show={showCareerProfile}
-                        close={() => setShowCareerProfile(false)}
-                      />
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                           <div className="media align-items-center company_box col-md-6 p-0">
-                            <a className="text_box text-left" href="http://localhost:3000/">
-                              <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
+                            <a
+                              className="text_box text-left"
+                              href="http://localhost:3000/"
+                            >
+                              <img
+                                className="company_logo"
+                                src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                                alt=""
+                              />
                             </a>
                             <div className="text_box text-left w-100 mt-n2">
                               <h3 className="mb-0">
@@ -326,9 +360,7 @@ const UserProfile = () => {
                               >
                                 Airabnb
                               </a>
-
                             </div>
-
                           </div>
                           <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
@@ -358,8 +390,15 @@ const UserProfile = () => {
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                           <div className="media align-items-center company_box col-md-6 p-0">
-                            <a className="text_box text-left" href="http://localhost:3000/">
-                              <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
+                            <a
+                              className="text_box text-left"
+                              href="http://localhost:3000/"
+                            >
+                              <img
+                                className="company_logo"
+                                src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                                alt=""
+                              />
                             </a>
                             <div className="text_box text-left w-100 mt-n2">
                               <h3 className="mb-0">
@@ -376,9 +415,7 @@ const UserProfile = () => {
                               >
                                 Airabnb
                               </a>
-
                             </div>
-
                           </div>
                           <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
@@ -425,8 +462,15 @@ const UserProfile = () => {
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                           <div className="media align-items-center company_box p-0">
-                            <a className="text_box text-left" href="http://localhost:3000/">
-                              <img className="company_logo" src="image/svg/harvard.svg" alt="" />
+                            <a
+                              className="text_box text-left"
+                              href="http://localhost:3000/"
+                            >
+                              <img
+                                className="company_logo"
+                                src="image/svg/harvard.svg"
+                                alt=""
+                              />
                             </a>
                             <div className="text_box text-left w-100 mt-n2">
                               <h3 className="mb-0">
@@ -443,9 +487,7 @@ const UserProfile = () => {
                               >
                                 Harvard University
                               </a>
-
                             </div>
-
                           </div>
                           <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
@@ -475,8 +517,15 @@ const UserProfile = () => {
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                           <div className="media align-items-center company_box p-0">
-                            <a className="text_box text-left" href="http://localhost:3000/">
-                              <img className="company_logo" src="image/svg/mit.svg" alt="" />
+                            <a
+                              className="text_box text-left"
+                              href="http://localhost:3000/"
+                            >
+                              <img
+                                className="company_logo"
+                                src="image/svg/mit.svg"
+                                alt=""
+                              />
                             </a>
                             <div className="text_box text-left w-100 mt-n2">
                               <h3 className="mb-0">
@@ -493,9 +542,7 @@ const UserProfile = () => {
                               >
                                 Manipal Institute of Technology
                               </a>
-
                             </div>
-
                           </div>
                           <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                             <a
@@ -1037,7 +1084,6 @@ const UserProfile = () => {
                 {/* <!-- Bottom End --> */}
               </div>
             </div>
-
           </div>
         </div>
         <>

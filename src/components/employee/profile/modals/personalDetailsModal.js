@@ -22,165 +22,171 @@ function PersonalDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
             <h5 className="text-center pt-2">Personal Details</h5>
-            <div className="row">
+            <div className="row pt-5">
               {" "}
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-4">
                 <label
-                  htmlFor="Gender"
+                  htmlFor="Full_Name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Gender
+                  Full Name:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Gender"
-                  id="Gender"
+                  placeholder="Full Name"
+                  id="Full_Name"
                 />
               </div>
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-4">
                 <label
-                  htmlFor="Marital_Status"
+                  htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Marital Status :
+                  Email Id :
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  placeholder="Marital Status "
-                  id="Marital_Status"
+                  placeholder="email"
+                  id="email"
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="Mobile_Number"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Mobile Number :
+                </label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  placeholder="Mobile Number"
+                  id="Mobile_Number"
                 />
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-6">
+              {" "}
+              <div className="form-group col-md-4">
                 <label
-                  htmlFor="Date_of_Birth"
+                  htmlFor="DOB"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Date of Birth :
+                  Date Of Birth :
                 </label>
                 <input
                   type="date"
                   className="form-control"
-                  placeholder="Date of Birth"
-                  id="Date_of_Birth"
+                  placeholder="Date Of Birth "
+                  id="DOB"
                 />
               </div>
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-4">
                 <label
-                  htmlFor="Disabled"
+                  htmlFor="Gender"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Are you Differently Abled ?
+                  Gender :
+                </label>
+                <select className="form-control">
+                  <option value={""}>Select Gender</option>
+                  <option value={""}>Male</option>
+                  <option value={""}>Female</option>
+                  <option value={""}>Other</option>
+                </select>
+              </div>
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="maritial_status"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Maritial status :
+                </label>{" "}
+                <select className="form-control">
+                  <option value={""}>Select Status</option>
+                  <option value={""}>Single</option>
+                  <option value={""}>Merried</option>
+                </select>
+              </div>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="Nationality"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Nationality / Citizenship :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Are you Differently Abled?"
-                  id="Disabled"
+                  placeholder="Nationality / Citizenship"
+                  id="Nationality"
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="Current_location"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Current Location :
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Maritial status"
+                  id="Current_location"
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="Currently_Located_Country"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Currently Located Country :
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Currently Located Country"
+                  id="Currently_Located_Country"
                 />
               </div>
             </div>
             <div className="row">
-              {" "}
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-4">
                 <label
-                  htmlFor="Break"
+                  htmlFor="langauages"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Have you taken a Career Break?
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Break"
-                    placeholder="Have you taken a Career Break?"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Work_Permit_for_USA"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Work Permit for USA :
+                  Languages Known (Max 3) :
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Work Permit for USA"
-                  id="Work_Permit_for_USA"
+                  placeholder="Languages Known (Max 3)"
+                  id="langauages"
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="Religion"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Religion :
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Religion"
+                  id="Religion"
                 />
               </div>
             </div>
-            <div className="row">
-              {" "}
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Work_Permit_for_Other_Countries"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Work Permit for Other Countries :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Work Permit for Other Countries"
-                  id="Work_Permit_for_Other_Countries"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Hometown"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Hometown :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Hometown"
-                  id="Hometown"
-                />
-              </div>
-            </div>
-            <div className="row">
-              {" "}
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Pincode"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Pincode :
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Pincode"
-                  id="Pincode"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Languages"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Languages :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Languages"
-                  id="Languages"
-                />
-              </div>
-            </div>
-
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

@@ -6,7 +6,7 @@ function ItSkills(props) {
     <>
       <Modal
         show={props.show}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -21,13 +21,13 @@ function ItSkills(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2">Add It Skills </h5>{" "}
-            <div className="form-group">
+            <h5 className="text-center pt-2 pb-5">Add It Skills </h5>{" "}
+            <div className="form-group ">
               <label
                 htmlFor="Skill_Name"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Skill / Software Name :
+                Skill / Software Name <span className="text-danger">*</span> :
               </label>
               <input
                 type="text"
@@ -36,50 +36,8 @@ function ItSkills(props) {
                 id="Skill_Name"
               />
             </div>
-            <div className="form-group">
-              <label
-                htmlFor="Software_Version"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-              >
-                Software Version :
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Software_Version"
-                id="Software Version"
-              />
-            </div>
-            <div className="form-group">
-              <label
-                htmlFor="Last_Used"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-              >
-                Last Used :
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Last Used"
-                id="Last_Used"
-              />
-            </div>
-            <div className="form-group">
-              <label
-                htmlFor="Experience"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-              >
-                Experience :
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Experience"
-                id="Experience"
-              />
-            </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

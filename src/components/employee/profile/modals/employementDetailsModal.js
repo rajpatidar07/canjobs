@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function EmployementDetails(props) {
   return (
@@ -22,119 +23,143 @@ function EmployementDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
             <h5 className="text-center pt-2">Add Employment</h5>
-            <div className="row">
-              {" "}
+            <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Current_employment"
+                  htmlFor="Company"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Is this your current employment ?
+                  Company<span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder=" Is this your current employment ?"
-                  id="Current_employment"
+                  placeholder="Tell us your company name"
+                  id="Company"
                 />
-              </div>
+              </div>{" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Employment_Type"
+                  htmlFor="Designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Employment Type:
+                  Designation<span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Employment Type"
-                  id="Employment_Type"
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Current_Company_Name"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Current Company Name :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Current Company Name"
-                  id="Current_Company_Name"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Current_Designation"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Current Designation :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Current Designation"
-                  id="Current_Designation"
+                  placeholder="Tell us your designation / job role"
+                  id="Designation
+"
                 />
               </div>
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Joining_Date"
+                  htmlFor="Company_Name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Joining Date :
+                  Company location <span className="text-danger">*</span>:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Tell us your employer location"
+                  id="Company_Name"
+                />
+              </div>
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="Industry"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Industry <span className="text-danger">*</span> :
                 </label>
                 <div className="position-relative">
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="Joining_Date"
-                    placeholder="Joining Date"
-                  />
+                  <select className="form-control">
+                    <option value={""}>
+                      Select the industry your company belongs to
+                    </option>
+                    <option value={""}>Accounting & Auditing</option>
+                    <option value={""}>Call center / BPO</option>
+                    <option value={""}>Banking finance</option>
+                  </select>
                 </div>
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Job_Profile"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Job Profile :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Job Profile"
-                  id="Job_Profile"
-                />
               </div>
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
-                <label
-                  htmlFor="Notice_Period"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Notice Period :
+                <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                  Functional Area <span className="text-danger">*</span>:
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Notice Period"
-                  id="Notice_Period"
-                />
+                <div className="position-relative">
+                  <select className="form-control">
+                    <option value={""}>
+                      Select the department you work in
+                    </option>
+                    <option value={""}>
+                      Fresh graduates / Management Traninee /Intern
+                    </option>
+                    <option value={""}>Engineering </option>
+                    <option value={""}>Adminstration</option>
+                  </select>
+                </div>
+                <div className="col mt-2">
+                  <input
+                    type="checkbox"
+                    id="Current_working"
+                    className="pt-5 mt-5"
+                  />
+                  <label
+                    htmlFor="Current_working"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4 mt-5 pt-3"
+                  >
+                    I Currently work here
+                  </label>
+                </div>
+              </div>{" "}
+            </div>
+
+            <div>
+              <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                Work level<span className="text-danger">*</span> :
+              </label>
+              <div className="row font-size-3">
+                <Link to={""}>
+                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
+                    Studen/Intern
+                  </span>
+                </Link>
+                <Link to={""}>
+                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
+                    Entry level
+                  </span>
+                </Link>
+                <Link to={""}>
+                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
+                    Non Managerial level
+                  </span>
+                </Link>
+                <Link to={""}>
+                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
+                    Managerial level
+                  </span>
+                </Link>
+                <Link to={""}>
+                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
+                    Senior Mangement(AVP ,VP , GM)
+                  </span>
+                </Link>
+                <Link to={""}>
+                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
+                    Top Management (CEO , CFO , Director)
+                  </span>
+                </Link>
               </div>
             </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

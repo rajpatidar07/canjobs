@@ -6,7 +6,7 @@ function AccountDetails(props) {
     <>
       <Modal
         show={props.show}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -27,7 +27,7 @@ function AccountDetails(props) {
                 htmlFor="Username"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Username :
+                Name :
               </label>
               <input
                 type="text"
@@ -38,64 +38,79 @@ function AccountDetails(props) {
             </div>
             <div className="form-group">
               <label
-                htmlFor="email"
+                htmlFor="acc_number"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                E-mail :
+                Account Number :
               </label>
               <input
-                type="email"
+                type="number"
                 className="form-control"
-                placeholder="example@gmail.com"
-                id="email"
+                placeholder="Account Number"
+                id="acc_number"
               />
             </div>
             <div className="form-group">
               <label
-                htmlFor="Role"
+                htmlFor="ifsc_code"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Role :
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Role "
-                id="Role"
-              />
-            </div>
-            <div className="form-group">
-              <label
-                htmlFor="Reporting_Manager"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-              >
-                Reporting Manager :
+                IFSC_code :
               </label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Reporting Manager"
-                id="Reporting_Manager"
+                placeholder="IFSC code "
+                id="ifsc_code"
               />
             </div>
             <div className="form-group">
               <label
-                htmlFor="mobile"
+                htmlFor="bank_name"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Mobile Number :
+                Bank Name :
+              </label>
+              <select className="form-control">
+                <option value={""}>Select bank</option>
+                <option value={""}>PNB</option>
+                <option value={""}>Cenera</option>
+                <option value={""}>BOI</option>
+                <option value={""}>SBI</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="branch_name"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                Branch Name :
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder=" Branch Name"
+                id="branch_name"
+              />
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="City"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                City :
               </label>
               <div className="position-relative">
                 <input
-                  type="tel"
+                  type="text"
                   className="form-control"
-                  id="mobile"
-                  placeholder="Enter mobile number"
+                  id="City"
+                  placeholder="Enter City "
                 />
               </div>
             </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

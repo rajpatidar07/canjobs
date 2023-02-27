@@ -22,28 +22,24 @@ function EducationDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
             <h5 className="text-center pt-2">Education Details</h5>
-            <div className="row">
+            <div className="row pt-5">
               {" "}
               <div className="form-group col-md-6">
-                <label
-                  htmlFor="Education"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Education :
+                <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                  Qualification <span className="text-danger">*</span> :
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Education"
-                  id="Education"
-                />
+                <select className="form-control" id="Qualification">
+                  <option value={""}>select Qualification</option>
+                  <option value={""}>Doctors</option>
+                  <option value={""}>Masters</option>
+                </select>
               </div>
               <div className="form-group col-md-6">
                 <label
                   htmlFor="University_Institute"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  University/Institute :
+                  University/Institute <span className="text-danger">*</span> :
                 </label>
                 <input
                   type="text"
@@ -59,96 +55,76 @@ function EducationDetails(props) {
                   htmlFor="Course"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Course :
+                  Course <span className="text-danger">*</span> :
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Course"
-                  id="Course"
-                />
+                <select className="form-control" id="Qualification">
+                  <option value={""}>select Course</option>
+                  <option value={""}>MBA</option>
+                  <option value={""}>MBBS</option>
+                  <option value={""}>CA</option>
+                  <option value={""}>BA</option>
+                  <option value={""}>MA</option>
+                  <option value={""}>B.Tech</option>
+                  <option value={""}>M.Tech</option>
+                </select>
               </div>
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialization :
+                  Specialization <span className="text-danger">*</span> :
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Specialization"
-                  id="Specialization"
-                />
+                <select className="form-control" id="Qualification">
+                  <option value={""}>select Specialization</option>
+                  <option value={""}>MBA</option>
+                  <option value={""}>MBBS</option>
+                  <option value={""}>CA</option>
+                  <option value={""}>BA</option>
+                  <option value={""}>MA</option>
+                  <option value={""}>B.Tech</option>
+                  <option value={""}>M.Tech</option>
+                </select>
               </div>
             </div>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Course_Type"
+                  htmlFor="Institute_Location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Course Type :
+                  Institute Location <span className="text-danger">*</span> :
                 </label>
                 <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Course_Type"
-                    placeholder="Course Type"
-                  />
+                  <select className="form-control" id="Qualification">
+                    <option value={""}>select Location</option>
+                    <option value={""}>India</option>
+                    <option value={""}>Pakistan</option>
+                    <option value={""}>U.S.A</option>
+                    <option value={""}>U.K</option>
+                    <option value={""}>Dubai</option>
+                    <option value={""}>Canada</option>
+                  </select>
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Course duration"
+                  htmlFor="Passing_Year"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Course duration :
+                  Passing Year <span className="text-danger">*</span> :
                 </label>
                 <input
                   type="number"
                   className="form-control"
-                  placeholder="Course duration"
-                  id="Course duration"
+                  placeholder="Passing Year"
+                  id="Passing_Year"
                 />
               </div>
             </div>
-            <div className="row">
-              {" "}
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Grading_System"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Grading System :
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Grading System"
-                  id="Grading_System"
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="Expected_Salary"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Expected Salary :
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Expected Salary"
-                  id="Expected_Salary"
-                />
-              </div>
-            </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

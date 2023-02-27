@@ -29,7 +29,7 @@ function CompanyInfo(props) {
                   htmlFor="Company_Name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  My company is here :
+                  Company Name :
                 </label>
                 <input
                   type="text"
@@ -147,8 +147,8 @@ function CompanyInfo(props) {
                 />
               </div>
             </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>

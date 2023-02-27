@@ -199,6 +199,9 @@ span.job_swap_label {
 }
 
 /* ALL FORM INPUT */
+.form-group {
+  position: relative;
+}
 .form-group label {
   font-weight: 500;
   font-size: 12px;
