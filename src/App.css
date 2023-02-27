@@ -135,6 +135,10 @@ p {
     max-width: 100%;
   }
 
+  .filter-search-form-2 .filter-inputs .form-group {
+    width: 100%;
+  }
+
   .job_search_main_form {
     padding: 10px !important;
     border-radius: 10px;
@@ -157,6 +161,18 @@ p {
 .company_box .company_logo {
   max-height: 50px;
   margin-right: 10px;
+}
+
+span.job_swap_label {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 12px;
+  font-weight: 600;
+  background: #00b074;
+  padding: 3px 5px 3px 10px;
+  border-radius: 0 0.625rem 0 0.625rem;
+  color: #fff;
 }
 
 @media (min-width: 768px) {}

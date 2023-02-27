@@ -2,7 +2,7 @@ import React from "react";
 // eslint-disable-next-line no-use-before-define
 function SearchForm() {
     return (
-        <form action="http://localhost:3000/" className="search-form" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
+        <form action="http://localhost:3000/search" className="search-form" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
             <div className="filter-search-form-2 bg-white job_search_main_form rounded-70 shadow-7 pr-15 py-7 pl-12">
                 <div className="filter-inputs">
                     <div className="form-group position-relative">
