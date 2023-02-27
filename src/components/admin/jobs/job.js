@@ -159,12 +159,12 @@ function Job() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href="jobdetails.html"
+                            <Link
+                              to="/jobdetails"
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               UI Designer
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">
@@ -207,12 +207,12 @@ function Job() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href="jobdetails.html"
+                            <Link
+                              to="/jobdetails"
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Head of Marketing
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">
@@ -255,12 +255,12 @@ function Job() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href="jobdetails.html"
+                            <Link
+                              to="/jobdetails"
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Full-Stack Developer
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">

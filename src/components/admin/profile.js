@@ -27,7 +27,7 @@ function Profile() {
               <div className="row">
                 <div className="col-xxxl-9 px-lg-13 px-6">
                   <h5 className="font-size-6 font-weight-semibold mb-8">
-                    Update Company Profile
+                    Update Profile
                   </h5>
                   <div className="contact-form bg-white shadow-8 rounded-4 pl-sm-10 pl-4 pr-sm-11 pr-4 pt-1 pb-13">
                     <div className="upload-file mb-16 text-center">
@@ -43,7 +43,7 @@ function Profile() {
                                 htmlFor="namedash"
                                 className="d-block text-black-2 font-size-4 font-weight-semibold mb-4"
                               >
-                                Company Name
+                                Name
                               </label>
                               <input
                                 type="text"
@@ -101,47 +101,19 @@ function Profile() {
                         <div className="row">
                           <div className="col-md-12">
                             <div className="form-group">
-                              <label
-                                htmlFor="aboutTextarea"
-                                className="d-block text-black-2 font-size-4 font-weight-semibold mb-4"
-                              >
-                                About Comapny
+                              <label className="d-block text-black-2 font-size-4 font-weight-semibold mb-4">
+                                Admin Type
                               </label>
                               <div className="position-relative">
-                                <div sm="12" className="mt-3">
-                                  <CKEditor
-                                    // data={emailText}
-                                    // initData={emailText}
-                                    type={"classic"}
-                                    name={"email_text"}
-                                    placeholder="Describe about the company what make it unique"
-                                    required
-                                    className="border border-mercury text-gray w-100 pt-4 pl-6"
-                                  />
-                                </div>
+                                <select className="form-control col-6">
+                                  <option value={""}>select type</option>
+                                  <option value={""}>Manager</option>
+                                  <option value={""}>Sub admin</option>
+                                  <option value={""}>Admin</option>
+                                  <option value={""}>Super admin</option>
+                                </select>
                               </div>
                             </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="form-group mb-11">
-                              <label
-                                htmlFor="formGroupExampleInput"
-                                className="d-block text-black-2 font-size-4 font-weight-semibold mb-4"
-                              >
-                                Company Website Link
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="formGroupExampleInput"
-                                placeholder="https://www.example.com/"
-                              />
-                            </div>
-                            <input
-                              type="button"
-                              value="Update Profile"
-                              className="btn btn-green btn-h-60 text-white min-width-px-210 rounded-5 text-uppercase"
-                            />
                           </div>
                         </div>
                       </fieldset>
