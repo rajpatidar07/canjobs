@@ -1,7 +1,6 @@
 import React from "react";
 import EmployeeHeader from "./header";
 import EmployeeFooter from "./footer";
-import { Link } from "react-router-dom";
 function JobSearchPage() {
   return (
     <div className="site-wrapper overflow-hidden ">
