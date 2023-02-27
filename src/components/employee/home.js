@@ -147,10 +147,10 @@ function EmployeeHomePage() {
           </div>
           {/* <!-- Section Title End --> */}
           <div className="row justify-content-center">
+            <JobBox swap={true} />
             <JobBox />
-            <JobBox />
-            <JobBox />
-            <JobBox />
+            <JobBox swap={true} />
+            <JobBox swap={true} />
             <JobBox />
             <JobBox />
           </div>

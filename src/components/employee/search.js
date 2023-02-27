@@ -48,6 +48,18 @@ function JobSearch() {
                     </div>
                     <div className="mr-5 mb-5">
                       <select
+                        name="jobswap"
+                        id="jobswap"
+                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      >
+                        <option data-display="Job Type">Job swap</option>
+                        <option value="">All</option>
+                        <option value="">Only swap jobs</option>
+                        <option value="">Without swap</option>
+                      </select>
+                    </div>
+                    <div className="mr-5 mb-5">
+                      <select
                         name="country"
                         id="country"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
@@ -103,7 +115,7 @@ function JobSearch() {
                       aria-selected="true "
                     >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
                     </a>
                     <a
@@ -129,7 +141,7 @@ function JobSearch() {
                       aria-selected="true "
                     >
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
                     </a>
                     <a

@@ -1,9 +1,10 @@
 import React from "react";
-function JobBox() {
+function JobBox(props) {
     return (
         <div className="col-xxl-12 col-xl-12 col-lg-12 mb-8 job_box p-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
             {/* <!-- Single Featured Job --> */}
             <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green">
+                {props.swap === true ? <span className="job_swap_label">SWAP</span> : null}
                 <div className="row job_header m-0">
                     <div className="media align-items-center company_box col-md-6 p-0">
                         <a className="text_box text-left" href="http://localhost:3000/">
