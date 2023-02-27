@@ -9,6 +9,7 @@ import EducationDetails from "./modals/educationDetailsModal";
 import Projects from "./modals/projectsModal";
 import ItSkills from "./modals/itSkillsModal";
 import CustomButton from "../../comman/button";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const [showRegistration, setShowRegistration] = useState(false);
@@ -65,12 +66,12 @@ const UserProfile = () => {
                       />
                     </a>
                     <h4 className="mb-0">
-                      <a
+                      <Link
                         className="text-black-2 font-size-6 font-weight-semibold"
                         onClick={() => setShowRegistration(true)}
                       >
                         David Henricks <span className="age_gender font-size-3 text-smoke">(Male 29)</span>
-                      </a>
+                      </Link>
                       <Registration
                         show={showRegistration}
                         close={() => setShowRegistration(false)}
