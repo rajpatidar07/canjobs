@@ -111,12 +111,12 @@ function Job() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href=""
+                            <Link
+                              to={"/jobdetails"}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">

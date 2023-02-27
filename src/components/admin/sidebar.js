@@ -70,7 +70,7 @@ const AdminSidebar = () => {
         </li>
         <li className="">
           <a
-            href="dashboard-settings.html"
+            href=""
             className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
           >
             <i className="fas fa-cog mr-7"></i>Settings

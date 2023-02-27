@@ -13,10 +13,10 @@ const EmployeeLayout = () => {
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/search" element={<JobSearch />} />
-        <Route path="/jobdetails" element={<JobDetails />} />
         <Route path="/jobapplied" element={<JobApplied />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/recommendedjobs" element={<RecommendedJobs />} />
+        <Route path="/jobdetails" element={<JobDetails />} />
       </Routes>
     </BrowserRouter>
   );
