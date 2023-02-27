@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../../comman/button";
+import JobDetailsBox from "../../comman/jobDetailsBox";
 import AdminHeader from "../header";
 import AdminSidebar from "../sidebar";
 import AddModal from "./modal/addModal";
 function Job() {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [showJobDetails, setShowJobDetails] = useState(false);
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -23,7 +25,14 @@ function Job() {
         >
           <i className="icon icon-sidebar-2"></i>
         </a>
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div
+          className={
+            showJobDetails === false
+              ? "dashboard-main-container mt-24"
+              : "d-none"
+          }
+          id="dashboard-body"
+        >
           <div className="container">
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
@@ -112,7 +121,8 @@ function Job() {
                         >
                           <div className="">
                             <Link
-                              to={"/jobdetails"}
+                              to={""}
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
@@ -160,7 +170,8 @@ function Job() {
                         >
                           <div className="">
                             <Link
-                              to="/jobdetails"
+                              to=""
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               UI Designer
@@ -208,7 +219,8 @@ function Job() {
                         >
                           <div className="">
                             <Link
-                              to="/jobdetails"
+                              to=""
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Head of Marketing
@@ -256,7 +268,8 @@ function Job() {
                         >
                           <div className="">
                             <Link
-                              to="/jobdetails"
+                              to=""
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Full-Stack Developer
@@ -304,6 +317,35 @@ function Job() {
             </div>
           </div>
         </div>
+        {showJobDetails === true ? (
+          <div className="dashboard-main-container mt-24">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-12 dark-mode-texts">
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowJobDetails(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      {" "}
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-18">
+                <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
+                  {" "}
+                  <JobDetailsBox />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </>
   );

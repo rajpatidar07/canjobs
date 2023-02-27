@@ -4,8 +4,12 @@ import AdminSidebar from "../sidebar";
 import CustomButton from "../../comman/button";
 import { Link } from "react-router-dom";
 import AddModal from "./modal/addModal";
+import EmployeeProfleBox from "../../comman/employeeProfleBox";
+
 function Employee() {
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
+  let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -23,7 +27,14 @@ function Employee() {
         >
           <i className="icon icon-sidebar-2"></i>
         </a>
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div
+          className={
+            showEmployeeProfile === false
+              ? "dashboard-main-container mt-24"
+              : "d-none"
+          }
+          id="dashboard-body"
+        >
           <div className="container">
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
@@ -101,7 +112,7 @@ function Employee() {
                     <tbody>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-1.png"
@@ -109,10 +120,16 @@ function Employee() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Nicolas Bradley (25)
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployeeProfile(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Nicolas Bradley{" "}
+                                <span className="text-gray">(Male 25)</span>
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -152,7 +169,7 @@ function Employee() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-2.png"
@@ -160,10 +177,16 @@ function Employee() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Elizabeth Gomez (28)
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployeeProfile(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Minny jeson{" "}
+                                <span className="text-gray">(Female 28)</span>
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -203,7 +226,7 @@ function Employee() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-3.png"
@@ -211,10 +234,16 @@ function Employee() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Joe Wade (23)
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployeeProfile(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Joe Wade{" "}
+                                <span className="text-gray">(Male 32)</span>
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -254,7 +283,7 @@ function Employee() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-4.png"
@@ -262,10 +291,16 @@ function Employee() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Roger Hawkins (36)
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployeeProfile(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Roger Hawkins{" "}
+                                <span className="text-gray">(Male 30)</span>
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -305,7 +340,7 @@ function Employee() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-5.png"
@@ -313,10 +348,16 @@ function Employee() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Marie Green (32)
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployeeProfile(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Marie Green{" "}
+                                <span className="text-gray">(Female 23)</span>
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -425,6 +466,33 @@ function Employee() {
             </div>
           </div>
         </div>
+        {showEmployeeProfile === true ? (
+          <div className="dashboard-main-container mt-24">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-12 dark-mode-texts">
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowEmployeeProfile(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      {" "}
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-18">
+                {" "}
+                <EmployeeProfleBox />
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </>
   );
