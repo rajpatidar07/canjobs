@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import CustomButton from "../comman/button";
+import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import AddEmployer from "../forms/employer";
 import EmployerProfile from "../company/profile";

@@ -5,7 +5,7 @@ import CareerProfile from "../employee/profile/modals/careerProfileModal";
 import EducationDetails from "../employee/profile/modals/educationDetailsModal";
 import Projects from "../employee/profile/modals/projectsModal";
 import ItSkills from "../employee/profile/modals/itSkillsModal";
-import CustomButton from "../comman/button";
+import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 
 function EmployeeDetails() {

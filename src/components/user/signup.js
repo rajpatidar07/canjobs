@@ -1,8 +1,51 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useValidation from "../common/useValidation";
 
 export default function EmployeeSignupModal(props) {
+  // USER SIGNUP VALIDATION
+  const initialFormState = {
+    useremail: "",
+    userpassword: "",
+    confirmpassword: "",
+  };
+
+  const validators = {
+    useremail: [
+      (value) => (value ? null : "Email is required"),
+      (value) => (/\S+@\S+\.\S+/.test(value) ? null : "Email is invalid"),
+    ],
+    userpassword: [
+      (value) => (value ? null : "Password is required"),
+      (value) =>
+        value && value.length >= 8
+          ? null
+          : "Password must be at least 8 characters",
+    ],
+    confirmpassword: [
+      (value) => (value ? null : "Confirm Password is required"),
+      (value) =>
+        value === state.userpassword
+          ? null
+          : "Confirm Password must be Same as Password",
+    ],
+  };
+
+  const { state, onInputChange, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
+
+  const onUserSignUpClick = (event) => {
+    event.preventDefault();
+
+    if (validate()) {
+      // handle form submission
+    }
+  };
+  // END USER SIGNUP VALIDATION
+
   return (
     <>
       {/* <!-- Sign Up Modal --> */}
@@ -53,6 +96,7 @@ export default function EmployeeSignupModal(props) {
               </div>
               <div className="col-lg-7 col-md-6">
                 <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                  {/* SOCIAL MEDIA LINK BUTTONS */}
                   <div className="row">
                     <div className="col-4 col-xs-12">
                       <a
@@ -88,67 +132,118 @@ export default function EmployeeSignupModal(props) {
                       </a>
                     </div>
                   </div>
+                  {/* END SOCIAL MEDIA LINK BUTTONS */}
                   <div className="or-devider">
                     <span className="font-size-3 line-height-reset">Or</span>
                   </div>
-                  <form>
+
+                  {/* SIGNUP FORM */}
+                  <form onSubmit={onUserSignUpClick}>
                     <div className="form-group">
                       <label
-                        htmlFor="email2"
+                        htmlFor="useremail"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         E-mail
                       </label>
                       <input
+                        name="useremail"
+                        value={state.useremail}
+                        onChange={onInputChange}
                         type="email"
-                        className="form-control"
+                        className={
+                          errors.useremail
+                            ? "form-control border border-danger"
+                            : "form-control"
+                        }
                         placeholder="example@gmail.com"
-                        id="email2"
+                        id="useremail"
                       />
+                      {errors.useremail && (
+                        <ul>
+                          {errors.useremail.map((error) => (
+                            <li key={error} className="text-danger">
+                              {error}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="password2"
+                        htmlFor="userpassword"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Password
                       </label>
                       <div className="position-relative">
                         <input
+                          name="userpassword"
+                          value={state.userpassword}
+                          onChange={onInputChange}
                           type="password"
-                          className="form-control"
-                          id="password2"
+                          className={
+                            errors.userpassword
+                              ? "form-control border border-danger"
+                              : "form-control"
+                          }
+                          id="userpassword"
                           placeholder="Enter password"
                         />
-                        <a
+                        {errors.userpassword && (
+                          <ul>
+                            {errors.userpassword.map((error) => (
+                              <li key={error} className="text-danger">
+                                {error}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {/* <a
                           href="http://localhost:3000/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password2"
-                        ></a>
+                        ></a> */}
                       </div>
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="password23"
+                        htmlFor="confirmpassword"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Confirm Password
                       </label>
                       <div className="position-relative">
                         <input
+                          name="confirmpassword"
+                          value={state.confirmpassword}
+                          onChange={onInputChange}
                           type="password"
-                          className="form-control"
-                          id="password23"
+                          className={
+                            errors.confirmpassword
+                              ? "form-control border border-danger"
+                              : "form-control"
+                          }
+                          id="confirmpassword"
                           placeholder="Enter password"
                         />
-                        <a
+                        {errors.confirmpassword && (
+                          <ul>
+                            {errors.confirmpassword.map((error) => (
+                              <li key={error} className="text-danger">
+                                {error}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {/* <a
                           href="http://localhost:3000/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password23"
-                        ></a>
+                        ></a> */}
                       </div>
                     </div>
-                    <div className="form-group d-flex flex-wrap justify-content-between mb-1">
+                    <div className=" d-flex flex-wrap justify-content-between mb-1">
                       <label
                         htmlFor="terms-check2"
                         className="gr-check-input d-flex  mr-3"
@@ -161,14 +256,20 @@ export default function EmployeeSignupModal(props) {
                         <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
-                          <a href="http://localhost:3000/" className="text-primary">
+                          <a
+                            href="http://localhost:3000/"
+                            className="text-primary"
+                          >
                             Terms & Conditions
                           </a>
                         </span>
                       </label>
                     </div>
-                    <div className="form-group mb-8">
-                      <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                    <div className="form-group">
+                      <button
+                        className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                        type="submit"
+                      >
                         Sign Up{" "}
                       </button>
                     </div>
@@ -183,6 +284,7 @@ export default function EmployeeSignupModal(props) {
                       </Link>
                     </p>
                   </form>
+                  {/* END SIGNUP FORM */}
                 </div>
               </div>
             </div>
