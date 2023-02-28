@@ -51,11 +51,6 @@ function EmployeeHeader() {
                     Jobs
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/search">
-                    Jobs
-                  </a>
-                </li>
               </ul>
             </div>
             <button
@@ -115,6 +110,7 @@ function EmployeeHeader() {
                     src="image/l2/jpg/gallery-img25.jpg"
                     width={50}
                     height={50}
+                    alt={""}
                   />
                 </div>
                 <i className="fas fa-chevron-down heading-default-color ml-6"></i>
@@ -123,24 +119,24 @@ function EmployeeHeader() {
                 className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                 aria-labelledby="dropdownMenuLink"
               >
-                <a
+                <Link
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="http://localhost:3000/"
+                  to="/setting"
                 >
                   Settings{" "}
-                </a>
-                <a
+                </Link>
+                <Link
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="/profile"
+                  to="/profile"
                 >
-                  Edit Profile
-                </a>
-                <a
+                  Profile
+                </Link>
+                <Link
                   className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  href="http://localhost:3000/"
+                  to="/"
                 >
                   Log Out
-                </a>
+                </Link>
               </div>
             </div>
           </div>

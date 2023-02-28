@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 function JobBox(props) {
     return (
         <div className="col-xxl-12 col-xl-12 col-lg-12 mb-8 job_box p-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
@@ -7,13 +8,13 @@ function JobBox(props) {
                 {props.swap === true ? <span className="job_swap_label">SWAP</span> : null}
                 <div className="row job_header m-0">
                     <div className="media align-items-center company_box col-md-6 p-0">
-                        <a className="text_box text-left" href="http://localhost:3000/">
+                        <Link className="text_box text-left" to={"/jobdetail"}>
                             <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
-                        </a>
-                        <a className="text_box text-left w-100" href="http://localhost:3000/">
-                            <p href="http://localhost:3000/" className="font-size-3 text-default-color line-height-2 m-0">Apple INC</p>
+                        </Link>
+                        <Link className="text_box text-left w-100" to={"/jobdetail"}>
+                            <p className="font-size-3 text-default-color line-height-2 m-0">Apple INC</p>
                             <h3 className="mb-0 font-size-6 heading-dark-color">UI/UX Designer</h3>
-                        </a>
+                        </Link>
                     </div>
                     <div className="col-md-6 p-0">
                         <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">

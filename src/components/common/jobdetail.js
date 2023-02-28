@@ -3,7 +3,7 @@ import React from "react";
 function JobDetailPage() {
   // eslint-disable-next-line no-use-before-define
   return (
-    <div className=" bg-white rounded-4 border border-mercury shadow-9 overflow-y-scroll mt-9 mt-xl-0">
+    <div className=" bg-white rounded-4 border border-mercury shadow-9 pos-abs-xl overflow-y-scroll mt-9 mt-xl-0">
       <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
         <div className="row">
           <div className="col-12">
