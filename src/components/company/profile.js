@@ -48,19 +48,19 @@ function CompanyProfile() {
             <div className="col-12 col-xl-9 col-lg-8">
               <div className="bg-white rounded-4 pt-11 shadow-9">
                 <div className="d-xs-flex align-items-center pl-xs-12 mb-8 text-center text-xs-left">
-                  <div class="media align-items-center company_box col-md-6 p-0">
-                    <a class="text_box text-left" href="/jobdetail">
+                  <div className="media align-items-center company_box col-md-6 p-0">
+                    <a className="text_box text-left" href="/jobdetail">
                       <img
-                        class="company_logo"
+                        className="company_logo"
                         src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                         alt=""
                       />
                     </a>
-                    <a class="text_box text-left w-100" href="/jobdetail">
-                      <h3 class="mb-0 font-size-6 heading-dark-color">
+                    <a className="text_box text-left w-100" href="/jobdetail">
+                      <h3 className="mb-0 font-size-6 heading-dark-color">
                         Apple INC
                       </h3>
-                      <p class="font-size-3 text-default-color line-height-2 m-0">
+                      <p className="font-size-3 text-default-color line-height-2 m-0">
                         Online Marketplace
                       </p>
                     </a>

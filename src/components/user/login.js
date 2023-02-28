@@ -1,9 +1,53 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useValidation from "../common/useValidation";
 
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
+
+  /*----USER LOGIN VALIDATION----*/
+  const initialFormState = {
+    useremail: "",
+    userpassword: "",
+  };
+  /*----VALIDATION CONTENT----*/
+  const validators = {
+    useremail: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
+    ],
+    userpassword: [
+      (value) =>
+        value === ""
+          ? "Password is required"
+          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+              value
+            )
+          ? null
+          : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+    ],
+  };
+  /*----LOGIN ONCHANGE FUNCTION----*/
+  const { state, onInputChange, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
+
+  /*----LOGIN SUBMIT FUNCTION----*/
+  const onUserLoginClick = (event) => {
+    event.preventDefault();
+
+    if (validate()) {
+      // handle form submission
+    }
+  };
+  // END USER LOGIN VALIDATION
+
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -105,41 +149,82 @@ export default function EmployeeLoginModal(props) {
                     <span className="font-size-3 line-height-reset ">Or</span>
                   </div>
                   <form
+                    onSubmit={onUserLoginClick}
                     className={showForgotPassword === false ? "" : "d-none"}
                   >
                     <div className="form-group">
                       <label
-                        htmlFor="email"
+                        htmlFor="useremail"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         E-mail
                       </label>
                       <input
                         type="email"
-                        className="form-control"
+                        name="useremail"
+                        value={state.useremail}
+                        onChange={onInputChange}
+                        className={
+                          errors.useremail
+                            ? "form-control border border-danger"
+                            : "form-control"
+                        }
                         placeholder="example@gmail.com"
-                        id="email"
+                        id="useremail"
                       />
+                      {/*----ERROR MESSAGE FOR EMAIL----*/}
+                      {errors.useremail && (
+                        <span>
+                          {errors.useremail.map((error) => (
+                            <span
+                              key={error}
+                              className="text-danger font-size-3"
+                            >
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="password"
+                        htmlFor="userpassword"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Password
                       </label>
                       <div className="position-relative">
                         <input
+                          name="userpassword"
                           type="password"
-                          className="form-control"
-                          id="password"
+                          value={state.userpassword}
+                          onChange={onInputChange}
+                          className={
+                            errors.userpassword
+                              ? "form-control border border-danger"
+                              : "form-control"
+                          }
                           placeholder="Enter password"
-                        />
-                        <a
+                          id="userpassword"
+                        />{" "}
+                        {/*----ERROR MESSAGE FOR PASSWORD----*/}
+                        {errors.userpassword && (
+                          <span>
+                            {errors.userpassword.map((error) => (
+                              <span
+                                key={error}
+                                className="text-danger font-size-3"
+                              >
+                                {error}
+                              </span>
+                            ))}
+                          </span>
+                        )}
+                        {/* <a
                           href="http://localhost:3000/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password"
-                        ></a>
+                        ></a> */}
                       </div>
                     </div>
                     <div className="form-group d-flex flex-wrap justify-content-between">
@@ -158,7 +243,7 @@ export default function EmployeeLoginModal(props) {
                         </span>
                       </label>
                       <Link
-                        href="http://localhost:3000/"
+                        to={""}
                         className="font-size-3 text-dodger line-height-reset"
                         onClick={() => setShowForgotPassword(true)}
                       >
@@ -166,7 +251,10 @@ export default function EmployeeLoginModal(props) {
                       </Link>
                     </div>
                     <div className="form-group mb-8">
-                      <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                      <button
+                        className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                        type="submit"
+                      >
                         Log in{" "}
                       </button>
                     </div>

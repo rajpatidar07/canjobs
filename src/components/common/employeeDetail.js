@@ -71,9 +71,9 @@ function EmployeeDetails() {
                   </h4>
                   <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <img
-                          class="mr-1"
+                          className="mr-1"
                           height={"16px"}
                           src="image/icons/envelope.svg"
                           alt="Email"
@@ -82,9 +82,9 @@ function EmployeeDetails() {
                       </span>
                     </div>
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <img
-                          class="mr-1"
+                          className="mr-1"
                           height={"16px"}
                           src="image/icons/mobile-button.svg"
                           alt="Mobile Number"
@@ -93,9 +93,9 @@ function EmployeeDetails() {
                       </span>
                     </div>
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <img
-                          class="mr-1"
+                          className="mr-1"
                           height={"16px"}
                           src="image/icons/marker.svg"
                           alt="Location"
@@ -104,9 +104,9 @@ function EmployeeDetails() {
                       </span>
                     </div>
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <img
-                          class="mr-1"
+                          className="mr-1"
                           height={"16px"}
                           src="image/icons/language.svg"
                           alt="language"
@@ -115,9 +115,9 @@ function EmployeeDetails() {
                       </span>
                     </div>
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <img
-                          class="mr-1"
+                          className="mr-1"
                           height={"16px"}
                           src="image/icons/address-book.svg"
                           alt="Address"
@@ -126,12 +126,12 @@ function EmployeeDetails() {
                       </span>
                     </div>
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <b>Work Permit of Canada:</b> Yes
                       </span>
                     </div>
                     <div className="info_box text-left">
-                      <span class="font-size-3 text-smoke  mr-3">
+                      <span className="font-size-3 text-smoke  mr-3">
                         <b>Work Permit of Other Country:</b> No
                       </span>
                     </div>
