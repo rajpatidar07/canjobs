@@ -5,23 +5,32 @@ import useValidation from "../common/useValidation";
 
 export default function EmployeeSignupModal(props) {
   // USER SIGNUP VALIDATION
+
+  // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     useremail: "",
     userpassword: "",
     confirmpassword: "",
   };
-
+  // VALIDATION CONDITIONS
   const validators = {
     useremail: [
-      (value) => (value ? null : "Email is required"),
-      (value) => (/\S+@\S+\.\S+/.test(value) ? null : "Email is invalid"),
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
     userpassword: [
-      (value) => (value ? null : "Password is required"),
       (value) =>
-        value && value.length >= 8
+        value === ""
+          ? "Password is required"
+          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+              value
+            )
           ? null
-          : "Password must be at least 8 characters",
+          : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     confirmpassword: [
       (value) => (value ? null : "Confirm Password is required"),
@@ -31,17 +40,15 @@ export default function EmployeeSignupModal(props) {
           : "Confirm Password must be Same as Password",
     ],
   };
-
+  // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
-
+  // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = (event) => {
     event.preventDefault();
-
     if (validate()) {
-      // handle form submission
     }
   };
   // END USER SIGNUP VALIDATION
@@ -58,7 +65,7 @@ export default function EmployeeSignupModal(props) {
         <div className="modal-dialog max-width-px-840 position-relative">
           <button
             type="button"
-            className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10"
+            className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10 z-index-supper"
             data-dismiss="modal"
             onClick={props.close}
           >
@@ -139,6 +146,7 @@ export default function EmployeeSignupModal(props) {
 
                   {/* SIGNUP FORM */}
                   <form onSubmit={onUserSignUpClick}>
+                    {/* FORM FIELDS */}
                     <div className="form-group">
                       <label
                         htmlFor="useremail"
@@ -160,13 +168,12 @@ export default function EmployeeSignupModal(props) {
                         id="useremail"
                       />
                       {errors.useremail && (
-                        <ul>
-                          {errors.useremail.map((error) => (
-                            <li key={error} className="text-danger">
-                              {error}
-                            </li>
-                          ))}
-                        </ul>
+                        <span
+                          key={errors.useremail}
+                          className="text-danger font-size-3"
+                        >
+                          {errors.useremail}
+                        </span>
                       )}
                     </div>
                     <div className="form-group">
@@ -191,13 +198,12 @@ export default function EmployeeSignupModal(props) {
                           placeholder="Enter password"
                         />
                         {errors.userpassword && (
-                          <ul>
-                            {errors.userpassword.map((error) => (
-                              <li key={error} className="text-danger">
-                                {error}
-                              </li>
-                            ))}
-                          </ul>
+                          <span
+                            key={errors.userpassword}
+                            className="text-danger font-size-3"
+                          >
+                            {errors.userpassword}
+                          </span>
                         )}
                         {/* <a
                           href="http://localhost:3000/"
@@ -228,13 +234,12 @@ export default function EmployeeSignupModal(props) {
                           placeholder="Enter password"
                         />
                         {errors.confirmpassword && (
-                          <ul>
-                            {errors.confirmpassword.map((error) => (
-                              <li key={error} className="text-danger">
-                                {error}
-                              </li>
-                            ))}
-                          </ul>
+                          <span
+                            key={errors.confirmpassword}
+                            className="text-danger font-size-3"
+                          >
+                            {errors.confirmpassword}
+                          </span>
                         )}
                         {/* <a
                           href="http://localhost:3000/"
@@ -243,23 +248,22 @@ export default function EmployeeSignupModal(props) {
                         ></a> */}
                       </div>
                     </div>
+                    {/* END FORM FIELDS  */}
                     <div className=" d-flex flex-wrap justify-content-between mb-1">
                       <label
-                        htmlFor="terms-check2"
+                        htmlFor="termsandcondition"
                         className="gr-check-input d-flex  mr-3"
                       >
                         <input
                           className="d-none"
                           type="checkbox"
-                          id="terms-check2"
+                          id="termsandcondition"
+                          name="termsandcondition"
                         />
                         <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
-                          <a
-                            href="http://localhost:3000/"
-                            className="text-primary"
-                          >
+                          <a href="" className="text-primary">
                             Terms & Conditions
                           </a>
                         </span>
