@@ -1,12 +1,12 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function AddModal(props) {
+function AddCategory(props) {
   return (
     <>
       <Modal
         show={props.show}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -22,10 +22,10 @@ function AddModal(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form>
             <h5 className="text-center pt-2">Add Category</h5>
-            <div className="form-group">
+            <div className="form-group mt-5">
               <label
                 htmlFor="category_name"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                className="font-size-4 text-black-2  line-height-reset"
               >
                 Category Name
               </label>
@@ -39,19 +39,21 @@ function AddModal(props) {
             <div className="form-group ">
               <label
                 htmlFor="Category_type"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                className="font-size-4 text-black-2  line-height-reset"
               >
                 Category Type :
               </label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Category Type"
-                id="Category_type"
-              />
+              <select className="form-control">
+                <option value={""}>select category</option>
+                <option value={""}>category01</option>
+                <option value={""}>category02</option>
+                <option value={""}>category03</option>
+                <option value={""}>category04</option>
+                <option value={""}>category05</option>
+              </select>
             </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>
@@ -63,4 +65,4 @@ function AddModal(props) {
   );
 }
 
-export default AddModal;
+export default AddCategory;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function ItSkills(props) {
+function Skills(props) {
   return (
     <>
       <Modal
@@ -49,4 +49,4 @@ function ItSkills(props) {
   );
 }
 
-export default ItSkills;
+export default Skills;

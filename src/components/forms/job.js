@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
 
-function AddModal(props) {
+function AddJobModal(props) {
   return (
     <>
       <Modal
@@ -24,10 +24,10 @@ function AddModal(props) {
           <form>
             <h5 className="text-center pt-2">Add Jobs</h5>
             <div className="row pt-5">
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Job_title"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Job title :
                 </label>
@@ -38,10 +38,10 @@ function AddModal(props) {
                   id="Job_title"
                 />
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Experience_required"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Experience required :
                 </label>
@@ -52,10 +52,10 @@ function AddModal(props) {
                   id="Experience_required"
                 />
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Salary"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Salary :
                 </label>
@@ -68,10 +68,10 @@ function AddModal(props) {
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Location"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Location :
                 </label>
@@ -82,10 +82,10 @@ function AddModal(props) {
                   id="Location"
                 />
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Job_Highlights"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Job Highlights :
                 </label>
@@ -98,10 +98,10 @@ function AddModal(props) {
                   />
                 </div>
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Apply_Link"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Apply Link :
                 </label>
@@ -115,7 +115,7 @@ function AddModal(props) {
                 </div>
               </div>
             </div>
-            <h4 className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+            <h4 className="font-size-4 text-black-2  line-height-reset">
               Your Job Match Score :
             </h4>
             <div className="row d-flex">
@@ -127,7 +127,7 @@ function AddModal(props) {
                 />
                 <label
                   htmlFor="Early_Applicant"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
                 >
                   Early Applicant
                 </label>
@@ -140,7 +140,7 @@ function AddModal(props) {
                 />
                 <label
                   htmlFor="Keyskills"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
                 >
                   Keyskillse
                 </label>
@@ -149,7 +149,7 @@ function AddModal(props) {
                 <input type="checkbox" id="Location" placeholder=" Location " />
                 <label
                   htmlFor="Location"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
                 >
                   Location
                 </label>
@@ -162,33 +162,33 @@ function AddModal(props) {
                 />
                 <label
                   htmlFor="Work_Experienc"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
                 >
                   Work Experienc
                 </label>
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="YOUR_DUTIES"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
-                  YOUR DUTIES :
+                  Your Duties :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     className="form-control"
                     id="YOUR_DUTIES"
-                    placeholder=" YOUR DUTIES "
+                    placeholder="Duties "
                   />
                 </div>
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Role_Back_End_Developer"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Role Back End Developer :
                 </label>
@@ -201,10 +201,10 @@ function AddModal(props) {
                   />
                 </div>
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Industry_type"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Industry Type :
                 </label>
@@ -219,10 +219,10 @@ function AddModal(props) {
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Department"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Department :
                 </label>
@@ -235,12 +235,12 @@ function AddModal(props) {
                   />
                 </div>
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Swip"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Swip :
+                  Swap :
                 </label>
                 <div className="position-relative">
                   <select className="form-control">
@@ -250,10 +250,10 @@ function AddModal(props) {
                   </select>
                 </div>
               </div>{" "}
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Role_Category"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Role Category :
                 </label>
@@ -268,10 +268,10 @@ function AddModal(props) {
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Education"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Education :
                 </label>
@@ -284,10 +284,10 @@ function AddModal(props) {
                   />
                 </div>
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="ug"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   UG :
                 </label>
@@ -300,10 +300,10 @@ function AddModal(props) {
                   />
                 </div>
               </div>
-              <div className="form-group col-md-4">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="Key_skills"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Key skills :
                 </label>
@@ -321,7 +321,7 @@ function AddModal(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="About_Company"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   About Company :
                 </label>
@@ -337,7 +337,7 @@ function AddModal(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="company_info"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Company Info :
                 </label>
@@ -355,7 +355,7 @@ function AddModal(props) {
               <div className="form-group col">
                 <label
                   htmlFor="job_description"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Job description :
                 </label>
@@ -373,8 +373,8 @@ function AddModal(props) {
               </div>
             </div>
 
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>
@@ -386,4 +386,4 @@ function AddModal(props) {
   );
 }
 
-export default AddModal;
+export default AddJobModal;

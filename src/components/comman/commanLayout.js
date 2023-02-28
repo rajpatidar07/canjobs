@@ -12,11 +12,11 @@ import ManageJobs from "../employer/manageJobs/manageJobs";
 import EmployeeSearch from "../employer/employeeSearch";
 import Response from "../employer/response";
 import AdminDashboard from "../admin/dashboard";
-import Job from "../admin/jobs/job";
-import Category from "../admin/job_category/category";
+import Job from "../admin/job";
+import Category from "../admin/category";
 import Profile from "../admin/profile";
-import Employee from "../admin/employee/employee";
-import Employer from "../admin/employer/employer";
+import Employee from "../admin/employee";
+import Employer from "../admin/employer";
 
 function CommanLayout() {
   return (

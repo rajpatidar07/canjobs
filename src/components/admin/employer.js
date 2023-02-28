@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import AdminHeader from "../header";
-import AdminSidebar from "../sidebar";
-import CustomButton from "../../comman/button";
+import AdminHeader from "./header";
+import AdminSidebar from "./sidebar";
+import CustomButton from "../comman/button";
 import { Link } from "react-router-dom";
-import AddModal from "./modal/addModal";
-import EmployerProfile from "../../comman/employerProfile";
+import AddEmployer from "../forms/employer";
+import EmployerProfile from "../comman/employerProfile";
 
 function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
@@ -65,7 +65,7 @@ function Employer() {
                     >
                       Add Employer
                     </CustomButton>
-                    <AddModal
+                    <AddEmployer
                       show={showAddEmployerModal}
                       close={() => setShowEmployerMOdal(false)}
                     />
