@@ -7,6 +7,7 @@ import EmployeeHeader from "../../employee/header";
 import EmployeeFooter from "../../employee/footer";
 import CustomButton from "../../comman/button";
 import { Link } from "react-router-dom";
+
 function CompanyProfile() {
   const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false);
   const [showCompanyDetailsModal, setShowCompanyDetailsModal] = useState(false);
