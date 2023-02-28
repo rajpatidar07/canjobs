@@ -6,8 +6,8 @@ import CommanLayout from "../src/components/comman/commanLayout";
 function App() {
   return (
     <div className="App">
-      {/* <MainLayout /> */}
-      <CommanLayout />
+      <MainLayout />
+      {/* <CommanLayout /> */}
     </div>
   );
 }

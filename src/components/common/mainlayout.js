@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
+import EmployerHome from "../company/home";
+import CompanyProfile from "../company/profile";
 import EmployeeHomePage from "../user/home";
 import JobDetail from "../user/jobdetail";
 import JobSearch from "../user/jobs";
@@ -18,6 +20,15 @@ function MainLayout() {
 
         {/* Employer */}
 
+        <Route path="/employer" element={<EmployerHome />} />
+        <Route path="/company" element={<CompanyProfile />} />
+
+
+        {/* <Route path="/employerhome" element={<EmployerHomePage/>} />
+        <Route path="/companyprofile" element={<CompanyProfile />} />
+        <Route path="/employeesearch" element={<EmployeeSearch />} />
+        <Route path="/managejobs" element={<ManageJobs />} />
+        <Route path="/response" element={<Response />} /> */}
 
         {/* Admin */}
 

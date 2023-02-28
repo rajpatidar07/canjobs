@@ -51,6 +51,10 @@ p {
   max-height: 28px;
 }
 
+.connect_btn {
+  min-width: 60px;
+}
+
 /* header */
 .main-menu>li>.nav-link {
   padding-top: 24px !important;
@@ -202,6 +206,7 @@ span.job_swap_label {
 .form-group {
   position: relative;
 }
+
 .form-group label {
   font-weight: 500;
   font-size: 12px;

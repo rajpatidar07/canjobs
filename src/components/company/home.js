@@ -1,9 +1,9 @@
 import React from "react";
-import EmployeeFooter from "../employee/footer";
-import EmployeeHeader from "../employee/header";
+import EmployeeFooter from "../common/footer";
+import EmployeeHeader from "../common/header";
 import EmployeeBox from "./employeeBox";
-import SearchForm from "./searchForm";
-function home() {
+import SearchForm from "../common/search_form";
+function EmployerHome() {
   return (
     <div>
       <EmployeeHeader />
@@ -987,4 +987,4 @@ function home() {
   );
 }
 
-export default home;
+export default EmployerHome;

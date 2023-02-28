@@ -65,7 +65,7 @@ const UserProfile = () => {
                       </label>
                       <img
                         className="rounded-circle"
-                        src="image/l2/jpg/gallery-img25.jpg"
+                        src="image/user1.jpg"
                         alt=""
                         width={"100px"}
                         height={"100px"}

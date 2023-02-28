@@ -107,7 +107,7 @@ function EmployeeHeader() {
                 <div className="">
                   <img
                     className="rounded-circle"
-                    src="image/l2/jpg/gallery-img25.jpg"
+                    src="image/user1.jpg"
                     width={50}
                     height={50}
                     alt={""}
