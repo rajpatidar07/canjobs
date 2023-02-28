@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import CustomButton from "../comman/button";
 import { Link } from "react-router-dom";
 import AddEmployer from "../forms/employer";
-import EmployerProfile from "../comman/employerProfile";
+import EmployerProfile from "../company/profile";
 
 function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);

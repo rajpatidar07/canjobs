@@ -2,11 +2,19 @@ import React from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
+import ManageJobs from "../company/manageJob";
+import EmployeeSearch from "../employer/employeeSearch";
+import Response from "../company/response";
 import EmployeeHomePage from "../user/home";
 import JobDetail from "../user/jobdetail";
 import JobSearch from "../user/jobs";
 import UserProfile from "../user/profile";
-
+import AdminDashboard from "../admin/dashboard";
+import Job from "../admin/job";
+import Category from "../admin/category";
+import Profile from "../admin/profile";
+import Employee from "../admin/employee";
+import Employer from "../admin/employer";
 
 function MainLayout() {
   return (
@@ -22,8 +30,9 @@ function MainLayout() {
 
         <Route path="/employer" element={<EmployerHome />} />
         <Route path="/company" element={<CompanyProfile />} />
-
-
+        <Route path="/employeesearch" element={<EmployeeSearch />} />
+        <Route path="/managejobs" element={<ManageJobs />} />
+        <Route path="/response" element={<Response />} />
         {/* <Route path="/employerhome" element={<EmployerHomePage/>} />
         <Route path="/companyprofile" element={<CompanyProfile />} />
         <Route path="/employeesearch" element={<EmployeeSearch />} />
@@ -31,7 +40,12 @@ function MainLayout() {
         <Route path="/response" element={<Response />} /> */}
 
         {/* Admin */}
-
+        <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/job" element={<Job />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/employee" element={<Employee />} />
+        <Route path="/employer" element={<Employer />} />
+        <Route path="/adminprofile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

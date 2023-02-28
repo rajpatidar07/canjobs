@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function AccountDetails(props) {
+function Account(props) {
   return (
     <>
       <Modal
@@ -122,4 +122,4 @@ function AccountDetails(props) {
   );
 }
 
-export default AccountDetails;
+export default Account;

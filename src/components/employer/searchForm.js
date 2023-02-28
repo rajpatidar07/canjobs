@@ -24,11 +24,7 @@ function SearchForm() {
           </div>
           {/* <!-- .select-city starts --> */}
           <div className="form-group position-relative">
-            <select
-              name="country"
-              id="country"
-              className="nice-select pl-13 h-100 arrow-3 font-size-4"
-            >
+            <select name="country" id="country">
               <option data-display="City, state, zip code or (Remote)">
                 City
               </option>

@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import EmployeeFooter from "../../employee/footer";
-import EmployeeHeader from "../../employee/header";
-import JobBox from "../jobBox";
-import AddJobsModal from "./addJobsModal";
-import SearchForm from "../../employee/search_form";
-
+import EmployeeFooter from "../employee/footer";
+import Header from "../common/header";
+import SearchForm from "../employee/search_form";
+import AddJobModal from "../forms/job";
+import JobBox from "../common/jobbox";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   return (
     <>
       <div>
-        <EmployeeHeader />
+        <Header />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
@@ -84,7 +83,7 @@ function ManageJobs() {
                       Add jobs
                     </button>
                   </div>
-                  <AddJobsModal
+                  <AddJobModal
                     show={showAddJobModal}
                     close={() => setShowAddJobModal(false)}
                   />

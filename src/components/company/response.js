@@ -1,6 +1,6 @@
 import React from "react";
-import EmployeeFooter from "../employee/footer";
-import EmployeeHeader from "../employee/header";
+import Footer from "../common/footer";
+import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../employee/search_form";
 
@@ -8,7 +8,7 @@ function Response() {
   return (
     <>
       <div>
-        <EmployeeHeader />
+        <Headers />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
@@ -1790,7 +1790,7 @@ function Response() {
           </div>
         </div>
         {/* <!-- Main Content end --> */}
-        <EmployeeFooter />
+        <Footer />
       </div>
     </>
   );

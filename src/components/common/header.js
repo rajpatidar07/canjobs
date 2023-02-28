@@ -40,18 +40,43 @@ function EmployeeHeader() {
           </div>
           <div className="collapse navbar-collapse" id="mobile-menu">
             <div className="navbar-nav-wrapper">
-              <ul className="navbar-nav main-menu">
-                <li className="nav-item">
-                  <a className="nav-link" href="/">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/jobs">
-                    Jobs
-                  </a>
-                </li>
-              </ul>
+              {1 == 1 ? (
+                <ul className="navbar-nav main-menu">
+                  <li className="nav-item">
+                    <a className="nav-link" href="/employer">
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a className="nav-link" href="/managejobs">
+                      Manage Jobs
+                    </a>
+                  </li>
+                  <li>
+                    <a className="nav-link" href="/response">
+                      Responses
+                    </a>
+                  </li>
+                  <li>
+                    <a className="nav-link" href="/company">
+                      Profile
+                    </a>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="navbar-nav main-menu">
+                  <li className="nav-item">
+                    <a className="nav-link" href="/">
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a className="nav-link" href="/jobs">
+                      Jobs
+                    </a>
+                  </li>
+                </ul>
+              )}
             </div>
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"

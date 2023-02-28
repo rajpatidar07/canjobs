@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import AccountDetails from "../forms/employer/account";
 import CompanyDetails from "../forms/employer/companyDetail";
 import KycComplianceDetails from "../forms/employer/kyc";
-import CompanyInfo from "../forms/employer/companyInfo";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
+import Account from "../forms/employer/account";
+import Company from "../forms/employer/companyInfo";
 
 function CompanyProfile() {
   const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false);
@@ -50,11 +50,19 @@ function CompanyProfile() {
                 <div className="d-xs-flex align-items-center pl-xs-12 mb-8 text-center text-xs-left">
                   <div class="media align-items-center company_box col-md-6 p-0">
                     <a class="text_box text-left" href="/jobdetail">
-                      <img class="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" />
+                      <img
+                        class="company_logo"
+                        src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                        alt=""
+                      />
                     </a>
                     <a class="text_box text-left w-100" href="/jobdetail">
-                      <h3 class="mb-0 font-size-6 heading-dark-color">Apple INC</h3>
-                      <p class="font-size-3 text-default-color line-height-2 m-0">Online Marketplace</p>
+                      <h3 class="mb-0 font-size-6 heading-dark-color">
+                        Apple INC
+                      </h3>
+                      <p class="font-size-3 text-default-color line-height-2 m-0">
+                        Online Marketplace
+                      </p>
                     </a>
                   </div>
                 </div>
@@ -68,8 +76,8 @@ function CompanyProfile() {
                     <Link
                       className={
                         showAccountDetails === false &&
-                          showCompanyDetails === false &&
-                          showKycComplainDetails === false
+                        showCompanyDetails === false &&
+                        showKycComplainDetails === false
                           ? "active text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                           : " text-uppercase font-size-3 font-weight-bold text-default-color py-3"
                       }
@@ -149,8 +157,8 @@ function CompanyProfile() {
                     {/* <!-- Excerpt Start --> */}
                     {/* <!-- Company Info  --> */}
                     {showAccountDetails === false &&
-                      showCompanyDetails === false &&
-                      showKycComplainDetails === false ? (
+                    showCompanyDetails === false &&
+                    showKycComplainDetails === false ? (
                       <div>
                         <div className="d-flex align-items-center justify-content-md-between flex-wrap">
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
@@ -162,7 +170,7 @@ function CompanyProfile() {
                           >
                             Edit
                           </CustomButton>
-                          <CompanyInfo
+                          <Company
                             show={showCompanyInfoModal}
                             close={() => setShowCompanyInfoModal(false)}
                           />
@@ -214,7 +222,7 @@ function CompanyProfile() {
                           >
                             Edit
                           </CustomButton>
-                          <AccountDetails
+                          <Account
                             show={showAccountDetailsModal}
                             close={() => setShowAccountDetailsModal(false)}
                           />

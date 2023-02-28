@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function CompanyInfo(props) {
+function Company(props) {
   return (
     <>
       <Modal
@@ -160,4 +160,4 @@ function CompanyInfo(props) {
   );
 }
 
-export default CompanyInfo;
+export default Company;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import AddJobsModal from "./manageJobs/addJobsModal";
-
+import AddJobModal from "../forms/job";
 function JobBox() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
 
@@ -106,7 +105,7 @@ function JobBox() {
             >
               Edit
             </Link>
-            <AddJobsModal
+            <AddJobModal
               show={showAddJobModal}
               close={() => setShowAddJobModal(false)}
             />

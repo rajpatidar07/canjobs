@@ -112,14 +112,14 @@ function JobBoxResponse() {
           </div>
         </div>
         {showTable && (
-          <div className="bg-white shadow-8 pt-7 rounded pb-8 px-11">
+          <div className="bg-white shadow-8 pt-7 rounded pb-8">
             <div className="table-responsive">
               <table className="table table-striped">
                 <thead>
                   <tr>
                     <th
                       scope="col"
-                      className="pl-0  border-0 font-size-4 font-weight-normal"
+                      className=" border-0 font-size-4 font-weight-normal"
                     >
                       Name
                     </th>
@@ -139,7 +139,7 @@ function JobBoxResponse() {
                 </thead>
                 <tbody>
                   <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                    <th scope="row" className="border-0 py-7">
                       <a
                         href="candidate-profile.html"
                         className="media min-width-px-235 align-items-center"
