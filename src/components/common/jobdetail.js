@@ -1,18 +1,14 @@
 import React from "react";
 
 function JobDetailPage() {
-  // eslint-disable-next-line no-use-before-define
   return (
-    <div className=" bg-white rounded-4 border border-mercury shadow-9 pos-abs-xl overflow-y-scroll mt-9 mt-xl-0">
+    <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
       <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
         <div className="row">
           <div className="col-12">
             {/* <!-- media start --> */}
             <div className="media align-items-center company_box col-md-6 p-0">
-              <a
-                className="text_box text-left"
-                href="http://localhost:3000/"
-              >
+              <a className="text_box text-left" href="http://localhost:3000/">
                 <img
                   className="company_logo"
                   src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
@@ -82,10 +78,7 @@ function JobDetailPage() {
           <div className="col-md-6">
             <div className="media justify-content-md-start mb-md-0 mb-6">
               <div className="image mr-5">
-                <img
-                  src="image/svg/icon-briefcase.svg"
-                  alt=""
-                />
+                <img src="image/svg/icon-briefcase.svg" alt="" />
               </div>
               <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
                 Full-time
@@ -104,9 +97,7 @@ function JobDetailPage() {
               </h6>
             </div>
             <div className="tags">
-              <p className="font-size-4 text-gray mb-0">
-                Soft Skill
-              </p>
+              <p className="font-size-4 text-gray mb-0">Soft Skill</p>
               <ul className="list-unstyled mr-n3 mb-0">
                 <li className="d-block font-size-4 text-black-2 mt-2">
                   <span className="d-inline-block mr-2">•</span>
@@ -133,9 +124,7 @@ function JobDetailPage() {
               </h6>
             </div>
             <div className="tags">
-              <p className="font-size-4 text-gray mb-3">
-                Technical Skill
-              </p>
+              <p className="font-size-4 text-gray mb-3">Technical Skill</p>
               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                 <li>
                   <a
@@ -206,14 +195,11 @@ function JobDetailPage() {
         <div className="row text-left">
           <div className="col-xxl-12 col-xl-9 pr-xxl-18 pr-xl-0 pr-11">
             <div className="">
-              <p className="mb-4 font-size-4 text-gray">
-                Job Description
-              </p>
+              <p className="mb-4 font-size-4 text-gray">Job Description</p>
               <p className="font-size-4 text-black-2 mb-7">
-                Gubagoo is a fast growing provider of messaging
-                and commerce solutions for automotive dealers
-                changing the future of how people find, buy and
-                service their vehicles.
+                Gubagoo is a fast growing provider of messaging and commerce
+                solutions for automotive dealers changing the future of how
+                people find, buy and service their vehicles.
               </p>
             </div>
             <div className="">
@@ -221,18 +207,16 @@ function JobDetailPage() {
                 Your Role:
               </span>
               <p className="font-size-4 text-black-2 mb-7">
-                We’re looking for a passionate individual to
-                design beautiful and functional products for our
-                customers at Gubagoo. We move very fast and you
-                will be expected to contribute to a
-                cross-functional product development squad, that
-                includes product managers and developers, to
-                deliver the UX and UI for the team to bring to
-                life.
+                We’re looking for a passionate individual to design beautiful
+                and functional products for our customers at Gubagoo. We move
+                very fast and you will be expected to contribute to a
+                cross-functional product development squad, that includes
+                product managers and developers, to deliver the UX and UI for
+                the team to bring to life.
               </p>
               <p className="font-size-4 text-black-2 mb-7">
-                We are serious about remote work. You can work
-                for from anywhere.
+                We are serious about remote work. You can work for from
+                anywhere.
               </p>
               <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
                 What you will be doing:
@@ -240,13 +224,11 @@ function JobDetailPage() {
               <ul className="list-unstyled">
                 <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-2">
                   <span className="d-inline-block mr-7">•</span>
-                  Contribute new controls or design improvements
-                  to our
+                  Contribute new controls or design improvements to our
                 </li>
                 <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-1">
                   <span className="d-inline-block mr-7">•</span>
-                  Take ownership of the successful delivery of
-                  features
+                  Take ownership of the successful delivery of features
                 </li>
                 <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-1">
                   <span className="d-inline-block mr-7">•</span>
@@ -254,8 +236,7 @@ function JobDetailPage() {
                 </li>
                 <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-1">
                   <span className="d-inline-block mr-7">•</span>
-                  Ship a TON of product improvements and
-                  features
+                  Ship a TON of product improvements and features
                 </li>
               </ul>
               <a

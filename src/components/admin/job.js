@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "../../comman/button";
-import AdminHeader from "../header";
-import AdminSidebar from "../sidebar";
-import AddModal from "./modal/addModal";
-
-function Category() {
-  let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+import CustomButton from "../common/button";
+import JobDetailsBox from "../common/jobdetail";
+import AdminHeader from "./header";
+import AdminSidebar from "./sidebar";
+import AddJobModal from "../forms/job";
+function Job() {
+  let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [showJobDetails, setShowJobDetails] = useState(false);
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -24,12 +25,19 @@ function Category() {
         >
           <i className="icon icon-sidebar-2"></i>
         </a>
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div
+          className={
+            showJobDetails === false
+              ? "dashboard-main-container mt-24"
+              : "d-none"
+          }
+          id="dashboard-body"
+        >
           <div className="container">
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
                 <div className="col-lg-6 mb-lg-0 mb-4">
-                  <h3 className="font-size-6 mb-0">Category</h3>
+                  <h3 className="font-size-6 mb-0">Posted Jobs (4)</h3>
                 </div>
                 <div className="col-lg-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
@@ -51,13 +59,13 @@ function Category() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShowAddCategoryModal(true)}
+                      onClick={() => setShowAddJobsModal(true)}
                     >
-                      Add category
+                      Add Job
                     </CustomButton>
-                    <AddModal
-                      show={showAddCategoryModal}
-                      close={() => setShowAddCategoryModal(false)}
+                    <AddJobModal
+                      show={showAddJobsModal}
+                      close={() => setShowAddJobsModal(false)}
                     />
                   </div>
                 </div>
@@ -77,7 +85,25 @@ function Category() {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Category Type
+                          Job Type
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          City
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Created on
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Total Applicants
                         </th>
                         <th
                           scope="col"
@@ -94,17 +120,33 @@ function Category() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href=""
+                            <Link
+                              to={""}
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                             Software Engineer
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            New York
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            12 July, 2020
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
+                            47
                           </h3>
                         </th>
                         <th className="table-y-middle py-7 min-width-px-100">
@@ -127,12 +169,13 @@ function Category() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href="jobdetails.html"
+                            <Link
+                              to=""
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               UI Designer
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">
@@ -140,37 +183,19 @@ function Category() {
                             Software Engineer
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th
-                          scope="row"
-                          className="pl-6 border-0 py-7 min-width-px-235"
-                        >
-                          <div className="">
-                            <a
-                              href="jobdetails.html"
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
-                            >
-                              Head of Marketing
-                            </a>
-                          </div>
-                        </th>
                         <th className="table-y-middle py-7">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                            BE
+                            Remote
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            24 June, 2020
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
+                            145
                           </h3>
                         </th>
                         <th className="table-y-middle py-7 min-width-px-100">
@@ -193,17 +218,82 @@ function Category() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href="jobdetails.html"
+                            <Link
+                              to=""
+                              onClick={() => setShowJobDetails(true)}
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
+                            >
+                              Head of Marketing
+                            </Link>
+                          </div>
+                        </th>
+                        <th className="table-y-middle py-7">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            MBA
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            London
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            15 June, 2020
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
+                            62
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 min-width-px-100">
+                          <Link to="">
+                            <span className=" fas fa-edit text-gray px-5">
+                              {" "}
+                            </span>
+                          </Link>
+                          <Link to="">
+                            <span className=" text-danger">
+                              {" "}
+                              <i className="fa fa-trash"></i>
+                            </span>
+                          </Link>
+                        </th>
+                      </tr>
+                      <tr className="border border-color-2">
+                        <th
+                          scope="row"
+                          className="pl-6 border-0 py-7 min-width-px-235"
+                        >
+                          <div className="">
+                            <Link
+                              to=""
+                              onClick={() => setShowJobDetails(true)}
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Full-Stack Developer
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                             BE
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            California
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                            29 May, 2020
+                          </h3>
+                        </th>
+                        <th className="table-y-middle py-7 ">
+                          <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
+                            184
                           </h3>
                         </th>
                         <th className="table-y-middle py-7 min-width-px-100">
@@ -227,10 +317,36 @@ function Category() {
             </div>
           </div>
         </div>
+        {showJobDetails === true ? (
+          <div className="dashboard-main-container mt-24 ">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-12 dark-mode-texts">
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowJobDetails(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      {" "}
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-18">
+                {" "}
+                <JobDetailsBox />
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
-      ;
     </>
   );
 }
 
-export default Category;
+export default Job;

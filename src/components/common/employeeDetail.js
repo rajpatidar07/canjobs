@@ -8,7 +8,7 @@ import ItSkills from "../employee/profile/modals/itSkillsModal";
 import CustomButton from "../comman/button";
 import { Link } from "react-router-dom";
 
-function EmployeeProfleBox() {
+function EmployeeDetails() {
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showCareerProfile, setShowCareerProfile] = useState(false);
@@ -1061,4 +1061,4 @@ function EmployeeProfleBox() {
   );
 }
 
-export default EmployeeProfleBox;
+export default EmployeeDetails;

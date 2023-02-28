@@ -184,6 +184,17 @@ function PersonalDetails(props) {
                   id="Religion"
                 />
               </div>
+              <div className="form-group col-md-4">
+                <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                  Swap :
+                </label>
+                <select className="form-control">
+                  <option value={""}>Select</option>
+                  <option value={""}>Swap</option>
+                  <option value={""}>Part-time</option>
+                  <option value={""}>All</option>
+                </select>
+              </div>
             </div>
             <div className="form-group text-center">
               <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">

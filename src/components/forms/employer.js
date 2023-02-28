@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function AddModal(props) {
+function AddEmployer(props) {
   return (
     <>
       <Modal
@@ -22,12 +22,12 @@ function AddModal(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
             <h5 className="text-center pt-2">Add Employer</h5>
-            <div className="row">
+            <div className="row pt-5">
               {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="compny_Name"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Company Name:
                 </label>
@@ -41,7 +41,7 @@ function AddModal(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="vacancy"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   No. of vacancies :
                 </label>
@@ -57,7 +57,7 @@ function AddModal(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="location"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Location :
                 </label>
@@ -71,7 +71,7 @@ function AddModal(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Gender"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Information status :
                 </label>
@@ -83,11 +83,11 @@ function AddModal(props) {
               </div>
             </div>
             <h5> Contact Person</h5>
-            <div className="row">
+            <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Name"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Name :
                 </label>
@@ -101,7 +101,7 @@ function AddModal(props) {
               <div className="form-group col-md-6">
                 <label
                   htmlFor="number"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  className="font-size-4 text-black-2  line-height-reset"
                 >
                   Number :
                 </label>
@@ -114,8 +114,8 @@ function AddModal(props) {
               </div>
             </div>
 
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
                 Submit
               </button>
             </div>
@@ -127,4 +127,4 @@ function AddModal(props) {
   );
 }
 
-export default AddModal;
+export default AddEmployer;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-function EducationDetails(props) {
+function Education(props) {
   return (
     <>
       <Modal
@@ -136,4 +136,4 @@ function EducationDetails(props) {
   );
 }
 
-export default EducationDetails;
+export default Education;
