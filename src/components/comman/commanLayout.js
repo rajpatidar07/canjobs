@@ -7,7 +7,7 @@ import UserProfile from "../employee/profile/profile";
 import RecommendedJobs from "../employee/recommendedJobs";
 import EmployerHomePage from "../employer/home";
 import JobSearch from "../employee/search";
-import CompanyProfile from "../employer/company profile/companyProfile";
+import CompanyProfile from "../employer/company_profile/companyProfile";
 import ManageJobs from "../employer/manageJobs/manageJobs";
 import EmployeeSearch from "../employer/employeeSearch";
 import Response from "../employer/response";

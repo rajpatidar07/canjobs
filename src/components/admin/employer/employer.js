@@ -4,9 +4,11 @@ import AdminSidebar from "../sidebar";
 import CustomButton from "../../comman/button";
 import { Link } from "react-router-dom";
 import AddModal from "./modal/addModal";
+import EmployerProfile from "../../comman/employerProfile";
 
 function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
+  let [showEmployerDetails, setShowEmployerDetails] = useState(false);
 
   return (
     <>
@@ -25,7 +27,14 @@ function Employer() {
         >
           <i className="icon icon-sidebar-2"></i>
         </a>
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div
+          className={
+            showEmployerDetails === false
+              ? "dashboard-main-container mt-24"
+              : "d-none"
+          }
+          id="dashboard-body"
+        >
           <div className="container">
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
@@ -103,7 +112,7 @@ function Employer() {
                     <tbody>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-1.png"
@@ -111,10 +120,15 @@ function Employer() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              We2code
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployerDetails(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                We2code
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -149,7 +163,7 @@ function Employer() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-2.png"
@@ -157,10 +171,15 @@ function Employer() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Syska
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployerDetails(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Syska
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -195,7 +214,7 @@ function Employer() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-3.png"
@@ -203,10 +222,15 @@ function Employer() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Tata
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployerDetails(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Tata
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -241,7 +265,7 @@ function Employer() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-4.png"
@@ -249,10 +273,15 @@ function Employer() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Wipro
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployerDetails(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Wipro
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -287,7 +316,7 @@ function Employer() {
                       </tr>
                       <tr className="border border-color-2">
                         <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                          <a href="" className="media  align-items-center">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mr-6">
                               <img
                                 src="image/table-one-profile-image-5.png"
@@ -295,10 +324,15 @@ function Employer() {
                                 className="w-100"
                               />
                             </div>
-                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                              Ariod
-                            </h4>
-                          </a>
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployerDetails(true)}
+                            >
+                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                                Ariod
+                              </h4>
+                            </Link>
+                          </div>
                         </th>
                         <th className="table-y-middle py-7  pr-0">
                           <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -402,6 +436,35 @@ function Employer() {
             </div>
           </div>
         </div>
+        {showEmployerDetails === true ? (
+          <div className="dashboard-main-container mt-24">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-12 dark-mode-texts">
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowEmployerDetails(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      {" "}
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-18">
+                <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
+                  {" "}
+                  <EmployerProfile />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </>
   );
