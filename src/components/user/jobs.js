@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import JobBox from "../common/jobbox";
@@ -38,10 +39,10 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Job Type">Job Category</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        <option aria-selected={true} value="">United States of America</option>
+                        <option value="1">United Arab Emirates</option>
+                        <option value="2">Bangladesh</option>
+                        <option value="3">Pakistan</option>
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
@@ -51,9 +52,9 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Job Type">Job swap</option>
-                        <option value="">All</option>
-                        <option value="">Only swap jobs</option>
-                        <option value="">Without swap</option>
+                        <option value="1">All</option>
+                        <option value="2">Only swap jobs</option>
+                        <option value="3">Without swap</option>
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
@@ -63,10 +64,10 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Salary Range">Job Skills</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        <option value="1">United States of America</option>
+                        <option value="2">United Arab Emirates</option>
+                        <option value="3">Bangladesh</option>
+                        <option value="4">Pakistan</option>
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
@@ -78,10 +79,10 @@ function JobSearch() {
                         <option data-display="Experience Level ">
                           Job Location
                         </option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        <option value="1">United States of America</option>
+                        <option value="2">United Arab Emirates</option>
+                        <option value="3">Bangladesh</option>
+                        <option value="4">Pakistan</option>
                       </select>
                     </div>
                   </div>
@@ -103,80 +104,80 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <a
+                    <Link
                       className="mb-8 p-0 w-100 active nav-link active"
                       id="tab-nav-1"
                       data-toggle="tab"
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       className="mb-8 p-0 w-100 active nav-link"
                       id="tab-nav-1"
                       data-toggle="tab"
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       className="mb-8 p-0 w-100 active nav-link"
                       id="tab-nav-1"
                       data-toggle="tab"
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       className="mb-8 p-0 w-100 active nav-link"
                       id="tab-nav-1"
                       data-toggle="tab"
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       className="mb-8 p-0 w-100 active nav-link"
                       id="tab-nav-1"
                       data-toggle="tab"
                       href="#tab-pane-1"
                       role="tab"
                       aria-controls="tab-pane-1"
-                      aria-selected="true "
+
                     >
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
+                    </Link>
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
-                    <a
+                    <Link
                       className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
                       href="http://localhost:3000/"
                     >
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* <!-- form end --> */}

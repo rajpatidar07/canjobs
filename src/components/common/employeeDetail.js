@@ -5,13 +5,14 @@ import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-
+// eslint-disable-next-line
 function EmployeeDetails() {
+
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
-  const [showCareerProfile, setShowCareerProfile] = useState(false);
+  // const [showCareerProfile, setShowCareerProfile] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
-  const [showProjects, setShowProjects] = useState(false);
+  // const [showProjects, setShowProjects] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   return (
@@ -23,9 +24,9 @@ function EmployeeDetails() {
               {/*----Slide Employee profile-----*/}
               <div className="bg-white shadow-9 rounded-4">
                 <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
-                  <a
+                  <Link
                     className="mb-4 position-relative"
-                    href="http://localhost:3000/"
+                    to="/"
                   >
                     <input type="file" id="ImgUploadInput" className="d-none" />
                     <label
@@ -41,7 +42,7 @@ function EmployeeDetails() {
                       width={"100px"}
                       height={"100px"}
                     />
-                  </a>
+                  </Link>
                   <h4 className="mb-0">
                     <Link
                       className="text-black-2 font-size-6 font-weight-semibold"
@@ -153,60 +154,60 @@ function EmployeeDetails() {
 
                     <ul className="list-unstyled d-flex align-items-center flex-wrap">
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           Agile
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           Wireframing
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           Prototyping
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           Information
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           Waterfall Model
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           New Layout
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
+                        <Link
                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                          href="http://localhost:3000/"
+                          to="/"
                         >
                           Browsing
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -224,7 +225,7 @@ function EmployeeDetails() {
                 role="tablist"
               >
                 <li className="tab-menu-items nav-item pr-12">
-                  <a
+                  <Link
                     className={
                       showAppliedJobs === true
                         ? "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
@@ -238,10 +239,10 @@ function EmployeeDetails() {
                     onClick={() => setShowAppliedJobs(false)}
                   >
                     Overview
-                  </a>
+                  </Link>
                 </li>
                 <li className="tab-menu-items nav-item pr-12">
-                  <a
+                  <Link
                     className={
                       showAppliedJobs === false
                         ? "text-uppercase font-size-3 font-weight-bold text-default-color py-3"
@@ -255,7 +256,7 @@ function EmployeeDetails() {
                     onClick={() => setShowAppliedJobs(true)}
                   >
                     Applied Jobs
-                  </a>
+                  </Link>
                 </li>
               </ul>
               {/*---Profile Details----*/}
@@ -296,47 +297,47 @@ function EmployeeDetails() {
                     </h4>
                     <CustomButton
                       className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                      onClick={() => setShowCareerProfile(true)}
+                    // onClick={() => setShowCareerProfile(true)}
                     />
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box col-md-6 p-0">
-                          <a
+                          <Link
                             className="text_box text-left"
-                            href="http://localhost:3000/"
+                            to="/"
                           >
                             <img
                               className="company_logo"
                               src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                               alt=""
                             />
-                          </a>
+                          </Link>
                           <div className="text_box text-left w-100 mt-n2">
                             <h3 className="mb-0">
-                              <a
+                              <Link
                                 className="font-size-6 text-black-2 font-weight-semibold"
-                                href="http://localhost:3000/"
+                                to="/"
                               >
                                 Lead Product Designer
-                              </a>
+                              </Link>
                             </h3>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="font-size-4 text-default-color line-height-2"
                             >
                               Airabnb
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-4 text-gray w-100"
                           >
                             Jun 2017 - April 2020- 3 years
-                          </a>
-                          <a
-                            href="http://localhost:3000/"
+                          </Link>
+                          <Link
+                            to="/"
                             className="font-size-3 text-gray w-100"
                           >
                             <span
@@ -349,49 +350,49 @@ function EmployeeDetails() {
                               />
                             </span>
                             New York, USA
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box col-md-6 p-0">
-                          <a
+                          <Link
                             className="text_box text-left"
-                            href="http://localhost:3000/"
+                            to="/"
                           >
                             <img
                               className="company_logo"
                               src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                               alt=""
                             />
-                          </a>
+                          </Link>
                           <div className="text_box text-left w-100 mt-n2">
                             <h3 className="mb-0">
-                              <a
+                              <Link
                                 className="font-size-6 text-black-2 font-weight-semibold"
-                                href="http://localhost:3000/"
+                                to="/"
                               >
                                 Lead Product Designer
-                              </a>
+                              </Link>
                             </h3>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="font-size-4 text-default-color line-height-2"
                             >
                               Airabnb
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-4 text-gray w-100"
                           >
                             Jun 2017 - April 2020- 3 years
-                          </a>
-                          <a
-                            href="http://localhost:3000/"
+                          </Link>
+                          <Link
+                            to="/"
                             className="font-size-3 text-gray w-100"
                           >
                             <span
@@ -404,7 +405,7 @@ function EmployeeDetails() {
                               />
                             </span>
                             New York, USA
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -428,42 +429,42 @@ function EmployeeDetails() {
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box p-0">
-                          <a
+                          <Link
                             className="text_box text-left"
-                            href="http://localhost:3000/"
+                            to="/"
                           >
                             <img
                               className="company_logo"
                               src="image/svg/harvard.svg"
                               alt=""
                             />
-                          </a>
+                          </Link>
                           <div className="text_box text-left w-100 mt-n2">
                             <h3 className="mb-0">
-                              <a
+                              <Link
                                 className="font-size-6 text-black-2 font-weight-semibold"
-                                href="http://localhost:3000/"
+                                to="/"
                               >
                                 Masters in Art Design
-                              </a>
+                              </Link>
                             </h3>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="font-size-4 text-default-color line-height-2"
                             >
                               Harvard University
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-4 text-gray w-100"
                           >
                             Jun 2017 - April 2020- 3 years
-                          </a>
-                          <a
-                            href="http://localhost:3000/"
+                          </Link>
+                          <Link
+                            to="/"
                             className="font-size-3 text-gray w-100"
                           >
                             <span
@@ -476,49 +477,49 @@ function EmployeeDetails() {
                               />
                             </span>
                             New York, USA
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box p-0">
-                          <a
+                          <Link
                             className="text_box text-left"
-                            href="http://localhost:3000/"
+                            to="/"
                           >
                             <img
                               className="company_logo"
                               src="image/svg/mit.svg"
                               alt=""
                             />
-                          </a>
+                          </Link>
                           <div className="text_box text-left w-100 mt-n2">
                             <h3 className="mb-0">
-                              <a
+                              <Link
                                 className="font-size-6 text-black-2 font-weight-semibold"
-                                href="http://localhost:3000/"
+                                to="/"
                               >
                                 Bachelor in Software Engineering
-                              </a>
+                              </Link>
                             </h3>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="font-size-4 text-default-color line-height-2"
                             >
                               Manipal Institute of Technology
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-4 text-gray w-100"
                           >
                             Jun 2017 - April 2020- 3 years
-                          </a>
-                          <a
-                            href="http://localhost:3000/"
+                          </Link>
+                          <Link
+                            to="/"
                             className="font-size-3 text-gray w-100"
                           >
                             <span
@@ -531,7 +532,7 @@ function EmployeeDetails() {
                               />
                             </span>
                             New York, USA
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -560,12 +561,12 @@ function EmployeeDetails() {
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
                         <div className="w-100 mt-n2 text-left">
                           <h3 className="mb-0">
-                            <a
+                            <Link
                               className="font-size-6 text-black-2"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               Fresh Graduate
-                            </a>
+                            </Link>
                           </h3>
                           <small>Fresher</small>
                         </div>
@@ -583,7 +584,7 @@ function EmployeeDetails() {
                       </h4>
                       <CustomButton
                         className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowProjects(true)}
+                      // onClick={() => setShowProjects(true)}
                       />
                     </div>
 
@@ -707,52 +708,52 @@ function EmployeeDetails() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-indigo mr-8 rounded">
-                          <a href="http://localhost:3000/">
+                          <Link to="/">
                             <img src="image/l3/png/fimize.png" alt="" />
-                          </a>
+                          </Link>
                         </div>
                         <div>
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Fimize
-                          </a>
+                          </Link>
                           <h3 className="font-size-5 mb-0">
-                            <a
+                            <Link
                               className="heading-default-color font-weight-semibold"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               Senior Marketing Expert
-                            </a>
+                            </Link>
                           </h3>
                         </div>
                       </div>
                       <div className="d-flex pt-17">
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
                               London
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
                               Full-time
-                            </a>
+                            </Link>
                           </li>
                         </ul>
-                        <a
-                          href="http://localhost:3000/"
+                        <Link
+                          to="/"
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
-                        ></a>
+                        ></Link>
                       </div>
                     </div>
                     {/* <!-- End Single Featured Job --> */}
@@ -762,52 +763,52 @@ function EmployeeDetails() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-regent mr-8 rounded">
-                          <a href="http://localhost:3000/">
+                          <Link to="/">
                             <img src="image/svg/icon-shark-2.svg" alt="" />
-                          </a>
+                          </Link>
                         </div>
                         <div>
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Shark
-                          </a>
+                          </Link>
                           <h3 className="font-size-5 mb-0">
-                            <a
+                            <Link
                               className="heading-default-color font-weight-semibold"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               3D ui / ux frontend developer
-                            </a>
+                            </Link>
                           </h3>
                         </div>
                       </div>
                       <div className="d-flex pt-17">
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
                               California
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
                               Remote
-                            </a>
+                            </Link>
                           </li>
                         </ul>
-                        <a
-                          href="http://localhost:3000/"
+                        <Link
+                          to="/"
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                        ></a>
+                        ></Link>
                       </div>
                     </div>
                     {/* <!-- End Single Featured Job --> */}
@@ -817,52 +818,52 @@ function EmployeeDetails() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-orange-2 mr-8 rounded">
-                          <a href="http://localhost:3000/">
+                          <Link to="/">
                             <img src="image/svg/icon-thunder.svg" alt="" />
-                          </a>
+                          </Link>
                         </div>
                         <div>
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Thunder
-                          </a>
+                          </Link>
                           <h3 className="font-size-5 mb-0">
-                            <a
+                            <Link
                               className="heading-default-color font-weight-semibold"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               Product Manager
-                            </a>
+                            </Link>
                           </h3>
                         </div>
                       </div>
                       <div className="d-flex pt-17">
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
                               London
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
                               Full-time
-                            </a>
+                            </Link>
                           </li>
                         </ul>
-                        <a
-                          href="http://localhost:3000/"
+                        <Link
+                          to="/"
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                        ></a>
+                        ></Link>
                       </div>
                     </div>
                     {/* <!-- End Single Featured Job --> */}
@@ -872,52 +873,52 @@ function EmployeeDetails() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-helio mr-8 rounded">
-                          <a href="http://localhost:3000/">
+                          <Link to="/">
                             <img src="image/l3/png/asios.png" alt="" />
-                          </a>
+                          </Link>
                         </div>
                         <div>
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Shark
-                          </a>
+                          </Link>
                           <h3 className="font-size-5 mb-0">
-                            <a
+                            <Link
                               className="heading-default-color font-weight-semibold"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               Front-end Developer
-                            </a>
+                            </Link>
                           </h3>
                         </div>
                       </div>
                       <div className="d-flex pt-17">
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
                               Alabama
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
                               Full-time
-                            </a>
+                            </Link>
                           </li>
                         </ul>
-                        <a
-                          href="http://localhost:3000/"
+                        <Link
+                          to="/"
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
-                        ></a>
+                        ></Link>
                       </div>
                     </div>
                     {/* <!-- End Single Featured Job --> */}
@@ -934,52 +935,52 @@ function EmployeeDetails() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-orange-2 mr-8 rounded">
-                          <a href="http://localhost:3000/">
+                          <Link to="/">
                             <img src="image/svg/icon-thunder.svg" alt="" />
-                          </a>
+                          </Link>
                         </div>
                         <div>
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Thunder
-                          </a>
+                          </Link>
                           <h3 className="font-size-5 mb-0">
-                            <a
+                            <Link
                               className="heading-default-color font-weight-semibold"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               Product Manager
-                            </a>
+                            </Link>
                           </h3>
                         </div>
                       </div>
                       <div className="d-flex pt-17">
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
                               New York
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
                               Part-time
-                            </a>
+                            </Link>
                           </li>
                         </ul>
-                        <a
-                          href="http://localhost:3000/"
+                        <Link
+                          to="/"
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                        ></a>
+                        ></Link>
                       </div>
                     </div>
                     {/* <!-- End Single Featured Job --> */}
@@ -989,52 +990,52 @@ function EmployeeDetails() {
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
                         <div className="square-52 bg-helio mr-8 rounded">
-                          <a href="http://localhost:3000/">
+                          <Link to="/">
                             <img src="image/l3/png/asios.png" alt="" />
-                          </a>
+                          </Link>
                         </div>
                         <div>
-                          <a
-                            href="http://localhost:3000/"
+                          <Link
+                            to="/"
                             className="font-size-3 text-default-color line-height-2"
                           >
                             Shark
-                          </a>
+                          </Link>
                           <h3 className="font-size-5 mb-0">
-                            <a
+                            <Link
                               className="heading-default-color font-weight-semibold"
-                              href="http://localhost:3000/"
+                              to="/"
                             >
                               Front-end Developer
-                            </a>
+                            </Link>
                           </h3>
                         </div>
                       </div>
                       <div className="d-flex pt-17">
                         <ul className="list-unstyled mb-1 d-flex flex-wrap">
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
                               Alabama
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a
-                              href="http://localhost:3000/"
+                            <Link
+                              to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
                               <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
                               Full-time
-                            </a>
+                            </Link>
                           </li>
                         </ul>
-                        <a
-                          href="http://localhost:3000/"
+                        <Link
+                          to="/"
                           className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                        ></a>
+                        ></Link>
                       </div>
                     </div>
                     {/* <!-- End Single Featured Job --> */}

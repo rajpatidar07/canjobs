@@ -14,7 +14,6 @@ const UserProfile = () => {
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
-  const [showProjects, setShowProjects] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
 
@@ -47,7 +46,7 @@ const UserProfile = () => {
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
-                    <a className="mb-4 position-relative">
+                    <Link className="mb-4 position-relative">
                       <input
                         type="file"
                         id="ImgUploadInput"
@@ -66,7 +65,7 @@ const UserProfile = () => {
                         width={"100px"}
                         height={"100px"}
                       />
-                    </a>
+                    </Link>
                     <h4 className="mb-0">
                       {/* <Link
                         className="text-black-2 font-size-6 font-weight-semibold"
@@ -575,81 +574,6 @@ const UserProfile = () => {
                       </div>
                     </div>
 
-                    {/*----Employee's Employement Profile----*/}
-                    {/* <div
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5"
-                      id="employement"
-                    >
-                      <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                          Employment Details
-                        </h4>
-                        <CustomButton
-                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                          onClick={() => setShowEmplyomentDetails(true)}
-                        />
-                        <EmployementDetails
-                          show={showEmplyomentDetails}
-                          close={() => setShowEmplyomentDetails(false)}
-                        />
-                      </div>
-
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="w-100 mt-n2 text-left">
-                            <h3 className="mb-0">
-                              <Link
-                                className="font-size-6 text-black-2"
-                                to="http://localhost:3000/"
-                              >
-                                Fresh Graduate
-                              </Link>
-                            </h3>
-                            <small>Fresher</small>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-                    {/*----Employee's Projects----*/}
-                    {/* <div
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5"
-                      id="Projects"
-                    >
-                      <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                          Projects
-                        </h4>
-                        <CustomButton
-                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                          onClick={() => setShowProjects(true)}
-                        />
-                      </div>
-
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                          <div className="w-100 mt-n2 text-left">
-                            <div className="px-4 pt-lg-5 pt-9 pt-xl-9 pb-5">
-                              <div className="mb-3">
-                                <h5 className="font-size-4 mb-0">
-                                  Home Project
-                                </h5>
-                                <p className="font-size-4 font-weight-semibold mb-0  text-break">
-                                  ABC
-                                </p>
-                              </div>
-                              <div className="mb-3">
-                                <h5 className="font-size-4 mb-0">
-                                  Industry Project
-                                </h5>
-                                <p className="font-size-4 font-weight-semibold mb-0  text-break">
-                                  Fresher
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
                   <div
                     className="tab-pane fade"

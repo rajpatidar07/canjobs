@@ -19,18 +19,18 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     userpassword: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     confirmpassword: [
       (value) => (value ? null : "Confirm Password is required"),
@@ -112,37 +112,37 @@ export default function EmployeeSignupModal(props) {
                   {/* SOCIAL MEDIA LINK BUTTONS */}
                   <div className="row">
                     <div className="col-4 col-xs-12">
-                      <a
-                        href="http://localhost:3000/"
+                      <Link
+                        to="/"
                         className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from LinkedIn
                         </span>
-                      </a>
+                      </Link>
                     </div>
                     <div className="col-4 col-xs-12">
-                      <a
-                        href="http://localhost:3000/"
+                      <Link
+                        to="/"
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Google
                         </span>
-                      </a>
+                      </Link>
                     </div>
                     <div className="col-4 col-xs-12">
-                      <a
-                        href="http://localhost:3000/"
+                      <Link
+                        to="/"
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Facebook
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   {/* END SOCIAL MEDIA LINK BUTTONS */}
@@ -211,11 +211,11 @@ export default function EmployeeSignupModal(props) {
                             {errors.userpassword}
                           </span>
                         )}
-                        {/* <a
-                          href="http://localhost:3000/"
+                        {/* <Link
+                          to="/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password2"
-                        ></a> */}
+                        ></Link> */}
                       </div>
                     </div>
                     <div className="form-group">
@@ -247,11 +247,11 @@ export default function EmployeeSignupModal(props) {
                             {errors.confirmpassword}
                           </span>
                         )}
-                        {/* <a
-                          href="http://localhost:3000/"
+                        {/* <Link
+                          to="/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password23"
-                        ></a> */}
+                        ></Link> */}
                       </div>
                     </div>
                     {/* END FORM FIELDS  */}
@@ -269,9 +269,9 @@ export default function EmployeeSignupModal(props) {
                         />
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
-                          <a href="" className="text-primary">
+                          <Link to="" className="text-primary">
                             Terms & Conditions
-                          </a>
+                          </Link>
                         </span>
                       </label>
                       {/*----ERROR MESSAGE FOR terms----*/}

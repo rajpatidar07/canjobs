@@ -175,7 +175,7 @@ span.job_swap_label {
   font-weight: 600;
   background: #00b074;
   padding: 3px 5px 3px 10px;
-  border-radius: 0 0.625rem 0 0.625rem;
+  border-radius: 0 0.5rem 0 0.5rem;
   color: #fff;
 }
 
@@ -246,4 +246,12 @@ label.image_upload_btn {
 /* CKEDITOR */
 .cke_chrome {
   border: none !important;
+}
+
+/* LOGIN MODAL */
+.login-modal-main .dark-mode-texts {
+  background-image: url(http://localhost:3000/image/favicon.png);
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
 }

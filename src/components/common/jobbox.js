@@ -96,7 +96,7 @@ function JobBox(props) {
           </div>
 
           <div className="media justify-content-md-end col-md-4">
-            {1 == 1 ? (
+            {1 == 2 ? (
               <>
                 <Link
                   className="btn btn-secondary text-uppercase font-size-3"
