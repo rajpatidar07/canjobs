@@ -3,6 +3,9 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
+import Filterbox from "../common/filterbox";
+import filterjson from "../json/filterjson";
+
 // eslint-disable-next-line no-use-before-define
 function EmployeeHomePage() {
   return (
@@ -19,110 +22,14 @@ function EmployeeHomePage() {
             {/* <!-- End Hero Form --> */}
           </div>
           <div className="row m-0 job_filter_block">
-            <div className="card job_filter_card ">
-              <div className="card-body row m-0 text-center justify-content-center">
-                <h4 className="card-title text-dark text-center mb-7 w-100">
-                  Jobs by Location
-                </h4>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-              </div>
-            </div>
-            <div className="card job_filter_card ">
-              <div className="card-body row m-0 text-center justify-content-center">
-                <h4 className="card-title text-dark text-center mb-7 w-100">
-                  Jobs by Category
-                </h4>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Hospitality
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Transportation
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mechanical
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Medical
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Education
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Driving
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Other
-                </button>
-              </div>
-            </div>
+            <Filterbox
+              filterheading=" Jobs by Location"
+              filterjson={filterjson.location}
+            />
+            <Filterbox
+              filterheading=" Jobs by Category"
+              filterjson={filterjson.category}
+            />
           </div>
         </div>
       </div>

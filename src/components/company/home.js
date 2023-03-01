@@ -3,6 +3,8 @@ import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import EmployeeBox from "./employeeBox";
 import SearchForm from "../common/search_form";
+import Filterbox from "../common/filterbox";
+import filterjson from "../json/filterjson";
 function EmployerHome() {
   return (
     <div>
@@ -20,200 +22,14 @@ function EmployerHome() {
             {/* <!-- End Hero Form --> */}
           </div>
           <div className="row m-0 job_filter_block">
-            <div className="card job_filter_card">
-              <div className="card-body row m-0">
-                <h4 className="card-title text-dark text-left mb-7 w-100">
-                  Employee by Location
-                </h4>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-              </div>
-            </div>
-            <div className="card job_filter_card">
-              <div className="card-body row m-0">
-                <h4 className="card-title text-dark text-left mb-7 w-100">
-                  Employee by Category
-                </h4>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Canada
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  USA
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  India
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  UK
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-                >
-                  Mexico
-                </button>
-              </div>
-            </div>
+            <Filterbox
+              filterheading="Employee by Location"
+              filterjson={filterjson.location}
+            />
+            <Filterbox
+              filterheading="Employee by Category"
+              filterjson={filterjson.category}
+            />
           </div>
         </div>
       </div>
@@ -237,9 +53,9 @@ function EmployerHome() {
           <div className="row justify-content-center">
             <EmployeeBox swap={true} />
             <EmployeeBox />
+            <EmployeeBox swap={true} />
             <EmployeeBox />
-            <EmployeeBox />
-            <EmployeeBox />
+            <EmployeeBox swap={true} />
             <EmployeeBox />
           </div>
         </div>
