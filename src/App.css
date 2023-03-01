@@ -242,3 +242,8 @@ label.image_upload_btn {
   line-height: 24px;
   cursor: pointer;
 }
+
+/* CKEDITOR */
+.cke_chrome {
+  border: none !important;
+}

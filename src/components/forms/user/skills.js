@@ -3,6 +3,31 @@ import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 
 function Skills(props) {
+  // USER SKILLS VALIDATION
+
+  // INITIAL STATE ASSIGNMENT
+  const initialFormState = {
+    userskills: "",
+  };
+  // VALIDATION CONDITIONS
+  const validators = {
+    userskills: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Skills is required" : null,
+    ],
+  };
+  // CUSTOM VALIDATIONS IMPORT
+  const { state, onInputChange, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
+  // USER SKILLS SUBMIT BUTTON
+  const onUserSkillsClick = (event) => {
+    event.preventDefault();
+    if (validate()) {
+    }
+  };
+  // END USER PERSONAL DETAIL VALIDATION
   return (
     <>
       <Modal
@@ -21,7 +46,7 @@ function Skills(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form>
+          <form onSubmit={onUserSkillsClick}>
             <h5 className="text-center pt-2 pb-5">Add It Skills </h5>{" "}
             <div className="form-group ">
               <label
@@ -32,13 +57,31 @@ function Skills(props) {
               </label>
               <input
                 type="text"
-                className="form-control"
                 placeholder="Skill / Software Name"
-                id="Skill_Name"
+                className={
+                  errors.userskills
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                id="userskills"
+                name="userskills"
+                value={state.userskills}
+                onChange={onInputChange}
               />
+              {errors.userskills && (
+                <span
+                  key={errors.userskills}
+                  className="text-danger font-size-3"
+                >
+                  {errors.userskills}
+                </span>
+              )}
             </div>
             <div className="form-group text-center">
-              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
+              <button
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                type="submit"
+              >
                 Submit
               </button>
             </div>
