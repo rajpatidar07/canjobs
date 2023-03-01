@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-import AddEmployer from "../forms/employer";
+import AddEmployer from "../forms/employer/employer";
 import EmployerProfile from "../company/profile";
 
 function Employer() {

@@ -3,10 +3,10 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-import PersonalDetails from "../forms/personal";
+import PersonalDetails from "../forms/user/personal";
 import EmployeeDetails from "../common/employeeDetail";
-import Education from "../forms/education";
-import Skills from "../forms/skills";
+import Education from "../forms/user/education";
+import Skills from "../forms/user/skills";
 
 function Employee() {
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);

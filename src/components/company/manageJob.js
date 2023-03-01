@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EmployeeFooter from "../common/footer";
 import Header from "../common/header";
 import SearchForm from "../common/search_form";
-import AddJobModal from "../forms/job";
+import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);

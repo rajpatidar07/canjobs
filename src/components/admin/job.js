@@ -4,7 +4,7 @@ import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import AddJobModal from "../forms/job";
+import AddJobModal from "../forms/employer/job";
 function Job() {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);

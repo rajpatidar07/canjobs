@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Registration from "../forms/registration";
-import EmployementDetails from "../forms/employement";
-import EducationDetails from "../forms/education";
-import ItSkills from "../forms/skills";
+import Registration from "../forms/user/registration";
+import EmployementDetails from "../forms/user/employement";
+import EducationDetails from "../forms/user/education";
+import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 

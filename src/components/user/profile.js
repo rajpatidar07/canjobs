@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
-import Registration from "../forms/registration";
-import EmployementDetails from "../forms/employement";
-import PersonalDetails from "../forms/personal";
-import EducationDetails from "../forms/education";
-import ItSkills from "../forms/skills";
+import Registration from "../forms/user/registration";
+import EmployementDetails from "../forms/user/employement";
+import PersonalDetails from "../forms/user/personal";
+import EducationDetails from "../forms/user/education";
+import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 

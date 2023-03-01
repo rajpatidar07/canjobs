@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import AddJobModal from "../forms/job";
+import AddJobModal from "../forms/employer/job";
 
 function JobBox(props) {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
