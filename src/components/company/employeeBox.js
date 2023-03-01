@@ -38,14 +38,14 @@ function EmployeeBox(props) {
             </Link>
           </div>
           <div className="media justify-content-md-end col-3 p-0">
-            <a
+            <Link
               className="btn btn-secondary text-uppercase font-size-3 connect_btn"
-              href="javacript:"
+              to="/"
               data-toggle="modal"
               data-target="#signup"
             >
               Connect
-            </a>
+            </Link>
           </div>
           <div className="col-md-12 p-0 mt-2">
             <ul className="d-flex list-unstyled mb-0 flex-wrap justify-content-md-start">
@@ -87,28 +87,28 @@ function EmployeeBox(props) {
           <div className="col-md-12">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap">
               <li>
-                <a
+                <Link
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
+                  to="/"
                 >
                   Visual Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
+                  to="/"
                 >
                   Wireframing
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
+                  to="/"
                 >
                   Scrum
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
