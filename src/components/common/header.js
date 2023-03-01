@@ -40,43 +40,43 @@ function EmployeeHeader() {
           </div>
           <div className="collapse navbar-collapse" id="mobile-menu">
             <div className="navbar-nav-wrapper">
-              {1 == 1 ? (
-                <ul className="navbar-nav main-menu">
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/company">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="nav-link" to="/managejobs">
-                      Manage Jobs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="nav-link" to="/response">
-                      Responses
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="nav-link" to="/companyprofile">
-                      Profile
-                    </Link>
-                  </li>
-                </ul>
-              ) : (
-                <ul className="navbar-nav main-menu">
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="nav-link" to="/jobs">
-                      Jobs
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              {/* {1 == 1 ? ( */}
+              <ul className="navbar-nav main-menu">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/company">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/managejobs">
+                    Manage Jobs
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/response">
+                    Responses
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/companyprofile">
+                    Profile
+                  </Link>
+                </li>
+              </ul>
+              {/* ) : ( */}
+              <ul className="navbar-nav main-menu">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link" to="/jobs">
+                    Jobs
+                  </Link>
+                </li>
+              </ul>
+              {/* )} */}
             </div>
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"
