@@ -235,7 +235,7 @@ function EmployerHome() {
           </div>
           {/* <!-- Section Title End --> */}
           <div className="row justify-content-center">
-            <EmployeeBox />
+            <EmployeeBox swap={true} />
             <EmployeeBox />
             <EmployeeBox />
             <EmployeeBox />

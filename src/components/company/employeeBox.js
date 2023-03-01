@@ -9,7 +9,7 @@ function EmployeeBox(props) {
       data-aos-once="true"
     >
       {/* <!-- Single Featured Job --> */}
-      <div className="pt-9 px-xl-10 px-lg-10 px-8 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green">
+      <div className="pt-9 px-xl-10 px-lg-10 px-8 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green position-relative">
         {props.swap === true ? (
           <span className="job_swap_label">SWAP</span>
         ) : null}

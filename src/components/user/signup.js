@@ -30,7 +30,7 @@ export default function EmployeeSignupModal(props) {
               value
             )
           ? null
-          : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     confirmpassword: [
       (value) => (value ? null : "Confirm Password is required"),

@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
-import SearchForm from "../employee/search_form";
+import SearchForm from "../common/search_form";
 
 function Response() {
   return (
@@ -27,10 +27,7 @@ function Response() {
                 <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
                 </h2>
-                <form
-                  className="mb-8"
-                  action="https://canjobs.com/demos/html/jobcamp/index.html"
-                >
+                <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
                       <select

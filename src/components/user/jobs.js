@@ -29,10 +29,7 @@ function JobSearch() {
                 <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
                 </h2>
-                <form
-                  className="mb-8"
-                  action="https://canjobs.com/demos/html/jobcamp/index.html"
-                >
+                <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
                       <select

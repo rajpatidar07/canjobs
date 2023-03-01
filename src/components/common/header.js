@@ -23,7 +23,7 @@ function EmployeeHeader() {
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
           <div className="brand-logo">
-            <a href="/">
+            <Link to="/">
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
                 src="image/logo-main-black.png"
@@ -36,44 +36,44 @@ function EmployeeHeader() {
                 alt=""
                 className="dark-version-logo"
               />
-            </a>
+            </Link>
           </div>
           <div className="collapse navbar-collapse" id="mobile-menu">
             <div className="navbar-nav-wrapper">
               {1 == 1 ? (
                 <ul className="navbar-nav main-menu">
                   <li className="nav-item">
-                    <a className="nav-link" href="/employer">
+                    <Link className="nav-link" to="/company">
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="nav-link" href="/managejobs">
+                    <Link className="nav-link" to="/managejobs">
                       Manage Jobs
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="nav-link" href="/response">
+                    <Link className="nav-link" to="/response">
                       Responses
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="nav-link" href="/company">
+                    <Link className="nav-link" to="/companyprofile">
                       Profile
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               ) : (
                 <ul className="navbar-nav main-menu">
                   <li className="nav-item">
-                    <a className="nav-link" href="/">
+                    <Link className="nav-link" to="/">
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="nav-link" href="/jobs">
+                    <Link className="nav-link" to="/jobs">
                       Jobs
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               )}
@@ -120,9 +120,9 @@ function EmployeeHeader() {
           </div>
           <div>
             <div className="dropdown show-gr-dropdown py-5">
-              <a
+              <Link
                 className="proile media ml-7 flex-y-center"
-                href="http://localhost:3000/"
+                to="/"
                 role="button"
                 id="dropdownMenuLink"
                 data-toggle="dropdown"
@@ -139,7 +139,7 @@ function EmployeeHeader() {
                   />
                 </div>
                 <i className="fas fa-chevron-down heading-default-color ml-6"></i>
-              </a>
+              </Link>
               <div
                 className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                 aria-labelledby="dropdownMenuLink"

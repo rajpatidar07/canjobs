@@ -119,7 +119,7 @@ function AddJobModal(props) {
               Your Job Match Score :
             </h4>
             <div className="row d-flex">
-              <div className="form-group col-3">
+              <div className="form-group col-md-3 col-6">
                 <input
                   type="checkbox"
                   id="Early_Applicant"
@@ -127,12 +127,12 @@ function AddJobModal(props) {
                 />
                 <label
                   htmlFor="Early_Applicant"
-                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
                 >
                   Early Applicant
                 </label>
               </div>
-              <div className="form-group col-3">
+              <div className="form-group col-md-3 col-6">
                 <input
                   type="checkbox"
                   id="Keyskills"
@@ -140,21 +140,21 @@ function AddJobModal(props) {
                 />
                 <label
                   htmlFor="Keyskills"
-                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
                 >
                   Keyskillse
                 </label>
               </div>
-              <div className="form-group col-3">
+              <div className="form-group col-md-3 col-6">
                 <input type="checkbox" id="Location" placeholder=" Location " />
                 <label
                   htmlFor="Location"
-                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
                 >
                   Location
                 </label>
               </div>
-              <div className="form-group col-3">
+              <div className="form-group col-md-3 col-6">
                 <input
                   type="checkbox"
                   id="Work_Experienc"
@@ -162,7 +162,7 @@ function AddJobModal(props) {
                 />
                 <label
                   htmlFor="Work_Experienc"
-                  className="font-size-4 text-black-2  line-height-reset mx-4 pt-5"
+                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
                 >
                   Work Experienc
                 </label>
@@ -240,7 +240,7 @@ function AddJobModal(props) {
                   htmlFor="Swip"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Swap :
+                  Interested In :
                 </label>
                 <div className="position-relative">
                   <select className="form-control">

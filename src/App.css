@@ -205,6 +205,7 @@ span.job_swap_label {
 /* ALL FORM INPUT */
 .form-group {
   position: relative;
+  padding: 0 15px !important;
 }
 
 .form-group label {
@@ -214,7 +215,7 @@ span.job_swap_label {
   position: absolute;
   top: -7px;
   z-index: 1;
-  left: 18px;
+  left: 26px;
   background: #fff;
   padding: 0 5px;
 }

@@ -34,7 +34,7 @@ function Profile() {
                       {/* <!-- <img id="imgPrime" src="" alt="uploaded image placeholder" /> --> */}
                       {/* <!-- <input type="file" id="upfile"> --> */}
                     </div>
-                    <form action="https://finestwp.co/">
+                    <form action="/">
                       <fieldset>
                         <div className="row mb-xl-1 mb-9">
                           <div className="col-lg-6">

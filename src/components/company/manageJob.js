@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import EmployeeFooter from "../employee/footer";
+import EmployeeFooter from "../common/footer";
 import Header from "../common/header";
-import SearchForm from "../employee/search_form";
+import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/job";
 import JobBox from "../common/jobbox";
 function ManageJobs() {
@@ -28,10 +28,7 @@ function ManageJobs() {
                 <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
                 </h2>
-                <form
-                  className="mb-8"
-                  action="https://canjobs.com/demos/html/jobcamp/index.html"
-                >
+                <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
                       <select
@@ -75,19 +72,20 @@ function ManageJobs() {
                       </select>
                     </div>
                   </div>
-                  <div className="px-5 mx-2 float-left">
-                    <button
-                      onClick={() => setShowAddJobModal(true)}
-                      className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4 mt-6 "
-                    >
-                      Add jobs
-                    </button>
-                  </div>
-                  <AddJobModal
-                    show={showAddJobModal}
-                    close={() => setShowAddJobModal(false)}
-                  />
                 </form>
+                <div className="px-5 mx-2 float-left">
+                  <button
+                    onClick={() => setShowAddJobModal(true)}
+                    className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4 mt-6 "
+                    type="button"
+                  >
+                    Add jobs
+                  </button>
+                </div>
+                <AddJobModal
+                  show={showAddJobModal}
+                  close={() => setShowAddJobModal(false)}
+                />
                 <div className="d-flex align-items-center justify-content-between mb-6">
                   <h5 className="font-size-4 font-weight-normal text-gray">
                     Showing

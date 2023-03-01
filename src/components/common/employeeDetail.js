@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import Registration from "../employee/profile/modals/registrationModal";
-import EmployementDetails from "../employee/profile/modals/employementDetailsModal";
-import CareerProfile from "../employee/profile/modals/careerProfileModal";
-import EducationDetails from "../employee/profile/modals/educationDetailsModal";
-import Projects from "../employee/profile/modals/projectsModal";
-import ItSkills from "../employee/profile/modals/itSkillsModal";
+import Registration from "../forms/registration";
+import EmployementDetails from "../forms/employement";
+import EducationDetails from "../forms/education";
+import ItSkills from "../forms/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 
@@ -300,10 +298,6 @@ function EmployeeDetails() {
                       className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                       onClick={() => setShowCareerProfile(true)}
                     />
-                    <CareerProfile
-                      show={showCareerProfile}
-                      close={() => setShowCareerProfile(false)}
-                    />
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box col-md-6 p-0">
@@ -590,10 +584,6 @@ function EmployeeDetails() {
                       <CustomButton
                         className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                         onClick={() => setShowProjects(true)}
-                      />
-                      <Projects
-                        show={showProjects}
-                        close={() => setShowProjects(false)}
                       />
                     </div>
 

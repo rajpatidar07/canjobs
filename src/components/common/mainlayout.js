@@ -3,7 +3,6 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
 import ManageJobs from "../company/manageJob";
-import EmployeeSearch from "../employer/employeeSearch";
 import Response from "../company/response";
 import EmployeeHomePage from "../user/home";
 import JobDetail from "../user/jobdetail";
@@ -15,6 +14,7 @@ import Category from "../admin/category";
 import Profile from "../admin/profile";
 import Employee from "../admin/employee";
 import Employer from "../admin/employer";
+import EmployeeSearch from "../company/employeeSearch";
 
 function MainLayout() {
   return (
@@ -28,14 +28,14 @@ function MainLayout() {
 
         {/* Employer */}
 
-        <Route path="/employer" element={<EmployerHome />} />
-        <Route path="/company" element={<CompanyProfile />} />
-        <Route path="/employeesearch" element={<EmployeeSearch />} />
+        <Route path="/company" element={<EmployerHome />} />
+        <Route path="/companyprofile" element={<CompanyProfile />} />
         <Route path="/managejobs" element={<ManageJobs />} />
         <Route path="/response" element={<Response />} />
+        <Route path="/empsearch" element={<EmployeeSearch />} />
+
         {/* <Route path="/employerhome" element={<EmployerHomePage/>} />
         <Route path="/companyprofile" element={<CompanyProfile />} />
-        <Route path="/employeesearch" element={<EmployeeSearch />} />
         <Route path="/managejobs" element={<ManageJobs />} />
         <Route path="/response" element={<Response />} /> */}
 
