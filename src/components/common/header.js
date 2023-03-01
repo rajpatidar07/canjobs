@@ -8,7 +8,7 @@ function EmployeeHeader() {
   const [showSingUp, setShowSingUp] = useState(false);
 
   /*-- Function to switch login to singup --*/
-  const SingUpClick = () => {
+  const SignUpClick = () => {
     setShowSingUp(true);
     setShowLogin(false);
   };
@@ -62,9 +62,9 @@ function EmployeeHeader() {
                     Profile
                   </Link>
                 </li>
-              </ul>
-              {/* ) : ( */}
-              <ul className="navbar-nav main-menu">
+                {/* </ul> */}
+                {/* ) : ( */}
+                {/* <ul className="navbar-nav main-menu"> */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/">
                     Home
@@ -101,7 +101,7 @@ function EmployeeHeader() {
             </Link>
             <EmployeeLoginModal
               show={showLogin}
-              singUpClick={SingUpClick}
+              signUpClick={SignUpClick}
               close={() => setShowLogin(false)}
             />
             {/* <!-- Modal for SingUp--> */}
