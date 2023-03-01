@@ -39,12 +39,18 @@ export default function EmployeeSignupModal(props) {
           ? null
           : "Confirm Password must be Same as Password",
     ],
+    tandr: [
+      (value) =>
+        value ? null : "Please accept terms and conditions o continue",
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
+  console.log(state);
+
   // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = (event) => {
     event.preventDefault();
@@ -249,18 +255,18 @@ export default function EmployeeSignupModal(props) {
                       </div>
                     </div>
                     {/* END FORM FIELDS  */}
-                    <div className=" d-flex flex-wrap justify-content-between mb-1">
+                    <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
                       <label
-                        htmlFor="termsandcondition"
+                        htmlFor="tandr"
                         className="gr-check-input d-flex  mr-3"
                       >
                         <input
-                          className="d-none"
                           type="checkbox"
-                          id="termsandcondition"
-                          name="termsandcondition"
+                          id="tandr"
+                          name="tandr"
+                          onChange={onInputChange}
+                          className="text-black-2 pt-5 mr-5"
                         />
-                        <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
                           <a href="" className="text-primary">
@@ -268,6 +274,15 @@ export default function EmployeeSignupModal(props) {
                           </a>
                         </span>
                       </label>
+                      {/*----ERROR MESSAGE FOR terms----*/}
+                      {errors.tandr && (
+                        <span
+                          key={errors.tandr}
+                          className="text-danger font-size-3"
+                        >
+                          {errors.tandr}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group">
                       <button

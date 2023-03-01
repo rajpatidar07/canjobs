@@ -13,7 +13,11 @@ function Skills(props) {
   const validators = {
     userskills: [
       (value) =>
-        value === "" || value.trim() === "" ? "Skills is required" : null,
+        value === "" || value.trim() === ""
+          ? "Skills is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -47,15 +51,16 @@ function Skills(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserSkillsClick}>
-            <h5 className="text-center pt-2 pb-5">Add It Skills </h5>{" "}
+            <h5 className="text-center mb-7">Add It Skills </h5>{" "}
             <div className="form-group ">
               <label
-                htmlFor="Skill_Name"
+                htmlFor="userskills"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Skill / Software Name <span className="text-danger">*</span> :
               </label>
               <input
+                maxLength={30}
                 type="text"
                 placeholder="Skill / Software Name"
                 className={
@@ -68,6 +73,7 @@ function Skills(props) {
                 value={state.userskills}
                 onChange={onInputChange}
               />
+              {/*----ERROR MESSAGE FOR SKILLS----*/}
               {errors.userskills && (
                 <span
                   key={errors.userskills}

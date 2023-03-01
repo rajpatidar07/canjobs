@@ -22,15 +22,27 @@ function EmployementDetails(props) {
   const validators = {
     companyname: [
       (value) =>
-        value === "" || value.trim() === "" ? "Company name is required" : null,
+        value === "" || value.trim() === ""
+          ? "Company name is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     designation: [
       (value) =>
-        value === "" || value.trim() === "" ? "Designation is required" : null,
+        value === "" || value.trim() === ""
+          ? "Designation is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     companylocation: [
       (value) =>
-        value === "" || value.trim() === "" ? "location is required" : null,
+        value === "" || value.trim() === ""
+          ? "location is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     industry: [(value) => (value ? null : "Industry is required")],
     funarea: [(value) => (value ? null : "Area is required")],
@@ -75,7 +87,7 @@ function EmployementDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
-            <h5 className="text-center pt-2">Add Employment</h5>
+            <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
@@ -85,9 +97,10 @@ function EmployementDetails(props) {
                   Company<span className="text-danger">*</span>:
                 </label>
                 <input
+                  maxLength={30}
                   type="text"
                   placeholder="Tell us your company name"
-                  name="usermobileno"
+                  name="companyname"
                   value={state.companyname}
                   onChange={onInputChange}
                   className={
@@ -97,6 +110,7 @@ function EmployementDetails(props) {
                   }
                   id="companyname"
                 />
+                {/*----ERROR MESSAGE FOR NAME----*/}
                 {errors.companyname && (
                   <span
                     key={errors.companyname}
@@ -108,12 +122,13 @@ function EmployementDetails(props) {
               </div>{" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Designation"
+                  htmlFor="designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Designation<span className="text-danger">*</span>:
                 </label>
                 <input
+                  maxLength={30}
                   type="text"
                   placeholder="Tell us your designation / job role"
                   name="designation"
@@ -126,6 +141,7 @@ function EmployementDetails(props) {
                   }
                   id="designation"
                 />
+                {/*----ERROR MESSAGE FOR DESIGNATION----*/}
                 {errors.designation && (
                   <span
                     key={errors.designation}
@@ -139,13 +155,14 @@ function EmployementDetails(props) {
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Company_Name"
+                  htmlFor="companylocation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Company location <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
+                  maxLength={30}
                   placeholder="Tell us your employer location"
                   name="companylocation"
                   value={state.companylocation}
@@ -157,6 +174,7 @@ function EmployementDetails(props) {
                   }
                   id="companylocation"
                 />
+                {/*----ERROR MESSAGE FOR LOCATION----*/}
                 {errors.companylocation && (
                   <span
                     key={errors.companylocation}
@@ -168,7 +186,7 @@ function EmployementDetails(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Industry"
+                  htmlFor="industry"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Industry <span className="text-danger">*</span> :
@@ -188,10 +206,11 @@ function EmployementDetails(props) {
                     <option value={""}>
                       Select the industry your company belongs to
                     </option>
-                    <option value={""}>Accounting & Auditing</option>
-                    <option value={""}>Call center / BPO</option>
-                    <option value={""}>Banking finance</option>
+                    <option value={"accounting"}>Accounting & Auditing</option>
+                    <option value={"call"}>Call center / BPO</option>
+                    <option value={"bank"}>Banking finance</option>
                   </select>
+                  {/*----ERROR MESSAGE FOR INDUSTRY----*/}
                   {errors.industry && (
                     <span
                       key={errors.industry}
@@ -205,7 +224,10 @@ function EmployementDetails(props) {
             </div>
             <div className="row">
               <div className="form-group col-md-6">
-                <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                <label
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  htmlFor="funarea"
+                >
                   Functional Area <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
@@ -223,12 +245,14 @@ function EmployementDetails(props) {
                     <option value={""}>
                       Select the department you work in
                     </option>
-                    <option value={""}>
-                      Fresh graduates / Management Traninee /Intern
+                    <option value={"fresh graduate"}>
+                      Fresh graduates / Management Traninee
                     </option>
-                    <option value={""}>Engineering </option>
-                    <option value={""}>Adminstration</option>
+                    <option value={"intern"}>Intern</option>
+                    <option value={"engineering"}>Engineering </option>
+                    <option value={"adminstration"}>Adminstration</option>
                   </select>
+                  {/*----ERROR MESSAGE FOR AREA----*/}
                   {errors.funarea && (
                     <span
                       key={errors.funarea}
@@ -241,7 +265,7 @@ function EmployementDetails(props) {
               </div>{" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="userdob"
+                  htmlFor="userdoj"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Start Date : <span className="text-danger">*</span>
@@ -260,6 +284,7 @@ function EmployementDetails(props) {
                   }
                   id="userdoj"
                 />
+                {/*----ERROR MESSAGE FOR START DATE----*/}
                 {errors.userdoj && (
                   <span
                     key={errors.userdoj}
@@ -293,6 +318,7 @@ function EmployementDetails(props) {
                   }
                   id="userdol"
                 />
+                {/*----ERROR MESSAGE FOR ENDDATE----*/}
                 {errors.userdol && (
                   <span
                     key={errors.userdol}
@@ -302,25 +328,22 @@ function EmployementDetails(props) {
                   </span>
                 )}
               </div>
-              <div className="col mt-2">
+              <div className="col-md-6 my-auto ">
                 <input
                   type="checkbox"
                   name="userdol"
-                  value={state.userdol}
+                  value={moment().format("YYYY-MM-DD")}
                   onChange={onInputChange}
-                  className={
-                    errors.userdol
-                      ? "pt-5 mt-5 border border-danger"
-                      : "pt-5 mt-5"
-                  }
+                  className={errors.userdol ? "border border-danger" : ""}
                   id="userdol"
                 />
                 <label
-                  htmlFor="Current_working"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4 mt-5 pt-3"
+                  htmlFor="userdol"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset mx-4"
                 >
                   I Currently work here
                 </label>
+                {/*----ERROR MESSAGE FOR ENDDATE----*/}
                 {errors.userdol && (
                   <span
                     key={errors.userdol}
@@ -332,7 +355,10 @@ function EmployementDetails(props) {
               </div>
             </div>
             <div>
-              <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+              <label
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                htmlFor="worklevel"
+              >
                 Work level<span className="text-danger">*</span> :
               </label>
               <div className="row font-size-3">
@@ -367,6 +393,15 @@ function EmployementDetails(props) {
                   </span>
                 </Link>
               </div>
+              {/*----ERROR MESSAGE FOR LEVEL----*/}
+              {errors.worklevel && (
+                <span
+                  key={errors.worklevel}
+                  className="text-danger font-size-3"
+                >
+                  {errors.worklevel}
+                </span>
+              )}
             </div>
             <div className="form-group text-center">
               <button

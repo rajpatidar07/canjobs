@@ -68,19 +68,19 @@ const UserProfile = () => {
                       />
                     </a>
                     <h4 className="mb-0">
-                      <Link
+                      {/* <Link
                         className="text-black-2 font-size-6 font-weight-semibold"
                         onClick={() => setShowRegistration(true)}
-                      >
-                        David Henricks{" "}
-                        <span className="age_gender font-size-3 text-smoke">
-                          (Male 29)
-                        </span>
-                      </Link>
+                      > */}
+                      David Henricks{" "}
+                      <span className="age_gender font-size-3 text-smoke">
+                        (Male 29)
+                      </span>
+                      {/* </Link>
                       <Registration
                         show={showRegistration}
                         close={() => setShowRegistration(false)}
-                      />
+                      /> */}
                     </h4>
                     <p className="mb-8 text-gray font-size-4">
                       Product Designer

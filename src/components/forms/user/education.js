@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-
+import filterjson from "../../json/filterjson";
 function Education(props) {
   /*----USER Education VALIDATION----*/
   const initialFormState = {
@@ -10,7 +10,7 @@ function Education(props) {
     course: "",
     specialization: "",
     location: "",
-    passingYear: "",
+    passingyear: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -22,7 +22,11 @@ function Education(props) {
     ],
     university: [
       (value) =>
-        value === null || value.trim() === "" ? "University is required" : null,
+        value === null || value.trim() === ""
+          ? "University is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     course: [
       (value) =>
@@ -38,7 +42,7 @@ function Education(props) {
       (value) =>
         value === null || value.trim() === "" ? "Location is required" : null,
     ],
-    passingYear: [
+    passingyear: [
       (value) =>
         value === "" || value === null ? "Passing Year is required" : null,
     ],
@@ -83,7 +87,7 @@ function Education(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="qaualification"
+                  htmlFor="qualification"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Qualification <span className="text-danger">*</span> :
@@ -94,61 +98,78 @@ function Education(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  name="qaualification"
-                  id="qaualification"
-                  // value={state.qualification}
+                  name="qualification"
+                  id="qualification"
+                  value={state.qualification}
                   onChange={onInputChange}
                 >
-                  <option
-                    defaultValue={state.qualification}
-                    onChange={onInputChange}
-                  >
-                    select Qualification
-                  </option>
-                  <option value={"Doctors"} onChange={onInputChange}>
-                    Doctors
-                  </option>
-                  <option value={"Masters"} onChange={onInputChange}>
-                    Masters
-                  </option>
+                  <option value={""}>select Qualification</option>
+                  <option value={"doctors"}>Doctors</option>
+                  <option value={"masters"}>Masters</option>
                 </select>
                 {/*----ERROR MESSAGE FOR QUALIFICATION----*/}
                 {errors.qualification && (
-                  <span>
-                    {errors.qualification.map((error) => (
-                      <span key={error} className="text-danger font-size-3">
-                        {error}
-                      </span>
-                    ))}
+                  <span
+                    key={errors.qualification}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.qualification}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="University_Institute"
+                  htmlFor="university"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   University/Institute <span className="text-danger">*</span> :
                 </label>
                 <input
+                  maxLength={40}
                   type="text"
-                  className="form-control"
                   placeholder="University/Institute "
-                  id="University_Institute"
+                  className={
+                    errors.university
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  name="university"
+                  id="university"
+                  value={state.university}
+                  onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
+                {errors.university && (
+                  <span
+                    key={errors.university}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.university}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Course"
+                  htmlFor="course"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Course <span className="text-danger">*</span> :
                 </label>
-                <select className="form-control" id="Qualification">
+                <select
+                  className={
+                    errors.course
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  name="course"
+                  id="course"
+                  value={state.course}
+                  onChange={onInputChange}
+                >
                   <option value={""}>select Course</option>
-                  <option value={""}>MBA</option>
+                  <option value={"mba"}>MBA</option>
                   <option value={""}>MBBS</option>
                   <option value={""}>CA</option>
                   <option value={""}>BA</option>
@@ -156,17 +177,33 @@ function Education(props) {
                   <option value={""}>B.Tech</option>
                   <option value={""}>M.Tech</option>
                 </select>
+                {/*----ERROR MESSAGE FOR course----*/}
+                {errors.course && (
+                  <span key={errors.course} className="text-danger font-size-3">
+                    {errors.course}
+                  </span>
+                )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Specialization"
+                  htmlFor="specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Specialization <span className="text-danger">*</span> :
                 </label>
-                <select className="form-control" id="Qualification">
+                <select
+                  className={
+                    errors.specialization
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  name="specialization"
+                  id="specialization"
+                  value={state.specialization}
+                  onChange={onInputChange}
+                >
                   <option value={""}>select Specialization</option>
-                  <option value={""}>MBA</option>
+                  <option value={"mba"}>MBA</option>
                   <option value={""}>MBBS</option>
                   <option value={""}>CA</option>
                   <option value={""}>BA</option>
@@ -174,42 +211,87 @@ function Education(props) {
                   <option value={""}>B.Tech</option>
                   <option value={""}>M.Tech</option>
                 </select>
+                {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
+                {errors.specialization && (
+                  <span
+                    key={errors.specialization}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.specialization}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Institute_Location"
+                  htmlFor="location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Institute Location <span className="text-danger">*</span> :
                 </label>
                 <div className="position-relative">
-                  <select className="form-control" id="Qualification">
+                  <select
+                    className={
+                      errors.location
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    name="location"
+                    id="location"
+                    value={state.location}
+                    onChange={onInputChange}
+                  >
                     <option value={""}>select Location</option>
-                    <option value={""}>India</option>
-                    <option value={""}>Pakistan</option>
-                    <option value={""}>U.S.A</option>
-                    <option value={""}>U.K</option>
-                    <option value={""}>Dubai</option>
-                    <option value={""}>Canada</option>
+                    {(filterjson.location || []).map((data, i) => {
+                      return (
+                        <option value={data} key={i}>
+                          {data}
+                        </option>
+                      );
+                    })}
                   </select>
+                  {/*----ERROR MESSAGE FOR LOCATION----*/}
+                  {errors.location && (
+                    <span
+                      key={errors.location}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.location}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Passing_Year"
+                  htmlFor="passingyear"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Passing Year <span className="text-danger">*</span> :
                 </label>
                 <input
                   type="number"
-                  className="form-control"
+                  className={
+                    errors.passingyear
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
                   placeholder="Passing Year"
-                  id="Passing_Year"
+                  id="passingyear"
+                  name="passingyear"
+                  value={state.passingyear}
+                  onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
+                {errors.passingyear && (
+                  <span
+                    key={errors.passingyear}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.passingyear}
+                  </span>
+                )}
               </div>
             </div>
             <div className="form-group text-center">

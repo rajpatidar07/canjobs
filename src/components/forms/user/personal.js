@@ -29,7 +29,11 @@ function PersonalDetails(props) {
   const validators = {
     userfullname: [
       (value) =>
-        value === "" || value.trim() === "" ? "Name is required" : null,
+        value === "" || value.trim() === ""
+          ? "Name is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     useremail: [
       (value) =>
@@ -47,7 +51,14 @@ function PersonalDetails(props) {
           ? "Mobile no should be of 10 digits"
           : null,
     ],
-    userdesc: [(value) => (value ? null : "Description is required")],
+    userdesc: [
+      (value) =>
+        value === ""
+          ? "Description is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character"
+          : null,
+    ],
     userdob: [(value) => (value ? null : "Dob is required")],
     usergender: [
       (value) =>
@@ -56,31 +67,62 @@ function PersonalDetails(props) {
     maritialstatus: [(value) => (value === "" ? "Status is required" : null)],
     nationality: [
       (value) =>
-        value === "" || value.trim() === "" ? "Nationality is required" : null,
+        value === "" || value.trim() === ""
+          ? "Nationality is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     currentlocation: [
       (value) =>
-        value === "" || value.trim() === "" ? "Location is required" : null,
+        value === "" || value.trim() === ""
+          ? "Location is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     currentcountry: [
       (value) =>
-        value === "" || value.trim() === "" ? "Country is required" : null,
+        value === "" || value.trim() === ""
+          ? "Country is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
     langauages: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Language is required"
-          : (value.length = 5 ? "Language should not be more than 5" : null),
+          : (value.length = 5
+              ? "Language should not be more than 5"
+              : /[^A-Za-z 0-9]/g.test(value)
+              ? "Cannot use special character "
+              : null),
     ],
     religion: [
       (value) =>
-        value === "" || value.trim() === "" ? "Religion is required" : null,
+        value === "" || value.trim() === ""
+          ? "Religion is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
-    interest: [(value) => (value === "" ? "Interest is required" : null)],
+    interest: [
+      (value) =>
+        value === ""
+          ? "Interest is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
     workpermit: [(value) => (value === "" ? "Work Permit is required" : null)],
     otherworkpermit: [
       (value) =>
-        value === "" || value.trim() === "" ? "Other Permit is required" : null,
+        value === "" || value.trim() === ""
+          ? "Other Permit is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -114,7 +156,7 @@ function PersonalDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserPersonalDetailClick}>
-            <h5 className="text-center pt-2">Personal Details</h5>
+            <h5 className="text-center pt-2 mb-7">Personal Details</h5>
             {/* FIRST LINE */}
             <div className="row pt-5">
               {" "}
@@ -126,6 +168,7 @@ function PersonalDetails(props) {
                   Full Name: <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   name="userfullname"
                   value={state.userfullname}
                   onChange={onInputChange}
@@ -138,6 +181,7 @@ function PersonalDetails(props) {
                   placeholder="Full Name"
                   id="userfullname"
                 />
+                {/*----ERROR MESSAGE FOR name----*/}
                 {errors.userfullname && (
                   <span
                     key={errors.userfullname}
@@ -155,6 +199,7 @@ function PersonalDetails(props) {
                   Email Id : <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={30}
                   type="email"
                   name="useremail"
                   value={state.useremail}
@@ -167,6 +212,7 @@ function PersonalDetails(props) {
                   id="useremail"
                   placeholder="email"
                 />
+                {/*----ERROR MESSAGE FOR EMAIL----*/}
                 {errors.useremail && (
                   <span
                     key={errors.useremail}
@@ -196,6 +242,7 @@ function PersonalDetails(props) {
                   }
                   id="usermobileno"
                 />
+                {/*----ERROR MESSAGE FOR MOBILENO----*/}
                 {errors.usermobileno && (
                   <span
                     key={errors.usermobileno}
@@ -236,6 +283,7 @@ function PersonalDetails(props) {
                       initData="Describe Yourself"
                     />
                   </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.userdesc && (
                     <span
                       key={errors.userdesc}
@@ -271,6 +319,7 @@ function PersonalDetails(props) {
                   }
                   id="userdob"
                 />
+                {/*----ERROR MESSAGE FOR DOB----*/}
                 {errors.userdob && (
                   <span
                     key={errors.userdob}
@@ -303,6 +352,7 @@ function PersonalDetails(props) {
                   <option value={"female"}>Female</option>
                   <option value={"other"}>Other</option>
                 </select>
+                {/*----ERROR MESSAGE FOR GENDER----*/}
                 {errors.usergender && (
                   <span
                     key={errors.usergender}
@@ -334,6 +384,7 @@ function PersonalDetails(props) {
                   <option value={"single"}>Single</option>
                   <option value={"married"}>Married</option>
                 </select>
+                {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
                 {errors.maritialstatus && (
                   <span
                     key={errors.maritialstatus}
@@ -355,6 +406,7 @@ function PersonalDetails(props) {
                   <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   type="text"
                   placeholder="Nationality / Citizenship"
                   name="nationality"
@@ -367,6 +419,7 @@ function PersonalDetails(props) {
                   }
                   id="nationality"
                 />
+                {/*----ERROR MESSAGE FOR NATIONALITY----*/}
                 {errors.nationality && (
                   <span
                     key={errors.nationality}
@@ -384,6 +437,7 @@ function PersonalDetails(props) {
                   Current Location : <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   type="text"
                   placeholder="Current Location"
                   name="currentlocation"
@@ -396,6 +450,7 @@ function PersonalDetails(props) {
                   }
                   id="currentlocation"
                 />
+                {/*----ERROR MESSAGE FOR LOCATION----*/}
                 {errors.currentlocation && (
                   <span
                     key={errors.currentlocation}
@@ -414,6 +469,7 @@ function PersonalDetails(props) {
                   <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   type="text"
                   className={
                     errors.currentcountry
@@ -426,6 +482,7 @@ function PersonalDetails(props) {
                   value={state.currentcountry}
                   onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR COUNTRY----*/}
                 {errors.currentcountry && (
                   <span
                     key={errors.currentcountry}
@@ -447,6 +504,7 @@ function PersonalDetails(props) {
                   <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   type="text"
                   placeholder="Languages Known (Max 3)"
                   className={
@@ -459,6 +517,7 @@ function PersonalDetails(props) {
                   value={state.langauages}
                   onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR LANGUAGE----*/}
                 {errors.langauages && (
                   <span
                     key={errors.langauages}
@@ -476,6 +535,7 @@ function PersonalDetails(props) {
                   Religion : <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   type="text"
                   className={
                     errors.religion
@@ -488,6 +548,7 @@ function PersonalDetails(props) {
                   value={state.religion}
                   onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR RELIGION----*/}
                 {errors.religion && (
                   <span
                     key={errors.religion}
@@ -517,6 +578,7 @@ function PersonalDetails(props) {
                   <option value={"parttime"}>Part-time</option>
                   <option value={"all"}>All</option>
                 </select>
+                {/*----ERROR MESSAGE FOR INTEREST----*/}
                 {errors.interest && (
                   <span
                     key={errors.interest}
@@ -551,6 +613,7 @@ function PersonalDetails(props) {
                   <option value={"no"}>No</option>
                   <option value={"yes"}>Yes</option>
                 </select>
+                {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
                 {errors.workpermit && (
                   <span
                     key={errors.workpermit}
@@ -569,6 +632,7 @@ function PersonalDetails(props) {
                   <span className="text-danger">*</span>
                 </label>
                 <input
+                  maxLength={20}
                   type="text"
                   className={
                     errors.otherworkpermit
@@ -581,6 +645,7 @@ function PersonalDetails(props) {
                   value={state.otherworkpermit}
                   onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
                 {errors.otherworkpermit && (
                   <span
                     key={errors.otherworkpermit}
