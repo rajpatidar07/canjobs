@@ -11,10 +11,8 @@ import Company from "../forms/employer/companyInfo";
 function CompanyProfile() {
   const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false);
   const [showCompanyDetailsModal, setShowCompanyDetailsModal] = useState(false);
-  const [
-    showKycComplainDetailsModal,
-    setShowKycComplainDetailsModal,
-  ] = useState(false);
+  const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
+    useState(false);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showAccountDetails, setShowAccountDetails] = useState(false);
   const [showCompanyDetails, setShowCompanyDetails] = useState(false);
@@ -88,7 +86,7 @@ function CompanyProfile() {
                       }}
                       to={""}
                     >
-                      Company
+                      OVERVIEW
                     </Link>
                   </li>
                   <li className="tab-menu-items nav-item pr-12">
