@@ -1,7 +1,6 @@
 import moment from "moment";
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import useValidation from "../../common/useValidation";
 
 function EmployementDetails(props) {
@@ -265,6 +264,57 @@ function EmployementDetails(props) {
               </div>{" "}
               <div className="form-group col-md-6">
                 <label
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  htmlFor="worklevel"
+                >
+                  Work level<span className="text-danger">*</span> :
+                </label>
+                <select
+                  name="worklevel"
+                  value={state.worklevel}
+                  onChange={onInputChange}
+                  className={
+                    errors.worklevel
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  id="worklevel"
+                >
+                  <option value={""}>Select the department you work in</option>
+                  <option value={"fresh graduate"}>
+                    Fresh graduates / Management Traninee
+                  </option>
+                  <option value={"intern"}>Intern</option>
+                  <option value={"entry level"}> Entry level </option>
+                  <option value={" nonmanagerial level"}>
+                    {" "}
+                    Non Managerial level
+                  </option>
+                  <option value={" managerial level"}> Managerial level</option>
+                  <option value={"senior management"}>
+                    {" "}
+                    Senior Mangement(AVP ,VP , GM)
+                  </option>
+                  <option value={"top management"}>
+                    {" "}
+                    Top Management (CEO , CFO , Director)
+                  </option>
+                </select>
+                {/*----ERROR MESSAGE FOR LEVEL----*/}
+                {errors.worklevel && (
+                  <span
+                    key={errors.worklevel}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.worklevel}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label
                   htmlFor="userdoj"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
@@ -294,9 +344,6 @@ function EmployementDetails(props) {
                   </span>
                 )}
               </div>
-            </div>
-
-            <div className="row">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="userdol"
@@ -354,55 +401,7 @@ function EmployementDetails(props) {
                 )}
               </div>
             </div>
-            <div>
-              <label
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                htmlFor="worklevel"
-              >
-                Work level<span className="text-danger">*</span> :
-              </label>
-              <div className="row font-size-3">
-                <Link to={""}>
-                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
-                    Studen/Intern
-                  </span>
-                </Link>
-                <Link to={""}>
-                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
-                    Entry level
-                  </span>
-                </Link>
-                <Link to={""}>
-                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
-                    Non Managerial level
-                  </span>
-                </Link>
-                <Link to={""}>
-                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
-                    Managerial level
-                  </span>
-                </Link>
-                <Link to={""}>
-                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
-                    Senior Mangement(AVP ,VP , GM)
-                  </span>
-                </Link>
-                <Link to={""}>
-                  <span className="text-dark rounded-pill mb-2 border mx-2 p-3">
-                    Top Management (CEO , CFO , Director)
-                  </span>
-                </Link>
-              </div>
-              {/*----ERROR MESSAGE FOR LEVEL----*/}
-              {errors.worklevel && (
-                <span
-                  key={errors.worklevel}
-                  className="text-danger font-size-3"
-                >
-                  {errors.worklevel}
-                </span>
-              )}
-            </div>
+
             <div className="form-group text-center">
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"

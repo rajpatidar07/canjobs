@@ -22,6 +22,7 @@ function PersonalDetails(props) {
     langauages: "",
     religion: "",
     interest: "",
+    experience: "",
     workpermit: "",
     otherworkpermit: "",
   };
@@ -115,6 +116,7 @@ function PersonalDetails(props) {
           ? "Cannot use special character "
           : null,
     ],
+    experience: [(value) => (value === "" ? "Experience is required" : null)],
     workpermit: [(value) => (value === "" ? "Work Permit is required" : null)],
     otherworkpermit: [
       (value) =>
@@ -591,6 +593,40 @@ function PersonalDetails(props) {
             </div>
             {/* WORDK PERMIT LINE */}
             <div className="row">
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="experience"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Experience : <span className="text-danger">*</span>
+                </label>
+                <select
+                  name="experience"
+                  value={state.experience}
+                  onChange={onInputChange}
+                  className={
+                    errors.experience
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  id="experience"
+                >
+                  <option value={""}>Select Experience</option>
+                  <option value={"0-1"}>0-1 year</option>
+                  <option value={"1-3"}>1-3 year</option>
+                  <option value={"3-5"}>3-5 year</option>
+                  <option value={"5+"}>5+ year</option>
+                </select>
+                {/*----ERROR MESSAGE FOR EXPERIENCE----*/}
+                {errors.experience && (
+                  <span
+                    key={errors.experience}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.experience}
+                  </span>
+                )}
+              </div>
               <div className="form-group col-md-4">
                 <label
                   htmlFor="workpermit"

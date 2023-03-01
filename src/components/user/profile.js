@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
-import Registration from "../forms/user/registration";
 import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
 import EducationDetails from "../forms/user/education";
@@ -10,7 +9,6 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 
 const UserProfile = () => {
-  const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -303,7 +301,7 @@ const UserProfile = () => {
                     aria-labelledby="home-tab"
                   >
                     {/*----About Employee----*/}
-                    <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
+                    <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5 px-9">
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
                         About
                       </h4>
@@ -322,19 +320,20 @@ const UserProfile = () => {
                     {/*----Employee's Career Profile----*/}
                     <div
                       id="Career_Profile"
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex align-items-center justify-content-md-between flex-wrap"
+                      className="border-top px-9 pt-lg-5 pt-9 pt-xl-9 pb-10"
                     >
-                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                        Career Profile
+                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
+                        <span>Career Profile</span>
+                        <CustomButton
+                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                          onClick={() => setShowEmplyomentDetails(true)}
+                        />
+                        <EmployementDetails
+                          show={showEmplyomentDetails}
+                          close={() => setShowEmplyomentDetails(false)}
+                        />
                       </h4>
-                      <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowEmplyomentDetails(true)}
-                      />
-                      <EmployementDetails
-                        show={showEmplyomentDetails}
-                        close={() => setShowEmplyomentDetails(false)}
-                      />
+
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                           <div className="media align-items-center company_box col-md-6 p-0">
@@ -449,19 +448,21 @@ const UserProfile = () => {
                     {/*----Employee's Education Profile----*/}
                     <div
                       id="Career_Profile"
-                      className="border-top p-5 pl-xs-12 pt-7 pb-5 d-flex align-items-center justify-content-md-between flex-wrap"
+                      className="border-top 
+                      px-9 pt-lg-5 pt-9 pt-xl-9 pb-10"
                     >
-                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                        Education
+                      <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
+                        <span>Education</span>
+                        <CustomButton
+                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                          onClick={() => setShowEducation(true)}
+                        />
+                        <EducationDetails
+                          show={showEducation}
+                          close={() => setShowEducation(false)}
+                        />
                       </h4>
-                      <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowEducation(true)}
-                      />
-                      <EducationDetails
-                        show={showEducation}
-                        close={() => setShowEducation(false)}
-                      />
+
                       <div className="w-100">
                         <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                           <div className="media align-items-center company_box p-0">
@@ -573,7 +574,6 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
-
                   </div>
                   <div
                     className="tab-pane fade"
