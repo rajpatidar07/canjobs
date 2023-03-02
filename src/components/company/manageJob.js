@@ -73,21 +73,24 @@ function ManageJobs() {
                     </div>
                   </div>
                 </form>
-                <div className="d-flex align-items-center justify-content-between mx-2">
-                  <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                    <span className="text-black-2">120</span> matched jobs
-                  </h5>
+                <div>
+                  <div className="d-flex align-items-center justify-content-between mx-2">
+                    <h5 className="font-size-4 font-weight-normal text-gray">
+                      Showing
+                      <span className="text-black-2">120</span> matched jobs
+                    </h5>
+                  </div>
+                  <div className=" mx-2 float-left pb-5">
+                    <button
+                      onClick={() => setShowAddJobModal(true)}
+                      className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4  "
+                      type="button"
+                    >
+                      Add jobs
+                    </button>
+                  </div>
                 </div>
-                <div className=" mx-2 float-left pb-5">
-                  <button
-                    onClick={() => setShowAddJobModal(true)}
-                    className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4  "
-                    type="button"
-                  >
-                    Add jobs
-                  </button>
-                </div>
+
                 <AddJobModal
                   show={showAddJobModal}
                   close={() => setShowAddJobModal(false)}
