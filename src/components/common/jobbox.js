@@ -37,23 +37,35 @@ function JobBox(props) {
           </div>
           <div className="col-md-6 p-0">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Job Category">
+                <span className="mr-4">
+                  <img src="image/svg/icon-loaction-pin-black.svg" alt="" />
+                </span>
+                <span className="font-weight-semibold">Hospitality</span>
+              </li>
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Location">
                 <span className="mr-4">
                   <img src="image/svg/icon-loaction-pin-black.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Berlyn, UK</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Job Type">
                 <span className="mr-4">
                   <img src="image/svg/icon-suitecase.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Full-time</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Posted Time">
                 <span className="mr-4">
                   <img src="image/svg/icon-clock.svg" alt="" />
                 </span>
-                <span className="font-weight-semibold">9d ago</span>
+                <span className="font-weight-semibold">16 Jan 2023</span>
+              </li>
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Salary">
+                <span className="mr-4">
+                  <img src="image/svg/icon-clock.svg" alt="" />
+                </span>
+                <span className="font-weight-semibold">80-90K PA</span>
               </li>
             </ul>
           </div>
