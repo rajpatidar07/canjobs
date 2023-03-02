@@ -6,6 +6,12 @@ import EmployeeSignupModal from "../user/signup";
 function EmployeeHeader() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSingUp, setShowSingUp] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  /*-- Function to show menu on toggle button --*/
+  function toggleMenu() {
+    setIsMenuOpen(!isMenuOpen);
+  }
 
   /*-- Function to switch login to singup --*/
   const SignUpClick = () => {
@@ -38,9 +44,11 @@ function EmployeeHeader() {
               />
             </Link>
           </div>
-          <div className="collapse navbar-collapse" id="mobile-menu">
+          <div
+            className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
+            id="mobile-menu"
+          >
             <div className="navbar-nav-wrapper">
-
               <ul className="navbar-nav main-menu">
                 <li className="nav-item">
                   <Link className="nav-link" to="/">
@@ -72,7 +80,6 @@ function EmployeeHeader() {
                     Profile
                   </Link>
                 </li>
-
               </ul>
             </div>
             <button
@@ -83,6 +90,7 @@ function EmployeeHeader() {
               aria-controls="mobile-menu"
               aria-expanded="true"
               aria-label="Toggle navigation"
+              onClick={() => setIsMenuOpen(false)}
             >
               <i className="gr-cross-icon"></i>
             </button>
@@ -171,6 +179,7 @@ function EmployeeHeader() {
             aria-controls="mobile-menu"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={toggleMenu}
           >
             {/* <!-- <i className="icon icon-simple-remove icon-close"></i> --> */}
             <span className="hamburger hamburger--squeeze js-hamburger">

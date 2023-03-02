@@ -46,7 +46,10 @@ function EmployeeFooter() {
                 >
                   Log in
                 </Link>
-                <EmployeeLoginModal show={showLogin} close={() => setShowLogin(false)} />
+                <EmployeeLoginModal
+                  show={showLogin}
+                  close={() => setShowLogin(false)}
+                />
                 {/* <!-- Modal for SingUp--> */}
                 <button
                   className="btn btn-green btn-h-60 btn-xl mx-4 mt-6 text-uppercase"
@@ -55,7 +58,10 @@ function EmployeeFooter() {
                 >
                   Sign up
                 </button>
-                <EmployeeSignupModal show={showSingUp} close={() => setShowSingUp(false)} />
+                <EmployeeSignupModal
+                  show={showSingUp}
+                  close={() => setShowSingUp(false)}
+                />
               </div>
               {/* <!-- cta-btns end --> */}
             </div>
@@ -81,9 +87,9 @@ function EmployeeFooter() {
               />
               <div className="media-body pl-5">
                 <p className="mb-0 font-size-4 text-white">Contact us at</p>
-                <a className="mb-0 font-size-4 font-weight-bold" href="http://localhost:3000/">
+                <Link className="mb-0 font-size-4 font-weight-bold" to="">
                   support@uxtheme.net
-                </a>
+                </Link>
               </div>
             </div>
             {/* <!-- media start --> */}
@@ -94,28 +100,28 @@ function EmployeeFooter() {
                   Follow us on:
                 </li>
                 <li className="d-flex flex-column justify-content-center px-3 mr-3">
-                  <a
-                    href="http://localhost:3000/"
+                  <Link
+                    to={""}
                     className="hover-color-primary heading-default-color"
                   >
                     <i className="fab fa-facebook-f font-size-3 pt-2"></i>
-                  </a>
+                  </Link>
                 </li>
                 <li className="d-flex flex-column justify-content-center px-3 mr-3">
-                  <a
-                    href="http://localhost:3000/"
+                  <Link
+                    to={""}
                     className="hover-color-primary heading-default-color"
                   >
                     <i className="fab fa-twitter font-size-3 pt-2"></i>
-                  </a>
+                  </Link>
                 </li>
                 <li className="d-flex flex-column justify-content-center px-3 mr-3">
-                  <a
-                    href="http://localhost:3000/"
+                  <Link
+                    to={""}
                     className="hover-color-primary heading-default-color"
                   >
                     <i className="fab fa-linkedin-in font-size-3 pt-2"></i>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -133,36 +139,36 @@ function EmployeeFooter() {
                   {/* <!-- widget social menu start --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         About us
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Contact us
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Careers
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Press
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                   {/* <!-- widget social menu end --> */}
@@ -178,44 +184,44 @@ function EmployeeFooter() {
                   {/* <!-- widget social menu start --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Features{" "}
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Pricing
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         News
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Help desk
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Support
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                   {/* <!-- widget social menu end --> */}
@@ -231,36 +237,36 @@ function EmployeeFooter() {
                   {/* <!-- widget social menu start --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Digital Marketing
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         SEO for Business
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Avasta Dash
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         UI Design
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                   {/* <!-- widget social menu end --> */}
@@ -275,28 +281,28 @@ function EmployeeFooter() {
                   {/* <!-- footer widget title end --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Privacy Policy
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Terms & Conditions
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-6">
-                      <a
+                      <Link
+                        to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
-                        href="http://localhost:3000/"
                       >
                         Return Policy
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>

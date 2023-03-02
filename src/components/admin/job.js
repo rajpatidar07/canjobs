@@ -15,7 +15,8 @@ function Job() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <a
+        <Link
+          to={""}
           className="sidebar-mobile-button"
           data-toggle="collapse"
           href="#sidebar"
@@ -24,7 +25,7 @@ function Job() {
           aria-controls="sidebar"
         >
           <i className="icon icon-sidebar-2"></i>
-        </a>
+        </Link>
         <div
           className={
             showJobDetails === false

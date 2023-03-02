@@ -19,18 +19,18 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     userpassword: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-            value
-          )
-            ? null
-            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              value
+            )
+          ? null
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     confirmpassword: [
       (value) => (value ? null : "Confirm Password is required"),
@@ -49,7 +49,6 @@ export default function EmployeeSignupModal(props) {
     initialFormState,
     validators
   );
-  console.log(state);
 
   // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = (event) => {

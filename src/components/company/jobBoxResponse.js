@@ -19,27 +19,21 @@ function JobBoxResponse() {
       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green">
         <div className="row job_header m-0">
           <div className="media align-items-center company_box col-md-6 p-0">
-            <a className="text_box text-left" href="http://localhost:3000/">
+            <div className="text_box text-left">
               <img
                 className="company_logo"
                 src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                 alt=""
               />
-            </a>
-            <a
-              className="text_box text-left w-100"
-              href="http://localhost:3000/"
-            >
-              <p
-                href="http://localhost:3000/"
-                className="font-size-3 text-default-color line-height-2 m-0"
-              >
+            </div>
+            <div className="text_box text-left w-100">
+              <p className="font-size-3 text-default-color line-height-2 m-0">
                 Apple INC
               </p>
               <h3 className="mb-0 font-size-6 heading-dark-color">
                 UI/UX Designer
               </h3>
-            </a>
+            </div>
           </div>
           <div className="col-md-6 p-0">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
@@ -67,7 +61,7 @@ function JobBoxResponse() {
         <div className="row pt-4">
           <div className="col-md-12 text-left">
             <p>
-              Gubagoo is a fast growing provider of messaging and commerce
+              Gubagoo is Link fast growing provider of messaging and commerce
               solutions for automotive dealers changing the future of how people
               find, buy and service their vehicles.
             </p>
@@ -75,28 +69,28 @@ function JobBoxResponse() {
           <div className="col-md-8">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap">
               <li>
-                <a
+                <Link
+                  to={""}
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
                 >
                   Visual Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
+                  to={""}
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
                 >
                   Wireframing
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
+                  to={""}
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
                 >
                   Scrum
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -140,10 +134,7 @@ function JobBoxResponse() {
                 <tbody>
                   <tr className="border border-color-2">
                     <th scope="row" className="border-0 py-7">
-                      <a
-                        href="candidate-profile.html"
-                        className="media min-width-px-235 align-items-center"
-                      >
+                      <div className="media min-width-px-235 align-items-center">
                         <div className="circle-36 mr-6">
                           <img
                             src="image/table-one-profile-image-1.png"
@@ -154,7 +145,7 @@ function JobBoxResponse() {
                         <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                           Nicolas Bradley
                         </h4>
-                      </a>
+                      </div>
                     </th>
                     <td className="table-y-middle py-7 min-width-px-235 pr-0">
                       <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -169,10 +160,7 @@ function JobBoxResponse() {
                   </tr>
                   <tr className="border border-color-2">
                     <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <a
-                        href="candidate-profile.html"
-                        className="media min-width-px-235 align-items-center"
-                      >
+                      <div className="media min-width-px-235 align-items-center">
                         <div className="circle-36 mr-6">
                           <img
                             src="image/table-one-profile-image-2.png"
@@ -183,7 +171,7 @@ function JobBoxResponse() {
                         <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                           Elizabeth Gomez
                         </h4>
-                      </a>
+                      </div>
                     </th>
                     <td className="table-y-middle py-7 min-width-px-235 pr-0">
                       <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -198,10 +186,7 @@ function JobBoxResponse() {
                   </tr>
                   <tr className="border border-color-2">
                     <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <a
-                        href="candidate-profile.html"
-                        className="media min-width-px-235 align-items-center"
-                      >
+                      <div className="media min-width-px-235 align-items-center">
                         <div className="circle-36 mr-6">
                           <img
                             src="image/table-one-profile-image-3.png"
@@ -212,7 +197,7 @@ function JobBoxResponse() {
                         <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                           Joe Wade
                         </h4>
-                      </a>
+                      </div>
                     </th>
                     <td className="table-y-middle py-7 min-width-px-235 pr-0">
                       <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -227,10 +212,7 @@ function JobBoxResponse() {
                   </tr>
                   <tr className="border border-color-2">
                     <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <a
-                        href="candidate-profile.html"
-                        className="media min-width-px-235 align-items-center"
-                      >
+                      <div className="media min-width-px-235 align-items-center">
                         <div className="circle-36 mr-6">
                           <img
                             src="image/table-one-profile-image-4.png"
@@ -241,7 +223,7 @@ function JobBoxResponse() {
                         <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                           Roger Hawkins
                         </h4>
-                      </a>
+                      </div>
                     </th>
                     <td className="table-y-middle py-7 min-width-px-235 pr-0">
                       <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -256,10 +238,7 @@ function JobBoxResponse() {
                   </tr>
                   <tr className="border border-color-2">
                     <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <a
-                        href="candidate-profile.html"
-                        className="media min-width-px-235 align-items-center"
-                      >
+                      <div className="media min-width-px-235 align-items-center">
                         <div className="circle-36 mr-6">
                           <img
                             src="image/table-one-profile-image-5.png"
@@ -270,7 +249,7 @@ function JobBoxResponse() {
                         <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                           Marie Green
                         </h4>
-                      </a>
+                      </div>
                     </th>
                     <td className="table-y-middle py-7 min-width-px-235 pr-0">
                       <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
@@ -290,62 +269,62 @@ function JobBoxResponse() {
               <nav aria-label="Page navigation example">
                 <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
                   <li className="page-item rounded-0 flex-all-center">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link rounded-0 border-0 px-3active"
-                      href="http://localhost:3000/"
                       aria-label="Previous"
                     >
                       <i className="fas fa-chevron-left"></i>
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href="http://localhost:3000/"
                     >
                       1
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href="http://localhost:3000/"
                     >
                       2
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href="http://localhost:3000/"
                     >
                       3
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item disabled">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href="http://localhost:3000/"
                     >
                       ...
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item ">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                      href="http://localhost:3000/"
                     >
                       7
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item rounded-0 flex-all-center">
-                    <a
+                    <Link
+                      to={""}
                       className="page-link rounded-0 border-0 px-3"
-                      href="http://localhost:3000/"
                       aria-label="Next"
                     >
                       <i className="fas fa-chevron-right"></i>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
