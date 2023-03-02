@@ -15,6 +15,7 @@ import Profile from "../admin/profile";
 import Employee from "../admin/employee";
 import Employer from "../admin/employer";
 import EmployeeSearch from "../company/employeeSearch";
+import ChangePassword from "../user/changepassword";
 
 function MainLayout() {
   return (
@@ -25,6 +26,7 @@ function MainLayout() {
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
 
         {/* Employer */}
 

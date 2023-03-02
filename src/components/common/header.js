@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
+import ChangePassword from "../user/changepassword";
 import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
 
@@ -10,6 +11,7 @@ function EmployeeHeader() {
   // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);
   const [showSingUp, setShowSingUp] = useState(false);
+  const [showChangePass, setShowChangePass] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /*-- Function to show menu on toggle button --*/
@@ -217,11 +219,16 @@ function EmployeeHeader() {
                 aria-labelledby="dropdownMenuLink"
               >
                 <Link
+                  onClick={() => setShowChangePass(true)}
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to="/setting"
+                  to=""
                 >
                   Settings{" "}
                 </Link>
+                <ChangePassword
+                  show={showChangePass}
+                  close={() => setShowChangePass(false)}
+                />
                 <Link
                   className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                   to="/profile"
