@@ -14,16 +14,6 @@ function Category() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        {/* <a
-          className="sidebar-mobile-button"
-          data-toggle="collapse"
-          href="#sidebar"
-          role="button"
-          aria-expanded="false"
-          aria-controls="sidebar"
-        >
-          <i className="icon icon-sidebar-2"></i>
-        </a> */}
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
@@ -94,12 +84,12 @@ function Category() {
                           className="pl-6 border-0 py-7 min-width-px-235"
                         >
                           <div className="">
-                            <a
-                              href=""
+                            <Link
+                              to="/"
                               className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
-                            </a>
+                            </Link>
                           </div>
                         </th>
                         <th className="table-y-middle py-7">

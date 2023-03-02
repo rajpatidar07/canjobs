@@ -26,24 +26,24 @@ function CompanyDetails(props) {
         value === "" || value.trim() === ""
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     industry: [
       (value) =>
         value === ""
           ? "Industry is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     corporation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Corporation type is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     alias: [],
     url: [],
@@ -56,24 +56,24 @@ function CompanyDetails(props) {
         value === "" || value.trim() === ""
           ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     vacancy: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     companydesc: [
       (value) =>
         value === ""
           ? "Company Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     // companylogo: [
     //   (value) =>
