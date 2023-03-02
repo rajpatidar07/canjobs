@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import AddCategory from "./addcategory";
+import AddCategory from "../forms/employer/category";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
@@ -14,16 +14,6 @@ function Category() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        {/* <a
-          className="sidebar-mobile-button"
-          data-toggle="collapse"
-          href="#sidebar"
-          role="button"
-          aria-expanded="false"
-          aria-controls="sidebar"
-        >
-          <i className="icon icon-sidebar-2"></i>
-        </a> */}
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
