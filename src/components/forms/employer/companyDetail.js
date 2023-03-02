@@ -24,7 +24,7 @@ function CompanyDetails(props) {
     companyname: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Comapny name is required"
+          ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,

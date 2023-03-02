@@ -9,7 +9,7 @@ const AdminDashboard = () => {
       <AdminHeader />
       {/* <!-- navbar- --> */}
       <AdminSidebar />
-      <a
+      {/* <a
         className="sidebar-mobile-button"
         data-toggle="collapse"
         href="#sidebar"
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
         aria-controls="sidebar"
       >
         <i className="icon icon-sidebar-2"></i>
-      </a>
+      </a> */}
       <div
         className="dashboard-main-container mt-25 mt-lg-22"
         id="dashboard-body"

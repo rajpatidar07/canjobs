@@ -19,41 +19,53 @@ function JobBox(props) {
         ) : null}
         <div className="row job_header m-0">
           <div className="media align-items-center company_box col-md-6 p-0">
-            <Link className="text_box text-left" to={"/jobdetail"}>
+            <div className="text_box text-left" to={"/jobdetail"}>
               <img
                 className="company_logo"
                 src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                 alt=""
               />
-            </Link>
-            <Link className="text_box text-left w-100" to={"/jobdetail"}>
+            </div>
+            <div className="text_box text-left w-100">
               <p className="font-size-3 text-default-color line-height-2 m-0">
                 Apple INC
               </p>
               <h3 className="mb-0 font-size-6 heading-dark-color">
                 UI/UX Designer
               </h3>
-            </Link>
+            </div>
           </div>
           <div className="col-md-6 p-0">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Job Category">
+                <span className="mr-4">
+                  <img src="image/svg/icon-loaction-pin-black.svg" alt="" />
+                </span>
+                <span className="font-weight-semibold">Hospitality</span>
+              </li>
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Location">
                 <span className="mr-4">
                   <img src="image/svg/icon-loaction-pin-black.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Berlyn, UK</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Job Type">
                 <span className="mr-4">
                   <img src="image/svg/icon-suitecase.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Full-time</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Posted Time">
                 <span className="mr-4">
                   <img src="image/svg/icon-clock.svg" alt="" />
                 </span>
-                <span className="font-weight-semibold">9d ago</span>
+                <span className="font-weight-semibold">16 Jan 2023</span>
+              </li>
+              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Salary">
+                <span className="mr-4">
+                  <img src="image/svg/icon-clock.svg" alt="" />
+                </span>
+                <span className="font-weight-semibold">80-90K PA</span>
               </li>
             </ul>
           </div>
@@ -69,28 +81,28 @@ function JobBox(props) {
           <div className="col-md-8">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap">
               <li>
-                <a
+                <Link
+                  to={""}
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
                 >
                   Visual Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
+                  to={""}
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
                 >
                   Wireframing
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
+                  to={""}
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  href="http://localhost:3000/"
                 >
                   Scrum
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

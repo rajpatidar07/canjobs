@@ -3,6 +3,7 @@ import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
+import { Link } from "react-router-dom";
 
 function Response() {
   return (
@@ -13,7 +14,7 @@ function Response() {
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row">
-              <div className="col-12">
+              <div className="col-lg-12 col-12 translateY-25  pb-10">
                 {/* <!-- form --> */}
                 <SearchForm />
               </div>
@@ -72,7 +73,7 @@ function Response() {
                     </div>
                   </div>
                 </form>
-                <div className="d-flex align-items-center justify-content-between mb-6">
+                <div className="d-flex align-items-center justify-content-between mb-6 mx-2">
                   <h5 className="font-size-4 font-weight-normal text-gray">
                     Showing
                     <span className="text-black-2">120</span> matched jobs
@@ -89,80 +90,40 @@ function Response() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <a
-                      className="mb-8 p-0 w-100 active nav-link active"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-                      aria-selected="true"
-                    >
+                    <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-                      aria-selected="true"
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-                      aria-selected="true"
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-                      aria-selected="true"
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
-                    <a
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-                      aria-selected="true"
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
                       {/* <!-- End Single Featured Job --> */}
-                    </a>
+                    </div>
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
-                    <a
+                    <Link
+                      to={""}
                       className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      href="http://localhost:3000/"
                     >
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* <!-- form end --> */}
@@ -183,30 +144,24 @@ function Response() {
                           <div className="col-12">
                             {/* <!-- media start --> */}
                             <div className="media align-items-center company_box col-md-6 p-0">
-                              <a
-                                className="text_box text-left"
-                                href="http://localhost:3000/"
-                              >
+                              <Link to={""} className="text_box text-left">
                                 <img
                                   className="company_logo"
                                   src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                                   alt=""
                                 />
-                              </a>
-                              <a
+                              </Link>
+                              <Link
+                                to={""}
                                 className="text_box text-left w-100"
-                                href="http://localhost:3000/"
                               >
-                                <p
-                                  href="http://localhost:3000/"
-                                  className="font-size-3 text-default-color line-height-2 m-0"
-                                >
+                                <p className="font-size-3 text-default-color line-height-2 m-0">
                                   Apple INC
                                 </p>
                                 <h3 className="mb-0 font-size-6 heading-dark-color">
                                   UI/UX Designer
                                 </h3>
-                              </a>
+                              </Link>
                             </div>
                             {/* <!-- media end --> */}
                           </div>
@@ -294,44 +249,44 @@ function Response() {
                               </p>
                               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Editing
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     XD
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     User Persona
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Sketch
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -414,12 +369,12 @@ function Response() {
                                   features
                                 </li>
                               </ul>
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -465,19 +420,19 @@ function Response() {
                           <div className="col-12">
                             {/* <!-- card-btn-group start --> */}
                             <div className="card-btn-group">
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
-                              <a
+                              </Link>
+                              <Link
+                                to={""}
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
-                              </a>
+                              </Link>
                             </div>
                             {/* <!-- card-btn-group end --> */}
                           </div>
@@ -565,44 +520,44 @@ function Response() {
                               </p>
                               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Visual Design
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     XD
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     User Persona
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Sketch
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -685,12 +640,12 @@ function Response() {
                                   features
                                 </li>
                               </ul>
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -736,19 +691,19 @@ function Response() {
                           <div className="col-12">
                             {/* <!-- card-btn-group start --> */}
                             <div className="card-btn-group">
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
-                              <a
+                              </Link>
+                              <Link
+                                to={""}
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
-                              </a>
+                              </Link>
                             </div>
                             {/* <!-- card-btn-group end --> */}
                           </div>
@@ -836,44 +791,44 @@ function Response() {
                               </p>
                               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Swift{" "}
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Objective C
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     X Code
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     WooCommerce
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Coding
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -956,12 +911,12 @@ function Response() {
                                   features
                                 </li>
                               </ul>
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -1007,19 +962,19 @@ function Response() {
                           <div className="col-12">
                             {/* <!-- card-btn-group start --> */}
                             <div className="card-btn-group">
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
-                              <a
+                              </Link>
+                              <Link
+                                to={""}
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
-                              </a>
+                              </Link>
                             </div>
                             {/* <!-- card-btn-group end --> */}
                           </div>
@@ -1107,44 +1062,44 @@ function Response() {
                               </p>
                               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Agile
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Prototyping
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Slack
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Director
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -1227,12 +1182,12 @@ function Response() {
                                   features
                                 </li>
                               </ul>
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -1278,19 +1233,19 @@ function Response() {
                           <div className="col-12">
                             {/* <!-- card-btn-group start --> */}
                             <div className="card-btn-group">
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
-                              <a
+                              </Link>
+                              <Link
+                                to={""}
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
-                              </a>
+                              </Link>
                             </div>
                             {/* <!-- card-btn-group end --> */}
                           </div>
@@ -1378,44 +1333,44 @@ function Response() {
                               </p>
                               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     C++
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Java Scprit
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     React JS
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Vue
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Angular
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -1498,12 +1453,12 @@ function Response() {
                                   features
                                 </li>
                               </ul>
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -1549,19 +1504,19 @@ function Response() {
                           <div className="col-12">
                             {/* <!-- card-btn-group start --> */}
                             <div className="card-btn-group">
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
-                              <a
+                              </Link>
+                              <Link
+                                to={""}
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="http://localhost:3000/"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
-                              </a>
+                              </Link>
                             </div>
                             {/* <!-- card-btn-group end --> */}
                           </div>
@@ -1649,44 +1604,44 @@ function Response() {
                               </p>
                               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Agile
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Wire-framing
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Prototyping
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     User Persona
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a
+                                  <Link
+                                    to={""}
                                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                    href="http://localhost:3000/"
                                   >
                                     Sketch
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -1769,12 +1724,12 @@ function Response() {
                                   features
                                 </li>
                               </ul>
-                              <a
+                              <Link
+                                to={""}
                                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                                href="http://localhost:3000/"
                               >
                                 Apply to this job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>

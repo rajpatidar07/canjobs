@@ -19,27 +19,10 @@ const UserProfile = () => {
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
-      <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32">
-        <div className="container">
-          {/* <div className="row justify-content-center">
-            <div className="col-12 dark-mode-texts">
-              <div className="mb-9">
-                <Link
-                  className="d-flex align-items-center ml-4"
-                  to="http://localhost:3000/"
-                >
-                  {" "}
-                  <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                  <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                    Back
-                  </span>
-                </Link>
-              </div>
-            </div>
-          </div> */}
-
-          <div className="row text-left">
-            <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0">
+      <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32 mt-5">
+        <div className="container mt-5 pt-5">
+          <div className="row text-left mt-5 pt-5">
+            <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
               <div className="pl-lg-5">
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
@@ -666,7 +649,7 @@ const UserProfile = () => {
                 <div className="mb-5">
                   <h4 className="font-size-7 mb-9">Applied Jobs</h4>
                   <div className="row justify-content-center">
-                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9">
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
@@ -721,7 +704,7 @@ const UserProfile = () => {
                       </div>
                       {/* <!-- End Single Featured Job --> */}
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9">
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
@@ -776,7 +759,7 @@ const UserProfile = () => {
                       </div>
                       {/* <!-- End Single Featured Job --> */}
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9">
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
@@ -831,7 +814,7 @@ const UserProfile = () => {
                       </div>
                       {/* <!-- End Single Featured Job --> */}
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9">
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
@@ -893,7 +876,7 @@ const UserProfile = () => {
                 <div className="">
                   <h4 className="font-size-7 mb-9">Saved Jobs</h4>
                   <div className="row justify-content-center">
-                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9">
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
@@ -948,7 +931,7 @@ const UserProfile = () => {
                       </div>
                       {/* <!-- End Single Featured Job --> */}
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9">
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
@@ -1010,28 +993,6 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
-        <>
-          {/* <Button variant="primary" onClick={handleShow}>
-            Launch demo modal
-          </Button> */}
-
-          {/* <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Woohoo, you're reading this text in a modal!
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleClose}>
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Modal> */}
-        </>
       </div>
       <EmployeeFooter />
     </div>

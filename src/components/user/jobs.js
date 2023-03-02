@@ -10,14 +10,14 @@ function JobSearch() {
   // eslint-disable-next-line no-use-before-define
   return (
     <>
-      <div>
+      <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
-            <div className="row">
-              <div className="col-12">
-                {/* <!-- form --> */}
+            <div className="row ">
+              {/* <!-- Hero Form --> */}
+              <div className="col-lg-12 col-12 translateY-25  pb-10">
                 <SearchForm />
               </div>
             </div>
@@ -39,7 +39,9 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Job Type">Job Category</option>
-                        <option aria-selected={true} value="">United States of America</option>
+                        <option aria-selected={true} value="">
+                          United States of America
+                        </option>
                         <option value="1">United Arab Emirates</option>
                         <option value="2">Bangladesh</option>
                         <option value="3">Pakistan</option>
@@ -104,76 +106,36 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <Link
-                      className="mb-8 p-0 w-100 active nav-link active"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-
-                    >
+                    <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link
-                      className="mb-8 p-0 w-100 active nav-link"
-                      id="tab-nav-1"
-                      data-toggle="tab"
-                      href="#tab-pane-1"
-                      role="tab"
-                      aria-controls="tab-pane-1"
-
-                    >
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
+                    </div>
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link
                       className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      href="http://localhost:3000/"
+                      to={""}
                     >
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
@@ -186,12 +148,7 @@ function JobSearch() {
 
               <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
                 <div className="tab-content" id="serachlist-tab">
-                  <div
-                    className="tab-pane fade show active"
-                    id="tab-pane-1"
-                    role="tabpanel"
-                    aria-labelledby="tab-nav-1"
-                  >
+                  <div className="tab-pane fade show active">
                     <JobDetailPage />
                   </div>
                 </div>

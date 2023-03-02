@@ -21,7 +21,8 @@ function Employee() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <a
+        {/* <Link
+          to={""}
           className="sidebar-mobile-button"
           data-toggle="collapse"
           href="#sidebar"
@@ -30,7 +31,7 @@ function Employee() {
           aria-controls="sidebar"
         >
           <i className="icon icon-sidebar-2"></i>
-        </a>
+        </Link> */}
         <div
           className={
             showEmployeeProfile === false
@@ -187,7 +188,7 @@ function Employee() {
                           show={showSkillsModal}
                           close={() => setShowSkillsModal(false)}
                         />
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -195,6 +196,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -259,7 +261,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -267,6 +269,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -331,7 +334,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -339,6 +342,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -404,7 +408,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -412,6 +416,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -477,7 +482,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -485,6 +490,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -497,62 +503,62 @@ function Employee() {
                   <nav aria-label="Page navigation example">
                     <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
                       <li className="page-item rounded-0 flex-all-center">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link rounded-0 border-0 px-3active"
-                          href="http://localhost:3000/"
                           aria-label="Previous"
                         >
                           <i className="fas fa-chevron-left"></i>
-                        </a>
+                        </Link>
                       </li>
                       <li className="page-item">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                          href="http://localhost:3000/"
                         >
                           1
-                        </a>
+                        </Link>
                       </li>
                       <li className="page-item">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                          href="http://localhost:3000/"
                         >
                           2
-                        </a>
+                        </Link>
                       </li>
                       <li className="page-item">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                          href="http://localhost:3000/"
                         >
                           3
-                        </a>
+                        </Link>
                       </li>
                       <li className="page-item disabled">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                          href="http://localhost:3000/"
                         >
                           ...
-                        </a>
+                        </Link>
                       </li>
                       <li className="page-item ">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                          href="http://localhost:3000/"
                         >
                           7
-                        </a>
+                        </Link>
                       </li>
                       <li className="page-item rounded-0 flex-all-center">
-                        <a
+                        <Link
+                          to={""}
                           className="page-link rounded-0 border-0 px-3"
-                          href="http://localhost:3000/"
                           aria-label="Next"
                         >
                           <i className="fas fa-chevron-right"></i>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </nav>

@@ -37,19 +37,19 @@ function JobDetailPage() {
         {/* <div className="row pt-9">
                           <div className="col-12">
                             <div className="card-btn-group">
-                              <a
+                              <Link to={''}
                                 className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="http://localhost:3000/"
+                                href="#"
                               >
                                 Apply to this job
-                              </a>
-                              <a
+                              </Link>
+                              <Link to={''}
                                 className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="http://localhost:3000/"
+                                href="#"
                               >
                                 <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                                 Save job
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div> */}
@@ -128,44 +128,49 @@ function JobDetailPage() {
               <p className="font-size-4 text-gray mb-3">Technical Skill</p>
               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                 <li>
-                  <a
+                  <Link
+                    to={""}
                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="http://localhost:3000/"
+                    href="#"
                   >
                     Editing
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
+                    to={""}
                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="http://localhost:3000/"
+                    href="#"
                   >
                     Wire-framing
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
+                    to={""}
                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="http://localhost:3000/"
+                    href="#"
                   >
                     XD
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
+                    to={""}
                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="http://localhost:3000/"
+                    href="#"
                   >
                     User Persona
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
+                    to={""}
                     className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="http://localhost:3000/"
+                    href="#"
                   >
                     Sketch
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -240,12 +245,13 @@ function JobDetailPage() {
                   Ship a TON of product improvements and features
                 </li>
               </ul>
-              <a
+              <Link
+                to={""}
                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                href="http://localhost:3000/"
+                href="#"
               >
                 Apply to this job
-              </a>
+              </Link>
             </div>
           </div>
         </div>

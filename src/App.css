@@ -60,7 +60,32 @@ p {
   padding-top: 24px !important;
   padding-bottom: 24px !important;
 }
-
+/* Drop-down css */
+.gr-menu-dropdown {
+  position: absolute;
+  min-width: 227px;
+  max-width: 227px;
+  box-shadow: 0 52px 54px rgb(65 62 101 / 30%);
+  border-radius: 8px;
+  border: 1px solid var(--border-color-3);
+  padding: 15px 0px;
+  top: 100%;
+  z-index: -99;
+  opacity: 0;
+  transition: opacity .4s, top .4s;
+  pointer-events: none;
+  left: 0;
+  right: auto;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid var(--border-color-3);
+  background-color: #fff;
+  display: block;
+  border-top: 3px solid #00b074;
+}
+.show-gr-dropdown .gr-menu-dropdown.dropdown-right {
+right: 0;
+left: 0;
+}
 /* Border Radius css */
 
 .rounded-70 {
@@ -82,7 +107,7 @@ p {
 }
 
 .bg-home-banner {
-  background-image: linear-gradient(45deg, rgba(21, 36, 224, 0.50), rgba(21, 36, 224, 0.50)), url(https://images.pexels.com/photos/8297452/pexels-photo-8297452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url(https://images.pexels.com/photos/8297452/pexels-photo-8297452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
   background-position: center 42%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -125,6 +150,7 @@ p {
   .job_filter_block {
     position: relative;
     gap: 15px;
+    justify-content: center;
   }
 }
 
