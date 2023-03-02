@@ -5,7 +5,6 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-import Account from "../forms/employer/account";
 import ContactInfo from "../forms/employer/contactInfo";
 import CompanyDetailPage from "./companydetail";
 
@@ -285,10 +284,6 @@ function CompanyProfile() {
                           <CustomButton
                             className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowAccountDetailsModal(true)}
-                          />
-                          <Account
-                            show={showAccountDetailsModal}
-                            close={() => setShowAccountDetailsModal(false)}
                           />
                         </h4>
                         <div className="pt-5 text-left row">

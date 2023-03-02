@@ -9,6 +9,7 @@ function ContactInfo(props) {
     contactname: "",
     email: "",
     contactno: "",
+    othercontactno: "",
     location: "",
     pincode: "",
     city: "",
@@ -42,6 +43,7 @@ function ContactInfo(props) {
           ? "Phone no should be of 10 digits"
           : null,
     ],
+    othercontactno: [],
     location: [
       (value) =>
         value === "" || value.trim() === ""
@@ -130,7 +132,7 @@ function ContactInfo(props) {
                   htmlFor="contactname"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact Person Name :
+                  Contact Person Name <span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={20}
@@ -161,7 +163,7 @@ function ContactInfo(props) {
                   htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Email :
+                  Email<span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={30}
@@ -192,7 +194,7 @@ function ContactInfo(props) {
                   htmlFor="contactno"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact No :
+                  Contact No <span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={30}
@@ -243,7 +245,7 @@ function ContactInfo(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Address :
+                  Address <span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={60}
@@ -274,7 +276,7 @@ function ContactInfo(props) {
                   htmlFor="pincode"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pin code :
+                  Pin code <span className="text-danger"> *</span> :
                 </label>
                 <input
                   name="pincode"

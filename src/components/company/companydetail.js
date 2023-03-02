@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
-import Account from "../forms/employer/account";
 
 function CompanyDetailPage() {
   return (
