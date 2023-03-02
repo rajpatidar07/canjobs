@@ -13,9 +13,9 @@ function CompanyDetails(props) {
     industry: "",
     corporation: "",
     alias: "",
+    url: "",
     startdate: "",
     members: "",
-    url: "",
     companydesc: "",
     vacancy: "",
   };
@@ -26,34 +26,27 @@ function CompanyDetails(props) {
         value === "" || value.trim() === ""
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     industry: [
       (value) =>
         value === ""
           ? "Industry is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     corporation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Corporation type is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
-
-    // alias: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Alias is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : null,
-    // ],
+    alias: [],
+    url: [],
     startdate: [
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
@@ -63,25 +56,29 @@ function CompanyDetails(props) {
         value === "" || value.trim() === ""
           ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     vacancy: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     companydesc: [
       (value) =>
         value === ""
           ? "Company Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
+    // companylogo: [
+    //   (value) =>
+    //     value === "" || value.trim() === "" ? "Company logo is required" : null,
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
@@ -122,7 +119,8 @@ function CompanyDetails(props) {
                   htmlFor="companyname"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Name (as per Kyc) :
+                  Company Name (as per Kyc){" "}
+                  <span className="text-danger"> *</span> :
                 </label>
                 <input
                   type="text"
@@ -230,22 +228,9 @@ function CompanyDetails(props) {
                     name="alias"
                     value={state.alias}
                     onChange={onInputChange}
-                    className={
-                      errors.alias
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
+                    className={"form-control"}
                     id="alias"
                   />
-                  {/*----ERROR MESSAGE FOR alias----*/}
-                  {errors.alias && (
-                    <span
-                      key={errors.alias}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.alias}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
@@ -255,7 +240,7 @@ function CompanyDetails(props) {
                   htmlFor="startdate"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Start Date :
+                  Company Start Date <span className="text-danger"> *</span> :
                 </label>
 
                 <input
@@ -287,7 +272,7 @@ function CompanyDetails(props) {
                   htmlFor="members"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Size :
+                  Company Size <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
@@ -351,7 +336,7 @@ function CompanyDetails(props) {
                   htmlFor="vacancy"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Vacancy FOr Post :
+                  Vacancy FOr Post <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
@@ -420,7 +405,6 @@ function CompanyDetails(props) {
                 </div>
               </div>
             </div>
-
             <div className="form-group mb-8">
               <button
                 className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"

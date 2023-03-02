@@ -1,65 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import CustomButton from "../common/button";
-import Account from "../forms/employer/account";
+import ContactInfo from "../forms/employer/contactInfo";
 
 function CompanyDetailPage() {
+  const [ContactDetails, setContactDetails] = useState(false);
+
   return (
-    <div className="col-12 col-xl-3 col-lg-4 col-md-5 col-sm-6">
-      <div className="pt-11 pt-lg-0 pl-lg-5">
-        <div className="">
-          <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-            <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-              Account Details
-            </h4>
-            <CustomButton
-              className="font-size-3 rounded-3 btn-primary border-0"
-              //   onClick={() => setShowAccountDetailsModal(true)}
-            >
-              Edit
-            </CustomButton>
-            {/* <Account
-              show={showAccountDetailsModal}
-              close={() => setShowAccountDetailsModal(false)}
-            /> */}
-          </div>
-          <div className="pt-5 text-left row">
-            <div className="col-md-4">
-              {" "}
-              <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                Name
-              </h5>
-              <p className="font-size-4 mb-8">Shan Maxio</p>
-            </div>
-            <div className="col-md-4">
-              {" "}
-              <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                Account No.
-              </h5>
-              <p className="font-size-4 mb-8">xxxxxxxxxx25</p>
-            </div>
-            <div className="col-md-4">
-              {" "}
-              <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                IFSC code
-              </h5>
-              <p className="font-size-4 mb-8">CRB4152S</p>
-            </div>
-            <div className="col-md-4">
-              {" "}
-              <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                Bank Name
-              </h5>
-              <p className="font-size-4 mb-8">Canera National Bank</p>
-            </div>
-            <div className="col-md-4">
-              {" "}
-              <h5 className="mb-0 font-size-5 font-weight-semibold text-gray">
-                Branch Name
-              </h5>
-              <p className="font-size-4 mb-8">Vijay Nagar, Indore</p>
-            </div>
-          </div>
+    <div className="col-md-4 col-xl-3 col-lg-4 col-12 border-right">
+      <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+        <span>Contact Info</span>
+        <CustomButton
+          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+          onClick={() => setContactDetails(true)}
+        />
+        <ContactInfo
+          show={ContactDetails}
+          close={() => setContactDetails(false)}
+        />
+
+      </h4>
+      <div className="pt-5 text-left row">
+        <div className="col-md-12">
+          <p className="font-size-4 mb-8" title="Contact Person Name"><img className="mr-2" src="image/icons/envelope.svg" alt="" /> Rajaram Patidar</p>
+          <p className="font-size-4 mb-8" title="Designation"><img className="mr-2" src="image/icons/address-book.svg" alt="" /> Manager</p>
+          <p className="font-size-4 mb-8" title="Email"><img className="mr-2" src="image/icons/envelope.svg" alt="" /> raj.we2code@gmail.com</p>
+          <p className="font-size-4 mb-8" title="Contact No"><img className="mr-2" src="image/icons/mobile-button.svg" alt="" /> 012345789</p>
+          <p className="font-size-4 mb-8" title="Contact No"><img className="mr-2" src="image/icons/mobile-button.svg" alt="" /> 012345789</p>
+          <p className="font-size-4 mb-8" title="Address"><img className="mr-2" src="image/icons/marker.svg" alt="" /> 45, Universal Tower Scheme 54, PU4, Indore, MP (452001)</p>
         </div>
       </div>
     </div>
