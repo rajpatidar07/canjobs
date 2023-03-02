@@ -1,13 +1,171 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
-
+import useValidation from "../../common/useValidation";
 function AddJobModal(props) {
+  // CKEDITOR
+  // ClassicEditor.defaultConfig = {
+  //   toolbar: {
+  //     items: [
+  //       "heading",
+  //       "|",
+  //       "bold",
+  //       "italic",
+  //       "|",
+  //       "bulletedList",
+  //       "numberedList",
+  //       "|",
+  //       "insertTable",
+  //       "|",
+  //       "undo",
+  //       "redo",
+  //     ],
+  //   },
+  //   table: {
+  //     contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+  //   },
+  //   language: "en",
+  // };
+  // ADD JOBS VALIDATION
+
+  // INITIAL STATE ASSIGNMENT
+  const initialFormState = {
+    jobtitle: "",
+    experience: "",
+    salary: "",
+    location: "",
+    industry: "",
+    link: "",
+    jobdesc: "",
+    duties: "",
+    requirment: "",
+    department: "",
+    jobtype: "",
+    role: "",
+    education: "",
+    language: "",
+    skills: "",
+    employement: "",
+    // jobscore: "",
+  };
+  // VALIDATION CONDITIONS
+  const validators = {
+    jobtitle: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Job Title is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    experience: [
+      (value) =>
+        value === ""
+          ? "Experience is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    salary: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Salary is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    location: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Location is required" : null,
+    ],
+    industry: [
+      (value) =>
+        value === ""
+          ? "Industry Type is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+
+    link: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Link is required" : null,
+    ],
+    jobdesc: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Job Description is required"
+          : null,
+    ],
+    duties: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Duties is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    requirment: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Job Requirment is required"
+          : null,
+    ],
+    department: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Department is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    jobtype: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Job Type is required" : null,
+    ],
+    role: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Role/Category is required"
+          : null,
+    ],
+    education: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Education is required" : null,
+    ],
+    language: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Language is required" : null,
+    ],
+    skills: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Skills is required" : null,
+    ],
+
+    employement: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Employement is required" : null,
+    ],
+
+    // jobscore: [],
+  };
+  // CUSTOM VALIDATIONS IMPORT
+  const { state, onInputChange, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
+  // ADD JOBS SUBMIT BUTTON
+  const onAddJobsClick = (event) => {
+    event.preventDefault();
+    if (validate()) {
+    }
+  };
+  // END ADD JOBS VALIDATION
   return (
     <>
       <Modal
         show={props.show}
-        size="lg"
+        size="xl"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -21,101 +179,204 @@ function AddJobModal(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <form>
-            <h5 className="text-center pt-2">Add Jobs</h5>
+          <form onSubmit={onAddJobsClick}>
+            <h5 className="text-center pt-2 mb-7">Add Jobs</h5>
             <div className="row pt-5">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Job_title"
+                  htmlFor="jobtitle"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job title :
+                  Job title <span className="text-danger"> *</span> :
                 </label>
                 <input
+                  maxLength={30}
+                  name="jobtitle"
+                  value={state.jobtitle}
+                  onChange={onInputChange}
                   type="text"
-                  className="form-control"
-                  placeholder="Job title Name"
-                  id="Job_title"
+                  className={
+                    errors.jobtitle
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="Job Title"
+                  id="jobtitle"
                 />
+                {/*----ERROR MESSAGE FOR jobtitle----*/}
+                {errors.jobtitle && (
+                  <span
+                    key={errors.jobtitle}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.jobtitle}
+                  </span>
+                )}
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Experience_required"
+                  htmlFor="experience"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Experience required :
+                  Experience required <span className="text-danger"> *</span> :
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Experience required"
-                  id="Experience_required"
-                />
-              </div>
+                <div className="position-relative">
+                  <select
+                    name="experience"
+                    value={state.experience}
+                    onChange={onInputChange}
+                    className={
+                      errors.experience
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Job Title"
+                    id="experience"
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"0-1"}>0-1 year</option>
+                    <option value={"1-3"}>1-3 year</option>
+                    <option value={"3-5"}>3-5 year</option>
+                    <option value={"5+"}>5+ year</option>
+                  </select>
+                  {/*----ERROR MESSAGE FOR experience----*/}
+                  {errors.experience && (
+                    <span
+                      key={errors.experience}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.experience}
+                    </span>
+                  )}
+                </div>
+              </div>{" "}
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Salary"
+                  htmlFor="salary"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Salary :
+                  Salary <span className="text-danger"> *</span> :
                 </label>
                 <input
+                  maxLength={9}
+                  name="salary"
+                  value={state.salary}
+                  onChange={onInputChange}
                   type="number"
-                  className="form-control"
-                  placeholder="Salary "
-                  id="Salary"
+                  className={
+                    errors.salary
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="Salary"
+                  id="salary"
                 />
+                {/*----ERROR MESSAGE FOR salary----*/}
+                {errors.salary && (
+                  <span key={errors.salary} className="text-danger font-size-3">
+                    {errors.salary}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Location"
+                  htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Location :
+                  Location <span className="text-danger"> *</span> :
                 </label>
                 <input
+                  maxLength={50}
+                  name="location"
+                  value={state.location}
+                  onChange={onInputChange}
                   type="text"
-                  className="form-control"
+                  className={
+                    errors.location
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
                   placeholder="Location"
-                  id="Location"
+                  id="location"
                 />
+                {/*----ERROR MESSAGE FOR location----*/}
+                {errors.location && (
+                  <span
+                    key={errors.location}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.location}
+                  </span>
+                )}
               </div>
+
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Job_Highlights"
+                  htmlFor="industry"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job Highlights :
+                  Industry Type <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
+                    maxLength={30}
+                    name="industry"
+                    value={state.industry}
+                    onChange={onInputChange}
                     type="text"
-                    className="form-control"
-                    id="Job_Highlights"
-                    placeholder=" Job Highlights "
+                    className={
+                      errors.industry
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Industry"
+                    id="industry"
                   />
+                  {/*----ERROR MESSAGE FOR industry----*/}
+                  {errors.industry && (
+                    <span
+                      key={errors.industry}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.industry}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Apply_Link"
+                  htmlFor="link"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Apply Link :
+                  Apply Link <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
-                    className="form-control"
-                    id="Apply_Link"
-                    placeholder=" Apply Link "
+                    maxLength={30}
+                    name="link"
+                    value={state.link}
+                    onChange={onInputChange}
+                    className={
+                      errors.link
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Apply Link"
+                    id="link"
                   />
+                  {/*----ERROR MESSAGE FOR link----*/}
+                  {errors.link && (
+                    <span key={errors.link} className="text-danger font-size-3">
+                      {errors.link}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
-            <h4 className="font-size-4 text-black-2  line-height-reset">
+            {/* <h4 className="font-size-4 text-black-2  line-height-reset">
               Your Job Match Score :
             </h4>
             <div className="row d-flex">
@@ -167,210 +428,367 @@ function AddJobModal(props) {
                   Work Experienc
                 </label>
               </div>
-            </div>
+            </div> */}
             <div className="row">
-              <div className="form-group col-md-4 px-0 pr-3">
+              <div className="form-group col-md-12 px-0 pr-3">
                 <label
-                  htmlFor="YOUR_DUTIES"
-                  className="font-size-4 text-black-2  line-height-reset"
+                  htmlFor="jobdesc"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Your Duties :
+                  Job Description : <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="YOUR_DUTIES"
-                    placeholder="Duties "
-                  />
-                </div>
-              </div>
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="Role_Back_End_Developer"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Role Back End Developer :
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Role_Back_End_Developer"
-                    placeholder=" Role Back End Developer "
-                  />
-                </div>
-              </div>
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="Industry_type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Industry Type :
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Industry_type"
-                    placeholder=" Industry Type "
-                  />
+                  <div
+                    sm="12"
+                    className={
+                      errors.jobdesc
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    <CKEditor
+                      type={"classic"}
+                      name={"jobdesc"}
+                      id={"jobdesc"}
+                      data={state.jobdesc}
+                      value={state.jobdesc}
+                      onChange={onInputChange}
+                      initData="JOb Description"
+                    />
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.jobdesc && (
+                    <span
+                      key={errors.jobdesc}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.jobdesc}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
             <div className="row">
+              <div className="form-group col-md-6 px-0 pr-3">
+                <label
+                  htmlFor="duties"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Your Duties : <span className="text-danger">*</span>
+                </label>
+                <div className="position-relative">
+                  <div
+                    sm="6"
+                    className={
+                      errors.duties
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    <CKEditor
+                      type={"classic"}
+                      name={"duties"}
+                      id={"duties"}
+                      data={state.duties}
+                      value={state.duties}
+                      onChange={onInputChange}
+                      initData="Employee Duties"
+                    />
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.duties && (
+                    <span
+                      key={errors.duties}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.duties}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group col-md-6 px-0 pr-3">
+                <label
+                  htmlFor="requirment"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Requirment : <span className="text-danger">*</span>
+                </label>
+                <div className="position-relative">
+                  <div
+                    sm="6"
+                    className={
+                      errors.requirment
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    <CKEditor
+                      type={"classic"}
+                      name={"requirment"}
+                      id={"requirment"}
+                      data={state.requirment}
+                      value={state.requirment}
+                      onChange={onInputChange}
+                      initData="Add Requirement"
+                    />
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.requirment && (
+                    <span
+                      key={errors.requirment}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.requirment}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Department"
+                  htmlFor="department"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Department :
+                  Department <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
-                    className="form-control"
-                    id="Department"
-                    placeholder=" Department "
+                    maxLength={30}
+                    name="department"
+                    value={state.department}
+                    onChange={onInputChange}
+                    className={
+                      errors.department
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Apply department"
+                    id="department"
                   />
+                  {/*----ERROR MESSAGE FOR department----*/}
+                  {errors.department && (
+                    <span
+                      key={errors.department}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.department}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Swip"
+                  htmlFor="jobtype"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Interested In :
+                  Job Type <span className="text-danger"> *</span> :
                 </label>
-                <div className="position-relative">
-                  <select className="form-control">
+                <div className={" position-relative"}>
+                  <select
+                    placeholder="Apply jobtype"
+                    id="jobtype"
+                    name="jobtype"
+                    value={state.jobtype}
+                    onChange={onInputChange}
+                    className={
+                      errors.jobtype
+                        ? " form-control border border-danger rounded position-relative overflow-hidden"
+                        : " form-control position-relative rounded overflow-hidden"
+                    }
+                  >
                     <option value={""}>Select</option>
-                    <option value={""}>Yes</option>
-                    <option value={""}>No</option>
+                    <option value={"swap"}>Swap</option>
+                    <option value={"other than swap"}>Other than swap</option>
+                    <option value={"with swap"}>With swap</option>
+                    <option value={"all"}>All</option>
                   </select>
                 </div>
+                {/*----ERROR MESSAGE FOR jobtype----*/}
+                {errors.jobtype && (
+                  <span
+                    key={errors.jobtype}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.jobtype}
+                  </span>
+                )}
               </div>{" "}
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Role_Category"
+                  htmlFor="role"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Role Category :
+                  Role/Category <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
-                    className="form-control"
-                    id="Role_Category"
-                    placeholder=" Role Category "
+                    maxLength={30}
+                    name="role"
+                    value={state.role}
+                    onChange={onInputChange}
+                    className={
+                      errors.role
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Apply role"
+                    id="role"
                   />
+                  {/*----ERROR MESSAGE FOR role----*/}
+                  {errors.role && (
+                    <span key={errors.role} className="text-danger font-size-3">
+                      {errors.role}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Education"
+                  htmlFor="education"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Education :
+                  Education <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <select
+                    name="education"
+                    value={state.education}
+                    onChange={onInputChange}
+                    className={
+                      errors.education
+                        ? " form-control border border-danger rounded position-relative overflow-hidden"
+                        : " form-control position-relative rounded overflow-hidden"
+                    }
+                    placeholder="Apply education"
+                    id="education"
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"fresher"}>fresher</option>
+                    <option value={"graduate"}>graduate</option>
+                    <option value={"post graduate"}>post graduate</option>
+                  </select>
+                </div>
+                {/*----ERROR MESSAGE FOR jobtype----*/}
+                {errors.jobtype && (
+                  <span
+                    key={errors.jobtype}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.jobtype}
+                  </span>
+                )}
+              </div>{" "}
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="language"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Language <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
-                    className="form-control"
-                    id="Education"
-                    placeholder=" Education "
+                    maxLength={30}
+                    name="language"
+                    value={state.language}
+                    onChange={onInputChange}
+                    className={
+                      errors.language
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Apply language"
+                    id="language"
                   />
+                  {/*----ERROR MESSAGE FOR language----*/}
+                  {errors.language && (
+                    <span
+                      key={errors.language}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.language}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="ug"
+                  htmlFor="skills"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  UG :
+                  Key skills <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
-                    className="form-control"
-                    id="ug"
-                    placeholder="UG "
+                    maxLength={30}
+                    name="skills"
+                    value={state.skills}
+                    onChange={onInputChange}
+                    className={
+                      errors.skills
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Apply skills"
+                    id="skills"
                   />
+                  {/*----ERROR MESSAGE FOR skills----*/}
+                  {errors.skills && (
+                    <span
+                      key={errors.skills}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.skills}
+                    </span>
+                  )}
                 </div>
               </div>
+            </div>
+
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="Key_skills"
+                  htmlFor="employement"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Key skills :
+                  Employement <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Key_skills"
-                    placeholder=" Key skills "
-                  />
+                  <select
+                    name="employement"
+                    value={state.employement}
+                    onChange={onInputChange}
+                    className={
+                      errors.employement
+                        ? " form-control border border-danger rounded position-relative overflow-hidden"
+                        : " form-control position-relative rounded overflow-hidden"
+                    }
+                    placeholder="Apply employement"
+                    id="employement"
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"part time"}>part time</option>
+                    <option value={"full time"}>full time</option>
+                    <option value={"both"}>both</option>
+                    <option value={"other"}>other</option>
+                  </select>
                 </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="About_Company"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  About Company :
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="About_Company"
-                    placeholder="About Company "
-                  />
-                </div>
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="company_info"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Company Info :
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="company_info"
-                    placeholder=" Key skills "
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col">
-                <label
-                  htmlFor="job_description"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Job description :
-                </label>
-                <div className="position-relative">
-                  <div sm="12" className="mt-3">
-                    <CKEditor
-                      // data={emailText}
-                      // initData={emailText}
-                      type={"classic"}
-                      name={"email_text"}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
+                {/*----ERROR MESSAGE FOR employement----*/}
+                {errors.employement && (
+                  <span
+                    key={errors.employement}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.employement}
+                  </span>
+                )}
+              </div>{" "}
             </div>
 
             <div className="form-group text-center">
