@@ -1,49 +1,32 @@
+import moment from "moment";
 import React from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
+import { CKEditor } from "ckeditor4-react";
+
 function CompanyDetails(props) {
   // COMPANY DETAIL VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    companytype: "",
-    phoneno: "",
-    otherphoneno: "",
+    companyname: "",
     industry: "",
-    contactperson: "",
+    corporation: "",
     alias: "",
-    contactdesignation: "",
-    website: "",
+    startdate: "",
+    members: "",
+    url: "",
+    companydesc: "",
     vacancy: "",
-    classified: "",
-    faxno: "",
-    tanno: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    companytype: [
+    companyname: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
-    ],
-
-    phoneno: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Phone no is required"
-          : value.length !== 10
-          ? "Phone no should be of 10 digits"
-          : null,
-    ],
-    otherphoneno: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Phone no is required"
-          : value.length !== 10
-          ? "Phone no should be of 10 digits"
           : null,
     ],
     industry: [
@@ -54,30 +37,31 @@ function CompanyDetails(props) {
           ? "Cannot use special character "
           : null,
     ],
-    contactperson: [
-      (value) =>
-        value === "" || value.trim() === "" ? "Contact name is required" : null,
-    ],
-    alias: [
+    corporation: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Alias is required"
+          ? "Corporation type is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
     ],
-    contactdesignation: [
+
+    // alias: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Alias is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : null,
+    // ],
+    startdate: [
       (value) =>
-        value === ""
-          ? "Designation is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+        value === "" || value.trim() === "" ? "Start Date is required" : null,
     ],
-    website: [
+    members: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Website Url is required"
+          ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
@@ -90,28 +74,12 @@ function CompanyDetails(props) {
           ? "Cannot use special character "
           : null,
     ],
-    classified: [
+    companydesc: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "Profile Classified is required"
+        value === ""
+          ? "Company Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
-    ],
-    faxno: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Fax no is required"
-          : value.length !== 10
-          ? "Fax no should be of 10 digits"
-          : null,
-    ],
-    tanno: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Tan no is required"
-          : value.length !== 10
-          ? "Tan no should be of 10 digits"
           : null,
     ],
   };
@@ -146,37 +114,37 @@ function CompanyDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
-            <h5 className="text-center pt-2">Company Details</h5>
+            <h5 className="text-center pt-2 mb-7">Company Details</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="companytype"
+                  htmlFor="companyname"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Type :
+                  Company Name (as per Kyc) :
                 </label>
                 <input
                   type="text"
                   maxLength={20}
-                  name="companytype"
-                  value={state.companytype}
+                  name="companyname"
+                  value={state.companyname}
                   onChange={onInputChange}
                   className={
-                    errors.companytype
+                    errors.companyname
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Company Name"
-                  id="companytype"
+                  id="companyname"
                 />
-                {/*----ERROR MESSAGE FOR companytype----*/}
-                {errors.companytype && (
+                {/*----ERROR MESSAGE FOR companyname----*/}
+                {errors.companyname && (
                   <span
-                    key={errors.companytype}
+                    key={errors.companyname}
                     className="text-danger font-size-3"
                   >
-                    {errors.companytype}
+                    {errors.companyname}
                   </span>
                 )}
               </div>
@@ -218,29 +186,32 @@ function CompanyDetails(props) {
                   htmlFor="contactperson"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact Person<span className="text-danger"> *</span> :
+                  Corporation<span className="text-danger"> *</span> :
                 </label>
-                <input
+                <select
                   type="text"
                   placeholder="Contact Person "
                   maxLength={20}
-                  name="contactperson"
-                  value={state.contactperson}
+                  name="corporation"
+                  value={state.corporation}
                   onChange={onInputChange}
                   className={
-                    errors.contactperson
+                    errors.corporation
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="contactperson"
-                />
-                {/*----ERROR MESSAGE FOR contactperson----*/}
-                {errors.contactperson && (
+                  id="corporation"
+                >
+                  <option value={""}>Select</option>
+                  <option value={"b2b3"}>B2B3</option>
+                </select>
+                {/*----ERROR MESSAGE FOR corporation----*/}
+                {errors.corporation && (
                   <span
-                    key={errors.contactperson}
+                    key={errors.corporation}
                     className="text-danger font-size-3"
                   >
-                    {errors.contactperson}
+                    {errors.corporation}
                   </span>
                 )}
               </div>
@@ -254,6 +225,7 @@ function CompanyDetails(props) {
                 <div className="position-relative">
                   <input
                     type="text"
+                    placeholder="Alias"
                     maxLength={20}
                     name="alias"
                     value={state.alias}
@@ -278,250 +250,174 @@ function CompanyDetails(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="contactdesignation"
+                  htmlFor="startdate"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact Person's Designation :
+                  Company Start Date :
                 </label>
+
                 <input
-                  type="text"
-                  maxLength={20}
-                  name="contactdesignation"
-                  value={state.contactdesignation}
+                  max={moment().format("YYYY-MM-DD")}
+                  type="date"
+                  name="startdate"
+                  value={state.startdate}
                   onChange={onInputChange}
                   className={
-                    errors.contactdesignation
+                    errors.startdate
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="contactdesignation"
+                  placeholder="startdate"
+                  id="startdate"
                 />
-                {/*----ERROR MESSAGE FOR contactdesignation----*/}
-                {errors.contactdesignation && (
+                {/*----ERROR MESSAGE FOR startdate----*/}
+                {errors.startdate && (
                   <span
-                    key={errors.contactdesignation}
+                    key={errors.startdate}
                     className="text-danger font-size-3"
                   >
-                    {errors.contactdesignation}
+                    {errors.startdate}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="website"
+                  htmlFor="members"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Company Size :
+                </label>
+                <div className="position-relative">
+                  <input
+                    maxLength={30}
+                    name="members"
+                    value={state.members}
+                    onChange={onInputChange}
+                    type="text"
+                    className={
+                      errors.members
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="members"
+                    id="members"
+                  />
+                  {/*----ERROR MESSAGE FOR members----*/}
+                  {errors.members && (
+                    <span
+                      key={errors.members}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.members}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              {" "}
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="url"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Website URL :
                 </label>
                 <input
                   type="text"
-                  maxLength={20}
-                  name="website"
-                  value={state.website}
+                  placeholder="Website Url"
+                  maxLength={40}
+                  name="url"
+                  value={state.url}
                   onChange={onInputChange}
                   className={
-                    errors.website
+                    errors.url
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="website"
+                  id="url"
                 />
-                {/*----ERROR MESSAGE FOR website----*/}
-                {errors.website && (
-                  <span
-                    key={errors.website}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.website}
+                {/*----ERROR MESSAGE FOR url----*/}
+                {errors.url && (
+                  <span key={errors.url} className="text-danger font-size-3">
+                    {errors.url}
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="vacancy"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Profile for Hot Vacancies :
+                  Vacancy FOr Post :
                 </label>
-                <input
-                  type="text"
-                  placeholder="Profile for Hot Vacancies"
-                  maxLength={20}
-                  name="vacancy"
-                  value={state.vacancy}
-                  onChange={onInputChange}
-                  className={
-                    errors.vacancy
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="vacancy"
-                />
-                {/*----ERROR MESSAGE FOR vacancy----*/}
-                {errors.vacancy && (
-                  <span
-                    key={errors.vacancy}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.vacancy}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="classified"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Profile for Classifieds :
-                </label>
-                <input
-                  type="text"
-                  placeholder="Profile for Classifieds"
-                  maxLength={20}
-                  name="classified"
-                  value={state.classified}
-                  onChange={onInputChange}
-                  className={
-                    errors.classified
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="classified"
-                />
-                {/*----ERROR MESSAGE FOR classified----*/}
-                {errors.classified && (
-                  <span
-                    key={errors.classified}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.classified}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="phoneno"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Phone Number 1<span className="text-danger"> *</span> :
-                </label>
-                <input
-                  type="number"
-                  maxLength={20}
-                  name="phoneno"
-                  value={state.phoneno}
-                  onChange={onInputChange}
-                  className={
-                    errors.phoneno
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="phoneno"
-                />
-                {/*----ERROR MESSAGE FOR phoneno----*/}
-                {errors.phoneno && (
-                  <span
-                    key={errors.phoneno}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.phoneno}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="otherphoneno"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Phone Number 2 :
-                </label>
-                <input
-                  type="number"
-                  placeholder="Phone Number 2"
-                  name="otherphoneno"
-                  value={state.otherphoneno}
-                  onChange={onInputChange}
-                  className={
-                    errors.otherphoneno
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="otherphoneno"
-                />
-                {/*----ERROR MESSAGE FOR otherphoneno----*/}
-                {errors.otherphoneno && (
-                  <span
-                    key={errors.otherphoneno}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.otherphoneno}
-                  </span>
-                )}
+                <div className="position-relative">
+                  <input
+                    maxLength={30}
+                    name="vacancy"
+                    value={state.vacancy}
+                    onChange={onInputChange}
+                    type="text"
+                    className={
+                      errors.vacancy
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Vacancy For Post"
+                    id="vacancy"
+                  />
+                  {/*----ERROR MESSAGE FOR vacancy----*/}
+                  {errors.vacancy && (
+                    <span
+                      key={errors.vacancy}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.vacancy}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             <div className="row">
               {" "}
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-12">
                 <label
-                  htmlFor="faxno"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  htmlFor="companydesc"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Fax Number :
+                  About : <span className="text-danger">*</span>
                 </label>
-                <input
-                  type="text"
-                  placeholder="Fax Number"
-                  name="faxno"
-                  value={state.faxno}
-                  onChange={onInputChange}
-                  className={
-                    errors.faxno
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="faxno"
-                />
-                {/*----ERROR MESSAGE FOR faxno----*/}
-                {errors.faxno && (
-                  <span key={errors.faxno} className="text-danger font-size-3">
-                    {errors.faxno}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="tanno"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  TAN Number :
-                </label>
-                <input
-                  type="text"
-                  placeholder="TAN Number"
-                  name="tanno"
-                  value={state.tanno}
-                  onChange={onInputChange}
-                  className={
-                    errors.tanno
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="tanno"
-                />
-                {/*----ERROR MESSAGE FOR tanno----*/}
-                {errors.tanno && (
-                  <span key={errors.tanno} className="text-danger font-size-3">
-                    {errors.tanno}
-                  </span>
-                )}
+                <div className="position-relative">
+                  <div
+                    sm="12"
+                    className={
+                      errors.companydesc
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    <CKEditor
+                      type={"classic"}
+                      name={"companydesc"}
+                      id={"companydesc"}
+                      data={state.companydesc}
+                      value={state.companydesc}
+                      onChange={onInputChange}
+                      initData="About Company"
+                    />
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.companydesc && (
+                    <span
+                      key={errors.companydesc}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.companydesc}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 

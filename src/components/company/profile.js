@@ -6,7 +6,8 @@ import EmployeeFooter from "../common/footer";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import Account from "../forms/employer/account";
-import Company from "../forms/employer/companyInfo";
+import ContactInfo from "../forms/employer/contactInfo";
+import CompanyDetailPage from "./companydetail";
 
 function CompanyProfile() {
   const [showAccountDetailsModal, setShowAccountDetailsModal] = useState(false);
@@ -168,7 +169,7 @@ function CompanyProfile() {
                           >
                             Edit
                           </CustomButton>
-                          <Company
+                          <ContactInfo
                             show={showCompanyInfoModal}
                             close={() => setShowCompanyInfoModal(false)}
                           />
@@ -676,125 +677,8 @@ function CompanyProfile() {
             </div>
             {/* <!-- Company Profile End --> */}
             {/* <!-- Sidebar --> */}
-            <div className="col-12 col-xl-3 col-lg-4 col-md-5 col-sm-6">
-              <div className="pt-11 pt-lg-0 pl-lg-5">
-                <h4 className="font-size-6 font-weight-semibold mb-0">
-                  Similar Companies
-                </h4>
-                <ul className="list-unstyled">
-                  {/* <!-- Single List --> */}
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-5"
-                          src="image/l1/png/feature-brand-1.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="mt-n4">
-                        <h4 className="mb-0 font-size-6 font-weight-semibold">
-                          Google INC.
-                        </h4>
-                        <p className="mb-0 font-size-4">Online Marketplace</p>
-                      </div>
-                    </a>
-                  </li>
-                  {/* <!-- Single List End --> */}
-                  {/* <!-- Single List --> */}
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-5"
-                          src="image/l1/png/feature-brand-4.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="mt-n4">
-                        <h4 className="mb-0 font-size-6 font-weight-semibold">
-                          Uber
-                        </h4>
-                        <p className="mb-0 font-size-4">Ride Sharing Company</p>
-                      </div>
-                    </a>
-                  </li>
-                  {/* <!-- Single List End --> */}
-                  {/* <!-- Single List --> */}
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-5"
-                          src="image/l1/png/feature-brand-5.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="mt-n4">
-                        <h4 className="mb-0 font-size-6 font-weight-semibold">
-                          Facebook
-                        </h4>
-                        <p className="mb-0 font-size-4">Social Network</p>
-                      </div>
-                    </a>
-                  </li>
-                  {/* <!-- Single List End --> */}
-                  {/* <!-- Single List --> */}
-                  <li className="border-bottom">
-                    <a
-                      className="media align-items-center py-9"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-5">
-                        <img
-                          className="square-72 rounded-5"
-                          src="image/l3/png/github-mark.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="mt-n4">
-                        <h4 className="mb-0 font-size-6 font-weight-semibold">
-                          GitHub
-                        </h4>
-                        <p className="mb-0 font-size-4">Online Software</p>
-                      </div>
-                    </a>
-                  </li>
-                  {/* <!-- Single List End --> */}
-                  {/* <!-- Single List --> */}
-                  <li className="">
-                    <a
-                      className="media align-items-center py-9"
-                      href="http://localhost:3000/"
-                    >
-                      <div className="mr-7">
-                        <img
-                          className="square-72 rounded-5"
-                          src="image/l3/png/universal.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="mt-n4">
-                        <h4 className="mb-0 font-size-6 font-weight-semibold">
-                          Uniliver
-                        </h4>
-                        <p className="mb-0 font-size-4">Manufacturer</p>
-                      </div>
-                    </a>
-                  </li>
-                  {/* <!-- Single List End --> */}
-                </ul>
-              </div>
-            </div>
+            <CompanyDetailPage />
+
             {/* <!-- end Sidebar --> */}
           </div>
         </div>

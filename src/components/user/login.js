@@ -10,6 +10,7 @@ export default function EmployeeLoginModal(props) {
   const initialFormState = {
     useremail: "",
     userpassword: "",
+    tandr: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -30,6 +31,10 @@ export default function EmployeeLoginModal(props) {
             )
           ? null
           : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+    ],
+    tandr: [
+      (value) =>
+        value ? null : "Please accept terms and conditions to continue",
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -72,7 +77,7 @@ export default function EmployeeLoginModal(props) {
                 <div className="pt-10 pb-6 pl-11 pr-12 bg-black-2 h-100 d-flex flex-column dark-mode-texts">
                   <div className="pb-9">
                     <h3 className="font-size-8 text-white line-height-reset pb-4 line-height-1p4">
-                      Welcome Back
+                      Welcome Backkkkkkkkkkk
                     </h3>
                     {showForgotPassword === false ? (
                       <p className="mb-0 font-size-4 text-white">
@@ -108,37 +113,37 @@ export default function EmployeeLoginModal(props) {
                     className={showForgotPassword === false ? "row" : "d-none"}
                   >
                     <div className="col-4 col-xs-12">
-                      <a
-                        href="http://localhost:3000/"
+                      <Link
+                        to="/"
                         className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-2"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-4">
-                          Log in with LinkedIn
+                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <span className="d-none d-xs-block mx-5 px-3">
+                          Import from LinkedIn
                         </span>
-                      </a>
+                      </Link>
                     </div>
                     <div className="col-4 col-xs-12">
-                      <a
-                        href="http://localhost:3000/"
+                      <Link
+                        to="/"
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-4">
-                          Log in with Google
+                        <span className="d-none d-xs-block mx-5 px-3">
+                          Import from Google
                         </span>
-                      </a>
+                      </Link>
                     </div>
                     <div className="col-4 col-xs-12">
-                      <a
-                        href="http://localhost:3000/"
+                      <Link
+                        to="/"
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-4">
-                          Log in with Facebook
+                        <span className="d-none d-xs-block mx-5 px-3">
+                          Import from Facebook
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div
@@ -148,6 +153,7 @@ export default function EmployeeLoginModal(props) {
                   >
                     <span className="font-size-3 line-height-reset ">Or</span>
                   </div>
+                  {/* user login form */}
                   <form
                     onSubmit={onUserLoginClick}
                     className={showForgotPassword === false ? "" : "d-none"}
@@ -227,29 +233,38 @@ export default function EmployeeLoginModal(props) {
                         ></a> */}
                       </div>
                     </div>
-                    <div className="form-group d-flex flex-wrap justify-content-between">
-                      <label
-                        htmlFor="terms-check"
-                        className="gr-check-input d-flex  mr-3"
-                      >
+                    <div className=" d-flex flex-wrap justify-content-between mb-5 col-md-12 ">
+                      <label htmlFor="tandr" className="mb-0 d-flex  mr-3">
                         <input
-                          className="d-none"
                           type="checkbox"
-                          id="terms-check"
+                          id="tandr"
+                          name="tandr"
+                          onChange={onInputChange}
+                          className="text-black-2 pt-5 mr-5"
                         />
-                        <span className="checkbox mr-5"></span>
-                        <span className="font-size-3 mb-0 line-height-reset mb-1 d-block">
+                        <span className="font-size-3 mb-1 line-height-reset d-block">
                           Remember password
                         </span>
                       </label>
+
                       <Link
-                        to={""}
+                        to="/"
                         className="font-size-3 text-dodger line-height-reset"
                         onClick={() => setShowForgotPassword(true)}
                       >
                         Forget Password
                       </Link>
+                      {/*----ERROR MESSAGE FOR terms----*/}
+                      {errors.tandr && (
+                        <span
+                          key={errors.tandr}
+                          className="text-danger font-size-3"
+                        >
+                          {errors.tandr}
+                        </span>
+                      )}
                     </div>
+
                     <div className="form-group mb-8">
                       <button
                         className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"

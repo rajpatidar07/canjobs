@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function JobDetailPage() {
   return (
@@ -8,16 +9,16 @@ function JobDetailPage() {
           <div className="col-12">
             {/* <!-- media start --> */}
             <div className="media align-items-center company_box col-md-6 p-0">
-              <a className="text_box text-left" href="http://localhost:3000/">
+              <Link className="text_box text-left" to="http://localhost:3000/">
                 <img
                   className="company_logo"
                   src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                   alt=""
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 className="text_box text-left w-100"
-                href="http://localhost:3000/"
+                to="http://localhost:3000/"
               >
                 <p
                   href="http://localhost:3000/"
@@ -28,7 +29,7 @@ function JobDetailPage() {
                 <h3 className="mb-0 font-size-6 heading-dark-color">
                   UI/UX Designer
                 </h3>
-              </a>
+              </Link>
             </div>
             {/* <!-- media end --> */}
           </div>

@@ -11,6 +11,7 @@ export default function EmployeeSignupModal(props) {
     useremail: "",
     userpassword: "",
     confirmpassword: "",
+    tandr: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -19,18 +20,18 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     userpassword: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-            value
-          )
-            ? null
-            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              value
+            )
+          ? null
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     confirmpassword: [
       (value) => (value ? null : "Confirm Password is required"),
@@ -49,7 +50,6 @@ export default function EmployeeSignupModal(props) {
     initialFormState,
     validators
   );
-  console.log(state);
 
   // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = (event) => {
@@ -173,6 +173,7 @@ export default function EmployeeSignupModal(props) {
                         placeholder="example@gmail.com"
                         id="useremail"
                       />
+                      {/* ERROR MSG FOR USEREMAIL */}
                       {errors.useremail && (
                         <span
                           key={errors.useremail}
@@ -203,6 +204,7 @@ export default function EmployeeSignupModal(props) {
                           id="userpassword"
                           placeholder="Enter password"
                         />
+                        {/* ERROR MSG FOR PASSWORD */}
                         {errors.userpassword && (
                           <span
                             key={errors.userpassword}

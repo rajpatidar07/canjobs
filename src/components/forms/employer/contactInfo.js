@@ -1,61 +1,48 @@
-import moment from "moment";
 import React from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-
-function KycComplianceDetails(props) {
-  // COMPANY KYC DETAIL VALIDATION
+function ContactInfo(props) {
+  // COMPANY PERSONAL INFO VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    panname: "",
+    contactname: "",
+    email: "",
+    contactno: "",
+    location: "",
     pincode: "",
-    panno: "",
-    pandate: "",
-    address: "",
     city: "",
     state: "",
     country: "",
-    gstin: "",
-    tanno: "",
-    docupload: "",
+    designation: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    panname: [
+    contactname: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Pan name is required"
+          ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
     ],
-
-    pincode: [
+    email: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Pincode is required"
-          : value.length > 6 || value.length < 6
-          ? "Pincode should be of 10 digits"
-          : null,
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
-    panno: [
-      (value) =>
-        value === ""
-          ? "Pan no is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
-    ],
-    pandate: [
+    contactno: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Pan card date is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
+          ? "Phone no is required"
+          : value.length !== 10
+          ? "Phone no should be of 10 digits"
           : null,
     ],
-    address: [
+    location: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Address is required"
@@ -63,46 +50,44 @@ function KycComplianceDetails(props) {
           ? "Cannot use special character "
           : null,
     ],
+    pincode: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Pincode is required"
+          : value.length > 10 || value.length < 10
+          ? "Mobile no should be of 10 digits"
+          : null,
+    ],
     city: [
       (value) =>
         value === ""
-          ? "City is required"
+          ? "City Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
     ],
     state: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "State is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
-    ],
-    gstin: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Gstin is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
-    ],
-    tanno: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Tan no is required"
+        value === ""
+          ? "State Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
     ],
     country: [
       (value) =>
-        value === "" || value.trim() === "" ? "Country is required" : null,
+        value === ""
+          ? "Country Name is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
     ],
-    docupload: [
+    designation: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Document Upload is required"
+          ? "Designation is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
           : null,
     ],
   };
@@ -111,13 +96,13 @@ function KycComplianceDetails(props) {
     initialFormState,
     validators
   );
-  // COMPANY KYC DETAIL SUBMIT BUTTON
-  const onKycInfoClick = (event) => {
+  // COMPANY PERSONAL INFO SUBMIT BUTTON
+  const onCompanyPersonalInfoClick = (event) => {
     event.preventDefault();
     if (validate()) {
     }
   };
-  // END COMPANY KYC DETAIL VALIDATION
+  // END COMPANY PERSONAL INFO VALIDATION
   return (
     <>
       <Modal
@@ -136,155 +121,173 @@ function KycComplianceDetails(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onKycInfoClick}>
-            <h5 className="text-center pt-2 mb-7">KYC Compliance Details</h5>
+          <form onSubmit={onCompanyPersonalInfoClick}>
+            <h5 className="text-center pt-2 mb-7">Contact Detail</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="panno"
+                  htmlFor="contactname"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  PAN Number :<span className="text-danger"> *</span> :
+                  Contact Person Name :
                 </label>
                 <input
-                  type="number"
-                  placeholder="PAN_Number"
-                  id="panno"
-                  name="panno"
-                  value={state.panno}
+                  maxLength={20}
+                  name="contactname"
+                  value={state.contactname}
                   onChange={onInputChange}
+                  type="text"
                   className={
-                    errors.panno
+                    errors.contactname
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  placeholder="Contact person Name"
+                  id="contactname"
                 />
-                {/*----ERROR MESSAGE FOR panno----*/}
-                {errors.panno && (
-                  <span key={errors.panno} className="text-danger font-size-3">
-                    {errors.panno}
+                {/*----ERROR MESSAGE FOR contactname----*/}
+                {errors.contactname && (
+                  <span
+                    key={errors.contactname}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.contactname}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="panname"
+                  htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Name on PAN Card :<span className="text-danger"> *</span> :
+                  Email :
                 </label>
                 <input
-                  type="text"
-                  placeholder="Name on PAN Card"
-                  id="panname"
-                  name="panname"
-                  value={state.panname}
+                  maxLength={30}
+                  name="email"
+                  value={state.email}
                   onChange={onInputChange}
+                  type="email"
                   className={
-                    errors.panname
+                    errors.email
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  placeholder="example@gmail.com"
+                  id="email"
                 />
-                {/*----ERROR MESSAGE FOR panname----*/}
-                {errors.panname && (
-                  <span
-                    key={errors.panname}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.panname}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="pandate"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Date on PAN Card :<span className="text-danger"> *</span> :
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="date"
-                    placeholder="Date_on_PAN_Card"
-                    id="pandate"
-                    name="pandate"
-                    max={moment().format("YYYY-MM-DD")}
-                    value={state.pandate}
-                    onChange={onInputChange}
-                    className={
-                      errors.pandate
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                  />
-                  {/*----ERROR MESSAGE FOR pandate----*/}
-                  {errors.pandate && (
-                    <span
-                      key={errors.pandate}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.pandate}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="address"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Address<span className="text-danger"> *</span> :
-                </label>
-                <input
-                  type="text"
-                  placeholder="Address"
-                  id="address"
-                  name="address"
-                  value={state.address}
-                  onChange={onInputChange}
-                  className={
-                    errors.address
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                />
-                {/*----ERROR MESSAGE FOR address----*/}
-                {errors.address && (
-                  <span
-                    key={errors.address}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.address}
+                {/*----ERROR MESSAGE FOR email----*/}
+                {errors.email && (
+                  <span key={errors.email} className="text-danger font-size-3">
+                    {errors.email}
                   </span>
                 )}
               </div>
             </div>
 
             <div className="row">
-              {" "}
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="contactno"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Contact No :
+                </label>
+                <input
+                  maxLength={30}
+                  name="contactno"
+                  value={state.contactno}
+                  onChange={onInputChange}
+                  type="number"
+                  className={
+                    errors.contactno
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="Contact No"
+                  id="contactno"
+                />
+                {/*----ERROR MESSAGE FOR contactno----*/}
+                {errors.contactno && (
+                  <span
+                    key={errors.contactno}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.contactno}
+                  </span>
+                )}
+              </div>
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="othercontactno"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Other Contact No :
+                </label>
+                <input
+                  maxLength={30}
+                  name="othercontactno"
+                  value={state.othercontactno}
+                  onChange={onInputChange}
+                  type="number"
+                  className={"form-control"}
+                  placeholder="Other Contact No"
+                  id="othercontactno"
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="location"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Address :
+                </label>
+                <input
+                  maxLength={60}
+                  type="text"
+                  name="location"
+                  value={state.location}
+                  onChange={onInputChange}
+                  className={
+                    errors.location
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="Address"
+                  id="location"
+                />
+                {/*----ERROR MESSAGE FOR location----*/}
+                {errors.location && (
+                  <span
+                    key={errors.location}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.location}
+                  </span>
+                )}
+              </div>
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pincode"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pincode<span className="text-danger"> *</span> :
+                  Pin code :
                 </label>
                 <input
-                  type="number"
-                  placeholder="Pincode"
-                  id="pincode"
                   name="pincode"
                   value={state.pincode}
                   onChange={onInputChange}
+                  type="number"
                   className={
                     errors.pincode
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  placeholder="Pincode"
+                  id="pincode"
                 />
                 {/*----ERROR MESSAGE FOR pincode----*/}
                 {errors.pincode && (
@@ -296,6 +299,9 @@ function KycComplianceDetails(props) {
                   </span>
                 )}
               </div>
+            </div>
+            <div className="row">
+              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="city"
@@ -322,9 +328,7 @@ function KycComplianceDetails(props) {
                     {errors.city}
                   </span>
                 )}
-              </div>
-            </div>
-            <div className="row">
+              </div>{" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="state"
@@ -352,6 +356,9 @@ function KycComplianceDetails(props) {
                   </span>
                 )}
               </div>
+            </div>
+
+            <div className="row">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="country"
@@ -382,124 +389,45 @@ function KycComplianceDetails(props) {
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="gstin"
+                  htmlFor="designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  GSTIN:
+                  Your designation :
                 </label>
-                <input
-                  type="number"
-                  placeholder="GSTIN"
-                  id="gstin"
-                  name="gstin"
-                  value={state.gstin}
-                  onChange={onInputChange}
-                  className={
-                    errors.gstin
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                />
-                {/*----ERROR MESSAGE FOR gstin----*/}
-                {errors.gstin && (
-                  <span key={errors.gstin} className="text-danger font-size-3">
-                    {errors.gstin}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="faxno"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Fax Number :
-                </label>
-                <input
-                  type="number"
-                  placeholder="Fax Number"
-                  id="faxno"
-                  name="faxno"
-                  value={state.faxno}
-                  onChange={onInputChange}
-                  className={
-                    errors.faxno
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                />
-                {/*----ERROR MESSAGE FOR faxno----*/}
-                {errors.faxno && (
-                  <span key={errors.faxno} className="text-danger font-size-3">
-                    {errors.faxno}
-                  </span>
-                )}
+                <div className="position-relative">
+                  <input
+                    maxLength={30}
+                    name="designation"
+                    value={state.designation}
+                    onChange={onInputChange}
+                    type="text"
+                    className={
+                      errors.designation
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Designation"
+                    id="designation"
+                  />
+                  {/*----ERROR MESSAGE FOR designation----*/}
+                  {errors.designation && (
+                    <span
+                      key={errors.designation}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.designation}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="tanno"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  TAN Number :
-                </label>
-                <input
-                  type="number"
-                  placeholder="TAN Number"
-                  id="tanno"
-                  name="tanno"
-                  value={state.tanno}
-                  onChange={onInputChange}
-                  className={
-                    errors.tanno
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                />
-                {/*----ERROR MESSAGE FOR tanno----*/}
-                {errors.tanno && (
-                  <span key={errors.tanno} className="text-danger font-size-3">
-                    {errors.tanno}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="docupload"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Document Upload :
-                </label>
-                <input
-                  type="file"
-                  id="docupload"
-                  name="docupload"
-                  value={state.docupload}
-                  onChange={onInputChange}
-                  className={
-                    errors.docupload
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                />
-                {/*----ERROR MESSAGE FOR docupload----*/}
-                {errors.docupload && (
-                  <span
-                    key={errors.docupload}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.docupload}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+            <div className="form-group text-center">
+              <button
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                type="submit"
+              >
                 Submit
               </button>
             </div>
@@ -511,4 +439,4 @@ function KycComplianceDetails(props) {
   );
 }
 
-export default KycComplianceDetails;
+export default ContactInfo;

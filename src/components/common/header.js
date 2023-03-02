@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import CompanyLogin from "../company/loginModal";
+import CompanySignUp from "../company/signupModal";
 import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
 
 function EmployeeHeader() {
+  // EMPLOYEEE LOGIN AND SIGNUP
+  // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);
   const [showSingUp, setShowSingUp] = useState(false);
-
   /*-- Function to switch login to singup --*/
   const SignUpClick = () => {
     setShowSingUp(true);
@@ -17,6 +20,23 @@ function EmployeeHeader() {
     setShowLogin(true);
     setShowSingUp(false);
   };
+  // END EMPLOYEE LOGIN AND SIGNUP
+
+  // COMPANY LOGIN AND SIGNUP
+  // Company signup and login state
+  const [showCompanyLogin, setShowCompanyLogin] = useState(false);
+  const [showCompanySignUp, setShowCompanySignUp] = useState(false);
+  /*-- Function to switch login to signup --*/
+  const CompanySignUpClick = () => {
+    setShowCompanySignUp(true);
+    setShowCompanyLogin(false);
+  };
+  /*-- Function to switch signup to login--*/
+  const CompanyLoginClick = () => {
+    setShowCompanyLogin(true);
+    setShowCompanySignUp(false);
+  };
+  //  END COMPANY LOGIN AND SIGNUP
   return (
     <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
       <div className="container">
@@ -40,7 +60,6 @@ function EmployeeHeader() {
           </div>
           <div className="collapse navbar-collapse" id="mobile-menu">
             <div className="navbar-nav-wrapper">
-
               <ul className="navbar-nav main-menu">
                 <li className="nav-item">
                   <Link className="nav-link" to="/">
@@ -52,27 +71,72 @@ function EmployeeHeader() {
                     Jobs
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/company">
-                    Employer Home
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle gr-toggle-arrow"
+                    id="navbarDropdown"
+                    to="/"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Company <i className="icon icon-small-down"></i>
                   </Link>
+                  <ul
+                    className="gr-menu-dropdown dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li className="nav-item drop-menu-item">
+                      <Link className="" to="/company">
+                        Company Home
+                      </Link>
+                    </li>
+                    <li className="drop-menu-item">
+                      <Link className="" to="/managejobs">
+                        Manage Jobs
+                      </Link>
+                    </li>
+                    <li className="drop-menu-item">
+                      <Link className="" to="/response">
+                        Responses
+                      </Link>
+                    </li>
+                    <li className="drop-menu-item">
+                      <Link className="" to="/companyprofile">
+                        Profile
+                      </Link>
+                    </li>
+                    <li className="drop-menu-item">
+                      <Link
+                        className=""
+                        to={""}
+                        onClick={() => setShowCompanySignUp(true)}
+                      >
+                        Sign up
+                      </Link>
+                      <CompanySignUp
+                        show={showCompanySignUp}
+                        CompanyLoginClick={CompanyLoginClick}
+                        close={() => setShowCompanySignUp(false)}
+                      />
+                    </li>
+                    <li className="drop-menu-item">
+                      <Link
+                        className=""
+                        to={""}
+                        onClick={() => setShowCompanyLogin(true)}
+                      >
+                        Login
+                      </Link>
+                      <CompanyLogin
+                        show={showCompanyLogin}
+                        CompanySignUpClick={CompanySignUpClick}
+                        close={() => setShowCompanyLogin(false)}
+                      />
+                    </li>
+                  </ul>
                 </li>
-                <li>
-                  <Link className="nav-link" to="/managejobs">
-                    Manage Jobs
-                  </Link>
-                </li>
-                <li>
-                  <Link className="nav-link" to="/response">
-                    Responses
-                  </Link>
-                </li>
-                <li>
-                  <Link className="nav-link" to="/companyprofile">
-                    Profile
-                  </Link>
-                </li>
-
               </ul>
             </div>
             <button
