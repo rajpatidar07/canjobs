@@ -1,7 +1,79 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import useValidation from "../../common/useValidation";
 
 function AddEmployer(props) {
+  // USER EMPLOYER VALIDATION
+
+  // INITIAL STATE ASSIGNMENT
+  const initialFormState = {
+    companyname: "",
+    vacancies: "",
+    location: "",
+    infostatus: "",
+    contactpersonname: "",
+    contactpersonnumber: "",
+  };
+  // VALIDATION CONDITIONS
+  const validators = {
+    companyname: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Company name is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    vacancies: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "No of vacancies is required"
+          : null,
+    ],
+    location: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "location is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    infostatus: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Information status Type is required"
+          : null,
+    ],
+    contactpersonname: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Contact person's name is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
+    contactpersonnumber: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "MobileNo. is required"
+          : value.length !== 10
+          ? "Mobile no should be of 10 digits"
+          : null,
+    ],
+  };
+  // CUSTOM VALIDATIONS IMPORT
+  const { state, onInputChange, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
+  // USER EMPLOYER SUBMIT BUTTON
+  const onUserEmployerClick = (event) => {
+    event.preventDefault();
+    if (validate()) {
+    }
+  };
+  // END USER PERSONAL DETAIL VALIDATION
+
   return (
     <>
       <Modal
@@ -20,37 +92,69 @@ function AddEmployer(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form>
+          <form onSubmit={onUserEmployerClick}>
             <h5 className="text-center pt-2">Add Employer</h5>
             <div className="row pt-5">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="compny_Name"
+                  htmlFor="companyname"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Company Name:
+                  Company Name <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={
+                    errors.companyname
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  value={state.companyname}
+                  onChange={onInputChange}
+                  name="companyname"
+                  id="companyname"
                   placeholder="Company Name"
-                  id="compny_Name"
                 />
+                {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
+                {errors.companyname && (
+                  <span
+                    key={errors.companyname}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.companyname}
+                  </span>
+                )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="vacancy"
+                  htmlFor="vacancies"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  No. of vacancies :
+                  No. of vacancies <span className="text-danger">*</span> :
                 </label>
                 <input
                   type="number"
-                  className="form-control"
+                  className={
+                    errors.vacancies
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
                   placeholder="vacancy"
-                  id="vacancy"
+                  id="vacancies"
+                  name="vacancies"
+                  value={state.vacancies}
+                  onChange={onInputChange}
                 />
+                {/*----ERROR MESSAGE FOR VACANCIES----*/}
+                {errors.vacancies && (
+                  <span
+                    key={errors.vacancies}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.vacancies}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row">
@@ -59,63 +163,129 @@ function AddEmployer(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Location :
+                  Location <span className="text-danger">*</span>:
                 </label>
                 <input
-                  type="tel"
-                  className="form-control"
+                  type="text"
+                  className={
+                    errors.location
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  value={state.location}
+                  onChange={onInputChange}
                   placeholder="Location"
                   id="location"
+                  name="location"
                 />
+                {errors.location && (
+                  <span
+                    key={errors.location}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.location}
+                  </span>
+                )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Gender"
+                  htmlFor="infostatus"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Information status :
+                  Information status <span className="text-danger">*</span>:
                 </label>
-                <select className="form-control">
+                <select
+                  className={
+                    errors.infostatus
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  value={state.infostatus}
+                  onChange={onInputChange}
+                  id="infostatus"
+                  name="infostatus"
+                >
                   <option value={""}>Select status</option>
-                  <option value={""}>Complete</option>
-                  <option value={""}>Incomplete</option>
+                  <option value={"Complete"}>Complete</option>
+                  <option value={"Incomplete"}>Incomplete</option>
                 </select>
+                {errors.infostatus && (
+                  <span
+                    key={errors.infostatus}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.infostatus}
+                  </span>
+                )}
               </div>
             </div>
             <h5> Contact Person</h5>
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="Name"
+                  htmlFor="contactpersonname"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Name :
+                  Name<span className="text-danger">*</span> :
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={
+                    errors.contactpersonname
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  value={state.contactpersonname}
+                  onChange={onInputChange}
                   placeholder="Name"
-                  id="Name"
+                  id="contactpersonname"
+                  name="contactpersonname"
                 />
+                {errors.contactpersonname && (
+                  <span
+                    key={errors.contactpersonname}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.contactpersonname}
+                  </span>
+                )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="number"
+                  htmlFor="contactpersonnumber"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Number :
+                  Number<span className="text-danger">*</span> :
                 </label>
                 <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Maritial status"
-                  id="number"
+                  type="number"
+                  className={
+                    errors.contactpersonnumber
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  value={state.contactpersonnumber}
+                  onChange={onInputChange}
+                  placeholder="Contact number"
+                  id="contactpersonnumber"
+                  name="contactpersonnumber"
+                  maxLength={10}
                 />
+                {errors.contactpersonnumber && (
+                  <span
+                    key={errors.contactpersonnumber}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.contactpersonnumber}
+                  </span>
+                )}
               </div>
             </div>
-
             <div className="form-group text-center">
-              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
+              <button
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                type="submit"
+              >
                 Submit
               </button>
             </div>
