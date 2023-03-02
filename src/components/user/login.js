@@ -227,7 +227,7 @@ export default function EmployeeLoginModal(props) {
                         ></a> */}
                       </div>
                     </div>
-                    <div className="form-group d-flex flex-wrap justify-content-between">
+                    <div className="d-flex flex-wrap justify-content-between">
                       <label
                         htmlFor="terms-check"
                         className="gr-check-input d-flex  mr-3"
@@ -244,7 +244,7 @@ export default function EmployeeLoginModal(props) {
                       </label>
                       <Link
                         to={""}
-                        className="font-size-3 text-dodger line-height-reset"
+                        className="font-size-3 text-dodger line-height-reset mb-3"
                         onClick={() => setShowForgotPassword(true)}
                       >
                         Forget Password

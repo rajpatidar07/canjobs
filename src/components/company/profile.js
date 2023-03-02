@@ -25,7 +25,7 @@ function CompanyProfile() {
         <div className="container">
           {/* <!-- back Button --> */}
           <div className="row justify-content-center">
-            <div className="col-12 mt-13 dark-mode-texts">
+            <div className="mt-20 dark-mode-texts col-12 translateY-25">
               <div className="mb-9">
                 <a
                   className="d-flex align-items-center ml-4"
@@ -64,6 +64,77 @@ function CompanyProfile() {
                     </a>
                   </div>
                 </div>
+                {/* <!-- Middle Body Start --> */}
+                <div className="pl-12 pt-10 pb-7 pr-12 pr-xxl-24">
+                  <div className="row text-left pt-5 border-top">
+                    {/* <!-- Single Widgets Start --> */}
+                    <div className="col-12 col-lg-4 col-md-4 col-xs-6">
+                      <div className="mb-8">
+                        <p className="font-size-4">Company size</p>
+                        <h5 className="font-size-4 font-weight-semibold text-black-2">
+                          11-50 employees
+                        </h5>
+                      </div>
+                      <div className="mb-8">
+                        <p className="font-size-4">Est. Since</p>
+                        <h5 className="font-size-4 font-weight-semibold text-black-2">
+                          2020
+                        </h5>
+                      </div>
+                    </div>
+                    {/* <!-- Single Widgets End --> */}
+                    {/* <!-- Single Widgets Start --> */}
+                    <div className="col-12 col-lg-4 col-md-4 col-xs-6">
+                      <div className="mb-8">
+                        <p className="font-size-4">Type of corporation</p>
+                        <h5 className="font-size-4 font-weight-semibold text-black-2">
+                          B2B & B2C
+                        </h5>
+                      </div>
+                      <div className="mb-8">
+                        <p className="font-size-4">Social Media</p>
+                        <div className="icon-link d-flex align-items-center">
+                          <a
+                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
+                            href="http://localhost:3000/"
+                          >
+                            <i className="fab fa-linkedin-in"></i>
+                          </a>
+                          <a
+                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
+                            href="http://localhost:3000/"
+                          >
+                            <i className="fab fa-facebook-f"></i>
+                          </a>
+                          <a
+                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
+                            href="http://localhost:3000/"
+                          >
+                            <i className="fab fa-twitter"></i>
+                          </a>
+                          <a
+                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
+                            href="http://localhost:3000/"
+                          >
+                            <i className="fa fa-globe"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <!-- Single Widgets End --> */}
+                    {/* <!-- Single Widgets Start --> */}
+                    <div className="col-12 col-lg-4 col-md-4 col-xs-6">
+                      <div className="mb-8">
+                        <p className="font-size-4">Location</p>
+                        <h5 className="font-size-4 font-weight-semibold text-black-2">
+                          New York City
+                        </h5>
+                      </div>
+                    </div>
+                    {/* <!-- Single Widgets End --> */}
+                  </div>
+                </div>
+                {/* <!-- Middle Body End --> */}
                 {/* <!-- Tab Section Start --> */}
                 <ul
                   className="nav border-bottom border-mercury pl-12"
@@ -158,21 +229,17 @@ function CompanyProfile() {
                     showCompanyDetails === false &&
                     showKycComplainDetails === false ? (
                       <div>
-                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                            About Airbnb
-                          </h4>
+                        <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                          <span>About Airbnb</span>
                           <CustomButton
-                            className="font-size-3 rounded-3 btn-primary border-0"
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowCompanyInfoModal(true)}
-                          >
-                            Edit
-                          </CustomButton>
+                          />
                           <Company
                             show={showCompanyInfoModal}
                             close={() => setShowCompanyInfoModal(false)}
                           />
-                        </div>
+                        </h4>
                         <div className="pt-5 text-left">
                           <p className="font-size-4 mb-8">
                             If you’re like most of my clients, you know creative
@@ -209,22 +276,18 @@ function CompanyProfile() {
 
                     {/* <!-- Account Details --> */}
                     {showAccountDetails === true ? (
-                      <div className="">
-                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                            Account Details
-                          </h4>
+                      <div>
+                        <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                          <span>Account Details</span>
                           <CustomButton
-                            className="font-size-3 rounded-3 btn-primary border-0"
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowAccountDetailsModal(true)}
-                          >
-                            Edit
-                          </CustomButton>
+                          />
                           <Account
                             show={showAccountDetailsModal}
                             close={() => setShowAccountDetailsModal(false)}
                           />
-                        </div>
+                        </h4>
                         <div className="pt-5 text-left row">
                           <div className="col-md-4">
                             {" "}
@@ -271,21 +334,17 @@ function CompanyProfile() {
                     {/* <!-- Company Details --> */}
                     {showCompanyDetails === true ? (
                       <div className="">
-                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                            Company Details
-                          </h4>
+                        <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                          <span>Company Details</span>
                           <CustomButton
-                            className="font-size-3 rounded-3 btn-primary border-0"
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowCompanyDetailsModal(true)}
-                          >
-                            Edit
-                          </CustomButton>
+                          />
                           <CompanyDetails
                             show={showCompanyDetailsModal}
                             close={() => setShowCompanyDetailsModal(false)}
                           />
-                        </div>
+                        </h4>
                         <div className="pt-5 text-left row">
                           <div className="col-md-3">
                             {" "}
@@ -382,22 +441,18 @@ function CompanyProfile() {
                     ) : null}
                     {/* <!-- KYC Details --> */}
                     {showKycComplainDetails === true ? (
-                      <div className="">
-                        <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
-                            KYC Details
-                          </h4>
+                      <div>
+                        <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                          <span>KYC Details</span>
                           <CustomButton
-                            className="font-size-3 rounded-3 btn-primary border-0"
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowKycComplainDetailsModal(true)}
-                          >
-                            Edit
-                          </CustomButton>
+                          />
                           <KycComplianceDetails
                             show={showKycComplainDetailsModal}
                             close={() => setShowKycComplainDetailsModal(false)}
                           />
-                        </div>
+                        </h4>
                         <div className="pt-5 text-left row">
                           <div className="col-md-3">
                             {" "}
@@ -492,183 +547,6 @@ function CompanyProfile() {
                     ) : null}
                     {/* <!-- Excerpt End --> */}
                   </div>{" "}
-                  {/* <!-- Middle Body Start --> */}
-                  <div className="row text-left pt-5 border-top">
-                    {/* <!-- Single Widgets Start --> */}
-                    <div className="col-12 col-lg-4 col-md-4 col-xs-6">
-                      <div className="mb-8">
-                        <p className="font-size-4">Company size</p>
-                        <h5 className="font-size-4 font-weight-semibold text-black-2">
-                          11-50 employees
-                        </h5>
-                      </div>
-                      <div className="mb-8">
-                        <p className="font-size-4">Est. Since</p>
-                        <h5 className="font-size-4 font-weight-semibold text-black-2">
-                          2020
-                        </h5>
-                      </div>
-                    </div>
-                    {/* <!-- Single Widgets End --> */}
-                    {/* <!-- Single Widgets Start --> */}
-                    <div className="col-12 col-lg-4 col-md-4 col-xs-6">
-                      <div className="mb-8">
-                        <p className="font-size-4">Type of corporation</p>
-                        <h5 className="font-size-4 font-weight-semibold text-black-2">
-                          B2B & B2C
-                        </h5>
-                      </div>
-                      <div className="mb-8">
-                        <p className="font-size-4">Social Media</p>
-                        <div className="icon-link d-flex align-items-center">
-                          <a
-                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                            href="http://localhost:3000/"
-                          >
-                            <i className="fab fa-linkedin-in"></i>
-                          </a>
-                          <a
-                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                            href="http://localhost:3000/"
-                          >
-                            <i className="fab fa-facebook-f"></i>
-                          </a>
-                          <a
-                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                            href="http://localhost:3000/"
-                          >
-                            <i className="fab fa-twitter"></i>
-                          </a>
-                          <a
-                            className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green"
-                            href="http://localhost:3000/"
-                          >
-                            <i className="fa fa-globe"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    {/* <!-- Single Widgets End --> */}
-                    {/* <!-- Single Widgets Start --> */}
-                    <div className="col-12 col-lg-4 col-md-4 col-xs-6">
-                      <div className="mb-8">
-                        <p className="font-size-4">Location</p>
-                        <h5 className="font-size-4 font-weight-semibold text-black-2">
-                          New York City
-                        </h5>
-                      </div>
-                    </div>
-                    {/* <!-- Single Widgets End --> */}
-                  </div>
-                  {/* <!-- Middle Body End --> */}
-                  <div
-                    className="tab-pane fade"
-                    id="profile"
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                  >
-                    {/* <!-- Middle Body Start --> */}
-                    <div className="row">
-                      {/* <!-- Single Widgets Start --> */}
-                      <div className="col-12 col-lg-4 col-md-4 col-xs-6">
-                        <div className="mb-8">
-                          <p className="font-size-4">Company size</p>
-                          <h5 className="font-size-4 font-weight-semibold">
-                            11-50 employees
-                          </h5>
-                        </div>
-                        <div className="mb-8">
-                          <p className="font-size-4">Est. Since</p>
-                          <h5 className="font-size-4 font-weight-semibold">
-                            2020
-                          </h5>
-                        </div>
-                      </div>
-                      {/* <!-- Single Widgets End --> */}
-                      {/* <!-- Single Widgets Start --> */}
-                      <div className="col-12 col-lg-4 col-md-4 col-xs-6">
-                        <div className="mb-8">
-                          <p className="font-size-4">Type of corporation</p>
-                          <h5 className="font-size-4 font-weight-semibold">
-                            B2B & B2C
-                          </h5>
-                        </div>
-                        <div className="mb-8">
-                          <p className="font-size-4">Social Media</p>
-                          <div className="icon-link d-flex align-items-center">
-                            <a
-                              className="text-smoke circle-32 bg-concrete mr-5"
-                              href="http://localhost:3000/"
-                            >
-                              <i className="fab fa-linkedin"></i>
-                            </a>
-                            <a
-                              className="text-smoke circle-32 bg-concrete mr-5"
-                              href="http://localhost:3000/"
-                            >
-                              <i className="fab fa-facebook-f"></i>
-                            </a>
-                            <a
-                              className="text-smoke circle-32 bg-concrete mr-5"
-                              href="http://localhost:3000/"
-                            >
-                              <i className="fab fa-twitter"></i>
-                            </a>
-                            <a
-                              className="text-smoke circle-32 bg-concrete mr-5"
-                              href="http://localhost:3000/"
-                            >
-                              <i className="fa fa-globe"></i>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      {/* <!-- Single Widgets End --> */}
-                      {/* <!-- Single Widgets Start --> */}
-                      <div className="col-12 col-lg-4 col-md-4 col-xs-6">
-                        <div className="mb-8">
-                          <p className="font-size-4">Location</p>
-                          <h5 className="font-size-4 font-weight-semibold">
-                            New York City
-                          </h5>
-                        </div>
-                      </div>
-                      {/* <!-- Single Widgets End --> */}
-                    </div>
-                    {/* <!-- Middle Body End --> */}
-                    {/* <!-- Excerpt Start --> */}
-                    <div className="pr-xl-0 pr-xxl-22 pt-5">
-                      <h4 className="font-size-6 mb-7">Job Airbnb</h4>
-                      <p className="font-size-4 mb-8">
-                        If you’re like most of my clients, you know creative
-                        content marketing and killer copywriting are fundamental
-                        to the success of your business.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        But with so much to do to keep your business growing,
-                        you don’t have time to learn how to write sales copy
-                        that actually sells, or create a content marketing
-                        strategy that resonates with your target audience.
-                      </p>
-                      <p className="font-size-4  mb-8">
-                        You’ve been disappointed with your traffic and
-                        conversions so far, but with an overwhelming number of
-                        things to do, you’ve put off doing anything about it
-                        until now.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        So you’ve come to Upwork, looking for someone that can
-                        craft creative content and killer sales copy to help you
-                        reach more people and make more sales.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        But your troubles aren’t over just yet; it isn’t easy to
-                        find someone who can create the high-quality content you
-                        need. But your troubles aren’t over just yet.
-                      </p>
-                    </div>
-                    {/* <!-- Excerpt End --> */}
-                  </div>
                 </div>
                 {/* <!-- Tab Content End --> */}
                 {/* <!-- Tab Section End --> */}

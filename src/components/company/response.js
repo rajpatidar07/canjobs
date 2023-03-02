@@ -14,7 +14,7 @@ function Response() {
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row">
-              <div className="col-12">
+              <div className="col-lg-12 col-12 translateY-25  pb-10">
                 {/* <!-- form --> */}
                 <SearchForm />
               </div>
@@ -73,7 +73,7 @@ function Response() {
                     </div>
                   </div>
                 </form>
-                <div className="d-flex align-items-center justify-content-between mb-6">
+                <div className="d-flex align-items-center justify-content-between mb-6 mx-2">
                   <h5 className="font-size-4 font-weight-normal text-gray">
                     Showing
                     <span className="text-black-2">120</span> matched jobs

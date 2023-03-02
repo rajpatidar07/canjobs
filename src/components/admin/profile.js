@@ -11,7 +11,7 @@ function Profile() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <a
+        {/* <a
           className="sidebar-mobile-button"
           data-toggle="collapse"
           href="#sidebar"
@@ -20,7 +20,7 @@ function Profile() {
           aria-controls="sidebar"
         >
           <i className="icon icon-sidebar-2"></i>
-        </a>
+        </a> */}
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
             <div className="mb-15 mb-lg-23">

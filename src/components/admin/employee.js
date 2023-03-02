@@ -21,7 +21,7 @@ function Employee() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <Link
+        {/* <Link
           to={""}
           className="sidebar-mobile-button"
           data-toggle="collapse"
@@ -31,7 +31,7 @@ function Employee() {
           aria-controls="sidebar"
         >
           <i className="icon icon-sidebar-2"></i>
-        </Link>
+        </Link> */}
         <div
           className={
             showEmployeeProfile === false
@@ -188,7 +188,7 @@ function Employee() {
                           show={showSkillsModal}
                           close={() => setShowSkillsModal(false)}
                         />
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -196,6 +196,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -260,7 +261,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -268,6 +269,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -332,7 +334,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -340,6 +342,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -405,7 +408,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -413,6 +416,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -478,7 +482,7 @@ function Employee() {
                           </Link>
                         </th>
 
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -486,6 +490,7 @@ function Employee() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>

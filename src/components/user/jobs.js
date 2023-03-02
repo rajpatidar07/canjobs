@@ -10,14 +10,14 @@ function JobSearch() {
   // eslint-disable-next-line no-use-before-define
   return (
     <>
-      <div>
+      <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
-            <div className="row">
-              <div className="col-12">
-                {/* <!-- form --> */}
+            <div className="row ">
+              {/* <!-- Hero Form --> */}
+              <div className="col-lg-12 col-12 translateY-25  pb-10">
                 <SearchForm />
               </div>
             </div>
@@ -106,34 +106,31 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <Link
-                      to={""}
-                      className="mb-8 p-0 w-100 active nav-link active"
-                    >
+                    <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link to={""} className="mb-8 p-0 w-100 active nav-link">
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link to={""} className="mb-8 p-0 w-100 active nav-link">
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox swap={true} />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link to={""} className="mb-8 p-0 w-100 active nav-link">
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
-                    <Link to={""} className="mb-8 p-0 w-100 active nav-link">
+                    </div>
+                    <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />
                       {/* <!-- End Single Featured Job --> */}
-                    </Link>
+                    </div>
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link

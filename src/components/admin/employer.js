@@ -17,7 +17,7 @@ function Employer() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <Link
+        {/* <Link
           to={""}
           className="sidebar-mobile-button"
           data-toggle="collapse"
@@ -27,7 +27,7 @@ function Employer() {
           aria-controls="sidebar"
         >
           <i className="icon icon-sidebar-2"></i>
-        </Link>
+        </Link> */}
         <div
           className={
             showEmployerDetails === false
@@ -149,7 +149,7 @@ function Employer() {
                             <option value={""}>Complete</option>
                           </select>
                         </th>
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -157,6 +157,7 @@ function Employer() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -200,7 +201,7 @@ function Employer() {
                             <option value={""}>Complete</option>
                           </select>
                         </th>
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -208,6 +209,7 @@ function Employer() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -251,7 +253,7 @@ function Employer() {
                             <option value={""}>Complete</option>
                           </select>
                         </th>
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -259,6 +261,7 @@ function Employer() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -302,7 +305,7 @@ function Employer() {
                             <option value={""}>Complete</option>
                           </select>
                         </th>
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -310,6 +313,7 @@ function Employer() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -353,7 +357,7 @@ function Employer() {
                             <option value={""}>Complete</option>
                           </select>
                         </th>
-                        <th className="table-y-middle py-7">
+                        <th className="table-y-middle py-7 min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
@@ -361,6 +365,7 @@ function Employer() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
+                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>

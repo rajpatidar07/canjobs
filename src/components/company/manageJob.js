@@ -14,7 +14,7 @@ function ManageJobs() {
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row">
-              <div className="col-12">
+              <div className="col-lg-12 col-12 translateY-25  pb-10">
                 {/* <!-- form --> */}
                 <SearchForm />
               </div>
@@ -73,10 +73,16 @@ function ManageJobs() {
                     </div>
                   </div>
                 </form>
-                <div className="px-5 mx-2 float-left">
+                <div className="d-flex align-items-center justify-content-between mx-2">
+                  <h5 className="font-size-4 font-weight-normal text-gray">
+                    Showing
+                    <span className="text-black-2">120</span> matched jobs
+                  </h5>
+                </div>
+                <div className=" mx-2 float-left pb-5">
                   <button
                     onClick={() => setShowAddJobModal(true)}
-                    className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4 mt-6 "
+                    className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4  "
                     type="button"
                   >
                     Add jobs
@@ -86,12 +92,6 @@ function ManageJobs() {
                   show={showAddJobModal}
                   close={() => setShowAddJobModal(false)}
                 />
-                <div className="d-flex align-items-center justify-content-between mb-6">
-                  <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                    <span className="text-black-2">120</span> matched jobs
-                  </h5>
-                </div>
               </div>
             </div>
             <div className="row justify-content-center position-static">
