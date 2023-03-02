@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
-import ChangePassword from "../user/changepassword";
+import ChangePassword from "./changepassword";
 import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
 

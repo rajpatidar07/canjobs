@@ -325,9 +325,12 @@ export default function CompanyLogin(props) {
                         </span>
                       </label>
                     </div>
-                    <div className="form-group mb-8">
-                      <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                        Submit{" "}
+                    <div className="form-group text-center">
+                      <button
+                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                        type="submit"
+                      >
+                        Login
                       </button>
                     </div>
                     <p className="font-size-4 text-center heading-default-color">

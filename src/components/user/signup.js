@@ -286,12 +286,12 @@ export default function EmployeeSignupModal(props) {
                         </span>
                       )}
                     </div>
-                    <div className="form-group">
+                    <div className="form-group text-center">
                       <button
-                        className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                         type="submit"
                       >
-                        Sign Up{" "}
+                        Sign Up
                       </button>
                     </div>
                     <p className="font-size-4 text-center heading-default-color">

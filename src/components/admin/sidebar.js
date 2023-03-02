@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import AddJobModal from "../forms/employer/job";
 
 const AdminSidebar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  let [showAddJobsModal, setShowAddJobsModal] = useState(false);
 
   /*-- Function to open sidebar --*/
   function sideBar() {
@@ -32,9 +34,17 @@ const AdminSidebar = () => {
           </Link>
         </div>
         <div className="my-15 px-11">
-          <Link to="/" className="btn btn-primary btn-xl w-100 text-uppercase">
+          <Link
+            to=""
+            onClick={() => setShowAddJobsModal(true)}
+            className="btn btn-primary btn-xl w-100 text-uppercase"
+          >
             <span className="mr-5 d-inline-block">+</span>Post a new job
           </Link>
+          <AddJobModal
+            show={showAddJobsModal}
+            close={() => setShowAddJobsModal(false)}
+          />
         </div>
         <ul className="list-unstyled dashboard-layout-sidebar">
           <li className="active">
@@ -88,14 +98,14 @@ const AdminSidebar = () => {
               <i className="fas fa-user mr-7"></i>profile
             </Link>
           </li>
-          <li className="">
+          {/* <li className="">
             <Link
               to=""
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-cog mr-7"></i>Settings
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </>

@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import useValidation from "../common/useValidation";
+import useValidation from "./useValidation";
 import { Modal } from "react-bootstrap";
 
 const ChangePassword = (props) => {
