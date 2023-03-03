@@ -11,20 +11,18 @@ const AdminHeader = () => {
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
           <div className="brand-logo">
-            <a href="index.html">
-              {/* <!-- light version logo (logo must be black)--> */}
-              <img
-                src="image/logo-main-black.png"
-                alt=""
-                className="light-version-logo default-logo"
-              />
-              {/* <!-- Dark version logo (logo must be White)--> */}
-              <img
-                src="image/logo-main-white.png"
-                alt=""
-                className="dark-version-logo"
-              />
-            </a>
+            {/* <!-- light version logo (logo must be black)--> */}
+            <img
+              src="image/logo-main-black.png"
+              alt=""
+              className="light-version-logo default-logo"
+            />
+            {/* <!-- Dark version logo (logo must be White)--> */}
+            <img
+              src="image/logo-main-white.png"
+              alt=""
+              className="dark-version-logo"
+            />
           </div>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
