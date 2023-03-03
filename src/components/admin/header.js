@@ -1,26 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import ChangePassword from "../common/changepassword";
 
 const AdminHeader = () => {
+  const [showChangePass, setShowChangePass] = useState(false);
+
   return (
     <header className="site-header site-header--menu-right bg-default position-fixed py-7 py-xs-0 site-header--absolute">
       <div className="container-fluid-fluid px-10">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
           <div className="brand-logo">
-            <a href="index.html">
-              {/* <!-- light version logo (logo must be black)--> */}
-              <img
-                src="image/logo-main-black.png"
-                alt=""
-                className="light-version-logo default-logo"
-              />
-              {/* <!-- Dark version logo (logo must be White)--> */}
-              <img
-                src="image/logo-main-white.png"
-                alt=""
-                className="dark-version-logo"
-              />
-            </a>
+            {/* <!-- light version logo (logo must be black)--> */}
+            <img
+              src="image/logo-main-black.png"
+              alt=""
+              className="light-version-logo default-logo"
+            />
+            {/* <!-- Dark version logo (logo must be White)--> */}
+            <img
+              src="image/logo-main-white.png"
+              alt=""
+              className="dark-version-logo"
+            />
           </div>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
@@ -37,9 +39,9 @@ const AdminHeader = () => {
             </div>
             <div>
               <div className="dropdown show-gr-dropdown py-5">
-                <a
+                <Link
+                  to={""}
                   className="proile media ml-7 flex-y-center"
-                  href="http://localhost:3000/"
                   role="button"
                   id="dropdownMenuLink"
                   data-toggle="dropdown"
@@ -50,29 +52,34 @@ const AdminHeader = () => {
                     <img src="image/header-profile.png" alt="" />
                   </div>
                   <i className="fas fa-chevron-down heading-default-color ml-6"></i>
-                </a>
+                </Link>
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <a
+                  <Link
+                    to=""
+                    onClick={() => setShowChangePass(true)}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    href="dashboard-settings.html"
                   >
                     Settings{" "}
-                  </a>
-                  <a
+                  </Link>
+                  <ChangePassword
+                    show={showChangePass}
+                    close={() => setShowChangePass(false)}
+                  />
+                  <Link
+                    to={"/adminprofile"}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    href="candidate-profile-main.html"
                   >
                     Edit Profile
-                  </a>
-                  <a
+                  </Link>
+                  <Link
+                    to={""}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    href="http://localhost:3000/"
                   >
                     Log Out
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
