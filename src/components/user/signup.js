@@ -10,7 +10,7 @@ export default function EmployeeSignupModal(props) {
   const initialFormState = {
     useremail: "",
     userpassword: "",
-    confirmpassword: "",
+    resume: "",
     tandr: "",
   };
   // VALIDATION CONDITIONS
@@ -33,13 +33,7 @@ export default function EmployeeSignupModal(props) {
           ? null
           : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    confirmpassword: [
-      (value) => (value ? null : "Confirm Password is required"),
-      (value) =>
-        value === state.userpassword
-          ? null
-          : "Confirm Password must be Same as Password",
-    ],
+    resume: [],
     tandr: [
       (value) =>
         value ? null : "Please accept terms and conditions o continue",
@@ -158,7 +152,7 @@ export default function EmployeeSignupModal(props) {
                         htmlFor="useremail"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-                        E-mail
+                        E-mail<span className="text-danger"> *</span> :
                       </label>
                       <input
                         name="useremail"
@@ -188,7 +182,7 @@ export default function EmployeeSignupModal(props) {
                         htmlFor="userpassword"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-                        Password
+                        Password<span className="text-danger"> *</span> :
                       </label>
                       <div className="position-relative">
                         <input
@@ -225,28 +219,28 @@ export default function EmployeeSignupModal(props) {
                         htmlFor="confirmpassword"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-                        Confirm Password
+                        Upload Resume
                       </label>
                       <div className="position-relative">
                         <input
-                          name="confirmpassword"
-                          value={state.confirmpassword}
+                          name="resume"
+                          value={state.resume}
                           onChange={onInputChange}
-                          type="password"
+                          type="file"
                           className={
-                            errors.confirmpassword
+                            errors.resume
                               ? "form-control border border-danger"
                               : "form-control"
                           }
-                          id="confirmpassword"
+                          id="resume"
                           placeholder="Enter password"
                         />
-                        {errors.confirmpassword && (
+                        {errors.resume && (
                           <span
-                            key={errors.confirmpassword}
+                            key={errors.resume}
                             className="text-danger font-size-3"
                           >
-                            {errors.confirmpassword}
+                            {errors.resume}
                           </span>
                         )}
                         {/* <Link

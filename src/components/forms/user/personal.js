@@ -33,32 +33,32 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     useremail: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     usermobileno: [
       (value) =>
         value === "" || value.trim() === ""
           ? "MobileNo. is required"
           : value.length !== 10
-            ? "Mobile no should be of 10 digits"
-            : null,
+          ? "Mobile no should be of 10 digits"
+          : null,
     ],
     userdesc: [
       (value) =>
         value === ""
           ? "Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character"
-            : null,
+          ? "Cannot use special character"
+          : null,
     ],
     userdob: [(value) => (value ? null : "Dob is required")],
     usergender: [
@@ -71,32 +71,32 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     currentlocation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     currentcountry: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Country is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     langauages: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Language is required"
           : (value.length = 5
-            ? "Language should not be more than 5"
-            : /[^A-Za-z 0-9]/g.test(value)
+              ? "Language should not be more than 5"
+              : /[^A-Za-z 0-9]/g.test(value)
               ? "Cannot use special character "
               : null),
     ],
@@ -105,16 +105,16 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     interest: [
       (value) =>
         value === ""
           ? "Interest is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     experience: [(value) => (value === "" ? "Experience is required" : null)],
     workpermit: [(value) => (value === "" ? "Work Permit is required" : null)],
@@ -123,8 +123,8 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Other Permit is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -495,6 +495,7 @@ function PersonalDetails(props) {
                 )}
               </div>
             </div>
+
             {/* FOURTH LINE */}
             <div className="row">
               <div className="form-group col-md-4">
@@ -688,6 +689,36 @@ function PersonalDetails(props) {
                     className="text-danger font-size-3"
                   >
                     {errors.otherworkpermit}
+                  </span>
+                )}
+              </div>
+            </div>
+            {/* RESUME UPLOAD */}
+            <div className="row">
+              <div className="form-group col-md-12">
+                <label
+                  htmlFor="resume"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Resume <span className="text-danger">*</span>:
+                </label>
+                <input
+                  type="file"
+                  placeholder="Resume"
+                  id="resume"
+                  name="resume"
+                  value={state.resume}
+                  onChange={onInputChange}
+                  className={
+                    errors.resume
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                />
+                {/*----ERROR MESSAGE FOR RESUME----*/}
+                {errors.resume && (
+                  <span key={errors.resume} className="text-danger font-size-3">
+                    {errors.resume}
                   </span>
                 )}
               </div>
