@@ -37,7 +37,7 @@ function CompanyProfile() {
           {/* <!-- back Button End --> */}
           <div className="row bg-white rounded-4 pt-11 shadow-9">
             {/* <!-- Company Profile --> */}
-            <div className="w-100 row m-0 align-items-center pl-xs-12 mb-8 text-center text-xs-left">
+            <div className="w-100 row m-0 align-items-center px-12 mb-8 text-center text-xs-left">
               <div className="media align-items-center company_box col-md-6 p-0">
                 <Link className="text_box text-left" href="/jobdetail">
                   <img
@@ -55,28 +55,36 @@ function CompanyProfile() {
                   </p>
                 </Link>
               </div>
-              <div className="company_info_box col-md-6 m-0 p-0">
+              <div className="company_info_box text-md-right fd-column col-md-6 m-0 p-0">
                 <small className="w-100"><strong>PAN:</strong>AASD1234FF</small>
                 <small className="w-100"><strong>TAN:</strong>AASD1234FF</small>
                 <small className="w-100"><strong>GSTIN:</strong>AASD1234FF</small>
               </div>
             </div>
-            <div className="company_info_box w-100 row m-0 pl-12 pt-10 pb-7 pr-12 pr-xxl-12 border-top">
+            <div className="company_detail_box w-100 row m-0 pl-12 pt-10 pb-7 pr-12 pr-xxl-12 border-top">
               <div class="font-size-4 mb-4 mr-24" title="Industry">
-                <img class="mr-2" src="image/icons/envelope.svg" alt="" />
+                <i class="far fa-building mr-2"></i>
                 Hotel
               </div>
+              <div class="font-size-4 mb-4 mr-24" title="Industry">
+                <i class="fas fa-briefcase mr-2"></i>
+                B2B
+              </div>
               <div class="font-size-4 mb-4 mr-24" title="Company size">
-                <img class="mr-2" src="image/icons/envelope.svg" alt="" />
+                <i class="fas fa-user-friends mr-2"></i>
                 50-60
               </div>
-              <div class="font-size-4 mb-4 mr-24" title="Company exist since">
-                <img class="mr-2" src="image/icons/envelope.svg" alt="" />
+              <div class="font-size-4 mb-4 mr-24" title="Est. Since">
+                <i class="fas fa-business-time mr-2"></i>
                 1976
               </div>
               <div class="font-size-4 mb-4 mr-24" title="Website URL">
-                <img class="mr-2" src="image/icons/envelope.svg" alt="" />
+                <i class="fas fa-globe mr-2"></i>
                 www.domain.com
+              </div>
+              <div class="font-size-4 mb-4 mr-24" title="Website URL">
+                <i class="fas fa-bullhorn mr-2"></i>
+                Superwiser, Electrician, Driver
               </div>
             </div>
             {/* <!-- Middle Body Start --> */}
