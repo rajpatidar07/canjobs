@@ -21,12 +21,12 @@ function CompanyDetailPage() {
       </h4>
       <div className="pt-5 text-left row">
         <div className="col-md-12">
-          <p className="font-size-4 mb-8" title="Contact Person Name"><img className="mr-2" src="image/icons/envelope.svg" alt="" /> Rajaram Patidar</p>
-          <p className="font-size-4 mb-8" title="Designation"><img className="mr-2" src="image/icons/address-book.svg" alt="" /> Manager</p>
-          <p className="font-size-4 mb-8" title="Email"><img className="mr-2" src="image/icons/envelope.svg" alt="" /> raj.we2code@gmail.com</p>
-          <p className="font-size-4 mb-8" title="Contact No"><img className="mr-2" src="image/icons/mobile-button.svg" alt="" /> 012345789</p>
-          <p className="font-size-4 mb-8" title="Contact No"><img className="mr-2" src="image/icons/mobile-button.svg" alt="" /> 012345789</p>
-          <p className="font-size-4 mb-8" title="Address"><img className="mr-2" src="image/icons/marker.svg" alt="" /> 45, Universal Tower Scheme 54, PU4, Indore, MP (452001)</p>
+          <p className="font-size-4 mb-8" title="Contact Person Name"><i class="fas fa-user mr-2"></i> Rajaram Patidar</p>
+          <p className="font-size-4 mb-8" title="Designation"><i class="fas fa-portrait mr-2"></i> Manager</p>
+          <p className="font-size-4 mb-8" title="Email"><i class="fas fa-envelope mr-2"></i> raj.we2code@gmail.com</p>
+          <p className="font-size-4 mb-8" title="Contact No"><i class="fas fa-phone-alt mr-2"></i> 012345789</p>
+          <p className="font-size-4 mb-8" title="Contact No"><i class="fas fa-phone-alt mr-2"></i> 012345789</p>
+          <p className="font-size-4 mb-8" title="Address"><i class="fas fa-map-marker-alt mr-2"></i> 45, Universal Tower Scheme 54, PU4, Indore, MP (452001)</p>
         </div>
       </div>
     </div>
