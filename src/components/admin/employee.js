@@ -21,17 +21,6 @@ function Employee() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        {/* <Link
-          to={""}
-          className="sidebar-mobile-button"
-          data-toggle="collapse"
-          href="#sidebar"
-          role="button"
-          aria-expanded="false"
-          aria-controls="sidebar"
-        >
-          <i className="icon icon-sidebar-2"></i>
-        </Link> */}
         <div
           className={
             showEmployeeProfile === false
@@ -48,7 +37,7 @@ function Employee() {
                 </div>
                 <div className="col-lg-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
-                    <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
+                    <p className="font-size-3 mb-0 mr-6 py-2">Filter by Job:</p>
                     <div className="h-px-48">
                       <select
                         name="country"
@@ -84,7 +73,13 @@ function Employee() {
                       <tr>
                         <th
                           scope="col"
-                          className="pl-0  border-0 font-size-4 font-weight-normal"
+                          className="pl-0 text-center border-0 font-size-4 font-weight-normal"
+                        >
+                          #
+                        </th>
+                        <th
+                          scope="col"
+                          className=" border-0 font-size-4 font-weight-normal"
                         >
                           Name
                         </th>
@@ -93,12 +88,6 @@ function Employee() {
                           className="border-0 font-size-4 font-weight-normal"
                         >
                           Contact
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Work status
                         </th>
                         <th
                           scope="col"
@@ -116,382 +105,451 @@ function Employee() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
+                          Salary
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          Experience
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
                           Action
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-1.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployeeProfile(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Nicolas Bradley <br />
-                                <span className="text-gray font-size-2">
-                                  {" "}
-                                  single <br />
-                                  (Male 25)
-                                </span>
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170
-                            <br />
-                            Nicolas25@gmail.com
-                          </h3>
-                        </th>
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Part-Time</option>
-                            <option value={""}>Full-Time</option>
-                            <option value={""}>Temporary</option>
-                            <option value={""}>Contract</option>
-                            <option value={""}>Unemployed</option>
-                          </select>
-                        </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className=" py-7  pr-0">
                           <Link
-                            to=""
-                            onClick={() => setShowEducationModal(true)}
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-5 mx-5">
-                              {" "}
-                            </span>
+                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              Nicolas Bradley <br />
+                              <span className="text-gray font-size-2">
+                                {" "}
+                                single <br />
+                                (Male 25)
+                              </span>
+                            </h4>
                           </Link>
                         </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Nicolas25@gmail.com
+                            </span>
+                          </h3>
+                        </th>
+
                         <Education
                           close={() => setShowEducationModal(false)}
                           show={showEducationModal}
                         />
-                        <th className="table-y-middle py-7  pr-0">
-                          <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                        </th>
                         <Skills
                           show={showSkillsModal}
                           close={() => setShowSkillsModal(false)}
                         />
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            M.tech
+                          </h3>
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            JAVA, PHP, React
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            25,000
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            2 years in React js
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <Link
+                            to=""
+                            onClick={() => setShowEducationModal(true)}
+                          >
+                            <span className="	fas fa-graduation-cap text-gray px-2">
+                              {" "}
+                            </span>
+                          </Link>
+                          <Link to="" onClick={() => setShowSkillsModal(true)}>
+                            <span className=" fa fa-cogs text-gray px-2">
+                              {" "}
+                            </span>
+                          </Link>
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployeeMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-2">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
                               {" "}
-                              <i className="fa fa-trash"></i>
+                              <i className="fa fa-trash "></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-2.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployeeProfile(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Minny jeson <br />
-                                <span className="text-gray font-size-2">
-                                  Married <br />
-                                  (Female 28)
-                                </span>
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className="pl-6 border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              Minny jeson <br />
+                              <span className="text-gray font-size-2">
+                                Married <br />
+                                (Female 28)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170
-                            <br />
-                            Elizabeth28@gmail.com
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Elizabeth28@gmail.com
+                            </span>
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Part-Time</option>
-                            <option value={""}>Full-Time</option>
-                            <option value={""}>Temporary</option>
-                            <option value={""}>Contract</option>
-                            <option value={""}>Unemployed</option>
-                          </select>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            M.tech
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            JAVA, PHP, React
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            25,000
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            2 years in React js
+                          </h3>{" "}
+                        </th>{" "}
+                        <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-5 mx-5">
+                            <span className="	fas fa-graduation-cap text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-                        <th className="table-y-middle py-7  pr-0">
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
+                            <span className=" fa fa-cogs text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployeeMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-2">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
                               {" "}
-                              <i className="fa fa-trash"></i>
+                              <i className="fa fa-trash "></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-3.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployeeProfile(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Joe Wade <br />
-                                <span className="text-gray font-size-2">
-                                  single <br />
-                                  (Male 32)
-                                </span>
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className="pl-6 border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              Joe Wade <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 32)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170
-                            <br />
-                            Joe23@gmail.com
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Joe23@gmail.com
+                            </span>
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Part-Time</option>
-                            <option value={""}>Full-Time</option>
-                            <option value={""}>Temporary</option>
-                            <option value={""}>Contract</option>
-                            <option value={""}>Unemployed</option>
-                          </select>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            M.tech
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            JAVA, PHP, React
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            25,000
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            2 years in React js
+                          </h3>{" "}
+                        </th>{" "}
+                        <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-5 mx-5">
+                            <span className="	fas fa-graduation-cap text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-                        <th className="table-y-middle py-7  pr-0">
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
+                            <span className=" fa fa-cogs text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployeeMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-2">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
                               {" "}
-                              <i className="fa fa-trash"></i>
+                              <i className="fa fa-trash "></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-4.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployeeProfile(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Roger Hawkins
-                                <br />
-                                <span className="text-gray font-size-2">
-                                  Married <br />
-                                  (Male 30)
-                                </span>
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className="pl-6 border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              Roger Hawkins
+                              <br />
+                              <span className="text-gray font-size-2">
+                                Married <br />
+                                (Male 30)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170
-                            <br />
-                            Roger36@gmail.com
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Roger36@gmail.com
+                            </span>
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Part-Time</option>
-                            <option value={""}>Full-Time</option>
-                            <option value={""}>Temporary</option>
-                            <option value={""}>Contract</option>
-                            <option value={""}>Unemployed</option>
-                          </select>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            M.tech
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            JAVA, PHP, React
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            25,000
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            2 years in React js
+                          </h3>{" "}
+                        </th>{" "}
+                        <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-5 mx-5">
+                            <span className="	fas fa-graduation-cap text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-                        <th className="table-y-middle py-7  pr-0">
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
+                            <span className=" fa fa-cogs text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployeeMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-2">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
                               {" "}
-                              <i className="fa fa-trash"></i>
+                              <i className="fa fa-trash "></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-5.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployeeProfile(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Marie Green
-                                <br />
-                                <span className="text-gray font-size-2">
-                                  Married <br />
-                                  (Female 23)
-                                </span>
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className="pl-6 border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              Marie Green
+                              <br />
+                              <span className="text-gray font-size-2">
+                                Married <br />
+                                (Female 23)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170
-                            <br />
-                            Marie32@gmail.com
+                            +9863 <br />
+                            <span className="text-gray font-size-2">
+                              <br /> Marie32@gmail.com
+                            </span>
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Part-Time</option>
-                            <option value={""}>Full-Time</option>
-                            <option value={""}>Temporary</option>
-                            <option value={""}>Contract</option>
-                            <option value={""}>Unemployed</option>
-                          </select>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            M.tech
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            JAVA, PHP, React
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            25,000
+                          </h3>{" "}
+                        </th>
+                        <th className=" py-7 min-width-px-100">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            2 years in React js
+                          </h3>{" "}
+                        </th>{" "}
+                        <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-5 mx-5">
+                            <span className="	fas fa-graduation-cap text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-                        <th className="table-y-middle py-7  pr-0">
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
+                            <span className=" fa fa-cogs text-gray px-2">
                               {" "}
                             </span>
                           </Link>
-                        </th>
-
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployeeMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-2">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
                               {" "}
-                              <i className="fa fa-trash"></i>
+                              <i className="fa fa-trash "></i>
                             </span>
                           </Link>
                         </th>
@@ -514,7 +572,7 @@ function Employee() {
                       <li className="page-item">
                         <Link
                           to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
                         >
                           1
                         </Link>
@@ -522,7 +580,7 @@ function Employee() {
                       <li className="page-item">
                         <Link
                           to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
                         >
                           2
                         </Link>
@@ -530,7 +588,7 @@ function Employee() {
                       <li className="page-item">
                         <Link
                           to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
                         >
                           3
                         </Link>
@@ -538,7 +596,7 @@ function Employee() {
                       <li className="page-item disabled">
                         <Link
                           to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
                         >
                           ...
                         </Link>
@@ -546,7 +604,7 @@ function Employee() {
                       <li className="page-item ">
                         <Link
                           to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
                         >
                           7
                         </Link>

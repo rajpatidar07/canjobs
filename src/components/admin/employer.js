@@ -5,9 +5,14 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import AddEmployer from "../forms/employer/employer";
 import EmployerProfile from "../company/profile";
+import CompanyDetails from "../forms/employer/companyDetail";
+import ContactInfo from "../forms/employer/contactInfo";
+import KycComplianceDetails from "../forms/employer/kyc";
 
 function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
+  let [showKycModal, setShowkycMOdal] = useState(false);
+  let [showContactModal, setShowContactMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
 
   return (
@@ -66,7 +71,7 @@ function Employer() {
                     >
                       Add Employer
                     </CustomButton>
-                    <AddEmployer
+                    <CompanyDetails
                       show={showAddEmployerModal}
                       close={() => setShowEmployerMOdal(false)}
                     />
@@ -80,7 +85,13 @@ function Employer() {
                       <tr>
                         <th
                           scope="col"
-                          className="pl-0  border-0 font-size-4 font-weight-normal"
+                          className=" border-0 text-center font-size-4 font-weight-normal"
+                        >
+                          #
+                        </th>
+                        <th
+                          scope="col"
+                          className=" border-0 font-size-4 font-weight-normal"
                         >
                           Name
                         </th>
@@ -100,7 +111,25 @@ function Employer() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Information status
+                          Contact Info
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          Company name
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          Skills
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          Status
                         </th>
                         <th
                           scope="col"
@@ -112,103 +141,170 @@ function Employer() {
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0 ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-1.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployerDetails(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                We2code
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployerDetails(true)}
+                          >
+                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              suresh thakker
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             50
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             indore
                           </h3>
                         </th>
-
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Incomplete</option>
-                            <option value={""}>Complete</option>
-                          </select>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Nicolas25@gmail.com
+                            </span>
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            We2code technology
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            Java , HTML , CSS and React js
+                          </h3>
+                        </th>
+                        <th className="  py-7 ">
+                          <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Pending
+                            </span>
+                          </h3>
+                        </th>
+                        <th className="  py-7  d-flex">
+                          <Link to="" onClick={() => setShowContactMOdal(true)}>
+                            <span className="fa fa-address-book text-gray px-1"></span>
+                          </Link>
+                          <ContactInfo
+                            show={showContactModal}
+                            close={() => setShowContactMOdal(false)}
+                          />
+                          <Link to="" onClick={() => setShowkycMOdal(true)}>
+                            <span className="fa fa-file text-gray px-1 "></span>
+                          </Link>
+                          <KycComplianceDetails
+                            show={showKycModal}
+                            close={() => setShowkycMOdal(false)}
+                          />
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployerMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-1">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
+                            <span className="fa fa-trash text-danger px-1"></span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0 ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-2.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployerDetails(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Syska
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployerDetails(true)}
+                          >
+                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              suresh thakker
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             32
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Mumbai
                           </h3>
                         </th>
-
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Incomplete</option>
-                            <option value={""}>Complete</option>
-                          </select>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Nicolas25@gmail.com
+                            </span>
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            We2code technology
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            Java , HTML , CSS and React js
+                          </h3>
+                        </th>
+                        <th className="  py-7 ">
+                          <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Pending
+                            </span>
+                          </h3>
+                        </th>
+                        <th className="  py-7  d-flex">
+                          <Link to="" onClick={() => setShowContactMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-address-book "></i>
+                            </span>
+                          </Link>
+                          <Link to="" onClick={() => setShowkycMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-file "></i>
+                            </span>
+                          </Link>
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployerMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-1">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
-                            <span className=" text-danger">
+                            <span className=" text-danger px-1">
                               {" "}
                               <i className="fa fa-trash"></i>
                             </span>
@@ -216,51 +312,85 @@ function Employer() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0 ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-3.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployerDetails(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Tata
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployerDetails(true)}
+                          >
+                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              suresh thakker
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             10
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Jamnagar
                           </h3>
                         </th>
-
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Incomplete</option>
-                            <option value={""}>Complete</option>
-                          </select>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Nicolas25@gmail.com
+                            </span>
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            We2code tectechnology{" "}
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            Java , HTML , CSS and React js
+                          </h3>
+                        </th>
+                        <th className="  py-7 ">
+                          <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Pending
+                            </span>
+                          </h3>
+                        </th>
+                        <th className="  py-7  d-flex">
+                          <Link to="" onClick={() => setShowContactMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-address-book "></i>
+                            </span>
+                          </Link>
+                          <Link to="" onClick={() => setShowkycMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-file "></i>
+                            </span>
+                          </Link>
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployerMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-1">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
-                            <span className=" text-danger">
+                            <span className=" text-danger px-1">
                               {" "}
                               <i className="fa fa-trash"></i>
                             </span>
@@ -268,51 +398,85 @@ function Employer() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0 ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-4.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployerDetails(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Wipro
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployerDetails(true)}
+                          >
+                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              suresh thakker
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             25
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Pume
                           </h3>
                         </th>
-
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Incomplete</option>
-                            <option value={""}>Complete</option>
-                          </select>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Nicolas25@gmail.com
+                            </span>
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            We2code tectechnology{" "}
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            Java , HTML , CSS and React js
+                          </h3>
+                        </th>
+                        <th className="  py-7 ">
+                          <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Pending
+                            </span>
+                          </h3>
+                        </th>
+                        <th className="  py-7  d-flex">
+                          <Link to="" onClick={() => setShowContactMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-address-book "></i>
+                            </span>
+                          </Link>
+                          <Link to="" onClick={() => setShowkycMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-file "></i>
+                            </span>
+                          </Link>
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployerMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-1">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
-                            <span className=" text-danger">
+                            <span className=" text-danger px-1">
                               {" "}
                               <i className="fa fa-trash"></i>
                             </span>
@@ -320,51 +484,85 @@ function Employer() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0 ">
                           <div className="media  align-items-center">
-                            <div className="circle-36 mr-6">
+                            <div className="circle-36 mx-auto">
                               <img
-                                src="image/table-one-profile-image-5.png"
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                                 alt=""
                                 className="w-100"
                               />
                             </div>
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployerDetails(true)}
-                            >
-                              <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                                Ariod
-                              </h4>
-                            </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" border-0 py-7 pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployerDetails(true)}
+                          >
+                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              suresh thakker{" "}
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             5
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7  pr-0">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             indore
                           </h3>
                         </th>
-
-                        <th className="table-y-middle py-7 ">
-                          <select className="form-control">
-                            <option value={""}>Select status</option>
-                            <option value={""}>Incomplete</option>
-                            <option value={""}>Complete</option>
-                          </select>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            <span className="text-gray font-size-2">
+                              Nicolas25@gmail.com
+                            </span>
+                          </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-5">
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            We2code tectechnology{" "}
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            Java , HTML , CSS and React js
+                          </h3>
+                        </th>
+                        <th className="  py-7 ">
+                          <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Pending
+                            </span>
+                          </h3>
+                        </th>
+                        <th className="  py-7  d-flex">
+                          <Link to="" onClick={() => setShowContactMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-address-book "></i>
+                            </span>
+                          </Link>
+                          <Link to="" onClick={() => setShowkycMOdal(true)}>
+                            <span className=" text-gray px-1">
+                              {" "}
+                              <i className="fa fa-file "></i>
+                            </span>
+                          </Link>
+                          <Link
+                            to=""
+                            onClick={() => setShowEmployerMOdal(true)}
+                          >
+                            <span className=" fas fa-edit text-gray px-1">
                               {" "}
                             </span>
                           </Link>
                           <Link to="">
-                            <span className=" text-danger">
+                            <span className=" text-danger px-1">
                               {" "}
                               <i className="fa fa-trash"></i>
                             </span>

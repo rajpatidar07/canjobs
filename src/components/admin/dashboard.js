@@ -1,26 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
+import { Link } from "react-router-dom";
+import EmployeeDetails from "../common/employeeDetail";
 
 const AdminDashboard = () => {
+  let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
       <AdminHeader />
       {/* <!-- navbar- --> */}
       <AdminSidebar />
-      {/* <a
-        className="sidebar-mobile-button"
-        data-toggle="collapse"
-        href="#sidebar"
-        role="button"
-        aria-expanded="false"
-        aria-controls="sidebar"
-      >
-        <i className="icon icon-sidebar-2"></i>
-      </a> */}
+
       <div
-        className="dashboard-main-container mt-25 mt-lg-22"
+        className={
+          showEmployeeProfile === false
+            ? "dashboard-main-container mt-25 mt-lg-22"
+            : "dashboard-main-container mt-25 mt-lg-22 d-none"
+        }
         id="dashboard-body"
       >
         <div className="container">
@@ -143,7 +141,13 @@ const AdminDashboard = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="pl-0  border-0 font-size-4 font-weight-normal"
+                        className="pl-0 text-center border-0 font-size-4 font-weight-normal"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        className=" border-0 font-size-4 font-weight-normal"
                       >
                         Name
                       </th>
@@ -151,333 +155,359 @@ const AdminDashboard = () => {
                         scope="col"
                         className="border-0 font-size-4 font-weight-normal"
                       >
-                        Applied as
+                        Contact
                       </th>
                       <th
                         scope="col"
                         className="border-0 font-size-4 font-weight-normal"
                       >
-                        Applied on
+                        Education
                       </th>
                       <th
                         scope="col"
                         className="border-0 font-size-4 font-weight-normal"
-                      ></th>
+                      >
+                        Skills
+                      </th>
                       <th
                         scope="col"
                         className="border-0 font-size-4 font-weight-normal"
-                      ></th>
+                      >
+                        Salary
+                      </th>
                       <th
                         scope="col"
                         className="border-0 font-size-4 font-weight-normal"
-                      ></th>
+                      >
+                        Experience
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-0 font-size-4 font-weight-normal"
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                        <a
-                          href="candidate-profile.html"
-                          className="media min-width-px-235 align-items-center"
-                        >
-                          <div className="circle-36 mr-6">
+                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto">
                             <img
-                              src="image/table-one-profile-image-1.png"
+                              src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                               alt=""
                               className="w-100"
                             />
                           </div>
-                          <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                            Nicolas Bradley
-                          </h4>
-                        </a>
+                        </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          Senior Project Manager
+                      <th className=" py-7  pr-0">
+                        <Link to={""}>
+                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            Nicolas Bradley <br />
+                            <span className="text-gray font-size-2">
+                              {" "}
+                              single <br />
+                              (Male 25)
+                            </span>
+                          </h4>
+                        </Link>
+                      </th>
+                      <th className=" py-7  pr-0">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          +9863254170 <br />
+                          <span className="text-gray font-size-2">
+                            Nicolas25@gmail.com
+                          </span>
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          12 July, 2020
+                      </th>
+
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          M.tech
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <div className="">
-                          <a
-                            href="javacript:"
-                            className="font-size-3 font-weight-bold text-black-2 text-uppercase"
-                            data-toggle="modal"
-                            data-target="#employe-profile"
-                          >
-                            View Application
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-110 pr-0">
-                        <div className="">
-                          <a
-                            href="contact.html"
-                            className="font-size-3 font-weight-bold text-green text-uppercase"
-                          >
-                            Contact
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-100 pr-0">
-                        <div className="">
-                          <a
-                            href="http://localhost:3000/"
-                            className="font-size-3 font-weight-bold text-red-2 text-uppercase"
-                          >
-                            Reject
-                          </a>
-                        </div>
-                      </td>
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          JAVA, PHP, React
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          25,000
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          2 years in React js
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <Link
+                          to=""
+                          onClick={() => setShowEmployeeProfile(true)}
+                        >
+                          <span className=" text-gray">
+                            {" "}
+                            <i className="fa fa-eye "></i>
+                          </span>
+                        </Link>
+                      </th>
                     </tr>
                     <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                        <a
-                          href="candidate-profile.html"
-                          className="media min-width-px-235 align-items-center"
-                        >
-                          <div className="circle-36 mr-6">
+                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto">
                             <img
-                              src="image/table-one-profile-image-2.png"
+                              src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                               alt=""
                               className="w-100"
                             />
                           </div>
-                          <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                            Elizabeth Gomez
-                          </h4>
-                        </a>
+                        </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          Senior Project Manager
+                      <th className="pl-6 border-0 py-7 pr-0">
+                        <Link to={""}>
+                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            Minny jeson <br />
+                            <span className="text-gray font-size-2">
+                              Married <br />
+                              (Female 28)
+                            </span>
+                          </h4>
+                        </Link>
+                      </th>
+                      <th className=" py-7  pr-0">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          +9863254170 <br />
+                          <span className="text-gray font-size-2">
+                            Elizabeth28@gmail.com
+                          </span>
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          14 July, 2020
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          M.tech
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <div className="">
-                          <a
-                            href="javacript:"
-                            className="font-size-3 font-weight-bold text-black-2 text-uppercase"
-                            data-toggle="modal"
-                            data-target="#employe-profile"
-                          >
-                            View Application
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-110 pr-0">
-                        <div className="">
-                          <a
-                            href="contact.html"
-                            className="font-size-3 font-weight-bold text-green text-uppercase"
-                          >
-                            Contact
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-100 pr-0">
-                        <div className="">
-                          <a
-                            href="http://localhost:3000/"
-                            className="font-size-3 font-weight-bold text-red-2 text-uppercase"
-                          >
-                            Reject
-                          </a>
-                        </div>
-                      </td>
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          JAVA, PHP, React
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          25,000
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          2 years in React js
+                        </h3>{" "}
+                      </th>{" "}
+                      <th className=" py-7 min-width-px-100">
+                        <Link
+                          to=""
+                          onClick={() => setShowEmployeeProfile(true)}
+                        >
+                          <span className=" text-gray">
+                            {" "}
+                            <i className="fa fa-eye "></i>
+                          </span>
+                        </Link>
+                      </th>
                     </tr>
                     <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                        <a
-                          href="candidate-profile.html"
-                          className="media min-width-px-235 align-items-center"
-                        >
-                          <div className="circle-36 mr-6">
+                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto">
                             <img
-                              src="image/table-one-profile-image-3.png"
+                              src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                               alt=""
                               className="w-100"
                             />
                           </div>
-                          <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                            Joe Wade
-                          </h4>
-                        </a>
+                        </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          Head of Marketing
+                      <th className="pl-6 border-0 py-7 pr-0">
+                        <Link to={""}>
+                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            Joe Wade <br />
+                            <span className="text-gray font-size-2">
+                              single <br />
+                              (Male 32)
+                            </span>
+                          </h4>
+                        </Link>
+                      </th>
+                      <th className=" py-7  pr-0">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          +9863254170 <br />
+                          <span className="text-gray font-size-2">
+                            Joe23@gmail.com
+                          </span>
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          14 July, 2020
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          M.tech
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <div className="">
-                          <a
-                            href="javacript:"
-                            className="font-size-3 font-weight-bold text-black-2 text-uppercase"
-                            data-toggle="modal"
-                            data-target="#employe-profile"
-                          >
-                            View Application
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-110 pr-0">
-                        <div className="">
-                          <a
-                            href="contact.html"
-                            className="font-size-3 font-weight-bold text-green text-uppercase"
-                          >
-                            Contact
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-100 pr-0">
-                        <div className="">
-                          <a
-                            href="http://localhost:3000/"
-                            className="font-size-3 font-weight-bold text-red-2 text-uppercase"
-                          >
-                            Reject
-                          </a>
-                        </div>
-                      </td>
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          JAVA, PHP, React
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          25,000
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          2 years in React js
+                        </h3>{" "}
+                      </th>{" "}
+                      <th className=" py-7 min-width-px-100">
+                        <Link
+                          to=""
+                          onClick={() => setShowEmployeeProfile(true)}
+                        >
+                          <span className=" text-gray">
+                            {" "}
+                            <i className="fa fa-eye "></i>
+                          </span>
+                        </Link>
+                      </th>
                     </tr>
                     <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                        <a
-                          href="candidate-profile.html"
-                          className="media min-width-px-235 align-items-center"
-                        >
-                          <div className="circle-36 mr-6">
+                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto">
                             <img
-                              src="image/table-one-profile-image-4.png"
+                              src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                               alt=""
                               className="w-100"
                             />
                           </div>
-                          <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                        </div>
+                      </th>
+                      <th className="pl-6 border-0 py-7 pr-0">
+                        <Link to={""}>
+                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Roger Hawkins
+                            <br />
+                            <span className="text-gray font-size-2">
+                              Married <br />
+                              (Male 30)
+                            </span>
                           </h4>
-                        </a>
+                        </Link>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          UI Designer
+                      <th className=" py-7  pr-0">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          +9863254170 <br />
+                          <span className="text-gray font-size-2">
+                            Roger36@gmail.com
+                          </span>
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          16 July, 2020
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          M.tech
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <div className="">
-                          <a
-                            href="javacript:"
-                            className="font-size-3 font-weight-bold text-black-2 text-uppercase"
-                            data-toggle="modal"
-                            data-target="#employe-profile"
-                          >
-                            View Application
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-110 pr-0">
-                        <div className="">
-                          <a
-                            href="contact.html"
-                            className="font-size-3 font-weight-bold text-green text-uppercase"
-                          >
-                            Contact
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-100 pr-0">
-                        <div className="">
-                          <a
-                            href="http://localhost:3000/"
-                            className="font-size-3 font-weight-bold text-red-2 text-uppercase"
-                          >
-                            Reject
-                          </a>
-                        </div>
-                      </td>
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          JAVA, PHP, React
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          25,000
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          2 years in React js
+                        </h3>{" "}
+                      </th>{" "}
+                      <th className=" py-7 min-width-px-100">
+                        <Link
+                          to=""
+                          onClick={() => setShowEmployeeProfile(true)}
+                        >
+                          <span className=" text-gray">
+                            {" "}
+                            <i className="fa fa-eye "></i>
+                          </span>
+                        </Link>
+                      </th>
                     </tr>
                     <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                        <a
-                          href="candidate-profile.html"
-                          className="media min-width-px-235 align-items-center"
-                        >
-                          <div className="circle-36 mr-6">
+                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto">
                             <img
-                              src="image/table-one-profile-image-5.png"
+                              src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                               alt=""
                               className="w-100"
                             />
                           </div>
-                          <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                            Marie Green
-                          </h4>
-                        </a>
+                        </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          Senior Project Manager
+                      <th className="pl-6 border-0 py-7 pr-0">
+                        <Link to={""}>
+                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            Marie Green
+                            <br />
+                            <span className="text-gray font-size-2">
+                              Married <br />
+                              (Female 23)
+                            </span>
+                          </h4>
+                        </Link>
+                      </th>
+                      <th className=" py-7  pr-0">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          +9863 <br />
+                          <span className="text-gray font-size-2">
+                            <br /> Marie32@gmail.com
+                          </span>
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                          21 July, 2020
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          M.tech
                         </h3>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                        <div className="">
-                          <a
-                            href="javacript:"
-                            className="font-size-3 font-weight-bold text-black-2 text-uppercase"
-                            data-toggle="modal"
-                            data-target="#employe-profile"
-                          >
-                            View Application
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-110 pr-0">
-                        <div className="">
-                          <a
-                            href="contact.html"
-                            className="font-size-3 font-weight-bold text-green text-uppercase"
-                          >
-                            Contact
-                          </a>
-                        </div>
-                      </td>
-                      <td className="table-y-middle py-7 min-width-px-100 pr-0">
-                        <div className="">
-                          <a
-                            href="http://localhost:3000/"
-                            className="font-size-3 font-weight-bold text-red-2 text-uppercase"
-                          >
-                            Reject
-                          </a>
-                        </div>
-                      </td>
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          JAVA, PHP, React
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          25,000
+                        </h3>{" "}
+                      </th>
+                      <th className=" py-7 min-width-px-100">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          2 years in React js
+                        </h3>{" "}
+                      </th>{" "}
+                      <th className=" py-7 min-width-px-100">
+                        <Link
+                          to=""
+                          onClick={() => setShowEmployeeProfile(true)}
+                        >
+                          <span className=" text-gray">
+                            {" "}
+                            <i className="fa fa-eye "></i>
+                          </span>
+                        </Link>
+                      </th>
                     </tr>
                   </tbody>
                 </table>
@@ -486,62 +516,62 @@ const AdminDashboard = () => {
                 <nav aria-label="Page navigation example">
                   <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
                     <li className="page-item rounded-0 flex-all-center">
-                      <a
+                      <Link
+                        to={""}
                         className="page-link rounded-0 border-0 px-3active"
-                        href="http://localhost:3000/"
                         aria-label="Previous"
                       >
                         <i className="fas fa-chevron-left"></i>
-                      </a>
+                      </Link>
                     </li>
                     <li className="page-item">
-                      <a
-                        className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        href="http://localhost:3000/"
+                      <Link
+                        to={""}
+                        className="page-link border-0 font-size-3 font-weight-semibold px-3"
                       >
                         1
-                      </a>
+                      </Link>
                     </li>
                     <li className="page-item">
-                      <a
-                        className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        href="http://localhost:3000/"
+                      <Link
+                        to={""}
+                        className="page-link border-0 font-size-3 font-weight-semibold px-3"
                       >
                         2
-                      </a>
+                      </Link>
                     </li>
                     <li className="page-item">
-                      <a
-                        className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        href="http://localhost:3000/"
+                      <Link
+                        to={""}
+                        className="page-link border-0 font-size-3 font-weight-semibold px-3"
                       >
                         3
-                      </a>
+                      </Link>
                     </li>
                     <li className="page-item disabled">
-                      <a
-                        className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        href="http://localhost:3000/"
+                      <Link
+                        to={""}
+                        className="page-link border-0 font-size-3 font-weight-semibold px-3"
                       >
                         ...
-                      </a>
+                      </Link>
                     </li>
                     <li className="page-item ">
-                      <a
-                        className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        href="http://localhost:3000/"
+                      <Link
+                        to={""}
+                        className="page-link border-0 font-size-3 font-weight-semibold px-3"
                       >
                         7
-                      </a>
+                      </Link>
                     </li>
                     <li className="page-item rounded-0 flex-all-center">
-                      <a
+                      <Link
+                        to={""}
                         className="page-link rounded-0 border-0 px-3"
-                        href="http://localhost:3000/"
                         aria-label="Next"
                       >
                         <i className="fas fa-chevron-right"></i>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </nav>
@@ -631,27 +661,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-135">
+                      <td className=" py-7 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Full-Time
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-125">
+                      <td className=" py-7 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           New York
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-155">
+                      <td className=" py-7 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           12 July, 2020
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-205">
+                      <td className=" py-7 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           47
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-80">
+                      <td className=" py-7 min-width-px-80">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -659,7 +689,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-100">
+                      <td className=" py-7 min-width-px-100">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -682,27 +712,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-135">
+                      <td className=" py-7 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Full-Time
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-125">
+                      <td className=" py-7 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Remote
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-155">
+                      <td className=" py-7 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           24 June, 2020
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-205">
+                      <td className=" py-7 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           145
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-80">
+                      <td className=" py-7 min-width-px-80">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -710,7 +740,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-100">
+                      <td className=" py-7 min-width-px-100">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -733,27 +763,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-135">
+                      <td className=" py-7 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Full-Time
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-125">
+                      <td className=" py-7 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           London
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-155">
+                      <td className=" py-7 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           15 June, 2020
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-205">
+                      <td className=" py-7 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           62
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-80">
+                      <td className=" py-7 min-width-px-80">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -761,7 +791,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-100">
+                      <td className=" py-7 min-width-px-100">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -784,27 +814,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className="table-y-middle py-7 min-width-px-135">
+                      <td className=" py-7 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Part-Time
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-125">
+                      <td className=" py-7 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           California
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-155">
+                      <td className=" py-7 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           29 May, 2020
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-205">
+                      <td className=" py-7 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           184
                         </h3>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-80">
+                      <td className=" py-7 min-width-px-80">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -812,7 +842,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className="table-y-middle py-7 min-width-px-100">
+                      <td className=" py-7 min-width-px-100">
                         <a
                           href="http://localhost:3000/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -828,6 +858,33 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+      {showEmployeeProfile === true ? (
+        <div className="dashboard-main-container mt-24">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-12 dark-mode-texts">
+                <div className="mb-9">
+                  <Link
+                    to={""}
+                    onClick={() => setShowEmployeeProfile(false)}
+                    className="d-flex align-items-center ml-4"
+                  >
+                    {" "}
+                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                      Back
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="mb-18">
+              {" "}
+              <EmployeeDetails />
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

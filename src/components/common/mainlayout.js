@@ -11,10 +11,11 @@ import UserProfile from "../user/profile";
 import AdminDashboard from "../admin/dashboard";
 import Job from "../admin/job";
 import Category from "../admin/category";
-import Profile from "../admin/profile";
 import Employee from "../admin/employee";
 import Employer from "../admin/employer";
 import EmployeeSearch from "../company/employeeSearch";
+import ManageAdmin from "../admin/manageadmin";
+import Followup from "../admin/followup";
 
 function MainLayout() {
   return (
@@ -45,7 +46,8 @@ function MainLayout() {
         <Route path="/category" element={<Category />} />
         <Route path="/employee" element={<Employee />} />
         <Route path="/employer" element={<Employer />} />
-        <Route path="/adminprofile" element={<Profile />} />
+        <Route path="/adminprofile" element={<ManageAdmin />} />
+        <Route path="/followup" element={<Followup />} />
       </Routes>
     </BrowserRouter>
   );

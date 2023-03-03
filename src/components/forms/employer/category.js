@@ -33,7 +33,7 @@ function AddCategory(props) {
     validators
   );
   // USER CATEGORY SUBMIT BUTTON
-  const onUserCategoryClick = (event) => {
+  const onAdminCategoryClick = (event) => {
     event.preventDefault();
     if (validate()) {
     }
@@ -58,7 +58,7 @@ function AddCategory(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <form onSubmit={onUserCategoryClick}>
+          <form onSubmit={onAdminCategoryClick}>
             <h5 className="text-center pt-2">Add Category</h5>
             <div className="form-group mt-5">
               <label

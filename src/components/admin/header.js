@@ -27,15 +27,15 @@ const AdminHeader = () => {
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
             <div>
-              <a
-                href="http://localhost:3000/"
+              <Link
+                to={""}
                 className="px-3 ml-7 font-size-7 notification-block flex-y-center position-relative"
               >
                 <i className="fas fa-bell heading-default-color"></i>
                 <span className="font-size-3 count font-weight-semibold text-white bg-primary circle-24 border border-width-3 border border-white">
                   3
                 </span>
-              </a>
+              </Link>
             </div>
             <div>
               <div className="dropdown show-gr-dropdown py-5">

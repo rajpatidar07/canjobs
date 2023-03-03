@@ -59,19 +59,19 @@ function Category() {
                       <tr>
                         <th
                           scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                          className="border-0 font-size-4 font-weight-normal"
                         >
                           Name
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className=" border-0 font-size-4 font-weight-normal"
                         >
                           Category Type
                         </th>
                         <th
                           scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                          className=" border-0 font-size-4 font-weight-normal"
                         >
                           Action
                         </th>
@@ -79,26 +79,26 @@ function Category() {
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
-                        <th
-                          scope="row"
-                          className="pl-6 border-0 py-7 min-width-px-235"
-                        >
+                        <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <Link
-                              to="/"
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
+                              to=""
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
                             </Link>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Software Engineer
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
+                        <th className=" py-7 ">
+                          <Link
+                            onClick={() => setShowAddCategoryModal(true)}
+                            to=""
+                          >
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
                             </span>
@@ -112,26 +112,26 @@ function Category() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th
-                          scope="row"
-                          className="pl-6 border-0 py-7 min-width-px-235"
-                        >
+                        <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <a
                               href="jobdetails.html"
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
                             >
                               UI Designer
                             </a>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Software Engineer
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
+                        <th className=" py-7 ">
+                          <Link
+                            onClick={() => setShowAddCategoryModal(true)}
+                            to=""
+                          >
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
                             </span>
@@ -145,26 +145,26 @@ function Category() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th
-                          scope="row"
-                          className="pl-6 border-0 py-7 min-width-px-235"
-                        >
+                        <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <a
                               href="jobdetails.html"
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
                             >
                               Head of Marketing
                             </a>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             BE
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
+                        <th className=" py-7 ">
+                          <Link
+                            onClick={() => setShowAddCategoryModal(true)}
+                            to=""
+                          >
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
                             </span>
@@ -178,26 +178,26 @@ function Category() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th
-                          scope="row"
-                          className="pl-6 border-0 py-7 min-width-px-235"
-                        >
+                        <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <a
                               href="jobdetails.html"
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
                             >
                               Full-Stack Developer
                             </a>
                           </div>
                         </th>
-                        <th className="table-y-middle py-7">
-                          <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                        <th className=" py-7">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             BE
                           </h3>
                         </th>
-                        <th className="table-y-middle py-7 min-width-px-100">
-                          <Link to="">
+                        <th className=" py-7 ">
+                          <Link
+                            onClick={() => setShowAddCategoryModal(true)}
+                            to=""
+                          >
                             <span className=" fas fa-edit text-gray px-5">
                               {" "}
                             </span>
@@ -212,6 +212,70 @@ function Category() {
                       </tr>
                     </tbody>
                   </table>
+                </div>
+                <div className="pt-2">
+                  <nav aria-label="Page navigation example">
+                    <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
+                      <li className="page-item rounded-0 flex-all-center">
+                        <Link
+                          to={""}
+                          className="page-link rounded-0 border-0 px-3active"
+                          aria-label="Previous"
+                        >
+                          <i className="fas fa-chevron-left"></i>
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link
+                          to={""}
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
+                        >
+                          1
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link
+                          to={""}
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
+                        >
+                          2
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link
+                          to={""}
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
+                        >
+                          3
+                        </Link>
+                      </li>
+                      <li className="page-item disabled">
+                        <Link
+                          to={""}
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
+                        >
+                          ...
+                        </Link>
+                      </li>
+                      <li className="page-item ">
+                        <Link
+                          to={""}
+                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
+                        >
+                          7
+                        </Link>
+                      </li>
+                      <li className="page-item rounded-0 flex-all-center">
+                        <Link
+                          to={""}
+                          className="page-link rounded-0 border-0 px-3"
+                          aria-label="Next"
+                        >
+                          <i className="fas fa-chevron-right"></i>
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
               </div>
             </div>

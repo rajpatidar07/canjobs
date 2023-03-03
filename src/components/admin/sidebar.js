@@ -29,7 +29,7 @@ const AdminSidebar = () => {
         id="sidebar"
       >
         <div className="brand-logo px-11">
-          <Link to="/">
+          <Link to="">
             <img src="image/logo-main-black.png" alt="" />
           </Link>
         </div>
@@ -92,10 +92,18 @@ const AdminSidebar = () => {
           </li>
           <li className="">
             <Link
+              to="/followup"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-user mr-7"></i>Follow up
+            </Link>
+          </li>
+          <li className="">
+            <Link
               to="/adminprofile"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-7"></i>profile
+              <i className="fas fa-user mr-7"></i>Manage Admin
             </Link>
           </li>
           {/* <li className="">
