@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
-import Addfollowup from "./addfollowup";
+import Addfollowup from "../forms/admin/addfollowup";
 
 function Followup() {
   let [followup, setFollowUp] = useState(false);
@@ -87,7 +87,7 @@ function Followup() {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Contact{" "}
+                          Contact
                         </th>
                         <th
                           scope="col"
@@ -122,7 +122,7 @@ function Followup() {
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Senior Project Manager
                           </div>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Infosys
@@ -140,13 +140,10 @@ function Followup() {
                         </th>
                         <th className=" py-7 ">
                           <Link to="">
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -170,7 +167,7 @@ function Followup() {
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Senior Project Manager
                           </div>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Infosys
@@ -188,13 +185,10 @@ function Followup() {
                         </th>
                         <th className=" py-7 ">
                           <Link to="">
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -218,7 +212,7 @@ function Followup() {
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Senior Project Manager
                           </div>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Infosys
@@ -236,13 +230,10 @@ function Followup() {
                         </th>
                         <th className=" py-7 ">
                           <Link to="">
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -266,7 +257,7 @@ function Followup() {
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Senior Project Manager
                           </div>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Infosys
@@ -284,13 +275,10 @@ function Followup() {
                         </th>
                         <th className=" py-7 ">
                           <Link to="">
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -314,7 +302,7 @@ function Followup() {
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Senior Project Manager
                           </div>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Infosys
@@ -332,13 +320,10 @@ function Followup() {
                         </th>
                         <th className=" py-7 ">
                           <Link to="">
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -426,7 +411,7 @@ function Followup() {
                 onClick={() => setShowJobDetails(false)}
                 className="d-flex align-items-center ml-4"
               >
-                {" "}
+                
                 <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   Back
@@ -436,7 +421,7 @@ function Followup() {
           </div>
         </div>
         <div className="mb-18">
-          {" "}
+          
           <JobDetailsBox />
         </div>
       </div>

@@ -106,7 +106,7 @@ function Job() {
                           className=" border-0 font-size-4 font-weight-normal"
                         >
                           Experience
-                        </th>{" "}
+                        </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
@@ -148,7 +148,7 @@ function Job() {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             BE /B.tech /BCS
                           </h3>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Java script , HTLM and CSS
@@ -209,7 +209,7 @@ function Job() {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             BE /B.tech /BCS
                           </h3>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Java script , HTLM and CSS
@@ -270,7 +270,7 @@ function Job() {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             BE /B.tech /BCS
                           </h3>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Java script , HTLM and CSS
@@ -293,9 +293,7 @@ function Job() {
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
@@ -331,7 +329,7 @@ function Job() {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             BE /B.tech /BCS
                           </h3>
-                        </th>{" "}
+                        </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Java script , HTLM and CSS
@@ -448,7 +446,6 @@ function Job() {
                       onClick={() => setShowJobDetails(false)}
                       className="d-flex align-items-center ml-4"
                     >
-                      {" "}
                       <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back
@@ -458,7 +455,6 @@ function Job() {
                 </div>
               </div>
               <div className="mb-18">
-                {" "}
                 <JobDetailsBox />
               </div>
             </div>

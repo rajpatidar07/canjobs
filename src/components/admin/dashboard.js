@@ -26,14 +26,14 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href="http://localhost:3000/"
+                href=""
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-blue bg-blue-opacity-1 circle-56 font-size-6 mr-7">
                   <i className="fas fa-briefcase"></i>
                 </div>
                 {/* <!-- Category Content --> */}
-                <div className="">
+                <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">05</span>
                   </h5>
@@ -47,14 +47,14 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href="http://localhost:3000/"
+                href=""
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-pink bg-pink-opacity-1 circle-56 font-size-6 mr-7">
                   <i className="fas fa-user"></i>
                 </div>
                 {/* <!-- Category Content --> */}
-                <div className="">
+                <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">256</span>
                   </h5>
@@ -68,14 +68,14 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href="http://localhost:3000/"
+                href=""
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-orange bg-orange-opacity-1 circle-56 font-size-6 mr-7">
                   <i className="fas fa-eye"></i>
                 </div>
                 {/* <!-- Category Content --> */}
-                <div className="">
+                <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">16.5</span>K
                   </h5>
@@ -89,14 +89,14 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href="http://localhost:3000/"
+                href=""
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-egg-blue bg-egg-blue-opacity-1 circle-56 font-size-6 mr-7">
                   <i className="fas fa-mouse-pointer"></i>
                 </div>
                 {/* <!-- Category Content --> */}
-                <div className="">
+                <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">18.6</span>%
                   </h5>
@@ -207,7 +207,6 @@ const AdminDashboard = () => {
                           <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Nicolas Bradley <br />
                             <span className="text-gray font-size-2">
-                              {" "}
                               single <br />
                               (Male 25)
                             </span>
@@ -222,7 +221,6 @@ const AdminDashboard = () => {
                           </span>
                         </h3>
                       </th>
-
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           M.tech
@@ -231,17 +229,17 @@ const AdminDashboard = () => {
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <Link
@@ -249,7 +247,6 @@ const AdminDashboard = () => {
                           onClick={() => setShowEmployeeProfile(true)}
                         >
                           <span className=" text-gray">
-                            {" "}
                             <i className="fa fa-eye "></i>
                           </span>
                         </Link>
@@ -294,25 +291,24 @@ const AdminDashboard = () => {
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
-                        </h3>{" "}
-                      </th>{" "}
+                        </h3>
+                      </th>
                       <th className=" py-7 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
                         >
                           <span className=" text-gray">
-                            {" "}
                             <i className="fa fa-eye "></i>
                           </span>
                         </Link>
@@ -357,25 +353,24 @@ const AdminDashboard = () => {
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
-                        </h3>{" "}
-                      </th>{" "}
+                        </h3>
+                      </th>
                       <th className=" py-7 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
                         >
                           <span className=" text-gray">
-                            {" "}
                             <i className="fa fa-eye "></i>
                           </span>
                         </Link>
@@ -421,25 +416,24 @@ const AdminDashboard = () => {
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
-                        </h3>{" "}
-                      </th>{" "}
+                        </h3>
+                      </th>
                       <th className=" py-7 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
                         >
                           <span className=" text-gray">
-                            {" "}
                             <i className="fa fa-eye "></i>
                           </span>
                         </Link>
@@ -471,7 +465,7 @@ const AdminDashboard = () => {
                       </th>
                       <th className=" py-7  pr-0">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          +9863 <br />
+                          +9863963254 <br />
                           <span className="text-gray font-size-2">
                             <br /> Marie32@gmail.com
                           </span>
@@ -485,25 +479,24 @@ const AdminDashboard = () => {
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
-                        </h3>{" "}
+                        </h3>
                       </th>
                       <th className=" py-7 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
-                        </h3>{" "}
-                      </th>{" "}
+                        </h3>
+                      </th>
                       <th className=" py-7 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
                         >
                           <span className=" text-gray">
-                            {" "}
                             <i className="fa fa-eye "></i>
                           </span>
                         </Link>
@@ -652,11 +645,8 @@ const AdminDashboard = () => {
                         scope="row"
                         className="pl-6 border-0 py-7 min-width-px-235"
                       >
-                        <div className="">
-                          <a
-                            href="jobdetails.html"
-                            className="font-size-4 mb-0 font-weight-semibold text-black-2"
-                          >
+                        <div>
+                          <a className="font-size-4 mb-0 font-weight-semibold text-black-2">
                             Senior Project Manager
                           </a>
                         </div>
@@ -683,7 +673,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -691,7 +681,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -703,9 +693,9 @@ const AdminDashboard = () => {
                         scope="row"
                         className="pl-6 border-0 py-7 min-width-px-235"
                       >
-                        <div className="">
+                        <div>
                           <a
-                            href="jobdetails.html"
+                            href=""
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
                           >
                             UI Designer
@@ -734,7 +724,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -742,7 +732,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -754,9 +744,9 @@ const AdminDashboard = () => {
                         scope="row"
                         className="pl-6 border-0 py-7 min-width-px-235"
                       >
-                        <div className="">
+                        <div>
                           <a
-                            href="jobdetails.html"
+                            href=""
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
                           >
                             Head of Marketing
@@ -785,7 +775,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -793,7 +783,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -805,9 +795,9 @@ const AdminDashboard = () => {
                         scope="row"
                         className="pl-6 border-0 py-7 min-width-px-235"
                       >
-                        <div className="">
+                        <div>
                           <a
-                            href="jobdetails.html"
+                            href=""
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
                           >
                             Full-Stack Developer
@@ -836,7 +826,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -844,7 +834,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href="http://localhost:3000/"
+                          href=""
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -869,7 +859,6 @@ const AdminDashboard = () => {
                     onClick={() => setShowEmployeeProfile(false)}
                     className="d-flex align-items-center ml-4"
                   >
-                    {" "}
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back
@@ -879,7 +868,6 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="mb-18">
-              {" "}
               <EmployeeDetails />
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import useValidation from "../common/useValidation";
+import useValidation from "../../common/useValidation";
 
 function Addadmin(props) {
   // USER ADMIN PROFILE UPDATE VALIDATION

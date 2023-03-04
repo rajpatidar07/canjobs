@@ -9,7 +9,6 @@ import CompanyDetails from "../forms/employer/companyDetail";
 
 function CompanyProfile() {
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
-
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
   return (
@@ -55,7 +54,10 @@ function CompanyProfile() {
                   </p>
                 </Link>
               </div>
-              <div className="company_info_box text-md-right fd-column col-2 m-0 p-0" title="Edit KYC Details">
+              <div
+                className="company_info_box text-md-right fd-column col-2 m-0 p-0"
+                title="Edit KYC Details"
+              >
                 <CustomButton
                   className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                   onClick={() => setShowKycComplainDetailsModal(true)}
@@ -115,8 +117,7 @@ function CompanyProfile() {
                     <CustomButton
                       className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                       onClick={() => setShowCompanyInfoModal(true)}
-                    >
-                    </CustomButton>
+                    ></CustomButton>
                     <CompanyDetails
                       title={"Edit Company de"}
                       show={showCompanyInfoModal}
@@ -126,32 +127,29 @@ function CompanyProfile() {
                   <div className="pt-5 text-left">
                     <p className="font-size-4 mb-8">
                       If you’re like most of my clients, you know creative
-                      content marketing and killer copywriting are
-                      fundamental to the success of your business.
+                      content marketing and killer copywriting are fundamental
+                      to the success of your business.
                     </p>
                     <p className="font-size-4 mb-8">
-                      But with so much to do to keep your business
-                      growing, you don’t have time to learn how to write
-                      sales copy that actually sells, or create a content
-                      marketing strategy that resonates with your target
-                      audience.
+                      But with so much to do to keep your business growing, you
+                      don’t have time to learn how to write sales copy that
+                      actually sells, or create a content marketing strategy
+                      that resonates with your target audience.
                     </p>
                     <p className="font-size-4  mb-8">
-                      You’ve been disappointed with your traffic and
-                      conversions so far, but with an overwhelming number
-                      of things to do, you’ve put off doing anything about
-                      it until now.
+                      You’ve been disappointed with your traffic and conversions
+                      so far, but with an overwhelming number of things to do,
+                      you’ve put off doing anything about it until now.
                     </p>
                     <p className="font-size-4 mb-8">
-                      So you’ve come to Upwork, looking for someone that
-                      can craft creative content and killer sales copy to
-                      help you reach more people and make more sales.
+                      So you’ve come to Upwork, looking for someone that can
+                      craft creative content and killer sales copy to help you
+                      reach more people and make more sales.
                     </p>
                     <p className="font-size-4 mb-8">
-                      But your troubles aren’t over just yet; it isn’t
-                      easy to find someone who can create the high-quality
-                      content you need. But your troubles aren’t over just
-                      yet.
+                      But your troubles aren’t over just yet; it isn’t easy to
+                      find someone who can create the high-quality content you
+                      need. But your troubles aren’t over just yet.
                     </p>
                   </div>
                 </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import AddCategory from "../forms/employer/category";
+import AddCategory from "../forms/admin/category";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);

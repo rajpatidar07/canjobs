@@ -142,7 +142,6 @@ function Employee() {
                             <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                               Nicolas Bradley <br />
                               <span className="text-gray font-size-2">
-                                {" "}
                                 single <br />
                                 (Male 25)
                               </span>
@@ -174,43 +173,36 @@ function Employee() {
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             JAVA, PHP, React
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             25,000
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             2 years in React js
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
                           </Link>
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fa fa-cogs text-gray px-2"></span>
                           </Link>
                           <Link
                             to=""
                             onClick={() => setShowEmployeeMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash "></i>
                             </span>
                           </Link>
@@ -258,43 +250,36 @@ function Employee() {
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             JAVA, PHP, React
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             25,000
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             2 years in React js
-                          </h3>{" "}
-                        </th>{" "}
+                          </h3>
+                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
                           </Link>
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fa fa-cogs text-gray px-2"></span>
                           </Link>
                           <Link
                             to=""
                             onClick={() => setShowEmployeeMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash "></i>
                             </span>
                           </Link>
@@ -342,43 +327,36 @@ function Employee() {
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             JAVA, PHP, React
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             25,000
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             2 years in React js
-                          </h3>{" "}
-                        </th>{" "}
+                          </h3>
+                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
                           </Link>
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fa fa-cogs text-gray px-2"></span>
                           </Link>
                           <Link
                             to=""
                             onClick={() => setShowEmployeeMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash "></i>
                             </span>
                           </Link>
@@ -427,43 +405,36 @@ function Employee() {
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             JAVA, PHP, React
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             25,000
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             2 years in React js
-                          </h3>{" "}
-                        </th>{" "}
+                          </h3>
+                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
                           </Link>
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fa fa-cogs text-gray px-2"></span>
                           </Link>
                           <Link
                             to=""
                             onClick={() => setShowEmployeeMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash "></i>
                             </span>
                           </Link>
@@ -512,43 +483,36 @@ function Employee() {
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             JAVA, PHP, React
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             25,000
-                          </h3>{" "}
+                          </h3>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             2 years in React js
-                          </h3>{" "}
-                        </th>{" "}
+                          </h3>
+                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
                           >
-                            <span className="	fas fa-graduation-cap text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
                           </Link>
                           <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fa fa-cogs text-gray px-2"></span>
                           </Link>
                           <Link
                             to=""
                             onClick={() => setShowEmployeeMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-2">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash "></i>
                             </span>
                           </Link>
@@ -636,7 +600,6 @@ function Employee() {
                       onClick={() => setShowEmployeeProfile(false)}
                       className="d-flex align-items-center ml-4"
                     >
-                      {" "}
                       <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back
@@ -646,7 +609,6 @@ function Employee() {
                 </div>
               </div>
               <div className="mb-18">
-                {" "}
                 <EmployeeDetails />
               </div>
             </div>

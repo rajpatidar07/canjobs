@@ -1,6 +1,6 @@
 import React from "react";
 import { CKEditor } from "ckeditor4-react";
-import useValidation from "../common/useValidation";
+import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 function Addfollowup(props) {
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
