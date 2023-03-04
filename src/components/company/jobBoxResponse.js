@@ -113,6 +113,12 @@ function JobBoxResponse() {
                   <tr>
                     <th
                       scope="col"
+                      className="text-center border-0 font-size-4 font-weight-normal"
+                    >
+                      #
+                    </th>
+                    <th
+                      scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
                     >
                       Name
@@ -121,144 +127,257 @@ function JobBoxResponse() {
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Applied as
+                      Applied for
                     </th>
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Applied on
+                      Skills
+                    </th>
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      Experience
+                    </th>
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      Salary
+                    </th>
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      Contact
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border border-color-2">
-                    <th scope="row" className="border-0 py-7">
-                      <div className="media min-width-px-235 align-items-center">
-                        <div className="circle-36 mr-6">
+                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                      <div className="media  align-items-center">
+                        <div className="circle-36 mx-auto">
                           <img
-                            src="image/table-one-profile-image-1.png"
+                            src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                             alt=""
                             className="w-100"
                           />
                         </div>
-                        <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                          Nicolas Bradley
-                        </h4>
                       </div>
                     </th>
-                    <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                    <th className="border-0 py-7">
+                      <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                        Nicolas Bradley
+                      </h4>
+                    </th>
+                    <td className=" py-7 pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
-                    <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                        12 July, 2020
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        JAVA , REACT JS ,HTML and CSS
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        4 years
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        20,000
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9632587410
+                        <br />
+                        email@gmail.com
                       </h3>
                     </td>
                   </tr>
                   <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <div className="media min-width-px-235 align-items-center">
-                        <div className="circle-36 mr-6">
+                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                      <div className="media  align-items-center">
+                        <div className="circle-36 mx-auto">
                           <img
-                            src="image/table-one-profile-image-2.png"
+                            src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                             alt=""
                             className="w-100"
                           />
                         </div>
-                        <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                          Elizabeth Gomez
-                        </h4>
                       </div>
                     </th>
-                    <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                    <th className="pl-6 border-0 py-7 pr-0">
+                      <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                        Elizabeth Gomez
+                      </h4>
+                    </th>
+                    <td className=" py-7 pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
-                    <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                        14 July, 2020
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        JAVA , REACT JS ,HTML and CSS
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        4 years
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        20,000
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9632587410
+                        <br />
+                        email@gmail.com
                       </h3>
                     </td>
                   </tr>
                   <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <div className="media min-width-px-235 align-items-center">
-                        <div className="circle-36 mr-6">
+                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                      <div className="media  align-items-center">
+                        <div className="circle-36 mx-auto">
                           <img
-                            src="image/table-one-profile-image-3.png"
+                            src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                             alt=""
                             className="w-100"
                           />
                         </div>
-                        <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                          Joe Wade
-                        </h4>
                       </div>
                     </th>
-                    <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                    <th className="pl-6 border-0 py-7 pr-0">
+                      <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                        Joe Wade
+                      </h4>
+                    </th>
+                    <td className=" py-7 pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Head of Marketing
                       </h3>
                     </td>
-                    <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                        14 July, 2020
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        JAVA , REACT JS ,HTML and CSS
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        4 years
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        20,000
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9632587410
+                        <br />
+                        email@gmail.com
                       </h3>
                     </td>
                   </tr>
                   <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <div className="media min-width-px-235 align-items-center">
-                        <div className="circle-36 mr-6">
+                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                      <div className="media  align-items-center">
+                        <div className="circle-36 mx-auto">
                           <img
-                            src="image/table-one-profile-image-4.png"
+                            src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                             alt=""
                             className="w-100"
                           />
                         </div>
-                        <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                          Roger Hawkins
-                        </h4>
                       </div>
                     </th>
-                    <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                    <th className="pl-6 border-0 py-7 pr-0">
+                      <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                        Roger Hawkins
+                      </h4>
+                    </th>
+                    <td className=" py-7 pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         UI Designer
                       </h3>
                     </td>
-                    <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                        16 July, 2020
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        JAVA , REACT JS ,HTML and CSS
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        4 years
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        20,000
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9632587410
+                        <br />
+                        email@gmail.com
                       </h3>
                     </td>
                   </tr>
                   <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0">
-                      <div className="media min-width-px-235 align-items-center">
-                        <div className="circle-36 mr-6">
+                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                      <div className="media  align-items-center">
+                        <div className="circle-36 mx-auto">
                           <img
-                            src="image/table-one-profile-image-5.png"
+                            src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
                             alt=""
                             className="w-100"
                           />
                         </div>
-                        <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
-                          Marie Green
-                        </h4>
                       </div>
                     </th>
-                    <td className="table-y-middle py-7 min-width-px-235 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
+                    <th className="pl-6 border-0 py-7 pr-0">
+                      <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                        Marie Green
+                      </h4>
+                    </th>
+                    <td className=" py-7 pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
-                    <td className="table-y-middle py-7 min-width-px-170 pr-0">
-                      <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
-                        21 July, 2020
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        JAVA , REACT JS ,HTML and CSS
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        4 years
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        20,000
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9632587410
+                        <br />
+                        email@gmail.com
                       </h3>
                     </td>
                   </tr>

@@ -94,7 +94,7 @@ function Category() {
                             Software Engineer
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className="min-width-px-100 py-7 ">
                           <Link
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
@@ -127,7 +127,7 @@ function Category() {
                             Software Engineer
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className="min-width-px-100 py-7 ">
                           <Link
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
@@ -160,7 +160,7 @@ function Category() {
                             BE
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className="min-width-px-100 py-7 ">
                           <Link
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
@@ -193,7 +193,7 @@ function Category() {
                             BE
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className="min-width-px-100 py-7 ">
                           <Link
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""

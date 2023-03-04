@@ -7,6 +7,13 @@ import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
 
 function EmployeeHeader() {
+  // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
+  // state:-
+  const [addClass, setAddClass] = useState(false);
+  //function :-
+  const addClassOnClick = () => {
+    setAddClass(!addClass);
+  };
   // EMPLOYEEE LOGIN AND SIGNUP
   // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);
@@ -87,44 +94,35 @@ function EmployeeHeader() {
                   <Link
                     className="nav-link dropdown-toggle gr-toggle-arrow"
                     id="navbarDropdown"
-                    to="/"
+                    to=""
                     role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    onClick={addClassOnClick}
                   >
                     Company <i className="icon icon-small-down"></i>
                   </Link>
                   <ul
-                    className="gr-menu-dropdown dropdown-menu"
+                    className={`gr-menu-dropdown dropdown-menu ${
+                      addClass ? "custom-opacity" : ""
+                    }`}
                     aria-labelledby="navbarDropdown"
                   >
                     <li className="nav-item drop-menu-item">
-                      <Link className="" to="/company">
-                        Company Home
-                      </Link>
+                      <Link to="/company">Company Home</Link>
                     </li>
                     <li className="drop-menu-item">
-                      <Link className="" to="/managejobs">
-                        Manage Jobs
-                      </Link>
+                      <Link to="/managejobs">Manage Jobs</Link>
                     </li>
                     <li className="drop-menu-item">
-                      <Link className="" to="/response">
-                        Responses
-                      </Link>
+                      <Link to="/response">Responses</Link>
                     </li>
                     <li className="drop-menu-item">
-                      <Link className="" to="/companyprofile">
-                        Profile
-                      </Link>
+                      <Link to="/companyprofile">Profile</Link>
                     </li>
                     <li className="drop-menu-item">
-                      <Link
-                        className=""
-                        to={""}
-                        onClick={() => setShowCompanySignUp(true)}
-                      >
+                      <Link to={""} onClick={() => setShowCompanySignUp(true)}>
                         Sign up
                       </Link>
                       <CompanySignUp
@@ -134,11 +132,7 @@ function EmployeeHeader() {
                       />
                     </li>
                     <li className="drop-menu-item">
-                      <Link
-                        className=""
-                        to={""}
-                        onClick={() => setShowCompanyLogin(true)}
-                      >
+                      <Link to={""} onClick={() => setShowCompanyLogin(true)}>
                         Login
                       </Link>
                       <CompanyLogin
@@ -203,7 +197,7 @@ function EmployeeHeader() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <div className="">
+                <div>
                   <img
                     className="rounded-circle"
                     src="image/user1.jpg"

@@ -281,3 +281,9 @@ label.image_upload_btn {
   background-repeat: no-repeat;
   background-position: center;
 }
+/* Add opactiy in dropdown */
+@media (max-width: 992px) {
+.custom-opacity{
+    opacity: 1 !important;
+  }
+}

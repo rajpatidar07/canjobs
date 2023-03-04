@@ -641,31 +641,24 @@ function Employer() {
           </div>
         </div>
         {showEmployerDetails === true ? (
-          <div className="dashboard-main-container mt-24">
+          <div className="dashboard-main-container mt-30">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
-                  <div className="mb-9">
-                    <Link
-                      to={""}
-                      onClick={() => setShowEmployerDetails(false)}
-                      className="d-flex align-items-center ml-4"
-                    >
-                      {" "}
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                        Back
-                      </span>
-                    </Link>
-                  </div>
+                  <Link
+                    to={""}
+                    onClick={() => setShowEmployerDetails(false)}
+                    className="d-flex align-items-center ml-4"
+                  >
+                    {" "}
+                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                      Back
+                    </span>
+                  </Link>
                 </div>
-              </div>
-              <div className="mb-18">
-                <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
-                  {" "}
-                  <EmployerProfile />
-                </div>
-              </div>
+              </div>{" "}
+              <EmployerProfile />
             </div>
           </div>
         ) : null}

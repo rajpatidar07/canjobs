@@ -14,10 +14,10 @@ function CompanyProfile() {
   return (
     <div>
       <EmployeeHeader />
-      <div className="bg-default-2 pt-16 pt-lg-22 pb-lg-27">
+      <div className="bg-default-2 pt-30 pt-lg-22 pb-lg-27">
         <div className="container">
           {/* <!-- back Button --> */}
-          <div className="row justify-content-center">
+          {/* <div className="row justify-content-center">
             <div className="mt-8 dark-mode-texts col-12 translateY-25">
               <div className="mb-9">
                 <Link
@@ -32,7 +32,7 @@ function CompanyProfile() {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* <!-- back Button End --> */}
           <div className="row bg-white rounded-4 pt-11 shadow-9">
             {/* <!-- Company Profile --> */}
@@ -158,7 +158,7 @@ function CompanyProfile() {
           </div>
         </div>
       </div>
-      <EmployeeFooter />
+      {1 == 1 ? null : <EmployeeFooter />}
     </div>
   );
 }

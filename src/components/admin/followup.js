@@ -138,7 +138,7 @@ function Followup() {
                             24 , yogesh vihar , indore
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className=" py-7  min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
@@ -183,7 +183,7 @@ function Followup() {
                             24 , yogesh vihar , indore
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className=" py-7  min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
@@ -228,7 +228,7 @@ function Followup() {
                             24 , yogesh vihar , indore
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className=" py-7  min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
@@ -273,7 +273,7 @@ function Followup() {
                             24 , yogesh vihar , indore
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className=" py-7  min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>
@@ -318,7 +318,7 @@ function Followup() {
                             24 , yogesh vihar , indore
                           </h3>
                         </th>
-                        <th className=" py-7 ">
+                        <th className=" py-7  min-width-px-100">
                           <Link to="">
                             <span className=" fas fa-edit text-gray px-2"></span>
                           </Link>

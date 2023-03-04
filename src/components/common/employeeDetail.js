@@ -7,7 +7,6 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 // eslint-disable-next-line
 function EmployeeDetails() {
-
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   // const [showCareerProfile, setShowCareerProfile] = useState(false);
@@ -24,10 +23,7 @@ function EmployeeDetails() {
               {/*----Slide Employee profile-----*/}
               <div className="bg-white shadow-9 rounded-4">
                 <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
-                  <Link
-                    className="mb-4 position-relative"
-                    to="/"
-                  >
+                  <Link className="mb-4 position-relative" to="/">
                     <input type="file" id="ImgUploadInput" className="d-none" />
                     <label
                       className="image_upload_btn m-0"
@@ -297,15 +293,12 @@ function EmployeeDetails() {
                     </h4>
                     <CustomButton
                       className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                    // onClick={() => setShowCareerProfile(true)}
+                      // onClick={() => setShowCareerProfile(true)}
                     />
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box col-md-6 p-0">
-                          <Link
-                            className="text_box text-left"
-                            to="/"
-                          >
+                          <Link className="text_box text-left" to="/">
                             <img
                               className="company_logo"
                               src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
@@ -330,16 +323,10 @@ function EmployeeDetails() {
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <Link
-                            to="/"
-                            className="font-size-4 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-4 text-gray w-100">
                             Jun 2017 - April 2020- 3 years
                           </Link>
-                          <Link
-                            to="/"
-                            className="font-size-3 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-3 text-gray w-100">
                             <span
                               className="mr-4"
                               style={{ marginTop: "-2px" }}
@@ -357,10 +344,7 @@ function EmployeeDetails() {
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box col-md-6 p-0">
-                          <Link
-                            className="text_box text-left"
-                            to="/"
-                          >
+                          <Link className="text_box text-left" to="/">
                             <img
                               className="company_logo"
                               src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
@@ -385,16 +369,10 @@ function EmployeeDetails() {
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <Link
-                            to="/"
-                            className="font-size-4 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-4 text-gray w-100">
                             Jun 2017 - April 2020- 3 years
                           </Link>
-                          <Link
-                            to="/"
-                            className="font-size-3 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-3 text-gray w-100">
                             <span
                               className="mr-4"
                               style={{ marginTop: "-2px" }}
@@ -429,10 +407,7 @@ function EmployeeDetails() {
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box p-0">
-                          <Link
-                            className="text_box text-left"
-                            to="/"
-                          >
+                          <Link className="text_box text-left" to="/">
                             <img
                               className="company_logo"
                               src="image/svg/harvard.svg"
@@ -457,16 +432,10 @@ function EmployeeDetails() {
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <Link
-                            to="/"
-                            className="font-size-4 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-4 text-gray w-100">
                             Jun 2017 - April 2020- 3 years
                           </Link>
-                          <Link
-                            to="/"
-                            className="font-size-3 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-3 text-gray w-100">
                             <span
                               className="mr-4"
                               style={{ marginTop: "-2px" }}
@@ -484,10 +453,7 @@ function EmployeeDetails() {
                     <div className="w-100">
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                         <div className="media align-items-center company_box p-0">
-                          <Link
-                            className="text_box text-left"
-                            to="/"
-                          >
+                          <Link className="text_box text-left" to="/">
                             <img
                               className="company_logo"
                               src="image/svg/mit.svg"
@@ -512,16 +478,10 @@ function EmployeeDetails() {
                           </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <Link
-                            to="/"
-                            className="font-size-4 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-4 text-gray w-100">
                             Jun 2017 - April 2020- 3 years
                           </Link>
-                          <Link
-                            to="/"
-                            className="font-size-3 text-gray w-100"
-                          >
+                          <Link to="/" className="font-size-3 text-gray w-100">
                             <span
                               className="mr-4"
                               style={{ marginTop: "-2px" }}
@@ -561,10 +521,7 @@ function EmployeeDetails() {
                       <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
                         <div className="w-100 mt-n2 text-left">
                           <h3 className="mb-0">
-                            <Link
-                              className="font-size-6 text-black-2"
-                              to="/"
-                            >
+                            <Link className="font-size-6 text-black-2" to="/">
                               Fresh Graduate
                             </Link>
                           </h3>
@@ -584,7 +541,7 @@ function EmployeeDetails() {
                       </h4>
                       <CustomButton
                         className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                      // onClick={() => setShowProjects(true)}
+                        // onClick={() => setShowProjects(true)}
                       />
                     </div>
 
@@ -703,7 +660,7 @@ function EmployeeDetails() {
               <div className="mb-5">
                 <h4 className="font-size-7 mb-9">Applied Jobs</h4>
                 <div className="row justify-content-center">
-                  <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                  <div className="col-lg-6  col-sm-11 mb-9">
                     {/* <!-- Single Featured Job --> */}
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
@@ -758,7 +715,7 @@ function EmployeeDetails() {
                     </div>
                     {/* <!-- End Single Featured Job --> */}
                   </div>
-                  <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                  <div className="col-lg-6  col-sm-11 mb-9">
                     {/* <!-- Single Featured Job --> */}
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
@@ -813,7 +770,7 @@ function EmployeeDetails() {
                     </div>
                     {/* <!-- End Single Featured Job --> */}
                   </div>
-                  <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                  <div className="col-lg-6  col-sm-11 mb-9">
                     {/* <!-- Single Featured Job --> */}
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
@@ -868,7 +825,7 @@ function EmployeeDetails() {
                     </div>
                     {/* <!-- End Single Featured Job --> */}
                   </div>
-                  <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                  <div className="col-lg-6  col-sm-11 mb-9">
                     {/* <!-- Single Featured Job --> */}
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
@@ -930,7 +887,7 @@ function EmployeeDetails() {
               <div className="">
                 <h4 className="font-size-7 mb-9">Saved Jobs</h4>
                 <div className="row justify-content-center">
-                  <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                  <div className="col-lg-6  col-sm-11 mb-9">
                     {/* <!-- Single Featured Job --> */}
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">
@@ -985,7 +942,7 @@ function EmployeeDetails() {
                     </div>
                     {/* <!-- End Single Featured Job --> */}
                   </div>
-                  <div className="col-lg-6 col-md-6 col-sm-11 mb-9">
+                  <div className="col-lg-6  col-sm-11 mb-9">
                     {/* <!-- Single Featured Job --> */}
                     <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                       <div className="media align-items-center">

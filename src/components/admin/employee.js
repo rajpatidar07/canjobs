@@ -185,7 +185,7 @@ function Employee() {
                             2 years in React js
                           </h3>
                         </th>
-                        <th className=" py-7 min-width-px-100">
+                        <th className="d-flex py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
@@ -262,7 +262,7 @@ function Employee() {
                             2 years in React js
                           </h3>
                         </th>
-                        <th className=" py-7 min-width-px-100">
+                        <th className="d-flex py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
@@ -339,7 +339,7 @@ function Employee() {
                             2 years in React js
                           </h3>
                         </th>
-                        <th className=" py-7 min-width-px-100">
+                        <th className="d-flex py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
@@ -417,7 +417,7 @@ function Employee() {
                             2 years in React js
                           </h3>
                         </th>
-                        <th className=" py-7 min-width-px-100">
+                        <th className="d-flex py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
@@ -495,7 +495,7 @@ function Employee() {
                             2 years in React js
                           </h3>
                         </th>
-                        <th className=" py-7 min-width-px-100">
+                        <th className="d-flex py-7 min-width-px-100">
                           <Link
                             to=""
                             onClick={() => setShowEducationModal(true)}
