@@ -7,7 +7,7 @@ import Response from "../company/response";
 import EmployeeHomePage from "../user/home";
 import JobDetail from "../user/jobdetail";
 import JobSearch from "../user/jobs";
-import UserProfile from "../user/profile";
+import UserProfile from "./employeeDetail";
 import AdminDashboard from "../admin/dashboard";
 import Job from "../admin/job";
 import Category from "../admin/category";

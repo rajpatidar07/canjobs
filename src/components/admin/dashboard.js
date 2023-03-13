@@ -6,9 +6,9 @@ import EmployeeDetails from "../common/employeeDetail";
 import JobDetailsBox from "../common/jobdetail";
 
 const AdminDashboard = () => {
-  // eslint-disable-next-line
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
+  const userType = "admin";
 
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -912,7 +912,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="mb-18">
-              <EmployeeDetails />
+              <EmployeeDetails userType={userType} />
             </div>
           </div>
         </div>

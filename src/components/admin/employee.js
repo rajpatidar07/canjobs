@@ -13,7 +13,7 @@ function Employee() {
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
-
+  const userType = "admin";
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -573,7 +573,7 @@ function Employee() {
                 </div>
               </div>
               <div className="mb-18">
-                <EmployeeDetails />
+                <EmployeeDetails userType={userType} />
               </div>
             </div>
           </div>
