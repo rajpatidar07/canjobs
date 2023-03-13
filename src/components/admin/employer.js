@@ -3,7 +3,6 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-import AddEmployer from "../forms/employer/employer";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import ContactInfo from "../forms/employer/contactInfo";
@@ -99,6 +98,12 @@ function Employer() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
+                          Contact Info
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
                           Vacancies
                         </th>
                         <th
@@ -106,12 +111,6 @@ function Employer() {
                           className="border-0 font-size-4 font-weight-normal"
                         >
                           Location
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Contact Info
                         </th>
                         <th
                           scope="col"
@@ -130,6 +129,12 @@ function Employer() {
                           className="border-0 font-size-4 font-weight-normal"
                         >
                           Status
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          Change Status
                         </th>
                         <th
                           scope="col"
@@ -157,10 +162,21 @@ function Employer() {
                             to={""}
                             onClick={() => setShowEmployerDetails(true)}
                           >
-                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              suresh thakker
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Suresh thakker
+                              <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
                             </h4>
                           </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -174,14 +190,6 @@ function Employer() {
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Nicolas25@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             We2code technology
                           </h3>
                         </th>
@@ -190,12 +198,20 @@ function Employer() {
                             Java , HTML , CSS and React js
                           </h3>
                         </th>
-                        <th className="  py-7 ">
+                        <th className=" py-7 ">
                           <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
                             <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                               Pending
                             </span>
                           </h3>
+                        </th>
+                        <th className="py-7">
+                          <select className="border-1 w-100 font-size-3 font-weight-normal text-black-2 mb-0">
+                            <option value={""}>Status</option>
+                            <option value={"draft"}>Draft</option>
+                            <option value={"pending"}>Pending</option>
+                            <option value={"approved"}>Approved</option>
+                          </select>
                         </th>
                         <th className="  py-7  d-flex">
                           <Link to="" onClick={() => setShowContactMOdal(true)}>
@@ -216,9 +232,7 @@ function Employer() {
                             to=""
                             onClick={() => setShowEmployerMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-1">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-1"></span>
                           </Link>
                           <Link to="">
                             <span className="fa fa-trash text-danger px-1"></span>
@@ -242,10 +256,21 @@ function Employer() {
                             to={""}
                             onClick={() => setShowEmployerDetails(true)}
                           >
-                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              suresh thakker
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Suresh thakker
+                              <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
                             </h4>
                           </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -255,14 +280,6 @@ function Employer() {
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             Mumbai
-                          </h3>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Nicolas25@gmail.com
-                            </span>
                           </h3>
                         </th>
                         <th className=" py-7  pr-0">
@@ -282,16 +299,22 @@ function Employer() {
                             </span>
                           </h3>
                         </th>
+                        <th className="py-7">
+                          <select className="border-1 w-100 font-size-3 font-weight-normal text-black-2 mb-0">
+                            <option value={""}>Status</option>
+                            <option value={"draft"}>Draft</option>
+                            <option value={"pending"}>Pending</option>
+                            <option value={"approved"}>Approved</option>
+                          </select>
+                        </th>
                         <th className="  py-7  d-flex">
                           <Link to="" onClick={() => setShowContactMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-address-book "></i>
                             </span>
                           </Link>
                           <Link to="" onClick={() => setShowkycMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-file "></i>
                             </span>
                           </Link>
@@ -299,13 +322,10 @@ function Employer() {
                             to=""
                             onClick={() => setShowEmployerMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-1">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-1"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger px-1">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -328,10 +348,21 @@ function Employer() {
                             to={""}
                             onClick={() => setShowEmployerDetails(true)}
                           >
-                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              suresh thakker
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Suresh thakker
+                              <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
                             </h4>
                           </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -345,15 +376,7 @@ function Employer() {
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Nicolas25@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            We2code tectechnology{" "}
+                            We2code tectechnology
                           </h3>
                         </th>
                         <th className=" py-7 ">
@@ -368,16 +391,22 @@ function Employer() {
                             </span>
                           </h3>
                         </th>
+                        <th className="py-7">
+                          <select className="border-1 w-100 font-size-3 font-weight-normal text-black-2 mb-0">
+                            <option value={""}>Status</option>
+                            <option value={"draft"}>Draft</option>
+                            <option value={"pending"}>Pending</option>
+                            <option value={"approved"}>Approved</option>
+                          </select>
+                        </th>
                         <th className="  py-7  d-flex">
                           <Link to="" onClick={() => setShowContactMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-address-book "></i>
                             </span>
                           </Link>
                           <Link to="" onClick={() => setShowkycMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-file "></i>
                             </span>
                           </Link>
@@ -385,13 +414,10 @@ function Employer() {
                             to=""
                             onClick={() => setShowEmployerMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-1">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-1"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger px-1">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -414,10 +440,21 @@ function Employer() {
                             to={""}
                             onClick={() => setShowEmployerDetails(true)}
                           >
-                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              suresh thakker
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Suresh thakker
+                              <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
                             </h4>
                           </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -431,15 +468,7 @@ function Employer() {
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Nicolas25@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            We2code tectechnology{" "}
+                            We2code tectechnology
                           </h3>
                         </th>
                         <th className=" py-7 ">
@@ -454,16 +483,22 @@ function Employer() {
                             </span>
                           </h3>
                         </th>
+                        <th className="py-7">
+                          <select className="border-1 w-100 font-size-3 font-weight-normal text-black-2 mb-0">
+                            <option value={""}>Status</option>
+                            <option value={"draft"}>Draft</option>
+                            <option value={"pending"}>Pending</option>
+                            <option value={"approved"}>Approved</option>
+                          </select>
+                        </th>
                         <th className="  py-7  d-flex">
                           <Link to="" onClick={() => setShowContactMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-address-book "></i>
                             </span>
                           </Link>
                           <Link to="" onClick={() => setShowkycMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-file "></i>
                             </span>
                           </Link>
@@ -471,13 +506,10 @@ function Employer() {
                             to=""
                             onClick={() => setShowEmployerMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-1">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-1"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger px-1">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -500,10 +532,21 @@ function Employer() {
                             to={""}
                             onClick={() => setShowEmployerDetails(true)}
                           >
-                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              suresh thakker{" "}
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Suresh thakker
+                              <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
                             </h4>
                           </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -517,15 +560,7 @@ function Employer() {
                         </th>
                         <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Nicolas25@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            We2code tectechnology{" "}
+                            We2code tectechnology
                           </h3>
                         </th>
                         <th className=" py-7 ">
@@ -540,16 +575,22 @@ function Employer() {
                             </span>
                           </h3>
                         </th>
+                        <th className="py-7">
+                          <select className="border-1 w-100 font-size-3 font-weight-normal text-black-2 mb-0">
+                            <option value={""}>Status</option>
+                            <option value={"draft"}>Draft</option>
+                            <option value={"pending"}>Pending</option>
+                            <option value={"approved"}>Approved</option>
+                          </select>
+                        </th>
                         <th className="  py-7  d-flex">
                           <Link to="" onClick={() => setShowContactMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-address-book "></i>
                             </span>
                           </Link>
                           <Link to="" onClick={() => setShowkycMOdal(true)}>
                             <span className=" text-gray px-1">
-                              {" "}
                               <i className="fa fa-file "></i>
                             </span>
                           </Link>
@@ -557,13 +598,10 @@ function Employer() {
                             to=""
                             onClick={() => setShowEmployerMOdal(true)}
                           >
-                            <span className=" fas fa-edit text-gray px-1">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-1"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger px-1">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -640,6 +678,7 @@ function Employer() {
             </div>
           </div>
         </div>
+        {/* <!-- Employer detail imported- --> */}
         {showEmployerDetails === true ? (
           <div className="dashboard-main-container mt-30">
             <div className="container">
@@ -650,14 +689,13 @@ function Employer() {
                     onClick={() => setShowEmployerDetails(false)}
                     className="d-flex align-items-center ml-4"
                   >
-                    {" "}
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back
                     </span>
                   </Link>
                 </div>
-              </div>{" "}
+              </div>
               <EmployerProfile />
             </div>
           </div>

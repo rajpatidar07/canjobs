@@ -22,11 +22,11 @@ const UserProfile = () => {
       <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32 mt-5">
         <div className="container mt-5 pt-5">
           <div className="row text-left mt-5 pt-5">
-            <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
+            <div className="col-12 mb-3 ">
               <div className="pl-lg-5">
                 {/*----Slide Employee profile-----*/}
-                <div className="bg-white shadow-9 rounded-4">
-                  <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
+                <div className="bg-white row shadow-9 rounded-4">
+                  <div className="px-5 col-lg-3 col-sm-4 col-md-4 pt-11 pb-5 text-center border-mercury">
                     <Link className="mb-4 position-relative">
                       <input
                         type="file"
@@ -66,7 +66,7 @@ const UserProfile = () => {
                       Product Designer
                     </p>
                   </div>
-                  <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
+                  <div className="px-9 col-lg-5 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10  border-mercury">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Personal Info</span>
                       <CustomButton
@@ -147,11 +147,11 @@ const UserProfile = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10">
+                  <div className="px-9 col-lg-4 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10 w-100">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Skill</span>
                       <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0 float-right"
                         onClick={() => setShowItSkills(true)}
                       />
                     </h4>
@@ -227,7 +227,7 @@ const UserProfile = () => {
               </div>
             </div>
 
-            <div className="col-12 col-xxl-8 col-lg-8 col-md-7 order-2 order-xl-1">
+            <div className="col-12 col-xxl-12 col-lg-12 col-md-12 order-2 order-xl-1">
               <div className="bg-white rounded-4 shadow-9">
                 {/*----Profile Header----*/}
                 <ul

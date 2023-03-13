@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 function EmployeeBox(props) {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div
       className="col-xxl-4 col-xl-4 col-lg-6 col-md-6 job_box p-3"
@@ -15,7 +17,7 @@ function EmployeeBox(props) {
         ) : null}
         <div className="row job_header m-0 align-items-center">
           <div className="media align-items-center company_box col-9 p-0">
-            <Link className="text_box text-left" to={"/jobdetail"}>
+            <div className="text_box text-left">
               {/* <img className="company_logo" src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png" alt="" /> */}
               <img
                 className="rounded-circle company_logo"
@@ -24,8 +26,8 @@ function EmployeeBox(props) {
                 height="50"
                 alt=""
               />
-            </Link>
-            <Link className="text_box text-left w-100" to={"/jobdetail"}>
+            </div>
+            <div className="text_box text-left w-100">
               <p className="font-size-3 text-default-color line-height-2 m-0">
                 Mathew Wade{" "}
                 <span className="age_gender font-size-3 text-smoke">
@@ -35,16 +37,25 @@ function EmployeeBox(props) {
               <h3 className="mb-0 font-size-6 heading-dark-color">
                 UI/UX Designer
               </h3>
-            </Link>
+            </div>
           </div>
           <div className="media justify-content-md-end col-3 p-0">
             <Link
               className="btn btn-secondary text-uppercase font-size-3 connect_btn"
-              to="/"
+              to=""
               data-toggle="modal"
               data-target="#signup"
+              onClick={() => setIsLoading(true)}
             >
-              Connect
+              {isLoading ? (
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              ) : (
+                <span>Connect</span>
+              )}
             </Link>
           </div>
           <div className="col-md-12 p-0 mt-2">
@@ -89,7 +100,7 @@ function EmployeeBox(props) {
               <li>
                 <Link
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  to="/"
+                  to=""
                 >
                   Visual Design
                 </Link>
@@ -97,7 +108,7 @@ function EmployeeBox(props) {
               <li>
                 <Link
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  to="/"
+                  to=""
                 >
                   Wireframing
                 </Link>
@@ -105,7 +116,7 @@ function EmployeeBox(props) {
               <li>
                 <Link
                   className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
-                  to="/"
+                  to=""
                 >
                   Scrum
                 </Link>

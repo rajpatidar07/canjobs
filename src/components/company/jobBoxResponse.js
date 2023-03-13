@@ -30,9 +30,12 @@ function JobBoxResponse() {
               <p className="font-size-3 text-default-color line-height-2 m-0">
                 Apple INC
               </p>
-              <h3 className="mb-0 font-size-6 heading-dark-color">
-                UI/UX Designer
-              </h3>
+              <Link to={"/job"}>
+                {" "}
+                <h3 className="mb-0 font-size-6 heading-dark-color">
+                  UI/UX Designer
+                </h3>
+              </Link>
             </div>
           </div>
           <div className="col-md-6 p-0">
@@ -127,13 +130,13 @@ function JobBoxResponse() {
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Applied for
+                      Contact
                     </th>
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Skills
+                      Address
                     </th>
                     <th
                       scope="col"
@@ -145,13 +148,13 @@ function JobBoxResponse() {
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Salary
+                      Job Type
                     </th>
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Contact
+                      Company
                     </th>
                   </tr>
                 </thead>
@@ -175,29 +178,29 @@ function JobBoxResponse() {
                     </th>
                     <td className=" py-7 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9863254170
+                        <br />
+                        Nicolas25@gmail.com
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        24 , yogesh vihar , indore
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        3 years React Develope
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
                     <td className=" py-7  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        JAVA , REACT JS ,HTML and CSS
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        4 years
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        20,000
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        +9632587410
-                        <br />
-                        email@gmail.com
+                        We2code
                       </h3>
                     </td>
                   </tr>
@@ -220,29 +223,29 @@ function JobBoxResponse() {
                     </th>
                     <td className=" py-7 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9863254170
+                        <br />
+                        Nicolas25@gmail.com
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        24 , yogesh vihar , indore
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        3 years React Develope
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
                     <td className=" py-7  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        JAVA , REACT JS ,HTML and CSS
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        4 years
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        20,000
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        +9632587410
-                        <br />
-                        email@gmail.com
+                        We2code
                       </h3>
                     </td>
                   </tr>
@@ -265,29 +268,29 @@ function JobBoxResponse() {
                     </th>
                     <td className=" py-7 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        Head of Marketing
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        JAVA , REACT JS ,HTML and CSS
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        4 years
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        20,000
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        +9632587410
+                        +9863254170
                         <br />
-                        email@gmail.com
+                        Nicolas25@gmail.com
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        24 , yogesh vihar , indore
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        3 years React Develope
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        Senior Project Manager
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        We2code
                       </h3>
                     </td>
                   </tr>
@@ -310,29 +313,29 @@ function JobBoxResponse() {
                     </th>
                     <td className=" py-7 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        UI Designer
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        JAVA , REACT JS ,HTML and CSS
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        4 years
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        20,000
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        +9632587410
+                        +9863254170
                         <br />
-                        email@gmail.com
+                        Nicolas25@gmail.com
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        24 , yogesh vihar , indore
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        3 years React Develope
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        Senior Project Manager
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        We2code
                       </h3>
                     </td>
                   </tr>
@@ -355,29 +358,29 @@ function JobBoxResponse() {
                     </th>
                     <td className=" py-7 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        +9863254170
+                        <br />
+                        Nicolas25@gmail.com
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        24 , yogesh vihar , indore
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        3 years React Develope
+                      </h3>
+                    </td>
+                    <td className=" py-7  pr-0">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
                     <td className=" py-7  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        JAVA , REACT JS ,HTML and CSS
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        4 years
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        20,000
-                      </h3>
-                    </td>
-                    <td className=" py-7  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        +9632587410
-                        <br />
-                        email@gmail.com
+                        We2code
                       </h3>
                     </td>
                   </tr>

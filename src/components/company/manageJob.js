@@ -4,7 +4,7 @@ import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
-import JobDetail from "./jobDetail";
+import JobDetailPage from "../common/jobdetail";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   return (
@@ -146,7 +146,7 @@ function ManageJobs() {
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              <JobDetail />
+              <JobDetailPage />
             </div>
           </div>
         </div>

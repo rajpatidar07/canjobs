@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function JobDetailPage() {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
       <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
@@ -247,10 +249,18 @@ function JobDetailPage() {
               </ul>
               <Link
                 to={""}
+                onClick={() => setIsLoading(true)}
                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                href="#"
               >
-                Apply to this job
+                {isLoading ? (
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                ) : (
+                  <span>Apply to this job</span>
+                )}
               </Link>
             </div>
           </div>

@@ -61,6 +61,12 @@ function Category() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
+                          #
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
                           Name
                         </th>
                         <th
@@ -79,11 +85,12 @@ function Category() {
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">1</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <Link
                               to=""
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
                             </Link>
@@ -99,24 +106,22 @@ function Category() {
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
                           >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">2</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <a
                               href="jobdetails.html"
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               UI Designer
                             </a>
@@ -132,24 +137,22 @@ function Category() {
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
                           >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">3</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <a
                               href="jobdetails.html"
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Head of Marketing
                             </a>
@@ -165,24 +168,22 @@ function Category() {
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
                           >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">4</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <a
                               href="jobdetails.html"
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Full-Stack Developer
                             </a>
@@ -198,13 +199,10 @@ function Category() {
                             onClick={() => setShowAddCategoryModal(true)}
                             to=""
                           >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>

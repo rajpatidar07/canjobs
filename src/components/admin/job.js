@@ -69,6 +69,12 @@ function Job() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
+                          #
+                        </th>
+                        <th
+                          scope="col"
+                          className=" border-0 font-size-4 font-weight-normal"
+                        >
                           Name
                         </th>
                         <th
@@ -99,19 +105,13 @@ function Job() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Salary
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
                           Experience
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Total Applicants
+                          Applied
                         </th>
                         <th
                           scope="col"
@@ -123,12 +123,13 @@ function Job() {
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">1</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <Link
                               to={""}
                               onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Senior Project Manager
                             </Link>
@@ -156,40 +157,35 @@ function Job() {
                         </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             0-5 years
                           </h3>
                         </th>
                         <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            47
-                          </h3>
+                          <Link to="/followup">
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                              47
+                            </h3>
+                          </Link>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">2</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <Link
                               to=""
                               onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               UI Designer
                             </Link>
@@ -217,40 +213,35 @@ function Job() {
                         </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             0-5 years
                           </h3>
                         </th>
                         <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            145
-                          </h3>
+                          <Link to="/followup">
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                              145
+                            </h3>
+                          </Link>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">3</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <Link
                               to=""
                               onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Head of Marketing
                             </Link>
@@ -278,18 +269,15 @@ function Job() {
                         </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             0-5 years
                           </h3>
                         </th>
                         <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            62
-                          </h3>
+                          <Link to="/followup">
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                              62
+                            </h3>
+                          </Link>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAddJobsModal(true)}>
@@ -297,19 +285,19 @@ function Job() {
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th className=" border-0 py-7">4</th>
                         <th scope="row" className=" border-0 py-7 ">
                           <div className="">
                             <Link
                               to=""
                               onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
                             >
                               Full-Stack Developer
                             </Link>
@@ -337,28 +325,22 @@ function Job() {
                         </th>
                         <th className=" py-7 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             0-5 years
                           </h3>
                         </th>
                         <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            184
-                          </h3>
+                          <Link to="/followup">
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                              184
+                            </h3>
+                          </Link>
                         </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -435,6 +417,7 @@ function Job() {
             </div>
           </div>
         </div>
+        {/* <!-- Job detail imported- --> */}
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-24 ">
             <div className="container">

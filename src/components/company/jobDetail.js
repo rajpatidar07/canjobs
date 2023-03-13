@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function JobDetail() {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
       <div className="tab-content" id="serachlist-tab">
@@ -1504,9 +1506,18 @@ function JobDetail() {
                     </ul>
                     <Link
                       to={""}
+                      onClick={() => setIsLoading(true)}
                       className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                     >
-                      Apply to this job
+                      {isLoading ? (
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      ) : (
+                        <span>Connect</span>
+                      )}
                     </Link>
                   </div>
                 </div>

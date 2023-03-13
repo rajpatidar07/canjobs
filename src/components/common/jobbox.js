@@ -19,7 +19,7 @@ function JobBox(props) {
         ) : null}
         <div className="row job_header m-0">
           <div className="media align-items-center company_box col-md-6 p-0">
-            <div className="text_box text-left" to={"/jobdetail"}>
+            <div className="text_box text-left">
               <img
                 className="company_logo"
                 src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
@@ -30,38 +30,55 @@ function JobBox(props) {
               <p className="font-size-3 text-default-color line-height-2 m-0">
                 Apple INC
               </p>
-              <h3 className="mb-0 font-size-6 heading-dark-color">
-                UI/UX Designer
-              </h3>
+              <Link to={"/jobdetail"}>
+                <h3 className="mb-0 font-size-6 heading-dark-color">
+                  UI/UX Designer
+                </h3>
+              </Link>
             </div>
           </div>
           <div className="col-md-6 p-0">
             <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Job Category">
+              <li
+                className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                title="Job Category"
+              >
                 <span className="mr-4">
                   <img src="image/svg/icon-loaction-pin-black.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Hospitality</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Location">
+              <li
+                className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                title="Location"
+              >
                 <span className="mr-4">
                   <img src="image/svg/icon-loaction-pin-black.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Berlyn, UK</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Job Type">
+              <li
+                className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                title="Job Type"
+              >
                 <span className="mr-4">
                   <img src="image/svg/icon-suitecase.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">Full-time</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Posted Time">
+              <li
+                className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                title="Posted Time"
+              >
                 <span className="mr-4">
                   <img src="image/svg/icon-clock.svg" alt="" />
                 </span>
                 <span className="font-weight-semibold">16 Jan 2023</span>
               </li>
-              <li className="mt-2 mr-8 font-size-small text-black-2 d-flex" title="Salary">
+              <li
+                className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                title="Salary"
+              >
                 <span className="mr-4">
                   <img src="image/svg/icon-clock.svg" alt="" />
                 </span>
@@ -115,7 +132,7 @@ function JobBox(props) {
                   to=""
                   onClick={() => setShowAddJobModal(true)}
                 >
-                  Edit
+                  Apply
                 </Link>
                 <AddJobModal
                   show={showAddJobModal}
@@ -129,7 +146,7 @@ function JobBox(props) {
                   to=""
                   onClick={() => setShowAddJobModal(true)}
                 >
-                  Apply
+                  Edit
                 </Link>
                 <AddJobModal
                   show={showAddJobModal}

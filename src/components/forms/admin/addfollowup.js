@@ -1,5 +1,4 @@
 import React from "react";
-import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 function Addfollowup(props) {
@@ -48,33 +47,45 @@ function Addfollowup(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <h5 className="text-center pt-2">Add Follow Up</h5>
           <form onSubmit={onAminFollowClick} className="pt-5">
-            <div className=" col px-0 pr-3 pb-5 mb-5">
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
+            <div className="col mb-5 pb-5">
+              <div className="card w-100 mb-1">
+                <div className="card-body">
+                  <h6 className="">
+                    02-03-2023
+                    <small className="float-right text-danger">10:15 Am</small>
+                  </h6>
+                  <p className="card-text">Talked with the react intern</p>
+                </div>
               </div>
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
+              <div className="card w-100 mb-1">
+                <div className="card-body">
+                  <h6 className="">
+                    02-03-2023
+                    <small className="float-right text-danger">10:15 Am</small>
+                  </h6>
+                  <p className="card-text">Talked with the react intern</p>
+                </div>
               </div>
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
+              <div className="card w-100 mb-1">
+                <div className="card-body">
+                  <h6 className="">
+                    02-03-2023
+                    <small className="float-right text-danger">10:15 Am</small>
+                  </h6>
+                  <p className="card-text">Talked with the react intern</p>
+                </div>
               </div>
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
+              <div className="card w-100 mb-1">
+                <div className="card-body">
+                  <h6 className="">
+                    02-03-2023
+                    <small className="float-right text-danger">10:15 Am</small>
+                  </h6>
+                  <p className="card-text">Talked with the react intern</p>
+                </div>
               </div>
             </div>
-            <div className="form-group col px-0 pr-3">
+            <div className="form-group col w-100">
               <label
                 htmlFor="dis"
                 className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
@@ -82,24 +93,19 @@ function Addfollowup(props) {
                 Description : <span className="text-danger">*</span>
               </label>
               <div className="position-relative">
-                <div
-                  sm="6"
+                <input
+                  type={"text"}
                   className={
                     errors.dis
-                      ? "border border-danger rounded overflow-hidden"
-                      : "border rounded overflow-hidden"
+                      ? "form-control border border-danger"
+                      : "form-control"
                   }
-                >
-                  <CKEditor
-                    type={"classic"}
-                    name={"dis"}
-                    id={"dis"}
-                    data={state.dis}
-                    value={state.dis}
-                    onChange={onInputChange}
-                    initData="Add Discription"
-                  />
-                </div>
+                  value={state.dis}
+                  onChange={onInputChange}
+                  id="dis"
+                  name="dis"
+                  placeholder="Discription"
+                />
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                 {errors.dis && (
                   <span key={errors.dis} className="text-danger font-size-3">

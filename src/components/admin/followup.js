@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
-import CustomButton from "../common/button";
+import EmployeeDetails from "../common/employeeDetail";
 import Addfollowup from "../forms/admin/addfollowup";
 
 function Followup() {
   let [followup, setFollowUp] = useState(false);
+  let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -14,7 +16,14 @@ function Followup() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div
+          className={
+            showEmployeeProfile === false
+              ? "dashboard-main-container mt-24"
+              : "d-none"
+          }
+          id="dashboard-body"
+        >
           <div className="container">
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
@@ -40,18 +49,18 @@ function Followup() {
                       </select>
                     </div>
                   </div> */}
-                  <div className="float-md-right mt-6">
+                  {/* <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => setFollowUp(true)}
                     >
                       Add Follow up
-                    </CustomButton>
-                    <Addfollowup
-                      show={followup}
-                      close={() => setFollowUp(false)}
-                    />
-                  </div>
+                    </CustomButton> */}
+                  <Addfollowup
+                    show={followup}
+                    close={() => setFollowUp(false)}
+                  />
+                  {/* </div> */}
                 </div>
               </div>
               <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
@@ -61,9 +70,27 @@ function Followup() {
                       <tr>
                         <th
                           scope="col"
+                          className="text-center pl-0 border-0 font-size-4 font-weight-normal"
+                        >
+                          #
+                        </th>
+                        <th
+                          scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
                         >
                           Name
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Contact
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Address
                         </th>
                         <th
                           scope="col"
@@ -87,29 +114,46 @@ function Followup() {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Contact
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          Address
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
                           Action
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
-                        <th scope="row" className=" py-7">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Nicolas Bradley <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Shekher Pandey (35)
-                            <br />
-                            Male
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            24 , yogesh vihar , indore
                           </h3>
                         </th>
                         <th className=" py-7">
@@ -128,19 +172,9 @@ function Followup() {
                             Infosys
                           </h3>
                         </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
                         <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
+                          <Link to="" onClick={() => setFollowUp(true)}>
+                            <span className="fa fa-plus text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
@@ -150,11 +184,40 @@ function Followup() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th className=" py-7">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Nicolas Bradley <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            24 , yogesh vihar , indore
                           </h3>
                         </th>
                         <th className=" py-7">
@@ -173,19 +236,9 @@ function Followup() {
                             Infosys
                           </h3>
                         </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
                         <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
+                          <Link to="" onClick={() => setFollowUp(true)}>
+                            <span className="fa fa-plus text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
@@ -195,11 +248,40 @@ function Followup() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th className=" py-7">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Nicolas Bradley <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            24 , yogesh vihar , indore
                           </h3>
                         </th>
                         <th className=" py-7">
@@ -218,19 +300,9 @@ function Followup() {
                             Infosys
                           </h3>
                         </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
                         <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
+                          <Link to="" onClick={() => setFollowUp(true)}>
+                            <span className="fa fa-plus text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
@@ -240,11 +312,40 @@ function Followup() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th className=" py-7">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Nicolas Bradley <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            24 , yogesh vihar , indore
                           </h3>
                         </th>
                         <th className=" py-7">
@@ -263,19 +364,9 @@ function Followup() {
                             Infosys
                           </h3>
                         </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
                         <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
+                          <Link to="" onClick={() => setFollowUp(true)}>
+                            <span className="fa fa-plus text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
@@ -285,11 +376,40 @@ function Followup() {
                         </th>
                       </tr>
                       <tr className="border border-color-2">
-                        <th className=" py-7">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
+                        <th className=" py-7  pr-0">
+                          <Link
+                            to={""}
+                            onClick={() => setShowEmployeeProfile(true)}
+                          >
+                            <h4 className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                              Nicolas Bradley <br />
+                              <span className="text-gray font-size-2">
+                                single <br />
+                                (Male 25 years)
+                              </span>
+                            </h4>
+                          </Link>
+                        </th>
+                        <th className=" py-7  pr-0">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
+                            +9863254170 <br />
+                            Nicolas25@gmail.com
+                          </h3>
+                        </th>
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            24 , yogesh vihar , indore
                           </h3>
                         </th>
                         <th className=" py-7">
@@ -308,19 +428,9 @@ function Followup() {
                             Infosys
                           </h3>
                         </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
                         <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
+                          <Link to="" onClick={() => setFollowUp(true)}>
+                            <span className="fa fa-plus text-gray px-2"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
@@ -400,33 +510,32 @@ function Followup() {
             </div>
           </div>
         </div>
-        {/* {showJobDetails === true ? (
-    <div className="dashboard-main-container mt-24 ">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 dark-mode-texts">
-            <div className="mb-9">
-              <Link
-                to={""}
-                onClick={() => setShowJobDetails(false)}
-                className="d-flex align-items-center ml-4"
-              >
-                
-                <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                  Back
-                </span>
-              </Link>
+        {/* <!-- Employee detail imported- --> */}
+        {showEmployeeProfile === true ? (
+          <div className="dashboard-main-container mt-24">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-12 dark-mode-texts">
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowEmployeeProfile(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-18">
+                <EmployeeDetails />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mb-18">
-          
-          <JobDetailsBox />
-        </div>
-      </div>
-    </div>
-  ) : null} */}
+        ) : null}
       </div>
     </>
   );

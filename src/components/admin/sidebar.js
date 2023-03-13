@@ -47,7 +47,7 @@ const AdminSidebar = () => {
           />
         </div>
         <ul className="list-unstyled dashboard-layout-sidebar">
-          <li className="active">
+          <li className="">
             <Link
               to="/dashboard"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"

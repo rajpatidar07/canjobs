@@ -6,7 +6,7 @@ import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
 
 function ManageAdmin() {
-  let [showAminDetails, setShowAminDetails] = useState(false);
+  // let [showAminDetails, setShowAminDetails] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
 
   return (
@@ -18,9 +18,10 @@ function ManageAdmin() {
         <AdminSidebar />
         <div
           className={
-            showAminDetails === false
-              ? "dashboard-main-container mt-24"
-              : "d-none"
+            // showAminDetails === false
+            // ?
+            "dashboard-main-container mt-24"
+            // : "d-none"
           }
           id="dashboard-body"
         >
@@ -70,9 +71,21 @@ function ManageAdmin() {
                       <tr>
                         <th
                           scope="col"
+                          className="pl-0 border-0 text-center font-size-4 font-weight-normal"
+                        >
+                          #
+                        </th>
+                        <th
+                          scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
                         >
                           Name
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Email
                         </th>
                         <th
                           scope="col"
@@ -96,24 +109,34 @@ function ManageAdmin() {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Email{" "}
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
                           Action
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="border border-color-2">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
                         <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <h3 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                             Shekher Pandey
                           </h3>
                         </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            email@gmail.com
+                          </h3>
+                        </th>
+                        <th className="pl-6 border-0 py-7 ">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {/* <Link
                               to={""}
@@ -134,32 +157,40 @@ function ManageAdmin() {
                             Infosys
                           </h3>
                         </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
                         <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <h3 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                             Ruchi Gupta
                           </h3>
                         </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            email@gmail.com
+                          </h3>
+                        </th>
+                        <th className="pl-6 border-0 py-7 ">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {/* <Link
                               to=""
@@ -180,32 +211,40 @@ function ManageAdmin() {
                             We2code
                           </h3>
                         </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
                         <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <h3 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                             Ajali vishwkarma
                           </h3>
                         </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            email@gmail.com
+                          </h3>
+                        </th>
+                        <th className="pl-6 border-0 py-7 ">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {/* <Link
                               to=""
@@ -226,32 +265,40 @@ function ManageAdmin() {
                             Syska
                           </h3>
                         </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
                         </th>
                       </tr>
                       <tr className="border border-color-2">
+                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              <img
+                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                          </div>
+                        </th>
                         <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <h3 className="font-size-4 mb-0 font-weight-semibold text-black-2">
                             Shivam Thakur
                           </h3>
                         </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
+                        <th className=" py-7 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            email@gmail.com
+                          </h3>
+                        </th>
+                        <th className="pl-6 border-0 py-7 ">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {/* <Link
                               to=""
@@ -272,20 +319,12 @@ function ManageAdmin() {
                             Tech info
                           </h3>
                         </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
                         <th className=" py-7 min-width-px-100">
                           <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-5"></span>
                           </Link>
                           <Link to="">
                             <span className=" text-danger">
-                              {" "}
                               <i className="fa fa-trash"></i>
                             </span>
                           </Link>
@@ -373,7 +412,7 @@ function ManageAdmin() {
                     onClick={() => setShowJobDetails(false)}
                     className="d-flex align-items-center ml-4"
                   >
-                    {" "}
+                    
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back
@@ -383,7 +422,7 @@ function ManageAdmin() {
               </div>
             </div>
             <div className="mb-18">
-              {" "}
+              
               <JobDetailsBox />
             </div>
           </div>
