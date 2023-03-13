@@ -6,6 +6,7 @@ import EmployeeDetails from "../common/employeeDetail";
 import JobDetailsBox from "../common/jobdetail";
 
 const AdminDashboard = () => {
+  // eslint-disable-next-line
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
 

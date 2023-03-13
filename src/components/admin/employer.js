@@ -9,6 +9,7 @@ import ContactInfo from "../forms/employer/contactInfo";
 import KycComplianceDetails from "../forms/employer/kyc";
 
 function Employer() {
+  // eslint-disable-next-line
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showKycModal, setShowkycMOdal] = useState(false);
   let [showContactModal, setShowContactMOdal] = useState(false);

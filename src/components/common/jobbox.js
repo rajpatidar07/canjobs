@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import AddJobModal from "../forms/employer/job";
 
 function JobBox(props) {
-  let [showAddJobModal, setShowAddJobModal] = useState(false);
 
   return (
     <div
@@ -129,29 +127,20 @@ function JobBox(props) {
               <>
                 <Link
                   className="btn btn-secondary text-uppercase font-size-3"
-                  to=""
-                  onClick={() => setShowAddJobModal(true)}
+                  onClick={() => undefined}
                 >
                   Apply
                 </Link>
-                <AddJobModal
-                  show={showAddJobModal}
-                  close={() => setShowAddJobModal(false)}
-                />
+
               </>
             ) : (
               <>
                 <Link
                   className="btn btn-secondary text-uppercase font-size-3"
-                  to=""
-                  onClick={() => setShowAddJobModal(true)}
+                  onClick={() => undefined}
                 >
                   Edit
                 </Link>
-                <AddJobModal
-                  show={showAddJobModal}
-                  close={() => setShowAddJobModal(false)}
-                />
               </>
             )}
           </div>
