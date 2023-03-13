@@ -25,8 +25,8 @@ const UserProfile = () => {
             <div className="col-12 mb-3 ">
               <div className="pl-lg-5">
                 {/*----Slide Employee profile-----*/}
-                <div className="bg-white row shadow-9 rounded-4">
-                  <div className="px-5 col-lg-3 col-sm-4 col-md-4 pt-11 pb-5 text-center border-mercury">
+                <div className="bg-white row shadow-9 rounded-4 align-item-center">
+                  <div className="px-5 col-lg-3 col-sm-4 col-md-4 pt-11 pb-5 text-center border-mercury border-right border-dark">
                     <Link className="mb-4 position-relative">
                       <input
                         type="file"
@@ -66,7 +66,7 @@ const UserProfile = () => {
                       Product Designer
                     </p>
                   </div>
-                  <div className="px-9 col-lg-5 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10  border-mercury">
+                  <div className="px-9 col-lg-5 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10  border-mercury border-right border-dark">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Personal Info</span>
                       <CustomButton
