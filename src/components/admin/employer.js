@@ -3,13 +3,13 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-import AddEmployer from "../forms/employer/employer";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import ContactInfo from "../forms/employer/contactInfo";
 import KycComplianceDetails from "../forms/employer/kyc";
 
 function Employer() {
+  // eslint-disable-next-line
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showKycModal, setShowkycMOdal] = useState(false);
   let [showContactModal, setShowContactMOdal] = useState(false);

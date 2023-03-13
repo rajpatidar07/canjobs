@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { EmployeeLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
-
+  let [users, setusers] = useState(false);
+  useEffect(() => {
+    const getUsersAndPosts = async () => {
+      const usersData = await EmployeeLogin();
+      setusers(usersData);
+    };
+    getUsersAndPosts();
+  }, []);
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     useremail: "",
@@ -19,18 +27,18 @@ export default function EmployeeLoginModal(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     userpassword: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     tandr: [
       (value) =>

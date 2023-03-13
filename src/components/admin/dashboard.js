@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import EmployeeDetails from "../common/employeeDetail";
 
 const AdminDashboard = () => {
+  // eslint-disable-next-line
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -26,7 +27,7 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href=""
+                href="/"
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-blue bg-blue-opacity-1 circle-56 font-size-6 mr-7">
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href=""
+                href="/"
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-pink bg-pink-opacity-1 circle-56 font-size-6 mr-7">
@@ -68,7 +69,7 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href=""
+                href="/"
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-orange bg-orange-opacity-1 circle-56 font-size-6 mr-7">
@@ -89,7 +90,7 @@ const AdminDashboard = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
-                href=""
+                href="/"
                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
               >
                 <div className="text-egg-blue bg-egg-blue-opacity-1 circle-56 font-size-6 mr-7">
@@ -646,7 +647,7 @@ const AdminDashboard = () => {
                         className="pl-6 border-0 py-7 min-width-px-235"
                       >
                         <div>
-                          <a className="font-size-4 mb-0 font-weight-semibold text-black-2">
+                          <a className="font-size-4 mb-0 font-weight-semibold text-black-2" href="/">
                             Senior Project Manager
                           </a>
                         </div>
@@ -673,7 +674,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -681,7 +682,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -695,7 +696,7 @@ const AdminDashboard = () => {
                       >
                         <div>
                           <a
-                            href=""
+                            href="/"
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
                           >
                             UI Designer
@@ -724,7 +725,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -732,7 +733,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -746,7 +747,7 @@ const AdminDashboard = () => {
                       >
                         <div>
                           <a
-                            href=""
+                            href="/"
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
                           >
                             Head of Marketing
@@ -775,7 +776,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -783,7 +784,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete
@@ -797,7 +798,7 @@ const AdminDashboard = () => {
                       >
                         <div>
                           <a
-                            href=""
+                            href="/"
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
                           >
                             Full-Stack Developer
@@ -826,7 +827,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-80">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
                         >
                           Edit
@@ -834,7 +835,7 @@ const AdminDashboard = () => {
                       </td>
                       <td className=" py-7 min-width-px-100">
                         <a
-                          href=""
+                          href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
                         >
                           Delete

@@ -4,8 +4,9 @@ import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
-
+// eslint-disable-next-line
 function ManageAdmin() {
+  // eslint-disable-next-line
   let [showAminDetails, setShowAminDetails] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
 

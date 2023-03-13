@@ -158,7 +158,7 @@ function CompanyProfile() {
           </div>
         </div>
       </div>
-      {1 == 1 ? null : <EmployeeFooter />}
+      <EmployeeFooter />
     </div>
   );
 }
