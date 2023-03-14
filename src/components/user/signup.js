@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { EmployeeSignUp } from "../../api/api";
 import useValidation from "../common/useValidation";
 
 export default function EmployeeSignupModal(props) {
@@ -11,33 +12,31 @@ export default function EmployeeSignupModal(props) {
     useremail: "",
     userpassword: "",
     resume: "",
-    tandr: "",
   };
-  // VALIDATION CONDITIONS
+  const [isChecked, setIsChecked] = useState(false);
+  const [termsErr, settermsErr] = useState("");
+  const [SingUpSuccess, setSingUpSuccess] = useState("");
+  // VALIDATION CONDITIONS termsErr
   const validators = {
     useremail: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     userpassword: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    resume: [],
-    tandr: [
-      (value) =>
-        value ? null : "Please accept terms and conditions o continue",
-    ],
+    resume: []
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
@@ -46,10 +45,21 @@ export default function EmployeeSignupModal(props) {
   );
 
   // USER SIGNUP SUBMIT BUTTON
-  const onUserSignUpClick = (event) => {
+  const onUserSignUpClick = async (event) => {
     event.preventDefault();
+
     if (validate()) {
+      if (isChecked) {
+        settermsErr("")
+        const signUpData = await EmployeeSignUp(state);
+        if (signUpData.status) {
+          setSingUpSuccess('success')
+        }
+      } else {
+        settermsErr("Accept terms and conditions")
+      }
     }
+
   };
   // END USER SIGNUP VALIDATION
 
@@ -102,205 +112,215 @@ export default function EmployeeSignupModal(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
-                  {/* SOCIAL MEDIA LINK BUTTONS */}
-                  <div className="row">
-                    <div className="col-4 col-xs-12">
-                      <Link
-                        to="/"
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                      >
-                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-3">
-                          Import from LinkedIn
-                        </span>
-                      </Link>
-                    </div>
-                    <div className="col-4 col-xs-12">
-                      <Link
-                        to="/"
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                      >
-                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-3">
-                          Import from Google
-                        </span>
-                      </Link>
-                    </div>
-                    <div className="col-4 col-xs-12">
-                      <Link
-                        to="/"
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                      >
-                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-3">
-                          Import from Facebook
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                  {/* END SOCIAL MEDIA LINK BUTTONS */}
-                  <div className="or-devider">
-                    <span className="font-size-3 line-height-reset">Or</span>
-                  </div>
-
-                  {/* SIGNUP FORM */}
-                  <form onSubmit={onUserSignUpClick}>
-                    {/* FORM FIELDS */}
-                    <div className="form-group">
-                      <label
-                        htmlFor="useremail"
-                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                      >
-                        E-mail<span className="text-danger"> *</span> :
-                      </label>
-                      <input
-                        name="useremail"
-                        value={state.useremail}
-                        onChange={onInputChange}
-                        type="email"
-                        className={
-                          errors.useremail
-                            ? "form-control border border-danger"
-                            : "form-control"
-                        }
-                        placeholder="example@gmail.com"
-                        id="useremail"
-                      />
-                      {/* ERROR MSG FOR USEREMAIL */}
-                      {errors.useremail && (
-                        <span
-                          key={errors.useremail}
-                          className="text-danger font-size-3"
+                {SingUpSuccess === 'success' ?
+                  <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                    Congratulations! <br />You have successfully registered your account. Please login to continue
+                    <br />
+                    <Link
+                      to=""
+                      className="btn btn-primary mt-12"
+                      onClick={props.loginClick}
+                    >
+                      Login
+                    </Link>
+                  </div> :
+                  <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                    {/* SOCIAL MEDIA LINK BUTTONS */}
+                    <div className="row">
+                      <div className="col-4 col-xs-12">
+                        <Link
+                          to="/"
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                         >
-                          {errors.useremail}
-                        </span>
-                      )}
+                          <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <span className="d-none d-xs-block mx-5 px-3">
+                            Import from LinkedIn
+                          </span>
+                        </Link>
+                      </div>
+                      <div className="col-4 col-xs-12">
+                        <Link
+                          to="/"
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                        >
+                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <span className="d-none d-xs-block mx-5 px-3">
+                            Import from Google
+                          </span>
+                        </Link>
+                      </div>
+                      <div className="col-4 col-xs-12">
+                        <Link
+                          to="/"
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                        >
+                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <span className="d-none d-xs-block mx-5 px-3">
+                            Import from Facebook
+                          </span>
+                        </Link>
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <label
-                        htmlFor="userpassword"
-                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                      >
-                        Password<span className="text-danger"> *</span> :
-                      </label>
-                      <div className="position-relative">
+                    {/* END SOCIAL MEDIA LINK BUTTONS */}
+                    <div className="or-devider">
+                      <span className="font-size-3 line-height-reset">Or</span>
+                    </div>
+
+                    {/* SIGNUP FORM */}
+                    <form onSubmit={onUserSignUpClick}>
+                      {/* FORM FIELDS */}
+                      <div className="form-group">
+                        <label
+                          htmlFor="useremail"
+                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                          E-mail<span className="text-danger"> *</span> :
+                        </label>
                         <input
-                          name="userpassword"
-                          value={state.userpassword}
+                          name="useremail"
+                          value={state.useremail}
                           onChange={onInputChange}
-                          type="password"
+                          type="email"
                           className={
-                            errors.userpassword
+                            errors.useremail
                               ? "form-control border border-danger"
                               : "form-control"
                           }
-                          id="userpassword"
-                          placeholder="Enter password"
+                          placeholder="example@gmail.com"
+                          id="useremail"
                         />
-                        {/* ERROR MSG FOR PASSWORD */}
-                        {errors.userpassword && (
+                        {/* ERROR MSG FOR USEREMAIL */}
+                        {errors.useremail && (
                           <span
-                            key={errors.userpassword}
+                            key={errors.useremail}
                             className="text-danger font-size-3"
                           >
-                            {errors.userpassword}
+                            {errors.useremail}
                           </span>
                         )}
-                        {/* <Link
+                      </div>
+                      <div className="form-group">
+                        <label
+                          htmlFor="userpassword"
+                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                          Password<span className="text-danger"> *</span> :
+                        </label>
+                        <div className="position-relative">
+                          <input
+                            name="userpassword"
+                            value={state.userpassword}
+                            onChange={onInputChange}
+                            type="password"
+                            className={
+                              errors.userpassword
+                                ? "form-control border border-danger"
+                                : "form-control"
+                            }
+                            id="userpassword"
+                            placeholder="Enter password"
+                          />
+                          {/* ERROR MSG FOR PASSWORD */}
+                          {errors.userpassword && (
+                            <span
+                              key={errors.userpassword}
+                              className="text-danger font-size-3"
+                            >
+                              {errors.userpassword}
+                            </span>
+                          )}
+                          {/* <Link
                           to="/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password2"
                         ></Link> */}
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <label
-                        htmlFor="confirmpassword"
-                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                      >
-                        Upload Resume
-                      </label>
-                      <div className="position-relative">
-                        <input
-                          name="resume"
-                          value={state.resume}
-                          onChange={onInputChange}
-                          type="file"
-                          className={
-                            errors.resume
-                              ? "form-control border border-danger"
-                              : "form-control"
-                          }
-                          id="resume"
-                          placeholder="Enter password"
-                        />
-                        {errors.resume && (
-                          <span
-                            key={errors.resume}
-                            className="text-danger font-size-3"
-                          >
-                            {errors.resume}
-                          </span>
-                        )}
-                        {/* <Link
+                      <div className="form-group">
+                        <label
+                          htmlFor="confirmpassword"
+                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                          Upload Resume
+                        </label>
+                        <div className="position-relative">
+                          <input
+                            name="resume"
+                            value={state.resume}
+                            onChange={onInputChange}
+                            type="file"
+                            className={
+                              errors.resume
+                                ? "form-control border border-danger"
+                                : "form-control"
+                            }
+                            id="resume"
+                            placeholder="Enter password"
+                          />
+                          {errors.resume && (
+                            <span
+                              key={errors.resume}
+                              className="text-danger font-size-3"
+                            >
+                              {errors.resume}
+                            </span>
+                          )}
+                          {/* <Link
                           to="/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
                           data-show-pass="password23"
                         ></Link> */}
+                        </div>
                       </div>
-                    </div>
-                    {/* END FORM FIELDS  */}
-                    <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
-                      <label
-                        htmlFor="tandr"
-                        className="gr-check-input d-flex  mr-3"
-                      >
-                        <input
-                          type="checkbox"
-                          id="tandr"
-                          name="tandr"
-                          onChange={onInputChange}
-                          className="text-black-2 pt-5 mr-5"
-                        />
-                        <span className="font-size-3 mb-0 line-height-reset d-block">
-                          Agree to the{" "}
-                          <Link to="" className="text-primary">
-                            Terms & Conditions
-                          </Link>
-                        </span>
-                      </label>
-                      {/*----ERROR MESSAGE FOR terms----*/}
-                      {errors.tandr && (
+                      {/* END FORM FIELDS  */}
+                      <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
+                        <label
+                          htmlFor="tandr"
+                          className="gr-check-input d-flex  mr-3"
+                        >
+                          <input
+                            type="checkbox"
+                            id="tandr"
+                            name="tandr"
+                            onChange={(event) => { setIsChecked(event.target.checked) }}
+                            className="text-black-2 pt-5 mr-5"
+                          />
+                          <span className="font-size-3 mb-0 line-height-reset d-block">
+                            Agree to the{" "}
+                            <Link to="" className="text-primary">
+                              Terms & Conditions
+                            </Link>
+                          </span>
+                        </label>
+                        {/*----ERROR MESSAGE FOR terms----*/}
                         <span
-                          key={errors.tandr}
+                          key={termsErr}
                           className="text-danger font-size-3"
                         >
-                          {errors.tandr}
+                          {termsErr}
                         </span>
-                      )}
-                    </div>
-                    <div className="form-group text-center">
-                      <button
-                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                        type="submit"
-                      >
-                        Sign Up
-                      </button>
-                    </div>
-                    <p className="font-size-4 text-center heading-default-color">
-                      Already have an account?{" "}
-                      <Link
-                        to=""
-                        className="text-primary"
-                        onClick={props.loginClick}
-                      >
-                        Login
-                      </Link>
-                    </p>
-                  </form>
-                  {/* END SIGNUP FORM */}
-                </div>
+                      </div>
+                      <div className="form-group text-center">
+                        <button
+                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                          type="submit"
+                        >
+                          Sign Up
+                        </button>
+                      </div>
+                      <p className="font-size-4 text-center heading-default-color">
+                        Already have an account?{" "}
+                        <Link
+                          to=""
+                          className="text-primary"
+                          onClick={props.loginClick}
+                        >
+                          Login
+                        </Link>
+                      </p>
+                    </form>
+                    {/* END SIGNUP FORM */}
+                  </div>}
               </div>
             </div>
           </div>

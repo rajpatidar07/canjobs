@@ -9,12 +9,12 @@ export default function EmployeeLoginModal(props) {
 
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
-    useremail: "",
-    userpassword: "",
+    email: "",
+    password: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
-    useremail: [
+    email: [
       (value) =>
         value === null || value.trim() === ""
           ? "Email is required"
@@ -22,7 +22,7 @@ export default function EmployeeLoginModal(props) {
             ? null
             : "Email is invalid",
     ],
-    userpassword: [
+    password: [
       (value) =>
         value === ""
           ? "Password is required"
@@ -74,7 +74,7 @@ export default function EmployeeLoginModal(props) {
                 <div className="pt-10 pb-6 pl-11 pr-12 bg-black-2 h-100 d-flex flex-column dark-mode-texts">
                   <div className="pb-9">
                     <h3 className="font-size-8 text-white line-height-reset pb-4 line-height-1p4">
-                      Welcome Backkkkkkkkkkk
+                      Welcome Back
                     </h3>
                     {showForgotPassword === false ? (
                       <p className="mb-0 font-size-4 text-white">
@@ -164,7 +164,7 @@ export default function EmployeeLoginModal(props) {
                       </label>
                       <input
                         type="email"
-                        name="useremail"
+                        name="email"
                         value={state.useremail}
                         onChange={onInputChange}
                         className={
@@ -198,7 +198,7 @@ export default function EmployeeLoginModal(props) {
                       </label>
                       <div className="position-relative">
                         <input
-                          name="userpassword"
+                          name="password"
                           type="password"
                           value={state.userpassword}
                           onChange={onInputChange}
