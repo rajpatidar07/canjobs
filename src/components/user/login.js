@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { EmployeeLogin } from "../../api/api";
@@ -6,19 +6,11 @@ import useValidation from "../common/useValidation";
 
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
-  let [users, setusers] = useState(false);
-  useEffect(() => {
-    const getUsersAndPosts = async () => {
-      const usersData = await EmployeeLogin();
-      setusers(usersData);
-    };
-    getUsersAndPosts();
-  }, []);
+
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     useremail: "",
     userpassword: "",
-    tandr: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -34,16 +26,8 @@ export default function EmployeeLoginModal(props) {
       (value) =>
         value === ""
           ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-            value
-          )
-            ? null
-            : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
-    ],
-    tandr: [
-      (value) =>
-        value ? null : "Please accept terms and conditions to continue",
-    ],
+          : null
+    ]
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
   const { state, onInputChange, errors, validate } = useValidation(
@@ -52,11 +36,16 @@ export default function EmployeeLoginModal(props) {
   );
 
   /*----LOGIN SUBMIT FUNCTION----*/
-  const onUserLoginClick = (event) => {
+  const onUserLoginClick = async (event) => {
     event.preventDefault();
 
     if (validate()) {
       // handle form submission
+      const updatedTodo = await EmployeeLogin(state);
+      if (updatedTodo.status) {
+        localStorage.setItem("token", updatedTodo.token);
+        props.close();
+      }
     }
   };
   // END USER LOGIN VALIDATION
