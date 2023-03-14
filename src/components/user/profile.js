@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import EmployementDetails from "../forms/user/employement";
@@ -7,6 +7,7 @@ import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
+import { EmployeeDetails } from "../../api/api";
 
 const UserProfile = () => {
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
@@ -14,7 +15,15 @@ const UserProfile = () => {
   const [showEducation, setShowEducation] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
-
+  const [userDetail, setuserDetail] = useState([]);
+  const UserData = async () => {
+    const userData = await EmployeeDetails();
+    setuserDetail(userData)
+  }
+  useEffect(() => {
+    UserData();
+  }, [localStorage.getItem("user_id")]);
+  console.log(JSON.stringify(userDetail))
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">

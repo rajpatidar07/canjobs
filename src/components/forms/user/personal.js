@@ -1,12 +1,13 @@
 import moment from "moment/moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { CKEditor } from "ckeditor4-react";
+import { EmployeeDetails } from "../../../api/api";
 
 function PersonalDetails(props) {
-  // USER PERSONAL DETAIL VALIDATION
 
+  // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     userfullname: "",
@@ -33,32 +34,32 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     useremail: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     usermobileno: [
       (value) =>
         value === "" || value.trim() === ""
           ? "MobileNo. is required"
           : value.length !== 10
-          ? "Mobile no should be of 10 digits"
-          : null,
+            ? "Mobile no should be of 10 digits"
+            : null,
     ],
     userdesc: [
       (value) =>
         value === ""
           ? "Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character"
-          : null,
+            ? "Cannot use special character"
+            : null,
     ],
     userdob: [(value) => (value ? null : "Dob is required")],
     usergender: [
@@ -71,32 +72,32 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     currentlocation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     currentcountry: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Country is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     langauages: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Language is required"
           : (value.length = 5
-              ? "Language should not be more than 5"
-              : /[^A-Za-z 0-9]/g.test(value)
+            ? "Language should not be more than 5"
+            : /[^A-Za-z 0-9]/g.test(value)
               ? "Cannot use special character "
               : null),
     ],
@@ -105,16 +106,16 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     interest: [
       (value) =>
         value === ""
           ? "Interest is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     experience: [(value) => (value === "" ? "Experience is required" : null)],
     workpermit: [(value) => (value === "" ? "Work Permit is required" : null)],
@@ -123,8 +124,8 @@ function PersonalDetails(props) {
         value === "" || value.trim() === ""
           ? "Other Permit is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
