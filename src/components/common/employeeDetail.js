@@ -18,7 +18,7 @@ const UserProfile = (props) => {
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
-      <EmployeeHeader />
+      {userType === "admin" ? null : <EmployeeHeader />}
       <div
         className={
           userType === "admin"
@@ -47,7 +47,7 @@ const UserProfile = (props) => {
                   <div
                     className={
                       userType === "admin"
-                        ? "px-9 col-lg-4 col-sm-6 col-md-6 pt-lg-5 pt-9 pt-xl-9 pb-10 text-danger border-mercury"
+                        ? "px-9 col-lg-4 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10 text-danger border-mercury"
                         : "px-5 pt-11 pb-5 text-center border-bottom border-mercury"
                     }
                   >
@@ -93,7 +93,7 @@ const UserProfile = (props) => {
                   <div
                     className={
                       userType === "admin"
-                        ? "px-9 col-lg-8 col-sm-6 col-md-6 pt-lg-5 pt-9 pt-xl-9 pb-10"
+                        ? "px-9 col-lg-4 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10"
                         : "px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury"
                     }
                   >
@@ -110,13 +110,7 @@ const UserProfile = (props) => {
                     </h4>
                     <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/envelope.svg"
-                            alt="Email"
-                          />
+                        <span className="font-size-3 text-smoke text-break mr-3">
                           name_ac@domain.com
                         </span>
                       </div>
@@ -180,7 +174,7 @@ const UserProfile = (props) => {
                   <div
                     className={
                       userType === "admin"
-                        ? "px-9 col-lg-12 col-sm-12 col-md-12 pt-lg-5 pt-9 pt-xl-9 pb-10"
+                        ? "px-9 col-lg-4 col-sm-4 col-md-4 pt-lg-5 pt-9 pt-xl-9 pb-10"
                         : "px-9 pt-lg-5 pt-9 pt-xl-9 pb-10"
                     }
                   >
