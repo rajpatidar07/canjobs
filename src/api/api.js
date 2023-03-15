@@ -19,13 +19,13 @@ export const EmployeeLogin = async (props) => {
     return response.data;
 };
 export const EmployeeDetails = async () => {
-    const config = {
-        id: 13,
-        headers: { 'Authorization': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZV9pZCI6IjEzIiwiQVBJX1RJTUUiOjE2Nzg3OTMyOTV9.yDNPFrthFl7Ohe7-dylHNvaiNUA49cCrrFh7cTIQ2H0" }
-    };
     const formData = new FormData();
-    const response = await axios.get(`${API_URL}getEmployeeDetail`, 13, headers = {
-        'Authorization': 'Bearer <access_token>'
+    formData.append('employee_id', 13);
+    const response = await axios.get(`${API_URL}getEmployeeDetail?employee_id=13`, {
+        'headers': {
+            'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZV9pZCI6IjEzIiwiQVBJX1RJTUUiOjE2Nzg3OTU3MjR9.PkD7cwTr75050yj9wVAXg-fU515yEjrcy2VXeNsVkoQ'
+        }
+
     });
     return response.data;
 };
