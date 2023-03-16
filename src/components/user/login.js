@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { EmployeeLogin } from "../../api/api";
+import { EmployeeDetails, EmployeeLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 
 export default function EmployeeLoginModal(props) {
@@ -38,10 +38,10 @@ export default function EmployeeLoginModal(props) {
   /*----LOGIN SUBMIT FUNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
+    const updatedTodo = await EmployeeDetails();
 
     if (validate()) {
       // handle form submission
-      const updatedTodo = await EmployeeLogin(state);
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
         props.close();
