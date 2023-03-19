@@ -38,10 +38,10 @@ export default function EmployeeLoginModal(props) {
   /*----LOGIN SUBMIT FUNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
-    const updatedTodo = await EmployeeDetails();
 
     if (validate()) {
       // handle form submission
+      const updatedTodo = await EmployeeLogin();
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
         props.close();
