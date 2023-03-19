@@ -14,6 +14,7 @@ export default function EmployeeLoginModal(props) {
     };
     getUsersAndPosts();
   }, []);
+  console.log(users)
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     useremail: "",
