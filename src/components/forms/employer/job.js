@@ -427,13 +427,13 @@ function AddJobModal(props) {
                   >
                     <CKEditor
                       type={"classic"}
-                      name={"job_description"}
+                      name="job_description"
                       row={6}
                       id={"job_description"}
                       data={state.job_description}
                       value={state.job_description}
                       onChange={onInputChange}
-                      initData="JOb Description"
+                      initData="Job Description"
                     />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
@@ -467,12 +467,12 @@ function AddJobModal(props) {
                   >
                     <CKEditor
                       type={"classic"}
-                      name={"your_duties"}
+                      name="your_duties"
                       id={"your_duties"}
                       data={state.your_duties}
                       value={state.your_duties}
                       onChange={onInputChange}
-                      initData="Employee your_duties"
+                      initData="your duties"
                     />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
@@ -504,7 +504,7 @@ function AddJobModal(props) {
                   >
                     <CKEditor
                       type={"classic"}
-                      name={"requirement"}
+                      name="requirement"
                       id={"requirement"}
                       data={state.requirement}
                       value={state.requirement}

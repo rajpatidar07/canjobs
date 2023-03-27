@@ -6,6 +6,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { getAllJobs } from "../../api/api";
+import className from "../json/filterjson";
 function Job() {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
@@ -50,22 +51,29 @@ function Job() {
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
                 <div className="col-lg-6 mb-lg-0 mb-4">
-                  <h3 className="font-size-6 mb-0">Posted Jobs (4)</h3>
+                  <h3 className="font-size-6 mb-0">
+                    Posted Jobs ({jobData.length})
+                  </h3>
                 </div>
                 <div className="col-lg-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
-                    <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Job type:
+                    </p>
                     <div className="h-px-48">
                       <select
                         name="country"
                         id="country"
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
-                        <option value="" data-display="Product Designer">
-                          Software Engineer
-                        </option>
-                        <option value="">MBA</option>
-                        <option value="">BE</option>
+                        {" "}
+                        {(className.job_type || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

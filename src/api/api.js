@@ -35,6 +35,7 @@ export const EmployeeDetails = async () => {
   return response.data;
 };
 export const AddEmployeeDetails = async (props) => {
+  console.log(props);
   const response = await axios.put(
     `http://localhost/naukari/employeePersonal_detail`,
     props
@@ -42,7 +43,7 @@ export const AddEmployeeDetails = async (props) => {
   return response.data;
 };
 
-// EMPLOYEE'S API
+// EMPLOYER'S API
 export const GetAllJobs = async () => {
   const response = await axios.get(`${API_URL}view_jobs`);
   return response;
@@ -64,6 +65,25 @@ export const getAllJobsCategory = async () => {
   const response = await axios.get(`${API_URL}admin/getAllJobsCategory`);
   return response.data.data;
 };
+/*Add Job Category Api */
+export const AddJobCategory = async (props) => {
+  console.log(props);
+  const response = await axios.put(
+    `https://apnaorganicstore.in/canjobs/admin/addCategory`,
+    props
+  );
+  return response.data;
+};
+/*Delete Job Category Api */
+export const DeleteJobCategory = async (props) => {
+  console.log(props);
+  const response = await axios.delete(
+    `https://apnaorganicstore.in/canjobs/deletejobCategory/${props}`,
+    props
+  );
+  return response.data;
+};
+
 /*Employee List Api */
 export const getallEmployeeData = async () => {
   const response = await axios.get(

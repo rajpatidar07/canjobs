@@ -4,7 +4,7 @@ import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
-import { getAllJobsCategory } from "../../api/api";
+import { DeleteJobCategory, getAllJobsCategory } from "../../api/api";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
@@ -30,6 +30,10 @@ function Category() {
     setCategoryId(e);
   };
 
+  async function deleteCategory(e) {
+    const responseData = await DeleteJobCategory(e);
+    console.log(responseData);
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -103,44 +107,51 @@ function Category() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {(categoryData || []).map((catdata) => (
-                        <tr
-                          className="border border-color-2"
-                          key={catdata.job_category_id}
-                        >
-                          <th scope="row" className=" border-0 py-7 ">
-                            <div className="">
+                      {(categoryData || []).map((catdata) =>
+                        catdata.is_deleted === "1" ? null : (
+                          <tr
+                            className="border border-color-2"
+                            key={catdata.job_category_id}
+                          >
+                            <th scope="row" className=" border-0 py-7 ">
+                              <div className="">
+                                <Link
+                                  to={""}
+                                  className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                                >
+                                  {catdata.category_name}
+                                </Link>
+                              </div>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {catdata.category_type}
+                              </h3>
+                            </th>
+                            <th className=" py-7 min-width-px-100">
                               <Link
-                                to={""}
-                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                                to=""
+                                onClick={() => editJobCategory(catdata)}
                               >
-                                {catdata.category_name}
+                                <span className=" fas fa-edit text-gray px-5">
+                                  {" "}
+                                </span>
                               </Link>
-                            </div>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {catdata.category_type}
-                            </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
-                            <Link
-                              to=""
-                              onClick={(catdata) => editJobCategory(catdata)}
-                            >
-                              <span className=" fas fa-edit text-gray px-5">
-                                {" "}
-                              </span>
-                            </Link>
-                            <Link to="">
-                              <span className=" text-danger">
-                                {" "}
-                                <i className="fa fa-trash"></i>
-                              </span>
-                            </Link>
-                          </th>
-                        </tr>
-                      ))}
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  deleteCategory(catdata.job_category_id)
+                                }
+                              >
+                                <span className=" text-danger">
+                                  {" "}
+                                  <i className="fa fa-trash"></i>
+                                </span>
+                              </Link>
+                            </th>
+                          </tr>
+                        )
+                      )}
                     </tbody>
                   </table>
                 </div>

@@ -1,18 +1,19 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-
+import { AddJobCategory } from "../../../api/api";
 function AddCategory(props) {
+  console.log(props.jobCategoryData);
   // USER CATEGORY VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    categoryname: "",
-    categorytype: "",
+    category_name: "",
+    category_type: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    categoryname: [
+    category_name: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Category is required"
@@ -20,7 +21,7 @@ function AddCategory(props) {
           ? "Cannot use special character "
           : null,
     ],
-    categorytype: [
+    category_type: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Category Type is required"
@@ -28,16 +29,20 @@ function AddCategory(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, onInputChange, errors, validate, setState } = useValidation(
     initialFormState,
     validators
   );
   // USER CATEGORY SUBMIT BUTTON
-  const onAdminCategoryClick = (event) => {
+  async function onAdminCategoryClick(event) {
     event.preventDefault();
     if (validate()) {
+      console.log(state);
+      const responseData = await AddJobCategory(state);
+      console.log(responseData);
     }
-  };
+  }
+
   // END USER PERSONAL DETAIL VALIDATION
 
   return (
@@ -62,7 +67,7 @@ function AddCategory(props) {
             <h5 className="text-center pt-2">Add Category</h5>
             <div className="form-group mt-5">
               <label
-                htmlFor="categoryname"
+                htmlFor="category_name"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Category Name <span className="text-danger">*</span>
@@ -70,43 +75,43 @@ function AddCategory(props) {
               <input
                 type="text"
                 className={
-                  errors.categoryname
+                  errors.category_name
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.categoryname}
+                value={state.category_name}
                 onChange={onInputChange}
                 placeholder="Category Name"
-                id="categoryname"
-                name="categoryname"
+                id="category_name"
+                name="category_name"
               />
               {/*----ERROR MESSAGE FOR CATEGORY----*/}
-              {errors.categoryname && (
+              {errors.category_name && (
                 <span
-                  key={errors.categoryname}
+                  key={errors.category_name}
                   className="text-danger font-size-3"
                 >
-                  {errors.categoryname}
+                  {errors.category_name}
                 </span>
               )}
             </div>
             <div className="form-group ">
               <label
-                htmlFor="categorytype"
+                htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Category Type <span className="text-danger">*</span> :
               </label>
               <select
-                name="categorytype"
+                name="category_type"
                 className={
-                  errors.categorytype
+                  errors.category_type
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.categorytype}
+                value={state.category_type}
                 onChange={onInputChange}
-                id="categorytype"
+                id="category_type"
               >
                 <option value={""}>select category</option>
                 <option value={"category01"}>category01</option>
@@ -116,12 +121,12 @@ function AddCategory(props) {
                 <option value={"category05"}>category05</option>
               </select>
               {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
-              {errors.categorytype && (
+              {errors.category_type && (
                 <span
-                  key={errors.categorytype}
+                  key={errors.category_type}
                   className="text-danger font-size-3"
                 >
-                  {errors.categorytype}
+                  {errors.category_type}
                 </span>
               )}
             </div>
