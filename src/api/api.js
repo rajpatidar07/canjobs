@@ -49,10 +49,12 @@ export const GetAllJobs = async () => {
 };
 
 // ADMIN'S API
+/*Job List Api */
 export const getAllJobs = async () => {
   const response = await axios.get(`${API_URL}admin/getAllJobs`);
   return response.data.data;
 };
+/*Employer List Api */
 export const getAllEmployer = async () => {
   const response = await axios.get(`${API_URL}admin/getAllEmployer`);
   return response.data.data;

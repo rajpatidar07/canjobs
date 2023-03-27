@@ -23,7 +23,7 @@ function Employee() {
     setemployeeData(userData);
   };
 
-  /*Render function to get the job category*/
+  /*Render function to get the employer*/
   useEffect(() => {
     EmpData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
