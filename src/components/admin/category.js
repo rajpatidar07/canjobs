@@ -70,7 +70,7 @@ function Category() {
                     </CustomButton>
                     <AddCategory
                       show={showAddCategoryModal}
-                      jobCategoryData={setCategoryId}
+                      jobCategoryData={CategoryId}
                       close={() => setShowAddCategoryModal(false)}
                     />
                   </div>
@@ -102,6 +102,7 @@ function Category() {
                       </tr>
                     </thead>
                     <tbody>
+                      {/* Map function to show the data in the list*/}
                       {(categoryData || []).map((catdata) => (
                         <tr
                           className="border border-color-2"

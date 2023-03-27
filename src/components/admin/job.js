@@ -12,15 +12,20 @@ function Job() {
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
 
-  const EmpData = async () => {
+  /* Function to get Job data*/
+  const JobData = async () => {
     const userData = await getAllJobs();
     setjobData(userData);
   };
+
+  /*Render function to get the job */
   useEffect(() => {
-    EmpData();
+    JobData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("user_id")]);
   // console.log(("userData--" + JSON.stringify(jobData)))
+
+  /* Function to show the single data to update job category*/
   const editJob = (e) => {
     // e.preventDefault();
     setShowAddJobsModal(true);
@@ -147,6 +152,7 @@ function Job() {
                       </tr>
                     </thead>
                     <tbody>
+                      {/* Map function to show the data in the list*/}
                       {(jobData || []).map((jobdata) => (
                         <tr
                           className="border border-color-2"

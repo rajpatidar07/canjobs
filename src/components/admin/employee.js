@@ -7,24 +7,28 @@ import PersonalDetails from "../forms/user/personal";
 import EmployeeDetails from "../common/employeeDetail";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
-import { getAllEmployee } from "../../api/api";
+import { getallEmployeeData } from "../../api/api";
+import moment from "moment";
 
 function Employee() {
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
-  // const [employeeData, setemployeeData] = useState([]);
+  const [employeeData, setemployeeData] = useState([]);
 
-  // const EmpData = async () => {
-  //   const userData = await getAllEmployee();
-  //   setemployeeData(userData)
-  // }
-  // useEffect(() => {
-  //   EmpData();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [localStorage.getItem("user_id")]);
-  // console.log(("userData--" + JSON.stringify(employeeData)))
+  /* Function to get Employee data*/
+  const EmpData = async () => {
+    const userData = await getallEmployeeData();
+    setemployeeData(userData);
+  };
+
+  /*Render function to get the job category*/
+  useEffect(() => {
+    EmpData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem("user_id")]);
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -44,7 +48,9 @@ function Employee() {
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
                 <div className="col-lg-6 mb-lg-0 mb-4">
-                  <h3 className="font-size-6 mb-0">Applicants (14)</h3>
+                  <h3 className="font-size-6 mb-0">
+                    Applicants ({employeeData.length})
+                  </h3>
                 </div>
                 <div className="col-lg-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
@@ -104,6 +110,12 @@ function Employee() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
+                          Languages
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
                           Education
                         </th>
                         <th
@@ -116,7 +128,7 @@ function Employee() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Salary
+                          Specialization
                         </th>
                         <th
                           scope="col"
@@ -133,402 +145,120 @@ function Employee() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              <img
-                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                alt=""
-                                className="w-100"
-                              />
+                      {/* Map function to show the data in the list*/}
+                      {(employeeData || []).map((empdata) => (
+                        <tr
+                          className="border border-color-2"
+                          key={empdata.employee_id}
+                        >
+                          <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto">
+                                {empdata.profile_photo === null ? (
+                                  <img
+                                    src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                ) : (
+                                  <img
+                                    src={empdata.profile_photo}
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <Link
-                            to={""}
-                            onClick={() => setShowEmployeeProfile(true)}
-                          >
-                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              Nicolas Bradley <br />
+                          </th>
+                          <th className=" py-7  pr-0">
+                            <Link
+                              to={""}
+                              onClick={() => setShowEmployeeProfile(true)}
+                            >
+                              <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                {empdata.name} <br />
+                                <span className="text-gray font-size-2">
+                                  {empdata.marital_status} <br />(
+                                  {empdata.gender}
+                                  {/*Calculation of age from date of birth*/}
+                                  {moment().diff(
+                                    empdata.date_of_birth,
+                                    "years"
+                                  )}
+                                  )
+                                </span>
+                              </h4>
+                            </Link>
+                          </th>
+                          <th className=" py-7  pr-0">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              +{empdata.contact_no} <br />
                               <span className="text-gray font-size-2">
-                                single <br />
-                                (Male 25)
+                                {empdata.email}
                               </span>
-                            </h4>
-                          </Link>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Nicolas25@gmail.com
-                            </span>
-                          </h3>
-                        </th>
+                            </h3>
+                          </th>
 
-                        <Education
-                          close={() => setShowEducationModal(false)}
-                          show={showEducationModal}
-                        />
-                        <Skills
-                          show={showSkillsModal}
-                          close={() => setShowSkillsModal(false)}
-                        />
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            M.tech
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            JAVA, PHP, React
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            25,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            2 years in React js
-                          </h3>
-                        </th>
-                        <th className="d-flex py-7 min-width-px-100">
-                          <Link
-                            to=""
-                            onClick={() => setShowEducationModal(true)}
-                          >
-                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                          </Link>
-                          <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2"></span>
-                          </Link>
-                          <Link
-                            to=""
-                            onClick={() => setShowEmployeeMOdal(true)}
-                          >
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash "></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              <img
-                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                alt=""
-                                className="w-100"
-                              />
-                            </div>
-                          </div>
-                        </th>
-                        <th className="pl-6 border-0 py-7 pr-0">
-                          <Link
-                            to={""}
-                            onClick={() => setShowEmployeeProfile(true)}
-                          >
-                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              Minny jeson <br />
-                              <span className="text-gray font-size-2">
-                                Married <br />
-                                (Female 28)
+                          <Education
+                            close={() => setShowEducationModal(false)}
+                            show={showEducationModal}
+                          />
+                          <Skills
+                            show={showSkillsModal}
+                            close={() => setShowSkillsModal(false)}
+                          />
+                          <th className=" py-7 min-width-px-100">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {empdata.language}
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {empdata.education}
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {empdata.skill}
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {empdata.specialization}
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {empdata.experience}
+                            </h3>
+                          </th>
+                          <th className="d-flex py-7 min-width-px-100">
+                            <Link
+                              to=""
+                              onClick={() => setShowEducationModal(true)}
+                            >
+                              <span className="	fas fa-graduation-cap text-gray px-2"></span>
+                            </Link>
+                            <Link
+                              to=""
+                              onClick={() => setShowSkillsModal(true)}
+                            >
+                              <span className=" fa fa-cogs text-gray px-2"></span>
+                            </Link>
+                            <Link
+                              to=""
+                              onClick={() => setShowEmployeeMOdal(true)}
+                            >
+                              <span className=" fas fa-edit text-gray px-2"></span>
+                            </Link>
+                            <Link to="">
+                              <span className=" text-danger">
+                                <i className="fa fa-trash "></i>
                               </span>
-                            </h4>
-                          </Link>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Elizabeth28@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            M.tech
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            JAVA, PHP, React
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            25,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            2 years in React js
-                          </h3>
-                        </th>
-                        <th className="d-flex py-7 min-width-px-100">
-                          <Link
-                            to=""
-                            onClick={() => setShowEducationModal(true)}
-                          >
-                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                          </Link>
-                          <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2"></span>
-                          </Link>
-                          <Link
-                            to=""
-                            onClick={() => setShowEmployeeMOdal(true)}
-                          >
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash "></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              <img
-                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                alt=""
-                                className="w-100"
-                              />
-                            </div>
-                          </div>
-                        </th>
-                        <th className="pl-6 border-0 py-7 pr-0">
-                          <Link
-                            to={""}
-                            onClick={() => setShowEmployeeProfile(true)}
-                          >
-                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              Joe Wade <br />
-                              <span className="text-gray font-size-2">
-                                single <br />
-                                (Male 32)
-                              </span>
-                            </h4>
-                          </Link>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Joe23@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            M.tech
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            JAVA, PHP, React
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            25,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            2 years in React js
-                          </h3>
-                        </th>
-                        <th className="d-flex py-7 min-width-px-100">
-                          <Link
-                            to=""
-                            onClick={() => setShowEducationModal(true)}
-                          >
-                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                          </Link>
-                          <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2"></span>
-                          </Link>
-                          <Link
-                            to=""
-                            onClick={() => setShowEmployeeMOdal(true)}
-                          >
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash "></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              <img
-                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                alt=""
-                                className="w-100"
-                              />
-                            </div>
-                          </div>
-                        </th>
-                        <th className="pl-6 border-0 py-7 pr-0">
-                          <Link
-                            to={""}
-                            onClick={() => setShowEmployeeProfile(true)}
-                          >
-                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              Roger Hawkins
-                              <br />
-                              <span className="text-gray font-size-2">
-                                Married <br />
-                                (Male 30)
-                              </span>
-                            </h4>
-                          </Link>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863254170 <br />
-                            <span className="text-gray font-size-2">
-                              Roger36@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            M.tech
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            JAVA, PHP, React
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            25,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            2 years in React js
-                          </h3>
-                        </th>
-                        <th className="d-flex py-7 min-width-px-100">
-                          <Link
-                            to=""
-                            onClick={() => setShowEducationModal(true)}
-                          >
-                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                          </Link>
-                          <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2"></span>
-                          </Link>
-                          <Link
-                            to=""
-                            onClick={() => setShowEmployeeMOdal(true)}
-                          >
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash "></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              <img
-                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                alt=""
-                                className="w-100"
-                              />
-                            </div>
-                          </div>
-                        </th>
-                        <th className="pl-6 border-0 py-7 pr-0">
-                          <Link
-                            to={""}
-                            onClick={() => setShowEmployeeProfile(true)}
-                          >
-                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              Marie Green
-                              <br />
-                              <span className="text-gray font-size-2">
-                                Married <br />
-                                (Female 23)
-                              </span>
-                            </h4>
-                          </Link>
-                        </th>
-                        <th className=" py-7  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9863 <br />
-                            <span className="text-gray font-size-2">
-                              <br /> Marie32@gmail.com
-                            </span>
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            M.tech
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            JAVA, PHP, React
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            25,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            2 years in React js
-                          </h3>
-                        </th>
-                        <th className="d-flex py-7 min-width-px-100">
-                          <Link
-                            to=""
-                            onClick={() => setShowEducationModal(true)}
-                          >
-                            <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                          </Link>
-                          <Link to="" onClick={() => setShowSkillsModal(true)}>
-                            <span className=" fa fa-cogs text-gray px-2"></span>
-                          </Link>
-                          <Link
-                            to=""
-                            onClick={() => setShowEmployeeMOdal(true)}
-                          >
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash "></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
+                            </Link>
+                          </th>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

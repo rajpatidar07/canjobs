@@ -62,3 +62,10 @@ export const getAllJobsCategory = async () => {
   const response = await axios.get(`${API_URL}admin/getAllJobsCategory`);
   return response.data.data;
 };
+/*Employee List Api */
+export const getallEmployeeData = async () => {
+  const response = await axios.get(
+    `${API_URL}admin/getallEmployeeView?user_type=admin`
+  );
+  return response.data.data;
+};
