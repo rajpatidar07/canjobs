@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-
 function useValidation(initialState, validators) {
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -15,17 +14,18 @@ function useValidation(initialState, validators) {
 
     Object.keys(state).forEach((key) => {
       const value = state[key];
+      if (validators[key]) {
+        const fieldErrors = validators[key].reduce((acc, validator) => {
+          const error = validator(value);
+          if (error) {
+            acc.push(error);
+          }
+          return acc;
+        }, []);
 
-      const fieldErrors = validators[key].reduce((acc, validator) => {
-        const error = validator(value);
-        if (error) {
-          acc.push(error);
+        if (fieldErrors.length > 0) {
+          newErrors[key] = fieldErrors;
         }
-        return acc;
-      }, []);
-
-      if (fieldErrors.length > 0) {
-        newErrors[key] = fieldErrors;
       }
     });
 
@@ -36,9 +36,11 @@ function useValidation(initialState, validators) {
 
   return {
     state,
+    setState,
     onInputChange,
     errors,
     validate,
+
   };
 }
 

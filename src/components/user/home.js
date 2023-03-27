@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
 import Filterbox from "../common/filterbox";
 import filterjson from "../json/filterjson";
+import { GetAllJobs } from "../../api/api";
 
 // eslint-disable-next-line no-use-before-define
 function EmployeeHomePage() {
+  const [JobDetail, setJobDetail] = useState([]);
+
+  const UserData = async () => {
+    const jobData = await GetAllJobs();
+    setJobDetail(jobData);
+  }
+  useEffect(() => {
+    UserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem("user_id")]);
+
+  console.log("JobDetail===" + JSON.stringify(JobDetail))
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />

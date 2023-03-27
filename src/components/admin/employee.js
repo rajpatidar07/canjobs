@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
@@ -7,13 +7,24 @@ import PersonalDetails from "../forms/user/personal";
 import EmployeeDetails from "../common/employeeDetail";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
+import { getAllEmployee } from "../../api/api";
 
 function Employee() {
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
+  // const [employeeData, setemployeeData] = useState([]);
 
+  // const EmpData = async () => {
+  //   const userData = await getAllEmployee();
+  //   setemployeeData(userData)
+  // }
+  // useEffect(() => {
+  //   EmpData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [localStorage.getItem("user_id")]);
+  // console.log(("userData--" + JSON.stringify(employeeData)))
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">

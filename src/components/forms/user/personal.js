@@ -3,33 +3,34 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { CKEditor } from "ckeditor4-react";
-import { EmployeeDetails } from "../../../api/api";
+import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 
 function PersonalDetails(props) {
+  const [userDetail, setuserDetail] = useState([]);
 
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
-  const initialFormState = {
-    userfullname: "",
-    useremail: "",
-    usermobileno: "",
-    userdesc: "",
-    userdob: "",
-    usergender: "",
-    maritialstatus: "",
-    nationality: "",
-    currentlocation: "",
-    currentcountry: "",
-    langauages: "",
-    religion: "",
-    interest: "",
-    experience: "",
-    workpermit: "",
-    otherworkpermit: "",
-  };
+  // const initialFormStateuser = {
+  //   name: "",
+  //   email: "",
+  //   contact_no: "",
+  //   description: "",
+  //   date_of_birth: "",
+  //   gender: "",
+  //   marital_status: "",
+  //   nationality: "",
+  //   current_location: "",
+  //   currently_located_country: "",
+  //   language: "",
+  //   religion: "",
+  //   interested_in: "",
+  //   experience: "",
+  //   work_permit_canada: "",
+  //   work_permit_other_country: "",
+  // };
   // VALIDATION CONDITIONS
   const validators = {
-    userfullname: [
+    name: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Name is required"
@@ -37,7 +38,7 @@ function PersonalDetails(props) {
             ? "Cannot use special character "
             : null,
     ],
-    useremail: [
+    email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
@@ -45,7 +46,7 @@ function PersonalDetails(props) {
             ? null
             : "Email is invalid",
     ],
-    usermobileno: [
+    contact_no: [
       (value) =>
         value === "" || value.trim() === ""
           ? "MobileNo. is required"
@@ -53,7 +54,7 @@ function PersonalDetails(props) {
             ? "Mobile no should be of 10 digits"
             : null,
     ],
-    userdesc: [
+    description: [
       (value) =>
         value === ""
           ? "Description is required"
@@ -61,21 +62,21 @@ function PersonalDetails(props) {
             ? "Cannot use special character"
             : null,
     ],
-    userdob: [(value) => (value ? null : "Dob is required")],
-    usergender: [
+    date_of_birth: [(value) => (value ? null : "Dob is required")],
+    gender: [
       (value) =>
         value === "" || value.trim() === "" ? "Gender is required" : null,
     ],
-    maritialstatus: [(value) => (value === "" ? "Status is required" : null)],
+    marital_status: [(value) => (value === "" ? "Status is required" : null)],
     nationality: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Nationality is required"
+          ? "nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
             ? "Cannot use special character "
             : null,
     ],
-    currentlocation: [
+    current_location: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Location is required"
@@ -83,7 +84,7 @@ function PersonalDetails(props) {
             ? "Cannot use special character "
             : null,
     ],
-    currentcountry: [
+    currently_located_country: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Country is required"
@@ -91,35 +92,31 @@ function PersonalDetails(props) {
             ? "Cannot use special character "
             : null,
     ],
-    langauages: [
+    language: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Language is required"
-          : (value.length = 5
-            ? "Language should not be more than 5"
-            : /[^A-Za-z 0-9]/g.test(value)
-              ? "Cannot use special character "
-              : null),
+          : null,
     ],
     religion: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Religion is required"
+          ? "religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
             ? "Cannot use special character "
             : null,
     ],
-    interest: [
+    interested_in: [
       (value) =>
         value === ""
-          ? "Interest is required"
+          ? "interested_in is required"
           : /[^A-Za-z 0-9]/g.test(value)
             ? "Cannot use special character "
             : null,
     ],
-    experience: [(value) => (value === "" ? "Experience is required" : null)],
-    workpermit: [(value) => (value === "" ? "Work Permit is required" : null)],
-    otherworkpermit: [
+    experience: [(value) => (value === "" ? "experience is required" : null)],
+    work_permit_canada: [(value) => (value === "" ? "Work Permit is required" : null)],
+    work_permit_other_country: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Other Permit is required"
@@ -128,17 +125,34 @@ function PersonalDetails(props) {
             : null,
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
-    initialFormState,
+  const { state, setState, onInputChange, errors, validate } = useValidation(
+    userDetail,
     validators
   );
+
+  // API CALL
+  const UserData = async () => {
+    const userData = await EmployeeDetails();
+    setuserDetail(userData.data.personal_detail[0])
+    setState(userData.data.personal_detail[0])
+  }
+  useEffect(() => {
+    UserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem("user_id")]);
+  // console.log((state))
+
   // USER PERSONAL DETAIL SUBMIT BUTTON
-  const onUserPersonalDetailClick = (event) => {
+  const onUserPersonalDetailClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      const userData = await AddEmployeeDetails(state);
     }
   };
+
+
   // END USER PERSONAL DETAIL VALIDATION
   return (
     <>
@@ -158,45 +172,52 @@ function PersonalDetails(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onUserPersonalDetailClick}>
+          <form>
             <h5 className="text-center pt-2 mb-7">Personal Details</h5>
             {/* FIRST LINE */}
             <div className="row pt-5">
               {" "}
+              <input
+                maxLength={20}
+                name="employee_id"
+                value={state.id}
+                type="hidden"
+                id="employee_id"
+              />
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="userfullname"
+                  htmlFor="name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Full Name: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
-                  name="userfullname"
-                  value={state.userfullname}
+                  name="name"
+                  value={state.name}
                   onChange={onInputChange}
                   type="text"
                   className={
-                    errors.userfullname
+                    errors.name
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Full Name"
-                  id="userfullname"
+                  id="name"
                 />
                 {/*----ERROR MESSAGE FOR name----*/}
-                {errors.userfullname && (
+                {errors.name && (
                   <span
-                    key={errors.userfullname}
+                    key={errors.name}
                     className="text-danger font-size-3"
                   >
-                    {errors.userfullname}
+                    {errors.name}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="useremail"
+                  htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Email Id : <span className="text-danger">*</span>
@@ -204,30 +225,30 @@ function PersonalDetails(props) {
                 <input
                   maxLength={30}
                   type="email"
-                  name="useremail"
-                  value={state.useremail}
+                  name="email"
+                  value={state.email}
                   onChange={onInputChange}
                   className={
-                    errors.useremail
+                    errors.email
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="useremail"
+                  id="email"
                   placeholder="email"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
-                {errors.useremail && (
+                {errors.email && (
                   <span
-                    key={errors.useremail}
+                    key={errors.email}
                     className="text-danger font-size-3"
                   >
-                    {errors.useremail}
+                    {errors.email}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="usermobileno"
+                  htmlFor="contact_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Mobile Number : <span className="text-danger">*</span>
@@ -235,23 +256,23 @@ function PersonalDetails(props) {
                 <input
                   type="number"
                   placeholder="Mobile Number"
-                  name="usermobileno"
-                  value={state.usermobileno}
+                  name="contact_no"
+                  value={state.contact_no}
                   onChange={onInputChange}
                   className={
-                    errors.usermobileno
+                    errors.contact_no
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="usermobileno"
+                  id="contact_no"
                 />
                 {/*----ERROR MESSAGE FOR MOBILENO----*/}
-                {errors.usermobileno && (
+                {errors.contact_no && (
                   <span
-                    key={errors.usermobileno}
+                    key={errors.contact_no}
                     className="text-danger font-size-3"
                   >
-                    {errors.usermobileno}
+                    {errors.contact_no}
                   </span>
                 )}
               </div>
@@ -260,7 +281,7 @@ function PersonalDetails(props) {
             <div className="row">
               <div className="form-group col-md-12">
                 <label
-                  htmlFor="userdesc"
+                  htmlFor="description"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
                   Description : <span className="text-danger">*</span>
@@ -269,7 +290,7 @@ function PersonalDetails(props) {
                   <div
                     sm="12"
                     className={
-                      errors.userdesc
+                      errors.description
                         ? "border border-danger rounded overflow-hidden"
                         : "border rounded overflow-hidden"
                     }
@@ -278,21 +299,24 @@ function PersonalDetails(props) {
                       // data={emailText}
                       // initData={emailText}
                       type={"classic"}
-                      name={"userdesc"}
-                      id={"userdesc"}
-                      data={state.userdesc}
-                      value={state.userdesc}
-                      onChange={onInputChange}
+                      name={"description"}
+                      id={"description"}
+                      data={state.description}
+                      // onChange={onInputChange}
+                      // onChange={(event, editor) => {
+                      //   const data = editor.getData();
+                      //   setState.description(data)
+                      // }}
                       initData="Describe Yourself"
                     />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.userdesc && (
+                  {errors.description && (
                     <span
-                      key={errors.userdesc}
+                      key={errors.description}
                       className="text-danger font-size-3"
                     >
-                      {errors.userdesc}
+                      {errors.description}
                     </span>
                   )}
                 </div>
@@ -303,7 +327,7 @@ function PersonalDetails(props) {
               {" "}
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="userdob"
+                  htmlFor="date_of_birth"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Date Of Birth : <span className="text-danger">*</span>
@@ -312,43 +336,43 @@ function PersonalDetails(props) {
                   max={moment().format("YYYY-MM-DD")}
                   type="date"
                   placeholder="Date Of Birth "
-                  name="userdob"
-                  value={state.userdob}
+                  name="date_of_birth"
+                  value={state.date_of_birth}
                   onChange={onInputChange}
                   className={
-                    errors.userdob
+                    errors.date_of_birth
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="userdob"
+                  id="date_of_birth"
                 />
                 {/*----ERROR MESSAGE FOR DOB----*/}
-                {errors.userdob && (
+                {errors.date_of_birth && (
                   <span
-                    key={errors.userdob}
+                    key={errors.date_of_birth}
                     className="text-danger font-size-3"
                   >
-                    {errors.userdob}
+                    {errors.date_of_birth}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="usergender"
+                  htmlFor="gender"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Gender : <span className="text-danger">*</span>
                 </label>
                 <select
-                  name="usergender"
-                  value={state.usergender}
+                  name="gender"
+                  value={state.gender}
                   onChange={onInputChange}
                   className={
-                    errors.usergender
+                    errors.gender
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="usergender"
+                  id="gender"
                 >
                   <option value={""}>Select Gender</option>
                   <option value={"male"}>Male</option>
@@ -356,44 +380,44 @@ function PersonalDetails(props) {
                   <option value={"other"}>Other</option>
                 </select>
                 {/*----ERROR MESSAGE FOR GENDER----*/}
-                {errors.usergender && (
+                {errors.gender && (
                   <span
-                    key={errors.usergender}
+                    key={errors.gender}
                     className="text-danger font-size-3"
                   >
-                    {errors.usergender}
+                    {errors.gender}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="maritialstatus"
+                  htmlFor="marital_status"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Maritial status : <span className="text-danger">*</span>
                 </label>{" "}
                 <select
-                  name="maritialstatus"
-                  value={state.maritialstatus}
+                  name="marital_status"
+                  value={state.marital_status}
                   onChange={onInputChange}
                   className={
-                    errors.maritialstatus
+                    errors.marital_status
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="maritialstatus"
+                  id="marital_status"
                 >
                   <option value={""}>Select Status</option>
                   <option value={"single"}>Single</option>
                   <option value={"married"}>Married</option>
                 </select>
                 {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
-                {errors.maritialstatus && (
+                {errors.marital_status && (
                   <span
-                    key={errors.maritialstatus}
+                    key={errors.marital_status}
                     className="text-danger font-size-3"
                   >
-                    {errors.maritialstatus}
+                    {errors.marital_status}
                   </span>
                 )}
               </div>
@@ -405,13 +429,13 @@ function PersonalDetails(props) {
                   htmlFor="nationality"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Nationality / Citizenship :{" "}
+                  nationality / Citizenship :{" "}
                   <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
                   type="text"
-                  placeholder="Nationality / Citizenship"
+                  placeholder="nationality / Citizenship"
                   name="nationality"
                   value={state.nationality}
                   onChange={onInputChange}
@@ -422,7 +446,7 @@ function PersonalDetails(props) {
                   }
                   id="nationality"
                 />
-                {/*----ERROR MESSAGE FOR NATIONALITY----*/}
+                {/*----ERROR MESSAGE FOR nationality----*/}
                 {errors.nationality && (
                   <span
                     key={errors.nationality}
@@ -434,7 +458,7 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="currentlocation"
+                  htmlFor="current_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Current Location : <span className="text-danger">*</span>
@@ -443,29 +467,29 @@ function PersonalDetails(props) {
                   maxLength={20}
                   type="text"
                   placeholder="Current Location"
-                  name="currentlocation"
-                  value={state.currentlocation}
+                  name="current_location"
+                  value={state.current_location}
                   onChange={onInputChange}
                   className={
-                    errors.currentlocation
+                    errors.current_location
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="currentlocation"
+                  id="current_location"
                 />
                 {/*----ERROR MESSAGE FOR LOCATION----*/}
-                {errors.currentlocation && (
+                {errors.current_location && (
                   <span
-                    key={errors.currentlocation}
+                    key={errors.current_location}
                     className="text-danger font-size-3"
                   >
-                    {errors.currentlocation}
+                    {errors.current_location}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="currentcountry"
+                  htmlFor="currently_located_country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Currently Located Country :{" "}
@@ -475,23 +499,23 @@ function PersonalDetails(props) {
                   maxLength={20}
                   type="text"
                   className={
-                    errors.currentcountry
+                    errors.currently_located_country
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Currently Located Country"
-                  id="currentcountry"
-                  name="currentcountry"
-                  value={state.currentcountry}
+                  id="currently_located_country"
+                  name="currently_located_country"
+                  value={state.currently_located_country}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR COUNTRY----*/}
-                {errors.currentcountry && (
+                {errors.currently_located_country && (
                   <span
-                    key={errors.currentcountry}
+                    key={errors.currently_located_country}
                     className="text-danger font-size-3"
                   >
-                    {errors.currentcountry}
+                    {errors.currently_located_country}
                   </span>
                 )}
               </div>
@@ -501,7 +525,7 @@ function PersonalDetails(props) {
             <div className="row">
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="langauages"
+                  htmlFor="language"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Languages Known (Max 3) :{" "}
@@ -512,22 +536,22 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="Languages Known (Max 3)"
                   className={
-                    errors.langauages
+                    errors.language
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="langauages"
-                  name="langauages"
-                  value={state.langauages}
+                  id="language"
+                  name="language"
+                  value={state.language}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR LANGUAGE----*/}
-                {errors.langauages && (
+                {errors.language && (
                   <span
-                    key={errors.langauages}
+                    key={errors.language}
                     className="text-danger font-size-3"
                   >
-                    {errors.langauages}
+                    {errors.language}
                   </span>
                 )}
               </div>
@@ -536,7 +560,7 @@ function PersonalDetails(props) {
                   htmlFor="religion"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Religion : <span className="text-danger">*</span>
+                  religion : <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -546,13 +570,13 @@ function PersonalDetails(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="Religion"
+                  placeholder="religion"
                   id="religion"
                   name="religion"
                   value={state.religion}
                   onChange={onInputChange}
                 />
-                {/*----ERROR MESSAGE FOR RELIGION----*/}
+                {/*----ERROR MESSAGE FOR religion----*/}
                 {errors.religion && (
                   <span
                     key={errors.religion}
@@ -564,17 +588,17 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                  Interested In : <span className="text-danger">*</span>
+                  interested_ined In : <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
-                    errors.langauages
+                    errors.language
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="interest"
-                  name="interest"
-                  value={state.interest}
+                  id="interested_in"
+                  name="interested_in"
+                  value={state.interested_in}
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
@@ -582,13 +606,13 @@ function PersonalDetails(props) {
                   <option value={"parttime"}>Part-time</option>
                   <option value={"all"}>All</option>
                 </select>
-                {/*----ERROR MESSAGE FOR INTEREST----*/}
-                {errors.interest && (
+                {/*----ERROR MESSAGE FOR interested_in----*/}
+                {errors.interested_in && (
                   <span
-                    key={errors.interest}
+                    key={errors.interested_in}
                     className="text-danger font-size-3"
                   >
-                    {errors.interest}
+                    {errors.interested_in}
                   </span>
                 )}
               </div>
@@ -600,7 +624,7 @@ function PersonalDetails(props) {
                   htmlFor="experience"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Experience : <span className="text-danger">*</span>
+                  experience : <span className="text-danger">*</span>
                 </label>
                 <select
                   name="experience"
@@ -613,13 +637,13 @@ function PersonalDetails(props) {
                   }
                   id="experience"
                 >
-                  <option value={""}>Select Experience</option>
+                  <option value={""}>Select experience</option>
                   <option value={"0-1"}>0-1 year</option>
                   <option value={"1-3"}>1-3 year</option>
                   <option value={"3-5"}>3-5 year</option>
                   <option value={"5+"}>5+ year</option>
                 </select>
-                {/*----ERROR MESSAGE FOR EXPERIENCE----*/}
+                {/*----ERROR MESSAGE FOR experience----*/}
                 {errors.experience && (
                   <span
                     key={errors.experience}
@@ -631,33 +655,33 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="workpermit"
+                  htmlFor="work_permit_canada"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Work Permit of Canada : <span className="text-danger">*</span>
                 </label>
                 <select
-                  name="workpermit"
-                  value={state.workpermit}
+                  name="work_permit_canada"
+                  value={state.work_permit_canada}
                   onChange={onInputChange}
                   className={
-                    errors.workpermit
+                    errors.work_permit_canada
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="workpermit"
+                  id="work_permit_canada"
                 >
                   <option value={""}>Select </option>
                   <option value={"no"}>No</option>
                   <option value={"yes"}>Yes</option>
                 </select>
                 {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
-                {errors.workpermit && (
+                {errors.work_permit_canada && (
                   <span
-                    key={errors.workpermit}
+                    key={errors.work_permit_canada}
                     className="text-danger font-size-3"
                   >
-                    {errors.workpermit}
+                    {errors.work_permit_canada}
                   </span>
                 )}
               </div>
@@ -673,23 +697,23 @@ function PersonalDetails(props) {
                   maxLength={20}
                   type="text"
                   className={
-                    errors.otherworkpermit
+                    errors.work_permit_other_country
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Permit of Other Country"
-                  id="otherworkpermit"
-                  name="otherworkpermit"
-                  value={state.otherworkpermit}
+                  id="work_permit_other_country"
+                  name="work_permit_other_country"
+                  value={state.work_permit_other_country}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
-                {errors.otherworkpermit && (
+                {errors.work_permit_other_country && (
                   <span
-                    key={errors.otherworkpermit}
+                    key={errors.work_permit_other_country}
                     className="text-danger font-size-3"
                   >
-                    {errors.otherworkpermit}
+                    {errors.work_permit_other_country}
                   </span>
                 )}
               </div>
@@ -708,8 +732,8 @@ function PersonalDetails(props) {
                   placeholder="Resume"
                   id="resume"
                   name="resume"
-                  value={state.resume}
-                  onChange={onInputChange}
+                  // value={state.resume}
+                  // onChange={onInputChange}
                   className={
                     errors.resume
                       ? "form-control border border-danger"
@@ -728,6 +752,7 @@ function PersonalDetails(props) {
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                 type="submit"
+                onClick={onUserPersonalDetailClick}
               >
                 Submit
               </button>

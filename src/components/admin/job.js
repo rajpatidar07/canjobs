@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
+import { getAllJobs } from "../../api/api";
 function Job() {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
+  const [jobData, setjobData] = useState([]);
+  const [JobId, setJobId] = useState([]);
+
+  const EmpData = async () => {
+    const userData = await getAllJobs();
+    setjobData(userData)
+  }
+  useEffect(() => {
+    EmpData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem("user_id")]);
+  // console.log(("userData--" + JSON.stringify(jobData)))
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowAddJobsModal(true)
+    setJobId(e)
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -55,6 +73,7 @@ function Job() {
                     </CustomButton>
                     <AddJobModal
                       show={showAddJobsModal}
+                      jobData={JobId}
                       close={() => setShowAddJobsModal(false)}
                     />
                   </div>
@@ -69,7 +88,7 @@ function Job() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Name
+                          Job title / Industry
                         </th>
                         <th
                           scope="col"
@@ -99,6 +118,12 @@ function Job() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
+                          Language
+                        </th>
+                        <th
+                          scope="col"
+                          className=" border-0 font-size-4 font-weight-normal"
+                        >
                           Salary
                         </th>
                         <th
@@ -111,7 +136,7 @@ function Job() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Total Applicants
+                          Total Vacancy
                         </th>
                         <th
                           scope="col"
@@ -122,248 +147,74 @@ function Job() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <Link
-                              to={""}
-                              onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              Senior Project Manager
+                      {(jobData || []).map((jobdata) => (
+                        <tr className="border border-color-2" key={jobdata.job_id}>
+                          <th scope="row" className=" border-0 py-7 ">
+                            <div className="">
+                              <Link
+                                to={""}
+                                onClick={() => setShowJobDetails(true)}
+                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              >
+                                {jobdata.job_title} ({jobdata.industry_type})
+                              </Link>
+                            </div>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.employement} - {jobdata.job_type}
+                            </h3>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.location}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.education}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.keyskill}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.language}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.salary}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {jobdata.experience_required}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                              47
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
+                            <Link to="" onClick={(jobdata) => editJob(jobdata)}>
+                              <span className=" fas fa-edit text-gray px-5">
+                                {" "}
+                              </span>
                             </Link>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Software Engineer
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24, main cancel near yok tower, New York
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE /B.tech /BCS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Java script , HTLM and CSS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            0-5 years
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            47
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <Link
-                              to=""
-                              onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              UI Designer
+                            <Link to="">
+                              <span className=" text-danger">
+                                {" "}
+                                <i className="fa fa-trash"></i>
+                              </span>
                             </Link>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Software Engineer
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24, main cancel near yok tower, New York
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE /B.tech /BCS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Java script , HTLM and CSS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            0-5 years
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            145
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <Link
-                              to=""
-                              onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              Head of Marketing
-                            </Link>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            MBA
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24, main cancel near yok tower, New York
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE /B.tech /BCS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Java script , HTLM and CSS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            0-5 years
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            62
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <Link
-                              to=""
-                              onClick={() => setShowJobDetails(true)}
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              Full-Stack Developer
-                            </Link>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24, main cancel near yok tower, New York
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE /B.tech /BCS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Java script , HTLM and CSS
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            0-5 years
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            184
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAddJobsModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
+                          </th>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

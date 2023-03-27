@@ -8,6 +8,7 @@ import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import { EmployeeDetails } from "../../api/api";
+import moment from "moment";
 
 const UserProfile = () => {
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
@@ -16,14 +17,18 @@ const UserProfile = () => {
   const [showItSkills, setShowItSkills] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const [userDetail, setuserDetail] = useState([]);
+  const [PersonalDetail, setPersonalDetail] = useState([]);
   const UserData = async () => {
     const userData = await EmployeeDetails();
-    setuserDetail(userData)
+    setuserDetail(userData.data)
+    // setPersonalDetail(userData.data.personal_detail[0])
   }
   useEffect(() => {
     UserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("user_id")]);
-  console.log(JSON.stringify(userDetail))
+  console.log(("userData--" + JSON.stringify(userDetail)))
+
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
@@ -50,7 +55,7 @@ const UserProfile = () => {
                       </label>
                       <img
                         className="rounded-circle"
-                        src="image/user1.jpg"
+                        src={PersonalDetail.profile_photo}
                         alt=""
                         width={"100px"}
                         height={"100px"}
@@ -61,9 +66,9 @@ const UserProfile = () => {
                         className="text-black-2 font-size-6 font-weight-semibold"
                         onClick={() => setShowRegistration(true)}
                       > */}
-                      David Henricks{" "}
+                      {PersonalDetail.name}<br />
                       <span className="age_gender font-size-3 text-smoke">
-                        (Male 29)
+                        ({PersonalDetail.gender}, {PersonalDetail.marital_status},  {moment().diff(PersonalDetail.date_of_birth, 'years')}Y)
                       </span>
                       {/* </Link>
                       <Registration
@@ -71,9 +76,9 @@ const UserProfile = () => {
                         close={() => setShowRegistration(false)}
                       /> */}
                     </h4>
-                    <p className="mb-8 text-gray font-size-4">
-                      Product Designer
-                    </p>
+                    {/* <p className="mb-8 text-gray font-size-4">
+                    {PersonalDetail.gender}
+                    </p> */}
                   </div>
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
@@ -88,70 +93,97 @@ const UserProfile = () => {
                       />
                     </h4>
                     <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-7">
                           <img
                             className="mr-1"
                             height={"16px"}
                             src="image/icons/envelope.svg"
                             alt="Email"
                           />
-                          name_ac@domain.com
+                          {PersonalDetail.email}
                         </span>
                       </div>
+
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-7">
                           <img
                             className="mr-1"
                             height={"16px"}
                             src="image/icons/mobile-button.svg"
                             alt="Mobile Number"
                           />
-                          +91-0987654321
+                          {PersonalDetail.contact_no}
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-7">
                           <img
                             className="mr-1"
                             height={"16px"}
                             src="image/icons/marker.svg"
                             alt="Location"
                           />
-                          New York, USA
+                          {PersonalDetail.current_location}
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-7">
                           <img
                             className="mr-1"
                             height={"16px"}
                             src="image/icons/language.svg"
                             alt="language"
                           />
-                          Hindi, English
+                          {PersonalDetail.language}
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
+                        <span className="font-size-3 text-smoke  mr-7">
                           <img
                             className="mr-1"
                             height={"16px"}
                             src="image/icons/address-book.svg"
                             alt="Address"
                           />
-                          45, Universal Tower Scheme 54, PU4, Indore, MP
-                          (452001)
+                          {PersonalDetail.currently_located_country}
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
-                          <b>Work Permit of Canada:</b> Yes
+                        <span className="font-size-3 text-smoke  mr-7">
+                          <img
+                            className="mr-1"
+                            height={"16px"}
+                            src="image/icons/envelope.svg"
+                            alt="Email"
+                          />
+                          {PersonalDetail.experience}
                         </span>
                       </div>
                       <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-3">
-                          <b>Work Permit of Other Country:</b> No
+                        <span className="font-size-3 text-smoke  mr-7">
+                          Religion: <b>{PersonalDetail.religion}</b>
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span className="font-size-3 text-smoke  mr-7">
+                          Nationality: <b>{PersonalDetail.nationality}</b>
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span className="font-size-3 text-smoke  mr-7">
+                          Work Permit of Canada: <b>{PersonalDetail.work_permit_canada}</b>
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span className="font-size-3 text-smoke  mr-7">
+                          Work Permit of Other Country: <b>{PersonalDetail.work_permit_other_country}</b>
+                        </span>
+                      </div>
+                      <div className="info_box text-left">
+                        <span className="font-size-3 text-smoke  mr-7">
+                          Resume: <a href={PersonalDetail.resume} >View Resume</a>
                         </span>
                       </div>
                     </div>
@@ -167,68 +199,24 @@ const UserProfile = () => {
                     <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
                       {/*----Employee's Skills----*/}
 
+
                       <ItSkills
                         show={showItSkills}
                         close={() => setShowItSkills(false)}
                       />
 
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            Agile
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            Wireframing
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            Prototyping
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            Information
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            Waterfall Model
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            New Layout
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            to="http://localhost:3000/"
-                          >
-                            Browsing
-                          </Link>
-                        </li>
+                        {(userDetail.employee_skills || []).map((employeeSkills) => (
+                          <li>
+                            <Link
+                              className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                              to="http://localhost:3000/"
+                            >
+                              Agile
+                            </Link>
+                          </li>
+                        ))}
+
                       </ul>
                     </div>
                   </div>
@@ -298,15 +286,7 @@ const UserProfile = () => {
                         About
                       </h4>
                       <p className="font-size-4 mb-8">
-                        A talented professional with an academic background in
-                        IT and proven commercial development experience as C++
-                        developer since 1999. Has a sound knowledge of the
-                        software development life cycle. Was involved in more
-                        than 140 software development outsourcing projects.
-                      </p>
-                      <p className="font-size-4 mb-8">
-                        Programming Languages: C/C++, .NET C++, Python, Bash,
-                        Shell, PERL, Regular expressions, Python, Active-script.
+                        {PersonalDetail.description}
                       </p>
                     </div>
                     {/*----Employee's Career Profile----*/}
@@ -325,117 +305,56 @@ const UserProfile = () => {
                           close={() => setShowEmplyomentDetails(false)}
                         />
                       </h4>
+                      {/* {moment(PersonalDetail.start_date)}
+                              {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                          <div className="media align-items-center company_box col-md-6 p-0">
-                            <Link
-                              className="text_box text-left"
-                              to="http://localhost:3000/"
-                            >
-                              <img
-                                className="company_logo"
-                                src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
-                                alt=""
-                              />
-                            </Link>
-                            <div className="text_box text-left w-100 mt-n2">
-                              <h3 className="mb-0">
+                      {(userDetail.career_detail || []).map((CareerDetails) => (
+                        <div className="w-100">
+                          <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                            <div className="media align-items-center company_box col-md-6 p-0">
+                              <div className="text_box text-left w-100 mt-n2">
+                                <h3 className="mb-0">
+                                  <Link
+                                    className="font-size-6 text-black-2 font-weight-semibold"
+                                    to="http://localhost:3000/"
+                                  >
+                                    {CareerDetails.designation} - <span className="font-size-4">{CareerDetails.functional_area}</span>
+                                  </Link>
+                                </h3>
                                 <Link
-                                  className="font-size-6 text-black-2 font-weight-semibold"
                                   to="http://localhost:3000/"
+                                  className="font-size-4 text-default-color line-height-2"
                                 >
-                                  Lead Product Designer
+                                  {CareerDetails.company} ({CareerDetails.industry})
                                 </Link>
-                              </h3>
+                              </div>
+                            </div>
+                            <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                               <Link
                                 to="http://localhost:3000/"
-                                className="font-size-4 text-default-color line-height-2"
+                                className="font-size-4 text-gray w-100"
                               >
-                                Airabnb
+                                {CareerDetails.start_date} - {CareerDetails.end_date}
+                              </Link>
+                              <Link
+                                to="http://localhost:3000/"
+                                className="font-size-3 text-gray w-100"
+                              >
+                                <span
+                                  className="mr-4"
+                                  style={{ marginTop: "-2px" }}
+                                >
+                                  <img
+                                    src="image/svg/icon-loaction-pin-black.svg"
+                                    alt=""
+                                  />
+                                </span>
+                                {CareerDetails.company_location}
                               </Link>
                             </div>
                           </div>
-                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-4 text-gray w-100"
-                            >
-                              Jun 2017 - April 2020- 3 years
-                            </Link>
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-3 text-gray w-100"
-                            >
-                              <span
-                                className="mr-4"
-                                style={{ marginTop: "-2px" }}
-                              >
-                                <img
-                                  src="image/svg/icon-loaction-pin-black.svg"
-                                  alt=""
-                                />
-                              </span>
-                              New York, USA
-                            </Link>
-                          </div>
                         </div>
-                      </div>
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                          <div className="media align-items-center company_box col-md-6 p-0">
-                            <Link
-                              className="text_box text-left"
-                              to="http://localhost:3000/"
-                            >
-                              <img
-                                className="company_logo"
-                                src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
-                                alt=""
-                              />
-                            </Link>
-                            <div className="text_box text-left w-100 mt-n2">
-                              <h3 className="mb-0">
-                                <Link
-                                  className="font-size-6 text-black-2 font-weight-semibold"
-                                  to="http://localhost:3000/"
-                                >
-                                  Lead Product Designer
-                                </Link>
-                              </h3>
-                              <Link
-                                to="http://localhost:3000/"
-                                className="font-size-4 text-default-color line-height-2"
-                              >
-                                Airabnb
-                              </Link>
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-4 text-gray w-100"
-                            >
-                              Jun 2017 - April 2020- 3 years
-                            </Link>
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-3 text-gray w-100"
-                            >
-                              <span
-                                className="mr-4"
-                                style={{ marginTop: "-2px" }}
-                              >
-                                <img
-                                  src="image/svg/icon-loaction-pin-black.svg"
-                                  alt=""
-                                />
-                              </span>
-                              New York, USA
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                     {/*----Employee's Education Profile----*/}
                     <div
@@ -454,117 +373,53 @@ const UserProfile = () => {
                           close={() => setShowEducation(false)}
                         />
                       </h4>
-
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                          <div className="media align-items-center company_box p-0">
-                            <Link
-                              className="text_box text-left"
-                              to="http://localhost:3000/"
-                            >
-                              <img
-                                className="company_logo"
-                                src="image/svg/harvard.svg"
-                                alt=""
-                              />
-                            </Link>
-                            <div className="text_box text-left w-100 mt-n2">
-                              <h3 className="mb-0">
+                      {(userDetail.education_detail || []).map((EducationDetails) => (
+                        <div className="w-100">
+                          <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                            <div className="media align-items-center company_box p-0">
+                              <div className="text_box text-left w-100 mt-n2">
+                                <h3 className="mb-0">
+                                  <Link
+                                    className="font-size-6 text-black-2 font-weight-semibold"
+                                    to="http://localhost:3000/"
+                                  >
+                                    {EducationDetails.qualification} <span className="font-size-4">({EducationDetails.university_institute})</span>
+                                  </Link>
+                                </h3>
                                 <Link
-                                  className="font-size-6 text-black-2 font-weight-semibold"
                                   to="http://localhost:3000/"
+                                  className="font-size-4 text-default-color line-height-2"
                                 >
-                                  Masters in Art Design
+                                  {EducationDetails.course}, {EducationDetails.specialization}
                                 </Link>
-                              </h3>
+                              </div>
+                            </div>
+                            <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                               <Link
                                 to="http://localhost:3000/"
-                                className="font-size-4 text-default-color line-height-2"
+                                className="font-size-4 text-gray w-100"
                               >
-                                Harvard University
+                                {EducationDetails.passing_year}
+                              </Link>
+                              <Link
+                                to="http://localhost:3000/"
+                                className="font-size-3 text-gray w-100"
+                              >
+                                <span
+                                  className="mr-4"
+                                  style={{ marginTop: "-2px" }}
+                                >
+                                  <img
+                                    src="image/svg/icon-loaction-pin-black.svg"
+                                    alt=""
+                                  />
+                                </span>
+                                {EducationDetails.institute_location}
                               </Link>
                             </div>
                           </div>
-                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-4 text-gray w-100"
-                            >
-                              Jun 2017 - April 2020- 3 years
-                            </Link>
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-3 text-gray w-100"
-                            >
-                              <span
-                                className="mr-4"
-                                style={{ marginTop: "-2px" }}
-                              >
-                                <img
-                                  src="image/svg/icon-loaction-pin-black.svg"
-                                  alt=""
-                                />
-                              </span>
-                              New York, USA
-                            </Link>
-                          </div>
                         </div>
-                      </div>
-                      <div className="w-100">
-                        <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                          <div className="media align-items-center company_box p-0">
-                            <Link
-                              className="text_box text-left"
-                              to="http://localhost:3000/"
-                            >
-                              <img
-                                className="company_logo"
-                                src="image/svg/mit.svg"
-                                alt=""
-                              />
-                            </Link>
-                            <div className="text_box text-left w-100 mt-n2">
-                              <h3 className="mb-0">
-                                <Link
-                                  className="font-size-6 text-black-2 font-weight-semibold"
-                                  to="http://localhost:3000/"
-                                >
-                                  Bachelor in Software Engineering
-                                </Link>
-                              </h3>
-                              <Link
-                                to="http://localhost:3000/"
-                                className="font-size-4 text-default-color line-height-2"
-                              >
-                                Manipal Institute of Technology
-                              </Link>
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-4 text-gray w-100"
-                            >
-                              Jun 2017 - April 2020- 3 years
-                            </Link>
-                            <Link
-                              to="http://localhost:3000/"
-                              className="font-size-3 text-gray w-100"
-                            >
-                              <span
-                                className="mr-4"
-                                style={{ marginTop: "-2px" }}
-                              >
-                                <img
-                                  src="image/svg/icon-loaction-pin-black.svg"
-                                  alt=""
-                                />
-                              </span>
-                              New York, USA
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                   <div

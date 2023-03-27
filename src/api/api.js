@@ -1,8 +1,11 @@
 import axios from "axios";
 
-const API_URL = 'http://canjobs.000webhostapp.com/';
-const token = localStorage.getItem("token");
+const API_URL = 'https://apnaorganicstore.in/canjobs/';
+// const token = localStorage.getItem("token");
 const user_id = localStorage.getItem("user_id");
+
+
+// EMPLOYEE'S API
 
 export const EmployeeSignUp = async (props) => {
     const formData = new FormData();
@@ -19,30 +22,34 @@ export const EmployeeLogin = async (props) => {
     return response.data;
 };
 export const EmployeeDetails = async () => {
-    const response = await axios.get(`${API_URL}getEmployeeDetail`, {
-        params: {
-            'employee_id': 7
-        },
-        headers: {
-            'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZV9pZCI6IjE0IiwiQVBJX1RJTUUiOjE2Nzg5NDQxMjR9.e-zR6fpjIFUyQ2pzUI2dJ5uHglV7b39r6tG-ZxKxUbk',
-        }
-    })
+    const formData = new FormData();
+    formData.append('employee_id', '7');
+    const response = await axios.post(`https://apnaorganicstore.in/canjobs/getEmployeeDetail`, { "employee_id": "7" },
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
     return response.data;
-    // const headers = new Headers({
-    //     'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZV9pZCI6IjE0IiwiQVBJX1RJTUUiOjE2Nzg5NDQxMjR9.e-zR6fpjIFUyQ2pzUI2dJ5uHglV7b39r6tG-ZxKxUbk',
-    //     'Content-Type': 'application/json'
-    // });
+};
+export const AddEmployeeDetails = async (props) => {
+    const response = await axios.put(`http://localhost/naukari/employeePersonal_detail`, props)
+    return response.data;
+};
 
-    // const params = new URLSearchParams({
-    //     'employee_id': 7
-    // });
+// EMPLOYEE'S API
+export const GetAllJobs = async () => {
+    const response = await axios.get(`${API_URL}view_jobs`)
+    return response;
+};
 
-    // fetch(`${API_URL}getEmployeeDetail?${params}`, {
-    //     method: 'GET',
-    //     headers: headers
-    // })
-    //     .then(response => response.json())
-    //     .then(data => setData(data))
-    //     .catch(error => console.error(error));
 
+// ADMIN'S API
+export const getAllJobs = async () => {
+    const response = await axios.get(`${API_URL}admin/getAllJobs`)
+    return response.data.data;
+};
+export const getAllEmployer = async () => {
+    const response = await axios.get(`${API_URL}admin/getAllEmployer`)
+    return response.data.data;
 };

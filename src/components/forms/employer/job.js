@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
+import FilterJson from './../../json/filterjson';
 function AddJobModal(props) {
+  const [Json, setJson] = useState(FilterJson);
+
   // CKEDITOR
   // ClassicEditor.defaultConfig = {
   //   toolbar: {
@@ -30,85 +33,86 @@ function AddJobModal(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    jobtitle: "",
-    experience: "",
+    job_title: "",
+    experience_required: "",
     salary: "",
     location: "",
-    industry: "",
-    link: "",
-    jobdesc: "",
-    duties: "",
-    requirment: "",
+    industry_type: "",
+    apply_link: "",
+    job_description: "",
+    your_duties: "",
+    requirement: "",
     department: "",
-    jobtype: "",
-    role: "",
+    job_type: "",
+    role_category: "",
     education: "",
     language: "",
-    skills: "",
+    keyskill: "",
     employement: "",
+    job_category_id: ""
     // jobscore: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    jobtitle: [
+    job_title: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Job Title is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
-    experience: [
+    experience_required: [
       (value) =>
         value === ""
-          ? "Experience is required"
+          ? "experience_required is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     salary: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Salary is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
     location: [
       (value) =>
         value === "" || value.trim() === "" ? "Location is required" : null,
     ],
-    industry: [
+    industry_type: [
       (value) =>
         value === ""
-          ? "Industry Type is required"
+          ? "industry_type Type is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
 
-    link: [
+    apply_link: [
       (value) =>
-        value === "" || value.trim() === "" ? "Link is required" : null,
+        value === "" || value.trim() === "" ? "apply_link is required" : null,
     ],
-    jobdesc: [
+    job_description: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Job Description is required"
           : null,
     ],
-    duties: [
+    your_duties: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Duties is required"
+          ? "your_duties is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
-    requirment: [
+    requirement: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Job Requirment is required"
+          ? "Job requirement is required"
           : null,
     ],
     department: [
@@ -116,41 +120,45 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Department is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+            ? "Cannot use special character "
+            : null,
     ],
-    jobtype: [
+    job_type: [
       (value) =>
         value === "" || value.trim() === "" ? "Job Type is required" : null,
     ],
-    role: [
+    role_category: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Role/Category is required"
+          ? "role_category/Category is required"
           : null,
     ],
     education: [
       (value) =>
-        value === "" || value.trim() === "" ? "Education is required" : null,
+        value === "" || value.trim() === "" ? "education is required" : null,
     ],
     language: [
       (value) =>
-        value === "" || value.trim() === "" ? "Language is required" : null,
+        value === "" || value.trim() === "" ? "language is required" : null,
     ],
-    skills: [
+    keyskill: [
       (value) =>
-        value === "" || value.trim() === "" ? "Skills is required" : null,
+        value === "" || value.trim() === "" ? "keyskill is required" : null,
     ],
 
     employement: [
       (value) =>
-        value === "" || value.trim() === "" ? "Employement is required" : null,
+        value === "" || value.trim() === "" ? "employement is required" : null,
     ],
-
+    job_category_id: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Job category is required" : null,
+    ],
     // jobscore: [],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
+  // eslint-disable-next-line no-unused-vars
+  const { state, setState, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
@@ -160,6 +168,8 @@ function AddJobModal(props) {
     if (validate()) {
     }
   };
+  console.log("JSON" + JSON.stringify(FilterJson.location))
+
   // END ADD JOBS VALIDATION
   return (
     <>
@@ -184,68 +194,67 @@ function AddJobModal(props) {
             <div className="row pt-5">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="jobtitle"
+                  htmlFor="job_title"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job title <span className="text-danger"> *</span> :
+                  Job Title <span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={30}
-                  name="jobtitle"
-                  value={state.jobtitle}
+                  name="job_title"
+                  value={state.job_title}
                   onChange={onInputChange}
                   type="text"
                   className={
-                    errors.jobtitle
+                    errors.job_title
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Job Title"
-                  id="jobtitle"
+                  id="job_title"
                 />
-                {/*----ERROR MESSAGE FOR jobtitle----*/}
-                {errors.jobtitle && (
+                {/*----ERROR MESSAGE FOR job_title----*/}
+                {errors.job_title && (
                   <span
-                    key={errors.jobtitle}
+                    key={errors.job_title}
                     className="text-danger font-size-3"
                   >
-                    {errors.jobtitle}
+                    {errors.job_title}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="experience"
+                  htmlFor="experience_required"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
                   Experience required <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <select
-                    name="experience"
-                    value={state.experience}
+                    name="experience_required"
+                    value={state.experience_required}
                     onChange={onInputChange}
                     className={
-                      errors.experience
+                      errors.experience_required
                         ? "form-control border border-danger"
                         : "form-control"
                     }
                     placeholder="Job Title"
-                    id="experience"
+                    id="experience_required"
                   >
-                    <option value={""}>Select</option>
-                    <option value={"0-1"}>0-1 year</option>
-                    <option value={"1-3"}>1-3 year</option>
-                    <option value={"3-5"}>3-5 year</option>
-                    <option value={"5+"}>5+ year</option>
+                    {(FilterJson.experience || []).map((exp) => (
+                      <option key={exp} value={exp}>{exp}</option>
+                    ))}
+
                   </select>
-                  {/*----ERROR MESSAGE FOR experience----*/}
-                  {errors.experience && (
+                  {/*----ERROR MESSAGE FOR experience_required----*/}
+                  {errors.experience_required && (
                     <span
-                      key={errors.experience}
+                      key={errors.experience_required}
                       className="text-danger font-size-3"
                     >
-                      {errors.experience}
+                      {errors.experience_required}
                     </span>
                   )}
                 </div>
@@ -257,7 +266,7 @@ function AddJobModal(props) {
                 >
                   Salary <span className="text-danger"> *</span> :
                 </label>
-                <input
+                <select
                   maxLength={9}
                   name="salary"
                   value={state.salary}
@@ -270,7 +279,11 @@ function AddJobModal(props) {
                   }
                   placeholder="Salary"
                   id="salary"
-                />
+                >
+                  {(FilterJson.salary || []).map((salary) => (
+                    <option key={salary} value={salary}>{salary}</option>
+                  ))}
+                </select>
                 {/*----ERROR MESSAGE FOR salary----*/}
                 {errors.salary && (
                   <span key={errors.salary} className="text-danger font-size-3">
@@ -287,7 +300,7 @@ function AddJobModal(props) {
                 >
                   Location <span className="text-danger"> *</span> :
                 </label>
-                <input
+                <select
                   maxLength={50}
                   name="location"
                   value={state.location}
@@ -300,7 +313,11 @@ function AddJobModal(props) {
                   }
                   placeholder="Location"
                   id="location"
-                />
+                >
+                  {(FilterJson.location || []).map((location) => (
+                    <option key={location} value={location}>{location}</option>
+                  ))}
+                </select>
                 {/*----ERROR MESSAGE FOR location----*/}
                 {errors.location && (
                   <span
@@ -314,40 +331,44 @@ function AddJobModal(props) {
 
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="industry"
+                  htmlFor="industry_type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
                   Industry Type <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
-                  <input
+                  <select
                     maxLength={30}
-                    name="industry"
-                    value={state.industry}
+                    name="industry_type"
+                    value={state.industry_type}
                     onChange={onInputChange}
                     type="text"
                     className={
-                      errors.industry
+                      errors.industry_type
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Industry"
-                    id="industry"
-                  />
-                  {/*----ERROR MESSAGE FOR industry----*/}
-                  {errors.industry && (
+                    placeholder="industry_type"
+                    id="industry_type"
+                  >
+                    {(FilterJson.industry || []).map((industry) => (
+                      <option key={industry} value={industry}>{industry}</option>
+                    ))}
+                  </select>
+                  {/*----ERROR MESSAGE FOR industry_type----*/}
+                  {errors.industry_type && (
                     <span
-                      key={errors.industry}
+                      key={errors.industry_type}
                       className="text-danger font-size-3"
                     >
-                      {errors.industry}
+                      {errors.industry_type}
                     </span>
                   )}
                 </div>
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="link"
+                  htmlFor="apply_link"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
                   Apply Link <span className="text-danger"> *</span> :
@@ -356,83 +377,31 @@ function AddJobModal(props) {
                   <input
                     type="text"
                     maxLength={30}
-                    name="link"
-                    value={state.link}
+                    name="apply_link"
+                    value={state.apply_link}
                     onChange={onInputChange}
                     className={
-                      errors.link
+                      errors.apply_link
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply Link"
-                    id="link"
+                    placeholder="Apply apply_link"
+                    id="apply_link"
                   />
-                  {/*----ERROR MESSAGE FOR link----*/}
-                  {errors.link && (
-                    <span key={errors.link} className="text-danger font-size-3">
-                      {errors.link}
+                  {/*----ERROR MESSAGE FOR apply_link----*/}
+                  {errors.apply_link && (
+                    <span key={errors.apply_link} className="text-danger font-size-3">
+                      {errors.apply_link}
                     </span>
                   )}
                 </div>
               </div>
             </div>
-            {/* <h4 className="font-size-4 text-black-2  line-height-reset">
-              Your Job Match Score :
-            </h4>
-            <div className="row d-flex">
-              <div className="form-group col-md-3 col-6">
-                <input
-                  type="checkbox"
-                  id="Early_Applicant"
-                  placeholder=" Early Applicant "
-                />
-                <label
-                  htmlFor="Early_Applicant"
-                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
-                >
-                  Early Applicant
-                </label>
-              </div>
-              <div className="form-group col-md-3 col-6">
-                <input
-                  type="checkbox"
-                  id="Keyskills"
-                  placeholder=" Keyskillse "
-                />
-                <label
-                  htmlFor="Keyskills"
-                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
-                >
-                  Keyskillse
-                </label>
-              </div>
-              <div className="form-group col-md-3 col-6">
-                <input type="checkbox" id="Location" placeholder=" Location " />
-                <label
-                  htmlFor="Location"
-                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
-                >
-                  Location
-                </label>
-              </div>
-              <div className="form-group col-md-3 col-6">
-                <input
-                  type="checkbox"
-                  id="Work_Experienc"
-                  placeholder=" Work Experienc "
-                />
-                <label
-                  htmlFor="Work_Experienc"
-                  className="font-size-4 text-black-2  line-height-reset ml-6 pt-5"
-                >
-                  Work Experienc
-                </label>
-              </div>
-            </div> */}
+
             <div className="row">
               <div className="form-group col-md-12 px-0 pr-3">
                 <label
-                  htmlFor="jobdesc"
+                  htmlFor="job_description"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
                   Job Description : <span className="text-danger">*</span>
@@ -441,28 +410,29 @@ function AddJobModal(props) {
                   <div
                     sm="12"
                     className={
-                      errors.jobdesc
+                      errors.job_description
                         ? "border border-danger rounded overflow-hidden"
                         : "border rounded overflow-hidden"
                     }
                   >
                     <CKEditor
                       type={"classic"}
-                      name={"jobdesc"}
-                      id={"jobdesc"}
-                      data={state.jobdesc}
-                      value={state.jobdesc}
+                      name={"job_description"}
+                      row={6}
+                      id={"job_description"}
+                      data={state.job_description}
+                      value={state.job_description}
                       onChange={onInputChange}
                       initData="JOb Description"
                     />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.jobdesc && (
+                  {errors.job_description && (
                     <span
-                      key={errors.jobdesc}
+                      key={errors.job_description}
                       className="text-danger font-size-3"
                     >
-                      {errors.jobdesc}
+                      {errors.job_description}
                     </span>
                   )}
                 </div>
@@ -471,7 +441,7 @@ function AddJobModal(props) {
             <div className="row">
               <div className="form-group col-md-6 px-0 pr-3">
                 <label
-                  htmlFor="duties"
+                  htmlFor="your_duties"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
                   Your Duties : <span className="text-danger">*</span>
@@ -480,65 +450,65 @@ function AddJobModal(props) {
                   <div
                     sm="6"
                     className={
-                      errors.duties
+                      errors.your_duties
                         ? "border border-danger rounded overflow-hidden"
                         : "border rounded overflow-hidden"
                     }
                   >
                     <CKEditor
                       type={"classic"}
-                      name={"duties"}
-                      id={"duties"}
-                      data={state.duties}
-                      value={state.duties}
+                      name={"your_duties"}
+                      id={"your_duties"}
+                      data={state.your_duties}
+                      value={state.your_duties}
                       onChange={onInputChange}
-                      initData="Employee Duties"
+                      initData="Employee your_duties"
                     />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.duties && (
+                  {errors.your_duties && (
                     <span
-                      key={errors.duties}
+                      key={errors.your_duties}
                       className="text-danger font-size-3"
                     >
-                      {errors.duties}
+                      {errors.your_duties}
                     </span>
                   )}
                 </div>
               </div>
               <div className="form-group col-md-6 px-0 pr-3">
                 <label
-                  htmlFor="requirment"
+                  htmlFor="requirement"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Requirment : <span className="text-danger">*</span>
+                  Requirement : <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <div
                     sm="6"
                     className={
-                      errors.requirment
+                      errors.requirement
                         ? "border border-danger rounded overflow-hidden"
                         : "border rounded overflow-hidden"
                     }
                   >
                     <CKEditor
                       type={"classic"}
-                      name={"requirment"}
-                      id={"requirment"}
-                      data={state.requirment}
-                      value={state.requirment}
+                      name={"requirement"}
+                      id={"requirement"}
+                      data={state.requirement}
+                      value={state.requirement}
                       onChange={onInputChange}
                       initData="Add Requirement"
                     />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.requirment && (
+                  {errors.requirement && (
                     <span
-                      key={errors.requirment}
+                      key={errors.requirement}
                       className="text-danger font-size-3"
                     >
-                      {errors.requirment}
+                      {errors.requirement}
                     </span>
                   )}
                 </div>
@@ -580,67 +550,65 @@ function AddJobModal(props) {
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="jobtype"
+                  htmlFor="job_type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
                   Job Type <span className="text-danger"> *</span> :
                 </label>
                 <div className={" position-relative"}>
                   <select
-                    placeholder="Apply jobtype"
-                    id="jobtype"
-                    name="jobtype"
-                    value={state.jobtype}
+                    placeholder="Apply job_type"
+                    id="job_type"
+                    name="job_type"
+                    value={state.job_type}
                     onChange={onInputChange}
                     className={
-                      errors.jobtype
-                        ? " form-control border border-danger rounded position-relative overflow-hidden"
-                        : " form-control position-relative rounded overflow-hidden"
+                      errors.job_type
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
                     }
                   >
-                    <option value={""}>Select</option>
-                    <option value={"swap"}>Swap</option>
-                    <option value={"other than swap"}>Other than swap</option>
-                    <option value={"with swap"}>With swap</option>
-                    <option value={"all"}>All</option>
+                    {(FilterJson.job_type || []).map((job_type) => (
+                      <option key={job_type} value={job_type}>{job_type}</option>
+                    ))}
                   </select>
                 </div>
-                {/*----ERROR MESSAGE FOR jobtype----*/}
-                {errors.jobtype && (
+                {/*----ERROR MESSAGE FOR job_type----*/}
+                {errors.job_type && (
                   <span
-                    key={errors.jobtype}
+                    key={errors.job_type}
                     className="text-danger font-size-3"
                   >
-                    {errors.jobtype}
+                    {errors.job_type}
                   </span>
                 )}
               </div>{" "}
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="role"
+                  htmlFor="role_category"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Role/Category <span className="text-danger"> *</span> :
+                  Role Category <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     maxLength={30}
-                    name="role"
-                    value={state.role}
+                    name="role_category"
+                    value={state.role_category}
                     onChange={onInputChange}
                     className={
-                      errors.role
+                      errors.role_category
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply role"
-                    id="role"
+                    placeholder="Apply role_category"
+                    id="role_category"
                   />
-                  {/*----ERROR MESSAGE FOR role----*/}
-                  {errors.role && (
-                    <span key={errors.role} className="text-danger font-size-3">
-                      {errors.role}
+                  {/*----ERROR MESSAGE FOR role_category----*/}
+                  {errors.role_category && (
+                    <span key={errors.role_category} className="text-danger font-size-3">
+                      {errors.role_category}
                     </span>
                   )}
                 </div>
@@ -661,25 +629,24 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.education
-                        ? " form-control border border-danger rounded position-relative overflow-hidden"
-                        : " form-control position-relative rounded overflow-hidden"
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
                     }
                     placeholder="Apply education"
                     id="education"
                   >
-                    <option value={""}>Select</option>
-                    <option value={"fresher"}>fresher</option>
-                    <option value={"graduate"}>graduate</option>
-                    <option value={"post graduate"}>post graduate</option>
+                    {(FilterJson.education || []).map((education) => (
+                      <option key={education} value={education}>{education}</option>
+                    ))}
                   </select>
                 </div>
-                {/*----ERROR MESSAGE FOR jobtype----*/}
-                {errors.jobtype && (
+                {/*----ERROR MESSAGE FOR job_type----*/}
+                {errors.job_type && (
                   <span
-                    key={errors.jobtype}
+                    key={errors.job_type}
                     className="text-danger font-size-3"
                   >
-                    {errors.jobtype}
+                    {errors.job_type}
                   </span>
                 )}
               </div>{" "}
@@ -718,33 +685,33 @@ function AddJobModal(props) {
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="skills"
+                  htmlFor="keyskill"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Key skills <span className="text-danger"> *</span> :
+                  Key Skill <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
                     type="text"
                     maxLength={30}
-                    name="skills"
-                    value={state.skills}
+                    name="keyskill"
+                    value={state.keyskill}
                     onChange={onInputChange}
                     className={
-                      errors.skills
+                      errors.keyskill
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply skills"
-                    id="skills"
+                    placeholder="Apply keyskill"
+                    id="keyskill"
                   />
-                  {/*----ERROR MESSAGE FOR skills----*/}
-                  {errors.skills && (
+                  {/*----ERROR MESSAGE FOR keyskill----*/}
+                  {errors.keyskill && (
                     <span
-                      key={errors.skills}
+                      key={errors.keyskill}
                       className="text-danger font-size-3"
                     >
-                      {errors.skills}
+                      {errors.keyskill}
                     </span>
                   )}
                 </div>
@@ -757,7 +724,7 @@ function AddJobModal(props) {
                   htmlFor="employement"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Employement <span className="text-danger"> *</span> :
+                  employement <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <select
@@ -766,17 +733,15 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.employement
-                        ? " form-control border border-danger rounded position-relative overflow-hidden"
-                        : " form-control position-relative rounded overflow-hidden"
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
                     }
                     placeholder="Apply employement"
                     id="employement"
                   >
-                    <option value={""}>Select</option>
-                    <option value={"part time"}>part time</option>
-                    <option value={"full time"}>full time</option>
-                    <option value={"both"}>both</option>
-                    <option value={"other"}>other</option>
+                    {(FilterJson.employement || []).map((employement) => (
+                      <option key={employement} value={employement}>{employement}</option>
+                    ))}
                   </select>
                 </div>
                 {/*----ERROR MESSAGE FOR employement----*/}
@@ -786,6 +751,43 @@ function AddJobModal(props) {
                     className="text-danger font-size-3"
                   >
                     {errors.employement}
+                  </span>
+                )}
+              </div>{" "}
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="job_category_id"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Job Category <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <select
+                    name="job_category_id"
+                    value={state.job_category_id}
+                    onChange={onInputChange}
+                    className={
+                      errors.job_category_id
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
+                    }
+                    placeholder="Apply job_category_id"
+                    id="job_category_id"
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"Hospitality"}>Hospitality</option>
+                    <option value={"Driver"}>Driver</option>
+                    <option value={"Mechanic"}>Mechanic</option>
+                    <option value={"other"}>other</option>
+                  </select>
+                </div>
+                {/*----ERROR MESSAGE FOR job_category_id----*/}
+                {errors.job_category_id && (
+                  <span
+                    key={errors.job_category_id}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.job_category_id}
                   </span>
                 )}
               </div>{" "}
