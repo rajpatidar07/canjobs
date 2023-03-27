@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
+import { getAllJobsCategory } from "../../api/api";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  const [categoryData, setCategoryData] = useState([]);
+  const [CategoryId, setCategoryId] = useState([]);
+
+  /* Function to get the job category data*/
+  const CategoryData = async () => {
+    const userData = await getAllJobsCategory();
+    setCategoryData(userData);
+  };
+
+  /*Render function to get the job category*/
+  useEffect(() => {
+    CategoryData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage.getItem("user_id")]);
+
+  /* Function to show the single data to update job category*/
+  const editJobCategory = (e) => {
+    // e.preventDefault();
+    setShowAddCategoryModal(true);
+    setCategoryId(e);
+  };
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -47,6 +70,7 @@ function Category() {
                     </CustomButton>
                     <AddCategory
                       show={showAddCategoryModal}
+                      jobCategoryData={setCategoryId}
                       close={() => setShowAddCategoryModal(false)}
                     />
                   </div>
@@ -78,138 +102,44 @@ function Category() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
+                      {(categoryData || []).map((catdata) => (
+                        <tr
+                          className="border border-color-2"
+                          key={catdata.job_category_id}
+                        >
+                          <th scope="row" className=" border-0 py-7 ">
+                            <div className="">
+                              <Link
+                                to={""}
+                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              >
+                                {catdata.category_name}
+                              </Link>
+                            </div>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {catdata.category_type}
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
                             <Link
                               to=""
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              onClick={(catdata) => editJobCategory(catdata)}
                             >
-                              Senior Project Manager
+                              <span className=" fas fa-edit text-gray px-5">
+                                {" "}
+                              </span>
                             </Link>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Software Engineer
-                          </h3>
-                        </th>
-                        <th className="min-width-px-100 py-7 ">
-                          <Link
-                            onClick={() => setShowAddCategoryModal(true)}
-                            to=""
-                          >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <a
-                              href="jobdetails.html"
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              UI Designer
-                            </a>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Software Engineer
-                          </h3>
-                        </th>
-                        <th className="min-width-px-100 py-7 ">
-                          <Link
-                            onClick={() => setShowAddCategoryModal(true)}
-                            to=""
-                          >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <a
-                              href="jobdetails.html"
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              Head of Marketing
-                            </a>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE
-                          </h3>
-                        </th>
-                        <th className="min-width-px-100 py-7 ">
-                          <Link
-                            onClick={() => setShowAddCategoryModal(true)}
-                            to=""
-                          >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" border-0 py-7 ">
-                          <div className="">
-                            <a
-                              href="jobdetails.html"
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              Full-Stack Developer
-                            </a>
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            BE
-                          </h3>
-                        </th>
-                        <th className="min-width-px-100 py-7 ">
-                          <Link
-                            onClick={() => setShowAddCategoryModal(true)}
-                            to=""
-                          >
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
+                            <Link to="">
+                              <span className=" text-danger">
+                                {" "}
+                                <i className="fa fa-trash"></i>
+                              </span>
+                            </Link>
+                          </th>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

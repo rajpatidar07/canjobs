@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
-import FilterJson from './../../json/filterjson';
+import FilterJson from "./../../json/filterjson";
 function AddJobModal(props) {
   const [Json, setJson] = useState(FilterJson);
 
@@ -49,7 +49,7 @@ function AddJobModal(props) {
     language: "",
     keyskill: "",
     employement: "",
-    job_category_id: ""
+    job_category_id: "",
     // jobscore: "",
   };
   // VALIDATION CONDITIONS
@@ -59,24 +59,24 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Job Title is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     experience_required: [
       (value) =>
         value === ""
           ? "experience_required is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     salary: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Salary is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     location: [
       (value) =>
@@ -87,8 +87,8 @@ function AddJobModal(props) {
         value === ""
           ? "industry_type Type is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
 
     apply_link: [
@@ -106,8 +106,8 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "your_duties is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     requirement: [
       (value) =>
@@ -120,8 +120,8 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Department is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     job_type: [
       (value) =>
@@ -168,7 +168,7 @@ function AddJobModal(props) {
     if (validate()) {
     }
   };
-  console.log("JSON" + JSON.stringify(FilterJson.location))
+  // console.log("JSON" + JSON.stringify(FilterJson.location))
 
   // END ADD JOBS VALIDATION
   return (
@@ -244,9 +244,10 @@ function AddJobModal(props) {
                     id="experience_required"
                   >
                     {(FilterJson.experience || []).map((exp) => (
-                      <option key={exp} value={exp}>{exp}</option>
+                      <option key={exp} value={exp}>
+                        {exp}
+                      </option>
                     ))}
-
                   </select>
                   {/*----ERROR MESSAGE FOR experience_required----*/}
                   {errors.experience_required && (
@@ -281,7 +282,9 @@ function AddJobModal(props) {
                   id="salary"
                 >
                   {(FilterJson.salary || []).map((salary) => (
-                    <option key={salary} value={salary}>{salary}</option>
+                    <option key={salary} value={salary}>
+                      {salary}
+                    </option>
                   ))}
                 </select>
                 {/*----ERROR MESSAGE FOR salary----*/}
@@ -315,7 +318,9 @@ function AddJobModal(props) {
                   id="location"
                 >
                   {(FilterJson.location || []).map((location) => (
-                    <option key={location} value={location}>{location}</option>
+                    <option key={location} value={location}>
+                      {location}
+                    </option>
                   ))}
                 </select>
                 {/*----ERROR MESSAGE FOR location----*/}
@@ -352,7 +357,9 @@ function AddJobModal(props) {
                     id="industry_type"
                   >
                     {(FilterJson.industry || []).map((industry) => (
-                      <option key={industry} value={industry}>{industry}</option>
+                      <option key={industry} value={industry}>
+                        {industry}
+                      </option>
                     ))}
                   </select>
                   {/*----ERROR MESSAGE FOR industry_type----*/}
@@ -390,7 +397,10 @@ function AddJobModal(props) {
                   />
                   {/*----ERROR MESSAGE FOR apply_link----*/}
                   {errors.apply_link && (
-                    <span key={errors.apply_link} className="text-danger font-size-3">
+                    <span
+                      key={errors.apply_link}
+                      className="text-danger font-size-3"
+                    >
                       {errors.apply_link}
                     </span>
                   )}
@@ -569,7 +579,9 @@ function AddJobModal(props) {
                     }
                   >
                     {(FilterJson.job_type || []).map((job_type) => (
-                      <option key={job_type} value={job_type}>{job_type}</option>
+                      <option key={job_type} value={job_type}>
+                        {job_type}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -607,7 +619,10 @@ function AddJobModal(props) {
                   />
                   {/*----ERROR MESSAGE FOR role_category----*/}
                   {errors.role_category && (
-                    <span key={errors.role_category} className="text-danger font-size-3">
+                    <span
+                      key={errors.role_category}
+                      className="text-danger font-size-3"
+                    >
                       {errors.role_category}
                     </span>
                   )}
@@ -636,7 +651,9 @@ function AddJobModal(props) {
                     id="education"
                   >
                     {(FilterJson.education || []).map((education) => (
-                      <option key={education} value={education}>{education}</option>
+                      <option key={education} value={education}>
+                        {education}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -740,7 +757,9 @@ function AddJobModal(props) {
                     id="employement"
                   >
                     {(FilterJson.employement || []).map((employement) => (
-                      <option key={employement} value={employement}>{employement}</option>
+                      <option key={employement} value={employement}>
+                        {employement}
+                      </option>
                     ))}
                   </select>
                 </div>

@@ -14,8 +14,8 @@ function Job() {
 
   const EmpData = async () => {
     const userData = await getAllJobs();
-    setjobData(userData)
-  }
+    setjobData(userData);
+  };
   useEffect(() => {
     EmpData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,9 +23,9 @@ function Job() {
   // console.log(("userData--" + JSON.stringify(jobData)))
   const editJob = (e) => {
     // e.preventDefault();
-    setShowAddJobsModal(true)
-    setJobId(e)
-  }
+    setShowAddJobsModal(true);
+    setJobId(e);
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -148,7 +148,10 @@ function Job() {
                     </thead>
                     <tbody>
                       {(jobData || []).map((jobdata) => (
-                        <tr className="border border-color-2" key={jobdata.job_id}>
+                        <tr
+                          className="border border-color-2"
+                          key={jobdata.job_id}
+                        >
                           <th scope="row" className=" border-0 py-7 ">
                             <div className="">
                               <Link
