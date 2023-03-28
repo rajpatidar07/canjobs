@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddJobCategory } from "../../../api/api";
+import filterjson from "../../json/filterjson";
 function AddCategory(props) {
-  console.log(props.jobCategoryData);
+  const [catdata, setCatdata] = useState([]);
+  const close = props.close;
   // USER CATEGORY VALIDATION
 
   // INITIAL STATE ASSIGNMENT
-  const initialFormState = {
-    category_name: "",
-    category_type: "",
-  };
+  // const initialFormState = {
+  //   category_name: "",
+  //   category_type: "",
+  // };
   // VALIDATION CONDITIONS
   const validators = {
     category_name: [
@@ -29,17 +31,30 @@ function AddCategory(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate, setState } = useValidation(
-    initialFormState,
+  const { state, setState, onInputChange, errors, validate } = useValidation(
+    catdata,
     validators
   );
+  // API CALL
+  const CatData = () => {
+    setCatdata(props.jobCategoryData);
+    setState(props.jobCategoryData);
+  };
+  useEffect(() => {
+    CatData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+  // console.log(catdata);
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
     event.preventDefault();
     if (validate()) {
-      console.log(state);
+      // console.log(state);
       const responseData = await AddJobCategory(state);
-      console.log(responseData);
+      if (responseData.message === "Category updated successfully") {
+        return close();
+      }
+      // console.log(responseData);
     }
   }
 
@@ -114,11 +129,13 @@ function AddCategory(props) {
                 id="category_type"
               >
                 <option value={""}>select category</option>
-                <option value={"category01"}>category01</option>
-                <option value={"category02"}>category02</option>
-                <option value={"category03"}>category03</option>
-                <option value={"category04"}>category04</option>
-                <option value={"category05"}>category05</option>
+                {(filterjson.category || []).map((data, i) => {
+                  return (
+                    <option value={data} key={i}>
+                      {data}
+                    </option>
+                  );
+                })}
               </select>
               {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
               {errors.category_type && (

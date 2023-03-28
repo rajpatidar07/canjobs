@@ -12,16 +12,16 @@ const FilterJson = {
     "Nepal",
   ],
   category: [
-    "Canada",
-    "USA",
-    "India",
-    "UK",
-    "Mexico",
-    "Russia",
-    "Turkey",
-    "Japan",
-    "China",
-    "Nepal",
+    "Typing",
+    "Computer Operator",
+    "Teacher",
+    "Hr",
+    "CEO",
+    "Recepection",
+    "Frontend developer",
+    "Backend developer",
+    "Devops developer",
+    "Intership",
   ],
   education: [
     "Metric",
@@ -29,7 +29,7 @@ const FilterJson = {
     "Diploma",
     "Graduate",
     "Post Graduate",
-    "Other"
+    "Other",
   ],
   salary: [
     "Below 1 Lac",
@@ -38,23 +38,16 @@ const FilterJson = {
     "5Lac-8Lac",
     "9Lac-10Lac",
     "Above 10Lac",
-    "Not Disclosed"
+    "Not Disclosed",
   ],
-  industry: [
-    "Hospitality",
-    "Transport",
-    "IT",
-    "Tourism",
-    "Health",
-    "Other"
-  ],
+  industry: ["Hospitality", "Transport", "IT", "Tourism", "Health", "Other"],
   experience: [
     "Fresher",
     "0-1 Year",
     "1-3 Year",
     "3-5 Year",
     "5+ Year",
-    "10+ Year"
+    "10+ Year",
   ],
   job_type: [
     "Full Time",
@@ -63,12 +56,8 @@ const FilterJson = {
     "Part Time with SWAP",
     "SWAP Only",
     "Other than SWAP",
-    "Other"
+    "Other",
   ],
-  employement: [
-    "Full Time",
-    "Part Time",
-    "Other"
-  ]
+  employement: ["Full Time", "Part Time", "Other"],
 };
 export default FilterJson;

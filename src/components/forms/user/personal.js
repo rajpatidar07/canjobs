@@ -6,6 +6,7 @@ import { CKEditor } from "ckeditor4-react";
 import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 
 function PersonalDetails(props) {
+  console.log(props.employeedata);
   const [userDetail, setuserDetail] = useState([]);
 
   // USER PERSONAL DETAIL VALIDATION
@@ -32,97 +33,101 @@ function PersonalDetails(props) {
   const validators = {
     name: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     email: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     contact_no: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "MobileNo. is required"
           : value.length !== 10
-            ? "Mobile no should be of 10 digits"
-            : null,
+          ? "Mobile no should be of 10 digits"
+          : null,
     ],
     description: [
       (value) =>
         value === ""
           ? "Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character"
-            : null,
+          ? "Cannot use special character"
+          : null,
     ],
     date_of_birth: [(value) => (value ? null : "Dob is required")],
     gender: [
       (value) =>
-        value === "" || value.trim() === "" ? "Gender is required" : null,
+        value === "" || value.trim() === "" || value.length === 0
+          ? "Gender is required"
+          : null,
     ],
     marital_status: [(value) => (value === "" ? "Status is required" : null)],
     nationality: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     current_location: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     currently_located_country: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "Country is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     language: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "Language is required"
           : null,
     ],
     religion: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     interested_in: [
       (value) =>
         value === ""
           ? "interested_in is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     experience: [(value) => (value === "" ? "experience is required" : null)],
-    work_permit_canada: [(value) => (value === "" ? "Work Permit is required" : null)],
+    work_permit_canada: [
+      (value) => (value === "" ? "Work Permit is required" : null),
+    ],
     work_permit_other_country: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value.trim() === "" || value.length === 0
           ? "Other Permit is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
   };
 
@@ -131,27 +136,30 @@ function PersonalDetails(props) {
     userDetail,
     validators
   );
-
+  console.log(validators.name, "state", errors.name, "errror");
   // API CALL
   const UserData = async () => {
-    const userData = await EmployeeDetails();
-    setuserDetail(userData.data.personal_detail[0])
-    setState(userData.data.personal_detail[0])
-  }
+    const userData = await EmployeeDetails(props.employeedata);
+    // setuserDetail(userData.data.personal_detail[0]);
+    if (userData !== undefined && props.employeedata) {
+      setState(userData.data.personal_detail[0]);
+      console.log(userData.data);
+    }
+  };
   useEffect(() => {
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
-  // console.log((state))
+  }, [props]);
+  console.log(state);
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
-  const onUserPersonalDetailClick = async (event) => {
+  async function onUserPersonalDetailClick(event) {
     event.preventDefault();
     if (validate()) {
+      console.log("ll");
       const userData = await AddEmployeeDetails(state);
     }
-  };
-
+  }
 
   // END USER PERSONAL DETAIL VALIDATION
   return (
@@ -172,7 +180,7 @@ function PersonalDetails(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form>
+          <form onSubmit={onUserPersonalDetailClick}>
             <h5 className="text-center pt-2 mb-7">Personal Details</h5>
             {/* FIRST LINE */}
             <div className="row pt-5">
@@ -198,7 +206,7 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                   type="text"
                   className={
-                    errors.name
+                    errors.name || errors.name === undefined
                       ? "form-control border border-danger"
                       : "form-control"
                   }
@@ -207,10 +215,7 @@ function PersonalDetails(props) {
                 />
                 {/*----ERROR MESSAGE FOR name----*/}
                 {errors.name && (
-                  <span
-                    key={errors.name}
-                    className="text-danger font-size-3"
-                  >
+                  <span key={errors.name} className="text-danger font-size-3">
                     {errors.name}
                   </span>
                 )}
@@ -231,17 +236,14 @@ function PersonalDetails(props) {
                   className={
                     errors.email
                       ? "form-control border border-danger"
-                      : "form-control"
+                      : "form-control "
                   }
                   id="email"
                   placeholder="email"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
                 {errors.email && (
-                  <span
-                    key={errors.email}
-                    className="text-danger font-size-3"
-                  >
+                  <span key={errors.email} className="text-danger font-size-3">
                     {errors.email}
                   </span>
                 )}
@@ -381,10 +383,7 @@ function PersonalDetails(props) {
                 </select>
                 {/*----ERROR MESSAGE FOR GENDER----*/}
                 {errors.gender && (
-                  <span
-                    key={errors.gender}
-                    className="text-danger font-size-3"
-                  >
+                  <span key={errors.gender} className="text-danger font-size-3">
                     {errors.gender}
                   </span>
                 )}
@@ -752,7 +751,6 @@ function PersonalDetails(props) {
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                 type="submit"
-                onClick={onUserPersonalDetailClick}
               >
                 Submit
               </button>

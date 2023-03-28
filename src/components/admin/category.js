@@ -5,6 +5,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
 import { DeleteJobCategory, getAllJobsCategory } from "../../api/api";
+import filterjson from "../json/filterjson";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
@@ -21,7 +22,7 @@ function Category() {
   useEffect(() => {
     CategoryData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
+  }, [showAddCategoryModal]);
 
   /* Function to show the single data to update job category*/
   const editJobCategory = (e) => {
@@ -32,7 +33,6 @@ function Category() {
 
   async function deleteCategory(e) {
     const responseData = await DeleteJobCategory(e);
-    console.log(responseData);
   }
   return (
     <>
@@ -53,15 +53,18 @@ function Category() {
                     <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
                     <div className="h-px-48">
                       <select
-                        name="country"
-                        id="country"
+                        name="category"
+                        id="category"
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        onChange={(e) => e.target.value}
                       >
-                        <option value="" data-display="Product Designer">
-                          Software Engineer
-                        </option>
-                        <option value="">MBA</option>
-                        <option value="">BE</option>
+                        {(filterjson.category || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

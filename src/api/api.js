@@ -20,26 +20,28 @@ export const EmployeeLogin = async (props) => {
   const response = await axios.post(`${API_URL}employee_login`, formData);
   return response.data;
 };
-export const EmployeeDetails = async () => {
-  const formData = new FormData();
-  formData.append("employee_id", "7");
-  const response = await axios.post(
-    `https://apnaorganicstore.in/canjobs/getEmployeeDetail`,
-    { employee_id: "7" },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.data;
+export const EmployeeDetails = async (props) => {
+  if (props !== undefined) {
+    console.log(JSON.stringify(props.employee_id));
+
+    const formData = new FormData();
+    formData.append("employee_id", props.employee_id);
+    const response = await axios.post(
+      `${API_URL}getEmployeeDetail`,
+      { employee_id: props.employee_id },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
 };
 export const AddEmployeeDetails = async (props) => {
   console.log(props);
-  const response = await axios.put(
-    `http://localhost/naukari/employeePersonal_detail`,
-    props
-  );
+  const response = await axios.put(`${API_URL}employeePersonal_detail`, props);
+  console.log(response.data);
   return response.data;
 };
 
@@ -68,17 +70,15 @@ export const getAllJobsCategory = async () => {
 /*Add Job Category Api */
 export const AddJobCategory = async (props) => {
   console.log(props);
-  const response = await axios.put(
-    `https://apnaorganicstore.in/canjobs/admin/addCategory`,
-    props
-  );
+  console.log(`${API_URL}admin/addCategory`);
+  const response = await axios.put(`${API_URL}admin/addCategory`, props);
   return response.data;
 };
 /*Delete Job Category Api */
 export const DeleteJobCategory = async (props) => {
   console.log(props);
   const response = await axios.delete(
-    `https://apnaorganicstore.in/canjobs/deletejobCategory/${props}`,
+    `${API_URL}deletejobCategory/${props}`,
     props
   );
   return response.data;

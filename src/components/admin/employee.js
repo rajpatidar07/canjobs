@@ -16,7 +16,7 @@ function Employee() {
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   const [employeeData, setemployeeData] = useState([]);
-
+  let [employeeid, setemployeeId] = useState();
   /* Function to get Employee data*/
   const EmpData = async () => {
     const userData = await getallEmployeeData();
@@ -29,6 +29,12 @@ function Employee() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("user_id")]);
 
+  /* Function to show the single data to update Employee*/
+  const editEmployee = (e) => {
+    // e.preventDefault();
+    setShowEmployeeMOdal(true);
+    setemployeeId(e);
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -78,6 +84,7 @@ function Employee() {
                     </CustomButton>
                     <PersonalDetails
                       show={showAddEmployeeModal}
+                      employeedata={employeeid}
                       close={() => setShowEmployeeMOdal(false)}
                     />
                   </div>
@@ -245,10 +252,7 @@ function Employee() {
                             >
                               <span className=" fa fa-cogs text-gray px-2"></span>
                             </Link>
-                            <Link
-                              to=""
-                              onClick={() => setShowEmployeeMOdal(true)}
-                            >
+                            <Link to="" onClick={() => editEmployee(empdata)}>
                               <span className=" fas fa-edit text-gray px-2"></span>
                             </Link>
                             <Link to="">
