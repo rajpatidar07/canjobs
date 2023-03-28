@@ -3,6 +3,9 @@ import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddJobCategory } from "../../../api/api";
 import filterjson from "../../json/filterjson";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function AddCategory(props) {
   const [catdata, setCatdata] = useState([]);
   const close = props.close;
@@ -44,14 +47,25 @@ function AddCategory(props) {
     CatData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-  // console.log(catdata);
+  console.log();
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
     event.preventDefault();
     if (validate()) {
       // console.log(state);
       const responseData = await AddJobCategory(state);
+      if (responseData.message === "Category added successfully") {
+        toast.success("Category added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
       if (responseData.message === "Category updated successfully") {
+        toast.success("Category Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         return close();
       }
       // console.log(responseData);

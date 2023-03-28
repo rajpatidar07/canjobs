@@ -67,6 +67,15 @@ export const getAllJobsCategory = async () => {
   const response = await axios.get(`${API_URL}admin/getAllJobsCategory`);
   return response.data.data;
 };
+/*Delete Job Employee Api */
+export const DeleteJobEmployee = async (props) => {
+  console.log(props);
+  const response = await axios.delete(
+    `${API_URL}deleteEmployee/${props}`,
+    props
+  );
+  return response.data;
+};
 /*Add Job Category Api */
 export const AddJobCategory = async (props) => {
   console.log(props);

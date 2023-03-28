@@ -6,11 +6,17 @@ import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
 import { DeleteJobCategory, getAllJobsCategory } from "../../api/api";
 import filterjson from "../json/filterjson";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SAlert from "../common/sweetAlert";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
 
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -22,7 +28,7 @@ function Category() {
   useEffect(() => {
     CategoryData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddCategoryModal]);
+  }, [showAddCategoryModal, deleteAlert]);
 
   /* Function to show the single data to update job category*/
   const editJobCategory = (e) => {
@@ -30,9 +36,26 @@ function Category() {
     setShowAddCategoryModal(true);
     setCategoryId(e);
   };
-
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.job_category_id);
+    setDeleteName(e.category_name);
+    setDeleteAlert(true);
+  };
+  /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+  /*To call Api to delete category */
   async function deleteCategory(e) {
     const responseData = await DeleteJobCategory(e);
+    if (responseData.message === "job category has been deleted") {
+      toast.error("Category deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setDeleteAlert(false);
+    }
   }
   return (
     <>
@@ -49,6 +72,9 @@ function Category() {
                   <h3 className="font-size-6 mb-0">Category</h3>
                 </div>
                 <div className="col-lg-6">
+                  <div>
+                    <ToastContainer />
+                  </div>
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
                     <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
                     <div className="h-px-48">
@@ -142,9 +168,7 @@ function Category() {
                               </Link>
                               <Link
                                 to=""
-                                onClick={() =>
-                                  deleteCategory(catdata.job_category_id)
-                                }
+                                onClick={() => ShowDeleteAlert(catdata)}
                               >
                                 <span className=" text-danger">
                                   {" "}
@@ -225,6 +249,14 @@ function Category() {
               </div>
             </div>
           </div>
+          <SAlert
+            show={deleteAlert}
+            title={deleteName}
+            text="Are you Sure you want to delete !"
+            onConfirm={() => deleteCategory(deleteId)}
+            showCancelButton={true}
+            onCancel={CancelDelete}
+          />
         </div>
       </div>
       ;

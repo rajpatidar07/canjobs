@@ -7,8 +7,11 @@ import PersonalDetails from "../forms/user/personal";
 import EmployeeDetails from "../common/employeeDetail";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
-import { getallEmployeeData } from "../../api/api";
+import { getallEmployeeData, DeleteJobEmployee } from "../../api/api";
 import moment from "moment";
+import SAlert from "../common/sweetAlert";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Employee() {
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -17,6 +20,9 @@ function Employee() {
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   const [employeeData, setemployeeData] = useState([]);
   let [employeeid, setemployeeId] = useState();
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   /* Function to get Employee data*/
   const EmpData = async () => {
     const userData = await getallEmployeeData();
@@ -27,7 +33,13 @@ function Employee() {
   useEffect(() => {
     EmpData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
+  }, [
+    deleteAlert,
+    showAddEmployeeModal,
+    showEducationModal,
+    showSkillsModal,
+    showEmployeeProfile,
+  ]);
 
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
@@ -35,6 +47,27 @@ function Employee() {
     setShowEmployeeMOdal(true);
     setemployeeId(e);
   };
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.employee_id);
+    setDeleteName(e.name);
+    setDeleteAlert(true);
+  };
+  /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+  /*To call Api to delete category */
+  async function deleteEmployee(e) {
+    const responseData = await DeleteJobEmployee(e);
+    if (responseData.message === "Employee has been deleted") {
+      toast.error("Category deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setDeleteAlert(false);
+    }
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -42,6 +75,7 @@ function Employee() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
+        <ToastContainer />
         <div
           className={
             showEmployeeProfile === false
@@ -255,7 +289,10 @@ function Employee() {
                             <Link to="" onClick={() => editEmployee(empdata)}>
                               <span className=" fas fa-edit text-gray px-2"></span>
                             </Link>
-                            <Link to="">
+                            <Link
+                              to=""
+                              onClick={() => ShowDeleteAlert(empdata)}
+                            >
                               <span className=" text-danger">
                                 <i className="fa fa-trash "></i>
                               </span>
@@ -334,6 +371,14 @@ function Employee() {
             </div>
           </div>
         </div>
+        <SAlert
+          show={deleteAlert}
+          title={deleteName}
+          text="Are you Sure you want to delete !"
+          onConfirm={() => deleteEmployee(deleteId)}
+          showCancelButton={true}
+          onCancel={CancelDelete}
+        />
         {showEmployeeProfile === true ? (
           <div className="dashboard-main-container mt-24">
             <div className="container">
