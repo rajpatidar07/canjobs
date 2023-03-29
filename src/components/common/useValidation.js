@@ -9,6 +9,16 @@ function useValidation(initialState, validators) {
     setState({ ...state, [name]: value });
   };
 
+  const DescriptionChange = (event, editor) => {
+    setState(editor.getData());
+    let desc;
+    if (editor.getData() != undefined) {
+      desc = editor.getData().replaceAll(/"/g, "'");
+    }
+    setState({ ...state, desc });
+    console.log(desc);
+  };
+
   const validate = () => {
     let newErrors = {};
 
@@ -38,9 +48,9 @@ function useValidation(initialState, validators) {
     state,
     setState,
     onInputChange,
+    DescriptionChange,
     errors,
     validate,
-
   };
 }
 

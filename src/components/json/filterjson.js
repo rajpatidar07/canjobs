@@ -59,5 +59,6 @@ const FilterJson = {
     "Other",
   ],
   employement: ["Full Time", "Part Time", "Other"],
+  qualification: ["Graduate", "Post graduate", "PHD", "2th Pass"],
 };
 export default FilterJson;

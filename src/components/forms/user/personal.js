@@ -6,8 +6,9 @@ import { CKEditor } from "ckeditor4-react";
 import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 
 function PersonalDetails(props) {
-  console.log(props.employeedata);
+  // console.log(props.employeedata);
   const [userDetail, setuserDetail] = useState([]);
+  // const [contentEditor, setContentEditor] = useState("");
 
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -33,7 +34,7 @@ function PersonalDetails(props) {
   const validators = {
     name: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -41,7 +42,7 @@ function PersonalDetails(props) {
     ],
     email: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
           ? null
@@ -49,7 +50,7 @@ function PersonalDetails(props) {
     ],
     contact_no: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "MobileNo. is required"
           : value.length !== 10
           ? "Mobile no should be of 10 digits"
@@ -64,24 +65,19 @@ function PersonalDetails(props) {
           : null,
     ],
     date_of_birth: [(value) => (value ? null : "Dob is required")],
-    gender: [
-      (value) =>
-        value === "" || value.trim() === "" || value.length === 0
-          ? "Gender is required"
-          : null,
-    ],
+    gender: [(value) => (value === "" ? "Gender is required" : null)],
     marital_status: [(value) => (value === "" ? "Status is required" : null)],
     nationality: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
-          ? "nationality is required"
+        value === ""
+          ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
     ],
     current_location: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -89,7 +85,7 @@ function PersonalDetails(props) {
     ],
     currently_located_country: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "Country is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -97,13 +93,11 @@ function PersonalDetails(props) {
     ],
     language: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
-          ? "Language is required"
-          : null,
+        value === "" || value.trim() === "" ? "Language is required" : null,
     ],
     religion: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -123,7 +117,7 @@ function PersonalDetails(props) {
     ],
     work_permit_other_country: [
       (value) =>
-        value === "" || value.trim() === "" || value.length === 0
+        value === "" || value.trim() === ""
           ? "Other Permit is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -132,19 +126,22 @@ function PersonalDetails(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    userDetail,
-    validators
-  );
-  console.log(validators.name, "state", errors.name, "errror");
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+    DescriptionChange,
+  } = useValidation(userDetail, validators);
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeedata);
     // setuserDetail(userData.data.personal_detail[0]);
-    if (userData !== undefined && props.employeedata) {
-      setState(userData.data.personal_detail[0]);
-      console.log(userData.data);
-    }
+    // if (userData !== undefined && props) {
+    setState(userData.data.personal_detail[0]);
+    console.log(userData.data);
+    // }
   };
   useEffect(() => {
     UserData();
@@ -156,7 +153,6 @@ function PersonalDetails(props) {
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
     if (validate()) {
-      console.log("ll");
       const userData = await AddEmployeeDetails(state);
     }
   }
@@ -206,7 +202,7 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                   type="text"
                   className={
-                    errors.name || errors.name === undefined
+                    errors.name
                       ? "form-control border border-danger"
                       : "form-control"
                   }
@@ -298,19 +294,28 @@ function PersonalDetails(props) {
                     }
                   >
                     <CKEditor
+                      initData={state.description}
+                      // onInstanceReady={() => {
+                      //   alert("Editor is ready!");
+                      // }}
+                    />
+                    {/* <CKEditor
                       // data={emailText}
                       // initData={emailText}
                       type={"classic"}
                       name={"description"}
                       id={"description"}
-                      data={state.description}
-                      // onChange={onInputChange}
-                      // onChange={(event, editor) => {
-                      //   const data = editor.getData();
-                      //   setState.description(data)
-                      // }}
+                      editor={ClassicEditor}
+                      onReady={editor=>}
+                      data={contentEditor}
+                      // onChange={DescriptionChange}
+                      onChange={(event, editor) => {
+                        console.log(event, "Description", editor);
+                        const data = editor.getData();
+                        setState({ ...state, description: data });
+                      }}
                       initData="Describe Yourself"
-                    />
+                    /> */}
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.description && (

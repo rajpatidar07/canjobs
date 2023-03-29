@@ -20,6 +20,8 @@ function Employee() {
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   const [employeeData, setemployeeData] = useState([]);
   let [employeeid, setemployeeId] = useState();
+  let [employeeEducationId, setemployeeEducationId] = useState();
+  let [employeeSkillId, setemployeeSkillId] = useState();
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -41,11 +43,23 @@ function Employee() {
     showEmployeeProfile,
   ]);
 
+  /* Function to show the single data to update Employee* Education*/
+  const editEmployeeEducation = (e) => {
+    // e.preventDefault();
+    setShowEducationModal(true);
+    setemployeeEducationId(e);
+  };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
     // e.preventDefault();
     setShowEmployeeMOdal(true);
     setemployeeId(e);
+  };
+  /* Function to show the single data to update Employee Skills*/
+  const editEmployeeSkills = (e) => {
+    // e.preventDefault();
+    setShowSkillsModal(true);
+    setemployeeSkillId(e);
   };
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -242,10 +256,12 @@ function Employee() {
 
                           <Education
                             close={() => setShowEducationModal(false)}
+                            employeeEducationData={employeeEducationId}
                             show={showEducationModal}
                           />
                           <Skills
                             show={showSkillsModal}
+                            employeeSkillData={employeeSkillId}
                             close={() => setShowSkillsModal(false)}
                           />
                           <th className=" py-7 min-width-px-100">
@@ -276,17 +292,24 @@ function Employee() {
                           <th className="d-flex py-7 min-width-px-100">
                             <Link
                               to=""
-                              onClick={() => setShowEducationModal(true)}
+                              onClick={() =>
+                                editEmployeeEducation(empdata.employee_id)
+                              }
                             >
                               <span className="	fas fa-graduation-cap text-gray px-2"></span>
                             </Link>
                             <Link
                               to=""
-                              onClick={() => setShowSkillsModal(true)}
+                              onClick={() =>
+                                editEmployeeSkills(empdata.employee_id)
+                              }
                             >
                               <span className=" fa fa-cogs text-gray px-2"></span>
                             </Link>
-                            <Link to="" onClick={() => editEmployee(empdata)}>
+                            <Link
+                              to=""
+                              onClick={() => editEmployee(empdata.employee_id)}
+                            >
                               <span className=" fas fa-edit text-gray px-2"></span>
                             </Link>
                             <Link

@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
+import { Link } from "react-router-dom";
+import { EmployeeEducationDetails } from "../../../api/api";
 import filterjson from "../../json/filterjson";
+
 function Education(props) {
+  let [educationData, setEducationData] = useState([]);
   /*----USER Education VALIDATION----*/
-  const initialFormState = {
-    qualification: "",
-    university: "",
-    course: "",
-    specialization: "",
-    location: "",
-    passingyear: "",
-  };
+  // const initialFormState = {
+  //   qualification: "",
+  //   university: "",
+  //   course: "",
+  //   specialization: "",
+  //   institute_location: "",
+  //   passing_year: "",
+  // };
   /*----VALIDATION CONTENT----*/
   const validators = {
     qualification: [
@@ -38,20 +42,38 @@ function Education(props) {
           ? "Specialization is required"
           : null,
     ],
-    location: [
+    institute_location: [
       (value) =>
-        value === null || value.trim() === "" ? "Location is required" : null,
+        value === null || value.trim() === ""
+          ? "institute_location is required"
+          : null,
     ],
-    passingyear: [
+    passing_year: [
       (value) =>
         value === "" || value === null ? "Passing Year is required" : null,
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, onInputChange, errors, validate } = useValidation(
-    initialFormState,
+  const { state, setState, onInputChange, errors, validate } = useValidation(
+    educationData,
     validators
   );
+  // API CALL
+  const EducationData = async (data) => {
+    let EducationDetails = await EmployeeEducationDetails(
+      props.employeeEducationData
+    );
+    setEducationData(EducationDetails.data);
+    if (data !== undefined || data) {
+      setState(data);
+      console.log(data.qualification);
+    }
+  };
+  useEffect(() => {
+    EducationData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+  // console.log(state);
 
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = (event) => {
@@ -103,9 +125,13 @@ function Education(props) {
                   value={state.qualification}
                   onChange={onInputChange}
                 >
-                  <option value={""}>select Qualification</option>
-                  <option value={"doctors"}>Doctors</option>
-                  <option value={"masters"}>Masters</option>
+                  {(filterjson.qualification || []).map((data, i) => {
+                    return (
+                      <option value={data} key={i}>
+                        {data}
+                      </option>
+                    );
+                  })}
                 </select>
                 {/*----ERROR MESSAGE FOR QUALIFICATION----*/}
                 {errors.qualification && (
@@ -226,25 +252,26 @@ function Education(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="location"
+                  htmlFor="institute_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Institute Location <span className="text-danger">*</span> :
+                  Institute institute_location{" "}
+                  <span className="text-danger">*</span> :
                 </label>
                 <div className="position-relative">
                   <select
                     className={
-                      errors.location
+                      errors.institute_location
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    name="location"
-                    id="location"
-                    value={state.location}
+                    name="institute_location"
+                    id="institute_location"
+                    value={state.institute_location}
                     onChange={onInputChange}
                   >
-                    <option value={""}>select Location</option>
-                    {(filterjson.location || []).map((data, i) => {
+                    <option value={""}>select institute location</option>
+                    {(filterjson.institute_location || []).map((data, i) => {
                       return (
                         <option value={data} key={i}>
                           {data}
@@ -252,20 +279,20 @@ function Education(props) {
                       );
                     })}
                   </select>
-                  {/*----ERROR MESSAGE FOR LOCATION----*/}
-                  {errors.location && (
+                  {/*----ERROR MESSAGE FOR institute_location----*/}
+                  {errors.institute_location && (
                     <span
-                      key={errors.location}
+                      key={errors.institute_location}
                       className="text-danger font-size-3"
                     >
-                      {errors.location}
+                      {errors.institute_location}
                     </span>
                   )}
                 </div>
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="passingyear"
+                  htmlFor="passing_year"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Passing Year <span className="text-danger">*</span> :
@@ -273,26 +300,44 @@ function Education(props) {
                 <input
                   type="number"
                   className={
-                    errors.passingyear
+                    errors.passing_year
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Passing Year"
-                  id="passingyear"
-                  name="passingyear"
-                  value={state.passingyear}
+                  id="passing_year"
+                  name="passing_year"
+                  value={state.passing_year}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
-                {errors.passingyear && (
+                {errors.passing_year && (
                   <span
-                    key={errors.passingyear}
+                    key={errors.passing_year}
                     className="text-danger font-size-3"
                   >
-                    {errors.passingyear}
+                    {errors.passing_year}
                   </span>
                 )}
               </div>
+            </div>
+            <div className="">
+              <ul className="list-unstyled d-flex align-items-center flex-wrap">
+                {(educationData || []).map((education, index) => (
+                  <li
+                    className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                    key={education.education_id}
+                  >
+                    {education.course}
+                    <Link onClick={() => EducationData(education)}>
+                      <i class="px-3 fa fa-edit" aria-hidden="true"></i>
+                    </Link>
+                    <Link /*onClick={() => ShowDeleteAlert(education)}*/>
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="form-group text-center">
               <button
