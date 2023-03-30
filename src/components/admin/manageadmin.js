@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
+import { getallAdminData } from "../../api/api";
+import { ToastContainer } from "react-toastify";
 // eslint-disable-next-line
 function ManageAdmin() {
   // eslint-disable-next-line
   let [showAminDetails, setShowAminDetails] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
+  let [adminData, setAdminData] = useState([]);
+  let [adminId, setAdminID] = useState();
 
+  /* Function to get the Amin data*/
+  const AdminData = async () => {
+    const userData = await getallAdminData();
+    setAdminData(userData);
+  };
+
+  /*Render function to get the Admin*/
+  useEffect(() => {
+    AdminData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showAddAdminModal]);
+
+  /* Function to show the single data to update Admin*/
+  const editAdmin = (e) => {
+    // e.preventDefault();
+    setShowAdminModal(true);
+    setAdminID(e);
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -17,6 +39,7 @@ function ManageAdmin() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
+        <ToastContainer />
         <div
           className={
             showAminDetails === false
@@ -59,6 +82,7 @@ function ManageAdmin() {
                     </CustomButton>
                     <Addadmin
                       show={showAddAdminModal}
+                      adminId={adminId}
                       close={() => setShowAdminModal(false)}
                     />
                   </div>
@@ -77,21 +101,9 @@ function ManageAdmin() {
                         </th>
                         <th
                           scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
-                        >
-                          Post
-                        </th>
-                        <th
-                          scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
                           Admin Type
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          Company
                         </th>
                         <th
                           scope="col"
@@ -108,190 +120,44 @@ function ManageAdmin() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Shekher Pandey
-                          </h3>
-                        </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {/* <Link
-                              to={""}
-                              // onClick={() => setShowJobDetails(true)}
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
-                            > */}
-                            Senior Project Manager
-                            {/* </Link> */}
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Super admin
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Infosys
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ruchi Gupta
-                          </h3>
-                        </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {/* <Link
+                      {(adminData || []).map((admin) => (
+                        <tr
+                          className="border border-color-2"
+                          key={admin.admin_id}
+                        >
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {admin.name}
+                            </h3>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {admin.admin_type}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {admin.email}
+                            </h3>
+                          </th>
+                          <th className=" py-7 min-width-px-100">
+                            <Link
                               to=""
-                              // onClick={() => setShowJobDetails(true)}
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
-                            > */}
-                            UI Designer
-                            {/* </Link> */}
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Super admin
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            We2code
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma
-                          </h3>
-                        </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {/* <Link
-                              to=""
-                              // onClick={() => setShowJobDetails(true)}
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
-                            > */}
-                            Head of Marketing
-                            {/* </Link> */}
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Admin
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Syska
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Shivam Thakur
-                          </h3>
-                        </th>
-                        <th scope="row" className="pl-6 border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {/* <Link
-                              to=""
-                              // onClick={() => setShowJobDetails(true)}
-                              className="font-size-4 mb-0 font-weight-semibold text-black-2"
-                            > */}
-                            Full-Stack Developer
-                            {/* </Link> */}
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Operator
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Tech info
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 min-width-px-100">
-                          <Link to="" onClick={() => setShowAdminModal(true)}>
-                            <span className=" fas fa-edit text-gray px-5">
-                              {" "}
-                            </span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              {" "}
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
+                              onClick={() => editAdmin(admin.admin_id)}
+                            >
+                              <span className=" fas fa-edit text-gray px-5">
+                                {" "}
+                              </span>
+                            </Link>
+                            <Link to="">
+                              <span className=" text-danger">
+                                {" "}
+                                <i className="fa fa-trash"></i>
+                              </span>
+                            </Link>
+                          </th>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

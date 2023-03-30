@@ -47,7 +47,7 @@ function AddCategory(props) {
     CatData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-  console.log();
+
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
     event.preventDefault();
