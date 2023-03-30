@@ -5,14 +5,19 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { getAllJobs } from "../../api/api";
+import { getAllJobs, DeleteJob } from "../../api/api";
 import className from "../json/filterjson";
+import { ToastContainer, toast } from "react-toastify";
+import SAlert from "../common/sweetAlert";
+
 function Job() {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
-
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await getAllJobs();
@@ -23,15 +28,36 @@ function Job() {
   useEffect(() => {
     JobData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
+  }, [deleteAlert]);
   // console.log(("userData--" + JSON.stringify(jobData)))
 
-  /* Function to show the single data to update job category*/
+  /* Function to show the single data to update job */
   const editJob = (e) => {
     // e.preventDefault();
     setShowAddJobsModal(true);
     setJobId(e);
   };
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.job_id);
+    setDeleteName(e.job_title);
+    setDeleteAlert(true);
+  };
+  /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+  /*To call Api to delete Job */
+  async function deleteJob(e) {
+    const responseData = await DeleteJob(e);
+    if (responseData.message === "job has been deleted") {
+      toast.error("Job deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setDeleteAlert(false);
+    }
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -39,6 +65,7 @@ function Job() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
+        <ToastContainer />
         <div
           className={
             showJobDetails === false
@@ -223,7 +250,10 @@ function Job() {
                                 {" "}
                               </span>
                             </Link>
-                            <Link to="">
+                            <Link
+                              to=""
+                              onClick={() => ShowDeleteAlert(jobdata)}
+                            >
                               <span className=" text-danger">
                                 {" "}
                                 <i className="fa fa-trash"></i>
@@ -302,6 +332,14 @@ function Job() {
               </div>
             </div>
           </div>
+          <SAlert
+            show={deleteAlert}
+            title={deleteName}
+            text="Are you Sure you want to delete !"
+            onConfirm={() => deleteJob(deleteId)}
+            showCancelButton={true}
+            onCancel={CancelDelete}
+          />
         </div>
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-24 ">

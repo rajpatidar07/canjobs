@@ -21,7 +21,6 @@ export const EmployeeLogin = async (props) => {
   return response.data;
 };
 export const EmployeeDetails = async (props) => {
-  console.log(JSON.stringify(props));
   if (props !== undefined) {
     const formData = new FormData();
     formData.append("employee_id", props);
@@ -38,11 +37,17 @@ export const EmployeeDetails = async (props) => {
   }
 };
 export const AddEmployeeDetails = async (props) => {
-  console.log(props);
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props);
-  console.log(response.data);
   return response.data;
 };
+/*Employee List Api */
+export const getallEmployeeData = async () => {
+  const response = await axios.get(
+    `${API_URL}admin/getallEmployeeView?user_type=admin`
+  );
+  return response.data.data;
+};
+
 /*Detail Employee Education Api */
 export const EmployeeEducationDetails = async (props) => {
   if (props !== undefined) {
@@ -63,7 +68,6 @@ export const EmployeeEducationDetails = async (props) => {
 /*Detail Employee Skill Api */
 export const EmployeeSkillDetails = async (props) => {
   if (props !== undefined) {
-    console.log(props);
     const formData = new FormData();
     formData.append("employee_id", props);
     const response = await axios.get(
@@ -79,7 +83,6 @@ export const EmployeeSkillDetails = async (props) => {
 };
 /*Add Employee Skill Api */
 export const AddEmployeeSkill = async (props, id) => {
-  // console.log(props, id);
   const response = await axios.post(`${API_URL}/employeeSkill`, {
     employee_id: id,
     skill: props.skill,
@@ -88,7 +91,6 @@ export const AddEmployeeSkill = async (props, id) => {
 };
 /*Delete Employee Skill Api */
 export const DeleteEmployeeSkill = async (props) => {
-  console.log(props);
   const response = await axios.post(`${API_URL}deleteEmployeeSkill`, {
     skill_id: props,
   });
@@ -100,23 +102,58 @@ export const GetAllJobs = async () => {
   const response = await axios.get(`${API_URL}view_jobs`);
   return response;
 };
+/*Employer List Api */
+export const getAllEmployer = async () => {
+  const response = await axios.get(`${API_URL}admin/getAllEmployer`);
+  return response.data.data;
+};
+/*Employer Details Api */
+export const EmployerDetails = async (props) => {
+  if (props !== undefined) {
+    const formData = new FormData();
+    formData.append("company_id", props);
+    const response = await axios.post(
+      `${API_URL}getEmployer`,
+      { company_id: props },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }
+};
+/*Add Employer Contact Api */
+export const AddContact = async (props) => {
+  const response = await axios.put(`${API_URL}contact_detail`, props);
+  return response.data;
+};
+/*Add Employer KYC Api */
+export const AddKyc = async (props) => {
+  const response = await axios.put(`${API_URL}company_kyc_detail`, props);
+  return response.data;
+};
+/*Delete Employer Api */
+export const DeleteEmployer = async (props) => {
+  console.log(props);
+  const response = await axios.delete(
+    `${API_URL}deleteEmployer/${props}`,
+    props
+  );
+  return response.data;
+};
+/*Delete Job Api */
+export const DeleteJob = async (props) => {
+  console.log(props);
+  const response = await axios.delete(`${API_URL}deletejob/${props}`, props);
+  return response.data;
+};
 
 // ADMIN'S API
 /*Job List Api */
 export const getAllJobs = async () => {
   const response = await axios.get(`${API_URL}admin/getAllJobs`);
-  return response.data.data;
-};
-/*Employee List Api */
-export const getallEmployeeData = async () => {
-  const response = await axios.get(
-    `${API_URL}admin/getallEmployeeView?user_type=admin`
-  );
-  return response.data.data;
-};
-/*Employer List Api */
-export const getAllEmployer = async () => {
-  const response = await axios.get(`${API_URL}admin/getAllEmployer`);
   return response.data.data;
 };
 /*Admin List Api */
@@ -131,7 +168,6 @@ export const getAllJobsCategory = async () => {
 };
 /*Delete Job Employee Api */
 export const DeleteJobEmployee = async (props) => {
-  // console.log(props);
   const response = await axios.delete(
     `${API_URL}deleteEmployee/${props}`,
     props
@@ -140,13 +176,11 @@ export const DeleteJobEmployee = async (props) => {
 };
 /*Add Job Category Api */
 export const AddJobCategory = async (props) => {
-  // console.log(props);
   const response = await axios.put(`${API_URL}admin/addCategory`, props);
   return response.data;
 };
 /*Delete Job Category Api */
 export const DeleteJobCategory = async (props) => {
-  // console.log(props);
   const response = await axios.delete(
     `${API_URL}deletejobCategory/${props}`,
     props
@@ -174,6 +208,10 @@ export const AdminDetails = async (props) => {
 /*Add Admin Api */
 export const AddAdmin = async (props) => {
   const response = await axios.put(`${API_URL}admin/addAdmin`, props);
-  console.log(response.data);
+  return response.data;
+};
+/*Delete Admin Api */
+export const DeleteAdmin = async (props) => {
+  const response = await axios.delete(`${API_URL}admin/deleteAdmin/${props}`);
   return response.data;
 };

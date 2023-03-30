@@ -7,7 +7,9 @@ import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import ContactInfo from "../forms/employer/contactInfo";
 import KycComplianceDetails from "../forms/employer/kyc";
-import { getAllEmployer } from "../../api/api";
+import { getAllEmployer, DeleteEmployer } from "../../api/api";
+import { ToastContainer, toast } from "react-toastify";
+import SAlert from "../common/sweetAlert";
 
 function Employer() {
   // eslint-disable-next-line
@@ -16,7 +18,10 @@ function Employer() {
   let [showContactModal, setShowContactMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
   const [employerData, setemployerData] = useState([]);
-
+  const [employerId, setEmployerID] = useState();
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   /* Function to get Employer data*/
   const EmployerData = async () => {
     const userData = await getAllEmployer();
@@ -27,7 +32,42 @@ function Employer() {
   useEffect(() => {
     EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
+  }, [showAddEmployerModal, showKycModal, showContactModal, deleteAlert]);
+
+  /* Function to show the single data to update Employer Contact*/
+  const editEmployerContact = (e) => {
+    // e.preventDefault();
+    setShowContactMOdal(true);
+    setEmployerID(e);
+  };
+  /* Function to show the single data to update Kyc*/
+  const editEmployerKyc = (e) => {
+    // e.preventDefault();
+    setShowkycMOdal(true);
+    setEmployerID(e);
+  };
+
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.company_id);
+    setDeleteName(e.company_name);
+    setDeleteAlert(true);
+  };
+  /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+  /*To call Api to delete Employer */
+  async function deleteEmployer(e) {
+    const responseData = await DeleteEmployer(e);
+    if (responseData.message === "company has been deleted") {
+      toast.error("Employer deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setDeleteAlert(false);
+    }
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -35,6 +75,7 @@ function Employer() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
+        <ToastContainer />
         {/* <Link
           to={""}
           className="sidebar-mobile-button"
@@ -242,19 +283,28 @@ function Employer() {
                           <th className="  py-7  d-flex">
                             <Link
                               to=""
-                              onClick={() => setShowContactMOdal(true)}
+                              onClick={() =>
+                                editEmployerContact(empdata.company_id)
+                              }
                             >
                               <span className="fa fa-address-book text-gray px-1"></span>
                             </Link>
                             <ContactInfo
                               show={showContactModal}
+                              employerId={employerId}
                               close={() => setShowContactMOdal(false)}
                             />
-                            <Link to="" onClick={() => setShowkycMOdal(true)}>
+                            <Link
+                              to=""
+                              onClick={() =>
+                                editEmployerKyc(empdata.company_id)
+                              }
+                            >
                               <span className="fa fa-file text-gray px-1 "></span>
                             </Link>
                             <KycComplianceDetails
                               show={showKycModal}
+                              employerId={employerId}
                               close={() => setShowkycMOdal(false)}
                             />
                             <Link
@@ -265,7 +315,10 @@ function Employer() {
                                 {" "}
                               </span>
                             </Link>
-                            <Link to="">
+                            <Link
+                              to=""
+                              onClick={() => ShowDeleteAlert(empdata)}
+                            >
                               <span className="fa fa-trash text-danger px-1"></span>
                             </Link>
                           </th>
@@ -341,6 +394,14 @@ function Employer() {
               </div>
             </div>
           </div>
+          <SAlert
+            show={deleteAlert}
+            title={deleteName}
+            text="Are you Sure you want to delete !"
+            onConfirm={() => deleteEmployer(deleteId)}
+            showCancelButton={true}
+            onCancel={CancelDelete}
+          />
         </div>
         {showEmployerDetails === true ? (
           <div className="dashboard-main-container mt-30">

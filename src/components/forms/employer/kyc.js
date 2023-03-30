@@ -1,28 +1,33 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
+import { EmployerDetails, AddKyc } from "../../../api/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function KycComplianceDetails(props) {
+  let close = props.close;
   // COMPANY KYC DETAIL VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    panname: "",
+    name: "",
     pincode: "",
-    panno: "",
-    pandate: "",
+    pan_no: "",
+    pan_date: "",
     address: "",
     city: "",
     state: "",
     country: "",
     gstin: "",
-    tanno: "",
-    docupload: "",
+    tan_number: "",
+    document: "",
+    fax_number: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    panname: [
+    name: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Pan name is required"
@@ -39,7 +44,7 @@ function KycComplianceDetails(props) {
           ? "Pincode should be of 10 digits"
           : null,
     ],
-    panno: [
+    pan_no: [
       (value) =>
         value === ""
           ? "Pan no is required"
@@ -47,12 +52,10 @@ function KycComplianceDetails(props) {
           ? "Cannot use special character "
           : null,
     ],
-    pandate: [
+    pan_date: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Pan card date is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : null,
     ],
     address: [
@@ -81,25 +84,17 @@ function KycComplianceDetails(props) {
     ],
     gstin: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "Gstin is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+        value === "" || value.trim() === "" ? "Gstin is required" : null,
     ],
-    tanno: [
+    tan_number: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "Tan no is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+        value === "" || value.trim() === "" ? "Tan no is required" : null,
     ],
     country: [
       (value) =>
         value === "" || value.trim() === "" ? "Country is required" : null,
     ],
-    docupload: [
+    document: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Document Upload is required"
@@ -107,14 +102,33 @@ function KycComplianceDetails(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, setState, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
+  // API CALL
+  const EmployerData = async () => {
+    let userData = await EmployerDetails(props.employerId);
+    if (userData !== undefined) {
+      // setState(userData.data.kyc_detail[0]);
+    }
+  };
+  useEffect(() => {
+    EmployerData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.employerId]);
   // COMPANY KYC DETAIL SUBMIT BUTTON
-  const onKycInfoClick = (event) => {
+  const onKycInfoClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      let responseData = await AddKyc(state);
+      if (responseData.message === "Employee data updated successfully") {
+        toast.success("Contact Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // END COMPANY KYC DETAIL VALIDATION
@@ -130,7 +144,7 @@ function KycComplianceDetails(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
@@ -142,34 +156,34 @@ function KycComplianceDetails(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="panno"
+                  htmlFor="pan_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   PAN Number :<span className="text-danger"> *</span> :
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="PAN_Number"
-                  id="panno"
-                  name="panno"
-                  value={state.panno}
+                  id="pan_no"
+                  name="pan_no"
+                  value={state.pan_no}
                   onChange={onInputChange}
                   className={
-                    errors.panno
+                    errors.pan_no
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR panno----*/}
-                {errors.panno && (
-                  <span key={errors.panno} className="text-danger font-size-3">
-                    {errors.panno}
+                {/*----ERROR MESSAGE FOR pan_no----*/}
+                {errors.pan_no && (
+                  <span key={errors.pan_no} className="text-danger font-size-3">
+                    {errors.pan_no}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="panname"
+                  htmlFor="name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Name on PAN Card :<span className="text-danger"> *</span> :
@@ -177,23 +191,20 @@ function KycComplianceDetails(props) {
                 <input
                   type="text"
                   placeholder="Name on PAN Card"
-                  id="panname"
-                  name="panname"
-                  value={state.panname}
+                  id="name"
+                  name="name"
+                  value={state.name}
                   onChange={onInputChange}
                   className={
-                    errors.panname
+                    errors.name
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR panname----*/}
-                {errors.panname && (
-                  <span
-                    key={errors.panname}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.panname}
+                {/*----ERROR MESSAGE FOR name----*/}
+                {errors.name && (
+                  <span key={errors.name} className="text-danger font-size-3">
+                    {errors.name}
                   </span>
                 )}
               </div>
@@ -201,7 +212,7 @@ function KycComplianceDetails(props) {
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="pandate"
+                  htmlFor="pan_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Date on PAN Card :<span className="text-danger"> *</span> :
@@ -210,24 +221,24 @@ function KycComplianceDetails(props) {
                   <input
                     type="date"
                     placeholder="Date_on_PAN_Card"
-                    id="pandate"
-                    name="pandate"
+                    id="pan_date"
+                    name="pan_date"
                     max={moment().format("YYYY-MM-DD")}
-                    value={state.pandate}
+                    value={state.pan_date}
                     onChange={onInputChange}
                     className={
-                      errors.pandate
+                      errors.pan_date
                         ? "form-control border border-danger"
                         : "form-control"
                     }
                   />
-                  {/*----ERROR MESSAGE FOR pandate----*/}
-                  {errors.pandate && (
+                  {/*----ERROR MESSAGE FOR pan_date----*/}
+                  {errors.pan_date && (
                     <span
-                      key={errors.pandate}
+                      key={errors.pan_date}
                       className="text-danger font-size-3"
                     >
-                      {errors.pandate}
+                      {errors.pan_date}
                     </span>
                   )}
                 </div>
@@ -414,7 +425,7 @@ function KycComplianceDetails(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="faxno"
+                  htmlFor="fax_number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Fax Number :
@@ -422,20 +433,23 @@ function KycComplianceDetails(props) {
                 <input
                   type="number"
                   placeholder="Fax Number"
-                  id="faxno"
-                  name="faxno"
-                  value={state.faxno}
+                  id="fax_number"
+                  name="fax_number"
+                  value={state.fax_number}
                   onChange={onInputChange}
                   className={
-                    errors.faxno
+                    errors.fax_number
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR faxno----*/}
-                {errors.faxno && (
-                  <span key={errors.faxno} className="text-danger font-size-3">
-                    {errors.faxno}
+                {/*----ERROR MESSAGE FOR fax_number----*/}
+                {errors.fax_number && (
+                  <span
+                    key={errors.fax_number}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.fax_number}
                   </span>
                 )}
               </div>
@@ -443,7 +457,7 @@ function KycComplianceDetails(props) {
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="tanno"
+                  htmlFor="tan_number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   TAN Number :
@@ -451,49 +465,52 @@ function KycComplianceDetails(props) {
                 <input
                   type="number"
                   placeholder="TAN Number"
-                  id="tanno"
-                  name="tanno"
-                  value={state.tanno}
+                  id="tan_number"
+                  name="tan_number"
+                  value={state.tan_number}
                   onChange={onInputChange}
                   className={
-                    errors.tanno
+                    errors.tan_number
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR tanno----*/}
-                {errors.tanno && (
-                  <span key={errors.tanno} className="text-danger font-size-3">
-                    {errors.tanno}
+                {/*----ERROR MESSAGE FOR tan_number----*/}
+                {errors.tan_number && (
+                  <span
+                    key={errors.tan_number}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.tan_number}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="docupload"
+                  htmlFor="document"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Document Upload :
                 </label>
                 <input
                   type="file"
-                  id="docupload"
-                  name="docupload"
-                  value={state.docupload}
+                  id="document"
+                  name="document"
+                  value={state.document}
                   onChange={onInputChange}
                   className={
-                    errors.docupload
+                    errors.document
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR docupload----*/}
-                {errors.docupload && (
+                {/*----ERROR MESSAGE FOR document----*/}
+                {errors.document && (
                   <span
-                    key={errors.docupload}
+                    key={errors.document}
                     className="text-danger font-size-3"
                   >
-                    {errors.docupload}
+                    {errors.document}
                   </span>
                 )}
               </div>

@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
+import { EmployerDetails, AddContact } from "../../../api/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function ContactInfo(props) {
   // COMPANY PERSONAL INFO VALIDATION
-
+  let close = props.close;
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    contactname: "",
+    contact_person_name: "",
     email: "",
-    contactno: "",
-    othercontactno: "",
-    location: "",
-    pincode: "",
+    contact_no: "",
+    contact_no_other: "",
+    address: "",
+    pin_code: "",
     city: "",
     state: "",
     country: "",
@@ -19,7 +23,7 @@ function ContactInfo(props) {
   };
   // VALIDATION CONDITIONS
   const validators = {
-    contactname: [
+    contact_person_name: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Comapny name is required"
@@ -35,7 +39,7 @@ function ContactInfo(props) {
           ? null
           : "Email is invalid",
     ],
-    contactno: [
+    contact_no: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Phone no is required"
@@ -43,8 +47,8 @@ function ContactInfo(props) {
           ? "Phone no should be of 10 digits"
           : null,
     ],
-    othercontactno: [],
-    location: [
+    contact_no_other: [],
+    address: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Address is required"
@@ -52,11 +56,11 @@ function ContactInfo(props) {
           ? "Cannot use special character "
           : null,
     ],
-    pincode: [
+    pin_code: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Pincode is required"
-          : value.length > 10 || value.length < 10
+          ? "pin_code is required"
+          : value.length > 6
           ? "Mobile no should be of 10 digits"
           : null,
     ],
@@ -94,14 +98,32 @@ function ContactInfo(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, setState, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );
+  // API CALL
+  const EmployerData = async () => {
+    let userData = await EmployerDetails(props.employerId);
+    setState(userData.data.company_detail[0]);
+  };
+  useEffect(() => {
+    EmployerData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.employerId]);
+
   // COMPANY PERSONAL INFO SUBMIT BUTTON
-  const onCompanyPersonalInfoClick = (event) => {
+  const onCompanyContactClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      let responseData = await AddContact(state);
+      if (responseData.message === "Employee data updated successfully") {
+        toast.success("Contact Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // END COMPANY PERSONAL INFO VALIDATION
@@ -117,44 +139,44 @@ function ContactInfo(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onCompanyPersonalInfoClick}>
+          <form onSubmit={onCompanyContactClick}>
             <h5 className="text-center pt-2 mb-7">Contact Detail</h5>
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="contactname"
+                  htmlFor="contact_person_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Contact Person Name <span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={20}
-                  name="contactname"
-                  value={state.contactname}
+                  name="contact_person_name"
+                  value={state.contact_person_name}
                   onChange={onInputChange}
                   type="text"
                   className={
-                    errors.contactname
+                    errors.contact_person_name
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Contact person Name"
-                  id="contactname"
+                  id="contact_person_name"
                 />
-                {/*----ERROR MESSAGE FOR contactname----*/}
-                {errors.contactname && (
+                {/*----ERROR MESSAGE FOR contact_person_name----*/}
+                {errors.contact_person_name && (
                   <span
-                    key={errors.contactname}
+                    key={errors.contact_person_name}
                     className="text-danger font-size-3"
                   >
-                    {errors.contactname}
+                    {errors.contact_person_name}
                   </span>
                 )}
               </div>
@@ -191,58 +213,58 @@ function ContactInfo(props) {
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="contactno"
+                  htmlFor="contact_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Contact No <span className="text-danger"> *</span> :
                 </label>
                 <input
                   maxLength={30}
-                  name="contactno"
-                  value={state.contactno}
+                  name="contact_no"
+                  value={state.contact_no}
                   onChange={onInputChange}
                   type="number"
                   className={
-                    errors.contactno
+                    errors.contact_no
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Contact No"
-                  id="contactno"
+                  id="contact_no"
                 />
-                {/*----ERROR MESSAGE FOR contactno----*/}
-                {errors.contactno && (
+                {/*----ERROR MESSAGE FOR Contact No----*/}
+                {errors.contact_no && (
                   <span
-                    key={errors.contactno}
+                    key={errors.contact_no}
                     className="text-danger font-size-3"
                   >
-                    {errors.contactno}
+                    {errors.contact_no}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="othercontactno"
+                  htmlFor="contact_no_other"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Other Contact No :
                 </label>
                 <input
                   maxLength={30}
-                  name="othercontactno"
-                  value={state.othercontactno}
+                  name="contact_no_other"
+                  value={state.contact_no_other}
                   onChange={onInputChange}
                   type="number"
                   className={"form-control"}
                   placeholder="Other Contact No"
-                  id="othercontactno"
+                  id="contact_no_other"
                 />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="location"
+                  htmlFor="address"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Address <span className="text-danger"> *</span> :
@@ -250,54 +272,54 @@ function ContactInfo(props) {
                 <input
                   maxLength={60}
                   type="text"
-                  name="location"
-                  value={state.location}
+                  name="address"
+                  value={state.address}
                   onChange={onInputChange}
                   className={
-                    errors.location
+                    errors.address
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Address"
-                  id="location"
+                  id="address"
                 />
-                {/*----ERROR MESSAGE FOR location----*/}
-                {errors.location && (
+                {/*----ERROR MESSAGE FOR address----*/}
+                {errors.address && (
                   <span
-                    key={errors.location}
+                    key={errors.address}
                     className="text-danger font-size-3"
                   >
-                    {errors.location}
+                    {errors.address}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="pincode"
+                  htmlFor="pin_code"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Pin code <span className="text-danger"> *</span> :
                 </label>
                 <input
-                  name="pincode"
-                  value={state.pincode}
+                  name="pin_code"
+                  value={state.pin_code}
                   onChange={onInputChange}
                   type="number"
                   className={
-                    errors.pincode
+                    errors.pin_code
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="Pincode"
-                  id="pincode"
+                  placeholder="pin_code"
+                  id="pin_code"
                 />
-                {/*----ERROR MESSAGE FOR pincode----*/}
-                {errors.pincode && (
+                {/*----ERROR MESSAGE FOR pin_code----*/}
+                {errors.pin_code && (
                   <span
-                    key={errors.pincode}
+                    key={errors.pin_code}
                     className="text-danger font-size-3"
                   >
-                    {errors.pincode}
+                    {errors.pin_code}
                   </span>
                 )}
               </div>
@@ -370,7 +392,7 @@ function ContactInfo(props) {
                 </label>
                 <input
                   type="text"
-                  placeholder="State"
+                  placeholder="country"
                   id="country"
                   name="country"
                   value={state.country}

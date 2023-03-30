@@ -4,15 +4,19 @@ import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
-import { getallAdminData } from "../../api/api";
-import { ToastContainer } from "react-toastify";
-// eslint-disable-next-line
+import { getallAdminData, DeleteAdmin } from "../../api/api";
+import { ToastContainer,toast } from "react-toastify";
+import SAlert from "../common/sweetAlert";
+
 function ManageAdmin() {
   // eslint-disable-next-line
   let [showAminDetails, setShowAminDetails] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
   let [adminData, setAdminData] = useState([]);
   let [adminId, setAdminID] = useState();
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
 
   /* Function to get the Amin data*/
   const AdminData = async () => {
@@ -24,7 +28,7 @@ function ManageAdmin() {
   useEffect(() => {
     AdminData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddAdminModal]);
+  }, [showAddAdminModal, deleteAlert]);
 
   /* Function to show the single data to update Admin*/
   const editAdmin = (e) => {
@@ -32,6 +36,27 @@ function ManageAdmin() {
     setShowAdminModal(true);
     setAdminID(e);
   };
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.admin_id);
+    setDeleteName(e.name);
+    setDeleteAlert(true);
+  };
+  /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+  /*To call Api to delete category */
+  async function deleteAdmin(e) {
+    const responseData = await DeleteAdmin(e);
+    if (responseData.message === "admin has been deleted") {
+      toast.error("Admin deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setDeleteAlert(false);
+    }
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -149,7 +174,7 @@ function ManageAdmin() {
                                 {" "}
                               </span>
                             </Link>
-                            <Link to="">
+                            <Link to="" onClick={() => ShowDeleteAlert(admin)}>
                               <span className=" text-danger">
                                 {" "}
                                 <i className="fa fa-trash"></i>
@@ -229,6 +254,14 @@ function ManageAdmin() {
             </div>
           </div>
         </div>
+        <SAlert
+          show={deleteAlert}
+          title={deleteName}
+          text="Are you Sure you want to delete !"
+          onConfirm={() => deleteAdmin(deleteId)}
+          showCancelButton={true}
+          onCancel={CancelDelete}
+        />
         {/* {showJobDetails === true ? (
         <div className="dashboard-main-container mt-24 ">
           <div className="container">

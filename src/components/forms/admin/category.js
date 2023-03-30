@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddJobCategory } from "../../../api/api";
@@ -7,15 +7,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddCategory(props) {
-  const [catdata, setCatdata] = useState([]);
+  // const [catdata, setCatdata] = useState([]);
   const close = props.close;
   // USER CATEGORY VALIDATION
 
   // INITIAL STATE ASSIGNMENT
-  // const initialFormState = {
-  //   category_name: "",
-  //   category_type: "",
-  // };
+  const initialFormState = {
+    category_name: "",
+    category_type: "",
+  };
   // VALIDATION CONDITIONS
   const validators = {
     category_name: [
@@ -35,18 +35,17 @@ function AddCategory(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, validate } = useValidation(
-    catdata,
+    initialFormState,
     validators
   );
   // API CALL
   const CatData = () => {
-    setCatdata(props.jobCategoryData);
     setState(props.jobCategoryData);
   };
   useEffect(() => {
     CatData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, [props.jobCategoryData]);
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
@@ -68,7 +67,6 @@ function AddCategory(props) {
         });
         return close();
       }
-      // console.log(responseData);
     }
   }
 

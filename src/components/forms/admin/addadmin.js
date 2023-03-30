@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AdminDetails, AddAdmin } from "../../../api//api";
@@ -6,17 +6,17 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Addadmin(props) {
-  let [adminDetails, setAdmindetails] = useState([]);
+  // let [adminDetails, setAdmindetails] = useState([]);
   const close = props.close;
   // USER ADMIN PROFILE UPDATE VALIDATION
 
   // INITIAL STATE ASSIGNMENT
-  // const initialFormState = {
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  //   admin_type: "",
-  // };
+  const initialFormState = {
+    name: "",
+    email: "",
+    password: "",
+    admin_type: "",
+  };
   // VALIDATION CONDITIONS
   const validators = {
     name: [
@@ -54,18 +54,20 @@ function Addadmin(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, validate } = useValidation(
-    adminDetails,
+    initialFormState,
     validators
   );
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
-    setAdmindetails(userData.data[0]);
-    setState(userData.data[0]);
+    if (userData !== undefined || userData) {
+      // setAdmindetails(userData.data[0]);
+      setState(userData.data[0]);
+    }
   };
   useEffect(() => {
     AdminData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, [props.adminId]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
@@ -77,6 +79,7 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setState([]);
         return close();
       }
       if (responseData.message === "admin updated successfully") {
@@ -84,6 +87,7 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setState([]);
         return close();
       }
     }
@@ -101,7 +105,7 @@ function Addadmin(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
