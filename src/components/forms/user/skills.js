@@ -16,14 +16,19 @@ function Skills(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  const close = props.close;
+
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
 
   // USER SKILLS VALIDATION
 
   // INITIAL STATE ASSIGNMENT
-  // const initialFormState = {
-  //   skill: "",
-  // };
+  const initialFormState = {
+    skill: "",
+  };
   // VALIDATION CONDITIONS
   const validators = {
     skill: [
@@ -36,22 +41,17 @@ function Skills(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    skillData,
-    validators
-  );
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const SkillData = async () => {
-    // let SkillDetails = await EmployeeSkillDetails(props.employeeSkillData);
-    // console.log(SkillDetails.data);
-    // SetSkillData(SkillDetails.data);
-    // setState(props.employeeSkillData);
+    let SkillDetails = await EmployeeSkillDetails(props.employeeSkillData);
+    SetSkillData(SkillDetails.data);
   };
   useEffect(() => {
     SkillData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, deleteAlert]);
-  // console.log(state);
 
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
@@ -78,7 +78,7 @@ function Skills(props) {
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
-  /*To call Api to delete category */
+  /*To call Api to delete Skill */
   async function deleteSkill(e) {
     const responseData = await DeleteEmployeeSkill(e);
     if (responseData.message === "skill has been deleted") {
@@ -101,7 +101,7 @@ function Skills(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
@@ -146,7 +146,10 @@ function Skills(props) {
                   >
                     {skill.skill}
                     <Link onClick={() => ShowDeleteAlert(skill)}>
-                      <i class="px-3 fa fa-times-circle" aria-hidden="true"></i>
+                      <i
+                        className="px-3 fa fa-times-circle"
+                        aria-hidden="true"
+                      ></i>
                     </Link>
                   </li>
                 ))}

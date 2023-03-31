@@ -1,94 +1,120 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { CKEditor } from "ckeditor4-react";
+// import { CKEditor } from "ckeditor4-react";
+import { AddCompany, EmployerDetails } from "../../../api/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CompanyDetails(props) {
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // COMPANY DETAIL VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    companyname: "",
+    company_name: "",
     industry: "",
     corporation: "",
     alias: "",
-    url: "",
-    startdate: "",
-    members: "",
-    companydesc: "",
-    vacancy: "",
+    website_url: "",
+    company_start_date: "",
+    company_size: "",
+    about: "",
+    vacancy_for_post: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    companyname: [
+    company_name: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     industry: [
       (value) =>
         value === ""
           ? "Industry is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     corporation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Corporation type is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
     alias: [],
-    url: [],
-    startdate: [
+    website_url: [],
+    company_start_date: [
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
     ],
-    members: [
+    company_size: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
-    vacancy: [
+    vacancy_for_post: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
+          ? "Cannot use special character "
+          : null,
     ],
-    companydesc: [
-      (value) =>
-        value === ""
-          ? "Company Description is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : null,
-    ],
+    // about: [
+    //   (value) =>
+    //     value === ""
+    //       ? "Company Description is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : null,
+    // ],
     // companylogo: [
     //   (value) =>
     //     value === "" || value.trim() === "" ? "Company logo is required" : null,
     // ],
   };
+  // API CALL
+  const EmployerData = async () => {
+    let userData = await EmployerDetails(props.employerId);
+    if (userData !== undefined) {
+      setState(userData.data.company_detail[0]);
+    }
+  };
+  useEffect(() => {
+    EmployerData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
+
   // COMPANY DETAIL SUBMIT BUTTON
-  const onCompanyDetailClick = (event) => {
+  const onCompanyDetailClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      let responseData = await AddCompany(state);
+      if (responseData.message === "Employee data updated successfully") {
+        toast.success("Company Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // END COMPANY DETAIL VALIDATION
@@ -104,7 +130,7 @@ function CompanyDetails(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
@@ -116,7 +142,7 @@ function CompanyDetails(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="companyname"
+                  htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Company Name (as per Kyc){" "}
@@ -125,24 +151,24 @@ function CompanyDetails(props) {
                 <input
                   type="text"
                   maxLength={20}
-                  name="companyname"
-                  value={state.companyname}
+                  name="company_name"
+                  value={state.company_name}
                   onChange={onInputChange}
                   className={
-                    errors.companyname
+                    errors.company_name
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Company Name"
-                  id="companyname"
+                  id="company_name"
                 />
-                {/*----ERROR MESSAGE FOR companyname----*/}
-                {errors.companyname && (
+                {/*----ERROR MESSAGE FOR company_name----*/}
+                {errors.company_name && (
                   <span
-                    key={errors.companyname}
+                    key={errors.company_name}
                     className="text-danger font-size-3"
                   >
-                    {errors.companyname}
+                    {errors.company_name}
                   </span>
                 )}
               </div>
@@ -237,7 +263,7 @@ function CompanyDetails(props) {
             <div className="row">
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="startdate"
+                  htmlFor="company_start_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Company Start Date <span className="text-danger"> *</span> :
@@ -246,30 +272,30 @@ function CompanyDetails(props) {
                 <input
                   max={moment().format("YYYY-MM-DD")}
                   type="date"
-                  name="startdate"
-                  value={state.startdate}
+                  name="company_start_date"
+                  value={moment(state.company_start_date).format("YYYY-MM-DD")}
                   onChange={onInputChange}
                   className={
-                    errors.startdate
+                    errors.company_start_date
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="startdate"
-                  id="startdate"
+                  placeholder="company_start_date"
+                  id="company_start_date"
                 />
-                {/*----ERROR MESSAGE FOR startdate----*/}
-                {errors.startdate && (
+                {/*----ERROR MESSAGE FOR company_start_date----*/}
+                {errors.company_start_date && (
                   <span
-                    key={errors.startdate}
+                    key={errors.company_start_date}
                     className="text-danger font-size-3"
                   >
-                    {errors.startdate}
+                    {errors.company_start_date}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="members"
+                  htmlFor="company_size"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Company Size <span className="text-danger"> *</span> :
@@ -277,25 +303,25 @@ function CompanyDetails(props) {
                 <div className="position-relative">
                   <input
                     maxLength={30}
-                    name="members"
-                    value={state.members}
+                    name="company_size"
+                    value={state.company_size}
                     onChange={onInputChange}
                     type="text"
                     className={
-                      errors.members
+                      errors.company_size
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="members"
-                    id="members"
+                    placeholder="company_size"
+                    id="company_size"
                   />
-                  {/*----ERROR MESSAGE FOR members----*/}
-                  {errors.members && (
+                  {/*----ERROR MESSAGE FOR company_size----*/}
+                  {errors.company_size && (
                     <span
-                      key={errors.members}
+                      key={errors.company_size}
                       className="text-danger font-size-3"
                     >
-                      {errors.members}
+                      {errors.company_size}
                     </span>
                   )}
                 </div>
@@ -305,7 +331,7 @@ function CompanyDetails(props) {
               {" "}
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="url"
+                  htmlFor="website_url"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Website URL :
@@ -314,26 +340,29 @@ function CompanyDetails(props) {
                   type="text"
                   placeholder="Website Url"
                   maxLength={40}
-                  name="url"
-                  value={state.url}
+                  name="website_url"
+                  value={state.website_url}
                   onChange={onInputChange}
                   className={
-                    errors.url
+                    errors.website_url
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="url"
+                  id="website_url"
                 />
-                {/*----ERROR MESSAGE FOR url----*/}
-                {errors.url && (
-                  <span key={errors.url} className="text-danger font-size-3">
-                    {errors.url}
+                {/*----ERROR MESSAGE FOR website_url----*/}
+                {errors.website_url && (
+                  <span
+                    key={errors.website_url}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.website_url}
                   </span>
                 )}
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="vacancy"
+                  htmlFor="vacancy_for_post"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Vacancy FOr Post <span className="text-danger"> *</span> :
@@ -341,25 +370,25 @@ function CompanyDetails(props) {
                 <div className="position-relative">
                   <input
                     maxLength={30}
-                    name="vacancy"
-                    value={state.vacancy}
+                    name="vacancy_for_post"
+                    value={state.vacancy_for_post}
                     onChange={onInputChange}
                     type="text"
                     className={
-                      errors.vacancy
+                      errors.vacancy_for_post
                         ? "form-control border border-danger"
                         : "form-control"
                     }
                     placeholder="Vacancy For Post"
-                    id="vacancy"
+                    id="vacancy_for_post"
                   />
-                  {/*----ERROR MESSAGE FOR vacancy----*/}
-                  {errors.vacancy && (
+                  {/*----ERROR MESSAGE FOR vacancy_for_post----*/}
+                  {errors.vacancy_for_post && (
                     <span
-                      key={errors.vacancy}
+                      key={errors.vacancy_for_post}
                       className="text-danger font-size-3"
                     >
-                      {errors.vacancy}
+                      {errors.vacancy_for_post}
                     </span>
                   )}
                 </div>
@@ -369,7 +398,7 @@ function CompanyDetails(props) {
               {" "}
               <div className="form-group col-md-12">
                 <label
-                  htmlFor="companydesc"
+                  htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
                   About : <span className="text-danger">*</span>
@@ -378,28 +407,39 @@ function CompanyDetails(props) {
                   <div
                     sm="12"
                     className={
-                      errors.companydesc
+                      errors.about
                         ? "border border-danger rounded overflow-hidden"
                         : "border rounded overflow-hidden"
                     }
                   >
-                    <CKEditor
+                    {/* <CKEditor
                       type={"classic"}
-                      name={"companydesc"}
-                      id={"companydesc"}
-                      data={state.companydesc}
-                      value={state.companydesc}
+                      name={"about"}
+                      id={"about"}
+                      data={state.about}
+                      value={state.about}
                       onChange={onInputChange}
                       initData="About Company"
-                    />
+                    /> */}
+                    <textarea
+                      name="about"
+                      value={state.about}
+                      onChange={onInputChange}
+                      className={
+                        errors.about
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="about"
+                    ></textarea>
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.companydesc && (
+                  {errors.about && (
                     <span
-                      key={errors.companydesc}
+                      key={errors.about}
                       className="text-danger font-size-3"
                     >
-                      {errors.companydesc}
+                      {errors.about}
                     </span>
                   )}
                 </div>

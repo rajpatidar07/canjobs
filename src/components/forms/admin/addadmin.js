@@ -7,7 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Addadmin(props) {
   // let [adminDetails, setAdmindetails] = useState([]);
-  const close = props.close;
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // USER ADMIN PROFILE UPDATE VALIDATION
 
   // INITIAL STATE ASSIGNMENT
@@ -53,10 +57,8 @@ function Addadmin(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
     if (userData !== undefined || userData) {
@@ -79,7 +81,6 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState([]);
         return close();
       }
       if (responseData.message === "admin updated successfully") {
@@ -87,7 +88,6 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState([]);
         return close();
       }
     }

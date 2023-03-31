@@ -3,6 +3,7 @@ import axios from "axios";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 // const token = localStorage.getItem("token");
 const user_id = localStorage.getItem("user_id");
+const employee_id = localStorage.getItem("employee_id");
 
 // EMPLOYEE'S API
 
@@ -22,18 +23,18 @@ export const EmployeeLogin = async (props) => {
 };
 export const EmployeeDetails = async (props) => {
   // if (props !== undefined) {
-    const formData = new FormData();
-    formData.append("employee_id", user_id);
-    const response = await axios.post(
-      `${API_URL}getEmployeeDetail`,
-      { employee_id: props },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
+  const formData = new FormData();
+  formData.append("employee_id", user_id);
+  const response = await axios.post(
+    `${API_URL}getEmployeeDetail`,
+    { employee_id: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
   // }
 };
 export const AddEmployeeDetails = async (props) => {
@@ -50,21 +51,31 @@ export const getallEmployeeData = async () => {
 
 /*Detail Employee Education Api */
 export const EmployeeEducationDetails = async (props) => {
-  if (props !== undefined) {
-    const formData = new FormData();
-    formData.append("employee_id", props);
-    const response = await axios.get(
-      `${API_URL}getEmployeeEducation?employee_id=${props}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  }
+  const formData = new FormData();
+  formData.append("employee_id", props);
+  const response = await axios.get(
+    `${API_URL}getEmployeeEducation?employee_id=${props}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
 };
-
+/*Add Employee Education Api */
+export const AddEmployeeEducation = async (props, id) => {
+  const response = await axios.put(`${API_URL}employeeEducation_detail`, {
+    employee_id: id,
+    course: props.course,
+    institute_location: props.course,
+    passing_year: props.institute_location,
+    qualification: props.qualification,
+    specialization: props.specialization,
+    university_institute: props.university_institute,
+  });
+  return response.data;
+};
 /*Detail Employee Skill Api */
 export const EmployeeSkillDetails = async (props) => {
   if (props !== undefined) {
@@ -93,6 +104,14 @@ export const AddEmployeeSkill = async (props, id) => {
 export const DeleteEmployeeSkill = async (props) => {
   const response = await axios.post(`${API_URL}deleteEmployeeSkill`, {
     skill_id: props,
+  });
+  return response.data;
+};
+/*Delete Employee Skill Api */
+export const DeleteEmployeeEducation = async (props) => {
+  console.log(props);
+  const response = await axios.post(`${API_URL}deleteEmployeeEducation`, {
+    education_id: props,
   });
   return response.data;
 };
@@ -129,6 +148,11 @@ export const EmployerDetails = async (props) => {
     );
     return response.data;
   }
+};
+/*Add Employer / Company Api */
+export const AddCompany = async (props) => {
+  const response = await axios.put(`${API_URL}company_detail`, props);
+  return response.data;
 };
 /*Add Employer Contact Api */
 export const AddContact = async (props) => {

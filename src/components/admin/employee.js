@@ -43,7 +43,7 @@ function Employee() {
     showEmployeeProfile,
   ]);
 
-  /* Function to show the single data to update Employee* Education*/
+  /* Function to show the single data to update Employee Education*/
   const editEmployeeEducation = (e) => {
     // e.preventDefault();
     setShowEducationModal(true);
@@ -58,6 +58,7 @@ function Employee() {
   /* Function to show the single data to update Employee Skills*/
   const editEmployeeSkills = (e) => {
     // e.preventDefault();
+    localStorage.setItem("employee_id", e);
     setShowSkillsModal(true);
     setemployeeSkillId(e);
   };
@@ -71,7 +72,7 @@ function Employee() {
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
-  /*To call Api to delete category */
+  /*To call Api to delete employee */
   async function deleteEmployee(e) {
     const responseData = await DeleteJobEmployee(e);
     if (responseData.message === "Employee has been deleted") {
@@ -126,7 +127,7 @@ function Employee() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={()=>editEmployee("0")}
+                      onClick={() => editEmployee("0")}
                     >
                       Add Employee
                     </CustomButton>
@@ -231,10 +232,9 @@ function Employee() {
                               onClick={() => setShowEmployeeProfile(true)}
                             >
                               <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                <p className="m-0">{empdata.name}</p> 
+                                <p className="m-0">{empdata.name}</p>
                                 <p className="text-gray font-size-2 m-0">
-                                  {empdata.marital_status} (
-                                  {empdata.gender}
+                                  {empdata.marital_status} ({empdata.gender}
                                   {/*Calculation of age from date of birth*/}
                                   {moment().diff(
                                     empdata.date_of_birth,
@@ -254,16 +254,16 @@ function Employee() {
                             </h3>
                           </td>
 
-                                    <Education
-                                      close={() => setShowEducationModal(false)}
-                                      employeeEducationData={employeeEducationId}
-                                      show={showEducationModal}
-                                    />
-                                    <Skills
-                                      show={showSkillsModal}
-                                      employeeSkillData={employeeSkillId}
-                                      close={() => setShowSkillsModal(false)}
-                                    />
+                          <Education
+                            close={() => setShowEducationModal(false)}
+                            employeeEducationData={employeeEducationId}
+                            show={showEducationModal}
+                          />
+                          <Skills
+                            show={showSkillsModal}
+                            employeeSkillData={employeeSkillId}
+                            close={() => setShowSkillsModal(false)}
+                          />
                           <td className=" py-7 min-width-px-100">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.language}

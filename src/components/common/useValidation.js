@@ -21,9 +21,8 @@ function useValidation(initialState, validators) {
 
   const validate = () => {
     let newErrors = {};
-    console.log("VALIDATION CHECK"+JSON.stringify(state));
+    console.log("VALIDATION CHECK" + JSON.stringify(state));
     Object.keys(state).forEach((key) => {
-
       const value = state[key];
       if (validators[key]) {
         const fieldErrors = validators[key].reduce((acc, validator) => {
@@ -52,6 +51,7 @@ function useValidation(initialState, validators) {
     DescriptionChange,
     errors,
     validate,
+    setErrors,
   };
 }
 

@@ -2,20 +2,35 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { Link } from "react-router-dom";
-import { EmployeeEducationDetails } from "../../../api/api";
+import {
+  EmployeeEducationDetails,
+  AddEmployeeEducation,
+  DeleteEmployeeEducation,
+} from "../../../api/api";
 import filterjson from "../../json/filterjson";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SAlert from "../../common/sweetAlert";
 
 function Education(props) {
   let [educationData, setEducationData] = useState([]);
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   /*----USER Education VALIDATION----*/
-  // const initialFormState = {
-  //   qualification: "",
-  //   university: "",
-  //   course: "",
-  //   specialization: "",
-  //   institute_location: "",
-  //   passing_year: "",
-  // };
+  const initialFormState = {
+    qualification: "",
+    university_institute: "",
+    course: "",
+    specialization: "",
+    institute_location: "",
+    passing_year: "",
+  };
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   /*----VALIDATION CONTENT----*/
   const validators = {
     qualification: [
@@ -24,7 +39,7 @@ function Education(props) {
           ? "Qualification is required"
           : null,
     ],
-    university: [
+    university_institute: [
       (value) =>
         value === null || value.trim() === ""
           ? "University is required"
@@ -54,37 +69,65 @@ function Education(props) {
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    educationData,
-    validators
-  );
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EducationData = async (data) => {
-    // let EducationDetails = await EmployeeEducationDetails(
-    //   props.employeeEducationData
-    // );
-    // setEducationData(EducationDetails.data);
-    // if (data !== undefined || data) {
-    //   setState(data);
-    //   console.log(data.qualification);
-    // }
+    let EducationDetails = await EmployeeEducationDetails(
+      props.employeeEducationData
+    );
+    setEducationData(EducationDetails.data);
+    if (data !== undefined || data) {
+      setState(data);
+    }
   };
   useEffect(() => {
     EducationData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-  // console.log(state);
 
   /*----LOGIN SUBMIT FUNCTION----*/
-  const onEducationSubmitClick = (event) => {
+  const onEducationSubmitClick = async (event) => {
     event.preventDefault();
-
     if (validate()) {
+      let responseData = await AddEmployeeEducation(
+        state,
+        props.employeeEducationData
+      );
+      if (responseData.message === "Employee data updated successfully") {
+        toast.success("Education Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
       // handle form submission
     }
   };
   // END USER Education VALIDATION
 
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.education_id);
+    setDeleteName(e.course);
+    setDeleteAlert(true);
+  };
+  /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+  /*To call Api to delete Skill */
+  async function deleteEducation(e) {
+    console.log(e);
+    const responseData = await DeleteEmployeeEducation(e);
+    if (responseData.message === "Education details has been deleted") {
+      toast.error("Education deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setDeleteAlert(false);
+    }
+  }
   return (
     <>
       <Modal
@@ -97,7 +140,7 @@ function Education(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
@@ -145,7 +188,7 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="university"
+                  htmlFor="university_institute"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   University/Institute <span className="text-danger">*</span> :
@@ -155,22 +198,22 @@ function Education(props) {
                   type="text"
                   placeholder="University/Institute "
                   className={
-                    errors.university
+                    errors.university_institute
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  name="university"
-                  id="university"
-                  value={state.university}
+                  name="university_institute"
+                  id="university_institute"
+                  value={state.university_institute}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
-                {errors.university && (
+                {errors.university_institute && (
                   <span
-                    key={errors.university}
+                    key={errors.university_institute}
                     className="text-danger font-size-3"
                   >
-                    {errors.university}
+                    {errors.university_institute}
                   </span>
                 )}
               </div>
@@ -196,12 +239,12 @@ function Education(props) {
                 >
                   <option value={""}>select Course</option>
                   <option value={"mba"}>MBA</option>
-                  <option value={""}>MBBS</option>
-                  <option value={""}>CA</option>
-                  <option value={""}>BA</option>
-                  <option value={""}>MA</option>
-                  <option value={""}>B.Tech</option>
-                  <option value={""}>M.Tech</option>
+                  <option value={"MBBS"}>MBBS</option>
+                  <option value={"CA"}>CA</option>
+                  <option value={"BA"}>BA</option>
+                  <option value={"MA"}>MA</option>
+                  <option value={"B.Tech"}>B.Tech</option>
+                  <option value={"M.Tech"}>M.Tech</option>
                 </select>
                 {/*----ERROR MESSAGE FOR course----*/}
                 {errors.course && (
@@ -230,12 +273,12 @@ function Education(props) {
                 >
                   <option value={""}>select Specialization</option>
                   <option value={"mba"}>MBA</option>
-                  <option value={""}>MBBS</option>
-                  <option value={""}>CA</option>
-                  <option value={""}>BA</option>
-                  <option value={""}>MA</option>
-                  <option value={""}>B.Tech</option>
-                  <option value={""}>M.Tech</option>
+                  <option value={"MBBS"}>MBBS</option>
+                  <option value={"CA"}>CA</option>
+                  <option value={"BA"}>BA</option>
+                  <option value={"MA"}>MA</option>
+                  <option value={"B.Tech"}>B.Tech</option>
+                  <option value={"M.Tech"}>M.Tech</option>
                 </select>
                 {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
                 {errors.specialization && (
@@ -271,7 +314,7 @@ function Education(props) {
                     onChange={onInputChange}
                   >
                     <option value={""}>select institute location</option>
-                    {(filterjson.institute_location || []).map((data, i) => {
+                    {(filterjson.location || []).map((data, i) => {
                       return (
                         <option value={data} key={i}>
                           {data}
@@ -323,7 +366,7 @@ function Education(props) {
             </div>
             <div className="">
               <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                {(educationData || []).map((education, index) => (
+                {(educationData || []).map((education) => (
                   <li
                     className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                     key={education.education_id}
@@ -332,7 +375,7 @@ function Education(props) {
                     <Link onClick={() => EducationData(education)}>
                       <i class="px-3 fa fa-edit" aria-hidden="true"></i>
                     </Link>
-                    <Link /*onClick={() => ShowDeleteAlert(education)}*/>
+                    <Link onClick={() => ShowDeleteAlert(education)}>
                       <i class="fa fa-times-circle" aria-hidden="true"></i>
                     </Link>
                   </li>
@@ -349,6 +392,14 @@ function Education(props) {
             </div>
           </form>
           {/* </div> */}
+          <SAlert
+            show={deleteAlert}
+            title={deleteName}
+            text="Are you Sure you want to delete !"
+            onConfirm={() => deleteEducation(deleteId)}
+            showCancelButton={true}
+            onCancel={CancelDelete}
+          />
         </div>
       </Modal>
     </>

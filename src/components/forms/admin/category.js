@@ -8,7 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddCategory(props) {
   // const [catdata, setCatdata] = useState([]);
-  const close = props.close;
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // USER CATEGORY VALIDATION
 
   // INITIAL STATE ASSIGNMENT
@@ -34,18 +38,20 @@ function AddCategory(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const CatData = () => {
-    setState(props.jobCategoryData);
+    if (props.jobCategoryData !== "0") {
+      setState(props.jobCategoryData);
+    } else {
+      setState(initialFormState);
+    }
   };
   useEffect(() => {
     CatData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.jobCategoryData]);
+  }, [props]);
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
@@ -84,7 +90,7 @@ function AddCategory(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>

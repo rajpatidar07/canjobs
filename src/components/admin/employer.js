@@ -26,6 +26,7 @@ function Employer() {
   const EmployerData = async () => {
     const userData = await getAllEmployer();
     setemployerData(userData);
+    console.log(userData);
   };
 
   /*Render function to get the employer*/
@@ -34,6 +35,12 @@ function Employer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAddEmployerModal, showKycModal, showContactModal, deleteAlert]);
 
+  /* Function to show the single data to update Employer Contact*/
+  const editEmployer = (e) => {
+    // e.preventDefault();
+    setShowEmployerMOdal(true);
+    setEmployerID(e);
+  };
   /* Function to show the single data to update Employer Contact*/
   const editEmployerContact = (e) => {
     // e.preventDefault();
@@ -129,6 +136,7 @@ function Employer() {
                     </CustomButton>
                     <CompanyDetails
                       show={showAddEmployerModal}
+                      employerId={employerId}
                       close={() => setShowEmployerMOdal(false)}
                     />
                   </div>
@@ -309,7 +317,7 @@ function Employer() {
                             />
                             <Link
                               to=""
-                              onClick={() => setShowEmployerMOdal(true)}
+                              onClick={() => editEmployer(empdata.company_id)}
                             >
                               <span className=" fas fa-edit text-gray px-1">
                                 {" "}

@@ -97,7 +97,7 @@ function Category() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShowAddCategoryModal(true)}
+                      onClick={() => editJobCategory("0")}
                     >
                       Add category
                     </CustomButton>

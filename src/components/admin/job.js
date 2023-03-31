@@ -245,7 +245,7 @@ function Job() {
                             </h3>
                           </th>
                           <th className=" py-7 min-width-px-100">
-                            <Link to="" onClick={(jobdata) => editJob(jobdata)}>
+                            <Link to="" onClick={() => editJob(jobdata)}>
                               <span className=" fas fa-edit text-gray px-5">
                                 {" "}
                               </span>

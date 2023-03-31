@@ -4,6 +4,7 @@ import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import FilterJson from "./../../json/filterjson";
 function AddJobModal(props) {
+  console.log(props.jobData);
   const [Json, setJson] = useState(FilterJson);
 
   // CKEDITOR
