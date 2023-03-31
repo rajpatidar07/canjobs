@@ -42,9 +42,9 @@ function Skills(props) {
   );
   // API CALL
   const SkillData = async () => {
-    let SkillDetails = await EmployeeSkillDetails(props.employeeSkillData);
-    console.log(SkillDetails.data);
-    SetSkillData(SkillDetails.data);
+    // let SkillDetails = await EmployeeSkillDetails(props.employeeSkillData);
+    // console.log(SkillDetails.data);
+    // SetSkillData(SkillDetails.data);
     // setState(props.employeeSkillData);
   };
   useEffect(() => {

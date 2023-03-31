@@ -60,14 +60,14 @@ function Education(props) {
   );
   // API CALL
   const EducationData = async (data) => {
-    let EducationDetails = await EmployeeEducationDetails(
-      props.employeeEducationData
-    );
-    setEducationData(EducationDetails.data);
-    if (data !== undefined || data) {
-      setState(data);
-      console.log(data.qualification);
-    }
+    // let EducationDetails = await EmployeeEducationDetails(
+    //   props.employeeEducationData
+    // );
+    // setEducationData(EducationDetails.data);
+    // if (data !== undefined || data) {
+    //   setState(data);
+    //   console.log(data.qualification);
+    // }
   };
   useEffect(() => {
     EducationData();

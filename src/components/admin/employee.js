@@ -126,7 +126,7 @@ function Employee() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShowEmployeeMOdal(true)}
+                      onClick={()=>editEmployee("0")}
                     >
                       Add Employee
                     </CustomButton>
@@ -142,7 +142,7 @@ function Employee() {
                 <div className="table-responsive">
                   <table className="table table-striped">
                     <thead>
-                      <tr>
+                      <tr className="border border-color-2">
                         <th
                           scope="col"
                           className="pl-0 text-center border-0 font-size-4 font-weight-normal"
@@ -206,12 +206,12 @@ function Employee() {
                           className="border border-color-2"
                           key={empdata.employee_id}
                         >
-                          <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <td scope="row" className="pl-6 border-0 py-7 pr-0  ">
                             <div className="media  align-items-center">
                               <div className="circle-36 mx-auto">
                                 {empdata.profile_photo === null ? (
                                   <img
-                                    src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     alt=""
                                     className="w-100"
                                   />
@@ -224,16 +224,16 @@ function Employee() {
                                 )}
                               </div>
                             </div>
-                          </th>
-                          <th className=" py-7  pr-0">
+                          </td>
+                          <td className=" py-7  pr-0">
                             <Link
                               to={""}
                               onClick={() => setShowEmployeeProfile(true)}
                             >
                               <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {empdata.name} <br />
-                                <span className="text-gray font-size-2">
-                                  {empdata.marital_status} <br />(
+                                <p className="m-0">{empdata.name}</p> 
+                                <p className="text-gray font-size-2 m-0">
+                                  {empdata.marital_status} (
                                   {empdata.gender}
                                   {/*Calculation of age from date of birth*/}
                                   {moment().diff(
@@ -241,55 +241,55 @@ function Employee() {
                                     "years"
                                   )}
                                   )
-                                </span>
+                                </p>
                               </h4>
                             </Link>
-                          </th>
-                          <th className=" py-7  pr-0">
+                          </td>
+                          <td className=" py-7  pr-0">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              +{empdata.contact_no} <br />
-                              <span className="text-gray font-size-2">
+                              <p className="m-0">+{empdata.contact_no}</p>
+                              <p className="text-gray font-size-2 m-0">
                                 {empdata.email}
-                              </span>
+                              </p>
                             </h3>
-                          </th>
+                          </td>
 
-                          <Education
-                            close={() => setShowEducationModal(false)}
-                            employeeEducationData={employeeEducationId}
-                            show={showEducationModal}
-                          />
-                          <Skills
-                            show={showSkillsModal}
-                            employeeSkillData={employeeSkillId}
-                            close={() => setShowSkillsModal(false)}
-                          />
-                          <th className=" py-7 min-width-px-100">
+                                    <Education
+                                      close={() => setShowEducationModal(false)}
+                                      employeeEducationData={employeeEducationId}
+                                      show={showEducationModal}
+                                    />
+                                    <Skills
+                                      show={showSkillsModal}
+                                      employeeSkillData={employeeSkillId}
+                                      close={() => setShowSkillsModal(false)}
+                                    />
+                          <td className=" py-7 min-width-px-100">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.language}
                             </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
+                          </td>
+                          <td className=" py-7 min-width-px-100">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.education}
                             </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
+                          </td>
+                          <td className=" py-7 min-width-px-100">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.skill}
                             </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
+                          </td>
+                          <td className=" py-7 min-width-px-100">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.specialization}
                             </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
+                          </td>
+                          <td className=" py-7 min-width-px-100">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.experience}
                             </h3>
-                          </th>
-                          <th className="d-flex py-7 min-width-px-100">
+                          </td>
+                          <td className="d-flex py-7 min-width-px-100">
                             <Link
                               to=""
                               onClick={() =>
@@ -320,7 +320,7 @@ function Employee() {
                                 <i className="fa fa-trash "></i>
                               </span>
                             </Link>
-                          </th>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
