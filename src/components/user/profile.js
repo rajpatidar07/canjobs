@@ -19,8 +19,8 @@ const UserProfile = () => {
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const UserData = async () => {
-    const userData = await EmployeeDetails();
-    setuserDetail(userData.data)
+    // const userData = await EmployeeDetails();
+    // setuserDetail(userData.data)
     // setPersonalDetail(userData.data.personal_detail[0])
   }
   useEffect(() => {

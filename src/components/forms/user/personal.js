@@ -12,25 +12,26 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
-  // const initialFormStateuser = {
-  //   name: "",
-  //   email: "",
-  //   contact_no: "",
-  //   description: "",
-  //   date_of_birth: "",
-  //   gender: "",
-  //   marital_status: "",
-  //   nationality: "",
-  //   current_location: "",
-  //   currently_located_country: "",
-  //   language: "",
-  //   religion: "",
-  //   interested_in: "",
-  //   experience: "",
-  //   work_permit_canada: "",
-  //   work_permit_other_country: "",
-  // };
+  const initialFormStateuser = {
+    name: "",
+    email: "",
+    contact_no: "",
+    description: "",
+    date_of_birth: "",
+    gender: "",
+    marital_status: "",
+    nationality: "",
+    current_location: "",
+    currently_located_country: "",
+    language: "",
+    religion: "",
+    interested_in: "",
+    experience: "",
+    work_permit_canada: "",
+    work_permit_other_country: "",
+  };
   // VALIDATION CONDITIONS
+
   const validators = {
     name: [
       (value) =>
@@ -137,14 +138,16 @@ function PersonalDetails(props) {
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeedata);
-    // setuserDetail(userData.data.personal_detail[0]);
-    // if (userData !== undefined && props) {
     setState(userData.data.personal_detail[0]);
-    console.log(userData.data);
-    // }
+  console.log("EMMMMPLLLLLLLLL----"+JSON.stringify(props));
+    
   };
   useEffect(() => {
-    UserData();
+    if(props.employeedata!="0"){
+      UserData();
+    }else{
+      setState(initialFormStateuser);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   console.log(state);
@@ -154,6 +157,7 @@ function PersonalDetails(props) {
     event.preventDefault();
     if (validate()) {
       const userData = await AddEmployeeDetails(state);
+      setState(initialFormStateuser);
     }
   }
 
@@ -184,7 +188,7 @@ function PersonalDetails(props) {
               <input
                 maxLength={20}
                 name="employee_id"
-                value={state.id}
+                defaultValue={state.id}
                 type="hidden"
                 id="employee_id"
               />
@@ -198,7 +202,7 @@ function PersonalDetails(props) {
                 <input
                   maxLength={20}
                   name="name"
-                  value={state.name}
+                  defaultValue={state.name}
                   onChange={onInputChange}
                   type="text"
                   className={
@@ -227,7 +231,7 @@ function PersonalDetails(props) {
                   maxLength={30}
                   type="email"
                   name="email"
-                  value={state.email}
+                  defaultValue={state.email}
                   onChange={onInputChange}
                   className={
                     errors.email
@@ -255,7 +259,7 @@ function PersonalDetails(props) {
                   type="number"
                   placeholder="Mobile Number"
                   name="contact_no"
-                  value={state.contact_no}
+                  defaultValue={state.contact_no}
                   onChange={onInputChange}
                   className={
                     errors.contact_no
@@ -276,7 +280,7 @@ function PersonalDetails(props) {
               </div>
             </div>
             {/* DECRIBE YOUSELF */}
-            <div className="row">
+            {/* <div className="row">
               <div className="form-group col-md-12">
                 <label
                   htmlFor="description"
@@ -316,9 +320,8 @@ function PersonalDetails(props) {
                       }}
                       initData="Describe Yourself"
                     /> */}
-                  </div>
-                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.description && (
+                  {/* </div>  */}
+                  {/* {errors.description && (
                     <span
                       key={errors.description}
                       className="text-danger font-size-3"
@@ -328,7 +331,37 @@ function PersonalDetails(props) {
                   )}
                 </div>
               </div>
+            </div> */}
+            <div className="row">
+              {" "}
+              <div className="form-group col-md-12">
+                <label
+                  htmlFor="description"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  description : <span className="text-danger">*</span>
+                </label>
+                <textarea
+                  name="description"
+                  defaultValue={state.description}
+                  onChange={onInputChange}
+                  className={
+                    errors.description
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  id="description"
+                >
+                </textarea>
+                {/*----ERROR MESSAGE FOR GENDER----*/}
+                {errors.description && (
+                  <span key={errors.description} className="text-danger font-size-3">
+                    {errors.description}
+                  </span>
+                )}
+              </div>
             </div>
+            
             {/* SECOND LINE */}
             <div className="row">
               {" "}
@@ -344,7 +377,7 @@ function PersonalDetails(props) {
                   type="date"
                   placeholder="Date Of Birth "
                   name="date_of_birth"
-                  value={state.date_of_birth}
+                  defaultValue={state.date_of_birth}
                   onChange={onInputChange}
                   className={
                     errors.date_of_birth
@@ -372,7 +405,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="gender"
-                  value={state.gender}
+                  defaultValue={state.gender}
                   onChange={onInputChange}
                   className={
                     errors.gender
@@ -402,7 +435,7 @@ function PersonalDetails(props) {
                 </label>{" "}
                 <select
                   name="marital_status"
-                  value={state.marital_status}
+                  defaultValue={state.marital_status}
                   onChange={onInputChange}
                   className={
                     errors.marital_status
@@ -441,7 +474,7 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="nationality / Citizenship"
                   name="nationality"
-                  value={state.nationality}
+                  defaultValue={state.nationality}
                   onChange={onInputChange}
                   className={
                     errors.nationality
@@ -472,7 +505,7 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="Current Location"
                   name="current_location"
-                  value={state.current_location}
+                  defaultValue={state.current_location}
                   onChange={onInputChange}
                   className={
                     errors.current_location
@@ -510,7 +543,7 @@ function PersonalDetails(props) {
                   placeholder="Currently Located Country"
                   id="currently_located_country"
                   name="currently_located_country"
-                  value={state.currently_located_country}
+                  defaultValue={state.currently_located_country}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR COUNTRY----*/}
@@ -546,7 +579,7 @@ function PersonalDetails(props) {
                   }
                   id="language"
                   name="language"
-                  value={state.language}
+                  defaultValue={state.language}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR LANGUAGE----*/}
@@ -577,7 +610,7 @@ function PersonalDetails(props) {
                   placeholder="religion"
                   id="religion"
                   name="religion"
-                  value={state.religion}
+                  defaultValue={state.religion}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR religion----*/}
@@ -602,7 +635,7 @@ function PersonalDetails(props) {
                   }
                   id="interested_in"
                   name="interested_in"
-                  value={state.interested_in}
+                  defaultValue={state.interested_in}
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
@@ -632,7 +665,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="experience"
-                  value={state.experience}
+                  defaultValue={state.experience}
                   onChange={onInputChange}
                   className={
                     errors.experience
@@ -666,7 +699,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="work_permit_canada"
-                  value={state.work_permit_canada}
+                  defaultValue={state.work_permit_canada}
                   onChange={onInputChange}
                   className={
                     errors.work_permit_canada
@@ -708,7 +741,7 @@ function PersonalDetails(props) {
                   placeholder="Permit of Other Country"
                   id="work_permit_other_country"
                   name="work_permit_other_country"
-                  value={state.work_permit_other_country}
+                  defaultValue={state.work_permit_other_country}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
@@ -736,7 +769,7 @@ function PersonalDetails(props) {
                   placeholder="Resume"
                   id="resume"
                   name="resume"
-                  // value={state.resume}
+                  // defaultValue={state.resume}
                   // onChange={onInputChange}
                   className={
                     errors.resume

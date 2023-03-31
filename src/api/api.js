@@ -21,9 +21,9 @@ export const EmployeeLogin = async (props) => {
   return response.data;
 };
 export const EmployeeDetails = async (props) => {
-  if (props !== undefined) {
+  // if (props !== undefined) {
     const formData = new FormData();
-    formData.append("employee_id", props);
+    formData.append("employee_id", user_id);
     const response = await axios.post(
       `${API_URL}getEmployeeDetail`,
       { employee_id: props },
@@ -34,7 +34,7 @@ export const EmployeeDetails = async (props) => {
       }
     );
     return response.data;
-  }
+  // }
 };
 export const AddEmployeeDetails = async (props) => {
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props);
