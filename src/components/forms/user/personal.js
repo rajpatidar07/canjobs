@@ -12,24 +12,24 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
-  // const initialFormStateuser = {
-  //   name: "",
-  //   email: "",
-  //   contact_no: "",
-  //   description: "",
-  //   date_of_birth: "",
-  //   gender: "",
-  //   marital_status: "",
-  //   nationality: "",
-  //   current_location: "",
-  //   currently_located_country: "",
-  //   language: "",
-  //   religion: "",
-  //   interested_in: "",
-  //   experience: "",
-  //   work_permit_canada: "",
-  //   work_permit_other_country: "",
-  // };
+  const initialFormStateuser = {
+    name: "",
+    email: "",
+    contact_no: "",
+    description: "Discription",
+    date_of_birth: "",
+    gender: "",
+    marital_status: "",
+    nationality: "",
+    current_location: "",
+    currently_located_country: "",
+    language: "",
+    religion: "",
+    interested_in: "",
+    experience: "",
+    work_permit_canada: "",
+    work_permit_other_country: "",
+  };
   // VALIDATION CONDITIONS
   const validators = {
     name: [
@@ -133,7 +133,7 @@ function PersonalDetails(props) {
     errors,
     validate,
     DescriptionChange,
-  } = useValidation(userDetail, validators);
+  } = useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeedata);

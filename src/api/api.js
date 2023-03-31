@@ -223,8 +223,13 @@ export const DeleteAdmin = async (props) => {
 };
 /*Add Followup Api */
 export const AddFollowup = async (props) => {
-  // const response = await axios.post(`${API_URL}admin/addFollowup`, props);
-  // return response.data;
+  const response = await axios.post(`${API_URL}admin/addFollowup`, {
+    admin_id: props.adminId,
+    job_id: props.jobId,
+    employee_id: props.employId,
+    remark: props.state.remark,
+  });
+  return response.data;
 };
 /*Add Followup single data Api */
 export const getSingleFollowup = async (props) => {

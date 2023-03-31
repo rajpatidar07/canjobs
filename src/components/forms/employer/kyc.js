@@ -110,7 +110,7 @@ function KycComplianceDetails(props) {
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
     if (userData !== undefined) {
-      // setState(userData.data.kyc_detail[0]);
+      setState(userData.data.kyc_detail[0]);
     }
   };
   useEffect(() => {
@@ -123,7 +123,7 @@ function KycComplianceDetails(props) {
     if (validate()) {
       let responseData = await AddKyc(state);
       if (responseData.message === "Employee data updated successfully") {
-        toast.success("Contact Updated successfully", {
+        toast.success("Kyc Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });

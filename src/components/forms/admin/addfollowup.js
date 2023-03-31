@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
-import { getSingleFollowup } from "../../../api/api";
+import { getSingleFollowup, AddFollowup } from "../../../api/api";
 import moment from "moment";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
-
+  let [employId, setEmployeId] = useState();
+  let [adminId, setAdminId] = useState();
+  let [jobId, setJobId] = useState();
+  let close = props.close;
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await getSingleFollowup();
     setResponseData(userData.data);
-    console.log(response);
+    setEmployeId(userData.data[0].employee_id);
+    setAdminId(userData.data[0].admin_id);
+    setJobId(userData.data[0].job_id);
   };
 
   /*Render function to get the Response*/
@@ -24,11 +32,11 @@ function Addfollowup(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    dis: "",
+    remark: "Hello",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    dis: [
+    remark: [
       (value) =>
         value === "" || value.trim() === "" ? "Discription required" : null,
     ],
@@ -40,14 +48,23 @@ function Addfollowup(props) {
   );
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
-  const onAminFollowClick = (event) => {
+  const onAminFollowClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      let responseData = await AddFollowup({ state, employId, adminId, jobId });
+      if (responseData.message === "follow up updated successfully") {
+        toast.success("Followup Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // END USER FOLLOW UP PROFILE UPDATE VALIDATION
   return (
     <>
+      <ToastContainer />
       <Modal
         show={props.show}
         size="md"
@@ -77,34 +94,34 @@ function Addfollowup(props) {
             </div>
             <div className="form-group col px-0 pr-3">
               <label
-                htmlFor="dis"
+                htmlFor="remark"
                 className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
               >
-                Description : <span className="text-danger">*</span>
+                Discription : <span className="text-danger">*</span>
               </label>
               <div className="position-relative">
                 <div
                   sm="6"
                   className={
-                    errors.dis
+                    errors.remark
                       ? "border border-danger rounded overflow-hidden"
                       : "border rounded overflow-hidden"
                   }
                 >
                   <CKEditor
                     type={"classic"}
-                    name={"dis"}
-                    id={"dis"}
-                    data={state.dis}
-                    value={"state.dis"}
+                    name={"remark"}
+                    id={"remark"}
+                    data={state.remark}
+                    value={state.remark}
                     onChange={onInputChange}
                     initData="Add Discription"
                   />
                 </div>
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {errors.dis && (
-                  <span key={errors.dis} className="text-danger font-size-3">
-                    {errors.dis}
+                {errors.remark && (
+                  <span key={errors.remark} className="text-danger font-size-3">
+                    {errors.remark}
                   </span>
                 )}
               </div>
