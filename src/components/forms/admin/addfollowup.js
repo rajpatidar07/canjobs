@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
+import { getSingleFollowup } from "../../../api/api";
+import moment from "moment";
 function Addfollowup(props) {
+  let [response, setResponseData] = useState([]);
+
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
+
+  /* Function to get the Response data*/
+  const ResponseData = async () => {
+    const userData = await getSingleFollowup();
+    setResponseData(userData.data);
+    console.log(response);
+  };
+
+  /*Render function to get the Response*/
+  useEffect(() => {
+    ResponseData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.show]);
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -49,30 +66,14 @@ function Addfollowup(props) {
           <h5 className="text-center pt-2">Add Follow Up</h5>
           <form onSubmit={onAminFollowClick} className="pt-5">
             <div className=" col px-0 pr-3 pb-5 mb-5">
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
-              </div>
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
-              </div>
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
-              </div>
-              <div className="d-flex justify-content-between">
-                22/02/23
-                <ul>
-                  <li>Talked with the react intern</li>
-                </ul>
-              </div>
+              {(response || []).map((res) => (
+                <div className="d-flex justify-content-between" key={res.id}>
+                  {moment(res.created_at).format("YYYY-MM-DD")}
+                  <ul>
+                    <li>{res.remark}</li>
+                  </ul>
+                </div>
+              ))}
             </div>
             <div className="form-group col px-0 pr-3">
               <label
@@ -95,7 +96,7 @@ function Addfollowup(props) {
                     name={"dis"}
                     id={"dis"}
                     data={state.dis}
-                    value={state.dis}
+                    value={"state.dis"}
                     onChange={onInputChange}
                     initData="Add Discription"
                   />

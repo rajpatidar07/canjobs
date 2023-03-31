@@ -7,6 +7,20 @@ import Addfollowup from "../forms/admin/addfollowup";
 
 function Followup() {
   let [followup, setFollowUp] = useState(false);
+  // let [response, setResponseData] = useState([]);
+
+  /* Function to get the Response data*/
+  // const ResponseData = async () => {
+  //   const userData = await GetAllResponse();
+  //   setResponseData(userData);
+  // };
+
+  /*Render function to get the Response*/
+  // useEffect(() => {
+  //   ResponseData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [followup deleteAlert]);
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">

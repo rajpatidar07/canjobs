@@ -96,6 +96,12 @@ export const DeleteEmployeeSkill = async (props) => {
   });
   return response.data;
 };
+/*Response List Api */
+export const GetAllResponse = async (props) => {
+  console.log(props);
+  // const response = await axios.get(`${API_URL}getJobResponse?job_id=1&user_type=company`);
+  // return response;
+};
 
 // EMPLOYER'S API
 export const GetAllJobs = async () => {
@@ -213,5 +219,17 @@ export const AddAdmin = async (props) => {
 /*Delete Admin Api */
 export const DeleteAdmin = async (props) => {
   const response = await axios.delete(`${API_URL}admin/deleteAdmin/${props}`);
+  return response.data;
+};
+/*Add Followup Api */
+export const AddFollowup = async (props) => {
+  // const response = await axios.post(`${API_URL}admin/addFollowup`, props);
+  // return response.data;
+};
+/*Add Followup single data Api */
+export const getSingleFollowup = async (props) => {
+  const response = await axios.get(
+    `${API_URL}admin/getFollowup?job_id=2&employee_id=2`
+  );
   return response.data;
 };
