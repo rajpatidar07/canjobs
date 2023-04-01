@@ -12,7 +12,11 @@ function Addfollowup(props) {
   let [employId, setEmployeId] = useState();
   let [adminId, setAdminId] = useState();
   let [jobId, setJobId] = useState();
-  let close = props.close;
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
   /* Function to get the Response data*/
@@ -32,7 +36,8 @@ function Addfollowup(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    remark: "Hello",
+    remark: "",
+    next_followup_date: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -42,10 +47,8 @@ function Addfollowup(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
@@ -108,7 +111,7 @@ function Addfollowup(props) {
                       : "border rounded overflow-hidden"
                   }
                 >
-                  <CKEditor
+                  {/* <CKEditor
                     type={"classic"}
                     name={"remark"}
                     id={"remark"}
@@ -116,12 +119,56 @@ function Addfollowup(props) {
                     value={state.remark}
                     onChange={onInputChange}
                     initData="Add Discription"
-                  />
+                  /> */}
+                  <textarea
+                    name="remark"
+                    value={state.remark}
+                    onChange={onInputChange}
+                    className={
+                      errors.remark
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="remark"
+                  ></textarea>
                 </div>
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                 {errors.remark && (
                   <span key={errors.remark} className="text-danger font-size-3">
                     {errors.remark}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="form-group col-md-6">
+              <label
+                htmlFor="next_followup_date"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+              >
+                Next Date :
+              </label>
+              <div className="position-relative">
+                <input
+                  type="date"
+                  placeholder="Next followup date"
+                  id="next_followup_date"
+                  name="next_followup_date"
+                  min={moment().format("YYYY-MM-DD")}
+                  value={state.next_followup_date}
+                  onChange={onInputChange}
+                  className={
+                    errors.next_followup_date
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                />
+                {/*----ERROR MESSAGE FOR next_followup_date----*/}
+                {errors.next_followup_date && (
+                  <span
+                    key={errors.next_followup_date}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.next_followup_date}
                   </span>
                 )}
               </div>

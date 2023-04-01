@@ -5,7 +5,7 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { getAllJobs, DeleteJob } from "../../api/api";
+import { GetAllJobs, DeleteJob } from "../../api/api";
 import className from "../json/filterjson";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
@@ -18,17 +18,18 @@ function Job() {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
+
   /* Function to get Job data*/
   const JobData = async () => {
-    const userData = await getAllJobs();
-    setjobData(userData);
+    const userData = await GetAllJobs();
+    setjobData(userData.data.data);
   };
 
   /*Render function to get the job */
   useEffect(() => {
     JobData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteAlert]);
+  }, [showAddJobsModal, deleteAlert]);
   // console.log(("userData--" + JSON.stringify(jobData)))
 
   /* Function to show the single data to update job */
@@ -83,9 +84,9 @@ function Job() {
                   </h3>
                 </div>
                 <div className="col-lg-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by Job type:
+                      Filter by Category:
                     </p>
                     <div className="h-px-48">
                       <select
@@ -94,7 +95,70 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         {" "}
-                        {(className.job_type || []).map((data, i) => {
+                        {(className.category || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Job Swap:
+                    </p>
+                    <div className="h-px-48">
+                      <select
+                        name="country"
+                        id="country"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                      >
+                        {" "}
+                        {(className.swap || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Key skill:
+                    </p>
+                    <div className="h-px-48">
+                      <select
+                        name="country"
+                        id="country"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                      >
+                        {" "}
+                        {(className.keyskill || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Location:
+                    </p>
+                    <div className="h-px-48">
+                      <select
+                        name="country"
+                        id="country"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                      >
+                        {" "}
+                        {(className.location || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
                               {data}
@@ -107,7 +171,7 @@ function Job() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShowAddJobsModal(true)}
+                      onClick={() => editJob("0")}
                     >
                       Add Job
                     </CustomButton>
@@ -245,7 +309,7 @@ function Job() {
                             </h3>
                           </th>
                           <th className=" py-7 min-width-px-100">
-                            <Link to="" onClick={() => editJob(jobdata)}>
+                            <Link to="" onClick={() => editJob(jobdata.job_id)}>
                               <span className=" fas fa-edit text-gray px-5">
                                 {" "}
                               </span>

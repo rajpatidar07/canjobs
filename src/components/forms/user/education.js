@@ -11,6 +11,7 @@ import filterjson from "../../json/filterjson";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../../common/sweetAlert";
+import moment from "moment";
 
 function Education(props) {
   let [educationData, setEducationData] = useState([]);
@@ -84,7 +85,7 @@ function Education(props) {
   useEffect(() => {
     EducationData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, [props, deleteAlert]);
 
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
@@ -350,7 +351,7 @@ function Education(props) {
                   placeholder="Passing Year"
                   id="passing_year"
                   name="passing_year"
-                  value={state.passing_year}
+                  value={moment(state.passing_year).format("YYYY")}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
 import JobDetail from "./jobDetail";
+import { getAllJobsCategory } from "../../api/api";
 function Response() {
+  let [category, setCategory] = useState([]);
+
+  /* Function to get the job category data*/
+  const CategoryData = async () => {
+    const userData = await getAllJobsCategory();
+    setCategory(userData);
+  };
+  useEffect(() => {
+    CategoryData();
+  }, []);
   return (
     <>
       <div>
@@ -32,15 +43,18 @@ function Response() {
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
                       <select
-                        name="country"
-                        id="country"
+                        name="category"
+                        id="category"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Job Type">Job Category</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        {(category || []).map((cat) => (
+                          <option
+                            key={cat.job_category_id}
+                            value={cat.job_category_id}
+                          >
+                            {cat.category_name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="mr-5 mb-5">

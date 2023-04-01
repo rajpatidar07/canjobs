@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
 import { getallAdminData, DeleteAdmin } from "../../api/api";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 
 function ManageAdmin() {
@@ -101,7 +101,7 @@ function ManageAdmin() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShowAdminModal(true)}
+                      onClick={() => editAdmin("0")}
                     >
                       Add Admin
                     </CustomButton>

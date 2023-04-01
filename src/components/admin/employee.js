@@ -76,7 +76,7 @@ function Employee() {
   async function deleteEmployee(e) {
     const responseData = await DeleteJobEmployee(e);
     if (responseData.message === "Employee has been deleted") {
-      toast.error("Category deleted Successfully", {
+      toast.error("Employee deleted Successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });

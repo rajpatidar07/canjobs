@@ -58,7 +58,16 @@ const FilterJson = {
     "Other than SWAP",
     "Other",
   ],
+  swap: ["Yes", "No"],
   employement: ["Full Time", "Part Time", "Other"],
-  qualification: ["Graduate", "Post graduate", "PHD", "2th Pass"],
+  qualification: [
+    "Graduate",
+    "Post graduate",
+    "PHD",
+    "12th Pass",
+    "Bds",
+    "Doctor",
+  ],
+  keyskill: ["java", "html", "css", "React", "phn", "python"],
 };
 export default FilterJson;

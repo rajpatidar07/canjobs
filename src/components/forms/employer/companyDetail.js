@@ -75,14 +75,14 @@ function CompanyDetails(props) {
           ? "Cannot use special character "
           : null,
     ],
-    // about: [
-    //   (value) =>
-    //     value === ""
-    //       ? "Company Description is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : null,
-    // ],
+    about: [
+      (value) =>
+        value === ""
+          ? "Company Description is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : null,
+    ],
     // companylogo: [
     //   (value) =>
     //     value === "" || value.trim() === "" ? "Company logo is required" : null,
@@ -96,8 +96,11 @@ function CompanyDetails(props) {
     }
   };
   useEffect(() => {
-    EmployerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (props.employerId != "0") {
+    } else {
+      setState(initialFormState);
+    }
+    EmployerData(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
@@ -108,7 +111,15 @@ function CompanyDetails(props) {
     event.preventDefault();
     if (validate()) {
       let responseData = await AddCompany(state);
-      if (responseData.message === "Employee data updated successfully") {
+      if (responseData.message === "Employer data inserted successfully") {
+        toast.success("Company Added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
+
+      if (responseData.message === "Employer data updated successfully") {
         toast.success("Company Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,

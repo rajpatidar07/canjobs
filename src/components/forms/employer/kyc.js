@@ -7,7 +7,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function KycComplianceDetails(props) {
-  let close = props.close;
+  let close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // COMPANY KYC DETAIL VALIDATION
 
   // INITIAL STATE ASSIGNMENT
@@ -41,7 +45,7 @@ function KycComplianceDetails(props) {
         value === "" || value.trim() === ""
           ? "Pincode is required"
           : value.length > 6 || value.length < 6
-          ? "Pincode should be of 10 digits"
+          ? "Pincode should be of 6 digits"
           : null,
     ],
     pan_no: [
@@ -94,34 +98,40 @@ function KycComplianceDetails(props) {
       (value) =>
         value === "" || value.trim() === "" ? "Country is required" : null,
     ],
-    document: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Document Upload is required"
-          : null,
-    ],
+    // document: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Document Upload is required"
+    //       : null,
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
-    if (userData !== undefined) {
+    if (userData.data.kyc_detail[0].pan_no !== undefined) {
       setState(userData.data.kyc_detail[0]);
     }
+    console.log(userData);
   };
   useEffect(() => {
     EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.employerId]);
+  }, [props]);
   // COMPANY KYC DETAIL SUBMIT BUTTON
   const onKycInfoClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      let responseData = await AddKyc(state);
+      let responseData = await AddKyc(state, props.employerId);
+      if (responseData.message === "Employee data inserted successfully") {
+        toast.success("Kyc Added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
       if (responseData.message === "Employee data updated successfully") {
         toast.success("Kyc Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -496,8 +506,8 @@ function KycComplianceDetails(props) {
                   type="file"
                   id="document"
                   name="document"
-                  value={state.document}
-                  onChange={onInputChange}
+                  // value={state.document}
+                  // onChange={onInputChange}
                   className={
                     errors.document
                       ? "form-control border border-danger"

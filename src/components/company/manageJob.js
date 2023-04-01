@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EmployeeFooter from "../common/footer";
 import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
 import JobDetail from "./jobDetail";
+import { ToastContainer } from "react-bootstrap";
+import { getAllJobsCategory } from "../../api/api";
+
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
+  let [jobId, setJobId] = useState();
+  let [category, setCategory] = useState([]);
+
+  /* Function to get the job category data*/
+  const CategoryData = async () => {
+    const userData = await getAllJobsCategory();
+    setCategory(userData);
+  };
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowAddJobModal(true);
+    setJobId(e);
+  };
+  useEffect(() => {
+    CategoryData();
+  }, []);
   return (
     <>
       <div>
@@ -21,6 +40,7 @@ function ManageJobs() {
               </div>
             </div>
           </div>
+          <ToastContainer />
         </div>
         <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
           <div className="container">
@@ -33,15 +53,18 @@ function ManageJobs() {
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
                       <select
-                        name="country"
-                        id="country"
+                        name="category"
+                        id="category"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Job Type">Job Category</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        {(category || []).map((cat) => (
+                          <option
+                            key={cat.job_category_id}
+                            value={cat.job_category_id}
+                          >
+                            {cat.category_name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
@@ -83,7 +106,7 @@ function ManageJobs() {
                   </div>
                   <div className=" mx-2 float-left pb-5">
                     <button
-                      onClick={() => setShowAddJobModal(true)}
+                      onClick={() => editJob("0")}
                       className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4  "
                       type="button"
                     >
@@ -94,6 +117,7 @@ function ManageJobs() {
 
                 <AddJobModal
                   show={showAddJobModal}
+                  jobData={jobId}
                   close={() => setShowAddJobModal(false)}
                 />
               </div>
@@ -107,26 +131,6 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
                     <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox />

@@ -3,10 +3,24 @@ import { Modal } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import FilterJson from "./../../json/filterjson";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  GetJobDetail,
+  AddJob,
+  getAllJobsCategory,
+  getAllEmployer,
+} from "../../../api/api";
 function AddJobModal(props) {
-  console.log(props.jobData);
-  const [Json, setJson] = useState(FilterJson);
+  // console.log(props.jobData);
+  const [category, setCategory] = useState([]);
+  const [company, setCompany] = useState([]);
 
+  let close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // CKEDITOR
   // ClassicEditor.defaultConfig = {
   //   toolbar: {
@@ -45,13 +59,13 @@ function AddJobModal(props) {
     requirement: "",
     department: "",
     job_type: "",
-    role_category: "",
+    // role_category:  "",
     education: "",
     language: "",
     keyskill: "",
     employement: "",
     job_category_id: "",
-    // jobscore: "",
+    company_id: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -64,20 +78,11 @@ function AddJobModal(props) {
           : null,
     ],
     experience_required: [
-      (value) =>
-        value === ""
-          ? "experience_required is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+      (value) => (value === "" ? "experience_required is required" : null),
     ],
     salary: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "Salary is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+        value === "" || value.trim() === "" ? "Salary is required" : null,
     ],
     location: [
       (value) =>
@@ -128,12 +133,12 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === "" ? "Job Type is required" : null,
     ],
-    role_category: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "role_category/Category is required"
-          : null,
-    ],
+    // role_category: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "role_category/Category is required"
+    //       : null,
+    // ],
     education: [
       (value) =>
         value === "" || value.trim() === "" ? "education is required" : null,
@@ -155,18 +160,66 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === "" ? "Job category is required" : null,
     ],
-    // jobscore: [],
+    company_id: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Company is required" : null,
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
+  // API CALL
+  const JobData = async () => {
+    let userData = await GetJobDetail(props.jobData);
+    if (userData.data.data[0] !== undefined) {
+      setState(userData.data.data[0]);
+    }
+    // console.log(userData);
+  };
+  /* Function to get the job category data*/
+  const CategoryData = async () => {
+    const userData = await getAllJobsCategory();
+    setCategory(userData);
+  };
+
+  /* Function to get Employer data*/
+  const CompnayData = async () => {
+    const userData = await getAllEmployer();
+    setCompany(userData);
+    // console.log(userData);
+  };
+
+  useEffect(() => {
+    CategoryData();
+    CompnayData();
+    if (props.jobData === "0") {
+      setState(initialFormState);
+    } else {
+      JobData();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
   // ADD JOBS SUBMIT BUTTON
-  const onAddJobsClick = (event) => {
+  const onAddJobsClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      let responseData = await AddJob(state);
+      if (responseData.message === "job data inserted successfully") {
+        toast.success("Job Added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
+      if (responseData.message === "job data updated successfully") {
+        toast.success("Job Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // console.log("JSON" + JSON.stringify(FilterJson.location))
@@ -184,14 +237,18 @@ function AddJobModal(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAddJobsClick}>
-            <h5 className="text-center pt-2 mb-7">Add Jobs</h5>
+            {props.jobData === "0" ? (
+              <h5 className="text-center pt-2 mb-7">Add Jobs</h5>
+            ) : (
+              <h5 className="text-center pt-2 mb-7">Update Jobs</h5>
+            )}
             <div className="row pt-5">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
@@ -426,7 +483,7 @@ function AddJobModal(props) {
                         : "border rounded overflow-hidden"
                     }
                   >
-                    <CKEditor
+                    {/* <CKEditor
                       type={"classic"}
                       name="job_description"
                       row={6}
@@ -435,7 +492,18 @@ function AddJobModal(props) {
                       value={state.job_description}
                       onChange={onInputChange}
                       initData="Job Description"
-                    />
+                    /> */}
+                    <textarea
+                      name="job_description"
+                      value={state.job_description}
+                      onChange={onInputChange}
+                      className={
+                        errors.job_description
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="job_description"
+                    ></textarea>
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.job_description && (
@@ -466,7 +534,7 @@ function AddJobModal(props) {
                         : "border rounded overflow-hidden"
                     }
                   >
-                    <CKEditor
+                    {/* <CKEditor
                       type={"classic"}
                       name="your_duties"
                       id={"your_duties"}
@@ -474,7 +542,18 @@ function AddJobModal(props) {
                       value={state.your_duties}
                       onChange={onInputChange}
                       initData="your duties"
-                    />
+                    /> */}
+                    <textarea
+                      name="your_duties"
+                      value={state.your_duties}
+                      onChange={onInputChange}
+                      className={
+                        errors.your_duties
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="your_duties"
+                    ></textarea>
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.your_duties && (
@@ -503,7 +582,7 @@ function AddJobModal(props) {
                         : "border rounded overflow-hidden"
                     }
                   >
-                    <CKEditor
+                    {/* <CKEditor
                       type={"classic"}
                       name="requirement"
                       id={"requirement"}
@@ -511,7 +590,18 @@ function AddJobModal(props) {
                       value={state.requirement}
                       onChange={onInputChange}
                       initData="Add Requirement"
-                    />
+                    /> */}
+                    <textarea
+                      name="requirement"
+                      value={state.requirement}
+                      onChange={onInputChange}
+                      className={
+                        errors.requirement
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="requirement"
+                    ></textarea>
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.requirement && (
@@ -596,7 +686,7 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>{" "}
-              <div className="form-group col-md-4 px-0 pr-3">
+              {/* <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="role_category"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -619,7 +709,7 @@ function AddJobModal(props) {
                     id="role_category"
                   />
                   {/*----ERROR MESSAGE FOR role_category----*/}
-                  {errors.role_category && (
+              {/* {errors.role_category && (
                     <span
                       key={errors.role_category}
                       className="text-danger font-size-3"
@@ -628,9 +718,7 @@ function AddJobModal(props) {
                     </span>
                   )}
                 </div>
-              </div>
-            </div>
-            <div className="row">
+              </div> */}
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="education"
@@ -668,6 +756,8 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>{" "}
+            </div>
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="language"
@@ -734,9 +824,6 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-            </div>
-
-            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="employement"
@@ -774,6 +861,9 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>{" "}
+            </div>
+
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="job_category_id"
@@ -791,14 +881,17 @@ function AddJobModal(props) {
                         ? " form-control border border-danger position-relative overflow-hidden"
                         : " form-control position-relative overflow-hidden"
                     }
-                    placeholder="Apply job_category_id"
+                    placeholder="Apply job category id"
                     id="job_category_id"
                   >
-                    <option value={""}>Select</option>
-                    <option value={"Hospitality"}>Hospitality</option>
-                    <option value={"Driver"}>Driver</option>
-                    <option value={"Mechanic"}>Mechanic</option>
-                    <option value={"other"}>other</option>
+                    {(category || []).map((cat) => (
+                      <option
+                        key={cat.job_category_id}
+                        value={cat.job_category_id}
+                      >
+                        {cat.category_name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 {/*----ERROR MESSAGE FOR job_category_id----*/}
@@ -808,6 +901,43 @@ function AddJobModal(props) {
                     className="text-danger font-size-3"
                   >
                     {errors.job_category_id}
+                  </span>
+                )}
+              </div>{" "}
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="job_category_id"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Company <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <select
+                    name="company_id"
+                    value={"2"}
+                    onChange={onInputChange}
+                    className={
+                      errors.company_id
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
+                    }
+                    placeholder="company name"
+                    id="company_id"
+                  >
+                    {(company || []).map((com) => (
+                      <option key={com.company_id} value={com.company_id}>
+                        {com.company_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/*----ERROR MESSAGE FOR COMPANY----*/}
+                {errors.company_id && (
+                  <span
+                    key={errors.company_id}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.company_id}
                   </span>
                 )}
               </div>{" "}

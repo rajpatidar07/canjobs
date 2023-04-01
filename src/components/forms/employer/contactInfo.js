@@ -7,7 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ContactInfo(props) {
   // COMPANY PERSONAL INFO VALIDATION
-  let close = props.close;
+  let close = () => {
+    setState(initialFormState);
+    setErrors("");
+    props.close();
+  };
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     contact_person_name: "",
@@ -47,7 +51,7 @@ function ContactInfo(props) {
           ? "Phone no should be of 10 digits"
           : null,
     ],
-    contact_no_other: [],
+    // contact_no_other: [],
     address: [
       (value) =>
         value === "" || value.trim() === ""
@@ -88,20 +92,18 @@ function ContactInfo(props) {
           ? "Cannot use special character "
           : null,
     ],
-    designation: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Designation is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
-    ],
+    // designation: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Designation is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : null,
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
@@ -117,7 +119,7 @@ function ContactInfo(props) {
     event.preventDefault();
     if (validate()) {
       let responseData = await AddContact(state);
-      if (responseData.message === "Employee data updated successfully") {
+      if (responseData.message === "contact data updated successfully") {
         toast.success("Contact Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,

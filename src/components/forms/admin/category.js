@@ -97,7 +97,11 @@ function AddCategory(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAdminCategoryClick}>
-            <h5 className="text-center pt-2">Add Category</h5>
+            {props.jobCategoryData === "0" ? (
+              <h5 className="text-center pt-2">Add Category</h5>
+            ) : (
+              <h5 className="text-center pt-2">Update Category</h5>
+            )}
             <div className="form-group mt-5">
               <label
                 htmlFor="category_name"

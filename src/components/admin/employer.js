@@ -130,7 +130,7 @@ function Employer() {
                   <div className="float-md-right mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShowEmployerMOdal(true)}
+                      onClick={() => editEmployer("0")}
                     >
                       Add Employer
                     </CustomButton>

@@ -67,9 +67,15 @@ function Addadmin(props) {
     }
   };
   useEffect(() => {
-    AdminData();
+    if (props.adminId != "0") {
+      AdminData();
+    }
+    {
+      setState(initialFormState);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.adminId]);
+  }, [props]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
@@ -110,7 +116,11 @@ function Addadmin(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Add Admin</h5>
+          {props.adminId === "0" ? (
+            <h5 className="text-center pt-2">Add Admin</h5>
+          ) : (
+            <h5 className="text-center pt-2">Add Admin</h5>
+          )}
           <form onSubmit={onAminProfileUpdateClick}>
             <div className="form-group mt-5">
               <label

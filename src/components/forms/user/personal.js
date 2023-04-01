@@ -188,7 +188,14 @@ function PersonalDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserPersonalDetailClick}>
-            <h5 className="text-center pt-2 mb-7">Personal Details</h5>
+            {props.employeedata === "0" ? (
+              <h5 className="text-center pt-2 mb-7"> Add Personal Details</h5>
+            ) : (
+              <h5 className="text-center pt-2 mb-7">
+                {" "}
+                Update Personal Details
+              </h5>
+            )}
             {/* FIRST LINE */}
             <div className="row pt-5">
               {" "}

@@ -48,7 +48,6 @@ export const getallEmployeeData = async () => {
   );
   return response.data.data;
 };
-
 /*Detail Employee Education Api */
 export const EmployeeEducationDetails = async (props) => {
   const formData = new FormData();
@@ -109,7 +108,6 @@ export const DeleteEmployeeSkill = async (props) => {
 };
 /*Delete Employee Skill Api */
 export const DeleteEmployeeEducation = async (props) => {
-  console.log(props);
   const response = await axios.post(`${API_URL}deleteEmployeeEducation`, {
     education_id: props,
   });
@@ -117,15 +115,52 @@ export const DeleteEmployeeEducation = async (props) => {
 };
 /*Response List Api */
 export const GetAllResponse = async (props) => {
-  console.log(props);
   // const response = await axios.get(`${API_URL}getJobResponse?job_id=1&user_type=company`);
   // return response;
+};
+/*single job data api */
+export const GetJobDetail = async (props) => {
+  const response = await axios.post(`${API_URL}getJob`, { job_id: props });
+  return response;
 };
 
 // EMPLOYER'S API
 export const GetAllJobs = async () => {
   const response = await axios.get(`${API_URL}view_jobs`);
   return response;
+};
+export const GetAllJobfilter = async (props) => {
+  const response = await axios.get(
+    `${API_URL}view_jobs?employee_id${props}&filters_name${props}`
+  );
+  return response;
+};
+/*Add Job  Api */
+export const AddJob = async (props) => {
+  const response = await axios.put(
+    `${API_URL}addJobs`,
+    props
+    // {
+    // apply_link: props.apply_link,
+    // department: props.department,
+    // education: props.education,
+    // employement: props.employement,
+    // experience_required: props,
+    // industry_type: props.industry_type,
+    // job_category_id: props.job_category_id,
+    // job_description: props.job_description,
+    // job_title: props.job_title,
+    // job_type: props.job_type,
+    // keyskill: props.keyskill,
+    // language: props.language,
+    // location: props.location,
+    // requirement: props.requirement,
+    // role_category: props.role_category,
+    // salary: props.salary,
+    // your_duties: props.your_duties,
+    // }
+  );
+  return response.data;
 };
 /*Employer List Api */
 export const getAllEmployer = async () => {
@@ -134,20 +169,20 @@ export const getAllEmployer = async () => {
 };
 /*Employer Details Api */
 export const EmployerDetails = async (props) => {
-  if (props !== undefined) {
-    const formData = new FormData();
-    formData.append("company_id", props);
-    const response = await axios.post(
-      `${API_URL}getEmployer`,
-      { company_id: props },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  }
+  // if (props !== undefined) {
+  const formData = new FormData();
+  formData.append("company_id", props);
+  const response = await axios.post(
+    `${API_URL}getEmployer`,
+    { company_id: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+  // }
 };
 /*Add Employer / Company Api */
 export const AddCompany = async (props) => {
@@ -160,13 +195,26 @@ export const AddContact = async (props) => {
   return response.data;
 };
 /*Add Employer KYC Api */
-export const AddKyc = async (props) => {
-  const response = await axios.put(`${API_URL}company_kyc_detail`, props);
+export const AddKyc = async (props, id) => {
+  const response = await axios.put(`${API_URL}company_kyc_detail`, {
+    company_id: id,
+    address: props.address,
+    city: props.city,
+    country: props.country,
+    document: props.document,
+    fax_number: props.fax_number,
+    gstin: props.gstin,
+    name: props.name,
+    pan_date: props.pan_date,
+    pan_no: props.pan_no,
+    pincode: props.pincode,
+    state: props.state,
+    tan_number: props.tan_number,
+  });
   return response.data;
 };
 /*Delete Employer Api */
 export const DeleteEmployer = async (props) => {
-  console.log(props);
   const response = await axios.delete(
     `${API_URL}deleteEmployer/${props}`,
     props
@@ -175,7 +223,6 @@ export const DeleteEmployer = async (props) => {
 };
 /*Delete Job Api */
 export const DeleteJob = async (props) => {
-  console.log(props);
   const response = await axios.delete(`${API_URL}deletejob/${props}`, props);
   return response.data;
 };
@@ -252,6 +299,7 @@ export const AddFollowup = async (props) => {
     job_id: props.jobId,
     employee_id: props.employId,
     remark: props.state.remark,
+    next_followup_date: props.next_followup_date,
   });
   return response.data;
 };
