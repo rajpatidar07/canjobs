@@ -19,15 +19,10 @@ export default function EmployeeLoginModal(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
-    password: [
-      (value) =>
-        value === ""
-          ? "Password is required"
-          : null
-    ]
+    password: [(value) => (value === "" ? "Password is required" : null)],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
   const { state, onInputChange, errors, validate } = useValidation(
@@ -44,6 +39,7 @@ export default function EmployeeLoginModal(props) {
       const updatedTodo = await EmployeeLogin();
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
+        localStorage.setItem("userType", "user");
         props.close();
       }
     }

@@ -22,6 +22,9 @@ const FilterJson = {
     "Backend developer",
     "Devops developer",
     "Intership",
+    "House",
+    "Doctor",
+    "Domestic",
   ],
   education: [
     "Metric",

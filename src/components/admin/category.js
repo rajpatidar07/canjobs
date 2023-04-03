@@ -9,6 +9,7 @@ import filterjson from "../json/filterjson";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
+import Pagination from "../common/pagination";
 
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
@@ -17,18 +18,44 @@ function Category() {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
+  /*Filter and search state */
+  const [categoryTypeFilterValue, setCategoryTypeFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  /*Pagination states */
+  const [totalData, setTotalData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(5);
+  /*Shorting states */
+  const [columnName, setcolumnName] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
   /* Function to get the job category data*/
   const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    setCategoryData(userData);
+    const userData = await getAllJobsCategory(
+      categoryTypeFilterValue,
+      search,
+      currentPage,
+      recordsPerPage,
+      columnName,
+      sortOrder
+    );
+    setCategoryData(userData.data);
+    setTotalData(userData.total_rows);
   };
 
   /*Render function to get the job category*/
   useEffect(() => {
     CategoryData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddCategoryModal, deleteAlert]);
+  }, [
+    categoryTypeFilterValue,
+    search,
+    currentPage,
+    showAddCategoryModal,
+    deleteAlert,
+    columnName,
+    sortOrder,
+  ]);
 
   /* Function to show the single data to update job category*/
   const editJobCategory = (e) => {
@@ -57,6 +84,16 @@ function Category() {
       setDeleteAlert(false);
     }
   }
+  /*Category Type Onchange function to filter the data */
+  let onCategoryTypeFilterChange = (e) => {
+    setCategoryTypeFilterValue(e.target.value);
+  };
+  /*Searcg Onchange function to filter the data */
+  let onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  /*<-----Pagination Calculator----> */
+  const nPages = Math.ceil(totalData / recordsPerPage);
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -75,15 +112,30 @@ function Category() {
                   <div>
                     <ToastContainer />
                   </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <input
+                      required
+                      type="text"
+                      className="form-control col-6"
+                      placeholder={"Search Category"}
+                      value={search}
+                      name={"category_name"}
+                      onChange={(e) => onSearch(e)}
+                    />
+                  </div>
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
-                    <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Type:
+                    </p>
                     <div className="h-px-48">
                       <select
                         name="category"
+                        value={categoryTypeFilterValue}
                         id="category"
+                        onChange={onCategoryTypeFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
-                        onChange={(e) => e.target.value}
                       >
+                        <option value={""}>Select category type</option>
                         {(filterjson.category || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -118,13 +170,57 @@ function Category() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Name
+                          <span className="col-8">Name</span>
+                          <span className="col-1">
+                            <Link
+                              to={""}
+                              className="row"
+                              onClick={() => {
+                                setcolumnName("category_name");
+                                setSortOrder("ASC");
+                              }}
+                            >
+                              <i className="fas fa-chevron-up"></i>
+                            </Link>
+                            <Link
+                              to={""}
+                              className="row"
+                              onClick={() => {
+                                setcolumnName("category_name");
+                                setSortOrder("DESC");
+                              }}
+                            >
+                              <i className="fas fa-chevron-down"></i>
+                            </Link>
+                          </span>{" "}
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Category Type
+                          <span className="col-8">Category Type</span>
+                          <span className="col-1">
+                            <Link
+                              to={""}
+                              className="row"
+                              onClick={() => {
+                                setcolumnName("category_type");
+                                setSortOrder("ASC");
+                              }}
+                            >
+                              <i className="fas fa-chevron-up"></i>
+                            </Link>
+                            <Link
+                              to={""}
+                              className="row"
+                              onClick={() => {
+                                setcolumnName("category_type");
+                                setSortOrder("DESC");
+                              }}
+                            >
+                              <i className="fas fa-chevron-down"></i>
+                            </Link>
+                          </span>{" "}
                         </th>
                         <th
                           scope="col"
@@ -183,68 +279,11 @@ function Category() {
                   </table>
                 </div>
                 <div className="pt-2">
-                  <nav aria-label="Page navigation example">
-                    <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3active"
-                          aria-label="Previous"
-                        >
-                          <i className="fas fa-chevron-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          2
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item disabled">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          ...
-                        </Link>
-                      </li>
-                      <li className="page-item ">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          7
-                        </Link>
-                      </li>
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3"
-                          aria-label="Next"
-                        >
-                          <i className="fas fa-chevron-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
               </div>
             </div>

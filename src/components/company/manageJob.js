@@ -7,12 +7,17 @@ import JobBox from "../common/jobbox";
 import JobDetail from "./jobDetail";
 import { ToastContainer } from "react-bootstrap";
 import { getAllJobsCategory } from "../../api/api";
-
+import className from "../json/filterjson";
+import FilterJson from "../json/filterjson";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
   let [category, setCategory] = useState([]);
-
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [locationFilterValue, setLocationFilterValue] = useState("");
+  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [search, setSearch] = useState("");
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
@@ -26,6 +31,26 @@ function ManageJobs() {
   useEffect(() => {
     CategoryData();
   }, []);
+  /*Category Onchange function to filter the data */
+  let onCategoryFilterChange = (e) => {
+    setCategoryFilterValue(e.target.value);
+  };
+  /*Skill Onchange function to filter the data */
+  let onSkillFilterChange = (e) => {
+    setSkillFilterValue(e.target.value);
+  };
+  /*Location Onchange function to filter the data */
+  let onLocationFilterChange = (e) => {
+    setLocationFilterValue(e.target.value);
+  };
+  /*JobSwap Onchange function to filter the data */
+  let onJobSwapFilterChange = (e) => {
+    setJobSwapFilterValue(e.target.value);
+  };
+  /*Searcg Onchange function to filter the data */
+  let onSearch = (e) => {
+    setSearch(e.target.value);
+  };
   return (
     <>
       <div>
@@ -55,6 +80,7 @@ function ManageJobs() {
                       <select
                         name="category"
                         id="category"
+                        onChange={CategoryData}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         {(category || []).map((cat) => (
@@ -69,30 +95,53 @@ function ManageJobs() {
                     </div>
                     <div className="mr-5 mb-5">
                       <select
-                        name="country"
-                        id="country"
+                        name="skill"
+                        id="skill"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Salary Range">Job Skills</option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        <option value="">Select Skill</option>{" "}
+                        {(className.keyskill || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
                       <select
-                        name="country"
-                        id="country"
+                        name="location"
+                        id="location"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Experience Level ">
                           Job Location
                         </option>
-                        <option value="">United States of America</option>
-                        <option value="">United Arab Emirates</option>
-                        <option value="">Bangladesh</option>
-                        <option value="">Pakistan</option>
+                        {(className.location || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div className="mr-5 mb-5">
+                      <select
+                        name="job_type"
+                        id="job_type"
+                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      >
+                        <option data-display="Experience Level ">
+                          Job type
+                        </option>
+                        {(FilterJson.job_type || []).map((job_type) => (
+                          <option key={job_type} value={job_type}>
+                            {job_type}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

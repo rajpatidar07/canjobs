@@ -12,7 +12,7 @@ import {
   getAllEmployer,
 } from "../../../api/api";
 function AddJobModal(props) {
-  // console.log(props.jobData);
+  // console.log(props.jobdata);
   const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
 
@@ -171,7 +171,7 @@ function AddJobModal(props) {
     useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
-    let userData = await GetJobDetail(props.jobData);
+    let userData = await GetJobDetail(props.jobdata);
     if (userData.data.data[0] !== undefined) {
       setState(userData.data.data[0]);
     }
@@ -180,7 +180,7 @@ function AddJobModal(props) {
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
-    setCategory(userData);
+    setCategory(userData.data);
   };
 
   /* Function to get Employer data*/
@@ -193,7 +193,7 @@ function AddJobModal(props) {
   useEffect(() => {
     CategoryData();
     CompnayData();
-    if (props.jobData === "0") {
+    if (props.jobdata === "0") {
       setState(initialFormState);
     } else {
       JobData();
@@ -244,7 +244,7 @@ function AddJobModal(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAddJobsClick}>
-            {props.jobData === "0" ? (
+            {props.jobdata === "0" ? (
               <h5 className="text-center pt-2 mb-7">Add Jobs</h5>
             ) : (
               <h5 className="text-center pt-2 mb-7">Update Jobs</h5>
@@ -914,7 +914,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="company_id"
-                    value={"2"}
+                    value={state.company_id}
                     onChange={onInputChange}
                     className={
                       errors.company_id

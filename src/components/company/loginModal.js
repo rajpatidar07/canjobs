@@ -316,10 +316,7 @@ export default function CompanyLogin(props) {
                         <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
-                          <a
-                            href="http://localhost:3000/"
-                            className="text-primary"
-                          >
+                          <a href="" className="text-primary">
                             Terms & Conditions
                           </a>
                         </span>

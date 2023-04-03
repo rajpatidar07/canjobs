@@ -77,19 +77,19 @@ export const AddEmployeeEducation = async (props, id) => {
 };
 /*Detail Employee Skill Api */
 export const EmployeeSkillDetails = async (props) => {
-  if (props !== undefined) {
-    const formData = new FormData();
-    formData.append("employee_id", props);
-    const response = await axios.get(
-      `${API_URL}getEmployeeSkill?employee_id=${props}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  }
+  // if (props !== undefined) {
+  const formData = new FormData();
+  formData.append("employee_id", props);
+  const response = await axios.get(
+    `${API_URL}getEmployeeSkill?employee_id=${props}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+  // }
 };
 /*Add Employee Skill Api */
 export const AddEmployeeSkill = async (props, id) => {
@@ -125,41 +125,34 @@ export const GetJobDetail = async (props) => {
 };
 
 // EMPLOYER'S API
-export const GetAllJobs = async () => {
-  const response = await axios.get(`${API_URL}view_jobs`);
-  return response;
-};
-export const GetAllJobfilter = async (props) => {
-  const response = await axios.get(
-    `${API_URL}view_jobs?employee_id${props}&filters_name${props}`
-  );
+export const GetAllJobs = async (
+  category,
+  skill,
+  location,
+  job,
+  search,
+  page,
+  limit,
+  column_name,
+  sort_order
+) => {
+  const response = await axios.post(`${API_URL}view_jobs`, {
+    // employee_id: id,
+    filter_category_id: category,
+    filter_job_swap: job,
+    filter_keyskill: skill,
+    filter_location: location,
+    page: page,
+    search: search,
+    limit: limit,
+    column_name: column_name,
+    sort_order: sort_order,
+  });
   return response;
 };
 /*Add Job  Api */
 export const AddJob = async (props) => {
-  const response = await axios.put(
-    `${API_URL}addJobs`,
-    props
-    // {
-    // apply_link: props.apply_link,
-    // department: props.department,
-    // education: props.education,
-    // employement: props.employement,
-    // experience_required: props,
-    // industry_type: props.industry_type,
-    // job_category_id: props.job_category_id,
-    // job_description: props.job_description,
-    // job_title: props.job_title,
-    // job_type: props.job_type,
-    // keyskill: props.keyskill,
-    // language: props.language,
-    // location: props.location,
-    // requirement: props.requirement,
-    // role_category: props.role_category,
-    // salary: props.salary,
-    // your_duties: props.your_duties,
-    // }
-  );
+  const response = await axios.put(`${API_URL}addJobs`, props);
   return response.data;
 };
 /*Employer List Api */
@@ -239,9 +232,23 @@ export const getallAdminData = async () => {
   return response.data.data;
 };
 /*Job Category List Api */
-export const getAllJobsCategory = async () => {
-  const response = await axios.get(`${API_URL}admin/getAllJobsCategory`);
-  return response.data.data;
+export const getAllJobsCategory = async (
+  type,
+  search,
+  page,
+  limit,
+  column_name,
+  sort_order
+) => {
+  const response = await axios.post(`${API_URL}admin/getAllJobsCategory`, {
+    filter_category_type: type,
+    search: search,
+    page: page,
+    limit: limit,
+    column_name: column_name,
+    sort_order: sort_order,
+  });
+  return response.data;
 };
 /*Delete Job Employee Api */
 export const DeleteJobEmployee = async (props) => {
@@ -267,20 +274,20 @@ export const DeleteJobCategory = async (props) => {
 
 /* Admin Detail Api */
 export const AdminDetails = async (props) => {
-  if (props !== undefined) {
-    const formData = new FormData();
-    formData.append("admin_id", props);
-    const response = await axios.post(
-      `${API_URL}/admin/getAdmin`,
-      { admin_id: props },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  }
+  // if (props !== undefined) {
+  const formData = new FormData();
+  formData.append("admin_id", props);
+  const response = await axios.post(
+    `${API_URL}/admin/getAdmin`,
+    { admin_id: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+  // }
 };
 /*Add Admin Api */
 export const AddAdmin = async (props) => {
