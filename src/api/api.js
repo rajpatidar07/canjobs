@@ -42,10 +42,27 @@ export const AddEmployeeDetails = async (props) => {
   return response.data;
 };
 /*Employee List Api */
-export const getallEmployeeData = async () => {
-  const response = await axios.get(
-    `${API_URL}admin/getallEmployeeView?user_type=admin`
-  );
+export const getallEmployeeData = async (
+  experience,
+  skill,
+  education,
+  search,
+  page,
+  limit,
+  column,
+  sort
+) => {
+  const response = await axios.post(`${API_URL}admin/getallEmployeeView`, {
+    user_type: "admin",
+    filter_experience: experience,
+    filter_skill: skill,
+    filter_education: education,
+    search: search,
+    page: page,
+    limit: limit,
+    column_name: column,
+    sort_order: sort,
+  });
   return response.data.data;
 };
 /*Detail Employee Education Api */
@@ -60,6 +77,7 @@ export const EmployeeEducationDetails = async (props) => {
       },
     }
   );
+  console.log(response.data);
   return response.data;
 };
 /*Add Employee Education Api */
@@ -156,9 +174,25 @@ export const AddJob = async (props) => {
   return response.data;
 };
 /*Employer List Api */
-export const getAllEmployer = async () => {
-  const response = await axios.get(`${API_URL}admin/getAllEmployer`);
-  return response.data.data;
+export const getAllEmployer = async (
+  industry,
+  corporation,
+  search,
+  page,
+  limit,
+  column,
+  sort
+) => {
+  const response = await axios.post(`${API_URL}admin/getAllEmployer`, {
+    filter_industry: industry,
+    filter_corporation: corporation,
+    search: search,
+    page: page,
+    limit: limit,
+    column_name: column,
+    sort_order: sort,
+  });
+  return response.data;
 };
 /*Employer Details Api */
 export const EmployerDetails = async (props) => {
@@ -227,9 +261,23 @@ export const getAllJobs = async () => {
   return response.data.data;
 };
 /*Admin List Api */
-export const getallAdminData = async () => {
-  const response = await axios.get(`${API_URL}admin/getAllAdmin`);
-  return response.data.data;
+export const getallAdminData = async (
+  type,
+  search,
+  page,
+  limit,
+  column,
+  sort
+) => {
+  const response = await axios.post(`${API_URL}admin/getAllAdmin`, {
+    filter_admin_type: type,
+    page: page,
+    search: search,
+    limit: limit,
+    column_name: column,
+    sort_order: sort,
+  });
+  return response.data;
 };
 /*Job Category List Api */
 export const getAllJobsCategory = async (

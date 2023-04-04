@@ -226,6 +226,27 @@ function Job() {
       setClicksort(0);
     }
   };
+  /*Category type array to filter*/
+  // const CategoryType = Categorylist.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.category_type === thing.category_type)
+  // );
+  /*Job type array to filter*/
+  // const JobType = jobData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.job_type === thing.job_type)
+  // );
+  /*Skill type array to filter*/
+  // const SkillType = jobData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.skill === thing.skill)
+  // );
+  /*Location type array to filter*/
+  // const LocationType = jobData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.Location === thing.Location)
+  // );
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">

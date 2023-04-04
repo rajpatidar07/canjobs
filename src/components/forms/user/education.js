@@ -76,14 +76,17 @@ function Education(props) {
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
       props.employeeEducationData
-    );
+    ); /*"No Employee found"*/
     setEducationData(EducationDetails.data);
+    console.log(EducationDetails.data);
     if (data !== undefined || data) {
       setState(data);
     }
   };
   useEffect(() => {
-    if (props.employeeEducationData !== undefined) {
+    if (props.employeeEducationData === undefined || educationData === []) {
+      setState(initialFormState);
+    } else {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -376,10 +379,10 @@ function Education(props) {
                   >
                     {education.course}
                     <Link onClick={() => EducationData(education)}>
-                      <i class="px-3 fa fa-edit" aria-hidden="true"></i>
+                      <i className="px-3 fa fa-edit" aria-hidden="true"></i>
                     </Link>
                     <Link onClick={() => ShowDeleteAlert(education)}>
-                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      <i className="fa fa-times-circle" aria-hidden="true"></i>
                     </Link>
                   </li>
                 ))}

@@ -185,7 +185,7 @@ function AddJobModal(props) {
   /* Function to get Employer data*/
   const CompnayData = async () => {
     const userData = await getAllEmployer();
-    setCompany(userData);
+    setCompany(userData.data);
     // console.log(userData);
   };
 

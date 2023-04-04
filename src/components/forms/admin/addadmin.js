@@ -67,10 +67,10 @@ function Addadmin(props) {
     }
   };
   useEffect(() => {
-    if (props.adminId !== "0") {
-      AdminData();
-    } else {
+    if (props.adminId === "0" || props.adminId === undefined) {
       setState(initialFormState);
+    } else {
+      AdminData();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

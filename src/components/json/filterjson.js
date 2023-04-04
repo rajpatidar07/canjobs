@@ -71,6 +71,22 @@ const FilterJson = {
     "Bds",
     "Doctor",
   ],
+  corporation: [
+    "Chief accounting officer (CAO)",
+    "Chief executive officer (CEO)",
+    " Chief financial officer (CFO)",
+    "Chief marketing officer (CMO)",
+    " Chief information security officer (CISO)",
+    " Chief procurement officer (CPO)",
+    " Chief sustainability officer (CSO)",
+    "Chief technology officer (CTO)",
+    "Recruiter Employment specialist",
+    " Human resource assistant",
+    "Human resource specialist",
+    " Human resource manager",
+    " Director of employee experience",
+  ],
   keyskill: ["java", "html", "css", "React", "phn", "python"],
+  adminType: ["Manager", "Sub-admin", "Admin", "Super-Admin"],
 };
 export default FilterJson;

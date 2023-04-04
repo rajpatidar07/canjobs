@@ -10,32 +10,68 @@ import KycComplianceDetails from "../forms/employer/kyc";
 import { getAllEmployer, DeleteEmployer } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
+import Pagination from "../common/pagination";
 
 function Employer() {
   // eslint-disable-next-line
+  /*show modal and data, id state */
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showKycModal, setShowkycMOdal] = useState(false);
   let [showContactModal, setShowContactMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
   const [employerData, setemployerData] = useState([]);
   const [employerId, setEmployerID] = useState();
+  /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
+  /*Filter and search state */
+  const [industryFilterValue, setIndutryFilterValue] = useState("");
+  const [corporationFilterValue, setcorporationFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  /*Pagination states */
+  const [totalData, setTotalData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(5);
+  /*Shorting states */
+  const [columnName, setcolumnName] = useState("company_id");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  const [clicksort, setClicksort] = useState(0);
+
   /* Function to get Employer data*/
   const EmployerData = async () => {
-    const userData = await getAllEmployer();
-    setemployerData(userData);
-    console.log(userData);
+    const userData = await getAllEmployer(
+      industryFilterValue,
+      corporationFilterValue,
+      search,
+      currentPage,
+      recordsPerPage,
+      columnName,
+      sortOrder
+    );
+    setemployerData(userData.data);
+    setTotalData(userData.total_rows);
   };
 
   /*Render function to get the employer*/
   useEffect(() => {
     EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddEmployerModal, showKycModal, showContactModal, deleteAlert]);
+  }, [
+    industryFilterValue,
+    corporationFilterValue,
+    search,
+    showAddEmployerModal,
+    showKycModal,
+    showContactModal,
+    deleteAlert,
+    currentPage,
+    recordsPerPage,
+    columnName,
+    sortOrder,
+  ]);
 
-  /* Function to show the single data to update Employer Contact*/
+  /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
     // e.preventDefault();
     setShowEmployerMOdal(true);
@@ -75,6 +111,144 @@ function Employer() {
       setDeleteAlert(false);
     }
   }
+  /*Corporation Onchange function to filter the data */
+  let onCorporationFilterChange = (e) => {
+    setcorporationFilterValue(e.target.value);
+  };
+  /*industry Onchange function to filter the data */
+  let onIndustryFilterChange = (e) => {
+    setIndutryFilterValue(e.target.value);
+  };
+  /*Search Onchange function to filter the data */
+  let onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
+
+  /*Sorting Function by name */
+  let sortByNameClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "company_id"
+    ) {
+      setcolumnName("contact_person_name");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("contact_person_name");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Vacancies */
+  // let sortByVananciesClick = () => {
+  //   if (
+  //     clicksort === 0 ||
+  //     sortOrder === "DESC" ||
+  //     columnName === "company_id"
+  //   ) {
+  //     setcolumnName("job_type");
+  //     setSortOrder("ASC");
+  //     setClicksort(1);
+  //   } else {
+  //     setcolumnName("job_type");
+  //     setSortOrder("DESC");
+  //     setClicksort(0);
+  //   }
+  // };
+  /*Sorting Function by Location */
+  let sortByLocationClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "company_id"
+    ) {
+      setcolumnName("address");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("address");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Contact no */
+  let sortByContactClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "company_id"
+    ) {
+      setcolumnName("contact_no");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("contact_no");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Company name */
+  let sortByCompanyNameClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "company_id"
+    ) {
+      setcolumnName("company_name");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("company_name");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Industry */
+  let sortByIndustryClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "company_id"
+    ) {
+      setcolumnName("industry");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("industry");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by post available */
+  let sortByPostClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "company_id"
+    ) {
+      setcolumnName("vacancy_for_post");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("vacancy_for_post");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Industry array to filter*/
+  const Industry = employerData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.industry === thing.industry)
+  );
+  /*Corporation array to filter*/
+  const Corporation = employerData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.corporation === thing.corporation)
+  );
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -105,25 +279,66 @@ function Employer() {
           <div className="container">
             <div className="mb-18">
               <div className="row mb-8 align-items-center">
-                <div className="col-lg-6 mb-lg-0 mb-4">
-                  <h3 className="font-size-6 mb-0">
-                    Employer ({employerData.length})
-                  </h3>
+                <div className="col-lg-4 mb-lg-0 mb-4">
+                  <h3 className="font-size-6 mb-0">Employer</h3>
                 </div>
-                <div className="col-lg-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
-                    <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
+                <div className="col-lg-8">
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <input
+                      required
+                      type="text"
+                      className="form-control col-6"
+                      placeholder={"Search Employer"}
+                      value={search}
+                      name={"Employer_name"}
+                      onChange={(e) => onSearch(e)}
+                    />
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Corporation:
+                    </p>
                     <div className="h-px-48">
                       <select
-                        name="country"
-                        id="country"
+                        name="corporation"
+                        value={corporationFilterValue}
+                        id="corporation"
+                        onChange={onCorporationFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
-                        <option value="" data-display="Product Designer">
-                          Software Engineer
-                        </option>
-                        <option value="">MBA</option>
-                        <option value="">BE</option>
+                        <option value={""}>Select corporation</option>
+                        {(Corporation || []).map((corporation) => (
+                          <option
+                            key={corporation.company_id}
+                            value={corporation.corporation}
+                          >
+                            {corporation.corporation}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Industry:
+                    </p>
+                    <div className="h-px-48">
+                      <select
+                        name="industry"
+                        value={industryFilterValue}
+                        id="industry"
+                        onChange={onIndustryFilterChange}
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                      >
+                        <option value={""}>Select industry</option>
+                        {(Industry || []).map((industry) => (
+                          <option
+                            key={industry.company_id}
+                            value={industry.industry}
+                          >
+                            {industry.industry}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -157,43 +372,89 @@ function Employer() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Name
+                          <Link
+                            to={""}
+                            onClick={sortByNameClick}
+                            className="text-gray"
+                          >
+                            Name
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Vacancies
+                          <Link
+                            to={""}
+                            // onClick={sortByVananciesClick}
+                            className="text-gray"
+                          >
+                            Vacancies
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Location
+                          <Link
+                            to={""}
+                            onClick={sortByLocationClick}
+                            className="text-gray"
+                          >
+                            Location
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Contact Info
+                          <Link
+                            to={""}
+                            onClick={sortByContactClick}
+                            className="text-gray"
+                          >
+                            {" "}
+                            Contact Info
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Company name
+                          <Link
+                            to={""}
+                            onClick={sortByCompanyNameClick}
+                            className="text-gray"
+                          >
+                            {" "}
+                            Company name
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Industry
+                          <Link
+                            to={""}
+                            onClick={sortByIndustryClick}
+                            className="text-gray"
+                          >
+                            {" "}
+                            Industry
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          Posts Available
+                          <Link
+                            to={""}
+                            onClick={sortByPostClick}
+                            className="text-gray"
+                          >
+                            {" "}
+                            Posts Available
+                          </Link>
                         </th>
                         <th
                           scope="col"
@@ -336,68 +597,11 @@ function Employer() {
                   </table>
                 </div>
                 <div className="pt-2">
-                  <nav aria-label="Page navigation example">
-                    <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3active"
-                          aria-label="Previous"
-                        >
-                          <i className="fas fa-chevron-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          2
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item disabled">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          ...
-                        </Link>
-                      </li>
-                      <li className="page-item ">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          7
-                        </Link>
-                      </li>
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3"
-                          aria-label="Next"
-                        >
-                          <i className="fas fa-chevron-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
               </div>
             </div>

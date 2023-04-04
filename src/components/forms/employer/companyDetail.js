@@ -6,6 +6,7 @@ import useValidation from "../../common/useValidation";
 import { AddCompany, EmployerDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FilterJson from "../../json/filterjson";
 
 function CompanyDetails(props) {
   const close = () => {
@@ -96,11 +97,11 @@ function CompanyDetails(props) {
     }
   };
   useEffect(() => {
-    if (props.employerId !== "0") {
-    } else {
+    if (props.employerId === "0" || props.employerId === undefined) {
       setState(initialFormState);
+    } else {
+      EmployerData(); // eslint-disable-next-line react-hooks/exhaustive-deps
     }
-    EmployerData(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
@@ -237,8 +238,12 @@ function CompanyDetails(props) {
                   }
                   id="corporation"
                 >
-                  <option value={""}>Select</option>
-                  <option value={"b2b3"}>B2B3</option>
+                  <option value={""}>Select corporation</option>
+                  {(FilterJson.corporation || []).map((job_type) => (
+                    <option key={job_type} value={job_type}>
+                      {job_type}
+                    </option>
+                  ))}
                 </select>
                 {/*----ERROR MESSAGE FOR corporation----*/}
                 {errors.corporation && (

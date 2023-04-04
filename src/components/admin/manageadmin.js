@@ -7,28 +7,58 @@ import Addadmin from "../forms/admin/addadmin";
 import { getallAdminData, DeleteAdmin } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
+import Pagination from "../common/pagination";
 
 function ManageAdmin() {
   // eslint-disable-next-line
-  let [showAminDetails, setShowAminDetails] = useState(false);
+  /*data and id state */
+  let [showAminDetails /*, setShowAminDetails*/] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
   let [adminData, setAdminData] = useState([]);
   let [adminId, setAdminID] = useState();
+  /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-
+  /*Filter and search state */
+  const [typeFilterValue, setTypeFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  /*Pagination states */
+  const [totalData, setTotalData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(5);
+  /*Shorting states */
+  const [columnName, setcolumnName] = useState("admin_id");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  const [clicksort, setClicksort] = useState(0);
   /* Function to get the Amin data*/
   const AdminData = async () => {
-    const userData = await getallAdminData();
-    setAdminData(userData);
+    const userData = await getallAdminData(
+      typeFilterValue,
+      search,
+      currentPage,
+      recordsPerPage,
+      columnName,
+      sortOrder
+    );
+    setAdminData(userData.data);
+    setTotalData(userData.total_rows);
   };
 
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddAdminModal, deleteAlert]);
+  }, [
+    typeFilterValue,
+    search,
+    currentPage,
+    recordsPerPage,
+    columnName,
+    sortOrder,
+    showAddAdminModal,
+    deleteAlert,
+  ]);
 
   /* Function to show the single data to update Admin*/
   const editAdmin = (e) => {
@@ -57,6 +87,59 @@ function ManageAdmin() {
       setDeleteAlert(false);
     }
   }
+  /*Admin type Onchange function to filter the data */
+  let onTypeFilterChange = (e) => {
+    setTypeFilterValue(e.target.value);
+  };
+  /*Search Onchange function to filter the data */
+  let onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
+
+  /*Sorting Function by name */
+  let sortByNameClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "admin_id") {
+      setcolumnName("name");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("name");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Type no */
+  let sortByTypeClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "admin_id") {
+      setcolumnName("admin_type");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("admin_type");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by email  */
+  let sortByEmailClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "admin_id") {
+      setcolumnName("email");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("email");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Admin type array to filter*/
+  const AdminType = adminData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.admin_type === thing.admin_type)
+  );
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -80,21 +163,35 @@ function ManageAdmin() {
                   <h3 className="font-size-6 mb-0">Admin</h3>
                 </div>
                 <div className="col-lg-6">
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                    <input
+                      required
+                      type="text"
+                      className="form-control col-6"
+                      placeholder={"Search Admin"}
+                      value={search}
+                      name={"Admin_name"}
+                      onChange={(e) => onSearch(e)}
+                    />
+                  </div>
                   <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Type:
                     </p>
                     <div className="h-px-48">
                       <select
-                        name="country"
-                        id="country"
+                        name="type"
+                        value={typeFilterValue}
+                        id="type"
+                        onChange={onTypeFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         <option value="">select type</option>
-                        <option value="">Super Admin</option>
-                        <option value="">Admin</option>
-                        <option value="">Manager</option>
-                        <option value="">Operator</option>
+                        {(AdminType || []).map((type) => (
+                          <option value={type.admin_type} key={type.admin_id}>
+                            {type.admin_type}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -122,19 +219,38 @@ function ManageAdmin() {
                           scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
                         >
-                          Name
+                          <Link
+                            className="text-gray"
+                            to={""}
+                            onClick={sortByNameClick}
+                          >
+                            {" "}
+                            Name
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Admin Type
+                          <Link
+                            className="text-gray"
+                            to={""}
+                            onClick={sortByTypeClick}
+                          >
+                            Admin Type
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Email{" "}
+                          <Link
+                            className="text-gray"
+                            to={""}
+                            onClick={sortByEmailClick}
+                          >
+                            Email
+                          </Link>
                         </th>
                         <th
                           scope="col"
@@ -170,13 +286,10 @@ function ManageAdmin() {
                               to=""
                               onClick={() => editAdmin(admin.admin_id)}
                             >
-                              <span className=" fas fa-edit text-gray px-5">
-                                {" "}
-                              </span>
+                              <span className=" fas fa-edit text-gray px-5"></span>
                             </Link>
                             <Link to="" onClick={() => ShowDeleteAlert(admin)}>
                               <span className=" text-danger">
-                                {" "}
                                 <i className="fa fa-trash"></i>
                               </span>
                             </Link>
@@ -187,68 +300,11 @@ function ManageAdmin() {
                   </table>
                 </div>
                 <div className="pt-2">
-                  <nav aria-label="Page navigation example">
-                    <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3active"
-                          aria-label="Previous"
-                        >
-                          <i className="fas fa-chevron-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          2
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item disabled">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          ...
-                        </Link>
-                      </li>
-                      <li className="page-item ">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          7
-                        </Link>
-                      </li>
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3"
-                          aria-label="Next"
-                        >
-                          <i className="fas fa-chevron-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
               </div>
             </div>
@@ -273,7 +329,7 @@ function ManageAdmin() {
                     onClick={() => setShowJobDetails(false)}
                     className="d-flex align-items-center ml-4"
                   >
-                    {" "}
+                    
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back
@@ -283,7 +339,7 @@ function ManageAdmin() {
               </div>
             </div>
             <div className="mb-18">
-              {" "}
+              
               <JobDetailsBox />
             </div>
           </div>

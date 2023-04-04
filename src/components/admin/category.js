@@ -5,7 +5,6 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
 import { DeleteJobCategory, getAllJobsCategory } from "../../api/api";
-import filterjson from "../json/filterjson";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
@@ -89,7 +88,7 @@ function Category() {
   let onCategoryTypeFilterChange = (e) => {
     setCategoryTypeFilterValue(e.target.value);
   };
-  /*Searcg Onchange function to filter the data */
+  /*Search Onchange function to filter the data */
   let onSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -128,6 +127,12 @@ function Category() {
       setClicksort(0);
     }
   };
+  /*Category type array to filter*/
+  const CategoryType = categoryData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.category_type === thing.category_type)
+  );
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -170,10 +175,13 @@ function Category() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         <option value={""}>Select category type</option>
-                        {(filterjson.category || []).map((data, i) => {
+                        {(CategoryType || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option
+                              value={data.category_type}
+                              key={data.job_category_id}
+                            >
+                              {data.category_type}
                             </option>
                           );
                         })}

@@ -110,9 +110,11 @@ function ContactInfo(props) {
     setState(userData.data.company_detail[0]);
   };
   useEffect(() => {
-    EmployerData();
+    props.employerId === undefined
+      ? setState(initialFormState)
+      : EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.employerId]);
+  }, [props]);
 
   // COMPANY PERSONAL INFO SUBMIT BUTTON
   const onCompanyContactClick = async (event) => {

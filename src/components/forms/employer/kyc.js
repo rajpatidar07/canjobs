@@ -117,7 +117,9 @@ function KycComplianceDetails(props) {
     console.log(userData);
   };
   useEffect(() => {
-    EmployerData();
+    props.employerId === undefined
+      ? setState(initialFormState)
+      : EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // COMPANY KYC DETAIL SUBMIT BUTTON
