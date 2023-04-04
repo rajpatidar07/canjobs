@@ -13,11 +13,13 @@ function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
   let [category, setCategory] = useState([]);
-  const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("");
-  const [locationFilterValue, setLocationFilterValue] = useState("");
-  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [search, setSearch] = useState("");
+  /*Filter states */
+  // const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  // const [SkillFilterValue, setSkillFilterValue] = useState("");
+  // const [locationFilterValue, setLocationFilterValue] = useState("");
+  // const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  // const [search, setSearch] = useState("");
+
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
@@ -32,25 +34,25 @@ function ManageJobs() {
     CategoryData();
   }, []);
   /*Category Onchange function to filter the data */
-  let onCategoryFilterChange = (e) => {
-    setCategoryFilterValue(e.target.value);
-  };
+  // let onCategoryFilterChange = (e) => {
+  //   setCategoryFilterValue(e.target.value);
+  // };
   /*Skill Onchange function to filter the data */
-  let onSkillFilterChange = (e) => {
-    setSkillFilterValue(e.target.value);
-  };
+  // let onSkillFilterChange = (e) => {
+  //   setSkillFilterValue(e.target.value);
+  // };
   /*Location Onchange function to filter the data */
-  let onLocationFilterChange = (e) => {
-    setLocationFilterValue(e.target.value);
-  };
+  // let onLocationFilterChange = (e) => {
+  //   setLocationFilterValue(e.target.value);
+  // };
   /*JobSwap Onchange function to filter the data */
-  let onJobSwapFilterChange = (e) => {
-    setJobSwapFilterValue(e.target.value);
-  };
+  // let onJobSwapFilterChange = (e) => {
+  //   setJobSwapFilterValue(e.target.value);
+  // };
   /*Searcg Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  // let onSearch = (e) => {
+  //   setSearch(e.target.value);
+  // };
   return (
     <>
       <div>

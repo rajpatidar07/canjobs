@@ -26,8 +26,9 @@ function Category() {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(5);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [columnName, setcolumnName] = useState("job_category_id");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -92,8 +93,41 @@ function Category() {
   let onSearch = (e) => {
     setSearch(e.target.value);
   };
-  /*<-----Pagination Calculator----> */
+  /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
+
+  /*Sorting Function by name */
+  let sortByNameClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "job_category_id"
+    ) {
+      setcolumnName("category_name");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("category_name");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by type */
+  let sortBytypeClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "job_category_id"
+    ) {
+      setcolumnName("category_type");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("category_type");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -170,57 +204,25 @@ function Category() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Name</span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("category_name");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("category_name");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to={""}
+                            onClick={sortByNameClick}
+                            className="text-gray"
+                          >
+                            Name
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Category Type</span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("category_type");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("category_type");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to={""}
+                            onClick={sortBytypeClick}
+                            className="text-gray"
+                          >
+                            Category Type
+                          </Link>
                         </th>
                         <th
                           scope="col"

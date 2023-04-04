@@ -12,7 +12,7 @@ function useValidation(initialState, validators) {
   const DescriptionChange = (event, editor) => {
     setState(editor.getData());
     let desc;
-    if (editor.getData() != undefined) {
+    if (editor.getData() !== undefined) {
       desc = editor.getData().replaceAll(/"/g, "'");
     }
     setState({ ...state, desc });

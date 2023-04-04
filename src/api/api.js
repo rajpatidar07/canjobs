@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 // const token = localStorage.getItem("token");
 const user_id = localStorage.getItem("user_id");
-const employee_id = localStorage.getItem("employee_id");
+// const employee_id = localStorage.getItem("employee_id");
 
 // EMPLOYEE'S API
 

@@ -33,8 +33,9 @@ function Job() {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(5);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [columnName, setcolumnName] = useState("job_id");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -72,8 +73,6 @@ function Job() {
     columnName,
     sortOrder,
   ]);
-  console.log(columnName, sortOrder);
-  // console.log(("userData--" + JSON.stringify(jobData)))
 
   /* Function to show the single data to update job */
   const editJob = (e) => {
@@ -128,8 +127,105 @@ function Job() {
   let onSearch = (e) => {
     setSearch(e.target.value);
   };
-  /*<-----Pagination Calculator----> */
+  /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
+
+  /*Sorting Function by name */
+  let sortByNameClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("job_title");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("job_title");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Type */
+  let sortByTypeClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("job_type");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("job_type");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Location */
+  let sortByLocationClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("location");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("location");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Education */
+  let sortByEducationClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("education");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("education");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Skill */
+  let sortBySkillClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("keyskill");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("keyskill");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Language */
+  let sortByLanguageClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("language");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("language");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Salary */
+  let sortBySalaryClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("salary");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("salary");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Experience  */
+  let sortByExperienceClick = () => {
+    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
+      setcolumnName("experience_required");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("experience_required");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -281,254 +377,101 @@ function Job() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Job title / Industry </span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("job_title");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("job_title");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link onClick={sortByNameClick} className="text-gray">
+                            Job title / Industry{" "}
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Job Type </span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("job_type");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("job_type");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortByTypeClick}
+                            className="text-gray"
+                          >
+                            Job Type{" "}
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Address</span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("location");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("location");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortByLocationClick}
+                            className="text-gray"
+                          >
+                            Address
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Education </span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("education");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("education");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortByEducationClick}
+                            className="text-gray"
+                          >
+                            Education{" "}
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Skills</span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("keyskill");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("keyskill");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortBySkillClick}
+                            className="text-gray"
+                          >
+                            Skills
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Language</span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("language");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("language");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortByLanguageClick}
+                            className="text-gray"
+                          >
+                            Language
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Salary </span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("salary");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("salary");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortBySalaryClick}
+                            className="text-gray"
+                          >
+                            Salary{" "}
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <span className="col-8">Experience </span>
-                          <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("experience_required");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("experience_required");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "}
+                          <Link
+                            to=""
+                            onClick={sortByExperienceClick}
+                            className="text-gray"
+                          >
+                            Experience{" "}
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          Total Vacancy{" "}
-                          <span className="col-8">Total Vacancy </span>
-                          {/* <span className="col-1">
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("job_title");
-                                setSortOrder("ASC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-up"></i>
-                            </Link>
-                            <Link
-                              to={""}
-                              className="row"
-                              onClick={() => {
-                                setcolumnName("job_title");
-                                setSortOrder("DESC");
-                              }}
-                            >
-                              <i className="fas fa-chevron-down"></i>
-                            </Link>
-                          </span>{" "} */}
+                          <Link to="" className="text-gray">
+                            Total Vacancy{" "}
+                          </Link>
                         </th>
                         <th
                           scope="col"

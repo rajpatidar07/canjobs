@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function PersonalDetails(props) {
+  console.log(props.employeedata);
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -139,10 +140,10 @@ function PersonalDetails(props) {
     setState(userData.data.personal_detail[0]);
   };
   useEffect(() => {
-    if (props.employeedata != "0") {
-      UserData();
-    } else {
+    if (props.employeedata === "0") {
       setState(initialFormStateuser);
+    } else {
+      UserData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);

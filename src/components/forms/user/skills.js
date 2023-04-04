@@ -49,7 +49,9 @@ function Skills(props) {
     SetSkillData(SkillDetails.data);
   };
   useEffect(() => {
-    SkillData();
+    if (props.employeeEducationData !== undefined) {
+      SkillData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, deleteAlert]);
 

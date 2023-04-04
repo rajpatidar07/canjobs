@@ -83,7 +83,9 @@ function Education(props) {
     }
   };
   useEffect(() => {
-    EducationData();
+    if (props.employeeEducationData !== undefined) {
+      EducationData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, deleteAlert]);
 

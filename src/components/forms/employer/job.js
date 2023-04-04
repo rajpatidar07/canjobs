@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { CKEditor } from "ckeditor4-react";
+// import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import FilterJson from "./../../json/filterjson";
 import { toast } from "react-toastify";
@@ -12,7 +12,6 @@ import {
   getAllEmployer,
 } from "../../../api/api";
 function AddJobModal(props) {
-  // console.log(props.jobdata);
   const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
 
@@ -172,7 +171,7 @@ function AddJobModal(props) {
   // API CALL
   const JobData = async () => {
     let userData = await GetJobDetail(props.jobdata);
-    if (userData.data.data[0] !== undefined) {
+    if (props.jobdata !== undefined && props.jobdata !== "0") {
       setState(userData.data.data[0]);
     }
     // console.log(userData);

@@ -96,7 +96,7 @@ function CompanyDetails(props) {
     }
   };
   useEffect(() => {
-    if (props.employerId != "0") {
+    if (props.employerId !== "0") {
     } else {
       setState(initialFormState);
     }

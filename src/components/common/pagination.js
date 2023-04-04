@@ -41,7 +41,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
           {pageNumbers.map((pgNumber) => {
             return (
               <li
-                className={currentPage == pgNumber ? "page-item" : ""}
+                className={currentPage === pgNumber ? "page-item" : ""}
                 key={pgNumber}
               >
                 {pgNumber === 0 ? (
@@ -51,7 +51,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
                     to={""}
                     onClick={() => setCurrentPage(pgNumber)}
                     className={`page-link border-0 font-size-3 font-weight-semibold px-3 ${
-                      currentPage == pgNumber ? "active " : ""
+                      currentPage === pgNumber ? "active " : ""
                     } `}
                   >
                     {pgNumber}

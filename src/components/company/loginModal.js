@@ -316,9 +316,9 @@ export default function CompanyLogin(props) {
                         <span className="checkbox mr-5"></span>
                         <span className="font-size-3 mb-0 line-height-reset d-block">
                           Agree to the{" "}
-                          <a href="" className="text-primary">
+                          <Link to={""} className="text-primary">
                             Terms & Conditions
-                          </a>
+                          </Link>
                         </span>
                       </label>
                     </div>

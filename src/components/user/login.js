@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { EmployeeDetails, EmployeeLogin } from "../../api/api";
+import { EmployeeLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 
 export default function EmployeeLoginModal(props) {

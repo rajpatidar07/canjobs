@@ -207,7 +207,7 @@ function Employee() {
                           className="border border-color-2"
                           key={empdata.employee_id}
                         >
-                          <td scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                          <td className="pl-6 border-0 py-7 pr-0  ">
                             <div className="media  align-items-center">
                               <div className="circle-36 mx-auto">
                                 {empdata.profile_photo === null ? (

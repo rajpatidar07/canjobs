@@ -67,10 +67,9 @@ function Addadmin(props) {
     }
   };
   useEffect(() => {
-    if (props.adminId != "0") {
+    if (props.adminId !== "0") {
       AdminData();
-    }
-    {
+    } else {
       setState(initialFormState);
     }
 

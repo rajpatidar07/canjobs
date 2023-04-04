@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CKEditor } from "ckeditor4-react";
+// import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import { getSingleFollowup, AddFollowup } from "../../../api/api";
