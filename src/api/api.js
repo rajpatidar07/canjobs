@@ -63,7 +63,7 @@ export const getallEmployeeData = async (
     column_name: column,
     sort_order: sort,
   });
-  return response.data.data;
+  return response.data;
 };
 /*Detail Employee Education Api */
 export const EmployeeEducationDetails = async (props) => {
@@ -77,7 +77,6 @@ export const EmployeeEducationDetails = async (props) => {
       },
     }
   );
-  console.log(response.data);
   return response.data;
 };
 /*Add Employee Education Api */
@@ -85,11 +84,12 @@ export const AddEmployeeEducation = async (props, id) => {
   const response = await axios.put(`${API_URL}employeeEducation_detail`, {
     employee_id: id,
     course: props.course,
-    institute_location: props.course,
-    passing_year: props.institute_location,
+    institute_location: props.institute_location,
+    passing_year: props.passing_year,
     qualification: props.qualification,
     specialization: props.specialization,
     university_institute: props.university_institute,
+    education_id: props.education_id,
   });
   return response.data;
 };
@@ -166,6 +166,7 @@ export const GetAllJobs = async (
     column_name: column_name,
     sort_order: sort_order,
   });
+  console.log(response);
   return response;
 };
 /*Add Job  Api */
@@ -279,6 +280,29 @@ export const getallAdminData = async (
   });
   return response.data;
 };
+/*Admin List Api */
+export const getAllFollowUpData = async (
+  job,
+  company,
+  experience,
+  search,
+  page,
+  limit,
+  column,
+  sort
+) => {
+  const response = await axios.post(`${API_URL}admin/getFollowupView`, {
+    filter_job_type: job,
+    filter_company_name: company,
+    filter_experience: experience,
+    page: page,
+    search: search,
+    limit: limit,
+    column_name: column,
+    sort_order: sort,
+  });
+  return response.data;
+};
 /*Job Category List Api */
 export const getAllJobsCategory = async (
   type,
@@ -359,9 +383,10 @@ export const AddFollowup = async (props) => {
   return response.data;
 };
 /*Add Followup single data Api */
-export const getSingleFollowup = async (props) => {
+export const getSingleFollowup = async (employee_id, job_id) => {
+  console.log(employee_id, job_id);
   const response = await axios.get(
-    `${API_URL}admin/getFollowup?job_id=2&employee_id=2`
+    `${API_URL}admin/getFollowup?job_id=${job_id}&employee_id=${employee_id}`
   );
   return response.data;
 };

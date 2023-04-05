@@ -9,9 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
-  let [employId, setEmployeId] = useState();
-  let [adminId, setAdminId] = useState();
-  let [jobId, setJobId] = useState();
+  let employId = props.resData.employee_id;
+  let [adminId, setAdminId] = useState(2);
+  let jobId = props.resData.job_id;
+
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -21,18 +22,24 @@ function Addfollowup(props) {
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
-    const userData = await getSingleFollowup();
+    const userData = await getSingleFollowup(
+      props.resData.employee_id,
+      props.resData.job_id
+    );
     setResponseData(userData.data);
-    setEmployeId(userData.data[0].employee_id);
     setAdminId(userData.data[0].admin_id);
-    setJobId(userData.data[0].job_id);
   };
 
   /*Render function to get the Response*/
   useEffect(() => {
-    ResponseData();
+    if (
+      props.resData.employee_id !== undefined ||
+      props.resData.job_id !== undefined
+    ) {
+      ResponseData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.show]);
+  }, [props]);
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -78,7 +85,7 @@ function Addfollowup(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>

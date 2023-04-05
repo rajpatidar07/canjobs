@@ -6,11 +6,10 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
-import className from "../json/filterjson";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
-import FilterJson from "../json/filterjson";
 import Pagination from "../common/pagination";
+
 function Job() {
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
@@ -52,7 +51,10 @@ function Job() {
     );
     setjobData(userData.data.data);
     setTotalData(userData.data.total_rows);
-    // if (userData.message === "No data found")
+
+    // if (userData.message === "No data found") {
+    console.log(userData.status);
+    // }
   };
 
   /*Render function to get the job */
@@ -74,6 +76,12 @@ function Job() {
     sortOrder,
   ]);
 
+  /* Function to show the Job detail data */
+  const JobDetail = (e) => {
+    // e.preventDefault();
+    setShowJobDetails(true);
+    setJobId(e);
+  };
   /* Function to show the single data to update job */
   const editJob = (e) => {
     // e.preventDefault();
@@ -227,25 +235,25 @@ function Job() {
     }
   };
   /*Category type array to filter*/
-  // const CategoryType = Categorylist.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.category_type === thing.category_type)
-  // );
+  const CategoryType = Categorylist.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.category_type === thing.category_type)
+  );
   /*Job type array to filter*/
-  // const JobType = jobData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.job_type === thing.job_type)
-  // );
+  const JobType = jobData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.job_type === thing.job_type)
+  );
   /*Skill type array to filter*/
-  // const SkillType = jobData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.skill === thing.skill)
-  // );
+  const SkillType = jobData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.skill === thing.skill)
+  );
   /*Location type array to filter*/
-  // const LocationType = jobData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.Location === thing.Location)
-  // );
+  const LocationType = jobData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.Location === thing.Location)
+  );
 
   return (
     <>
@@ -294,13 +302,10 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         <option value="">Select category</option>
-                        {(Categorylist || []).map((data, i) => {
+                        {(CategoryType || []).map((data) => {
                           return (
-                            <option
-                              value={data.job_category_id}
-                              key={data.job_category_id}
-                            >
-                              {data.category_name}
+                            <option value={data.jobid} key={data.category_type}>
+                              {data.category_type}
                             </option>
                           );
                         })}
@@ -320,9 +325,9 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         <option value="">SelectJob type</option>
-                        {(FilterJson.job_type || []).map((job_type) => (
-                          <option key={job_type} value={job_type}>
-                            {job_type}
+                        {(JobType || []).map((job) => (
+                          <option key={job.job_id} value={job.job_type}>
+                            {job.job_type}
                           </option>
                         ))}
                       </select>
@@ -341,10 +346,10 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         <option value="">Select Skill</option>{" "}
-                        {(className.keyskill || []).map((data, i) => {
+                        {(SkillType || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.skill} key={data.job_id}>
+                              {data.skill}
                             </option>
                           );
                         })}
@@ -364,10 +369,10 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
                         <option value="">Select location</option>{" "}
-                        {(className.location || []).map((data, i) => {
+                        {(LocationType || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.location} key={data.job_id}>
+                              {data.location}
                             </option>
                           );
                         })}
@@ -510,7 +515,7 @@ function Job() {
                             <div className="">
                               <Link
                                 to={""}
-                                onClick={() => setShowJobDetails(true)}
+                                onClick={() => JobDetail(job.job_id)}
                                 className="font-size-3 mb-0 font-weight-semibold text-black-2"
                               >
                                 {job.job_title} ({job.industry_type})
@@ -611,7 +616,7 @@ function Job() {
                 </div>
               </div>
               <div className="mb-18">
-                <JobDetailsBox />
+                <JobDetailsBox jobdata={JobId} />
               </div>
             </div>
           </div>

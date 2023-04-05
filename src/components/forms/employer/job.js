@@ -338,6 +338,7 @@ function AddJobModal(props) {
                   placeholder="Salary"
                   id="salary"
                 >
+                  <option value={""}>select salary</option>
                   {(FilterJson.salary || []).map((salary) => (
                     <option key={salary} value={salary}>
                       {salary}
@@ -668,6 +669,7 @@ function AddJobModal(props) {
                         : " form-control position-relative overflow-hidden"
                     }
                   >
+                    <option value={""}>select company</option>
                     {(FilterJson.job_type || []).map((job_type) => (
                       <option key={job_type} value={job_type}>
                         {job_type}
@@ -923,6 +925,7 @@ function AddJobModal(props) {
                     placeholder="company name"
                     id="company_id"
                   >
+                    <option value={""}>Select Company</option>
                     {(company || []).map((com) => (
                       <option key={com.company_id} value={com.company_id}>
                         {com.company_name}

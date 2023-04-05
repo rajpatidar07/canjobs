@@ -14,6 +14,7 @@ function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
+  /*delete states */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");

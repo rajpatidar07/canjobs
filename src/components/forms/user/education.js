@@ -7,11 +7,11 @@ import {
   AddEmployeeEducation,
   DeleteEmployeeEducation,
 } from "../../../api/api";
-import filterjson from "../../json/filterjson";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../../common/sweetAlert";
 import moment from "moment";
+import FilterJson from "../../json/filterjson";
 
 function Education(props) {
   let [educationData, setEducationData] = useState([]);
@@ -78,7 +78,6 @@ function Education(props) {
       props.employeeEducationData
     ); /*"No Employee found"*/
     setEducationData(EducationDetails.data);
-    console.log(EducationDetails.data);
     if (data !== undefined || data) {
       setState(data);
     }
@@ -107,6 +106,13 @@ function Education(props) {
         });
         return close();
       }
+      if (responseData.message === "Employee data inserted successfully") {
+        toast.success("Education Added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      } //"
       // handle form submission
     }
   };
@@ -174,7 +180,7 @@ function Education(props) {
                   value={state.qualification}
                   onChange={onInputChange}
                 >
-                  {(filterjson.qualification || []).map((data, i) => {
+                  {(FilterJson.qualification || []).map((data, i) => {
                     return (
                       <option value={data} key={i}>
                         {data}
@@ -244,13 +250,11 @@ function Education(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>select Course</option>
-                  <option value={"mba"}>MBA</option>
-                  <option value={"MBBS"}>MBBS</option>
-                  <option value={"CA"}>CA</option>
-                  <option value={"BA"}>BA</option>
-                  <option value={"MA"}>MA</option>
-                  <option value={"B.Tech"}>B.Tech</option>
-                  <option value={"M.Tech"}>M.Tech</option>
+                  {(FilterJson.course || []).map((course) => (
+                    <option value={course} key={course}>
+                      {course}
+                    </option>
+                  ))}
                 </select>
                 {/*----ERROR MESSAGE FOR course----*/}
                 {errors.course && (
@@ -278,13 +282,11 @@ function Education(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>select Specialization</option>
-                  <option value={"mba"}>MBA</option>
-                  <option value={"MBBS"}>MBBS</option>
-                  <option value={"CA"}>CA</option>
-                  <option value={"BA"}>BA</option>
-                  <option value={"MA"}>MA</option>
-                  <option value={"B.Tech"}>B.Tech</option>
-                  <option value={"M.Tech"}>M.Tech</option>
+                  {(FilterJson.Specialization || []).map((Specialization) => (
+                    <option value={Specialization} key={Specialization}>
+                      {Specialization}
+                    </option>
+                  ))}
                 </select>
                 {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
                 {errors.specialization && (
@@ -320,7 +322,7 @@ function Education(props) {
                     onChange={onInputChange}
                   >
                     <option value={""}>select institute location</option>
-                    {(filterjson.location || []).map((data, i) => {
+                    {(FilterJson.location || []).map((data, i) => {
                       return (
                         <option value={data} key={i}>
                           {data}

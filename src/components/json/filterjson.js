@@ -88,5 +88,21 @@ const FilterJson = {
   ],
   keyskill: ["java", "html", "css", "React", "phn", "python"],
   adminType: ["Manager", "Sub-admin", "Admin", "Super-Admin"],
+  course: [
+    "MA",
+    "BA",
+    "B.com",
+    "M.com",
+    "CA",
+    "MBBS",
+    "BDS",
+    "PHD",
+    "M.tech",
+    "B.tech",
+    "BBA",
+    "MBA",
+    "CPCT",
+  ],
+  Specialization: ["Maths", "Bio", "phy", "Social studies", "core"],
 };
 export default FilterJson;

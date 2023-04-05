@@ -16,7 +16,7 @@ function useValidation(initialState, validators) {
       desc = editor.getData().replaceAll(/"/g, "'");
     }
     setState({ ...state, desc });
-    console.log(desc);
+    // console.log(desc);
   };
 
   const validate = () => {

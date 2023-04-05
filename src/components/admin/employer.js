@@ -50,6 +50,7 @@ function Employer() {
       sortOrder
     );
     setemployerData(userData.data);
+    console.log(userData.data);
     setTotalData(userData.total_rows);
   };
 
@@ -248,7 +249,12 @@ function Employer() {
     (thing, index, self) =>
       index === self.findIndex((t) => t.corporation === thing.corporation)
   );
-
+  /* Function to show the Job detail data */
+  const EmployerDetail = (e) => {
+    // e.preventDefault();
+    setShowEmployerDetails(true);
+    setEmployerID(e);
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -499,7 +505,7 @@ function Employer() {
                           <th className=" border-0 py-7 pr-0">
                             <Link
                               to={""}
-                              onClick={() => setShowEmployerDetails(true)}
+                              onClick={() => EmployerDetail(empdata.company_id)}
                             >
                               <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {empdata.contact_person_name}
@@ -508,7 +514,7 @@ function Employer() {
                           </th>
                           <th className=" py-7  pr-0">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              50
+                              {empdata.vacancies}
                             </h3>
                           </th>
                           <th className=" py-7  pr-0">
@@ -633,7 +639,7 @@ function Employer() {
                   </Link>
                 </div>
               </div>{" "}
-              <EmployerProfile />
+              <EmployerProfile employerId={employerId} />
             </div>
           </div>
         ) : null}

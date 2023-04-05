@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import KycComplianceDetails from "../forms/employer/kyc";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
@@ -6,11 +6,25 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
-
-function CompanyProfile() {
+import { EmployerDetails } from "../../api/api";
+function CompanyProfile(props) {
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
+  const [employerData, setEmployerData] = useState("");
+  const EmployerData = async () => {
+    let userData = await EmployerDetails(props.employerId);
+    if (userData !== undefined) {
+      setEmployerData(userData.data.company_detail[0]);
+    }
+  };
+  useEffect(() => {
+    if (props.employerId !== "0" || props.employerId !== undefined) {
+      EmployerData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }, [props]);
+  console.log(employerData);
   return (
     <div>
       <EmployeeHeader />
@@ -69,40 +83,40 @@ function CompanyProfile() {
               </div>
             </div>
             <div className="company_detail_box w-100 row m-0 pl-12 pt-5 pb-7 pr-12 pr-xxl-12">
-              <div class="font-size-3 mb-4 mr-10" title="Industry">
-                <i class="far fa-building mr-2"></i>
+              <div className="font-size-3 mb-4 mr-10" title="Industry">
+                <i className="far fa-building mr-2"></i>
                 Hotel
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="Business Type">
-                <i class="fas fa-briefcase mr-2"></i>
+              <div className="font-size-3 mb-4 mr-10" title="Business Type">
+                <i className="fas fa-briefcase mr-2"></i>
                 B2B
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="Company size">
-                <i class="fas fa-user-friends mr-2"></i>
+              <div className="font-size-3 mb-4 mr-10" title="Company size">
+                <i className="fas fa-user-friends mr-2"></i>
                 50-60
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="Est. Since">
-                <i class="fas fa-business-time mr-2"></i>
+              <div className="font-size-3 mb-4 mr-10" title="Est. Since">
+                <i className="fas fa-business-time mr-2"></i>
                 1976
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="Website URL">
-                <i class="fas fa-globe mr-2"></i>
+              <div className="font-size-3 mb-4 mr-10" title="Website URL">
+                <i className="fas fa-globe mr-2"></i>
                 www.domain.com
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="Hiring for">
-                <i class="fas fa-bullhorn mr-2"></i>
+              <div className="font-size-3 mb-4 mr-10" title="Hiring for">
+                <i className="fas fa-bullhorn mr-2"></i>
                 Superwiser, Electrician, Driver
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="PAN">
-                <span class="mr-2 font-weight-bold">PAN</span>
+              <div className="font-size-3 mb-4 mr-10" title="PAN">
+                <span className="mr-2 font-weight-bold">PAN</span>
                 AASD1234FF
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="TAN">
-                <span class="mr-2 font-weight-bold">TAN</span>
+              <div className="font-size-3 mb-4 mr-10" title="TAN">
+                <span className="mr-2 font-weight-bold">TAN</span>
                 AASD1234FF
               </div>
-              <div class="font-size-3 mb-4 mr-10" title="GSTIN">
-                <span class="mr-2 font-weight-bold">GSTIN</span>
+              <div className="font-size-3 mb-4 mr-10" title="GSTIN">
+                <span className="mr-2 font-weight-bold">GSTIN</span>
                 AASD1234FF
               </div>
             </div>

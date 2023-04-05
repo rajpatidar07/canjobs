@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-function JobDetailPage() {
+import { GetJobDetail } from "../../api/api";
+function JobDetailPage(props) {
+  let [jobDetatilsData, setJobDetailsData] = useState("");
+  let skill = [];
+  /*Function to get job details data*/
+  const JobData = async () => {
+    let userData = await GetJobDetail(props.jobdata);
+    if (props.jobdata !== undefined && props.jobdata !== "0") {
+      setJobDetailsData(userData.data.data[0]);
+    }
+  };
+  /*Render method to get job detail data */
+  useEffect(() => {
+    JobData();
+  }, []);
+  /*Set skill variable to array frm string */
+  if (jobDetatilsData !== "") {
+    skill = jobDetatilsData.keyskill.split(",");
+  }
   return (
     <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
       <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
@@ -9,25 +26,22 @@ function JobDetailPage() {
           <div className="col-12">
             {/* <!-- media start --> */}
             <div className="media align-items-center company_box col-md-6 p-0">
-              <Link className="text_box text-left" to="http://localhost:3000/">
+              <Link className="text_box text-left" to="">
                 <img
                   className="company_logo"
                   src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
                   alt=""
                 />
               </Link>
-              <Link
-                className="text_box text-left w-100"
-                to="http://localhost:3000/"
-              >
+              <Link className="text_box text-left w-100" to="">
                 <p
-                  href="http://localhost:3000/"
+                  href=""
                   className="font-size-3 text-default-color line-height-2 m-0"
                 >
-                  Apple INC
+                  {jobDetatilsData.job_title}
                 </p>
                 <h3 className="mb-0 font-size-6 heading-dark-color">
-                  UI/UX Designer
+                  {jobDetatilsData.department}
                 </h3>
               </Link>
             </div>
@@ -62,7 +76,7 @@ function JobDetailPage() {
                 <img src="image/svg/icon-location.svg" alt="" />
               </div>
               <p className="font-size-5 text-gray mb-0">
-                777 Brockton Avenue, Abington MA 2351
+                {jobDetatilsData.location}
               </p>
             </div>
           </div>
@@ -72,7 +86,7 @@ function JobDetailPage() {
                 <img src="image/svg/icon-dolor.svg" alt="" />
               </div>
               <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
-                80-90K PLN PLN
+                {jobDetatilsData.salary}
               </p>
             </div>
           </div>
@@ -82,7 +96,7 @@ function JobDetailPage() {
                 <img src="image/svg/icon-briefcase.svg" alt="" />
               </div>
               <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
-                Full-time
+                {jobDetatilsData.job_type}
               </p>
             </div>
           </div>
@@ -98,20 +112,20 @@ function JobDetailPage() {
               </h6>
             </div>
             <div className="tags">
-              <p className="font-size-4 text-gray mb-0">Soft Skill</p>
-              <ul className="list-unstyled mr-n3 mb-0">
-                <li className="d-block font-size-4 text-black-2 mt-2">
-                  <span className="d-inline-block mr-2">•</span>
-                  Slack
-                </li>
-                <li className="d-block font-size-4 text-black-2 mt-2">
-                  <span className="d-inline-block mr-2">•</span>
-                  Basic English
-                </li>
-                <li className="d-block font-size-4 text-black-2 mt-2">
-                  <span className="d-inline-block mr-2">•</span>
-                  Well Organized
-                </li>
+              <p className="font-size-4 text-gray mb-0"> Skill</p>
+
+              <ul className="list-unstyled d-flex align-items-center flex-wrap row">
+                {(skill || []).map((skill) => (
+                  <li key={skill}>
+                    <Link
+                      to={""}
+                      className="bg-polar text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                      href="#"
+                    >
+                      {skill}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -123,56 +137,6 @@ function JobDetailPage() {
               <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9">
                 Project Manangement
               </h6>
-            </div>
-            <div className="tags">
-              <p className="font-size-4 text-gray mb-3">Technical Skill</p>
-              <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                <li>
-                  <Link
-                    to={""}
-                    className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="#"
-                  >
-                    Editing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={""}
-                    className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="#"
-                  >
-                    Wire-framing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={""}
-                    className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="#"
-                  >
-                    XD
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={""}
-                    className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="#"
-                  >
-                    User Persona
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={""}
-                    className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                    href="#"
-                  >
-                    Sketch
-                  </Link>
-                </li>
-              </ul>
             </div>
           </div>
           <div className="col-md-6">

@@ -27,6 +27,8 @@ function PersonalDetails(props) {
     experience: "",
     work_permit_canada: "",
     work_permit_other_country: "",
+    resume: "",
+    filename: "",
   };
   const close = () => {
     setState(initialFormStateuser);
@@ -149,6 +151,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
+    console.log(state);
     event.preventDefault();
     if (validate()) {
       const responseData = await AddEmployeeDetails(state);
@@ -169,6 +172,32 @@ function PersonalDetails(props) {
     }
   }
   // END USER PERSONAL DETAIL VALIDATION
+
+  const handleUploadFile = (event) => {
+    let selectedFile = event.target.files[0];
+    //   let file = null;
+    //   let fileName = "";
+    //   //Check File is not Empty
+    //   if (selectedFile.length > 0) {
+    //     // Select the very first file from list
+    //     let fileToLoad = selectedFile[0];
+    //     fileName = fileToLoad.name;
+    //     // FileReader function for read the file.
+    //     let fileReader = new FileReader();
+    //     // Onload of file read the file content
+    //     fileReader.onload = function (fileLoadedEvent) {
+    //       file = fileLoadedEvent.target.result;
+    //       // Print data in console
+    //       console.log(file, fileName);
+    //       //
+    //     };
+    //     console.log(file, fileName);
+    //     // Convert data to base64
+    //     fileReader.readAsDataURL(fileToLoad);
+    //   }
+    setState({ ...state, resume: selectedFile });
+    console.log(state.resume);
+  };
   return (
     <>
       <Modal
@@ -786,7 +815,8 @@ function PersonalDetails(props) {
                   id="resume"
                   name="resume"
                   // value={state.resume}
-                  // onChange={onInputChange}
+                  accept="document/pdf"
+                  // onChange={handleUploadFile}
                   className={
                     errors.resume
                       ? "form-control border border-danger"

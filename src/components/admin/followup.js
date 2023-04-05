@@ -1,25 +1,183 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
-import CustomButton from "../common/button";
 import Addfollowup from "../forms/admin/addfollowup";
+import { getAllFollowUpData } from "../../api/api";
+import moment from "moment";
+import Pagination from "../common/pagination";
 
 function Followup() {
+  /*show modal and data states */
   let [followup, setFollowUp] = useState(false);
-  // let [response, setResponseData] = useState([]);
-
+  let [response, setResponseData] = useState([]);
+  let [resData, setResData] = useState("");
+  /*Filter and search state */
+  const [jobFilterValue, setJobTypeFilterValue] = useState("");
+  const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    useState("");
+  const [search, setSearch] = useState("");
+  /*Pagination states */
+  const [totalData, setTotalData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(5);
+  /*Shorting states */
+  const [columnName, setcolumnName] = useState("employee_id");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  const [clicksort, setClicksort] = useState(0);
   /* Function to get the Response data*/
-  // const ResponseData = async () => {
-  //   const userData = await GetAllResponse();
-  //   setResponseData(userData);
-  // };
+  const ResponseData = async () => {
+    const userData = await getAllFollowUpData(
+      jobFilterValue,
+      companyFilterValue,
+      experienceTypeFilterValue,
+      search,
+      currentPage,
+      recordsPerPage,
+      columnName,
+      sortOrder
+    );
+    setResponseData(userData.data);
+    setTotalData(userData.total_rows);
+  };
 
   /*Render function to get the Response*/
-  // useEffect(() => {
-  //   ResponseData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [followup deleteAlert]);
+  useEffect(() => {
+    ResponseData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    jobFilterValue,
+    companyFilterValue,
+    experienceTypeFilterValue,
+    search,
+    currentPage,
+    recordsPerPage,
+    columnName,
+    sortOrder,
+    followup,
+  ]);
+
+  /*Function to open add follow up modal */
+  const addFollow = (e) => {
+    setFollowUp(true);
+    setResData(e);
+  };
+
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
+
+  /*Sorting Function by name */
+  let sortByNameClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "employee_id"
+    ) {
+      setcolumnName("name");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("name");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Experience */
+  let sortByExperienceClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "employee_id"
+    ) {
+      setcolumnName("experience");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("experience");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Job */
+  let sortByJobClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "employee_id"
+    ) {
+      setcolumnName("job_title");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("job_title");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Company */
+  let sortByCompanyClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "employee_id"
+    ) {
+      setcolumnName("company_name");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("company_name");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Contact */
+  let sortByContactClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "employee_id"
+    ) {
+      setcolumnName("contact_no");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("contact_no");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Sorting Function by Address */
+  let sortByAddressClick = () => {
+    if (
+      clicksort === 0 ||
+      sortOrder === "DESC" ||
+      columnName === "employee_id"
+    ) {
+      setcolumnName("current_location");
+      setSortOrder("ASC");
+      setClicksort(1);
+    } else {
+      setcolumnName("current_location");
+      setSortOrder("DESC");
+      setClicksort(0);
+    }
+  };
+  /*Job array to filter*/
+  const Job = response.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.job_title === thing.job_title)
+  );
+  /*Company name array to filter*/
+  const Company = response.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.company_name === thing.company_name)
+  );
+  /*Experience name array to filter*/
+  const Experience = response.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.experience === thing.experience)
+  );
 
   return (
     <>
@@ -36,33 +194,86 @@ function Followup() {
                   <h3 className="font-size-6 mb-0">Follow Up</h3>
                 </div>
                 <div className="col-lg-6">
-                  {/* <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2  ">
+                    <input
+                      required
+                      type="text"
+                      className="form-control col-6"
+                      placeholder={"Search Category"}
+                      value={search}
+                      name={"category_name"}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2 ">
+                    <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
+                    <div className="h-px-48">
+                      <select
+                        name="job"
+                        id="job"
+                        value={jobFilterValue}
+                        onChange={(e) => setJobTypeFilterValue(e.target.value)}
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                      >
+                        <option value="">select job</option>
+                        {(Job || []).map((job, i) => (
+                          <option value={job.job_title} key={i}>
+                            {job.job_title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by Type:
+                      Filter by company:
                     </p>
                     <div className="h-px-48">
                       <select
-                        name="country"
-                        id="country"
+                        name="company_name"
+                        id="company_name"
+                        value={companyFilterValue}
+                        onChange={(e) =>
+                          setCompanyTypeFilterValue(e.target.value)
+                        }
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
                       >
-                        <option value="">select type</option>
-                        <option value="">Super Admin</option>
-                        <option value="">Admin</option>
-                        <option value="">Manager</option>
-                        <option value="">Operator</option>
+                        <option value="">select company</option>
+                        {(Company || []).map((job, i) => (
+                          <option value={job.company_name} key={i}>
+                            {job.company_name}
+                          </option>
+                        ))}
                       </select>
                     </div>
-                  </div> */}
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2 ">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Experience:
+                    </p>
+                    <div className="h-px-48">
+                      <select
+                        name="experience"
+                        id="experience"
+                        value={experienceTypeFilterValue}
+                        onChange={(e) =>
+                          setExperienceTypeFilterValue(e.target.value)
+                        }
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                      >
+                        <option value="">select Experience</option>
+                        {(Experience || []).map((job, i) => (
+                          <option value={job.experience} key={i}>
+                            {job.experience}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                   <div className="float-md-right mt-6">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setFollowUp(true)}
-                    >
-                      Add Follow up
-                    </CustomButton>
                     <Addfollowup
                       show={followup}
+                      resData={resData}
                       close={() => setFollowUp(false)}
                     />
                   </div>
@@ -75,39 +286,81 @@ function Followup() {
                       <tr>
                         <th
                           scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                          className="pl-0 border-0 font-size-4 font-weight-normal text-center"
                         >
-                          Name
+                          #
                         </th>
                         <th
                           scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
                         >
-                          Experience
+                          <Link
+                            to={""}
+                            onClick={sortByNameClick}
+                            className="text-gray"
+                          >
+                            Name
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={sortByExperienceClick}
+                            className="text-gray"
+                          >
+                            Experience
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Job Type
+                          <Link
+                            to={""}
+                            onClick={sortByJobClick}
+                            className="text-gray"
+                          >
+                            Job Type
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Company
+                          <Link
+                            to={""}
+                            onClick={sortByCompanyClick}
+                            className="text-gray"
+                          >
+                            Company
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Contact
+                          <Link
+                            to={""}
+                            onClick={sortByContactClick}
+                            className="text-gray"
+                          >
+                            Contact
+                          </Link>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Address
+                          <Link
+                            to={""}
+                            onClick={sortByAddressClick}
+                            className="text-gray"
+                          >
+                            Address
+                          </Link>
                         </th>
                         <th
                           scope="col"
@@ -118,297 +371,87 @@ function Followup() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border border-color-2">
-                        <th scope="row" className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Shekher Pandey (35)
-                            <br />
-                            Male
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            3 years <br />
-                            React Developer
-                          </h3>
-                        </th>
-                        <th className=" border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Senior Project Manager
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Infosys
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
-                        <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            3 years <br />
-                            React Developer
-                          </h3>
-                        </th>
-                        <th className=" border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Senior Project Manager
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Infosys
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
-                        <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            3 years <br />
-                            React Developer
-                          </h3>
-                        </th>
-                        <th className=" border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Senior Project Manager
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Infosys
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
-                        <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            3 years <br />
-                            React Developer
-                          </h3>
-                        </th>
-                        <th className=" border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Senior Project Manager
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Infosys
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
-                        <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
-                      <tr className="border border-color-2">
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Ajali vishwkarma (22)
-                            <br />
-                            Female
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            3 years <br />
-                            React Developer
-                          </h3>
-                        </th>
-                        <th className=" border-0 py-7 ">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Senior Project Manager
-                          </div>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Infosys
-                          </h3>
-                        </th>
-                        <th className=" py-7">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410 <br /> email@gmail.com
-                          </h3>
-                        </th>
-                        <th className=" py-7 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            24 , yogesh vihar , indore
-                          </h3>
-                        </th>
-                        <th className=" py-7  min-width-px-100">
-                          <Link to="">
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </Link>
-                          <Link to="">
-                            <span className=" text-danger">
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </Link>
-                        </th>
-                      </tr>
+                      {(response || []).map((res) => (
+                        <tr
+                          className="border border-color-2"
+                          key={res.employee_id}
+                        >
+                          <th className="pl-6 border-0 py-7 pr-0  ">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto">
+                                {/* {res.profile_photo === null ? ( */}
+                                <img
+                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  alt=""
+                                  className="w-100"
+                                />
+                                {/* ) : (
+                              <img
+                                src={empdata.profile_photo}
+                                alt=""
+                                className="w-100"
+                              />
+                            )} */}
+                              </div>
+                            </div>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.name}(
+                              {moment().diff(res.date_of_birth, "years")})
+                              <br />
+                              {res.gender}
+                            </h3>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.experience} years <br />
+                            </h3>
+                          </th>
+                          <th className=" border-0 py-7 ">
+                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.job_title}
+                            </div>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.company_name}
+                            </h3>
+                          </th>
+                          <th className=" py-7">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              +{res.contact_no} <br /> {res.email}
+                            </h3>
+                          </th>
+                          <th className=" py-7 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <span>{res.current_location}</span>
+                              <span className="px-1">
+                                {res.currently_located_country}
+                              </span>
+                            </h3>
+                          </th>
+                          <th className=" py-7  min-width-px-100">
+                            <Link to="" onClick={() => addFollow(res)}>
+                              <span className=" fas fa-plus text-gray px-2"></span>
+                            </Link>
+                            {/* <Link to="">
+                              <span className=" text-danger">
+                                <i className="fa fa-trash"></i>
+                              </span>
+                            </Link> */}
+                          </th>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
                 <div className="pt-2">
-                  <nav aria-label="Page navigation example">
-                    <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3active"
-                          aria-label="Previous"
-                        >
-                          <i className="fas fa-chevron-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          2
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item disabled">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          ...
-                        </Link>
-                      </li>
-                      <li className="page-item ">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-3 font-weight-semibold px-3"
-                        >
-                          7
-                        </Link>
-                      </li>
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3"
-                          aria-label="Next"
-                        >
-                          <i className="fas fa-chevron-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
               </div>
             </div>

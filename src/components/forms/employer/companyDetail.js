@@ -100,7 +100,8 @@ function CompanyDetails(props) {
     if (props.employerId === "0" || props.employerId === undefined) {
       setState(initialFormState);
     } else {
-      EmployerData(); // eslint-disable-next-line react-hooks/exhaustive-deps
+      EmployerData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT

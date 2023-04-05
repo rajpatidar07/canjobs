@@ -54,7 +54,8 @@ function Employee() {
       columnName,
       sortOrder
     );
-    setemployeeData(userData);
+    setemployeeData(userData.data);
+    setTotalData(userData.total_rows);
   };
 
   /*Render function to get the employer*/
