@@ -66,7 +66,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
               to={""}
               onClick={nextPage}
               className={
-                currentPage === nPages.length
+                currentPage === pageNumbers.length
                   ? "page-link rounded-0 border-0 px-3 d-none"
                   : "page-link rounded-0 border-0 px-3"
               }

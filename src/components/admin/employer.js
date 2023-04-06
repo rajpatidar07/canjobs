@@ -50,7 +50,6 @@ function Employer() {
       sortOrder
     );
     setemployerData(userData.data);
-    console.log(userData.data);
     setTotalData(userData.total_rows);
   };
 

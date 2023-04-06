@@ -53,7 +53,7 @@ function Job() {
     setTotalData(userData.data.total_rows);
 
     // if (userData.message === "No data found") {
-    console.log(userData.status);
+    // console.log(userData.status);
     // }
   };
 

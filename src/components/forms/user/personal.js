@@ -174,7 +174,7 @@ function PersonalDetails(props) {
   // END USER PERSONAL DETAIL VALIDATION
 
   // const handleUploadFile = (event) => {
-  //   let selectedFile = event.target.files[0];
+  // let selectedFile = event.target.files[0];
   //   let file = null;
   //   let fileName = "";
   //   //Check File is not Empty
@@ -195,9 +195,9 @@ function PersonalDetails(props) {
   //     // Convert data to base64
   //     fileReader.readAsDataURL(fileToLoad);
   //   }
-  //   setState({ ...state, resume: selectedFile });
-  //   console.log(state.resume);
+  //   setState({ ...state, resume: "selectedFile" });
   // };
+  console.log(state.resume);
   return (
     <>
       <Modal
@@ -814,9 +814,11 @@ function PersonalDetails(props) {
                   placeholder="Resume"
                   id="resume"
                   name="resume"
-                  // value={state.resume}
-                  accept="document/pdf"
-                  // onChange={handleUploadFile}
+                  value={state.resume}
+                  accept=".pdf,application/pdf"
+                  onChange={(e) =>
+                    setState({ ...state, resume: e.target.files[0] })
+                  }
                   className={
                     errors.resume
                       ? "form-control border border-danger"

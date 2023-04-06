@@ -166,7 +166,6 @@ export const GetAllJobs = async (
     column_name: column_name,
     sort_order: sort_order,
   });
-  console.log(response);
   return response;
 };
 /*Add Job  Api */
@@ -384,7 +383,6 @@ export const AddFollowup = async (props) => {
 };
 /*Add Followup single data Api */
 export const getSingleFollowup = async (employee_id, job_id) => {
-  console.log(employee_id, job_id);
   const response = await axios.get(
     `${API_URL}admin/getFollowup?job_id=${job_id}&employee_id=${employee_id}`
   );

@@ -261,41 +261,53 @@ function ManageAdmin() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(adminData || []).map((admin) => (
-                        <tr
-                          className="border border-color-2"
-                          key={admin.admin_id}
-                        >
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {admin.name}
-                            </h3>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {admin.admin_type}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {admin.email}
-                            </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
-                            <Link
-                              to=""
-                              onClick={() => editAdmin(admin.admin_id)}
-                            >
-                              <span className=" fas fa-edit text-gray px-5"></span>
-                            </Link>
-                            <Link to="" onClick={() => ShowDeleteAlert(admin)}>
-                              <span className=" text-danger">
-                                <i className="fa fa-trash"></i>
-                              </span>
-                            </Link>
-                          </th>
+                      {totalData === 0 ? (
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th>No Data Found</th>
+                          <th></th>
                         </tr>
-                      ))}
+                      ) : (
+                        (adminData || []).map((admin) => (
+                          <tr
+                            className="border border-color-2"
+                            key={admin.admin_id}
+                          >
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {admin.name}
+                              </h3>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {admin.admin_type}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {admin.email}
+                              </h3>
+                            </th>
+                            <th className=" py-7 min-width-px-100">
+                              <Link
+                                to=""
+                                onClick={() => editAdmin(admin.admin_id)}
+                              >
+                                <span className=" fas fa-edit text-gray px-5"></span>
+                              </Link>
+                              <Link
+                                to=""
+                                onClick={() => ShowDeleteAlert(admin)}
+                              >
+                                <span className=" text-danger">
+                                  <i className="fa fa-trash"></i>
+                                </span>
+                              </Link>
+                            </th>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>
