@@ -371,78 +371,93 @@ function Followup() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(response || []).map((res) => (
-                        <tr
-                          className="border border-color-2"
-                          key={res.employee_id}
-                        >
-                          <th className="pl-6 border-0 py-7 pr-0  ">
-                            <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto">
-                                {/* {res.profile_photo === null ? ( */}
-                                <img
-                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                  alt=""
-                                  className="w-100"
-                                />
-                                {/* ) : (
+                      {totalData === 0 ? (
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th>No Data Found</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      ) : (
+                        (response || []).map((res) => (
+                          <tr
+                            className="border border-color-2"
+                            key={res.employee_id}
+                          >
+                            <th className="pl-6 border-0 py-7 pr-0  ">
+                              <div className="media  align-items-center">
+                                <div className="circle-36 mx-auto">
+                                  {/* {res.profile_photo === null ? ( */}
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                  {/* ) : (
                               <img
                                 src={empdata.profile_photo}
                                 alt=""
                                 className="w-100"
                               />
                             )} */}
+                                </div>
                               </div>
-                            </div>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.name}(
-                              {moment().diff(res.date_of_birth, "years")})
-                              <br />
-                              {res.gender}
-                            </h3>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.experience} years <br />
-                            </h3>
-                          </th>
-                          <th className=" border-0 py-7 ">
-                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.job_title}
-                            </div>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.company_name}
-                            </h3>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              +{res.contact_no} <br /> {res.email}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <span>{res.current_location}</span>
-                              <span className="px-1">
-                                {res.currently_located_country}
-                              </span>
-                            </h3>
-                          </th>
-                          <th className=" py-7  min-width-px-100">
-                            <Link to="" onClick={() => addFollow(res)}>
-                              <span className=" fas fa-plus text-gray px-2"></span>
-                            </Link>
-                            {/* <Link to="">
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.name}(
+                                {moment().diff(res.date_of_birth, "years")})
+                                <br />
+                                {res.gender}
+                              </h3>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.experience} years <br />
+                              </h3>
+                            </th>
+                            <th className=" border-0 py-7 ">
+                              <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.job_title}
+                              </div>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.company_name}
+                              </h3>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                +{res.contact_no} <br /> {res.email}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <span>{res.current_location}</span>
+                                <span className="px-1">
+                                  {res.currently_located_country}
+                                </span>
+                              </h3>
+                            </th>
+                            <th className=" py-7  min-width-px-100">
+                              <Link to="" onClick={() => addFollow(res)}>
+                                <span className=" fas fa-plus text-gray px-2"></span>
+                              </Link>
+                              {/* <Link to="">
                               <span className=" text-danger">
                                 <i className="fa fa-trash"></i>
                               </span>
                             </Link> */}
-                          </th>
-                        </tr>
-                      ))}
+                            </th>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

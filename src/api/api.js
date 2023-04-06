@@ -161,7 +161,7 @@ export const GetAllJobs = async (
   column_name,
   sort_order
 ) => {
-  const response = await axios.post(`${API_URL}view_jobs`, {
+  const response = await axios.post(`${API_URL}getAllJobs`, {
     // employee_id: id,
     filter_category_id: category,
     filter_job_swap: job,
@@ -276,14 +276,24 @@ export const getallAdminData = async (
   column,
   sort
 ) => {
-  const response = await axios.post(`${API_URL}admin/getAllAdmin`, {
-    filter_admin_type: type,
-    page: page,
-    search: search,
-    limit: limit,
-    column_name: column,
-    sort_order: sort,
-  });
+  const response = await axios.post(
+    `${API_URL}admin/getAllAdmin`,
+    {
+      filter_admin_type: type,
+      page: page,
+      search: search,
+      limit: limit,
+      column_name: column,
+      sort_order: sort,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+      },
+    }
+  );
   return response.data;
 };
 /*Admin List Api */
@@ -297,16 +307,27 @@ export const getAllFollowUpData = async (
   column,
   sort
 ) => {
-  const response = await axios.post(`${API_URL}admin/getFollowupView`, {
-    filter_job_type: job,
-    filter_company_name: company,
-    filter_experience: experience,
-    page: page,
-    search: search,
-    limit: limit,
-    column_name: column,
-    sort_order: sort,
-  });
+  const response = await axios.post(
+    `${API_URL}admin/getFollowupView`,
+    {
+      filter_job_type: job,
+      filter_company_name: company,
+      filter_experience: experience,
+      page: page,
+      search: search,
+      limit: limit,
+      column_name: column,
+      sort_order: sort,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+      },
+    }
+  );
+
   return response.data;
 };
 /*Job Category List Api */
@@ -361,6 +382,8 @@ export const AdminDetails = async (props) => {
     {
       headers: {
         "Content-Type": "application/json",
+        Authorization:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
       },
     }
   );
@@ -369,12 +392,28 @@ export const AdminDetails = async (props) => {
 };
 /*Add Admin Api */
 export const AddAdmin = async (props) => {
-  const response = await axios.put(`${API_URL}admin/addAdmin`, props);
+  const response = await axios.put(`${API_URL}admin/addAdmin`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+    },
+  });
   return response.data;
 };
 /*Delete Admin Api */
 export const DeleteAdmin = async (props) => {
-  const response = await axios.delete(`${API_URL}admin/deleteAdmin/${props}`);
+  const response = await axios.post(
+    `${API_URL}admin/deleteAdmin`,
+    { admin_id: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+      },
+    }
+  );
   return response.data;
 };
 /*Add Followup Api */

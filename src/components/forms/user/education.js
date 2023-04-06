@@ -46,6 +46,8 @@ function Education(props) {
           ? "University is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "University had 2 or more letters"
           : null,
     ],
     course: [
@@ -61,7 +63,7 @@ function Education(props) {
     institute_location: [
       (value) =>
         value === null || value.trim() === ""
-          ? "institute_location is required"
+          ? "Institute location is required"
           : null,
     ],
     passing_year: [
@@ -140,6 +142,9 @@ function Education(props) {
       setDeleteAlert(false);
     }
   }
+  let date = moment();
+  const currentYear = date.year();
+  console.log(currentYear);
   return (
     <>
       <Modal
@@ -180,6 +185,7 @@ function Education(props) {
                   value={state.qualification}
                   onChange={onInputChange}
                 >
+                  <option value={""}>Select qualification</option>
                   {(FilterJson.qualification || []).map((data, i) => {
                     return (
                       <option value={data} key={i}>
@@ -360,6 +366,7 @@ function Education(props) {
                   name="passing_year"
                   value={moment(state.passing_year).format("YYYY")}
                   onChange={onInputChange}
+                  max={currentYear}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
                 {errors.passing_year && (

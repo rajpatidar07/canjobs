@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetJobDetail } from "../../api/api";
+import moment from "moment";
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let skill = [];
@@ -10,7 +11,6 @@ function JobDetailPage(props) {
     if (props.jobdata !== undefined && props.jobdata !== "0") {
       setJobDetailsData(userData.data.data[0]);
     }
-    console.log(userData);
   };
   /*Render method to get job detail data */
   useEffect(() => {
@@ -109,7 +109,7 @@ function JobDetailPage(props) {
                 Type of corporation
               </span>
               <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9">
-                B2B &amp; B2C
+                {jobDetatilsData.corporation}
               </h6>
             </div>
             <div className="tags">
@@ -146,7 +146,7 @@ function JobDetailPage(props) {
                 Company size
               </span>
               <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                11-50 employees
+                {jobDetatilsData.company_size}
               </h6>
             </div>
           </div>
@@ -156,7 +156,7 @@ function JobDetailPage(props) {
                 Posted Time
               </span>
               <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                16 November 2020
+                {moment(jobDetatilsData.created_at).format("YYYY-MM-DD")}
               </h6>
             </div>
           </div>
@@ -168,9 +168,7 @@ function JobDetailPage(props) {
             <div className="">
               <p className="mb-4 font-size-4 text-gray">Job Description</p>
               <p className="font-size-4 text-black-2 mb-7">
-                Gubagoo is a fast growing provider of messaging and commerce
-                solutions for automotive dealers changing the future of how
-                people find, buy and service their vehicles.
+                {jobDetatilsData.job_description}
               </p>
             </div>
             <div className="">
@@ -178,45 +176,21 @@ function JobDetailPage(props) {
                 Your Role:
               </span>
               <p className="font-size-4 text-black-2 mb-7">
-                We’re looking for a passionate individual to design beautiful
-                and functional products for our customers at Gubagoo. We move
-                very fast and you will be expected to contribute to a
-                cross-functional product development squad, that includes
-                product managers and developers, to deliver the UX and UI for
-                the team to bring to life.
-              </p>
-              <p className="font-size-4 text-black-2 mb-7">
-                We are serious about remote work. You can work for from
-                anywhere.
+                {jobDetatilsData.your_duties}
               </p>
               <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
                 What you will be doing:
               </span>
-              <ul className="list-unstyled">
-                <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-2">
-                  <span className="d-inline-block mr-7">•</span>
-                  Contribute new controls or design improvements to our
-                </li>
-                <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-1">
-                  <span className="d-inline-block mr-7">•</span>
-                  Take ownership of the successful delivery of features
-                </li>
-                <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-1">
-                  <span className="d-inline-block mr-7">•</span>
-                  Help set and achieve quarterly goals
-                </li>
-                <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-1">
-                  <span className="d-inline-block mr-7">•</span>
-                  Ship a TON of product improvements and features
-                </li>
-              </ul>
-              <Link
+              <p className="font-size-4 text-black-2 mb-7">
+                {jobDetatilsData.about}
+              </p>
+              {/* <Link
                 to={""}
                 className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                 href="#"
               >
                 Apply to this job
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

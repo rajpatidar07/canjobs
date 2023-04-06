@@ -496,7 +496,7 @@ function Job() {
                           className=" border-0 font-size-4 font-weight-normal"
                         >
                           <Link to="" className="text-gray">
-                            Total Vacancy{" "}
+                            Total Applicants
                           </Link>
                         </th>
                         <th
@@ -509,71 +509,89 @@ function Job() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {(jobData || []).map((job) => (
-                        <tr className="border border-color-2" key={job.job_id}>
-                          <th scope="row" className=" border-0 py-7 ">
-                            <div className="">
-                              <Link
-                                to={""}
-                                onClick={() => JobDetail(job.job_id)}
-                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                              >
-                                {job.job_title} ({job.industry_type})
-                              </Link>
-                            </div>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.employement} - {job.job_type}
-                            </h3>
-                          </th>
-                          <th className=" py-7">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.location}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.education}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.keyskill}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.language}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.salary}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.experience_required}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                              47
-                            </h3>
-                          </th>
-                          <th className=" py-7 min-width-px-100">
-                            <Link to="" onClick={() => editJob(job.job_id)}>
-                              <span className=" fas fa-edit text-gray px-5"></span>
-                            </Link>
-                            <Link to="" onClick={() => ShowDeleteAlert(job)}>
-                              <span className=" text-danger">
-                                <i className="fa fa-trash"></i>
-                              </span>
-                            </Link>
-                          </th>
+                      {totalData === 0 ? (
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th>No Data Found</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
                         </tr>
-                      ))}
+                      ) : (
+                        (jobData || []).map((job) => (
+                          <tr
+                            className="border border-color-2"
+                            key={job.job_id}
+                          >
+                            <th scope="row" className=" border-0 py-7 ">
+                              <div className="">
+                                <Link
+                                  to={""}
+                                  onClick={() => JobDetail(job.job_id)}
+                                  className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                                >
+                                  {job.job_title} ({job.industry_type})
+                                </Link>
+                              </div>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.employement} - {job.job_type}
+                              </h3>
+                            </th>
+                            <th className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.location}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.education}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.keyskill}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.language}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.salary}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.experience_required}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                                {job.total_applicants}
+                              </h3>
+                            </th>
+                            <th className=" py-7 min-width-px-100">
+                              <Link to="" onClick={() => editJob(job.job_id)}>
+                                <span className=" fas fa-edit text-gray px-5"></span>
+                              </Link>
+                              <Link to="" onClick={() => ShowDeleteAlert(job)}>
+                                <span className=" text-danger">
+                                  <i className="fa fa-trash"></i>
+                                </span>
+                              </Link>
+                            </th>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

@@ -74,10 +74,12 @@ function AddJobModal(props) {
           ? "Job Title is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "Job Title had 2 or more letters"
           : null,
     ],
     experience_required: [
-      (value) => (value === "" ? "experience_required is required" : null),
+      (value) => (value === "" ? "Experienceis required" : null),
     ],
     salary: [
       (value) =>
@@ -90,7 +92,7 @@ function AddJobModal(props) {
     industry_type: [
       (value) =>
         value === ""
-          ? "industry_type Type is required"
+          ? "Industry type Type is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
@@ -98,26 +100,36 @@ function AddJobModal(props) {
 
     apply_link: [
       (value) =>
-        value === "" || value.trim() === "" ? "apply_link is required" : null,
+        value === "" || value.trim() === ""
+          ? "Apply link is required"
+          : value.length <= 5
+          ? "Apply link  had 5 or more letters"
+          : null,
     ],
     job_description: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Job Description is required"
+          : value.length <= 5
+          ? "Job Description  had 5 or more letters"
           : null,
     ],
     your_duties: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "your_duties is required"
+          ? "Your duties is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "Duties  had 2 or more letters"
           : null,
     ],
     requirement: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Job requirement is required"
+          : value.length <= 2
+          ? "Requirement  had 2 or more letters"
           : null,
     ],
     department: [
@@ -126,6 +138,8 @@ function AddJobModal(props) {
           ? "Department is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "Department  had 2 or more letters"
           : null,
     ],
     job_type: [
@@ -140,15 +154,23 @@ function AddJobModal(props) {
     // ],
     education: [
       (value) =>
-        value === "" || value.trim() === "" ? "education is required" : null,
+        value === "" || value.trim() === "" ? "Education is required" : null,
     ],
     language: [
       (value) =>
-        value === "" || value.trim() === "" ? "language is required" : null,
+        value === "" || value.trim() === ""
+          ? "Language is required"
+          : value.length <= 2
+          ? "Language  had 2 or more letters"
+          : null,
     ],
     keyskill: [
       (value) =>
-        value === "" || value.trim() === "" ? "keyskill is required" : null,
+        value === "" || value.trim() === ""
+          ? "Skill is required"
+          : value.length <= 2
+          ? "Skill  had 2 or more letters"
+          : null,
     ],
 
     employement: [
@@ -191,7 +213,7 @@ function AddJobModal(props) {
   useEffect(() => {
     CategoryData();
     CompnayData();
-    if (props.jobdata === "0") {
+    if (props.jobdata === "0" || props.jobdata === undefined) {
       setState(initialFormState);
     } else {
       JobData();
@@ -296,7 +318,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Job Title"
+                    placeholder="Experience"
                     id="experience_required"
                   >
                     <option value={""}>select Experience</option>
@@ -412,7 +434,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="industry_type"
+                    placeholder="industry type"
                     id="industry_type"
                   >
                     <option value={""}>select industry</option>
@@ -452,7 +474,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply apply_link"
+                    placeholder="Apply link"
                     id="apply_link"
                   />
                   {/*----ERROR MESSAGE FOR apply_link----*/}
@@ -496,6 +518,8 @@ function AddJobModal(props) {
                       initData="Job Description"
                     /> */}
                     <textarea
+                      maxLength={30}
+                      placeholder="Job Description"
                       name="job_description"
                       value={state.job_description}
                       onChange={onInputChange}
@@ -546,6 +570,8 @@ function AddJobModal(props) {
                       initData="your duties"
                     /> */}
                     <textarea
+                      maxLength={30}
+                      placeholder="Your Duties"
                       name="your_duties"
                       value={state.your_duties}
                       onChange={onInputChange}
@@ -594,6 +620,8 @@ function AddJobModal(props) {
                       initData="Add Requirement"
                     /> */}
                     <textarea
+                      maxLength={30}
+                      placeholder="Requirements"
                       name="requirement"
                       value={state.requirement}
                       onChange={onInputChange}
@@ -637,7 +665,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply department"
+                    placeholder="Department"
                     id="department"
                   />
                   {/*----ERROR MESSAGE FOR department----*/}
@@ -781,7 +809,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply language"
+                    placeholder="Language"
                     id="language"
                   />
                   {/*----ERROR MESSAGE FOR language----*/}
@@ -814,7 +842,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply keyskill"
+                    placeholder="Skill"
                     id="keyskill"
                   />
                   {/*----ERROR MESSAGE FOR keyskill----*/}
@@ -833,7 +861,7 @@ function AddJobModal(props) {
                   htmlFor="employement"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  employement <span className="text-danger"> *</span> :
+                  Employement <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <select
@@ -886,7 +914,7 @@ function AddJobModal(props) {
                         ? " form-control border border-danger position-relative overflow-hidden"
                         : " form-control position-relative overflow-hidden"
                     }
-                    placeholder="Apply job category id"
+                    placeholder="Job category"
                     id="job_category_id"
                   >
                     <option value={""}>select Category</option>

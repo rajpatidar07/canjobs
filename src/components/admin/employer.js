@@ -477,127 +477,148 @@ function Employer() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {(employerData || []).map((empdata) => (
-                        <tr
-                          className="border border-color-2"
-                          key={empdata.company_id}
-                        >
-                          <th scope="row" className="pl-6 border-0 py-7 pr-0 ">
-                            <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto">
-                                {empdata.logo === null ? (
-                                  <img
-                                    src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                ) : (
-                                  <img
-                                    src={empdata.logo}
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                )}
-                              </div>
-                            </div>
-                          </th>
-                          <th className=" border-0 py-7 pr-0">
-                            <Link
-                              to={""}
-                              onClick={() => EmployerDetail(empdata.company_id)}
-                            >
-                              <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.contact_person_name}
-                              </h4>
-                            </Link>
-                          </th>
-                          <th className=" py-7  pr-0">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.vacancies}
-                            </h3>
-                          </th>
-                          <th className=" py-7  pr-0">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.address} {empdata.city} (
-                              {empdata.pin_code}) {empdata.state}{" "}
-                              {empdata.country}
-                            </h3>
-                          </th>
-                          <th className=" py-7  pr-0">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              +{empdata.contact_no} +{empdata.contact_no_other}
-                              <br />
-                              <span className="text-gray font-size-2">
-                                {empdata.email}
-                              </span>
-                            </h3>
-                          </th>
-                          <th className=" py-7  pr-0">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.company_name}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.industry}
-                            </h3>
-                          </th>
-                          <th className=" py-7 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.vacancy_for_post}
-                            </h3>
-                          </th>
-                          <th className="  py-7 ">
-                            <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
-                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                Pending
-                              </span>
-                            </h3>
-                          </th>
-                          <th className="  py-7  d-flex">
-                            <Link
-                              to=""
-                              onClick={() =>
-                                editEmployerContact(empdata.company_id)
-                              }
-                            >
-                              <span className="fa fa-address-book text-gray px-1"></span>
-                            </Link>
-                            <ContactInfo
-                              show={showContactModal}
-                              employerId={employerId}
-                              close={() => setShowContactMOdal(false)}
-                            />
-                            <Link
-                              to=""
-                              onClick={() =>
-                                editEmployerKyc(empdata.company_id)
-                              }
-                            >
-                              <span className="fa fa-file text-gray px-1 "></span>
-                            </Link>
-                            <KycComplianceDetails
-                              show={showKycModal}
-                              employerId={employerId}
-                              close={() => setShowkycMOdal(false)}
-                            />
-                            <Link
-                              to=""
-                              onClick={() => editEmployer(empdata.company_id)}
-                            >
-                              <span className=" fas fa-edit text-gray px-1">
-                                {" "}
-                              </span>
-                            </Link>
-                            <Link
-                              to=""
-                              onClick={() => ShowDeleteAlert(empdata)}
-                            >
-                              <span className="fa fa-trash text-danger px-1"></span>
-                            </Link>
-                          </th>
+                      {totalData === 0 ? (
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th>No Data Found</th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
                         </tr>
-                      ))}
+                      ) : (
+                        (employerData || []).map((empdata) => (
+                          <tr
+                            className="border border-color-2"
+                            key={empdata.company_id}
+                          >
+                            <th
+                              scope="row"
+                              className="pl-6 border-0 py-7 pr-0 "
+                            >
+                              <div className="media  align-items-center">
+                                <div className="circle-36 mx-auto">
+                                  {empdata.logo === null ? (
+                                    <img
+                                      src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                      alt=""
+                                      className="w-100"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={empdata.logo}
+                                      alt=""
+                                      className="w-100"
+                                    />
+                                  )}
+                                </div>
+                              </div>
+                            </th>
+                            <th className=" border-0 py-7 pr-0">
+                              <Link
+                                to={""}
+                                onClick={() =>
+                                  EmployerDetail(empdata.company_id)
+                                }
+                              >
+                                <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.contact_person_name}
+                                </h4>
+                              </Link>
+                            </th>
+                            <th className=" py-7  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.vacancies}
+                              </h3>
+                            </th>
+                            <th className=" py-7  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.address} {empdata.city} (
+                                {empdata.pin_code}) {empdata.state}{" "}
+                                {empdata.country}
+                              </h3>
+                            </th>
+                            <th className=" py-7  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                +{empdata.contact_no} +
+                                {empdata.contact_no_other}
+                                <br />
+                                <span className="text-gray font-size-2">
+                                  {empdata.email}
+                                </span>
+                              </h3>
+                            </th>
+                            <th className=" py-7  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.company_name}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.industry}
+                              </h3>
+                            </th>
+                            <th className=" py-7 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.vacancy_for_post}
+                              </h3>
+                            </th>
+                            <th className="  py-7 ">
+                              <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                  Pending
+                                </span>
+                              </h3>
+                            </th>
+                            <th className="  py-7  d-flex">
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  editEmployerContact(empdata.company_id)
+                                }
+                              >
+                                <span className="fa fa-address-book text-gray px-1"></span>
+                              </Link>
+                              <ContactInfo
+                                show={showContactModal}
+                                employerId={employerId}
+                                close={() => setShowContactMOdal(false)}
+                              />
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  editEmployerKyc(empdata.company_id)
+                                }
+                              >
+                                <span className="fa fa-file text-gray px-1 "></span>
+                              </Link>
+                              <KycComplianceDetails
+                                show={showKycModal}
+                                employerId={employerId}
+                                close={() => setShowkycMOdal(false)}
+                              />
+                              <Link
+                                to=""
+                                onClick={() => editEmployer(empdata.company_id)}
+                              >
+                                <span className=" fas fa-edit text-gray px-1">
+                                  {" "}
+                                </span>
+                              </Link>
+                              <Link
+                                to=""
+                                onClick={() => ShowDeleteAlert(empdata)}
+                              >
+                                <span className="fa fa-trash text-danger px-1"></span>
+                              </Link>
+                            </th>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AdminDetails, AddAdmin } from "../../../api//api";
@@ -7,10 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Addadmin(props) {
   // let [adminDetails, setAdmindetails] = useState([]);
+  let [already, setAlready] = useState("");
   const close = () => {
     setState(initialFormState);
     setErrors("");
     props.close();
+    setAlready("");
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
 
@@ -95,6 +97,9 @@ function Addadmin(props) {
         });
         return close();
       }
+      if (responseData.message === "Admin already exists") {
+        setAlready("Admin already exists");
+      }
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
@@ -118,7 +123,7 @@ function Addadmin(props) {
           {props.adminId === "0" ? (
             <h5 className="text-center pt-2">Add Admin</h5>
           ) : (
-            <h5 className="text-center pt-2">Add Admin</h5>
+            <h5 className="text-center pt-2">Update Admin</h5>
           )}
           <form onSubmit={onAminProfileUpdateClick}>
             <div className="form-group mt-5">
@@ -166,6 +171,7 @@ function Addadmin(props) {
                 id="email"
                 name="email"
                 type={"email"}
+                disabled={props.adminId === "0" ? false : true}
               />
               {/*----ERROR MESSAGE FOR EMAIL----*/}
               {errors.email && (
@@ -270,6 +276,7 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
+            <span className="text-danger font-size-3">{already}</span>
             <div className="form-group text-center">
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"

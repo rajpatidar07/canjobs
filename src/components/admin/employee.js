@@ -496,127 +496,136 @@ function Employee() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {(employeeData || []).map((empdata) => (
-                        <tr
-                          className="border border-color-2"
-                          key={empdata.employee_id}
-                        >
-                          <td className="pl-6 border-0 py-7 pr-0  ">
-                            <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto">
-                                {empdata.profile_photo === null ? (
-                                  <img
-                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                ) : (
-                                  <img
-                                    src={empdata.profile_photo}
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                )}
-                              </div>
-                            </div>
-                          </td>
-                          <td className=" py-7  pr-0">
-                            <Link
-                              to={""}
-                              onClick={() => setShowEmployeeProfile(true)}
-                            >
-                              <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                <p className="m-0">{empdata.name}</p>
-                                <p className="text-gray font-size-2 m-0">
-                                  {empdata.marital_status} ({empdata.gender}
-                                  {/*Calculation of age from date of birth*/}
-                                  {moment().diff(
-                                    empdata.date_of_birth,
-                                    "years"
+                      {totalData !== 0 ? (
+                        (employeeData || []).map((empdata) => (
+                          <tr
+                            className="border border-color-2"
+                            key={empdata.employee_id}
+                          >
+                            <td className="pl-6 border-0 py-7 pr-0  ">
+                              <div className="media  align-items-center">
+                                <div className="circle-36 mx-auto">
+                                  {empdata.profile_photo === null ? (
+                                    <img
+                                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                      alt=""
+                                      className="w-100"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={empdata.profile_photo}
+                                      alt=""
+                                      className="w-100"
+                                    />
                                   )}
-                                  )
+                                </div>
+                              </div>
+                            </td>
+                            <td className=" py-7  pr-0">
+                              <Link
+                                to={""}
+                                onClick={() => setShowEmployeeProfile(true)}
+                              >
+                                <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  <p className="m-0">{empdata.name}</p>
+                                  <p className="text-gray font-size-2 m-0">
+                                    {empdata.marital_status} ({empdata.gender}
+                                    {/*Calculation of age from date of birth*/}
+                                    {moment().diff(
+                                      empdata.date_of_birth,
+                                      "years"
+                                    )}
+                                    )
+                                  </p>
+                                </h4>
+                              </Link>
+                            </td>
+                            <td className=" py-7  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <p className="m-0">+{empdata.contact_no}</p>
+                                <p className="text-gray font-size-2 m-0">
+                                  {empdata.email}
                                 </p>
-                              </h4>
-                            </Link>
-                          </td>
-                          <td className=" py-7  pr-0">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="m-0">+{empdata.contact_no}</p>
-                              <p className="text-gray font-size-2 m-0">
-                                {empdata.email}
-                              </p>
-                            </h3>
-                          </td>
+                              </h3>
+                            </td>
 
-                          <Education
-                            close={() => setShowEducationModal(false)}
-                            employeeEducationData={employeeEducationId}
-                            show={showEducationModal}
-                          />
-                          <Skills
-                            show={showSkillsModal}
-                            employeeSkillData={employeeSkillId}
-                            close={() => setShowSkillsModal(false)}
-                          />
-                          <td className=" py-7 min-width-px-100">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.language}
-                            </h3>
-                          </td>
-                          <td className=" py-7 min-width-px-100">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.education}
-                            </h3>
-                          </td>
-                          <td className=" py-7 min-width-px-100">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.skill}
-                            </h3>
-                          </td>
-                          <td className=" py-7 min-width-px-100">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.specialization}
-                            </h3>
-                          </td>
-                          <td className=" py-7 min-width-px-100">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.experience}
-                            </h3>
-                          </td>
-                          <td className="d-flex py-7 min-width-px-100">
-                            <Link
-                              to=""
-                              onClick={() =>
-                                editEmployeeEducation(empdata.employee_id)
-                              }
-                            >
-                              <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                            </Link>
-                            <Link
-                              to=""
-                              onClick={() =>
-                                editEmployeeSkills(empdata.employee_id)
-                              }
-                            >
-                              <span className=" fa fa-cogs text-gray px-2"></span>
-                            </Link>
-                            <Link
-                              to=""
-                              onClick={() => editEmployee(empdata.employee_id)}
-                            >
-                              <span className=" fas fa-edit text-gray px-2"></span>
-                            </Link>
-                            <Link
-                              to=""
-                              onClick={() => ShowDeleteAlert(empdata)}
-                            >
-                              <span className=" text-danger">
-                                <i className="fa fa-trash "></i>
-                              </span>
-                            </Link>
-                          </td>
+                            <Education
+                              close={() => setShowEducationModal(false)}
+                              employeeEducationData={employeeEducationId}
+                              show={showEducationModal}
+                            />
+                            <Skills
+                              show={showSkillsModal}
+                              employeeSkillData={employeeSkillId}
+                              close={() => setShowSkillsModal(false)}
+                            />
+                            <td className=" py-7 min-width-px-100">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.language}
+                              </h3>
+                            </td>
+                            <td className=" py-7 min-width-px-100">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.education}
+                              </h3>
+                            </td>
+                            <td className=" py-7 min-width-px-100">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.skill}
+                              </h3>
+                            </td>
+                            <td className=" py-7 min-width-px-100">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.specialization}
+                              </h3>
+                            </td>
+                            <td className=" py-7 min-width-px-100">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {empdata.experience}
+                              </h3>
+                            </td>
+                            <td className="d-flex py-7 min-width-px-100">
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  editEmployeeEducation(empdata.employee_id)
+                                }
+                              >
+                                <span className="	fas fa-graduation-cap text-gray px-2"></span>
+                              </Link>
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  editEmployeeSkills(empdata.employee_id)
+                                }
+                              >
+                                <span className=" fa fa-cogs text-gray px-2"></span>
+                              </Link>
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  editEmployee(empdata.employee_id)
+                                }
+                              >
+                                <span className=" fas fa-edit text-gray px-2"></span>
+                              </Link>
+                              <Link
+                                to=""
+                                onClick={() => ShowDeleteAlert(empdata)}
+                              >
+                                <span className=" text-danger">
+                                  <i className="fa fa-trash "></i>
+                                </span>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>

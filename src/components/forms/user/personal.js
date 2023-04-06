@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function PersonalDetails(props) {
+  let encoded;
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -28,7 +29,6 @@ function PersonalDetails(props) {
     work_permit_canada: "",
     work_permit_other_country: "",
     resume: "",
-    filename: "",
   };
   const close = () => {
     setState(initialFormStateuser);
@@ -45,6 +45,8 @@ function PersonalDetails(props) {
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "Name had to 2 or more letter"
           : null,
     ],
     email: [
@@ -58,7 +60,7 @@ function PersonalDetails(props) {
     contact_no: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "MobileNo. is required"
+          ? "Mobile No. is required"
           : value.length !== 10
           ? "Mobile no should be of 10 digits"
           : null,
@@ -69,6 +71,8 @@ function PersonalDetails(props) {
           ? "Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character"
+          : value.length <= 5
+          ? "Description had to 5 or more letter"
           : null,
     ],
     date_of_birth: [(value) => (value ? null : "Dob is required")],
@@ -80,6 +84,8 @@ function PersonalDetails(props) {
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 5
+          ? "Nationality had to 5 or more letter"
           : null,
     ],
     current_location: [
@@ -88,6 +94,8 @@ function PersonalDetails(props) {
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "Location had to 5 or more letter"
           : null,
     ],
     currently_located_country: [
@@ -96,29 +104,38 @@ function PersonalDetails(props) {
           ? "Country is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 2
+          ? "Country had to 5 or more letter"
           : null,
     ],
     language: [
       (value) =>
-        value === "" || value.trim() === "" ? "Language is required" : null,
+        value === "" || value.trim() === ""
+          ? "Language is required"
+          : value.length <= 5
+          ? "Language had to 5 or more letter"
+          : null,
     ],
     religion: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "religion is required"
+          ? "Religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length <= 5
+          ? "Religion had to 5 or more letter"
           : null,
     ],
     interested_in: [
       (value) =>
         value === ""
-          ? "interested_in is required"
+          ? "Interested in is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : null,
     ],
-    experience: [(value) => (value === "" ? "experience is required" : null)],
+    experience: [(value) => (value === "" ? "Experience is required" : null)],
+    resume: [(value) => (value === "" ? "Resume is required" : null)],
     work_permit_canada: [
       (value) => (value === "" ? "Work Permit is required" : null),
     ],
@@ -172,32 +189,25 @@ function PersonalDetails(props) {
     }
   }
   // END USER PERSONAL DETAIL VALIDATION
-
-  // const handleUploadFile = (event) => {
-  // let selectedFile = event.target.files[0];
-  //   let file = null;
-  //   let fileName = "";
-  //   //Check File is not Empty
-  //   if (selectedFile.length > 0) {
-  //     // Select the very first file from list
-  //     let fileToLoad = selectedFile[0];
-  //     fileName = fileToLoad.name;
-  //     // FileReader function for read the file.
-  //     let fileReader = new FileReader();
-  //     // Onload of file read the file content
-  //     fileReader.onload = function (fileLoadedEvent) {
-  //       file = fileLoadedEvent.target.result;
-  //       // Print data in console
-  //       console.log(file, fileName);
-  //       //
-  //     };
-  //     console.log(file, fileName);
-  //     // Convert data to base64
-  //     fileReader.readAsDataURL(fileToLoad);
-  //   }
-  //   setState({ ...state, resume: "selectedFile" });
-  // };
-  console.log(state.resume);
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  /*Onchange function of Resume */
+  const handleUploadFile = async (e) => {
+    encoded = await convertToBase64(e.target.files[0]);
+    let base64Name = encoded.base64;
+    setState({ ...state, resume: base64Name });
+  };
   return (
     <>
       <Modal
@@ -670,7 +680,7 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                  interested_ined In : <span className="text-danger">*</span>
+                  Interested ined In : <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -814,11 +824,8 @@ function PersonalDetails(props) {
                   placeholder="Resume"
                   id="resume"
                   name="resume"
-                  value={state.resume}
                   accept=".pdf,application/pdf"
-                  onChange={(e) =>
-                    setState({ ...state, resume: e.target.files[0] })
-                  }
+                  onChange={handleUploadFile}
                   className={
                     errors.resume
                       ? "form-control border border-danger"

@@ -21,16 +21,17 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
   return (
     <div>
       <nav aria-label="Page navigation example">
-        <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
+        <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
           {/* To change page perivous page :- */}{" "}
           <li className="page-item rounded-0 flex-all-center">
             <Link
               to={""}
               onClick={prevPage}
               className={
-                currentPage === 1
-                  ? "page-link rounded-0 border-0 px-3 d-none"
-                  : "page-link rounded-0 border-0 px-3 "
+                // currentPage === 1
+                //   ? "page-link rounded-0 border-0 px-3 d-none"
+                // :
+                "page-link rounded-1 mr-1 px-3 "
               }
               aria-label="Previous"
             >
@@ -41,7 +42,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
           {pageNumbers.map((pgNumber) => {
             return (
               <li
-                className={currentPage === pgNumber ? "page-item" : ""}
+                className={currentPage === pgNumber ? "page-item px-1" : "px-1"}
                 key={pgNumber}
               >
                 {pgNumber === 0 ? (
@@ -50,7 +51,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
                   <Link
                     to={""}
                     onClick={() => setCurrentPage(pgNumber)}
-                    className={`page-link border-0 font-size-3 font-weight-semibold px-3 ${
+                    className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
                       currentPage === pgNumber ? "active " : ""
                     } `}
                   >
@@ -66,9 +67,10 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
               to={""}
               onClick={nextPage}
               className={
-                currentPage === pageNumbers.length
-                  ? "page-link rounded-0 border-0 px-3 d-none"
-                  : "page-link rounded-0 border-0 px-3"
+                // currentPage === pageNumbers.length
+                //   ? "page-link rounded-0 border-0 px-3 d-none"
+                // :
+                "page-link rounded-1 ml-1 px-3"
               }
               aria-label="Next"
             >
