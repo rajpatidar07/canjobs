@@ -137,11 +137,18 @@ export const GetAllResponse = async (props) => {
   // return response;
 };
 /*single job data api */
-export const GetJobDetail = async (props) => {
+export const GetJob = async (props) => {
   const response = await axios.post(`${API_URL}getJob`, { job_id: props });
   return response;
 };
 
+/*single job Detail api */
+export const GetJobDetail = async (props) => {
+  const response = await axios.post(`${API_URL}/admin/jobDetail`, {
+    job_id: props,
+  });
+  return response;
+};
 // EMPLOYER'S API
 export const GetAllJobs = async (
   category,

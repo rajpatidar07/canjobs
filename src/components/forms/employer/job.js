@@ -6,7 +6,7 @@ import FilterJson from "./../../json/filterjson";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  GetJobDetail,
+  GetJob,
   AddJob,
   getAllJobsCategory,
   getAllEmployer,
@@ -170,11 +170,10 @@ function AddJobModal(props) {
     useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
-    let userData = await GetJobDetail(props.jobdata);
+    let userData = await GetJob(props.jobdata);
     if (props.jobdata !== undefined && props.jobdata !== "0") {
       setState(userData.data.data[0]);
     }
-    // console.log(userData);
   };
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -300,6 +299,7 @@ function AddJobModal(props) {
                     placeholder="Job Title"
                     id="experience_required"
                   >
+                    <option value={""}>select Experience</option>
                     {(FilterJson.experience || []).map((exp) => (
                       <option key={exp} value={exp}>
                         {exp}
@@ -375,6 +375,7 @@ function AddJobModal(props) {
                   placeholder="Location"
                   id="location"
                 >
+                  <option value={""}>select location</option>
                   {(FilterJson.location || []).map((location) => (
                     <option key={location} value={location}>
                       {location}
@@ -414,6 +415,7 @@ function AddJobModal(props) {
                     placeholder="industry_type"
                     id="industry_type"
                   >
+                    <option value={""}>select industry</option>
                     {(FilterJson.industry || []).map((industry) => (
                       <option key={industry} value={industry}>
                         {industry}
@@ -669,7 +671,7 @@ function AddJobModal(props) {
                         : " form-control position-relative overflow-hidden"
                     }
                   >
-                    <option value={""}>select company</option>
+                    <option value={""}>select job type</option>
                     {(FilterJson.job_type || []).map((job_type) => (
                       <option key={job_type} value={job_type}>
                         {job_type}
@@ -740,6 +742,7 @@ function AddJobModal(props) {
                     placeholder="Apply education"
                     id="education"
                   >
+                    <option value={""}>select education</option>
                     {(FilterJson.education || []).map((education) => (
                       <option key={education} value={education}>
                         {education}
@@ -845,6 +848,7 @@ function AddJobModal(props) {
                     placeholder="Apply employement"
                     id="employement"
                   >
+                    <option value={""}>select education</option>
                     {(FilterJson.employement || []).map((employement) => (
                       <option key={employement} value={employement}>
                         {employement}
@@ -885,6 +889,7 @@ function AddJobModal(props) {
                     placeholder="Apply job category id"
                     id="job_category_id"
                   >
+                    <option value={""}>select Category</option>
                     {(category || []).map((cat) => (
                       <option
                         key={cat.job_category_id}

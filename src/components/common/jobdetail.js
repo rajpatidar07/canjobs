@@ -10,6 +10,7 @@ function JobDetailPage(props) {
     if (props.jobdata !== undefined && props.jobdata !== "0") {
       setJobDetailsData(userData.data.data[0]);
     }
+    console.log(userData);
   };
   /*Render method to get job detail data */
   useEffect(() => {
