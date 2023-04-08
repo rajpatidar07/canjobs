@@ -34,10 +34,14 @@ function Skills(props) {
     skill: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Skills is required"
+          ? "Skills / Software Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value.length < 3
+          ? "Skills / Software Name should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Skills / Software Name can not have a number."
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -45,11 +49,11 @@ function Skills(props) {
     useValidation(initialFormState, validators);
   // API CALL
   const SkillData = async () => {
-    let SkillDetails = await EmployeeSkillDetails(props.employeeSkillData);
-    SetSkillData(SkillDetails.data);
+    let SkillDetails = await EmployeeSkillDetails(props.employeeId);
+    SetSkillData(SkillDetails.data.skill);
   };
   useEffect(() => {
-    if (props.employeeEducationData !== undefined) {
+    if (props.employeeId !== undefined) {
       SkillData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,7 +63,7 @@ function Skills(props) {
   const onUserSkillsClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      let responseData = await AddEmployeeSkill(state, props.employeeSkillData);
+      let responseData = await AddEmployeeSkill(state, props.employeeId);
       if (responseData.message === "Employee data updated successfully") {
         toast.success("Skill Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,

@@ -75,8 +75,10 @@ function AddJobModal(props) {
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length <= 2
-          ? "Job Title had 2 or more letters"
-          : null,
+          ? "Job Title should have 2 or more letters"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Job Title can not have a number."
+          : "",
     ],
     experience_required: [
       (value) => (value === "" ? "Experienceis required" : null),
@@ -102,16 +104,20 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Apply link is required"
-          : value.length <= 5
-          ? "Apply link  had 5 or more letters"
+          : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
+              value
+            )
+          ? "Write the correct link"
+          : value.length <= 3
+          ? "Apply link  should have 3 or more letters"
           : null,
     ],
     job_description: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Job Description is required"
-          : value.length <= 5
-          ? "Job Description  had 5 or more letters"
+          : value.length <= 3
+          ? "Job Description  should have 3 or more letters"
           : null,
     ],
     your_duties: [
@@ -121,16 +127,20 @@ function AddJobModal(props) {
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length <= 2
-          ? "Duties  had 2 or more letters"
-          : null,
+          ? "Duties  should have 2 or more letters"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Duties can not have a number."
+          : "",
     ],
     requirement: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Job requirement is required"
           : value.length <= 2
-          ? "Requirement  had 2 or more letters"
-          : null,
+          ? "Requirement  should have 2 or more letters"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Requirement can not have a number."
+          : "",
     ],
     department: [
       (value) =>
@@ -139,8 +149,10 @@ function AddJobModal(props) {
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length <= 2
-          ? "Department  had 2 or more letters"
-          : null,
+          ? "Department  should have 2 or more letters"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Department can not have a number."
+          : "",
     ],
     job_type: [
       (value) =>
@@ -154,23 +166,31 @@ function AddJobModal(props) {
     // ],
     education: [
       (value) =>
-        value === "" || value.trim() === "" ? "Education is required" : null,
+        value === "" || value.trim() === ""
+          ? "Education is required"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Education can not have a number."
+          : "",
     ],
     language: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Language is required"
-          : value.length <= 2
-          ? "Language  had 2 or more letters"
-          : null,
+          : value.length <= 3
+          ? "Language  should have 3 or more letters"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Language can not have a number."
+          : "",
     ],
     keyskill: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Skill is required"
-          : value.length <= 2
-          ? "Skill  had 2 or more letters"
-          : null,
+          : value.length <= 3
+          ? "Skill  should have 3 or more letters"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Skill can not have a number."
+          : "",
     ],
 
     employement: [

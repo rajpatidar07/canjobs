@@ -158,23 +158,26 @@ function ManageAdmin() {
         >
           <div className="container">
             <div className="mb-18">
-              <div className="row mb-8 align-items-center">
-                <div className="col-lg-6 mb-lg-0 mb-4">
+              <div className="mb-8 align-items-center">
+                <div className="">
                   <h3 className="font-size-6 mb-0">Admin</h3>
                 </div>
-                <div className="col-lg-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                <div className="row">
+                  <div className="col-xl-3 col-md-6 ">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Type:
+                    </p>
                     <input
                       required
                       type="text"
-                      className="form-control col-6"
+                      className="form-control "
                       placeholder={"Search Admin"}
                       value={search}
                       name={"Admin_name"}
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Type:
                     </p>
@@ -184,7 +187,7 @@ function ManageAdmin() {
                         value={typeFilterValue}
                         id="type"
                         onChange={onTypeFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">select type</option>
                         {(AdminType || []).map((type) => (
@@ -195,7 +198,7 @@ function ManageAdmin() {
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right mt-6">
+                  <div className="text-right col-xl-6 mt-6 mt-xl-12">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editAdmin("0")}

@@ -25,10 +25,14 @@ function AddCategory(props) {
     category_name: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Category is required"
+          ? "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Category Name can not have a number."
+          : value.length < 2
+          ? "Category Name should have 2 or more letters"
+          : "",
     ],
     category_type: [
       (value) =>

@@ -36,7 +36,11 @@ function CompanyDetails(props) {
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Company Name can not have a number."
+          : value.length < 2
+          ? "Company Name should have 2 or more letters"
+          : "",
     ],
     industry: [
       (value) =>
@@ -44,14 +48,16 @@ function CompanyDetails(props) {
           ? "Industry is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Industry can not have a number."
+          : value.length < 2
+          ? "Industry should have 2 or more letters"
+          : "",
     ],
     corporation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Corporation type is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : null,
     ],
     alias: [],
@@ -74,15 +80,21 @@ function CompanyDetails(props) {
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Vacancy can not have a number."
+          : value.length < 2
+          ? "Vacancy should have 2 or more letters"
+          : "",
     ],
     about: [
       (value) =>
         value === ""
-          ? "Company Description is required"
+          ? " is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value.length < 2
+          ? "Company Description should have 2 or more letters"
+          : "",
     ],
     // companylogo: [
     //   (value) =>
@@ -448,6 +460,7 @@ function CompanyDetails(props) {
                           : "form-control"
                       }
                       id="about"
+                      placeholder="Company Description"
                     ></textarea>
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}

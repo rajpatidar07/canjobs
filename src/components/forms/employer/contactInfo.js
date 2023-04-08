@@ -29,15 +29,18 @@ function ContactInfo(props) {
   const validators = {
     contact_person_name: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" ||
+        value === undefined ||
+        value === null ||
+        value.trim() === ""
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     email: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
           ? null
@@ -45,60 +48,60 @@ function ContactInfo(props) {
     ],
     contact_no: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Phone no is required"
-          : value.length !== 10
-          ? "Phone no should be of 10 digits"
-          : null,
+          : value.length < 10
+          ? "Mobile no should be of 10 digits"
+          : "",
     ],
     // contact_no_other: [],
     address: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Address is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     pin_code: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "pin_code is required"
           : value.length > 6
-          ? "Mobile no should be of 10 digits"
-          : null,
+          ? "PinCode no should be of 6 digits"
+          : "",
     ],
     city: [
       (value) =>
-        value === ""
+        value === "" || value === null || value.trim() === ""
           ? "City Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     state: [
       (value) =>
-        value === ""
+        value === "" || value === null || value.trim() === ""
           ? "State Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     country: [
       (value) =>
-        value === ""
+        value === "" || value === null || value.trim() === ""
           ? "Country Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     // designation: [
     //   (value) =>
-    //     value === "" || value.trim() === ""
+    //     value === ""
     //       ? "Designation is required"
     //       : /[^A-Za-z 0-9]/g.test(value)
     //       ? "Cannot use special character "
-    //       : null,
+    //       : "",
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -107,10 +110,16 @@ function ContactInfo(props) {
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
-    setState(userData.data.company_detail[0]);
+    if (
+      userData.data.company_detail !== undefined ||
+      userData.data.company_detail !== []
+    ) {
+      setState(userData.data.company_detail[0]);
+    }
+    console.log(userData.data);
   };
   useEffect(() => {
-    props.employerId === undefined
+    props.employerId === undefined || props.employerId === "0"
       ? setState(initialFormState)
       : EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import EmployeeHeader from "../common/header";
-import EmployeeFooter from "../common/footer";
+// import EmployeeHeader from "../common/header" ;
+// import EmployeeFooter from "../common/footer";
 import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
 import EducationDetails from "../forms/user/education";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { EmployeeDetails } from "../../api/api";
 import moment from "moment";
 
-const UserProfile = () => {
+const UserProfile = (props) => {
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -18,21 +18,29 @@ const UserProfile = () => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
+  const employeeId = props.employeeId;
   const UserData = async () => {
-    const userData = await EmployeeDetails();
+    const userData = await EmployeeDetails(props.employeeId);
     setuserDetail(userData.data);
-    setPersonalDetail(userData.data.personal_detail[0]);
+    setPersonalDetail(userData.data.employee[0]);
   };
   useEffect(() => {
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
+  }, [
+    showPersonalDetails,
+    showEmplyomentDetails,
+    showEducation,
+    showAppliedJobs,
+    showItSkills,
+    localStorage.getItem("user_id"),
+  ]);
   // console.log(("userData--" + JSON.stringify(userDetail)))
 
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
-      <EmployeeHeader />
+      {/* <EmployeeHeader /> */}
       <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32 mt-5">
         <div className="container mt-5 pt-5">
           <div className="row text-left mt-5 pt-5">
@@ -92,6 +100,7 @@ const UserProfile = () => {
                       />
                       <PersonalDetails
                         show={showPersonalDetails}
+                        employeeId={employeeId}
                         close={() => setShowPersonalDetails(false)}
                       />
                     </h4>
@@ -188,7 +197,7 @@ const UserProfile = () => {
                       <div className="info_box text-left">
                         <span className="font-size-3 text-smoke  mr-7">
                           Resume:{" "}
-                          <a href={PersonalDetail.resume}>View Resume</a>
+                          <Link to={PersonalDetail.resume}>View Resume</Link>
                         </span>
                       </div>
                     </div>
@@ -206,22 +215,18 @@ const UserProfile = () => {
 
                       <ItSkills
                         show={showItSkills}
+                        employeeId={employeeId}
                         close={() => setShowItSkills(false)}
                       />
 
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                        {(userDetail.employee_skills || []).map(
-                          (employeeSkills) => (
-                            <li>
-                              <Link
-                                className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                to="http://localhost:3000/"
-                              >
-                                Agile
-                              </Link>
-                            </li>
-                          )
-                        )}
+                        {(userDetail.skill || []).map((employeeSkills) => (
+                          <li key={employeeSkills.skill_id}>
+                            <span className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                              {employeeSkills.skill}
+                            </span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -307,49 +312,43 @@ const UserProfile = () => {
                         />
                         <EmployementDetails
                           show={showEmplyomentDetails}
+                          employeeId={employeeId}
                           close={() => setShowEmplyomentDetails(false)}
                         />
                       </h4>
                       {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                      {(userDetail.career_detail || []).map((CareerDetails) => (
-                        <div className="w-100">
+                      {(userDetail.career || []).map((CareerDetails) => (
+                        <div className="w-100" key={CareerDetails.career_id}>
                           <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                             <div className="media align-items-center company_box col-md-6 p-0">
                               <div className="text_box text-left w-100 mt-n2">
                                 <h3 className="mb-0">
-                                  <Link
-                                    className="font-size-6 text-black-2 font-weight-semibold"
-                                    to="http://localhost:3000/"
-                                  >
+                                  <span className="font-size-6 text-black-2 font-weight-semibold">
                                     {CareerDetails.designation} -{" "}
                                     <span className="font-size-4">
                                       {CareerDetails.functional_area}
                                     </span>
-                                  </Link>
+                                  </span>
                                 </h3>
-                                <Link
-                                  to="http://localhost:3000/"
-                                  className="font-size-4 text-default-color line-height-2"
-                                >
+                                <span className="font-size-4 text-default-color line-height-2">
                                   {CareerDetails.company} (
                                   {CareerDetails.industry})
-                                </Link>
+                                </span>
                               </div>
                             </div>
                             <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                              <Link
-                                to="http://localhost:3000/"
-                                className="font-size-4 text-gray w-100"
-                              >
-                                {CareerDetails.start_date} -{" "}
-                                {CareerDetails.end_date}
-                              </Link>
-                              <Link
-                                to="http://localhost:3000/"
-                                className="font-size-3 text-gray w-100"
-                              >
+                              <span className="font-size-4 text-gray w-100">
+                                {moment(CareerDetails.start_date).format(
+                                  "YYYY-MM-DD"
+                                )}{" "}
+                                -{" "}
+                                {moment(CareerDetails.end_date).format(
+                                  "YYYY-MM-DD"
+                                )}
+                              </span>
+                              <span className="font-size-3 text-gray w-100">
                                 <span
                                   className="mr-4"
                                   style={{ marginTop: "-2px" }}
@@ -360,7 +359,7 @@ const UserProfile = () => {
                                   />
                                 </span>
                                 {CareerDetails.company_location}
-                              </Link>
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -380,63 +379,52 @@ const UserProfile = () => {
                         />
                         <EducationDetails
                           show={showEducation}
+                          employeeId={employeeId}
                           close={() => setShowEducation(false)}
                         />
                       </h4>
-                      {(userDetail.education_detail || []).map(
-                        (EducationDetails) => (
-                          <div className="w-100">
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                              <div className="media align-items-center company_box p-0">
-                                <div className="text_box text-left w-100 mt-n2">
-                                  <h3 className="mb-0">
-                                    <Link
-                                      className="font-size-6 text-black-2 font-weight-semibold"
-                                      to="http://localhost:3000/"
-                                    >
-                                      {EducationDetails.qualification}{" "}
-                                      <span className="font-size-4">
-                                        ({EducationDetails.university_institute}
-                                        )
-                                      </span>
-                                    </Link>
-                                  </h3>
-                                  <Link
-                                    to="http://localhost:3000/"
-                                    className="font-size-4 text-default-color line-height-2"
-                                  >
-                                    {EducationDetails.course},{" "}
-                                    {EducationDetails.specialization}
-                                  </Link>
-                                </div>
-                              </div>
-                              <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                                <Link
-                                  to="http://localhost:3000/"
-                                  className="font-size-4 text-gray w-100"
-                                >
-                                  {EducationDetails.passing_year}
-                                </Link>
-                                <Link
-                                  to="http://localhost:3000/"
-                                  className="font-size-3 text-gray w-100"
-                                >
-                                  <span
-                                    className="mr-4"
-                                    style={{ marginTop: "-2px" }}
-                                  >
-                                    <img
-                                      src="image/svg/icon-loaction-pin-black.svg"
-                                      alt=""
-                                    />
+                      {(userDetail.education || []).map((EducationDetails) => (
+                        <div
+                          className="w-100"
+                          key={EducationDetails.education_id}
+                        >
+                          <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                            <div className="media align-items-center company_box p-0">
+                              <div className="text_box text-left w-100 mt-n2">
+                                <h3 className="mb-0">
+                                  <span className="font-size-6 text-black-2 font-weight-semibold">
+                                    {EducationDetails.qualification}{" "}
+                                    <span className="font-size-4">
+                                      ({EducationDetails.university_institute})
+                                    </span>
                                   </span>
-                                  {EducationDetails.institute_location}
-                                </Link>
+                                </h3>
+                                <span className="font-size-4 text-default-color line-height-2">
+                                  {EducationDetails.course},{" "}
+                                  {EducationDetails.specialization}
+                                </span>
                               </div>
                             </div>
+                            <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                              <span className="font-size-4 text-gray w-100">
+                                {EducationDetails.passing_year}
+                              </span>
+                              <span className="font-size-3 text-gray w-100">
+                                <span
+                                  className="mr-4"
+                                  style={{ marginTop: "-2px" }}
+                                >
+                                  <img
+                                    src="image/svg/icon-loaction-pin-black.svg"
+                                    alt=""
+                                  />
+                                </span>
+                                {EducationDetails.institute_location}
+                              </span>
+                            </div>
                           </div>
-                        )
-                      )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div
@@ -535,13 +523,13 @@ const UserProfile = () => {
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-indigo mr-8 rounded">
-                            <Link to="http://localhost:3000/">
+                            <Link to="">
                               <img src="image/l3/png/fimize.png" alt="" />
                             </Link>
                           </div>
                           <div>
                             <Link
-                              to="http://localhost:3000/"
+                              to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Fimize
@@ -549,7 +537,7 @@ const UserProfile = () => {
                             <h3 className="font-size-5 mb-0">
                               <Link
                                 className="heading-default-color font-weight-semibold"
-                                to="http://localhost:3000/"
+                                to=""
                               >
                                 Senior Marketing Expert
                               </Link>
@@ -560,7 +548,7 @@ const UserProfile = () => {
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -569,7 +557,7 @@ const UserProfile = () => {
                             </li>
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -578,7 +566,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                           <Link
-                            to="http://localhost:3000/"
+                            to=""
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
                           ></Link>
                         </div>
@@ -590,13 +578,13 @@ const UserProfile = () => {
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-regent mr-8 rounded">
-                            <Link to="http://localhost:3000/">
+                            <Link to="">
                               <img src="image/svg/icon-shark-2.svg" alt="" />
                             </Link>
                           </div>
                           <div>
                             <Link
-                              to="http://localhost:3000/"
+                              to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Shark
@@ -604,7 +592,7 @@ const UserProfile = () => {
                             <h3 className="font-size-5 mb-0">
                               <Link
                                 className="heading-default-color font-weight-semibold"
-                                to="http://localhost:3000/"
+                                to=""
                               >
                                 3D ui / ux frontend developer
                               </Link>
@@ -615,7 +603,7 @@ const UserProfile = () => {
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -624,7 +612,7 @@ const UserProfile = () => {
                             </li>
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -633,7 +621,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                           <Link
-                            to="http://localhost:3000/"
+                            to=""
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                           ></Link>
                         </div>
@@ -645,13 +633,13 @@ const UserProfile = () => {
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-orange-2 mr-8 rounded">
-                            <Link to="http://localhost:3000/">
+                            <Link to="">
                               <img src="image/svg/icon-thunder.svg" alt="" />
                             </Link>
                           </div>
                           <div>
                             <Link
-                              to="http://localhost:3000/"
+                              to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Thunder
@@ -659,7 +647,7 @@ const UserProfile = () => {
                             <h3 className="font-size-5 mb-0">
                               <Link
                                 className="heading-default-color font-weight-semibold"
-                                to="http://localhost:3000/"
+                                to=""
                               >
                                 Product Manager
                               </Link>
@@ -670,7 +658,7 @@ const UserProfile = () => {
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -679,7 +667,7 @@ const UserProfile = () => {
                             </li>
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -688,7 +676,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                           <Link
-                            to="http://localhost:3000/"
+                            to=""
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                           ></Link>
                         </div>
@@ -700,13 +688,13 @@ const UserProfile = () => {
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-helio mr-8 rounded">
-                            <Link to="http://localhost:3000/">
+                            <Link to="">
                               <img src="image/l3/png/asios.png" alt="" />
                             </Link>
                           </div>
                           <div>
                             <Link
-                              to="http://localhost:3000/"
+                              to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Shark
@@ -714,7 +702,7 @@ const UserProfile = () => {
                             <h3 className="font-size-5 mb-0">
                               <Link
                                 className="heading-default-color font-weight-semibold"
-                                to="http://localhost:3000/"
+                                to=""
                               >
                                 Front-end Developer
                               </Link>
@@ -725,7 +713,7 @@ const UserProfile = () => {
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -734,7 +722,7 @@ const UserProfile = () => {
                             </li>
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -743,7 +731,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                           <Link
-                            to="http://localhost:3000/"
+                            to=""
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
                           ></Link>
                         </div>
@@ -762,13 +750,13 @@ const UserProfile = () => {
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-orange-2 mr-8 rounded">
-                            <Link to="http://localhost:3000/">
+                            <Link to="">
                               <img src="image/svg/icon-thunder.svg" alt="" />
                             </Link>
                           </div>
                           <div>
                             <Link
-                              to="http://localhost:3000/"
+                              to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Thunder
@@ -776,7 +764,7 @@ const UserProfile = () => {
                             <h3 className="font-size-5 mb-0">
                               <Link
                                 className="heading-default-color font-weight-semibold"
-                                to="http://localhost:3000/"
+                                to=""
                               >
                                 Product Manager
                               </Link>
@@ -787,7 +775,7 @@ const UserProfile = () => {
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -796,7 +784,7 @@ const UserProfile = () => {
                             </li>
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -805,7 +793,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                           <Link
-                            to="http://localhost:3000/"
+                            to=""
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                           ></Link>
                         </div>
@@ -817,13 +805,13 @@ const UserProfile = () => {
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-helio mr-8 rounded">
-                            <Link to="http://localhost:3000/">
+                            <Link to="">
                               <img src="image/l3/png/asios.png" alt="" />
                             </Link>
                           </div>
                           <div>
                             <Link
-                              to="http://localhost:3000/"
+                              to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
                               Shark
@@ -831,7 +819,7 @@ const UserProfile = () => {
                             <h3 className="font-size-5 mb-0">
                               <Link
                                 className="heading-default-color font-weight-semibold"
-                                to="http://localhost:3000/"
+                                to=""
                               >
                                 Front-end Developer
                               </Link>
@@ -842,7 +830,7 @@ const UserProfile = () => {
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
@@ -851,7 +839,7 @@ const UserProfile = () => {
                             </li>
                             <li>
                               <Link
-                                to="http://localhost:3000/"
+                                to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
@@ -860,7 +848,7 @@ const UserProfile = () => {
                             </li>
                           </ul>
                           <Link
-                            to="http://localhost:3000/"
+                            to=""
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                           ></Link>
                         </div>
@@ -875,7 +863,7 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <EmployeeFooter />
+      {/* <EmployeeFooter /> */}
     </div>
   );
 };

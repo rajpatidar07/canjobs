@@ -178,7 +178,7 @@ function Followup() {
     (thing, index, self) =>
       index === self.findIndex((t) => t.experience === thing.experience)
   );
-
+  console.log(response);
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -189,23 +189,26 @@ function Followup() {
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="row mb-8 align-items-center">
-                <div className="col-lg-6 mb-lg-0 mb-4">
+              <div className="mb-8 align-items-center">
+                <div className="">
                   <h3 className="font-size-6 mb-0">Follow Up</h3>
                 </div>
-                <div className="col-lg-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2  ">
+                <div className="row">
+                  <div className="col-xl-3 col-md-6 ">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by company:
+                    </p>
                     <input
                       required
                       type="text"
-                      className="form-control col-6"
+                      className="form-control"
                       placeholder={"Search Category"}
                       value={search}
                       name={"category_name"}
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2 ">
+                  <div className="col-xl-3 col-md-6">
                     <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
                     <div className="h-px-48">
                       <select
@@ -213,7 +216,7 @@ function Followup() {
                         id="job"
                         value={jobFilterValue}
                         onChange={(e) => setJobTypeFilterValue(e.target.value)}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">select job</option>
                         {(Job || []).map((job, i) => (
@@ -224,7 +227,7 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2 ">
+                  <div className="col-xl-3 col-md-6">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by company:
                     </p>
@@ -236,7 +239,7 @@ function Followup() {
                         onChange={(e) =>
                           setCompanyTypeFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">select company</option>
                         {(Company || []).map((job, i) => (
@@ -247,7 +250,7 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2 ">
+                  <div className="col-xl-3 col-md-6">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Experience:
                     </p>
@@ -259,7 +262,7 @@ function Followup() {
                         onChange={(e) =>
                           setExperienceTypeFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">select Experience</option>
                         {(Experience || []).map((job, i) => (
@@ -388,7 +391,7 @@ function Followup() {
                         (response || []).map((res) => (
                           <tr
                             className="border border-color-2"
-                            key={res.employee_id}
+                            key={res.apply_id}
                           >
                             <th className="pl-6 border-0 py-7 pr-0  ">
                               <div className="media  align-items-center">

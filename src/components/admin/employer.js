@@ -260,7 +260,7 @@ function Employer() {
         {/* <!-- Header Area --> */}
         <AdminHeader />
         {/* <!-- navbar- --> */}
-        <AdminSidebar />
+        <AdminSidebar active="active" />
         <ToastContainer />
         {/* <Link
           to={""}
@@ -283,23 +283,26 @@ function Employer() {
         >
           <div className="container">
             <div className="mb-18">
-              <div className="row mb-8 align-items-center">
-                <div className="col-lg-4 mb-lg-0 mb-4">
+              <div className="mb-8 align-items-center">
+                <div className="">
                   <h3 className="font-size-6 mb-0">Employer</h3>
                 </div>
-                <div className="col-lg-8">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                <div className="row">
+                  <div className="col-xl-3 col-md-6 ">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Corporation:
+                    </p>
                     <input
                       required
                       type="text"
-                      className="form-control col-6"
+                      className="form-control"
                       placeholder={"Search Employer"}
                       value={search}
                       name={"Employer_name"}
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Corporation:
                     </p>
@@ -309,7 +312,7 @@ function Employer() {
                         value={corporationFilterValue}
                         id="corporation"
                         onChange={onCorporationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black font-weight-semibold text-black-2 w-100"
                       >
                         <option value={""}>Select corporation</option>
                         {(Corporation || []).map((corporation) => (
@@ -323,7 +326,7 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Industry:
                     </p>
@@ -333,7 +336,7 @@ function Employer() {
                         value={industryFilterValue}
                         id="industry"
                         onChange={onIndustryFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black font-weight-semibold text-black-2 w-100"
                       >
                         <option value={""}>Select industry</option>
                         {(Industry || []).map((industry) => (
@@ -347,7 +350,7 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right mt-6">
+                  <div className="float-md-right text-right mt-md-11 col-xl-3 mt-xl-12  mt-6">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editEmployer("0")}

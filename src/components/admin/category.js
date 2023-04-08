@@ -141,29 +141,32 @@ function Category() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
+        <div>
+          <ToastContainer />
+        </div>
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="row mb-8 align-items-center">
-                <div className="col-lg-6 mb-lg-0 mb-4">
+              <div className="mb-8 align-items-center">
+                <div className="">
                   <h3 className="font-size-6 mb-0">Category</h3>
                 </div>
-                <div className="col-lg-6">
-                  <div>
-                    <ToastContainer />
-                  </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                <div className="row">
+                  <div className="col-xl-3 col-md-6">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Search Category
+                    </p>
                     <input
                       required
                       type="text"
-                      className="form-control col-6"
+                      className="form-control"
                       placeholder={"Search Category"}
                       value={search}
                       name={"category_name"}
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
+                  <div className="col-xl-3 col-md-6">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Type:
                     </p>
@@ -173,7 +176,7 @@ function Category() {
                         value={categoryTypeFilterValue}
                         id="category"
                         onChange={onCategoryTypeFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value={""}>Select category type</option>
                         {(CategoryType || []).map((data) => {
@@ -189,18 +192,20 @@ function Category() {
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right mt-6">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editJobCategory("0")}
-                    >
-                      Add category
-                    </CustomButton>
-                    <AddCategory
-                      show={showAddCategoryModal}
-                      jobCategoryData={CategoryId}
-                      close={() => setShowAddCategoryModal(false)}
-                    />
+                  <div className="text-end px-6 col-xl-6">
+                    <div className="float-md-right mt-xl-12 mt-6">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editJobCategory("0")}
+                      >
+                        Add category
+                      </CustomButton>
+                      <AddCategory
+                        show={showAddCategoryModal}
+                        jobCategoryData={CategoryId}
+                        close={() => setShowAddCategoryModal(false)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -257,13 +262,8 @@ function Category() {
                               key={catdata.job_category_id}
                             >
                               <th scope="row" className=" border-0 py-7 ">
-                                <div className="">
-                                  <Link
-                                    to={""}
-                                    className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                                  >
-                                    {catdata.category_name}
-                                  </Link>
+                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  {catdata.category_name}
                                 </div>
                               </th>
                               <th className=" py-7">

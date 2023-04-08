@@ -273,23 +273,26 @@ function Job() {
         >
           <div className="container">
             <div className="mb-18">
-              <div className="row mb-8 align-items-center">
-                <div className="col-lg-6 mb-lg-0 mb-4">
+              <div className="mb-8 align-items-center">
+                <div className="">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
-                <div className="col-lg-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                <div className="row">
+                  <div className="col-xl-3 col-md-6 ">
+                    <p class="font-size-4 mb-0 mr-6 py-2">
+                      Filter by Category:
+                    </p>
                     <input
                       required
                       type="text"
-                      className="form-control col-6"
+                      className="form-control w-100"
                       placeholder={"Search Job"}
                       value={search}
                       name={"category_name"}
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Category:
                     </p>
@@ -299,7 +302,7 @@ function Job() {
                         id="country"
                         value={categoryFilterValue}
                         onChange={onCategoryFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">Select category</option>
                         {(CategoryType || []).map((data) => {
@@ -312,7 +315,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Job Swap:
                     </p>
@@ -322,7 +325,7 @@ function Job() {
                         id="country"
                         value={jobSwapFilterValue}
                         onChange={onJobSwapFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">SelectJob type</option>
                         {(JobType || []).map((job) => (
@@ -333,7 +336,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Key skill:
                     </p>
@@ -343,7 +346,7 @@ function Job() {
                         id="country"
                         value={SkillFilterValue}
                         onChange={onSkillFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">Select Skill</option>{" "}
                         {(SkillType || []).map((data) => {
@@ -356,7 +359,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Location:
                     </p>
@@ -366,7 +369,7 @@ function Job() {
                         id="country"
                         value={locationFilterValue}
                         onChange={onLocationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">Select location</option>{" "}
                         {(LocationType || []).map((data) => {
@@ -379,18 +382,20 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right mt-6">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editJob("0")}
-                    >
-                      Add Job
-                    </CustomButton>
-                    <AddJobModal
-                      show={showAddJobsModal}
-                      jobdata={JobId}
-                      close={() => setShowAddJobsModal(false)}
-                    />
+                  <div className="text-end col-xl-9">
+                    <div className="float-md-right mt-6 mt-xl-12">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editJob("0")}
+                      >
+                        Add Job
+                      </CustomButton>
+                      <AddJobModal
+                        show={showAddJobsModal}
+                        jobdata={JobId}
+                        close={() => setShowAddJobsModal(false)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

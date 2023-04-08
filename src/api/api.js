@@ -110,6 +110,23 @@ export const EmployeeSkillDetails = async (props) => {
   // }
 };
 /*Add Employee Skill Api */
+export const AddEmployeement = async (props, id) => {
+  const response = await axios.put(`${API_URL}employeeCareer_detail`, {
+    employee_id: id,
+    company: props.company,
+    designation: props.designation,
+    company_location: props.company_location,
+    industry: props.industry,
+    functional_area: props.functional_area,
+    work_level: props.work_level,
+    start_date: props.start_date,
+    end_date: props.end_date,
+    currently_work_here: props.currently_work_here,
+    career_id: props.career_id,
+  });
+  return response.data;
+};
+/*Add Employee Skill Api */
 export const AddEmployeeSkill = async (props, id) => {
   const response = await axios.post(`${API_URL}/employeeSkill`, {
     employee_id: id,
@@ -128,6 +145,13 @@ export const DeleteEmployeeSkill = async (props) => {
 export const DeleteEmployeeEducation = async (props) => {
   const response = await axios.post(`${API_URL}deleteEmployeeEducation`, {
     education_id: props,
+  });
+  return response.data;
+};
+/*Delete Employee Career Api */
+export const DeleteEmployeeCareer = async (props) => {
+  const response = await axios.post(`${API_URL}deleteEmployeeCareer`, {
+    career_id: props,
   });
   return response.data;
 };
@@ -418,19 +442,37 @@ export const DeleteAdmin = async (props) => {
 };
 /*Add Followup Api */
 export const AddFollowup = async (props) => {
-  const response = await axios.post(`${API_URL}admin/addFollowup`, {
-    admin_id: props.adminId,
-    job_id: props.jobId,
-    employee_id: props.employId,
-    remark: props.state.remark,
-    next_followup_date: props.next_followup_date,
-  });
+  const response = await axios.post(
+    `${API_URL}admin/addFollowup`,
+    {
+      admin_id: props.adminId,
+      job_id: props.jobId,
+      employee_id: props.employId,
+      remark: props.state.remark,
+      next_followup_date: props.next_followup_date,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+      },
+    }
+  );
   return response.data;
 };
 /*Add Followup single data Api */
 export const getSingleFollowup = async (employee_id, job_id) => {
+  console.log(employee_id, job_id);
   const response = await axios.get(
-    `${API_URL}admin/getFollowup?job_id=${job_id}&employee_id=${employee_id}`
+    `${API_URL}admin/getFollowup?job_id=${job_id}&employee_id=${employee_id}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+      },
+    }
   );
   return response.data;
 };

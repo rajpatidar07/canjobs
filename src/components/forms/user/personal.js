@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function PersonalDetails(props) {
+  console.log(props.employeeid);
   let encoded;
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -41,17 +42,19 @@ function PersonalDetails(props) {
   const validators = {
     name: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
-          ? "Name had to 2 or more letter"
-          : null,
+          : value.length < 2
+          ? "Name should have 2 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Name can not have a number."
+          : "",
     ],
     email: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
           ? null
@@ -59,89 +62,106 @@ function PersonalDetails(props) {
     ],
     contact_no: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Mobile No. is required"
-          : value.length !== 10
+          : value.length < 10
           ? "Mobile no should be of 10 digits"
           : null,
     ],
     description: [
       (value) =>
-        value === ""
+        value === "" || value === null || value.trim() === ""
           ? "Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character"
-          : value.length <= 5
-          ? "Description had to 5 or more letter"
+          : value.length < 5
+          ? "Description should have 5 or more letter"
           : null,
     ],
-    date_of_birth: [(value) => (value ? null : "Dob is required")],
-    gender: [(value) => (value === "" ? "Gender is required" : null)],
-    marital_status: [(value) => (value === "" ? "Status is required" : null)],
+    date_of_birth: [
+      (value) => (value === "" || value === null ? "Dob is required" : ""),
+    ],
+    gender: [
+      (value) => (value === "" || value === null ? "Gender is required" : null),
+    ],
+    marital_status: [
+      (value) => (value === "" || value === null ? "Status is required" : null),
+    ],
     nationality: [
       (value) =>
-        value === ""
+        value === "" || value === null
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 5
-          ? "Nationality had to 5 or more letter"
-          : null,
+          : value.length < 3
+          ? "Nationality should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Nationality can not have a number."
+          : "",
     ],
     current_location: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
-          ? "Location had to 5 or more letter"
-          : null,
+          : value.length < 3
+          ? "Location should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Location can not have a number."
+          : "",
     ],
     currently_located_country: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Country is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
-          ? "Country had to 5 or more letter"
-          : null,
+          : value.length < 3
+          ? "Country should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Country can not have a number."
+          : "",
     ],
     language: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Language is required"
-          : value.length <= 5
-          ? "Language had to 5 or more letter"
-          : null,
+          : value.length < 3
+          ? "Language should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Language can not have a number."
+          : "",
     ],
     religion: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 5
-          ? "Religion had to 5 or more letter"
-          : null,
+          : value.length < 3
+          ? "Religion should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Religion can not have a number."
+          : "",
     ],
     interested_in: [
-      (value) =>
-        value === ""
-          ? "Interested in is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
+      (value) => (value === "" ? "Interested in is required" : null),
     ],
-    experience: [(value) => (value === "" ? "Experience is required" : null)],
-    resume: [(value) => (value === "" ? "Resume is required" : null)],
+    experience: [
+      (value) =>
+        value === "" || value === null ? "Experience is required" : null,
+    ],
+    resume: [
+      (value) => (value === "" || value === null ? "Resume is required" : null),
+    ],
     work_permit_canada: [
-      (value) => (value === "" ? "Work Permit is required" : null),
+      (value) =>
+        value === "" || value === null ? "Work Permit is required" : null,
     ],
     work_permit_other_country: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Other Permit is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -154,11 +174,11 @@ function PersonalDetails(props) {
     useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
-    const userData = await EmployeeDetails(props.employeedata);
-    setState(userData.data.personal_detail[0]);
+    const userData = await EmployeeDetails(props.employeeId);
+    setState(userData.data.employee[0]);
   };
   useEffect(() => {
-    if (props.employeedata === "0" || props.employeedata === undefined) {
+    if (props.employeeId === "0" || props.employeeId === undefined) {
       setState(initialFormStateuser);
     } else {
       UserData();
@@ -227,7 +247,7 @@ function PersonalDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserPersonalDetailClick}>
-            {props.employeedata === "0" ? (
+            {props.employeeId === "0" ? (
               <h5 className="text-center pt-2 mb-7"> Add Personal Details</h5>
             ) : (
               <h5 className="text-center pt-2 mb-7">

@@ -47,7 +47,7 @@ function Education(props) {
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length <= 2
-          ? "University had 2 or more letters"
+          ? "University should have 2 or more letters"
           : null,
     ],
     course: [
@@ -77,15 +77,15 @@ function Education(props) {
   // API CALL
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
-      props.employeeEducationData
+      props.employeeId
     ); /*"No Employee found"*/
-    setEducationData(EducationDetails.data);
+    setEducationData(EducationDetails.data.education);
     if (data !== undefined || data) {
       setState(data);
     }
   };
   useEffect(() => {
-    if (props.employeeEducationData === undefined || educationData === []) {
+    if (props.employeeId === undefined || educationData === []) {
       setState(initialFormState);
     } else {
       EducationData();
@@ -97,10 +97,7 @@ function Education(props) {
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      let responseData = await AddEmployeeEducation(
-        state,
-        props.employeeEducationData
-      );
+      let responseData = await AddEmployeeEducation(state, props.employeeId);
       if (responseData.message === "Employee data updated successfully") {
         toast.success("Education Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -142,9 +139,9 @@ function Education(props) {
       setDeleteAlert(false);
     }
   }
+  /*Code to get current year */
   let date = moment();
   const currentYear = date.year();
-  console.log(currentYear);
   return (
     <>
       <Modal
@@ -380,22 +377,56 @@ function Education(props) {
               </div>
             </div>
             <div className="">
-              <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                {(educationData || []).map((education) => (
-                  <li
-                    className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+              {(educationData || []).map((education) => (
+                <>
+                  <div
+                    className="w-100 border m-1"
                     key={education.education_id}
                   >
-                    {education.course}
-                    <Link onClick={() => EducationData(education)}>
-                      <i className="px-3 fa fa-edit" aria-hidden="true"></i>
-                    </Link>
-                    <Link onClick={() => ShowDeleteAlert(education)}>
-                      <i className="fa fa-times-circle" aria-hidden="true"></i>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                    <div className="p-1 d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between ">
+                      <div className="media align-items-center company_box p-0">
+                        <div className="text_box text-left w-100 mt-n2">
+                          <h3 className="mb-0">
+                            <Link
+                              to=""
+                              className="font-size-6 text-black-2 font-weight-semibold"
+                              onClick={() => EducationData(education)}
+                            >
+                              {education.qualification}{" "}
+                              <span className="font-size-4">
+                                ({education.university_institute})
+                              </span>
+                            </Link>
+                          </h3>
+                          <span className="font-size-4 text-default-color line-height-2">
+                            {education.course}, {education.specialization}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                        <span className="font-size-4 text-gray w-100">
+                          {education.passing_year}
+                        </span>
+                        <span className="font-size-3 text-gray w-100">
+                          <span className="mr-4" style={{ marginTop: "-2px" }}>
+                            <img
+                              src="image/svg/icon-loaction-pin-black.svg"
+                              alt=""
+                            />
+                          </span>
+                          {education.institute_location}
+                        </span>
+                      </div>
+                      <Link to="" onClick={() => ShowDeleteAlert(education)}>
+                        <i
+                          className="fa fa-times-circle"
+                          aria-hidden="true"
+                        ></i>
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              ))}
             </div>
             <div className="form-group text-center">
               <button

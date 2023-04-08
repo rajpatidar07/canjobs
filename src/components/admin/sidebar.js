@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
 
-const AdminSidebar = () => {
+const AdminSidebar = (className) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [jobId, setJobId] = useState();
 
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
   }
-
+  /* Function to show the single data to update job */
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowAddJobsModal(true);
+    setJobId(e);
+  };
   return (
     <>
       <Link
@@ -36,13 +42,14 @@ const AdminSidebar = () => {
         <div className="my-15 px-11">
           <Link
             to=""
-            onClick={() => setShowAddJobsModal(true)}
+            onClick={() => editJob("0")}
             className="btn btn-primary btn-xl w-100 text-uppercase"
           >
             <span className="mr-5 d-inline-block">+</span>Post a new job
           </Link>
           <AddJobModal
             show={showAddJobsModal}
+            jobdata={jobId}
             close={() => setShowAddJobsModal(false)}
           />
         </div>
@@ -55,7 +62,7 @@ const AdminSidebar = () => {
               <i className="icon icon-layout-11 mr-7"></i>Dashboard
             </Link>
           </li>
-          <li className="">
+          <li>
             <Link
               to="/job"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"

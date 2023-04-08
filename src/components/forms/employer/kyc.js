@@ -111,10 +111,12 @@ function KycComplianceDetails(props) {
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
-    if (userData.data.kyc_detail[0].pan_no !== undefined) {
+    if (
+      userData.data.kyc_detail[0].pan_no !== undefined ||
+      userData.data.kyc_detail !== "0"
+    ) {
       setState(userData.data.kyc_detail[0]);
     }
-    console.log(userData);
   };
   useEffect(() => {
     props.employerId === undefined

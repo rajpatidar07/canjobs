@@ -4,7 +4,6 @@ import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
-import EmployeeDetails from "../common/employeeDetail";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
 import { getallEmployeeData, DeleteJobEmployee } from "../../api/api";
@@ -13,6 +12,7 @@ import SAlert from "../common/sweetAlert";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
+import UserProfile from "../user/profile";
 function Employee() {
   /*Show modal states */
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -21,9 +21,7 @@ function Employee() {
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
-  let [employeeid, setemployeeId] = useState();
-  let [employeeEducationId, setemployeeEducationId] = useState();
-  let [employeeSkillId, setemployeeSkillId] = useState();
+  let [employeeId, setemployeeId] = useState();
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -78,11 +76,17 @@ function Employee() {
     sortOrder,
   ]);
 
+  /* Function to show the single data to update Employee*/
+  const employeeDetails = (e) => {
+    // e.preventDefault();
+    setShowEmployeeProfile(true);
+    setemployeeId(e);
+  };
   /* Function to show the single data to update Employee Education*/
   const editEmployeeEducation = (e) => {
     // e.preventDefault();
     setShowEducationModal(true);
-    setemployeeEducationId(e);
+    setemployeeId(e);
   };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
@@ -95,7 +99,7 @@ function Employee() {
     // e.preventDefault();
     localStorage.setItem("employee_id", e);
     setShowSkillsModal(true);
-    setemployeeSkillId(e);
+    setemployeeId(e);
   };
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -286,23 +290,26 @@ function Employee() {
         >
           <div className="container">
             <div className="mb-18">
-              <div className="row mb-8 align-items-center">
-                <div className="col-lg-6 mb-lg-0 mb-4">
+              <div className="mb-8 align-items-center">
+                <div className="">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
-                <div className="col-lg-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                <div className="row">
+                  <div className="col-xl-3 col-md-6 ">
+                    <p className="font-size-4 mb-0 mr-6 py-2">
+                      Search Employee:
+                    </p>
                     <input
                       required
                       type="text"
-                      className="form-control col-6"
+                      className="form-control"
                       placeholder={"Search Employee"}
                       value={search}
                       name={"Employee_name"}
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Experience:
                     </p>
@@ -312,7 +319,7 @@ function Employee() {
                         value={experienceFilterValue}
                         id="experience"
                         onChange={onExperienceFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value={""}>Select Experience</option>
                         {(Experience || []).map((experience) => (
@@ -326,7 +333,7 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end pb-2">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Skill:
                     </p>
@@ -336,7 +343,7 @@ function Employee() {
                         value={skillFilterValue}
                         id="Skill"
                         onChange={onSkillFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value={""}>Select Skill</option>
                         {(Skill || []).map((keyskill) => (
@@ -350,7 +357,7 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
+                  <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
                       Filter by Education:
                     </p>
@@ -360,7 +367,7 @@ function Employee() {
                         value={educationFilterValue}
                         id="education"
                         onChange={onEducationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black min-width-px-273 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="" data-display="Product Designer">
                           Select education
@@ -376,18 +383,20 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right mt-6">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editEmployee("0")}
-                    >
-                      Add Employee
-                    </CustomButton>
-                    <PersonalDetails
-                      show={showAddEmployeeModal}
-                      employeedata={employeeid}
-                      close={() => setShowEmployeeMOdal(false)}
-                    />
+                  <div className="text-end px-6 w-100">
+                    <div className="float-md-right mt-6">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editEmployee("0")}
+                      >
+                        Add Employee
+                      </CustomButton>
+                      <PersonalDetails
+                        show={showAddEmployeeModal}
+                        employeeId={employeeId}
+                        close={() => setShowEmployeeMOdal(false)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -524,7 +533,9 @@ function Employee() {
                             <td className=" py-7  pr-0">
                               <Link
                                 to={""}
-                                onClick={() => setShowEmployeeProfile(true)}
+                                onClick={() =>
+                                  employeeDetails(empdata.employee_id)
+                                }
                               >
                                 <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   <p className="m-0">{empdata.name}</p>
@@ -551,12 +562,12 @@ function Employee() {
 
                             <Education
                               close={() => setShowEducationModal(false)}
-                              employeeEducationData={employeeEducationId}
+                              employeeId={employeeId}
                               show={showEducationModal}
                             />
                             <Skills
                               show={showSkillsModal}
-                              employeeSkillData={employeeSkillId}
+                              employeeId={employeeId}
                               close={() => setShowSkillsModal(false)}
                             />
                             <td className=" py-7 min-width-px-100">
@@ -668,7 +679,7 @@ function Employee() {
                 </div>
               </div>
               <div className="mb-18">
-                <EmployeeDetails />
+                <UserProfile employeeId={employeeId} />
               </div>
             </div>
           </div>
