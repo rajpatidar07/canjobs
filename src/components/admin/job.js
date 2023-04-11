@@ -307,8 +307,11 @@ function Job() {
                         <option value="">Select category</option>
                         {(CategoryType || []).map((data) => {
                           return (
-                            <option value={data.jobid} key={data.category_type}>
-                              {data.category_type}
+                            <option
+                              value={data.job_category_id}
+                              key={data.category_type}
+                            >
+                              {data.category_name}
                             </option>
                           );
                         })}

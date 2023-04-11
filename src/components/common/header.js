@@ -143,6 +143,11 @@ function EmployeeHeader() {
                     </li>
                   </ul>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/adminlogin">
+                    Admin
+                  </Link>
+                </li>
               </ul>
             </div>
             <button
