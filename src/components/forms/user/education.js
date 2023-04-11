@@ -46,7 +46,7 @@ function Education(props) {
           ? "University is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
+          : value.length < 2
           ? "University should have 2 or more letters"
           : null,
     ],
@@ -72,8 +72,14 @@ function Education(props) {
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
@@ -85,14 +91,17 @@ function Education(props) {
     }
   };
   useEffect(() => {
-    if (props.employeeId === undefined || educationData === []) {
+    if (
+      props.employeeId === undefined ||
+      educationData === [] ||
+      deleteAlert === true
+    ) {
       setState(initialFormState);
     } else {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, deleteAlert]);
-
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
@@ -129,7 +138,7 @@ function Education(props) {
   };
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
-    console.log(e);
+    //console.log((e);
     const responseData = await DeleteEmployeeEducation(e);
     if (responseData.message === "Education details has been deleted") {
       toast.error("Education deleted Successfully", {

@@ -4,7 +4,6 @@ import ChangePassword from "../common/changepassword";
 
 const AdminHeader = () => {
   const [showChangePass, setShowChangePass] = useState(false);
-
   return (
     <header className="site-header site-header--menu-right bg-default position-fixed py-7 py-xs-0 site-header--absolute">
       <div className="container-fluid-fluid px-10">
@@ -75,7 +74,10 @@ const AdminHeader = () => {
                     Edit Profile
                   </Link>
                   <Link
-                    to={""}
+                    to={"/adminlogin"}
+                    onClick={() => {
+                      localStorage.clear(); // clear the local storage
+                    }}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                   >
                     Log Out

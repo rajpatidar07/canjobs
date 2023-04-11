@@ -104,5 +104,7 @@ const FilterJson = {
     "CPCT",
   ],
   Specialization: ["Maths", "Bio", "phy", "Social studies", "core"],
+  Language: ["English", "Hindi", "French", "Gujrati", "Marathi"],
+  AdminType: ["manager", "sub-admin", "admin", "super-admin"],
 };
 export default FilterJson;

@@ -36,6 +36,8 @@ function ContactInfo(props) {
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length < 2
+          ? "Comapny name should have 2 or more letter"
           : "",
     ],
     email: [
@@ -61,13 +63,15 @@ function ContactInfo(props) {
           ? "Address is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
+          : value.length < 2
+          ? "Address should have 2 or more letter"
           : "",
     ],
     pin_code: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "pin_code is required"
-          : value.length > 6
+          ? "pinCode is required"
+          : value.length < 6
           ? "PinCode no should be of 6 digits"
           : "",
     ],
@@ -95,18 +99,24 @@ function ContactInfo(props) {
           ? "Cannot use special character "
           : "",
     ],
-    // designation: [
-    //   (value) =>
-    //     value === ""
-    //       ? "Designation is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : "",
-    // ],
+    designation: [
+      (value) =>
+        value === "" || value === null
+          ? ""
+          : value.length < 2
+          ? "Designation should have 2 or more letter"
+          : "",
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
@@ -116,7 +126,7 @@ function ContactInfo(props) {
     ) {
       setState(userData.data.company_detail[0]);
     }
-    console.log(userData.data);
+    //console.log((userData.data);
   };
   useEffect(() => {
     props.employerId === undefined || props.employerId === "0"

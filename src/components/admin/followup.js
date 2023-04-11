@@ -15,8 +15,9 @@ function Followup() {
   /*Filter and search state */
   const [jobFilterValue, setJobTypeFilterValue] = useState("");
   const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
-    useState("");
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
+    ""
+  );
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -178,7 +179,7 @@ function Followup() {
     (thing, index, self) =>
       index === self.findIndex((t) => t.experience === thing.experience)
   );
-  console.log(response);
+  //console.log(response);
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">

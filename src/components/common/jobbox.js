@@ -9,7 +9,7 @@ function JobBox(props) {
   const JobData = async () => {
     const userData = await GetAllJobs();
     setjobData(userData.data.data);
-    console.log(userData);
+    //console.log((userData);
   };
   useEffect(() => {
     JobData();

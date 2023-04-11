@@ -35,7 +35,7 @@ function Addadmin(props) {
           ? "Admin name should have 2 or more letters"
           : !/[^a-zA-Z0-9]/g.test(value)
           ? null
-          : "Admin name is invalid",
+          : "Cannot use special character ",
     ],
     email: [
       (value) =>
@@ -63,8 +63,14 @@ function Addadmin(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
     if (userData !== undefined || userData) {

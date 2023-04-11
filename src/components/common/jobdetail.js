@@ -81,16 +81,20 @@ function JobDetailPage(props) {
               </p>
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="media justify-content-md-start mb-6">
-              <div className="image mr-5">
-                <img src="image/svg/icon-dolor.svg" alt="" />
+          {jobDetatilsData.salary !== "0" ? (
+            <div className="col-md-6">
+              <div className="media justify-content-md-start mb-6">
+                <>
+                  <div className="image mr-5">
+                    <img src="image/svg/icon-dolor.svg" alt="" />
+                  </div>
+                  <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
+                    {jobDetatilsData.salary}
+                  </p>{" "}
+                </>
               </div>
-              <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
-                {jobDetatilsData.salary}
-              </p>
             </div>
-          </div>
+          ) : null}
           <div className="col-md-6">
             <div className="media justify-content-md-start mb-md-0 mb-6">
               <div className="image mr-5">

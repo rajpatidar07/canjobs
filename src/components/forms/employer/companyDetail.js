@@ -60,8 +60,6 @@ function CompanyDetails(props) {
           ? "Corporation type is required"
           : null,
     ],
-    alias: [],
-    website_url: [],
     company_start_date: [
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
@@ -89,11 +87,29 @@ function CompanyDetails(props) {
     about: [
       (value) =>
         value === ""
-          ? " is required"
+          ? "Company Description is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length < 2
           ? "Company Description should have 2 or more letters"
+          : "",
+    ],
+    website_url: [
+      (value) =>
+        value === ""
+          ? ""
+          : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
+              value
+            )
+          ? "Write the correct URL"
+          : "",
+    ],
+    alias: [
+      (value) =>
+        value === ""
+          ? ""
+          : value.length < 2
+          ? "Alias should have 2 or more letters"
           : "",
     ],
     // companylogo: [
@@ -107,6 +123,7 @@ function CompanyDetails(props) {
     if (userData !== undefined) {
       setState(userData.data.company_detail[0]);
     }
+    //console.log((userData);
   };
   useEffect(() => {
     if (props.employerId === "0" || props.employerId === undefined) {
@@ -117,8 +134,14 @@ function CompanyDetails(props) {
     }
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
@@ -283,9 +306,22 @@ function CompanyDetails(props) {
                     name="alias"
                     value={state.alias}
                     onChange={onInputChange}
-                    className={"form-control"}
+                    className={
+                      errors.alias
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
                     id="alias"
                   />
+                  {/*----ERROR MESSAGE FOR company_start_date----*/}
+                  {errors.alias && (
+                    <span
+                      key={errors.alias}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.alias}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -341,7 +377,7 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="company_size"
+                    placeholder="Company size"
                     id="company_size"
                   />
                   {/*----ERROR MESSAGE FOR company_size----*/}

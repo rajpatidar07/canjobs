@@ -290,7 +290,7 @@ function Employer() {
                 <div className="row">
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by Corporation:
+                      Search by name :
                     </p>
                     <input
                       required

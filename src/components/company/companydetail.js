@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomButton from "../common/button";
 import ContactInfo from "../forms/employer/contactInfo";
+import { EmployerDetails } from "../../api/api";
 
-function CompanyDetailPage() {
+function CompanyDetailPage(props) {
+  /*Show modal and data state */
   const [ContactDetails, setContactDetails] = useState(false);
-
+  const [employerData, setEmployerData] = useState("");
+  /*Function to get employer data */
+  const EmployerData = async () => {
+    let userData = await EmployerDetails(props.employerId);
+    if (userData !== undefined) {
+      setEmployerData(userData.data.company_detail[0]);
+    }
+  };
+  /*Render method to get employer data */
+  useEffect(() => {
+    if (props.employerId !== "0" || props.employerId !== undefined) {
+      EmployerData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }, [props, ContactDetails]);
   return (
     <div className="col-md-12 col-xl-3 col-lg-4 col-12 col-sm-12 border-right">
       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
@@ -14,6 +30,7 @@ function CompanyDetailPage() {
           onClick={() => setContactDetails(true)}
         />
         <ContactInfo
+          employerId={props.employerId}
           show={ContactDetails}
           close={() => setContactDetails(false)}
         />
@@ -21,23 +38,27 @@ function CompanyDetailPage() {
       <div className="pt-5 text-left row">
         <div className="col-md-12">
           <p className="font-size-4 mb-8" title="Contact Person Name">
-            <i className="fas fa-user mr-2"></i> Rajaram Patidar
+            <i className="fas fa-user mr-2"></i>
+            {employerData.contact_person_name}
           </p>
           <p className="font-size-4 mb-8" title="Designation">
-            <i className="fas fa-portrait mr-2"></i> Manager
+            <i className="fas fa-portrait mr-2"></i> {employerData.designation}
           </p>
           <p className="font-size-4 mb-8" title="Email">
-            <i className="fas fa-envelope mr-2"></i> raj.we2code@gmail.com
+            <i className="fas fa-envelope mr-2"></i> {employerData.email}
           </p>
           <p className="font-size-4 mb-8" title="Contact No">
-            <i className="fas fa-phone-alt mr-2"></i> 012345789
+            <i className="fas fa-phone-alt mr-2"></i> {employerData.contact_no}
           </p>
-          <p className="font-size-4 mb-8" title="Contact No">
-            <i className="fas fa-phone-alt mr-2"></i> 012345789
-          </p>
+          {employerData.contact_no_other !== null ? (
+            <p className="font-size-4 mb-8" title="Contact No">
+              <i className="fas fa-phone-alt mr-2"></i>
+              {employerData.contact_no_other}
+            </p>
+          ) : null}
           <p className="font-size-4 mb-8" title="Address">
-            <i className="fas fa-map-marker-alt mr-2"></i> 45, Universal Tower
-            Scheme 54, PU4, Indore, MP (452001)
+            <i className="fas fa-map-marker-alt mr-2"></i>
+            {employerData.address}
           </p>
         </div>
       </div>

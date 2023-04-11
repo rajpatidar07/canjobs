@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import EmployeeDetails from "../common/employeeDetail";
-
+import { ToastContainer } from "react-toastify";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
@@ -22,6 +22,8 @@ const AdminDashboard = () => {
         }
         id="dashboard-body"
       >
+        {" "}
+        <ToastContainer />
         <div className="container">
           <div className="row mb-7">
             <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">

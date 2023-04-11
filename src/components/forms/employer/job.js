@@ -208,8 +208,14 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
@@ -227,7 +233,7 @@ function AddJobModal(props) {
   const CompnayData = async () => {
     const userData = await getAllEmployer();
     setCompany(userData.data);
-    // console.log(userData);
+    // //console.log((userData);
   };
 
   useEffect(() => {
@@ -262,7 +268,7 @@ function AddJobModal(props) {
       }
     }
   };
-  // console.log("JSON" + JSON.stringify(FilterJson.location))
+  // //console.log(("JSON" + JSON.stringify(FilterJson.location))
 
   // END ADD JOBS VALIDATION
   return (
@@ -818,20 +824,25 @@ function AddJobModal(props) {
                   Language <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
-                  <input
-                    type="text"
-                    maxLength={30}
+                  <select
                     name="language"
                     value={state.language}
                     onChange={onInputChange}
                     className={
                       errors.language
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
                     }
                     placeholder="Language"
                     id="language"
-                  />
+                  >
+                    <option value={""}>select Language</option>
+                    {(FilterJson.Language || []).map((Language) => (
+                      <option key={Language} value={Language}>
+                        {Language}
+                      </option>
+                    ))}
+                  </select>
                   {/*----ERROR MESSAGE FOR language----*/}
                   {errors.language && (
                     <span

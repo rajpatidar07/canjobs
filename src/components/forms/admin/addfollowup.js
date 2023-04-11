@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let employId = props.resData.employee_id;
-  let [adminId, setAdminId] = useState(2);
   let jobId = props.resData.job_id;
 
   const close = () => {
@@ -26,8 +25,7 @@ function Addfollowup(props) {
       props.resData.employee_id,
       props.resData.job_id
     );
-    setResponseData(userData.data);
-    setAdminId(userData.data[0].admin_id);
+    setResponseData(userData.data.followup);
   };
 
   /*Render function to get the Response*/
@@ -50,18 +48,28 @@ function Addfollowup(props) {
   const validators = {
     remark: [
       (value) =>
-        value === "" || value.trim() === "" ? "Discription required" : null,
+        value === "" || value === null || value.trim() === ""
+          ? "Discription required"
+          : value.length < 2
+          ? "Discription should have 2 or more letters."
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      let responseData = await AddFollowup({ state, employId, adminId, jobId });
+      let responseData = await AddFollowup({ state, employId, jobId });
       if (responseData.message === "follow up updated successfully") {
         toast.success("Followup Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -137,6 +145,7 @@ function Addfollowup(props) {
                         : "form-control"
                     }
                     id="remark"
+                    placeholder="Description"
                   ></textarea>
                 </div>
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
@@ -147,7 +156,7 @@ function Addfollowup(props) {
                 )}
               </div>
             </div>
-            <div className="form-group col-md-6">
+            <div className="form-group ">
               <label
                 htmlFor="next_followup_date"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

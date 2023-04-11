@@ -12,6 +12,7 @@ function KycComplianceDetails(props) {
     setErrors("");
     props.close();
   };
+  let encoded;
   // COMPANY KYC DETAIL VALIDATION
 
   // INITIAL STATE ASSIGNMENT
@@ -33,88 +34,122 @@ function KycComplianceDetails(props) {
   const validators = {
     name: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "Pan name is required"
+        value === "" || value === null || value.trim() === ""
+          ? "Pan card name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value.length < 2
+          ? "Pan name  be of 2  or more letters"
+          : "",
     ],
 
     pincode: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Pincode is required"
-          : value.length > 6 || value.length < 6
+          : value.length < 6
           ? "Pincode should be of 6 digits"
-          : null,
+          : "",
     ],
     pan_no: [
       (value) =>
-        value === ""
+        value === "" || value === null
           ? "Pan no is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value.length < 10 || value.length > 10
+          ? "Pan no should be of 10 digits"
+          : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
+          ? "Pan no should be of 6 alphabte and 4 digits"
+          : "",
     ],
     pan_date: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Pan card date is required"
-          : null,
+          : "",
     ],
     address: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Address is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value.length < 5
+          ? "Address should be of 5  or more letters"
+          : "",
     ],
     city: [
       (value) =>
-        value === ""
+        value === "" || value === null
           ? "City is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     state: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "State is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : "",
     ],
     gstin: [
       (value) =>
-        value === "" || value.trim() === "" ? "Gstin is required" : null,
+        value === ""
+          ? ""
+          : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
+          ? "Invalid GSTIN"
+          : "",
     ],
     tan_number: [
       (value) =>
-        value === "" || value.trim() === "" ? "Tan no is required" : null,
+        value === ""
+          ? ""
+          : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
+          ? "Invalid TAN"
+          : "",
     ],
     country: [
       (value) =>
-        value === "" || value.trim() === "" ? "Country is required" : null,
+        value === "" || value === null || value.trim() === ""
+          ? "Country is required"
+          : "",
     ],
-    // document: [
+    fax_number: [
+      (value) =>
+        value === ""
+          ? ""
+          : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
+          ? "Invalid Fax"
+          : "",
+    ],
+    // fax_number: [
     //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Document Upload is required"
-    //       : null,
+    //     !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.text(value) ? "Invalid Fax" : "",
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
     if (
-      userData.data.kyc_detail[0].pan_no !== undefined ||
-      userData.data.kyc_detail !== "0"
+      userData.data.kyc_detail.length === 0 ||
+      userData.data.kyc_detail === undefined ||
+      userData.data.kyc_detail === "0" ||
+      userData.data.kyc_detail === []
     ) {
+      setState(initialFormState);
+    } else {
       setState(userData.data.kyc_detail[0]);
     }
   };
@@ -146,6 +181,26 @@ function KycComplianceDetails(props) {
     }
   };
   // END COMPANY KYC DETAIL VALIDATION
+
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  /*Onchange function of Resume */
+  const handleUploadFile = async (e) => {
+    encoded = await convertToBase64(e.target.files[0]);
+    let base64Name = encoded.base64;
+    setState({ ...state, document: base64Name });
+  };
   return (
     <>
       <Modal
@@ -177,7 +232,7 @@ function KycComplianceDetails(props) {
                 </label>
                 <input
                   type="text"
-                  placeholder="PAN_Number"
+                  placeholder="PAN Number"
                   id="pan_no"
                   name="pan_no"
                   value={state.pan_no}
@@ -214,6 +269,7 @@ function KycComplianceDetails(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
+                  max={25}
                 />
                 {/*----ERROR MESSAGE FOR name----*/}
                 {errors.name && (
@@ -418,7 +474,7 @@ function KycComplianceDetails(props) {
                   GSTIN:
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="GSTIN"
                   id="gstin"
                   name="gstin"
@@ -445,7 +501,7 @@ function KycComplianceDetails(props) {
                   Fax Number :
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Fax Number"
                   id="fax_number"
                   name="fax_number"
@@ -477,7 +533,7 @@ function KycComplianceDetails(props) {
                   TAN Number :
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="TAN Number"
                   id="tan_number"
                   name="tan_number"
@@ -511,22 +567,14 @@ function KycComplianceDetails(props) {
                   id="document"
                   name="document"
                   // value={state.document}
-                  // onChange={onInputChange}
+                  accept=".pdf,application/pdf"
+                  onChange={handleUploadFile}
                   className={
                     errors.document
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR document----*/}
-                {errors.document && (
-                  <span
-                    key={errors.document}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.document}
-                  </span>
-                )}
               </div>
             </div>
             <div className="form-group mb-8">

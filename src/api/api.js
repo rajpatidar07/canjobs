@@ -1,9 +1,11 @@
 import axios from "axios";
 
 const API_URL = "https://apnaorganicstore.in/canjobs/";
-// const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 const user_id = localStorage.getItem("user_id");
-// const employee_id = localStorage.getItem("employee_id");
+// const employer_id = localStorage.getItem("employer_id");
+const admin_id = localStorage.getItem("admin_id");
+const user_type = localStorage.getItem("userType");
 
 // EMPLOYEE'S API
 
@@ -38,7 +40,12 @@ export const EmployeeDetails = async (props) => {
   // }
 };
 export const AddEmployeeDetails = async (props) => {
-  const response = await axios.put(`${API_URL}employeePersonal_detail`, props);
+  const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
   return response.data;
 };
 /*Employee List Api */
@@ -52,17 +59,20 @@ export const getallEmployeeData = async (
   column,
   sort
 ) => {
-  const response = await axios.post(`${API_URL}admin/getallEmployeeView`, {
-    user_type: "admin",
-    filter_experience: experience,
-    filter_skill: skill,
-    filter_education: education,
-    search: search,
-    page: page,
-    limit: limit,
-    column_name: column,
-    sort_order: sort,
-  });
+  const response = await axios.post(
+    `${API_URL}${user_type}/getallEmployeeView`,
+    {
+      user_type: user_type,
+      filter_experience: experience,
+      filter_skill: skill,
+      filter_education: education,
+      search: search,
+      page: page,
+      limit: limit,
+      column_name: column,
+      sort_order: sort,
+    }
+  );
   return response.data;
 };
 /*Detail Employee Education Api */
@@ -168,7 +178,7 @@ export const GetJob = async (props) => {
 
 /*single job Detail api */
 export const GetJobDetail = async (props) => {
-  const response = await axios.post(`${API_URL}/admin/jobDetail`, {
+  const response = await axios.post(`${API_URL}/${user_type}/jobDetail`, {
     job_id: props,
   });
   return response;
@@ -214,7 +224,7 @@ export const getAllEmployer = async (
   column,
   sort
 ) => {
-  const response = await axios.post(`${API_URL}admin/getAllEmployer`, {
+  const response = await axios.post(`${API_URL}${user_type}/getAllEmployer`, {
     filter_industry: industry,
     filter_corporation: corporation,
     search: search,
@@ -286,9 +296,17 @@ export const DeleteJob = async (props) => {
 };
 
 // ADMIN'S API
+/*Admin login Api */
+export const AdminLogin = async (props) => {
+  const formData = new FormData();
+  formData.append("email", props.email);
+  formData.append("password", props.password);
+  const response = await axios.post(`${API_URL}admin_login`, formData);
+  return response.data;
+};
 /*Job List Api */
 export const getAllJobs = async () => {
-  const response = await axios.get(`${API_URL}admin/getAllJobs`);
+  const response = await axios.get(`${API_URL}${user_type}/getAllJobs`);
   return response.data.data;
 };
 /*Admin List Api */
@@ -301,7 +319,7 @@ export const getallAdminData = async (
   sort
 ) => {
   const response = await axios.post(
-    `${API_URL}admin/getAllAdmin`,
+    `${API_URL}${user_type}/getAllAdmin`,
     {
       filter_admin_type: type,
       page: page,
@@ -313,8 +331,7 @@ export const getallAdminData = async (
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+        Authorization: token,
       },
     }
   );
@@ -332,7 +349,7 @@ export const getAllFollowUpData = async (
   sort
 ) => {
   const response = await axios.post(
-    `${API_URL}admin/getFollowupView`,
+    `${API_URL}${user_type}/getFollowupView`,
     {
       filter_job_type: job,
       filter_company_name: company,
@@ -346,8 +363,7 @@ export const getAllFollowUpData = async (
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+        Authorization: token,
       },
     }
   );
@@ -363,14 +379,17 @@ export const getAllJobsCategory = async (
   column_name,
   sort_order
 ) => {
-  const response = await axios.post(`${API_URL}admin/getAllJobsCategory`, {
-    filter_category_type: type,
-    search: search,
-    page: page,
-    limit: limit,
-    column_name: column_name,
-    sort_order: sort_order,
-  });
+  const response = await axios.post(
+    `${API_URL}${user_type}/getAllJobsCategory`,
+    {
+      filter_category_type: type,
+      search: search,
+      page: page,
+      limit: limit,
+      column_name: column_name,
+      sort_order: sort_order,
+    }
+  );
   return response.data;
 };
 /*Delete Job Employee Api */
@@ -383,7 +402,7 @@ export const DeleteJobEmployee = async (props) => {
 };
 /*Add Job Category Api */
 export const AddJobCategory = async (props) => {
-  const response = await axios.put(`${API_URL}admin/addCategory`, props);
+  const response = await axios.put(`${API_URL}${user_type}/addCategory`, props);
   return response.data;
 };
 /*Delete Job Category Api */
@@ -401,13 +420,12 @@ export const AdminDetails = async (props) => {
   const formData = new FormData();
   formData.append("admin_id", props);
   const response = await axios.post(
-    `${API_URL}/admin/getAdmin`,
+    `${API_URL}/${user_type}/getAdmin`,
     { admin_id: props },
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+        Authorization: token,
       },
     }
   );
@@ -416,11 +434,10 @@ export const AdminDetails = async (props) => {
 };
 /*Add Admin Api */
 export const AddAdmin = async (props) => {
-  const response = await axios.put(`${API_URL}admin/addAdmin`, props, {
+  const response = await axios.put(`${API_URL}${user_type}/addAdmin`, props, {
     headers: {
       "Content-Type": "application/json",
-      Authorization:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+      Authorization: token,
     },
   });
   return response.data;
@@ -428,13 +445,12 @@ export const AddAdmin = async (props) => {
 /*Delete Admin Api */
 export const DeleteAdmin = async (props) => {
   const response = await axios.post(
-    `${API_URL}admin/deleteAdmin`,
+    `${API_URL}${user_type}/deleteAdmin`,
     { admin_id: props },
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+        Authorization: token,
       },
     }
   );
@@ -443,9 +459,9 @@ export const DeleteAdmin = async (props) => {
 /*Add Followup Api */
 export const AddFollowup = async (props) => {
   const response = await axios.post(
-    `${API_URL}admin/addFollowup`,
+    `${API_URL}${user_type}/addFollowup`,
     {
-      admin_id: props.adminId,
+      admin_id: admin_id,
       job_id: props.jobId,
       employee_id: props.employId,
       remark: props.state.remark,
@@ -454,8 +470,7 @@ export const AddFollowup = async (props) => {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+        Authorization: token,
       },
     }
   );
@@ -463,14 +478,13 @@ export const AddFollowup = async (props) => {
 };
 /*Add Followup single data Api */
 export const getSingleFollowup = async (employee_id, job_id) => {
-  console.log(employee_id, job_id);
+  //console.log((employee_id, job_id);
   const response = await axios.get(
-    `${API_URL}admin/getFollowup?job_id=${job_id}&employee_id=${employee_id}`,
+    `${API_URL}${user_type}/getFollowup?job_id=${job_id}&employee_id=${employee_id}`,
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjEiLCJBUElfVElNRSI6MTY4MDc3MDc2MH0.BxPnqBw1fbtK9rCd3DFd5HWHtuvkXzUdI57prhzZBmU",
+        Authorization: token,
       },
     }
   );

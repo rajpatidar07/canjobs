@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
 
 function EmployementDetails(props) {
-  console.log(props);
   /*Data state */
   let [employementData, setEmployementData] = useState("");
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -89,8 +88,14 @@ function EmployementDetails(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const EmployeementData = async (data) => {
     let Employment = await EmployeeDetails(props.employeeId);
@@ -101,7 +106,9 @@ function EmployementDetails(props) {
     }
   };
   useEffect(() => {
-    if (props.employeeId !== undefined) {
+    if (props.employeeId === undefined || deleteAlert === true) {
+      setState(initialFormState);
+    } else {
       EmployeementData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -131,7 +138,6 @@ function EmployementDetails(props) {
   // END USER CARRER PROFILE VALIDATION
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
-    console.log(e);
     setDeleteID(e.career_id);
     setDeleteName(e.designation);
     setDeleteAlert(true);
@@ -142,7 +148,6 @@ function EmployementDetails(props) {
   };
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
-    console.log(e);
     const responseData = await DeleteEmployeeCareer(e);
     if (responseData.message === "career details has been deleted") {
       toast.error("Career deleted Successfully", {

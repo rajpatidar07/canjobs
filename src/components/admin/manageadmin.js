@@ -8,7 +8,7 @@ import { getallAdminData, DeleteAdmin } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-
+import FilterJson from "../json/filterjson";
 function ManageAdmin() {
   // eslint-disable-next-line
   /*data and id state */
@@ -165,7 +165,7 @@ function ManageAdmin() {
                 <div className="row">
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by Type:
+                      Search by name:
                     </p>
                     <input
                       required
@@ -190,9 +190,9 @@ function ManageAdmin() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
                       >
                         <option value="">select type</option>
-                        {(AdminType || []).map((type) => (
-                          <option value={type.admin_type} key={type.admin_id}>
-                            {type.admin_type}
+                        {(FilterJson.AdminType || []).map((type, i) => (
+                          <option value={type} key={i}>
+                            {type}
                           </option>
                         ))}
                       </select>

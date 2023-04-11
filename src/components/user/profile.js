@@ -35,7 +35,7 @@ const UserProfile = (props) => {
     showItSkills,
     localStorage.getItem("user_id"),
   ]);
-  // console.log(("userData--" + JSON.stringify(userDetail)))
+  // //console.log((("userData--" + JSON.stringify(userDetail)))
 
   return (
     /*---- Employee Profile Details Page ----*/
@@ -383,48 +383,51 @@ const UserProfile = (props) => {
                           close={() => setShowEducation(false)}
                         />
                       </h4>
-                      {(userDetail.education || []).map((EducationDetails) => (
-                        <div
-                          className="w-100"
-                          key={EducationDetails.education_id}
-                        >
-                          <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                            <div className="media align-items-center company_box p-0">
-                              <div className="text_box text-left w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <span className="font-size-6 text-black-2 font-weight-semibold">
-                                    {EducationDetails.qualification}{" "}
-                                    <span className="font-size-4">
-                                      ({EducationDetails.university_institute})
+                      {(userDetail.education || []).map(
+                        (EducationDetails, index) => (
+                          <div
+                            className="w-100"
+                            key={EducationDetails.education_id}
+                          >
+                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                              <div className="media align-items-center company_box p-0">
+                                <div className="text_box text-left w-100 mt-n2">
+                                  <h3 className="mb-0">
+                                    <span className="font-size-6 text-black-2 font-weight-semibold">
+                                      {EducationDetails.qualification}{" "}
+                                      <span className="font-size-4">
+                                        ({EducationDetails.university_institute}
+                                        )
+                                      </span>
                                     </span>
+                                  </h3>
+                                  <span className="font-size-4 text-default-color line-height-2">
+                                    {EducationDetails.course},{" "}
+                                    {EducationDetails.specialization}
                                   </span>
-                                </h3>
-                                <span className="font-size-4 text-default-color line-height-2">
-                                  {EducationDetails.course},{" "}
-                                  {EducationDetails.specialization}
+                                </div>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                                <span className="font-size-4 text-gray w-100">
+                                  {EducationDetails.passing_year}
+                                </span>
+                                <span className="font-size-3 text-gray w-100">
+                                  <span
+                                    className="mr-4"
+                                    style={{ marginTop: "-2px" }}
+                                  >
+                                    <img
+                                      src="image/svg/icon-loaction-pin-black.svg"
+                                      alt=""
+                                    />
+                                  </span>
+                                  {EducationDetails.institute_location}
                                 </span>
                               </div>
                             </div>
-                            <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                              <span className="font-size-4 text-gray w-100">
-                                {EducationDetails.passing_year}
-                              </span>
-                              <span className="font-size-3 text-gray w-100">
-                                <span
-                                  className="mr-4"
-                                  style={{ marginTop: "-2px" }}
-                                >
-                                  <img
-                                    src="image/svg/icon-loaction-pin-black.svg"
-                                    alt=""
-                                  />
-                                </span>
-                                {EducationDetails.institute_location}
-                              </span>
-                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      )}
                     </div>
                   </div>
                   <div

@@ -42,8 +42,14 @@ function AddCategory(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const CatData = () => {
     if (props.jobCategoryData !== "0") {
@@ -61,7 +67,7 @@ function AddCategory(props) {
   async function onAdminCategoryClick(event) {
     event.preventDefault();
     if (validate()) {
-      // console.log(state);
+      // //console.log((state);
       const responseData = await AddJobCategory(state);
       if (responseData.message === "Category added successfully") {
         toast.success("Category added successfully", {

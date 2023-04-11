@@ -6,9 +6,8 @@ import useValidation from "../../common/useValidation";
 import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import FilterJson from "../../json/filterjson";
 function PersonalDetails(props) {
-  console.log(props.employeeid);
   let encoded;
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -72,9 +71,9 @@ function PersonalDetails(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Description is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character"
-          : value.length < 5
+          : // : /[^A-Za-z 0-9]/g.test(value)
+          // ? "Cannot use special character"
+          value.length < 5
           ? "Description should have 5 or more letter"
           : null,
     ],
@@ -127,10 +126,6 @@ function PersonalDetails(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Language is required"
-          : value.length < 3
-          ? "Language should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Language can not have a number."
           : "",
     ],
     religion: [
@@ -170,8 +165,14 @@ function PersonalDetails(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate, setErrors } =
-    useValidation(initialFormStateuser, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+    setErrors,
+  } = useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeeId);
@@ -188,7 +189,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    console.log(state);
+    //console.log((state);
     event.preventDefault();
     if (validate()) {
       const responseData = await AddEmployeeDetails(state);
@@ -248,11 +249,11 @@ function PersonalDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserPersonalDetailClick}>
             {props.employeeId === "0" ? (
-              <h5 className="text-center pt-2 mb-7"> Add Personal Details</h5>
+              <h5 className="text-center pt-2 mb-7"> Add Employee Details</h5>
             ) : (
               <h5 className="text-center pt-2 mb-7">
                 {" "}
-                Update Personal Details
+                Update Employee Details
               </h5>
             )}
             {/* FIRST LINE */}
@@ -313,6 +314,7 @@ function PersonalDetails(props) {
                   }
                   id="email"
                   placeholder="email"
+                  disabled={props.employeeId === "0" ? false : true}
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
                 {errors.email && (
@@ -387,7 +389,7 @@ function PersonalDetails(props) {
                       data={contentEditor}
                       // onChange={DescriptionChange}
                       onChange={(event, editor) => {
-                        console.log(event, "Description", editor);
+                        //console.log((event, "Description", editor);
                         const data = editor.getData();
                         setState({ ...state, description: data });
                       }}
@@ -424,6 +426,7 @@ function PersonalDetails(props) {
                       : "form-control"
                   }
                   id="description"
+                  placeholder="Description"
                 ></textarea>
                 {/*----ERROR MESSAGE FOR GENDER----*/}
                 {errors.description && (
@@ -643,20 +646,25 @@ function PersonalDetails(props) {
                   Languages Known (Max 3) :{" "}
                   <span className="text-danger">*</span>
                 </label>
-                <input
-                  maxLength={20}
-                  type="text"
-                  placeholder="Languages Known (Max 3)"
-                  className={
-                    errors.language
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="language"
+                <select
                   name="language"
                   value={state.language}
                   onChange={onInputChange}
-                />
+                  className={
+                    errors.language
+                      ? " form-control border border-danger position-relative overflow-hidden"
+                      : " form-control position-relative overflow-hidden"
+                  }
+                  placeholder="Language"
+                  id="language"
+                >
+                  <option value={""}>select Language</option>
+                  {(FilterJson.Language || []).map((Language) => (
+                    <option key={Language} value={Language}>
+                      {Language}
+                    </option>
+                  ))}
+                </select>
                 {/*----ERROR MESSAGE FOR LANGUAGE----*/}
                 {errors.language && (
                   <span
