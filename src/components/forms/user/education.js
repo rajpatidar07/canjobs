@@ -171,6 +171,58 @@ function Education(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onEducationSubmitClick}>
             <h5 className="text-center pt-2">Education Details</h5>
+            <div className="row">
+              {(educationData || []).map((education) => (
+                <div className="col-6" key={education.education_id}>
+                  <div className=" border m-1">
+                    <div className="p-1 d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between ">
+                      <div className="media align-items-center company_box p-0">
+                        <div className="text_box text-left w-100 mt-n2">
+                          <h3 className="mb-0">
+                            <span
+                              className="font-size-6 text-black-2 font-weight-semibold"
+                              onClick={() => EducationData(education)}
+                            >
+                              {education.qualification}{" "}
+                              <span className="font-size-4 text-break">
+                                ({education.university_institute})
+                              </span>
+                            </span>
+                          </h3>
+                          <span className="font-size-4 text-default-color line-height-2">
+                            {education.course}, {education.specialization}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                        <span className="font-size-4 text-gray w-100">
+                          {education.passing_year}
+                        </span>
+                        <span className="font-size-3 text-gray w-100">
+                          <span className="mr-4" style={{ marginTop: "-2px" }}>
+                            <img
+                              src="image/svg/icon-loaction-pin-black.svg"
+                              alt=""
+                            />
+                          </span>
+                          {education.institute_location}
+                        </span>
+                      </div>
+                      <Link
+                        to=""
+                        className="fa fa-times-circle"
+                        onClick={() => ShowDeleteAlert(education)}
+                      ></Link>
+                      <Link
+                        to=""
+                        className="fa fa-edit text-gray px-3"
+                        onClick={() => EducationData(education)}
+                      ></Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className="row pt-5">
               {" "}
               <div className="form-group col-md-6">
@@ -385,58 +437,7 @@ function Education(props) {
                 )}
               </div>
             </div>
-            <div className="">
-              {(educationData || []).map((education) => (
-                <>
-                  <div
-                    className="w-100 border m-1"
-                    key={education.education_id}
-                  >
-                    <div className="p-1 d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between ">
-                      <div className="media align-items-center company_box p-0">
-                        <div className="text_box text-left w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <Link
-                              to=""
-                              className="font-size-6 text-black-2 font-weight-semibold"
-                              onClick={() => EducationData(education)}
-                            >
-                              {education.qualification}{" "}
-                              <span className="font-size-4">
-                                ({education.university_institute})
-                              </span>
-                            </Link>
-                          </h3>
-                          <span className="font-size-4 text-default-color line-height-2">
-                            {education.course}, {education.specialization}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                        <span className="font-size-4 text-gray w-100">
-                          {education.passing_year}
-                        </span>
-                        <span className="font-size-3 text-gray w-100">
-                          <span className="mr-4" style={{ marginTop: "-2px" }}>
-                            <img
-                              src="image/svg/icon-loaction-pin-black.svg"
-                              alt=""
-                            />
-                          </span>
-                          {education.institute_location}
-                        </span>
-                      </div>
-                      <Link to="" onClick={() => ShowDeleteAlert(education)}>
-                        <i
-                          className="fa fa-times-circle"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                    </div>
-                  </div>
-                </>
-              ))}
-            </div>
+
             <div className="form-group text-center">
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"

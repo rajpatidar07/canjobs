@@ -28,10 +28,9 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
               to={""}
               onClick={prevPage}
               className={
-                // currentPage === 1
-                //   ? "page-link rounded-0 border-0 px-3 d-none"
-                // :
-                "page-link rounded-1 mr-1 px-3 "
+                currentPage === 1
+                  ? "disabled-link page-link rounded-1 mr-1 px-3"
+                  : "page-link rounded-1 mr-1 px-3 "
               }
               aria-label="Previous"
             >
@@ -67,10 +66,9 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
               to={""}
               onClick={nextPage}
               className={
-                // currentPage === pageNumbers.length
-                //   ? "page-link rounded-0 border-0 px-3 d-none"
-                // :
-                "page-link rounded-1 ml-1 px-3"
+                currentPage === pageNumbers.length
+                  ? "disabled-link page-link rounded-1 ml-1 px-3"
+                  : "page-link rounded-1 ml-1 px-3"
               }
               aria-label="Next"
             >

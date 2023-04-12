@@ -65,6 +65,7 @@ export default function AdminLoginFrom() {
                 className="img-fluid "
                 height={200}
                 width={200}
+                alt="logo"
               />
             </div>
             {/* user login form */}

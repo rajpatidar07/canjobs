@@ -3,8 +3,9 @@ import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../common/useValidation";
 export default function CompanyLogin(props) {
-  let [showCompanyForgotPassword, setShowCompanyForgotPassword] =
-    useState(false);
+  let [showCompanyForgotPassword, setShowCompanyForgotPassword] = useState(
+    false
+  );
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",

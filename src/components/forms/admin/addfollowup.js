@@ -102,11 +102,16 @@ function Addfollowup(props) {
           <form onSubmit={onAminFollowClick} className="pt-5">
             <div className=" col px-0 pr-3 pb-5 mb-5">
               {(response || []).map((res) => (
-                <div className="d-flex justify-content-between" key={res.id}>
-                  {moment(res.created_at).format("YYYY-MM-DD")}
-                  <ul>
-                    <li>{res.remark}</li>
-                  </ul>
+                <div className="card mt-5 mb-5" key={res.id}>
+                  <div className="card-header">
+                    <span className="text-dark"> Posted date:</span>{" "}
+                    {moment(res.created_at).format("YYYY-MM-DD")}
+                  </div>
+                  <div className="card-body">{res.remark}</div>
+                  <div className="card-footer">
+                    <span className="text-dark"> Next date:</span>{" "}
+                    {moment(res.next_date).format("YYYY-MM-DD")}
+                  </div>
                 </div>
               ))}
             </div>

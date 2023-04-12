@@ -8106,9 +8106,9 @@ p {
   line-height: 1;
 }
 
-.font-size-3 {
+.font-size-3  {
   font-size: 13px;
-  line-height: 2;
+  line-height: 1.25;
   letter-spacing: 0.26px;
 }
 
@@ -9044,5 +9044,15 @@ html .ui-button.ui-state-disabled:active {
 .result-view-type a.active {
   color: #2b3940;
 }
-
+.text-truncate{
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+}
+.disabled-link {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
 /*# sourceMappingURL=maps/main.css.map */

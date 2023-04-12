@@ -45,8 +45,14 @@ function Skills(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const SkillData = async () => {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);

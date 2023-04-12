@@ -44,7 +44,6 @@ function ManageAdmin() {
     setAdminData(userData.data);
     setTotalData(userData.total_rows);
   };
-
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
@@ -135,10 +134,10 @@ function ManageAdmin() {
     }
   };
   /*Admin type array to filter*/
-  const AdminType = adminData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.admin_type === thing.admin_type)
-  );
+  // const AdminType = adminData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.admin_type === thing.admin_type)
+  // );
 
   return (
     <>
@@ -213,7 +212,7 @@ function ManageAdmin() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
+              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
                   <table className="table table-striped">
                     <thead>

@@ -62,10 +62,12 @@ function PersonalDetails(props) {
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Mobile No. is required"
+          ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile no should be of 10 digits"
-          : null,
+          ? "Mobile number should be of 10 digits"
+          : value.length > 11
+          ? "Mobile number should not be more than 11 digits"
+          : "",
     ],
     description: [
       (value) =>
@@ -160,7 +162,9 @@ function PersonalDetails(props) {
           ? "Other Permit is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value.length < 2
+          ? "Other permit sholud have 2 or more letters"
+          : "",
     ],
   };
 
@@ -342,6 +346,7 @@ function PersonalDetails(props) {
                       : "form-control"
                   }
                   id="contact_no"
+                  maxLength={10}
                 />
                 {/*----ERROR MESSAGE FOR MOBILENO----*/}
                 {errors.contact_no && (

@@ -209,7 +209,7 @@ function Category() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
+              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
                   <table className="table table-striped">
                     <thead>

@@ -36,8 +36,6 @@ function CompanyDetails(props) {
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Company Name can not have a number."
           : value.length < 2
           ? "Company Name should have 2 or more letters"
           : "",
@@ -70,7 +68,9 @@ function CompanyDetails(props) {
           ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : null,
+          : value == "0" || value == 0
+          ? "Company Size can not be zero"
+          : "",
     ],
     vacancy_for_post: [
       (value) =>
@@ -198,7 +198,7 @@ function CompanyDetails(props) {
                 </label>
                 <input
                   type="text"
-                  maxLength={20}
+                  maxLength={30}
                   name="company_name"
                   value={state.company_name}
                   onChange={onInputChange}

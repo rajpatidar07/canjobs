@@ -25,6 +25,7 @@ const FilterJson = {
     "House",
     "Doctor",
     "Domestic",
+    "Nurse",
   ],
   education: [
     "Metric",
@@ -84,7 +85,8 @@ const FilterJson = {
     " Human resource assistant",
     "Human resource specialist",
     " Human resource manager",
-    " Director of employee experience",
+    "Director of employee experience",
+    "Personal care context",
   ],
   keyskill: ["java", "html", "css", "React", "phn", "python"],
   adminType: ["Manager", "Sub-admin", "Admin", "Super-Admin"],
@@ -106,5 +108,6 @@ const FilterJson = {
   Specialization: ["Maths", "Bio", "phy", "Social studies", "core"],
   Language: ["English", "Hindi", "French", "Gujrati", "Marathi"],
   AdminType: ["manager", "sub-admin", "admin", "super-admin"],
+  lmia_status: ["pending", "approved", "reject", "draft", "complete"],
 };
 export default FilterJson;

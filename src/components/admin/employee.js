@@ -13,10 +13,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import UserProfile from "../user/profile";
+import LmiaStatus from "../forms/admin/lmiastatus";
 function Employee() {
   /*Show modal states */
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
+  let [showLimiaSttusModal, setShowLimiaStatusModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   /*data and id states */
@@ -86,6 +88,12 @@ function Employee() {
   const editEmployeeEducation = (e) => {
     // e.preventDefault();
     setShowEducationModal(true);
+    setemployeeId(e);
+  };
+  /* Function to show the single data to update Employee Limia status*/
+  const editEmployeeLimiaStatus = (e) => {
+    // e.preventDefault();
+    setShowLimiaStatusModal(true);
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee*/
@@ -280,6 +288,26 @@ function Employee() {
         {/* <!-- navbar- --> */}
         <AdminSidebar />
         <ToastContainer />
+        <PersonalDetails
+          show={showAddEmployeeModal}
+          employeeId={employeeId}
+          close={() => setShowEmployeeMOdal(false)}
+        />
+        <LmiaStatus
+          close={() => setShowLimiaStatusModal(false)}
+          employeeId={employeeId}
+          show={showLimiaSttusModal}
+        />
+        <Education
+          close={() => setShowEducationModal(false)}
+          employeeId={employeeId}
+          show={showEducationModal}
+        />
+        <Skills
+          show={showSkillsModal}
+          employeeId={employeeId}
+          close={() => setShowSkillsModal(false)}
+        />
         <div
           className={
             showEmployeeProfile === false
@@ -391,16 +419,11 @@ function Employee() {
                       >
                         Add Employee
                       </CustomButton>
-                      <PersonalDetails
-                        show={showAddEmployeeModal}
-                        employeeId={employeeId}
-                        close={() => setShowEmployeeMOdal(false)}
-                      />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-8 px-11">
+              <div className="bg-white shadow-8 pt-7 rounded pb-8 px-2 ">
                 <div className="table-responsive">
                   <table className="table table-striped">
                     <thead>
@@ -511,7 +534,7 @@ function Employee() {
                             className="border border-color-2"
                             key={empdata.employee_id}
                           >
-                            <td className="pl-6 border-0 py-7 pr-0  ">
+                            <td className=" border-0 py-7 ">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">
                                   {empdata.profile_photo === null ? (
@@ -530,7 +553,7 @@ function Employee() {
                                 </div>
                               </div>
                             </td>
-                            <td className=" py-7  pr-0">
+                            <td className=" py-7">
                               <Link
                                 to={""}
                                 onClick={() =>
@@ -551,7 +574,7 @@ function Employee() {
                                 </h4>
                               </Link>
                             </td>
-                            <td className=" py-7  pr-0">
+                            <td className=" py-7 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 <p className="m-0">+{empdata.contact_no}</p>
                                 <p className="text-gray font-size-2 m-0">
@@ -560,42 +583,41 @@ function Employee() {
                               </h3>
                             </td>
 
-                            <Education
-                              close={() => setShowEducationModal(false)}
-                              employeeId={employeeId}
-                              show={showEducationModal}
-                            />
-                            <Skills
-                              show={showSkillsModal}
-                              employeeId={employeeId}
-                              close={() => setShowSkillsModal(false)}
-                            />
-                            <td className=" py-7 min-width-px-100">
+                            <td className=" py-7">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {empdata.language}
                               </h3>
                             </td>
-                            <td className=" py-7 min-width-px-100">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <td className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                 {empdata.education}
                               </h3>
                             </td>
-                            <td className=" py-7 min-width-px-100">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <td className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                 {empdata.skill}
                               </h3>
                             </td>
-                            <td className=" py-7 min-width-px-100">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <td className=" py-7">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                 {empdata.specialization}
                               </h3>
                             </td>
-                            <td className=" py-7 min-width-px-100">
+                            <td className=" py-7">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.experience}
+                                {empdata.experience} Years
                               </h3>
                             </td>
-                            <td className="d-flex py-7 min-width-px-100">
+                            <td className="d-flex py-7">
+                              <Link
+                                to=""
+                                onClick={() =>
+                                  editEmployeeLimiaStatus(empdata.employee_id)
+                                }
+                              >
+                                <span className="fas fa-stream text-gray px-2"></span>
+                              </Link>
+
                               <Link
                                 to=""
                                 onClick={() =>

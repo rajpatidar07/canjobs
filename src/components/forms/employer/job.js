@@ -74,7 +74,7 @@ function AddJobModal(props) {
           ? "Job Title is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
+          : value.length < 2
           ? "Job Title should have 2 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Job Title can not have a number."
@@ -108,7 +108,7 @@ function AddJobModal(props) {
               value
             )
           ? "Write the correct link"
-          : value.length <= 3
+          : value.length < 3
           ? "Apply link  should have 3 or more letters"
           : null,
     ],
@@ -116,7 +116,7 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Job Description is required"
-          : value.length <= 3
+          : value.length < 3
           ? "Job Description  should have 3 or more letters"
           : null,
     ],
@@ -126,7 +126,7 @@ function AddJobModal(props) {
           ? "Your duties is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
+          : value.length < 2
           ? "Duties  should have 2 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Duties can not have a number."
@@ -136,7 +136,7 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Job requirement is required"
-          : value.length <= 2
+          : value.length < 2
           ? "Requirement  should have 2 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Requirement can not have a number."
@@ -148,7 +148,7 @@ function AddJobModal(props) {
           ? "Department is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value.length <= 2
+          : value.length < 2
           ? "Department  should have 2 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Department can not have a number."
@@ -176,7 +176,7 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Language is required"
-          : value.length <= 3
+          : value.length < 3
           ? "Language  should have 3 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Language can not have a number."
@@ -186,7 +186,7 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Skill is required"
-          : value.length <= 3
+          : value.length < 3
           ? "Skill  should have 3 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Skill can not have a number."
@@ -544,7 +544,7 @@ function AddJobModal(props) {
                       initData="Job Description"
                     /> */}
                     <textarea
-                      maxLength={30}
+                      maxLength={100}
                       placeholder="Job Description"
                       name="job_description"
                       value={state.job_description}
@@ -596,7 +596,7 @@ function AddJobModal(props) {
                       initData="your duties"
                     /> */}
                     <textarea
-                      maxLength={30}
+                      maxLength={100}
                       placeholder="Your Duties"
                       name="your_duties"
                       value={state.your_duties}

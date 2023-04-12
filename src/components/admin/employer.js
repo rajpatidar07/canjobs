@@ -528,9 +528,15 @@ function Employer() {
                                   EmployerDetail(empdata.company_id)
                                 }
                               >
-                                <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {empdata.contact_person_name}
-                                </h4>
+                                {empdata.contact_person_name === null ? (
+                                  <h4 className="font-size-3 font-weight-bold text-black-3 mb-0">
+                                    Complete your profile
+                                  </h4>
+                                ) : (
+                                  <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {empdata.contact_person_name}{" "}
+                                  </h4>
+                                )}
                               </Link>
                             </th>
                             <th className=" py-7  pr-0">
@@ -539,21 +545,33 @@ function Employer() {
                               </h3>
                             </th>
                             <th className=" py-7  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.address} {empdata.city} (
-                                {empdata.pin_code}) {empdata.state}{" "}
-                                {empdata.country}
-                              </h3>
+                              {empdata.address === null ? (
+                                <h4 className="font-size-3 font-weight-bold text-black-3 mb-0">
+                                  Complete your profile
+                                </h4>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                                  {empdata.address} {empdata.city} (
+                                  {empdata.pin_code}) {empdata.state}{" "}
+                                  {empdata.country}
+                                </h3>
+                              )}
                             </th>
                             <th className=" py-7  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                +{empdata.contact_no} +
-                                {empdata.contact_no_other}
-                                <br />
-                                <span className="text-gray font-size-2">
-                                  {empdata.email}
-                                </span>
-                              </h3>
+                              {empdata.contact_no === null ? (
+                                <h4 className="font-size-3 font-weight-bold text-black-3 mb-0">
+                                  Complete your profile
+                                </h4>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  +{empdata.contact_no} +
+                                  {empdata.contact_no_other}
+                                  <br />
+                                  <span className="text-gray font-size-2">
+                                    {empdata.email}
+                                  </span>
+                                </h3>
+                              )}
                             </th>
                             <th className=" py-7  pr-0">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">

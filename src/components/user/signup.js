@@ -23,20 +23,20 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     userpassword: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-            value
-          )
-            ? null
-            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              value
+            )
+          ? null
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    resume: []
+    resume: [],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, onInputChange, errors, validate } = useValidation(
@@ -50,16 +50,15 @@ export default function EmployeeSignupModal(props) {
 
     if (validate()) {
       if (isChecked) {
-        settermsErr("")
+        settermsErr("");
         const signUpData = await EmployeeSignUp(state);
         if (signUpData.status) {
-          setSingUpSuccess('success')
+          setSingUpSuccess("success");
         }
       } else {
-        settermsErr("Accept terms and conditions")
+        settermsErr("Accept terms and conditions");
       }
     }
-
   };
   // END USER SIGNUP VALIDATION
 
@@ -112,9 +111,11 @@ export default function EmployeeSignupModal(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                {SingUpSuccess === 'success' ?
+                {SingUpSuccess === "success" ? (
                   <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
-                    Congratulations! <br />You have successfully registered your account. Please login to continue
+                    Congratulations! <br />
+                    You have successfully registered your account. Please login
+                    to continue
                     <br />
                     <Link
                       to=""
@@ -123,7 +124,8 @@ export default function EmployeeSignupModal(props) {
                     >
                       Login
                     </Link>
-                  </div> :
+                  </div>
+                ) : (
                   <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
                     {/* SOCIAL MEDIA LINK BUTTONS */}
                     <div className="row">
@@ -282,7 +284,9 @@ export default function EmployeeSignupModal(props) {
                             type="checkbox"
                             id="tandr"
                             name="tandr"
-                            onChange={(event) => { setIsChecked(event.target.checked) }}
+                            onChange={(event) => {
+                              setIsChecked(event.target.checked);
+                            }}
                             className="text-black-2 pt-5 mr-5"
                           />
                           <span className="font-size-3 mb-0 line-height-reset d-block">
@@ -320,7 +324,8 @@ export default function EmployeeSignupModal(props) {
                       </p>
                     </form>
                     {/* END SIGNUP FORM */}
-                  </div>}
+                  </div>
+                )}
               </div>
             </div>
           </div>
