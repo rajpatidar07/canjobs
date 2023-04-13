@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-
+import FilterJson from "../json/filterjson";
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
@@ -129,10 +129,10 @@ function Category() {
     }
   };
   /*Category type array to filter*/
-  const CategoryType = categoryData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.category_type === thing.category_type)
-  );
+  // const CategoryType = categoryData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.category_type === thing.category_type)
+  // );
 
   return (
     <>
@@ -184,13 +184,10 @@ function Category() {
                         className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
                       >
                         <option value={""}>Select category type</option>
-                        {(CategoryType || []).map((data) => {
+                        {(FilterJson.category || []).map((data, i) => {
                           return (
-                            <option
-                              value={data.category_type}
-                              key={data.job_category_id}
-                            >
-                              {data.category_type}
+                            <option value={data} key={i}>
+                              {data}
                             </option>
                           );
                         })}

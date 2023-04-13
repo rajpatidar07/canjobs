@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
-
+import { toast } from "react-toastify";
 const AdminHeader = () => {
   const [showChangePass, setShowChangePass] = useState(false);
   return (
@@ -47,10 +47,10 @@ const AdminHeader = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <div className="circle-40">
+                  {/* <div className="circle-40">
                     <img src="image/header-profile.png" alt="" />
-                  </div>
-                  <i className="fas fa-chevron-down heading-default-color ml-6"></i>
+                  </div> */}
+                  <i className="fas fa-chevron-down heading-default-color ml-15"></i>
                 </Link>
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
@@ -77,6 +77,10 @@ const AdminHeader = () => {
                     to={"/adminlogin"}
                     onClick={() => {
                       localStorage.clear(); // clear the local storage
+                      toast.error("Log Out Successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                      });
                     }}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                   >

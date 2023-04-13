@@ -177,6 +177,48 @@ function EmployementDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
+            {(employementData || []).map((CareerDetails) => (
+              <div className="w-100 border m-2" key={CareerDetails.career_id}>
+                <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
+                  <div className="media align-items-center company_box col-md-6 p-0">
+                    <div className="text_box text-left w-100 mt-n2">
+                      <h3 className="mb-0">
+                        <div className="font-size-6 text-black-2 font-weight-semibold">
+                          {CareerDetails.designation} -{" "}
+                          <span className="font-size-4">
+                            {CareerDetails.functional_area}
+                          </span>
+                        </div>
+                      </h3>
+                      <span className="font-size-4 text-default-color line-height-2">
+                        {CareerDetails.company} ({CareerDetails.industry})
+                      </span>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                    <span className="font-size-4 text-gray w-100">
+                      {moment(CareerDetails.start_date).format("YYYY-MM-DD")} -{" "}
+                      {moment(CareerDetails.end_date).format("YYYY-MM-DD")}
+                    </span>
+                    <span className="font-size-3 text-gray w-100">
+                      <span className="mr-4" style={{ marginTop: "-2px" }}>
+                        <img
+                          src="image/svg/icon-loaction-pin-black.svg"
+                          alt=""
+                        />
+                      </span>
+                      {CareerDetails.company_location}
+                    </span>
+                  </div>
+                  <Link to="" onClick={() => ShowDeleteAlert(CareerDetails)}>
+                    <i className="fa fa-times-circle" aria-hidden="true"></i>
+                  </Link>
+                  <Link to="" onClick={() => EmployeementData(CareerDetails)}>
+                    <i className="fa fa-edit text-gray" aria-hidden="true"></i>
+                  </Link>
+                </div>
+              </div>
+            ))}
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
@@ -493,48 +535,6 @@ function EmployementDetails(props) {
                   ></span>
                 )} */}
               </div>
-              {(employementData || []).map((CareerDetails) => (
-                <div className="w-100 border m-2" key={CareerDetails.career_id}>
-                  <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
-                    <div className="media align-items-center company_box col-md-6 p-0">
-                      <div className="text_box text-left w-100 mt-n2">
-                        <h3 className="mb-0">
-                          <div className="font-size-6 text-black-2 font-weight-semibold">
-                            {CareerDetails.designation} -{" "}
-                            <span className="font-size-4">
-                              {CareerDetails.functional_area}
-                            </span>
-                          </div>
-                        </h3>
-                        <span className="font-size-4 text-default-color line-height-2">
-                          {CareerDetails.company} ({CareerDetails.industry})
-                        </span>
-                      </div>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                      <span className="font-size-4 text-gray w-100">
-                        {moment(CareerDetails.start_date).format("YYYY-MM-DD")}{" "}
-                        - {moment(CareerDetails.end_date).format("YYYY-MM-DD")}
-                      </span>
-                      <span className="font-size-3 text-gray w-100">
-                        <span className="mr-4" style={{ marginTop: "-2px" }}>
-                          <img
-                            src="image/svg/icon-loaction-pin-black.svg"
-                            alt=""
-                          />
-                        </span>
-                        {CareerDetails.company_location}
-                      </span>
-                    </div>
-                    <Link to="" onClick={() => ShowDeleteAlert(CareerDetails)}>
-                      <i className="fa fa-times-circle" aria-hidden="true"></i>
-                    </Link>
-                    <Link to="" onClick={() => EmployeementData(CareerDetails)}>
-                      <i className="fa fa-edit" aria-hidden="true"></i>
-                    </Link>
-                  </div>
-                </div>
-              ))}
             </div>
             <SAlert
               show={deleteAlert}
