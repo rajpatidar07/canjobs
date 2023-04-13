@@ -29,10 +29,7 @@ function ContactInfo(props) {
   const validators = {
     contact_person_name: [
       (value) =>
-        value === "" ||
-        value === undefined ||
-        value === null ||
-        value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -61,8 +58,6 @@ function ContactInfo(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Address is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 2
           ? "Address should have 2 or more letter"
           : "",
@@ -126,7 +121,7 @@ function ContactInfo(props) {
     ) {
       setState(userData.data.company_detail[0]);
     }
-    //console.log((userData.data);
+    //console.log(userData.data);
   };
   useEffect(() => {
     props.employerId === undefined || props.employerId === "0"

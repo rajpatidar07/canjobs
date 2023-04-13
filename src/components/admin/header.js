@@ -47,9 +47,9 @@ const AdminHeader = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  {/* <div className="circle-40">
+                  <div className="circle-40">
                     <img src="image/header-profile.png" alt="" />
-                  </div> */}
+                  </div>
                   <i className="fas fa-chevron-down heading-default-color ml-6"></i>
                 </Link>
                 <div

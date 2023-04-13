@@ -11,6 +11,7 @@ import { getAllEmployer, DeleteEmployer } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
+import FilterJson from "../json/filterjson";
 
 function Employer() {
   // eslint-disable-next-line
@@ -239,15 +240,15 @@ function Employer() {
     }
   };
   /*Industry array to filter*/
-  const Industry = employerData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.industry === thing.industry)
-  );
+  // const Industry = employerData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.industry === thing.industry)
+  // );
   /*Corporation array to filter*/
-  const Corporation = employerData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.corporation === thing.corporation)
-  );
+  // const Corporation = employerData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.corporation === thing.corporation)
+  // );
   /* Function to show the Job detail data */
   const EmployerDetail = (e) => {
     // e.preventDefault();
@@ -262,6 +263,21 @@ function Employer() {
         {/* <!-- navbar- --> */}
         <AdminSidebar active="active" />
         <ToastContainer />
+        <CompanyDetails
+          show={showAddEmployerModal}
+          employerId={employerId}
+          close={() => setShowEmployerMOdal(false)}
+        />
+        <ContactInfo
+          show={showContactModal}
+          employerId={employerId}
+          close={() => setShowContactMOdal(false)}
+        />
+        <KycComplianceDetails
+          show={showKycModal}
+          employerId={employerId}
+          close={() => setShowkycMOdal(false)}
+        />
         {/* <Link
           to={""}
           className="sidebar-mobile-button"
@@ -312,17 +328,16 @@ function Employer() {
                         value={corporationFilterValue}
                         id="corporation"
                         onChange={onCorporationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black font-weight-semibold text-black-2 w-100"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Select corporation</option>
-                        {(Corporation || []).map((corporation) => (
-                          <option
-                            key={corporation.company_id}
-                            value={corporation.corporation}
-                          >
-                            {corporation.corporation}
-                          </option>
-                        ))}
+                        {(FilterJson.corporation || []).map(
+                          (corporation, i) => (
+                            <option key={i} value={corporation}>
+                              {corporation}
+                            </option>
+                          )
+                        )}
                       </select>
                     </div>
                   </div>
@@ -336,15 +351,12 @@ function Employer() {
                         value={industryFilterValue}
                         id="industry"
                         onChange={onIndustryFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black font-weight-semibold text-black-2 w-100"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Select industry</option>
-                        {(Industry || []).map((industry) => (
-                          <option
-                            key={industry.company_id}
-                            value={industry.industry}
-                          >
-                            {industry.industry}
+                        {(FilterJson.industry || []).map((industry, i) => (
+                          <option key={i} value={industry}>
+                            {industry}
                           </option>
                         ))}
                       </select>
@@ -357,11 +369,6 @@ function Employer() {
                     >
                       Add Employer
                     </CustomButton>
-                    <CompanyDetails
-                      show={showAddEmployerModal}
-                      employerId={employerId}
-                      close={() => setShowEmployerMOdal(false)}
-                    />
                   </div>
                 </div>
               </div>
@@ -482,16 +489,16 @@ function Employer() {
                       {/* Map function to show the data in the list*/}
                       {totalData === 0 ? (
                         <tr>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th>No Data Found</th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                         </tr>
                       ) : (
                         (employerData || []).map((empdata) => (
@@ -529,8 +536,8 @@ function Employer() {
                                 }
                               >
                                 {empdata.contact_person_name === null ? (
-                                  <h4 className="font-size-3 font-weight-bold text-black-3 mb-0">
-                                    Complete your profile
+                                  <h4 className="font-size-3 font-weight-bold  mb-0">
+                                    Unavailable
                                   </h4>
                                 ) : (
                                   <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -546,8 +553,8 @@ function Employer() {
                             </th>
                             <th className=" py-7  pr-0">
                               {empdata.address === null ? (
-                                <h4 className="font-size-3 font-weight-bold text-black-3 mb-0">
-                                  Complete your profile
+                                <h4 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
                                 </h4>
                               ) : (
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
@@ -559,8 +566,8 @@ function Employer() {
                             </th>
                             <th className=" py-7  pr-0">
                               {empdata.contact_no === null ? (
-                                <h4 className="font-size-3 font-weight-bold text-black-3 mb-0">
-                                  Complete your profile
+                                <h4 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
                                 </h4>
                               ) : (
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -590,9 +597,22 @@ function Employer() {
                             </th>
                             <th className="  py-7 ">
                               <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
-                                <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                  Pending
-                                </span>
+                                {empdata.contact_person_name === null ||
+                                empdata.contact_no === null ||
+                                empdata.address === null ? (
+                                  <>
+                                    <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                      Pending
+                                    </span>
+                                    <small className="text-center px-5">
+                                      Incompelete Profile
+                                    </small>
+                                  </>
+                                ) : (
+                                  <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                    Complete
+                                  </span>
+                                )}
                               </h3>
                             </th>
                             <th className="  py-7  d-flex">
@@ -604,11 +624,7 @@ function Employer() {
                               >
                                 <span className="fa fa-address-book text-gray px-1"></span>
                               </Link>
-                              <ContactInfo
-                                show={showContactModal}
-                                employerId={employerId}
-                                close={() => setShowContactMOdal(false)}
-                              />
+
                               <Link
                                 to=""
                                 onClick={() =>
@@ -617,11 +633,7 @@ function Employer() {
                               >
                                 <span className="fa fa-file text-gray px-1 "></span>
                               </Link>
-                              <KycComplianceDetails
-                                show={showKycModal}
-                                employerId={employerId}
-                                close={() => setShowkycMOdal(false)}
-                              />
+
                               <Link
                                 to=""
                                 onClick={() => editEmployer(empdata.company_id)}

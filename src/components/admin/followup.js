@@ -3,15 +3,16 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { getAllFollowUpData } from "../../api/api";
+import { getAllFollowUpData, getAllEmployer } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
-
+import FilterJson from "../json/filterjson";
 function Followup() {
   /*show modal and data states */
   let [followup, setFollowUp] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
+  const [company, setCompany] = useState([]);
   /*Filter and search state */
   const [jobFilterValue, setJobTypeFilterValue] = useState("");
   const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
@@ -42,9 +43,16 @@ function Followup() {
     setResponseData(userData.data);
     setTotalData(userData.total_rows);
   };
+  /* Function to get Employer data*/
+  const CompnayData = async () => {
+    const userData = await getAllEmployer();
+    setCompany(userData.data);
+    // //console.log((userData);
+  };
 
   /*Render function to get the Response*/
   useEffect(() => {
+    CompnayData();
     ResponseData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -170,15 +178,15 @@ function Followup() {
       index === self.findIndex((t) => t.job_title === thing.job_title)
   );
   /*Company name array to filter*/
-  const Company = response.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.company_name === thing.company_name)
-  );
+  // const Company = response.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.company_name === thing.company_name)
+  // );
   /*Experience name array to filter*/
-  const Experience = response.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.experience === thing.experience)
-  );
+  // const Experience = response.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.experience === thing.experience)
+  // );
   //console.log(response);
   return (
     <>
@@ -187,6 +195,11 @@ function Followup() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
+        <Addfollowup
+          show={followup}
+          resData={resData}
+          close={() => setFollowUp(false)}
+        />
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
@@ -217,7 +230,7 @@ function Followup() {
                         id="job"
                         value={jobFilterValue}
                         onChange={(e) => setJobTypeFilterValue(e.target.value)}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">select job</option>
                         {(Job || []).map((job, i) => (
@@ -240,12 +253,15 @@ function Followup() {
                         onChange={(e) =>
                           setCompanyTypeFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">select company</option>
-                        {(Company || []).map((job, i) => (
-                          <option value={job.company_name} key={i}>
-                            {job.company_name}
+                        {(company || []).map((company) => (
+                          <option
+                            value={company.company_name}
+                            key={company.company_id}
+                          >
+                            {company.company_name}
                           </option>
                         ))}
                       </select>
@@ -263,24 +279,18 @@ function Followup() {
                         onChange={(e) =>
                           setExperienceTypeFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">select Experience</option>
-                        {(Experience || []).map((job, i) => (
-                          <option value={job.experience} key={i}>
-                            {job.experience}
+                        {(FilterJson.experience || []).map((ex, i) => (
+                          <option value={ex} key={i}>
+                            {ex} years
                           </option>
                         ))}
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right mt-6">
-                    <Addfollowup
-                      show={followup}
-                      resData={resData}
-                      close={() => setFollowUp(false)}
-                    />
-                  </div>
+                  <div className="float-md-right mt-6"></div>
                 </div>
               </div>
               <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
@@ -377,16 +387,16 @@ function Followup() {
                     <tbody>
                       {totalData === 0 ? (
                         <tr>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th>No Data Found</th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                         </tr>
                       ) : (
                         (response || []).map((res) => (

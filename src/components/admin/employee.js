@@ -347,7 +347,7 @@ function Employee() {
                         value={experienceFilterValue}
                         id="experience"
                         onChange={onExperienceFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value={""}>Select Experience</option>
                         {(Experience || []).map((experience) => (
@@ -371,7 +371,7 @@ function Employee() {
                         value={skillFilterValue}
                         id="Skill"
                         onChange={onSkillFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value={""}>Select Skill</option>
                         {(Skill || []).map((keyskill) => (
@@ -395,7 +395,7 @@ function Employee() {
                         value={educationFilterValue}
                         id="education"
                         onChange={onEducationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="" data-display="Product Designer">
                           Select education
@@ -556,27 +556,41 @@ function Employee() {
                             <td className=" py-7">
                               <Link
                                 to={""}
-                                onClick={() =>
-                                  employeeDetails(empdata.employee_id)
+                                onClick={
+                                  empdata.name !== null
+                                    ? () => employeeDetails(empdata.employee_id)
+                                    : null
                                 }
                               >
-                                <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  <p className="m-0">{empdata.name}</p>
-                                  <p className="text-gray font-size-2 m-0">
-                                    {empdata.marital_status} ({empdata.gender}
-                                    {/*Calculation of age from date of birth*/}
-                                    {moment().diff(
-                                      empdata.date_of_birth,
-                                      "years"
-                                    )}
-                                    )
-                                  </p>
-                                </h4>
+                                {empdata.name === null ? (
+                                  <h4 className="font-size-3 font-weight-bold  mb-0">
+                                    Unavailable
+                                  </h4>
+                                ) : (
+                                  <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                    <p className="m-0">{empdata.name}</p>
+                                    <p className="text-gray font-size-2 m-0">
+                                      {empdata.marital_status} ({empdata.gender}
+                                      {/*Calculation of age from date of birth*/}
+                                      {moment().diff(
+                                        empdata.date_of_birth,
+                                        "years"
+                                      )}
+                                      )
+                                    </p>
+                                  </h4>
+                                )}
                               </Link>
                             </td>
                             <td className=" py-7 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {empdata.contact_no === null ? (
+                                <h3 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h3>
+                              ) : (
                                 <p className="m-0">+{empdata.contact_no}</p>
+                              )}
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 <p className="text-gray font-size-2 m-0">
                                   {empdata.email}
                                 </p>
@@ -584,29 +598,59 @@ function Employee() {
                             </td>
 
                             <td className=" py-7">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.language}
-                              </h3>
+                              {empdata.language === null ? (
+                                <h3 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h3>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.language}
+                                </h3>
+                              )}
                             </td>
                             <td className=" py-7">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                                {empdata.education}
-                              </h3>
+                              {empdata.education === null ? (
+                                <h3 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h3>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.education}
+                                </h3>
+                              )}
                             </td>
                             <td className=" py-7">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                                {empdata.skill}
-                              </h3>
+                              {empdata.skill === null ? (
+                                <h3 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h3>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.skill}
+                                </h3>
+                              )}
                             </td>
                             <td className=" py-7">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                                {empdata.specialization}
-                              </h3>
+                              {empdata.specialization === null ? (
+                                <h3 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h3>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.specialization}
+                                </h3>
+                              )}
                             </td>
                             <td className=" py-7">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.experience} Years
-                              </h3>
+                              {empdata.experience === null ? (
+                                <h3 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h3>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.experience} Years
+                                </h3>
+                              )}
                             </td>
                             <td className="d-flex py-7">
                               <Link
@@ -656,7 +700,13 @@ function Employee() {
                       ) : (
                         <tr>
                           <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                           <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                         </tr>
                       )}
                     </tbody>

@@ -52,10 +52,10 @@ function AddCategory(props) {
   } = useValidation(initialFormState, validators);
   // API CALL
   const CatData = () => {
-    if (props.jobCategoryData !== "0") {
-      setState(props.jobCategoryData);
-    } else {
+    if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
       setState(initialFormState);
+    } else {
+      setState(props.jobCategoryData);
     }
   };
   useEffect(() => {

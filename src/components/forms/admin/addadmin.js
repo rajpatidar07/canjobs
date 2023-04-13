@@ -33,9 +33,9 @@ function Addadmin(props) {
           ? "Admin name can not have a number."
           : value.length < 2
           ? "Admin name should have 2 or more letters"
-          : !/[^a-zA-Z0-9]/g.test(value)
-          ? null
-          : "Cannot use special character ",
+          : /[^a-zA-Z0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
     ],
     email: [
       (value) =>

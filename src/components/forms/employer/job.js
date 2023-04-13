@@ -124,8 +124,6 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Your duties is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 2
           ? "Duties  should have 2 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
@@ -329,6 +327,122 @@ function AddJobModal(props) {
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
+                  htmlFor="job_category_id"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Company <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <select
+                    name="company_id"
+                    value={state.company_id}
+                    onChange={onInputChange}
+                    className={
+                      errors.company_id
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
+                    }
+                    placeholder="company name"
+                    id="company_id"
+                  >
+                    <option value={""}>Select Company</option>
+                    {(company || []).map((com) => (
+                      <option key={com.company_id} value={com.company_id}>
+                        {com.company_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/*----ERROR MESSAGE FOR COMPANY----*/}
+                {errors.company_id && (
+                  <span
+                    key={errors.company_id}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.company_id}
+                  </span>
+                )}
+              </div>{" "}
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="job_category_id"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Job Category <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <select
+                    name="job_category_id"
+                    value={state.job_category_id}
+                    onChange={onInputChange}
+                    className={
+                      errors.job_category_id
+                        ? " form-control border border-danger position-relative overflow-hidden"
+                        : " form-control position-relative overflow-hidden"
+                    }
+                    placeholder="Job category"
+                    id="job_category_id"
+                  >
+                    <option value={""}>select Category</option>
+                    {(category || []).map((cat) => (
+                      <option
+                        key={cat.job_category_id}
+                        value={cat.job_category_id}
+                      >
+                        {cat.category_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/*----ERROR MESSAGE FOR job_category_id----*/}
+                {errors.job_category_id && (
+                  <span
+                    key={errors.job_category_id}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.job_category_id}
+                  </span>
+                )}
+              </div>{" "}
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="industry_type"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Industry Type <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <select
+                    name="industry_type"
+                    value={state.industry_type}
+                    onChange={onInputChange}
+                    className={
+                      errors.industry_type
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="industry_type"
+                  >
+                    <option value={""}>select industry</option>
+                    {(FilterJson.industry || []).map((industry) => (
+                      <option key={industry} value={industry}>
+                        {industry}
+                      </option>
+                    ))}
+                  </select>
+                  {/*----ERROR MESSAGE FOR industry_type----*/}
+                  {errors.industry_type && (
+                    <span
+                      key={errors.industry_type}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.industry_type}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
                   htmlFor="experience_required"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
@@ -441,46 +555,6 @@ function AddJobModal(props) {
                 )}
               </div>
 
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="industry_type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Industry Type <span className="text-danger"> *</span> :
-                </label>
-                <div className="position-relative">
-                  <select
-                    maxLength={30}
-                    name="industry_type"
-                    value={state.industry_type}
-                    onChange={onInputChange}
-                    type="text"
-                    className={
-                      errors.industry_type
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    placeholder="industry type"
-                    id="industry_type"
-                  >
-                    <option value={""}>select industry</option>
-                    {(FilterJson.industry || []).map((industry) => (
-                      <option key={industry} value={industry}>
-                        {industry}
-                      </option>
-                    ))}
-                  </select>
-                  {/*----ERROR MESSAGE FOR industry_type----*/}
-                  {errors.industry_type && (
-                    <span
-                      key={errors.industry_type}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.industry_type}
-                    </span>
-                  )}
-                </div>
-              </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="apply_link"
@@ -907,7 +981,7 @@ function AddJobModal(props) {
                     placeholder="Apply employement"
                     id="employement"
                   >
-                    <option value={""}>select education</option>
+                    <option value={""}>select employement</option>
                     {(FilterJson.employement || []).map((employement) => (
                       <option key={employement} value={employement}>
                         {employement}
@@ -922,88 +996,6 @@ function AddJobModal(props) {
                     className="text-danger font-size-3"
                   >
                     {errors.employement}
-                  </span>
-                )}
-              </div>{" "}
-            </div>
-
-            <div className="row">
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="job_category_id"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Job Category <span className="text-danger"> *</span> :
-                </label>
-                <div className="position-relative">
-                  <select
-                    name="job_category_id"
-                    value={state.job_category_id}
-                    onChange={onInputChange}
-                    className={
-                      errors.job_category_id
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
-                    }
-                    placeholder="Job category"
-                    id="job_category_id"
-                  >
-                    <option value={""}>select Category</option>
-                    {(category || []).map((cat) => (
-                      <option
-                        key={cat.job_category_id}
-                        value={cat.job_category_id}
-                      >
-                        {cat.category_name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {/*----ERROR MESSAGE FOR job_category_id----*/}
-                {errors.job_category_id && (
-                  <span
-                    key={errors.job_category_id}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.job_category_id}
-                  </span>
-                )}
-              </div>{" "}
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="job_category_id"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Company <span className="text-danger"> *</span> :
-                </label>
-                <div className="position-relative">
-                  <select
-                    name="company_id"
-                    value={state.company_id}
-                    onChange={onInputChange}
-                    className={
-                      errors.company_id
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
-                    }
-                    placeholder="company name"
-                    id="company_id"
-                  >
-                    <option value={""}>Select Company</option>
-                    {(company || []).map((com) => (
-                      <option key={com.company_id} value={com.company_id}>
-                        {com.company_name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {/*----ERROR MESSAGE FOR COMPANY----*/}
-                {errors.company_id && (
-                  <span
-                    key={errors.company_id}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.company_id}
                   </span>
                 )}
               </div>{" "}

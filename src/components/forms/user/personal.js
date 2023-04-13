@@ -7,6 +7,7 @@ import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
+
 function PersonalDetails(props) {
   let encoded;
   // USER PERSONAL DETAIL VALIDATION
@@ -73,9 +74,7 @@ function PersonalDetails(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Description is required"
-          : // : /[^A-Za-z 0-9]/g.test(value)
-          // ? "Cannot use special character"
-          value.length < 5
+          : value.length < 5
           ? "Description should have 5 or more letter"
           : null,
     ],

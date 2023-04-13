@@ -146,7 +146,12 @@ function ManageAdmin() {
         <AdminHeader />
         {/* <!-- navbar- --> */}
         <AdminSidebar />
-        <ToastContainer />
+        <ToastContainer />{" "}
+        <Addadmin
+          show={showAddAdminModal}
+          adminId={adminId}
+          close={() => setShowAdminModal(false)}
+        />
         <div
           className={
             showAminDetails === false
@@ -186,7 +191,7 @@ function ManageAdmin() {
                         value={typeFilterValue}
                         id="type"
                         onChange={onTypeFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">select type</option>
                         {(FilterJson.AdminType || []).map((type, i) => (
@@ -204,11 +209,6 @@ function ManageAdmin() {
                     >
                       Add Admin
                     </CustomButton>
-                    <Addadmin
-                      show={showAddAdminModal}
-                      adminId={adminId}
-                      close={() => setShowAdminModal(false)}
-                    />
                   </div>
                 </div>
               </div>
@@ -265,10 +265,10 @@ function ManageAdmin() {
                     <tbody>
                       {totalData === 0 ? (
                         <tr>
-                          <th></th>
-                          <th></th>
-                          <th>No Data Found</th>
-                          <th></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
                         </tr>
                       ) : (
                         (adminData || []).map((admin) => (

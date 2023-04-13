@@ -11,7 +11,6 @@ function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let employId = props.resData.employee_id;
   let jobId = props.resData.job_id;
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -104,13 +103,13 @@ function Addfollowup(props) {
               {(response || []).map((res) => (
                 <div className="card mt-5 mb-5" key={res.id}>
                   <div className="card-header">
-                    <span className="text-dark"> Posted date:</span>{" "}
+                    <span className="text-dark"> Posted date:</span>
                     {moment(res.created_at).format("YYYY-MM-DD")}
                   </div>
                   <div className="card-body">{res.remark}</div>
                   <div className="card-footer">
-                    <span className="text-dark"> Next date:</span>{" "}
-                    {moment(res.next_date).format("YYYY-MM-DD")}
+                    <span className="text-dark"> Next date:</span>
+                    {moment(res.next_followup_date).format("YYYY-MM-DD")}
                   </div>
                 </div>
               ))}

@@ -499,16 +499,12 @@ function EmployementDetails(props) {
                     <div className="media align-items-center company_box col-md-6 p-0">
                       <div className="text_box text-left w-100 mt-n2">
                         <h3 className="mb-0">
-                          <Link
-                            to=""
-                            onClick={() => EmployeementData(CareerDetails)}
-                            className="font-size-6 text-black-2 font-weight-semibold"
-                          >
+                          <div className="font-size-6 text-black-2 font-weight-semibold">
                             {CareerDetails.designation} -{" "}
                             <span className="font-size-4">
                               {CareerDetails.functional_area}
                             </span>
-                          </Link>
+                          </div>
                         </h3>
                         <span className="font-size-4 text-default-color line-height-2">
                           {CareerDetails.company} ({CareerDetails.industry})
@@ -532,6 +528,9 @@ function EmployementDetails(props) {
                     </div>
                     <Link to="" onClick={() => ShowDeleteAlert(CareerDetails)}>
                       <i className="fa fa-times-circle" aria-hidden="true"></i>
+                    </Link>
+                    <Link to="" onClick={() => EmployeementData(CareerDetails)}>
+                      <i className="fa fa-edit" aria-hidden="true"></i>
                     </Link>
                   </div>
                 </div>

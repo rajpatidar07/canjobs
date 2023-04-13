@@ -32,7 +32,10 @@ function CompanyDetails(props) {
   const validators = {
     company_name: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        value.trim() === ""
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -42,58 +45,65 @@ function CompanyDetails(props) {
     ],
     industry: [
       (value) =>
-        value === ""
+        value === "" || value === null || value === undefined
           ? "Industry is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Industry can not have a number."
-          : value.length < 2
-          ? "Industry should have 2 or more letters"
           : "",
     ],
     corporation: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        value.trim() === ""
           ? "Corporation type is required"
           : null,
     ],
     company_start_date: [
       (value) =>
-        value === "" || value.trim() === "" ? "Start Date is required" : null,
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        value.trim() === ""
+          ? "Start Date is required"
+          : null,
     ],
     company_size: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        value.trim() === ""
           ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : value == "0" || value == 0
+          : value === "0" || value === 0
           ? "Company Size can not be zero"
           : "",
     ],
     vacancy_for_post: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : /[-]?\d+(\.\d+)?/.test(value)
           ? "Vacancy can not have a number."
           : value.length < 2
-          ? "Vacancy should have 2 or more letters"
+          ? "Vacancy should have 2 or more letters."
           : "",
     ],
     about: [
       (value) =>
         value === ""
           ? "Company Description is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 2
-          ? "Company Description should have 2 or more letters"
+          ? "Company Description should have 2 or more letters."
           : "",
     ],
+
     website_url: [
       (value) =>
         value === ""
@@ -114,7 +124,7 @@ function CompanyDetails(props) {
     ],
     // companylogo: [
     //   (value) =>
-    //     value === "" || value.trim() === "" ? "Company logo is required" : null,
+    //     value === "" || value === null||value===undefined|| value.trim() === "" ? "Company logo is required" : null,
     // ],
   };
   // API CALL
@@ -126,13 +136,17 @@ function CompanyDetails(props) {
     //console.log((userData);
   };
   useEffect(() => {
-    if (props.employerId === "0" || props.employerId === undefined) {
+    if (
+      props.employerId === "0" ||
+      props.employerId === undefined ||
+      props.employerId.length === 0
+    ) {
       setState(initialFormState);
     } else {
       EmployerData();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }
-  }, [props]);
+  }, [props.employerId]);
   // CUSTOM VALIDATIONS IMPORT
   const {
     state,
@@ -185,7 +199,8 @@ function CompanyDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
-            <h5 className="text-center pt-2 mb-7">Company Details</h5>
+            <h5 className="text-center pt-2 mb-7"> Company Details</h5>
+            <input type="hidden" value={state.company_id || null} />
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
@@ -227,10 +242,7 @@ function CompanyDetails(props) {
                 >
                   Industry<span className="text-danger"> *</span> :
                 </label>
-                <input
-                  type="text"
-                  placeholder="Industry"
-                  maxLength={20}
+                <select
                   name="industry"
                   value={state.industry}
                   onChange={onInputChange}
@@ -240,7 +252,14 @@ function CompanyDetails(props) {
                       : "form-control"
                   }
                   id="industry"
-                />
+                >
+                  <option value={""}>select industry</option>
+                  {(FilterJson.industry || []).map((industry) => (
+                    <option key={industry} value={industry}>
+                      {industry}
+                    </option>
+                  ))}
+                </select>
                 {/*----ERROR MESSAGE FOR industry----*/}
                 {errors.industry && (
                   <span

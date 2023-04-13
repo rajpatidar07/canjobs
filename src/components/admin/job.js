@@ -9,6 +9,7 @@ import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
+import FilterJson from "../json/filterjson";
 
 function Job() {
   /*show Modal and props state */
@@ -245,14 +246,14 @@ function Job() {
       index === self.findIndex((t) => t.job_type === thing.job_type)
   );
   /*Skill type array to filter*/
-  const SkillType = jobData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.skill === thing.skill)
-  );
+  // const SkillType = jobData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.skill === thing.skill)
+  // );
   /*Location type array to filter*/
   const LocationType = jobData.filter(
     (thing, index, self) =>
-      index === self.findIndex((t) => t.Location === thing.Location)
+      index === self.findIndex((t) => t.location === thing.location)
   );
 
   return (
@@ -302,7 +303,7 @@ function Job() {
                         id="country"
                         value={categoryFilterValue}
                         onChange={onCategoryFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">Select category</option>
                         {(CategoryType || []).map((data) => {
@@ -328,9 +329,9 @@ function Job() {
                         id="country"
                         value={jobSwapFilterValue}
                         onChange={onJobSwapFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">SelectJob type</option>
+                        <option value="">Select Job type</option>
                         {(JobType || []).map((job) => (
                           <option key={job.job_id} value={job.job_type}>
                             {job.job_type}
@@ -349,13 +350,13 @@ function Job() {
                         id="country"
                         value={SkillFilterValue}
                         onChange={onSkillFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">Select Skill</option>{" "}
-                        {(SkillType || []).map((data) => {
+                        {(FilterJson.keyskill || []).map((data, i) => {
                           return (
-                            <option value={data.skill} key={data.job_id}>
-                              {data.skill}
+                            <option value={data} key={i}>
+                              {data}
                             </option>
                           );
                         })}
@@ -372,7 +373,7 @@ function Job() {
                         id="country"
                         value={locationFilterValue}
                         onChange={onLocationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">Select location</option>{" "}
                         {(LocationType || []).map((data) => {
@@ -519,16 +520,16 @@ function Job() {
                       {/* Map function to show the data in the list*/}
                       {totalData === 0 ? (
                         <tr>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th>No Data Found</th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                         </tr>
                       ) : (
                         (jobData || []).map((job) => (

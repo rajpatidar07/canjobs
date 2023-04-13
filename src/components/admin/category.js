@@ -143,6 +143,11 @@ function Category() {
         <AdminSidebar />
         <div>
           <ToastContainer />
+          <AddCategory
+            show={showAddCategoryModal}
+            jobCategoryData={CategoryId}
+            close={() => setShowAddCategoryModal(false)}
+          />
         </div>
         <div className="dashboard-main-container mt-24" id="dashboard-body">
           <div className="container">
@@ -176,7 +181,7 @@ function Category() {
                         value={categoryTypeFilterValue}
                         id="category"
                         onChange={onCategoryTypeFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 font-weight-semibold text-black-2"
+                        className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
                       >
                         <option value={""}>Select category type</option>
                         {(CategoryType || []).map((data) => {
@@ -200,11 +205,6 @@ function Category() {
                       >
                         Add category
                       </CustomButton>
-                      <AddCategory
-                        show={showAddCategoryModal}
-                        jobCategoryData={CategoryId}
-                        close={() => setShowAddCategoryModal(false)}
-                      />
                     </div>
                   </div>
                 </div>
@@ -250,9 +250,9 @@ function Category() {
                       {/* Map function to show the data in the list*/}
                       {totalData === 0 ? (
                         <tr>
-                          <th></th>
-                          <th>No Data Found</th>
-                          <th></th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
                         </tr>
                       ) : (
                         (categoryData || []).map((catdata) =>
