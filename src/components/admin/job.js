@@ -40,11 +40,11 @@ function Job() {
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
+      search,
+      locationFilterValue,
       categoryFilterValue,
       SkillFilterValue,
-      locationFilterValue,
       jobSwapFilterValue,
-      search,
       currentPage,
       recordsPerPage,
       columnName,

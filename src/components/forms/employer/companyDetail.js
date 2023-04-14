@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 
 function CompanyDetails(props) {
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -104,24 +106,24 @@ function CompanyDetails(props) {
           : "",
     ],
 
-    website_url: [
-      (value) =>
-        value === ""
-          ? ""
-          : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-              value
-            )
-          ? "Write the correct URL"
-          : "",
-    ],
-    alias: [
-      (value) =>
-        value === ""
-          ? ""
-          : value.length < 2
-          ? "Alias should have 2 or more letters"
-          : "",
-    ],
+    // website_url: [
+    //   (value) =>
+    //     value === ""
+    //       ? ""
+    //       : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
+    //           value
+    //         )
+    //       ? "Write the correct URL"
+    //       : "",
+    // ],
+    // alias: [
+    //   (value) =>
+    //     value === ""
+    //       ? ""
+    //       : value.length < 2
+    //       ? "Alias should have 2 or more letters"
+    //       : "",
+    // ],
     // companylogo: [
     //   (value) =>
     //     value === "" || value === null||value===undefined|| value.trim() === "" ? "Company logo is required" : null,

@@ -27,6 +27,8 @@ function Education(props) {
     institute_location: "",
     passing_year: "",
   };
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");

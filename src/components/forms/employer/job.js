@@ -15,7 +15,11 @@ function AddJobModal(props) {
   const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
 
-  let close = () => {
+  const user_type = localStorage.getItem("userType");
+  const company_id = localStorage.getItem("company_id");
+
+  /* Functionality to close the modal */
+  const close = () => {
     setState(initialFormState);
     setErrors("");
     props.close();
@@ -235,8 +239,10 @@ function AddJobModal(props) {
   };
 
   useEffect(() => {
+    if (user_type === "admin") {
+      CompnayData();
+    }
     CategoryData();
-    CompnayData();
     if (props.jobdata === "0" || props.jobdata === undefined) {
       setState(initialFormState);
     } else {
@@ -248,6 +254,11 @@ function AddJobModal(props) {
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
     event.preventDefault();
+    if (user_type === "company") {
+      setState({ ...state, company_id: company_id });
+    }
+    console.log(errors);
+
     if (validate()) {
       let responseData = await AddJob(state);
       if (responseData.message === "job data inserted successfully") {
@@ -293,6 +304,7 @@ function AddJobModal(props) {
             ) : (
               <h5 className="text-center pt-2 mb-7">Update Jobs</h5>
             )}
+
             <div className="row pt-5">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
@@ -325,44 +337,46 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="job_category_id"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Company <span className="text-danger"> *</span> :
-                </label>
-                <div className="position-relative">
-                  <select
-                    name="company_id"
-                    value={state.company_id}
-                    onChange={onInputChange}
-                    className={
-                      errors.company_id
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
-                    }
-                    placeholder="company name"
-                    id="company_id"
+              {user_type === "admin" ? (
+                <div className="form-group col-md-4 px-0 pr-3">
+                  <label
+                    htmlFor="job_category_id"
+                    className="font-size-4 text-black-2  line-height-reset"
                   >
-                    <option value={""}>Select Company</option>
-                    {(company || []).map((com) => (
-                      <option key={com.company_id} value={com.company_id}>
-                        {com.company_name}
-                      </option>
-                    ))}
-                  </select>
+                    Company <span className="text-danger"> *</span> :
+                  </label>
+                  <div className="position-relative">
+                    <select
+                      name="company_id"
+                      value={state.company_id}
+                      onChange={onInputChange}
+                      className={
+                        errors.company_id
+                          ? " form-control border border-danger position-relative overflow-hidden"
+                          : " form-control position-relative overflow-hidden"
+                      }
+                      placeholder="company name"
+                      id="company_id"
+                    >
+                      <option value={""}>Select Company</option>
+                      {(company || []).map((com) => (
+                        <option key={com.company_id} value={com.company_id}>
+                          {com.company_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {/*----ERROR MESSAGE FOR COMPANY----*/}
+                  {errors.company_id && (
+                    <span
+                      key={errors.company_id}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.company_id}
+                    </span>
+                  )}
                 </div>
-                {/*----ERROR MESSAGE FOR COMPANY----*/}
-                {errors.company_id && (
-                  <span
-                    key={errors.company_id}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.company_id}
-                  </span>
-                )}
-              </div>{" "}
+              ) : null}
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="job_category_id"
@@ -465,6 +479,7 @@ function AddJobModal(props) {
                     {(FilterJson.experience || []).map((exp) => (
                       <option key={exp} value={exp}>
                         {exp}
+                        {exp === "Fresher" || exp === "Other" ? "" : "Years"}
                       </option>
                     ))}
                   </select>
@@ -554,7 +569,6 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="apply_link"
@@ -589,7 +603,6 @@ function AddJobModal(props) {
                 </div>
               </div>
             </div>
-
             <div className="row">
               <div className="form-group col-md-12 px-0 pr-3">
                 <label
@@ -816,7 +829,7 @@ function AddJobModal(props) {
                     {errors.job_type}
                   </span>
                 )}
-              </div>{" "}
+              </div>
               {/* <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="role_category"
@@ -887,7 +900,7 @@ function AddJobModal(props) {
                     {errors.job_type}
                   </span>
                 )}
-              </div>{" "}
+              </div>
             </div>
             <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
@@ -998,7 +1011,7 @@ function AddJobModal(props) {
                     {errors.employement}
                   </span>
                 )}
-              </div>{" "}
+              </div>
             </div>
 
             <div className="form-group text-center">

@@ -7,7 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ContactInfo(props) {
   // COMPANY PERSONAL INFO VALIDATION
-  let close = () => {
+  /* Functionality to close the modal */
+
+  const close = () => {
     setState(initialFormState);
     setErrors("");
     props.close();

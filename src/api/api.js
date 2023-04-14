@@ -1,9 +1,8 @@
 import axios from "axios";
-
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 const token = localStorage.getItem("token");
 const user_id = localStorage.getItem("user_id");
-// const employer_id = localStorage.getItem("employer_id");
+const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
 
@@ -16,6 +15,7 @@ export const EmployeeSignUp = async (props) => {
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
+
 export const EmployeeLogin = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
@@ -165,11 +165,7 @@ export const DeleteEmployeeCareer = async (props) => {
   });
   return response.data;
 };
-/*Response List Api */
-export const GetAllResponse = async (props) => {
-  // const response = await axios.get(`${API_URL}getJobResponse?job_id=1&user_type=company`);
-  // return response;
-};
+
 /*single job data api */
 export const GetJob = async (props) => {
   const response = await axios.post(`${API_URL}getJob`, { job_id: props });
@@ -184,12 +180,39 @@ export const GetJobDetail = async (props) => {
   return response;
 };
 // EMPLOYER'S API
+/*Employer sign up */
+export const EmployerSignUp = async (props) => {
+  // console.log(props);
+  const formData = new FormData();
+  formData.append("email", props.email);
+  formData.append("password", props.password);
+  formData.append("contact_no", props.contact_no);
+  formData.append("remember", props.remember);
+  const response = await axios.post(`${API_URL}employer_signup`, formData);
+  return response.data;
+};
+/*Employer Login */
+export const EmployerLogin = async (props) => {
+  // console.log(props);
+  const formData = new FormData();
+  formData.append("email", props.email);
+  formData.append("password", props.password);
+  // formData.append("term_and_condition", props.term_and_condition);
+  const response = await axios.post(`${API_URL}employer_login`, formData);
+  return response.data;
+};
+
+/*Response List Api */
+export const GetAllResponse = async (props) => {
+  // const response = await axios.get(`${API_URL}getJobResponse?job_id=1&user_type=company`);
+  // return response;
+};
 export const GetAllJobs = async (
+  search,
+  location,
   category,
   skill,
-  location,
   job,
-  search,
   page,
   limit,
   column_name,
@@ -239,10 +262,10 @@ export const getAllEmployer = async (
 export const EmployerDetails = async (props) => {
   // if (props !== undefined) {
   const formData = new FormData();
-  formData.append("company_id", props);
+  formData.append("company_id", user_type === "company" ? employer_id : props);
   const response = await axios.post(
     `${API_URL}getEmployer`,
-    { company_id: props },
+    { company_id: user_type === "company" ? employer_id : props },
     {
       headers: {
         "Content-Type": "application/json",

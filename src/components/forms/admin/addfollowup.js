@@ -11,6 +11,8 @@ function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let employId = props.resData.employee_id;
   let jobId = props.resData.job_id;
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");

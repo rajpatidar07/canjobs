@@ -12,6 +12,8 @@ import FilterJson from "../../json/filterjson";
 
 function LmiaStatus(props) {
   const [company, setCompany] = useState([]);
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");

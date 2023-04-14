@@ -17,6 +17,8 @@ function EmployementDetails(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");

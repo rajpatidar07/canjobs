@@ -5,10 +5,13 @@ import EmployeeBox from "./employeeBox";
 import SearchForm from "../common/search_form";
 import Filterbox from "../common/filterbox";
 import filterjson from "../json/filterjson";
+import { ToastContainer } from "react-toastify";
+import { Link } from "react-router-dom";
 function EmployerHome() {
   return (
     <div>
       <EmployeeHeader />
+      <ToastContainer />
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         {/* <div className="pos-abs-tr h-100">
                     <img src="image/patterns/globe-pattern.png" alt="" className="h-100" />
@@ -231,10 +234,7 @@ function EmployerHome() {
             >
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-blue square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-briefcase"></i>
                   </div>
@@ -247,15 +247,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-spray square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-headset"></i>
                   </div>
@@ -268,15 +265,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-coral square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-layer-group"></i>
                   </div>
@@ -289,15 +283,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-red square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-pen-nib"></i>
                   </div>
@@ -310,15 +301,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-orange square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-rocket"></i>
                   </div>
@@ -331,15 +319,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-yellow square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-location-arrow"></i>
                   </div>
@@ -352,15 +337,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-turquoise square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="icon icon-sidebar-2"></i>
                   </div>
@@ -373,15 +355,12 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
               {/* <!-- Single Category --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-sm-6 col-xs-8">
-                <a
-                  href="http://localhost:3000/"
-                  className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center"
-                >
+                <Link className="bg-white border border-color-2 rounded-4 pl-5 pt-10 pb-3 px-2 hover-shadow-2 mb-9 d-block w-100 text-center">
                   <div className="text-white bg-green square-70 rounded-4 mb-7 font-size-7 text-center mx-auto">
                     <i className="fa fa-user"></i>
                   </div>
@@ -394,19 +373,16 @@ function EmployerHome() {
                       <span>415</span> Vacancy
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
               {/* <!-- End Single Category --> */}
             </div>
             <div className="row">
               <div className="col-12">
                 <div className="text-center pt-5 pt-lg-13">
-                  <a
-                    className="btn btn-outline-black-2 btn-lg text-uppercase"
-                    href="http://localhost:3000/"
-                  >
+                  <Link className="btn btn-outline-black-2 btn-lg text-uppercase">
                     Explore All
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -455,19 +431,13 @@ function EmployerHome() {
                 {/* <!-- card img end --> */}
                 {/* <!-- card-body start --> */}
                 <div className="card-body pt-11 px-0 pb-0">
-                  <a
-                    href="http://localhost:3000/"
-                    className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
-                  >
+                  <Link className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1">
                     CV Writing
-                  </a>
+                  </Link>
                   <h4>
-                    <a
-                      className="card-title font-size-7 mt-8 mb-6 heading-default-color"
-                      href="http://localhost:3000/"
-                    >
+                    <Link className="card-title font-size-7 mt-8 mb-6 heading-default-color">
                       How to make a perfect CV that attracts the attention{" "}
-                    </a>
+                    </Link>
                   </h4>
                   <p className="card-text mb-9 font-size-4">
                     Collaboratively administrate empowered markets via
@@ -477,31 +447,25 @@ function EmployerHome() {
                   {/* <!-- media start --> */}
                   <div className="media mb-5 pr-9">
                     {/* <!-- media img start --> */}
-                    <a href="http://localhost:3000/">
+                    <Link>
                       <img
                         src="image/l2/png/blog-user-img1.png"
                         className="align-self-center circle-54 mr-3 mt-2"
                         alt=""
                       />
-                    </a>
+                    </Link>
                     {/* <!-- media img start --> */}
                     {/* <!-- media body start --> */}
                     <div className="media-body pl-4 pt-2">
                       <h6 className="mb-0">
-                        <a
-                          className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
+                        <Link className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset">
                           Anna Frank
-                        </a>
+                        </Link>
                       </h6>
                       <p className="mb-0">
-                        <a
-                          className="font-size-3 text-default-color"
-                          href="http://localhost:3000/"
-                        >
+                        <Link className="font-size-3 text-default-color">
                           Creative Director
-                        </a>
+                        </Link>
                       </p>
                     </div>
                     {/* <!-- media body start --> */}
@@ -523,29 +487,23 @@ function EmployerHome() {
               {/* <!-- card start --> */}
               <div className="card bg-transparent border-0">
                 {/* <!-- card img start --> */}
-                <a href="http://localhost:3000/">
+                <Link>
                   <img
                     src="image/l2/png/blog-img2.png"
                     className="card-img-top"
                     alt="..."
                   />
-                </a>
+                </Link>
                 {/* <!-- card img end --> */}
                 {/* <!-- card-body start --> */}
                 <div className="card-body pt-11 px-0 pb-0">
-                  <a
-                    href="http://localhost:3000/"
-                    className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
-                  >
+                  <Link className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1">
                     Marketing
-                  </a>
+                  </Link>
                   <h4>
-                    <a
-                      className="card-title font-size-7 mt-8 mb-6 heading-default-color"
-                      href="http://localhost:3000/"
-                    >
+                    <Link className="card-title font-size-7 mt-8 mb-6 heading-default-color">
                       Out bound marketing to get the job you want within 72 days
-                    </a>
+                    </Link>
                   </h4>
                   <p className="card-text mb-9 font-size-4">
                     Collaboratively administrate empowered markets via
@@ -555,31 +513,25 @@ function EmployerHome() {
                   {/* <!-- media start --> */}
                   <div className="media mb-5 pr-9">
                     {/* <!-- media img start --> */}
-                    <a href="http://localhost:3000/">
+                    <Link>
                       <img
                         src="image/l2/png/blog-user-img2.png"
                         className="align-self-center circle-54 mr-3 mt-2"
                         alt=""
                       />
-                    </a>
+                    </Link>
                     {/* <!-- media img start --> */}
                     {/* <!-- media body start --> */}
                     <div className="media-body pl-4 pt-2">
                       <h6 className="mb-0">
-                        <a
-                          className="font-size-4 font-weight-semibold heading-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
+                        <Link className="font-size-4 font-weight-semibold heading-default-color line-height-reset">
                           David Herison
-                        </a>
+                        </Link>
                       </h6>
                       <p className="mb-0">
-                        <a
-                          className="font-size-3 text-default-color"
-                          href="http://localhost:3000/"
-                        >
+                        <Link className="font-size-3 text-default-color">
                           UX Designer
-                        </a>
+                        </Link>
                       </p>
                     </div>
                     {/* <!-- media body start --> */}
@@ -601,29 +553,23 @@ function EmployerHome() {
               {/* <!-- card start --> */}
               <div className="card bg-transparent border-0">
                 {/* <!-- card img start --> */}
-                <a href="http://localhost:3000/">
+                <Link>
                   <img
                     src="image/l2/png/blog-img3.png"
                     className="card-img-top"
                     alt="..."
                   />
-                </a>
+                </Link>
                 {/* <!-- card img end --> */}
                 {/* <!-- card-body start --> */}
                 <div className="card-body pt-11 px-0 pb-0">
-                  <a
-                    href="http://localhost:3000/"
-                    className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
-                  >
+                  <Link className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1">
                     Social media
-                  </a>
+                  </Link>
                   <h4>
-                    <a
-                      className="card-title font-size-7 mt-8 mb-6 heading-default-color"
-                      href="http://localhost:3000/"
-                    >
+                    <Link className="card-title font-size-7 mt-8 mb-6 heading-default-color">
                       Your social media accounts will be your new CV
-                    </a>
+                    </Link>
                   </h4>
                   <p className="card-text mb-9 font-size-4">
                     Leverage agile frameworks to provide a robust synopsis for
@@ -642,20 +588,14 @@ function EmployerHome() {
                     {/* <!-- media body start --> */}
                     <div className="media-body pl-4 pt-2">
                       <h6 className="mb-0">
-                        <a
-                          className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
+                        <Link className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset">
                           Benjamin Linkon
-                        </a>
+                        </Link>
                       </h6>
                       <p className="mb-0">
-                        <a
-                          className="font-size-3 text-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
+                        <Link className="font-size-3 text-default-color line-height-reset">
                           JavaScript Developer
-                        </a>
+                        </Link>
                       </p>
                     </div>
                     {/* <!-- media body start --> */}
@@ -785,12 +725,9 @@ function EmployerHome() {
                 </p>
                 {/* <!-- content-2 section title end --> */}
                 {/* <!-- content-2 btn start --> */}
-                <a
-                  className="btn btn-white btn-h-60 text-black-2 w-180 rounded-5 text-uppercase mx-auto mx-lg-0"
-                  href="http://localhost:3000/"
-                >
+                <Link className="btn btn-white btn-h-60 text-black-2 w-180 rounded-5 text-uppercase mx-auto mx-lg-0">
                   Post a Job
-                </a>
+                </Link>
                 {/* <!-- content-2 btn end --> */}
               </div>
             </div>

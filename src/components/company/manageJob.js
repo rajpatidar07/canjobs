@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import EmployeeFooter from "../common/footer";
 import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
 import JobDetail from "./jobDetail";
-import { ToastContainer } from "react-bootstrap";
-import { getAllJobsCategory } from "../../api/api";
+import { ToastContainer } from "react-toastify";
+// import { getAllJobsCategory } from "../../api/api";
 import className from "../json/filterjson";
 import FilterJson from "../json/filterjson";
+import { Link } from "react-router-dom";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
-  let [category, setCategory] = useState([]);
+  // let [category, setCategory] = useState([]);
   /*Filter states */
   // const [categoryFilterValue, setCategoryFilterValue] = useState("");
   // const [SkillFilterValue, setSkillFilterValue] = useState("");
   // const [locationFilterValue, setLocationFilterValue] = useState("");
   // const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  // const [search, setSearch] = useState("");
 
   /* Function to get the job category data*/
-  const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    setCategory(userData);
-  };
+  // const CategoryData = async () => {
+  //   const userData = await getAllJobsCategory();
+  //   setCategory(userData);
+  // };
   const editJob = (e) => {
     // e.preventDefault();
     setShowAddJobModal(true);
     setJobId(e);
   };
-  useEffect(() => {
-    CategoryData();
-  }, []);
+  // useEffect(() => {
+  //   CategoryData();
+  // }, []);
   /*Category Onchange function to filter the data */
   // let onCategoryFilterChange = (e) => {
   //   setCategoryFilterValue(e.target.value);
@@ -49,13 +49,11 @@ function ManageJobs() {
   // let onJobSwapFilterChange = (e) => {
   //   setJobSwapFilterValue(e.target.value);
   // };
-  /*Searcg Onchange function to filter the data */
-  // let onSearch = (e) => {
-  //   setSearch(e.target.value);
-  // };
+
   return (
     <>
       <div>
+        <ToastContainer />
         <Header />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
@@ -67,7 +65,6 @@ function ManageJobs() {
               </div>
             </div>
           </div>
-          <ToastContainer />
         </div>
         <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
           <div className="container">
@@ -76,13 +73,12 @@ function ManageJobs() {
                 <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
                 </h2>
-                <form className="mb-8" action="/">
+                <form className="mb-8">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                    <div className="mr-5 mb-5">
+                    {/* <div className="mr-5 mb-5">
                       <select
                         name="category"
                         id="category"
-                        onChange={CategoryData}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         {(category || []).map((cat) => (
@@ -94,7 +90,7 @@ function ManageJobs() {
                           </option>
                         ))}
                       </select>
-                    </div>
+                    </div> */}
                     <div className="mr-5 mb-5">
                       <select
                         name="skill"
@@ -189,13 +185,10 @@ function ManageJobs() {
                     </div>
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
-                    <a
-                      className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      href="http://localhost:3000/"
-                    >
+                    <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">
                       Load More{" "}
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* <!-- form end --> */}

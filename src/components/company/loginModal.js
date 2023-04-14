@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useValidation from "../common/useValidation";
+import { EmployerLogin } from "../../api/api";
+import { toast } from "react-toastify";
 export default function CompanyLogin(props) {
   let [showCompanyForgotPassword, setShowCompanyForgotPassword] = useState(
     false
   );
+  let Navigate = useNavigate();
+  /* Functionality to close the modal */
+
+  const close = () => {
+    setErrors("");
+    setState("");
+    props.close();
+  };
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
-    companypassword: "",
-    tandr: "",
+    password: "",
+    remember: "",
+    Credentials: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -22,7 +33,7 @@ export default function CompanyLogin(props) {
           ? null
           : "Email is invalid",
     ],
-    companypassword: [
+    password: [
       (value) =>
         value === ""
           ? "Password is required"
@@ -32,23 +43,43 @@ export default function CompanyLogin(props) {
           ? null
           : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    tandr: [
-      (value) =>
-        value ? null : "Please accept terms and conditions to continue",
-    ],
+    // remember: [
+    //   (value) =>
+    //     value ? null : "Please accept terms and conditions to continue",
+    // ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   /*----LOGIN SUBMIT FUNCTION----*/
-  const onCompanyLoginClick = (event) => {
+  const onCompanyLoginClick = async (event) => {
     event.preventDefault();
 
     if (validate()) {
-      // handle form submission
+      let Response = await EmployerLogin(state);
+      if (
+        Response.status === true ||
+        Response.message === "Successfully Logged In"
+      ) {
+        localStorage.setItem("token", Response.token);
+        localStorage.setItem("userType", "company");
+        localStorage.setItem("company_id", Response.company_id);
+        toast.success("Log in Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        Navigate("/company");
+      } else if (Response.message === "Invalid Credentials !") {
+        setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+        // handle form submission
+      }
     }
   };
   // END USER LOGIN VALIDATION
@@ -66,7 +97,7 @@ export default function CompanyLogin(props) {
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
             data-dismiss="modal"
-            onClick={props.close}
+            onClick={close}
           >
             <i className="fas fa-times"></i>
           </button>
@@ -200,29 +231,29 @@ export default function CompanyLogin(props) {
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="companypassword"
+                        htmlFor="password"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Password
                       </label>
                       <div className="position-relative">
                         <input
-                          name="companypassword"
+                          name="password"
                           type="password"
-                          value={state.companypassword}
+                          value={state.password}
                           onChange={onInputChange}
                           className={
-                            errors.companypassword
+                            errors.password
                               ? "form-control border border-danger"
                               : "form-control"
                           }
                           placeholder="Enter password"
-                          id="companypassword"
+                          id="password"
                         />{" "}
                         {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                        {errors.companypassword && (
+                        {errors.password && (
                           <span>
-                            {errors.companypassword.map((error) => (
+                            {errors.password.map((error) => (
                               <span
                                 key={error}
                                 className="text-danger font-size-3"
@@ -233,14 +264,27 @@ export default function CompanyLogin(props) {
                           </span>
                         )}
                       </div>
+                      {errors.Credentials && (
+                        <span
+                          key={errors.Credentials}
+                          className="text-danger font-size-3"
+                        >
+                          {errors.Credentials}
+                        </span>
+                      )}
                     </div>
                     <div className=" d-flex flex-wrap justify-content-between mb-5 col-md-12 ">
-                      <label htmlFor="tandr" className="mb-0 d-flex  mr-3">
+                      <label htmlFor="remember" className="mb-0 d-flex  mr-3">
                         <input
                           type="checkbox"
-                          id="tandr"
-                          name="tandr"
-                          onChange={onInputChange}
+                          id="remember"
+                          name="remember"
+                          onChange={(event) =>
+                            setState({
+                              ...state,
+                              remember: event.target.checked,
+                            })
+                          }
                           className="text-black-2 pt-5 mr-5"
                         />
                         <span className="font-size-3 mb-1 line-height-reset d-block">
@@ -256,12 +300,12 @@ export default function CompanyLogin(props) {
                         Forget Password
                       </Link>
                       {/*----ERROR MESSAGE FOR terms----*/}
-                      {errors.tandr && (
+                      {errors.remember && (
                         <span
-                          key={errors.tandr}
+                          key={errors.remember}
                           className="text-danger font-size-3"
                         >
-                          {errors.tandr}
+                          {errors.remember}
                         </span>
                       )}
                     </div>

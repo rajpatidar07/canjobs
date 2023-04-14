@@ -7,8 +7,11 @@ import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
 import moment from "moment";
+import { ToastContainer } from "react-toastify";
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
+  const company_id = localStorage.getItem("company_id");
+
   /*Show modal and data state */
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [
@@ -20,6 +23,7 @@ function CompanyProfile(props) {
   /*Function to get employer data */
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
+    console.log(userData);
     if (userData === undefined) {
       setEmployerData("");
       setEmployerKycData("");
@@ -39,20 +43,16 @@ function CompanyProfile(props) {
   };
   /*Render method to get employer data */
   useEffect(() => {
-    if (props.employerId !== "0" || props.employerId !== undefined) {
-      EmployerData();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }
-  }, [props, showKycComplainDetailsModal, showCompanyInfoModal]);
+    // if (props.employerId !== "0" || props.employerId !== undefined) {
+    EmployerData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }
+  }, [showKycComplainDetailsModal, showCompanyInfoModal]);
 
   return (
     <div>
+      <ToastContainer />
       {user_type !== "admin" ? <EmployeeHeader /> : null}
-      <KycComplianceDetails
-        employerId={props.employerId}
-        show={showKycComplainDetailsModal}
-        close={() => setShowKycComplainDetailsModal(false)}
-      />
       <div className="bg-default-2 pt-30 pt-lg-22 pb-lg-27">
         <div className="container">
           {/* <!-- back Button --> */}
@@ -152,7 +152,11 @@ function CompanyProfile(props) {
             </div>
             {/* <!-- Middle Body Start --> */}
             <div className="w-100 row m-0 pl-12 pt-10 pb-7 pr-12 pr-xxl-12 border-top">
-              <CompanyDetailPage employerId={props.employerId} />
+              <CompanyDetailPage
+                employerId={
+                  user_type === "company" ? company_id : props.employerId
+                }
+              />
 
               <div className="col-md-8 col-xl-9 col-lg-8 col-12 ">
                 <div>
@@ -162,11 +166,6 @@ function CompanyProfile(props) {
                       className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                       onClick={() => setShowCompanyInfoModal(true)}
                     ></CustomButton>
-                    <CompanyDetails
-                      employerId={props.employerId}
-                      show={showCompanyInfoModal}
-                      close={() => setShowCompanyInfoModal(false)}
-                    />
                   </h4>
                   <div className="pt-5 text-left">
                     <p className="font-size-4 mb-8">{employerData.about}</p>
@@ -178,6 +177,16 @@ function CompanyProfile(props) {
         </div>
       </div>
       {user_type !== "admin" ? <EmployeeFooter /> : null}
+      <CompanyDetails
+        employerId={user_type === "company" ? company_id : props.employerId}
+        show={showCompanyInfoModal}
+        close={() => setShowCompanyInfoModal(false)}
+      />{" "}
+      <KycComplianceDetails
+        employerId={user_type === "company" ? company_id : props.employerId}
+        show={showKycComplainDetailsModal}
+        close={() => setShowKycComplainDetailsModal(false)}
+      />
     </div>
   );
 }

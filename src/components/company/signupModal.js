@@ -2,20 +2,21 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../common/useValidation";
+import { EmployerSignUp } from "../../api/api";
 
 export default function CompanySignUp(props) {
   // USER SIGNUP VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    companyemail: "",
-    companypassword: "",
-    contactno: "",
-    tandr: "",
+    email: "",
+    password: "",
+    contact_no: "",
+    term_and_condition: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    companyemail: [
+    email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
@@ -23,7 +24,7 @@ export default function CompanySignUp(props) {
           ? null
           : "Email is invalid",
     ],
-    companypassword: [
+    password: [
       (value) =>
         value === ""
           ? "Password is required"
@@ -33,25 +34,41 @@ export default function CompanySignUp(props) {
           ? null
           : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    contactno: [
-      (value) => (value ? null : "Contact no is required"),
-      (value) => (value === 10 ? null : "Contact no should be of 10 digits"),
-    ],
-    tandr: [
+    contact_no: [
       (value) =>
-        value ? null : "Please accept terms and conditions o continue",
+        value === "" || value === null
+          ? "Contact no is required"
+          : value.length < 10 || value.length > 11
+          ? "Contact no should be of 10 digits"
+          : "",
+    ],
+    term_and_condition: [
+      (value) =>
+        value === null || value === ""
+          ? "Please accept terms and conditions continue"
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   // USER SIGNUP SUBMIT BUTTON
-  const onCompanySignUpClick = (event) => {
+  const onCompanySignUpClick = async (event) => {
+    // console.log(state);
+
     event.preventDefault();
     if (validate()) {
+      let Response = await EmployerSignUp(state);
+      if (Response.message === "Email already exists") {
+        setErrors({ ...errors, email: ["Email already exists"] });
+      }
     }
   };
   // END USER SIGNUP VALIDATION
@@ -157,85 +174,85 @@ export default function CompanySignUp(props) {
                       </label>
                       <input
                         type="email"
-                        name="companyemail"
-                        value={state.companyemail}
+                        name="email"
+                        value={state.email}
                         onChange={onInputChange}
                         className={
-                          errors.companyemail
+                          errors.email
                             ? "form-control border border-danger"
                             : "form-control"
                         }
                         placeholder="example@gmail.com"
-                        id="companyemail"
+                        id="email"
                       />
                       {/* ERROR MSG FOR Company EMAIL */}
-                      {errors.companyemail && (
+                      {errors.email && (
                         <span
-                          key={errors.companyemail}
+                          key={errors.email}
                           className="text-danger font-size-3"
                         >
-                          {errors.companyemail}
+                          {errors.email}
                         </span>
                       )}
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="contactno"
+                        htmlFor="contact_no"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Contact Number
                       </label>
                       <input
                         type="number"
-                        name="contactno"
-                        value={state.contactno}
+                        name="contact_no"
+                        value={state.contact_no}
                         onChange={onInputChange}
                         className={
-                          errors.contactno
+                          errors.contact_no
                             ? "form-control border border-danger"
                             : "form-control"
                         }
                         placeholder="Contact Person Name"
-                        id="contactno"
+                        id="contact_no"
                       />
                       {/* ERROR MSG FOR Company no */}
-                      {errors.contactno && (
+                      {errors.contact_no && (
                         <span
-                          key={errors.contactno}
+                          key={errors.contact_no}
                           className="text-danger font-size-3"
                         >
-                          {errors.contactno}
+                          {errors.contact_no}
                         </span>
                       )}
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="companypassword"
+                        htmlFor="password"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Password
                       </label>
                       <div className="position-relative">
                         <input
-                          name="companypassword"
-                          value={state.companypassword}
+                          name="password"
+                          value={state.password}
                           onChange={onInputChange}
                           type="password"
                           className={
-                            errors.companypassword
+                            errors.password
                               ? "form-control border border-danger"
                               : "form-control"
                           }
-                          id="companypassword"
+                          id="password"
                           placeholder="Enter password"
                         />
                         {/* ERROR MSG FOR PASSWORD */}
-                        {errors.companypassword && (
+                        {errors.password && (
                           <span
-                            key={errors.companypassword}
+                            key={errors.password}
                             className="text-danger font-size-3"
                           >
-                            {errors.companypassword}
+                            {errors.password}
                           </span>
                         )}
                       </div>
@@ -244,14 +261,19 @@ export default function CompanySignUp(props) {
                     {/* END FORM FIELDS  */}
                     <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
                       <label
-                        htmlFor="tandr"
+                        htmlFor="term_and_condition"
                         className="gr-check-input d-flex  mr-3"
                       >
                         <input
                           type="checkbox"
-                          id="tandr"
-                          name="tandr"
-                          onChange={onInputChange}
+                          id="term_and_condition"
+                          name="term_and_condition"
+                          onChange={(event) =>
+                            setState({
+                              ...state,
+                              term_and_condition: event.target.checked,
+                            })
+                          }
                           className="text-black-2 pt-5 mr-5"
                         />
                         <span className="font-size-3 mb-0 line-height-reset d-block">
@@ -262,12 +284,12 @@ export default function CompanySignUp(props) {
                         </span>
                       </label>
                       {/*----ERROR MESSAGE FOR terms----*/}
-                      {errors.tandr && (
+                      {errors.term_and_condition && (
                         <span
-                          key={errors.tandr}
+                          key={errors.term_and_condition}
                           className="text-danger font-size-3"
                         >
-                          {errors.tandr}
+                          {errors.term_and_condition}
                         </span>
                       )}
                     </div>

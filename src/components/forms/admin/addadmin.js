@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 function Addadmin(props) {
   // let [adminDetails, setAdmindetails] = useState([]);
   let [already, setAlready] = useState("");
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");

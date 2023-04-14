@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 function KycComplianceDetails(props) {
   //console.log(props.employerId);
-  let close = () => {
+  /* Functionality to close the modal */
+
+  const close = () => {
     setState(initialFormState);
     setErrors("");
     props.close();

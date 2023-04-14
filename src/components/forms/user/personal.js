@@ -31,6 +31,8 @@ function PersonalDetails(props) {
     work_permit_other_country: "",
     resume: "",
   };
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormStateuser);
     setErrors("");

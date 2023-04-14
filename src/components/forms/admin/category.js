@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddCategory(props) {
   // const [catdata, setCatdata] = useState([]);
+  /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormState);
     setErrors("");
