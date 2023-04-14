@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetJobDetail } from "../../api/api";
 import moment from "moment";
+// eslint-disable-next-line
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let skill = [];
@@ -15,7 +16,7 @@ function JobDetailPage(props) {
   /*Render method to get job detail data */
   useEffect(() => {
     JobData();
-  }, []);
+  });
   /*Set skill variable to array frm string */
   if (jobDetatilsData !== "") {
     skill = jobDetatilsData.keyskill.split(",");
