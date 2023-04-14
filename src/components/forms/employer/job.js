@@ -465,6 +465,7 @@ function AddJobModal(props) {
                     {(FilterJson.experience || []).map((exp) => (
                       <option key={exp} value={exp}>
                         {exp}
+                        {exp === "Fresher" || exp === "Other" ? "" : "Years"}
                       </option>
                     ))}
                   </select>

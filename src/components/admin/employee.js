@@ -353,7 +353,8 @@ function Employee() {
                         <option value={""}>Select Experience</option>
                         {(FilterJson.experience || []).map((ex, i) => (
                           <option value={ex} key={i}>
-                            {ex} years
+                            {ex}
+                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
                           </option>
                         ))}
                       </select>
