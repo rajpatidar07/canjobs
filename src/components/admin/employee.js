@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import UserProfile from "../user/profile";
 import LmiaStatus from "../forms/admin/lmiastatus";
+import FilterJson from "../json/filterjson";
 function Employee() {
   /*Show modal states */
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -264,15 +265,15 @@ function Employee() {
     }
   };
   /*Experience type array to filter*/
-  const Experience = employeeData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.experience === thing.experience)
-  );
+  // const Experience = employeeData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.experience === thing.experience)
+  // );
   /*Skill type array to filter*/
-  const Skill = employeeData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.skill === thing.skill)
-  );
+  // const Skill = employeeData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.skill === thing.skill)
+  // );
 
   /*Education type array to filter*/
   const EducationArray = employeeData.filter(
@@ -350,12 +351,9 @@ function Employee() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value={""}>Select Experience</option>
-                        {(Experience || []).map((experience) => (
-                          <option
-                            key={experience.employee_id}
-                            value={experience.experience}
-                          >
-                            {experience.experience}
+                        {(FilterJson.experience || []).map((ex, i) => (
+                          <option value={ex} key={i}>
+                            {ex} years
                           </option>
                         ))}
                       </select>
@@ -374,14 +372,13 @@ function Employee() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value={""}>Select Skill</option>
-                        {(Skill || []).map((keyskill) => (
-                          <option
-                            key={keyskill.employee_id}
-                            value={keyskill.skill}
-                          >
-                            {keyskill.skill}
-                          </option>
-                        ))}
+                        {(FilterJson.keyskill || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

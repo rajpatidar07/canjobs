@@ -241,20 +241,20 @@ function Job() {
       index === self.findIndex((t) => t.category_type === thing.category_type)
   );
   /*Job type array to filter*/
-  const JobType = jobData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.job_type === thing.job_type)
-  );
+  // const JobType = jobData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.job_type === thing.job_type)
+  // );
   /*Skill type array to filter*/
   // const SkillType = jobData.filter(
   //   (thing, index, self) =>
   //     index === self.findIndex((t) => t.skill === thing.skill)
   // );
   /*Location type array to filter*/
-  const LocationType = jobData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.location === thing.location)
-  );
+  // const LocationType = jobData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.location === thing.location)
+  // );
 
   return (
     <>
@@ -332,9 +332,9 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">Select Job type</option>
-                        {(JobType || []).map((job) => (
-                          <option key={job.job_id} value={job.job_type}>
-                            {job.job_type}
+                        {(FilterJson.job_type || []).map((job, i) => (
+                          <option key={i} value={job}>
+                            {job}
                           </option>
                         ))}
                       </select>
@@ -376,10 +376,10 @@ function Job() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="">Select location</option>{" "}
-                        {(LocationType || []).map((data) => {
+                        {(FilterJson.location || []).map((data, i) => {
                           return (
-                            <option value={data.location} key={data.job_id}>
-                              {data.location}
+                            <option value={data} key={i}>
+                              {data}
                             </option>
                           );
                         })}
