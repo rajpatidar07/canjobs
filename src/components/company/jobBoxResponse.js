@@ -106,9 +106,9 @@ function JobBoxResponse() {
           </div>
         </div>
         {showTable && (
-          <div className="bg-white shadow-8 pt-7 rounded pb-8">
-            <div className="table-responsive">
-              <table className="table table-striped">
+          <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8">
+            <div className="table-responsive main_table_div">
+              <table className="table table-striped main_data_table">
                 <thead>
                   <tr>
                     <th
@@ -156,8 +156,8 @@ function JobBoxResponse() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                  <tr className="">
+                    <th scope="row" className="pl-5 py-5 pr-0   ">
                       <div className="media  align-items-center">
                         <div className="circle-36 mx-auto">
                           <img
@@ -168,32 +168,32 @@ function JobBoxResponse() {
                         </div>
                       </div>
                     </th>
-                    <th className="border-0 py-7">
+                    <th className="border-0 py-5">
                       <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                         Nicolas Bradley
                       </h4>
                     </th>
-                    <td className=" py-7 pr-0">
+                    <td className=" py-5 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         JAVA , REACT JS ,HTML and CSS
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         4 years
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         20,000
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         +9632587410
                         <br />
@@ -201,8 +201,8 @@ function JobBoxResponse() {
                       </h3>
                     </td>
                   </tr>
-                  <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                  <tr className="">
+                    <th scope="row" className="pl-5 py-5 pr-0   ">
                       <div className="media  align-items-center">
                         <div className="circle-36 mx-auto">
                           <img
@@ -213,32 +213,32 @@ function JobBoxResponse() {
                         </div>
                       </div>
                     </th>
-                    <th className="pl-6 border-0 py-7 pr-0">
+                    <th className="pl-5 py-5 pr-0  ">
                       <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                         Elizabeth Gomez
                       </h4>
                     </th>
-                    <td className=" py-7 pr-0">
+                    <td className=" py-5 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         JAVA , REACT JS ,HTML and CSS
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         4 years
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         20,000
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         +9632587410
                         <br />
@@ -246,8 +246,8 @@ function JobBoxResponse() {
                       </h3>
                     </td>
                   </tr>
-                  <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                  <tr className="">
+                    <th scope="row" className="pl-5 py-5 pr-0   ">
                       <div className="media  align-items-center">
                         <div className="circle-36 mx-auto">
                           <img
@@ -258,32 +258,32 @@ function JobBoxResponse() {
                         </div>
                       </div>
                     </th>
-                    <th className="pl-6 border-0 py-7 pr-0">
+                    <th className="pl-5 py-5 pr-0  ">
                       <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                         Joe Wade
                       </h4>
                     </th>
-                    <td className=" py-7 pr-0">
+                    <td className=" py-5 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Head of Marketing
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         JAVA , REACT JS ,HTML and CSS
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         4 years
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         20,000
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         +9632587410
                         <br />
@@ -291,8 +291,8 @@ function JobBoxResponse() {
                       </h3>
                     </td>
                   </tr>
-                  <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                  <tr className="">
+                    <th scope="row" className="pl-5 py-5 pr-0   ">
                       <div className="media  align-items-center">
                         <div className="circle-36 mx-auto">
                           <img
@@ -303,32 +303,32 @@ function JobBoxResponse() {
                         </div>
                       </div>
                     </th>
-                    <th className="pl-6 border-0 py-7 pr-0">
+                    <th className="pl-5 py-5 pr-0  ">
                       <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                         Roger Hawkins
                       </h4>
                     </th>
-                    <td className=" py-7 pr-0">
+                    <td className=" py-5 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         UI Designer
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         JAVA , REACT JS ,HTML and CSS
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         4 years
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         20,000
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         +9632587410
                         <br />
@@ -336,8 +336,8 @@ function JobBoxResponse() {
                       </h3>
                     </td>
                   </tr>
-                  <tr className="border border-color-2">
-                    <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                  <tr className="">
+                    <th scope="row" className="pl-5 py-5 pr-0   ">
                       <div className="media  align-items-center">
                         <div className="circle-36 mx-auto">
                           <img
@@ -348,32 +348,32 @@ function JobBoxResponse() {
                         </div>
                       </div>
                     </th>
-                    <th className="pl-6 border-0 py-7 pr-0">
+                    <th className="pl-5 py-5 pr-0  ">
                       <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                         Marie Green
                       </h4>
                     </th>
-                    <td className=" py-7 pr-0">
+                    <td className=" py-5 pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         Senior Project Manager
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         JAVA , REACT JS ,HTML and CSS
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         4 years
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         20,000
                       </h3>
                     </td>
-                    <td className=" py-7  pr-0">
+                    <td className=" py-5  pr-0">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         +9632587410
                         <br />

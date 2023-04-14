@@ -485,7 +485,7 @@ function CompanyDetails(props) {
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  About : <span className="text-danger">*</span>
+                  About: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <div

@@ -259,9 +259,9 @@ function Employer() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader />
+        <AdminHeader heading={"Manage Companies"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar active="active" />
+        <AdminSidebar heading={"Manage Companies"} />
         <ToastContainer />
         <CompanyDetails
           show={showAddEmployerModal}
@@ -292,7 +292,7 @@ function Employer() {
         <div
           className={
             showEmployerDetails === false
-              ? "dashboard-main-container mt-24"
+              ? "dashboard-main-container mt-20"
               : "d-none"
           }
           id="dashboard-body"
@@ -300,13 +300,13 @@ function Employer() {
           <div className="container">
             <div className="mb-18">
               <div className="mb-8 align-items-center">
-                <div className="">
+                <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Employer</h3>
                 </div>
-                <div className="row">
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
-                      Search by Name :
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
+                      Search by Name:
                     </p>
                     <input
                       required
@@ -318,11 +318,11 @@ function Employer() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Corporation:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="corporation"
                         value={corporationFilterValue}
@@ -341,11 +341,11 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Industry:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="industry"
                         value={industryFilterValue}
@@ -362,7 +362,7 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="float-md-right text-right mt-md-11 col-xl-3 mt-xl-12  mt-6">
+                  <div className="text-right col-md-6 col-xl-3">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editEmployer("0")}
@@ -372,9 +372,9 @@ function Employer() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-8 px-11">
-                <div className="table-responsive">
-                  <table className="table table-striped">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
+                <div className="table-responsive main_table_div">
+                  <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -503,18 +503,18 @@ function Employer() {
                       ) : (
                         (employerData || []).map((empdata) => (
                           <tr
-                            className="border border-color-2"
+                            className=""
                             key={empdata.company_id}
                           >
                             <th
                               scope="row"
-                              className="pl-6 border-0 py-7 pr-0 "
+                              className="pl-5 py-5 pr-0   "
                             >
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">
                                   {empdata.logo === null ? (
                                     <img
-                                      src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                      src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
                                       alt=""
                                       className="w-100"
                                     />
@@ -528,7 +528,7 @@ function Employer() {
                                 </div>
                               </div>
                             </th>
-                            <th className=" border-0 py-7 pr-0">
+                            <th className="py-5 pr-0">
                               <Link
                                 to={""}
                                 onClick={() =>
@@ -546,12 +546,12 @@ function Employer() {
                                 )}
                               </Link>
                             </th>
-                            <th className=" py-7  pr-0">
+                            <th className=" py-5  pr-0">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {empdata.vacancies}
                               </h3>
                             </th>
-                            <th className=" py-7  pr-0">
+                            <th className=" py-5  pr-0">
                               {empdata.address === null ? (
                                 <h4 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -564,7 +564,7 @@ function Employer() {
                                 </h3>
                               )}
                             </th>
-                            <th className=" py-7  pr-0">
+                            <th className=" py-5  pr-0">
                               {empdata.contact_no === null ? (
                                 <h4 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -580,22 +580,22 @@ function Employer() {
                                 </h3>
                               )}
                             </th>
-                            <th className=" py-7  pr-0">
+                            <th className=" py-5  pr-0">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {empdata.company_name}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {empdata.industry}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {empdata.vacancy_for_post}
                               </h3>
                             </th>
-                            <th className="  py-7 ">
+                            <th className="  py-5 ">
                               <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
                                 {empdata.contact_person_name === null ||
                                 empdata.contact_no === null ||
@@ -612,39 +612,41 @@ function Employer() {
                                 )}
                               </h3>
                             </th>
-                            <th className="  py-7  d-flex">
-                              <Link
-                                to=""
+                            <th className="  py-5  d-flex">
+                            <div class="btn-group button_group" role="group">
+                              <button
+                                className="btn btn-outline-info action_btn"
                                 onClick={() =>
                                   editEmployerContact(empdata.company_id)
                                 }
                               >
                                 <span className="fa fa-address-book text-gray px-1"></span>
-                              </Link>
+                              </button>
 
-                              <Link
-                                to=""
+                              <button
+                                className="btn btn-outline-info action_btn"
                                 onClick={() =>
                                   editEmployerKyc(empdata.company_id)
                                 }
                               >
                                 <span className="fa fa-file text-gray px-1 "></span>
-                              </Link>
+                              </button>
 
-                              <Link
-                                to=""
+                              <button
+                                className="btn btn-outline-info action_btn"
                                 onClick={() => editEmployer(empdata.company_id)}
                               >
                                 <span className=" fas fa-edit text-gray px-1">
                                   {" "}
                                 </span>
-                              </Link>
-                              <Link
-                                to=""
+                              </button>
+                              <button
+                                className="btn btn-outline-info action_btn"
                                 onClick={() => ShowDeleteAlert(empdata)}
                               >
                                 <span className="fa fa-trash text-danger px-1"></span>
-                              </Link>
+                              </button>
+                              </div>
                             </th>
                           </tr>
                         ))

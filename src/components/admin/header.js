@@ -2,27 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
-const AdminHeader = () => {
+const AdminHeader = (props) => {
   const [showChangePass, setShowChangePass] = useState(false);
   return (
-    <header className="site-header site-header--menu-right bg-default position-fixed py-7 py-xs-0 site-header--absolute">
-      <div className="container-fluid-fluid px-10">
+    <header className="site-header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
+      <div className="container-fluid-fluid px-7">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
-          {/* <!-- Brand Logo--> */}
-          <div className="brand-logo">
-            {/* <!-- light version logo (logo must be black)--> */}
-            <img
-              src="image/logo-main-black.png"
-              alt=""
-              className="light-version-logo default-logo"
-            />
-            {/* <!-- Dark version logo (logo must be White)--> */}
-            <img
-              src="image/logo-main-white.png"
-              alt=""
-              className="dark-version-logo"
-            />
-          </div>
+          {/* <!-- Page Heading--> */}
+          
+          <h3 class="font-size-6 mb-0">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
             <div>

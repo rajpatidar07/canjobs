@@ -260,14 +260,14 @@ function Job() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader />
+        <AdminHeader heading={"Manage Jobs"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar />
+        <AdminSidebar  heading={"Manage Jobs"}/>
         <ToastContainer />
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-24"
+              ? "dashboard-main-container mt-20"
               : "d-none"
           }
           id="dashboard-body"
@@ -275,13 +275,13 @@ function Job() {
           <div className="container">
             <div className="mb-18">
               <div className="mb-8 align-items-center">
-                <div className="">
+                <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
-                <div className="row">
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
-                      Search by Name :
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
+                      Search by Name:
                     </p>
                     <input
                       required
@@ -293,17 +293,17 @@ function Job() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Category:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={categoryFilterValue}
                         onChange={onCategoryFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Category</option>
                         {(CategoryType || []).map((data) => {
@@ -319,17 +319,17 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Job Swap:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
                         onChange={onJobSwapFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
@@ -340,17 +340,17 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Key Skill:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={SkillFilterValue}
                         onChange={onSkillFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Skill</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
@@ -363,17 +363,17 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Location:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={locationFilterValue}
                         onChange={onLocationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Location</option>
                         {(FilterJson.location || []).map((data, i) => {
@@ -387,7 +387,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="text-end col-xl-9">
-                    <div className="float-md-right mt-6 mt-xl-12">
+                    <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editJob("0")}
@@ -403,9 +403,9 @@ function Job() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
-                <div className="table-responsive">
-                  <table className="table table-striped">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+                <div className="table-responsive main_table_div">
+                  <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -534,10 +534,10 @@ function Job() {
                       ) : (
                         (jobData || []).map((job) => (
                           <tr
-                            className="border border-color-2"
+                            className=""
                             key={job.job_id}
                           >
-                            <th scope="row" className=" border-0 py-7 ">
+                            <th scope="row" className="py-5 ">
                               <div className="">
                                 <Link
                                   to={""}
@@ -548,55 +548,57 @@ function Job() {
                                 </Link>
                               </div>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.employement} - {job.job_type}
                               </h3>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.location}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.education}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.keyskill}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.language}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.salary}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.experience_required}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
                                 {job.total_applicants}
                               </h3>
                             </th>
-                            <th className=" py-7 min-width-px-100">
-                              <Link to="" onClick={() => editJob(job.job_id)}>
-                                <span className=" fas fa-edit text-gray px-5"></span>
-                              </Link>
-                              <Link to="" onClick={() => ShowDeleteAlert(job)}>
-                                <span className=" text-danger">
-                                  <i className="fa fa-trash"></i>
-                                </span>
-                              </Link>
+                            <th className="py-5 min-width-px-100">
+                              <div class="btn-group button_group" role="group">
+                                <button className="btn btn-outline-info action_btn" onClick={() => editJob(job.job_id)}>
+                                  <span className=" fas fa-edit text-gray"></span>
+                                </button>
+                                <button className="btn btn-outline-info action_btn" onClick={() => ShowDeleteAlert(job)}>
+                                  <span className=" text-danger">
+                                    <i className="fa fa-trash"></i>
+                                  </span>
+                                </button>
+                              </div>
                             </th>
                           </tr>
                         ))
@@ -624,7 +626,7 @@ function Job() {
           />
         </div>
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-24 ">
+          <div className="dashboard-main-container mt-20 ">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

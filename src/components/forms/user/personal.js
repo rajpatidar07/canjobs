@@ -302,7 +302,7 @@ function PersonalDetails(props) {
                   htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Email Id : <span className="text-danger">*</span>
+                  Email Id: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={30}
@@ -331,7 +331,7 @@ function PersonalDetails(props) {
                   htmlFor="contact_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Mobile Number : <span className="text-danger">*</span>
+                  Mobile Number: <span className="text-danger">*</span>
                 </label>
                 <input
                   type="number"
@@ -365,7 +365,7 @@ function PersonalDetails(props) {
                   htmlFor="description"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Description : <span className="text-danger">*</span>
+                  Description: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <div
@@ -418,7 +418,7 @@ function PersonalDetails(props) {
                   htmlFor="description"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  description : <span className="text-danger">*</span>
+                  description: <span className="text-danger">*</span>
                 </label>
                 <textarea
                   name="description"
@@ -452,7 +452,7 @@ function PersonalDetails(props) {
                   htmlFor="date_of_birth"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Date Of Birth : <span className="text-danger">*</span>
+                  Date Of Birth: <span className="text-danger">*</span>
                 </label>
                 <input
                   max={moment().format("YYYY-MM-DD")}
@@ -483,7 +483,7 @@ function PersonalDetails(props) {
                   htmlFor="gender"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Gender : <span className="text-danger">*</span>
+                  Gender: <span className="text-danger">*</span>
                 </label>
                 <select
                   name="gender"
@@ -513,7 +513,7 @@ function PersonalDetails(props) {
                   htmlFor="marital_status"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Maritial status : <span className="text-danger">*</span>
+                  Maritial status: <span className="text-danger">*</span>
                 </label>{" "}
                 <select
                   name="marital_status"
@@ -580,7 +580,7 @@ function PersonalDetails(props) {
                   htmlFor="current_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Current Location : <span className="text-danger">*</span>
+                  Current Location: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -684,7 +684,7 @@ function PersonalDetails(props) {
                   htmlFor="religion"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  religion : <span className="text-danger">*</span>
+                  religion: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -712,7 +712,7 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                  Interested ined In : <span className="text-danger">*</span>
+                  Interested ined In: <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -748,7 +748,7 @@ function PersonalDetails(props) {
                   htmlFor="experience"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  experience : <span className="text-danger">*</span>
+                  experience: <span className="text-danger">*</span>
                 </label>
                 <select
                   name="experience"
@@ -782,7 +782,7 @@ function PersonalDetails(props) {
                   htmlFor="work_permit_canada"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Work Permit of Canada : <span className="text-danger">*</span>
+                  Work Permit of Canada: <span className="text-danger">*</span>
                 </label>
                 <select
                   name="work_permit_canada"

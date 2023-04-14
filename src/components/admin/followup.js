@@ -192,24 +192,24 @@ function Followup() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader />
+        <AdminHeader heading={"Manage Follow-ups"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar />
+        <AdminSidebar  heading={"Manage Follow-ups"}/>
         <Addfollowup
           show={followup}
           resData={resData}
           close={() => setFollowUp(false)}
         />
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div className="dashboard-main-container mt-20" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
               <div className="mb-8 align-items-center">
-                <div className="">
+                <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Follow Up</h3>
                 </div>
-                <div className="row">
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Company:
                     </p>
                     <input
@@ -222,15 +222,15 @@ function Followup() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6">
-                    <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
-                    <div className="h-px-48">
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">Filter by Job:</p>
+                    <div className="select_div">
                       <select
                         name="job"
                         id="job"
                         value={jobFilterValue}
                         onChange={(e) => setJobTypeFilterValue(e.target.value)}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Job</option>
                         {(Job || []).map((job, i) => (
@@ -241,11 +241,11 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Company:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="company_name"
                         id="company_name"
@@ -253,7 +253,7 @@ function Followup() {
                         onChange={(e) =>
                           setCompanyTypeFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Company</option>
                         {(company || []).map((company) => (
@@ -267,11 +267,11 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Experience:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="experience"
                         id="experience"
@@ -279,7 +279,7 @@ function Followup() {
                         onChange={(e) =>
                           setExperienceTypeFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select Experience</option>
                         {(FilterJson.experience || []).map((ex, i) => (
@@ -294,9 +294,9 @@ function Followup() {
                   <div className="float-md-right mt-6"></div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
-                  <table className="table table-striped">
+                  <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -402,10 +402,10 @@ function Followup() {
                       ) : (
                         (response || []).map((res) => (
                           <tr
-                            className="border border-color-2"
+                            className=""
                             key={res.apply_id}
                           >
-                            <th className="pl-6 border-0 py-7 pr-0  ">
+                            <th className="pl-5 py-5 pr-0   ">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">
                                   {/* {res.profile_photo === null ? ( */}
@@ -424,7 +424,7 @@ function Followup() {
                                 </div>
                               </div>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.name}(
                                 {moment().diff(res.date_of_birth, "years")})
@@ -432,27 +432,27 @@ function Followup() {
                                 {res.gender}
                               </h3>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.experience} years <br />
                               </h3>
                             </th>
-                            <th className=" border-0 py-7 ">
+                            <th className="py-5 ">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.job_title}
                               </div>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.company_name}
                               </h3>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 +{res.contact_no} <br /> {res.email}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 <span>{res.current_location}</span>
                                 <span className="px-1">
@@ -460,7 +460,7 @@ function Followup() {
                                 </span>
                               </h3>
                             </th>
-                            <th className=" py-7  min-width-px-100">
+                            <th className="py-5  min-width-px-100">
                               <Link to="" onClick={() => addFollow(res)}>
                                 <span className=" fas fa-plus text-gray px-2"></span>
                               </Link>
@@ -488,7 +488,7 @@ function Followup() {
           </div>
         </div>
         {/* {showJobDetails === true ? (
-    <div className="dashboard-main-container mt-24 ">
+    <div className="dashboard-main-container mt-20 ">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 dark-mode-texts">

@@ -280,7 +280,7 @@ function Registration(props) {
                   htmlFor="More_details"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  More detail can be add as input as per resume :
+                  More detail can be add as input as per resume:
                 </label>
                 <input
                   type="text"

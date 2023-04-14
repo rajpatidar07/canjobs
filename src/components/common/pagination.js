@@ -20,17 +20,17 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
 
   return (
     <div>
+      { pageNumbers.length > 0?
       <nav aria-label="Page navigation example">
         <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
           {/* To change page perivous page :- */}{" "}
-          <li className="page-item rounded-0 flex-all-center">
+          <li className="page-item px-1">
             <Link
-              to={""}
               onClick={prevPage}
               className={
                 currentPage === 1
-                  ? "disabled-link page-link rounded-1 mr-1 px-3"
-                  : "page-link rounded-1 mr-1 px-3 "
+                  ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
+                  : "page-link  font-size-3 py-2 font-weight-semibold px-3"
               }
               aria-label="Previous"
             >
@@ -41,14 +41,13 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
           {pageNumbers.map((pgNumber) => {
             return (
               <li
-                className={currentPage === pgNumber ? "page-item px-1" : "px-1"}
+                className= "page-item px-1"
                 key={pgNumber}
               >
                 {pgNumber === 0 ? (
                   <Link className="d-none"></Link>
                 ) : (
                   <Link
-                    to={""}
                     onClick={() => setCurrentPage(pgNumber)}
                     className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
                       currentPage === pgNumber ? "active " : ""
@@ -61,22 +60,23 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
             );
           })}
           {/* To change page next page :- */}
-          <li className="page-item rounded-0 flex-all-center">
+          <li className="page-item px-1">
             <Link
-              to={""}
               onClick={nextPage}
               className={
                 currentPage === pageNumbers.length
-                  ? "disabled-link page-link rounded-1 ml-1 px-3"
-                  : "page-link rounded-1 ml-1 px-3"
+                  ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
+                  : "page-link  font-size-3 py-2 font-weight-semibold px-3"
               }
               aria-label="Next"
             >
               <i className="fas fa-chevron-right"></i>
             </Link>
           </li>
+          
         </ul>
       </nav>
+      :null}
     </div>
   );
 }
