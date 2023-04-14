@@ -276,10 +276,10 @@ function Employee() {
   // );
 
   /*Education type array to filter*/
-  const EducationArray = employeeData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.education === thing.education)
-  );
+  // const EducationArray = employeeData.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.education === thing.education)
+  // );
 
   return (
     <>
@@ -395,16 +395,15 @@ function Employee() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
                         <option value="" data-display="Product Designer">
-                          Select education
+                          Select Education
                         </option>
-                        {(EducationArray || []).map((education) => (
-                          <option
-                            key={education.employee_id}
-                            value={education.education}
-                          >
-                            {education.education}
-                          </option>
-                        ))}
+                        {(FilterJson.education || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

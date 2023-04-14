@@ -9,6 +9,7 @@ export default function AdminLoginFrom() {
   const initialFormState = {
     email: "",
     password: "",
+    Credentials: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -23,7 +24,7 @@ export default function AdminLoginFrom() {
     password: [(value) => (value === "" ? "Password is required" : null)],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, onInputChange, errors, setErrors, validate } = useValidation(
     initialFormState,
     validators
   );
@@ -36,7 +37,7 @@ export default function AdminLoginFrom() {
       // handle form submission
       const updatedTodo = await AdminLogin(state);
       if (
-        updatedTodo.status ||
+        updatedTodo.status === true ||
         updatedTodo.message === "Successfully Logged "
       ) {
         localStorage.setItem("token", updatedTodo.token);
@@ -46,10 +47,13 @@ export default function AdminLoginFrom() {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        return navigate("/dashboard");
+      } else if (updatedTodo.message === "Invalid Credentials") {
+        setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
       }
-      return navigate("/dashboard");
     }
   };
+
   // END USER LOGIN VALIDATION
 
   return (
@@ -72,7 +76,7 @@ export default function AdminLoginFrom() {
             <form onSubmit={onUserLoginClick}>
               <div className="form-group">
                 <label
-                  htmlFor="useremail"
+                  htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   E-mail
@@ -80,20 +84,20 @@ export default function AdminLoginFrom() {
                 <input
                   type="email"
                   name="email"
-                  value={state.useremail}
+                  value={state.email}
                   onChange={onInputChange}
                   className={
-                    errors.useremail
+                    errors.email
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="example@gmail.com"
-                  id="useremail"
+                  id="email"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
-                {errors.useremail && (
+                {errors.email && (
                   <span>
-                    {errors.useremail.map((error) => (
+                    {errors.email.map((error) => (
                       <span key={error} className="text-danger font-size-3">
                         {error}
                       </span>
@@ -103,7 +107,7 @@ export default function AdminLoginFrom() {
               </div>
               <div className="form-group">
                 <label
-                  htmlFor="userpassword"
+                  htmlFor="password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Password
@@ -112,20 +116,20 @@ export default function AdminLoginFrom() {
                   <input
                     name="password"
                     type="password"
-                    value={state.userpassword}
+                    value={state.password}
                     onChange={onInputChange}
                     className={
-                      errors.userpassword
+                      errors.password
                         ? "form-control border border-danger"
                         : "form-control"
                     }
                     placeholder="Enter password"
-                    id="userpassword"
+                    id="password"
                   />{" "}
                   {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                  {errors.userpassword && (
+                  {errors.password && (
                     <span>
-                      {errors.userpassword.map((error) => (
+                      {errors.password.map((error) => (
                         <span key={error} className="text-danger font-size-3">
                           {error}
                         </span>
@@ -138,7 +142,17 @@ export default function AdminLoginFrom() {
                           data-show-pass="password"
                         ></a> */}
                 </div>
+                {errors.Credentials && (
+                  <span>
+                    {errors.Credentials.map((error) => (
+                      <span key={error} className="text-danger font-size-3">
+                        {error}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </div>
+
               {/* <div className="d-flex flex-wrap justify-content-between">
                 <label
                   htmlFor="terms-check"

@@ -70,7 +70,7 @@ const FilterJson = {
     "Other",
   ],
   corporation: ["B2B", "B2C", "C2C", "B2G", "G2C", "Other"],
-  keyskill: ["java", "html", "css", "React", "php", "python", "Other"],
+  keyskill: ["JAVA", "HTML", "CSS", "REACT", "PHP", "Python", "Other"],
   course: [
     "MA",
     "BA",
@@ -87,9 +87,9 @@ const FilterJson = {
     "CPCT",
     "Other",
   ],
-  Specialization: ["Maths", "Bio", "phy", "Social studies", "core", "Other"],
+  Specialization: ["Maths", "Bio", "Phy", "Social Studies", "Core", "Other"],
   Language: ["English", "Hindi", "French", "Gujrati", "Marathi", "Other"],
-  AdminType: ["manager", "sub-admin", "admin", "super-admin"],
-  lmia_status: ["pending", "approved", "reject", "draft", "complete", "Other"],
+  AdminType: ["Manager", "Sub-admin", "Admin", "Super-Admin"],
+  lmia_status: ["Pending", "Approved", "Reject", "Draft", "Complete", "Other"],
 };
 export default FilterJson;
