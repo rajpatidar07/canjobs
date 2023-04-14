@@ -210,7 +210,7 @@ function Followup() {
                 <div className="row">
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by company:
+                      Filter by Company:
                     </p>
                     <input
                       required
@@ -232,7 +232,7 @@ function Followup() {
                         onChange={(e) => setJobTypeFilterValue(e.target.value)}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">select job</option>
+                        <option value="">Select Job</option>
                         {(Job || []).map((job, i) => (
                           <option value={job.job_title} key={i}>
                             {job.job_title}
@@ -243,7 +243,7 @@ function Followup() {
                   </div>
                   <div className="col-xl-3 col-md-6">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by company:
+                      Filter by Company:
                     </p>
                     <div className="h-px-48">
                       <select
@@ -255,7 +255,7 @@ function Followup() {
                         }
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">select company</option>
+                        <option value="">Select Company</option>
                         {(company || []).map((company) => (
                           <option
                             value={company.company_name}
@@ -281,10 +281,11 @@ function Followup() {
                         }
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">select Experience</option>
+                        <option value="">Select Experience</option>
                         {(FilterJson.experience || []).map((ex, i) => (
                           <option value={ex} key={i}>
-                            {ex} years
+                            {ex}
+                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
                           </option>
                         ))}
                       </select>

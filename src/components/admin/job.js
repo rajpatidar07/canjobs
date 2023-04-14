@@ -281,7 +281,7 @@ function Job() {
                 <div className="row">
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Search by name :
+                      Search by Name :
                     </p>
                     <input
                       required
@@ -305,7 +305,7 @@ function Job() {
                         onChange={onCategoryFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">Select category</option>
+                        <option value="">Select Category</option>
                         {(CategoryType || []).map((data) => {
                           return (
                             <option
@@ -331,7 +331,7 @@ function Job() {
                         onChange={onJobSwapFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">Select Job type</option>
+                        <option value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
                           <option key={i} value={job}>
                             {job}
@@ -342,7 +342,7 @@ function Job() {
                   </div>
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Filter by Key skill:
+                      Filter by Key Skill:
                     </p>
                     <div className="h-px-48">
                       <select
@@ -352,7 +352,7 @@ function Job() {
                         onChange={onSkillFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">Select Skill</option>{" "}
+                        <option value="">Select Skill</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -375,7 +375,7 @@ function Job() {
                         onChange={onLocationFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">Select location</option>{" "}
+                        <option value="">Select Location</option>
                         {(FilterJson.location || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -413,7 +413,7 @@ function Job() {
                           className=" border-0 font-size-4 font-weight-normal"
                         >
                           <Link onClick={sortByNameClick} className="text-gray">
-                            Job title / Industry{" "}
+                            Job title / Industry
                           </Link>
                         </th>
                         <th
@@ -425,7 +425,7 @@ function Job() {
                             onClick={sortByTypeClick}
                             className="text-gray"
                           >
-                            Job Type{" "}
+                            Job Type
                           </Link>
                         </th>
                         <th
@@ -449,7 +449,7 @@ function Job() {
                             onClick={sortByEducationClick}
                             className="text-gray"
                           >
-                            Education{" "}
+                            Education
                           </Link>
                         </th>
                         <th
@@ -485,7 +485,7 @@ function Job() {
                             onClick={sortBySalaryClick}
                             className="text-gray"
                           >
-                            Salary{" "}
+                            Salary
                           </Link>
                         </th>
                         <th
@@ -497,7 +497,7 @@ function Job() {
                             onClick={sortByExperienceClick}
                             className="text-gray"
                           >
-                            Experience{" "}
+                            Experience
                           </Link>
                         </th>
                         <th

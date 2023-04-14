@@ -169,7 +169,7 @@ function ManageAdmin() {
                 <div className="row">
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Search by name:
+                      Search by Name:
                     </p>
                     <input
                       required
@@ -193,7 +193,7 @@ function ManageAdmin() {
                         onChange={onTypeFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
                       >
-                        <option value="">select type</option>
+                        <option value="">Select type</option>
                         {(FilterJson.AdminType || []).map((type, i) => (
                           <option value={type} key={i}>
                             {type}

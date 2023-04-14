@@ -306,7 +306,7 @@ function Employer() {
                 <div className="row">
                   <div className="col-xl-3 col-md-6 ">
                     <p className="font-size-4 mb-0 mr-6 py-2">
-                      Search by name :
+                      Search by Name :
                     </p>
                     <input
                       required
@@ -330,7 +330,7 @@ function Employer() {
                         onChange={onCorporationFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
-                        <option value={""}>Select corporation</option>
+                        <option value={""}>Select Corporation</option>
                         {(FilterJson.corporation || []).map(
                           (corporation, i) => (
                             <option key={i} value={corporation}>
@@ -353,7 +353,7 @@ function Employer() {
                         onChange={onIndustryFilterChange}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
-                        <option value={""}>Select industry</option>
+                        <option value={""}>Select Industry</option>
                         {(FilterJson.industry || []).map((industry, i) => (
                           <option key={i} value={industry}>
                             {industry}
