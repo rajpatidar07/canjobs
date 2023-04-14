@@ -109,7 +109,7 @@ button.btn.action_btn {
   padding-bottom: 24px !important;
 }
 
-header.site-header {
+header.site-header.admin_header {
   max-width: calc(100% - 320px);
   right: 0;
   left: auto;

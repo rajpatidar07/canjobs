@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const AdminHeader = (props) => {
   const [showChangePass, setShowChangePass] = useState(false);
   return (
-    <header className="site-header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
+    <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Page Heading--> */}
