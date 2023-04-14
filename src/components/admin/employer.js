@@ -602,11 +602,8 @@ function Employer() {
                                 empdata.address === null ? (
                                   <>
                                     <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                      Pending
-                                    </span>
-                                    <small className="text-center px-5">
                                       Incompelete Profile
-                                    </small>
+                                    </span>
                                   </>
                                 ) : (
                                   <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">

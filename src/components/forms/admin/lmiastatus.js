@@ -134,7 +134,7 @@ function LmiaStatus(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Lmia staus</h5>
+          <h5 className="text-center pt-2">LMIA staus</h5>
           <form onSubmit={onAminProfileUpdateClick}>
             <div className="form-group mt-5">
               <label
