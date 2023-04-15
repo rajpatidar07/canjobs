@@ -10,9 +10,9 @@ const AdminDashboard = () => {
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
-      <AdminHeader />
+      <AdminHeader heading={"Dashboard"}/>
       {/* <!-- navbar- --> */}
-      <AdminSidebar />
+      <AdminSidebar  heading={"Dashboard"}/>
 
       <div
         className={
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
               <div className="col-lg-6">
                 <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
                   <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
-                  <div className="h-px-48">
+                  <div className="select_div">
                     <select
                       name="country"
                       id="country"
@@ -137,9 +137,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white shadow-8 pt-7 rounded pb-8 px-11">
-              <div className="table-responsive">
-                <table className="table table-striped">
+            <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
+              <div className="table-responsive main_table_div">
+                <table className="table table-striped main_data_table">
                   <thead>
                     <tr>
                       <th
@@ -193,8 +193,8 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                    <tr className="">
+                      <th scope="row" className="pl-5 py-5 pr-0   ">
                         <div className="media  align-items-center">
                           <div className="circle-36 mx-auto">
                             <img
@@ -205,7 +205,7 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </th>
-                      <th className=" py-7  pr-0">
+                      <th className=" py-5  pr-0">
                         <Link to={""}>
                           <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Nicolas Bradley <br />
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                           </h4>
                         </Link>
                       </th>
-                      <th className=" py-7  pr-0">
+                      <th className=" py-5  pr-0">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           +9863254170 <br />
                           <span className="text-gray font-size-2">
@@ -224,27 +224,27 @@ const AdminDashboard = () => {
                           </span>
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           M.tech
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
@@ -255,8 +255,8 @@ const AdminDashboard = () => {
                         </Link>
                       </th>
                     </tr>
-                    <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                    <tr className="">
+                      <th scope="row" className="pl-5 py-5 pr-0   ">
                         <div className="media  align-items-center">
                           <div className="circle-36 mx-auto">
                             <img
@@ -267,7 +267,7 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </th>
-                      <th className="pl-6 border-0 py-7 pr-0">
+                      <th className="pl-5 py-5 pr-0  ">
                         <Link to={""}>
                           <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Minny jeson <br />
@@ -278,7 +278,7 @@ const AdminDashboard = () => {
                           </h4>
                         </Link>
                       </th>
-                      <th className=" py-7  pr-0">
+                      <th className=" py-5  pr-0">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           +9863254170 <br />
                           <span className="text-gray font-size-2">
@@ -286,27 +286,27 @@ const AdminDashboard = () => {
                           </span>
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           M.tech
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
@@ -317,8 +317,8 @@ const AdminDashboard = () => {
                         </Link>
                       </th>
                     </tr>
-                    <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                    <tr className="">
+                      <th scope="row" className="pl-5 py-5 pr-0   ">
                         <div className="media  align-items-center">
                           <div className="circle-36 mx-auto">
                             <img
@@ -329,7 +329,7 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </th>
-                      <th className="pl-6 border-0 py-7 pr-0">
+                      <th className="pl-5 py-5 pr-0  ">
                         <Link to={""}>
                           <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Joe Wade <br />
@@ -340,7 +340,7 @@ const AdminDashboard = () => {
                           </h4>
                         </Link>
                       </th>
-                      <th className=" py-7  pr-0">
+                      <th className=" py-5  pr-0">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           +9863254170 <br />
                           <span className="text-gray font-size-2">
@@ -348,27 +348,27 @@ const AdminDashboard = () => {
                           </span>
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           M.tech
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
@@ -379,8 +379,8 @@ const AdminDashboard = () => {
                         </Link>
                       </th>
                     </tr>
-                    <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                    <tr className="">
+                      <th scope="row" className="pl-5 py-5 pr-0   ">
                         <div className="media  align-items-center">
                           <div className="circle-36 mx-auto">
                             <img
@@ -391,7 +391,7 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </th>
-                      <th className="pl-6 border-0 py-7 pr-0">
+                      <th className="pl-5 py-5 pr-0  ">
                         <Link to={""}>
                           <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Roger Hawkins
@@ -403,7 +403,7 @@ const AdminDashboard = () => {
                           </h4>
                         </Link>
                       </th>
-                      <th className=" py-7  pr-0">
+                      <th className=" py-5  pr-0">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           +9863254170 <br />
                           <span className="text-gray font-size-2">
@@ -411,27 +411,27 @@ const AdminDashboard = () => {
                           </span>
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           M.tech
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
@@ -442,8 +442,8 @@ const AdminDashboard = () => {
                         </Link>
                       </th>
                     </tr>
-                    <tr className="border border-color-2">
-                      <th scope="row" className="pl-6 border-0 py-7 pr-0  ">
+                    <tr className="">
+                      <th scope="row" className="pl-5 py-5 pr-0   ">
                         <div className="media  align-items-center">
                           <div className="circle-36 mx-auto">
                             <img
@@ -454,7 +454,7 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </th>
-                      <th className="pl-6 border-0 py-7 pr-0">
+                      <th className="pl-5 py-5 pr-0  ">
                         <Link to={""}>
                           <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             Marie Green
@@ -466,7 +466,7 @@ const AdminDashboard = () => {
                           </h4>
                         </Link>
                       </th>
-                      <th className=" py-7  pr-0">
+                      <th className=" py-5  pr-0">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           +9863963254 <br />
                           <span className="text-gray font-size-2">
@@ -474,27 +474,27 @@ const AdminDashboard = () => {
                           </span>
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           M.tech
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           JAVA, PHP, React
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           25,000
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           2 years in React js
                         </h3>
                       </th>
-                      <th className=" py-7 min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <Link
                           to=""
                           onClick={() => setShowEmployeeProfile(true)}
@@ -582,7 +582,7 @@ const AdminDashboard = () => {
               <div className="col-lg-6">
                 <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
                   <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
-                  <div className="h-px-48">
+                  <div className="select_div">
                     <select
                       name="country"
                       id="country"
@@ -597,9 +597,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
+            <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
               <div className="table-responsive ">
-                <table className="table table-striped">
+                <table className="table table-striped main_data_table">
                   <thead>
                     <tr>
                       <th
@@ -643,10 +643,10 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border border-color-2">
+                    <tr className="">
                       <th
                         scope="row"
-                        className="pl-6 border-0 py-7 min-width-px-235"
+                        className="pl-6py-7 min-width-px-235"
                       >
                         <div>
                           <a
@@ -657,27 +657,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className=" py-7 min-width-px-135">
+                      <td className="py-5 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Full-Time
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-125">
+                      <td className="py-5 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           New York
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-155">
+                      <td className="py-5 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           12 July, 2020
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-205">
+                      <td className="py-5 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           47
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-80">
+                      <td className="py-5 min-width-px-80">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -685,7 +685,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className=" py-7 min-width-px-100">
+                      <td className="py-5 min-width-px-100">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -694,10 +694,10 @@ const AdminDashboard = () => {
                         </a>
                       </td>
                     </tr>
-                    <tr className="border border-color-2">
+                    <tr className="">
                       <th
                         scope="row"
-                        className="pl-6 border-0 py-7 min-width-px-235"
+                        className="pl-6py-7 min-width-px-235"
                       >
                         <div>
                           <a
@@ -708,27 +708,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className=" py-7 min-width-px-135">
+                      <td className="py-5 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Full-Time
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-125">
+                      <td className="py-5 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Remote
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-155">
+                      <td className="py-5 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           24 June, 2020
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-205">
+                      <td className="py-5 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           145
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-80">
+                      <td className="py-5 min-width-px-80">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -736,7 +736,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className=" py-7 min-width-px-100">
+                      <td className="py-5 min-width-px-100">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -745,10 +745,10 @@ const AdminDashboard = () => {
                         </a>
                       </td>
                     </tr>
-                    <tr className="border border-color-2">
+                    <tr className="">
                       <th
                         scope="row"
-                        className="pl-6 border-0 py-7 min-width-px-235"
+                        className="pl-6py-7 min-width-px-235"
                       >
                         <div>
                           <a
@@ -759,27 +759,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className=" py-7 min-width-px-135">
+                      <td className="py-5 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Full-Time
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-125">
+                      <td className="py-5 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           London
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-155">
+                      <td className="py-5 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           15 June, 2020
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-205">
+                      <td className="py-5 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           62
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-80">
+                      <td className="py-5 min-width-px-80">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -787,7 +787,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className=" py-7 min-width-px-100">
+                      <td className="py-5 min-width-px-100">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -796,10 +796,10 @@ const AdminDashboard = () => {
                         </a>
                       </td>
                     </tr>
-                    <tr className="border border-color-2">
+                    <tr className="">
                       <th
                         scope="row"
-                        className="pl-6 border-0 py-7 min-width-px-235"
+                        className="pl-6py-7 min-width-px-235"
                       >
                         <div>
                           <a
@@ -810,27 +810,27 @@ const AdminDashboard = () => {
                           </a>
                         </div>
                       </th>
-                      <td className=" py-7 min-width-px-135">
+                      <td className="py-5 min-width-px-135">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           Part-Time
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-125">
+                      <td className="py-5 min-width-px-125">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           California
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-155">
+                      <td className="py-5 min-width-px-155">
                         <h3 className="font-size-4 font-weight-normal text-black-2 mb-0">
                           29 May, 2020
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-205">
+                      <td className="py-5 min-width-px-205">
                         <h3 className="font-size-4 font-weight-bold text-black-2 mb-0">
                           184
                         </h3>
                       </td>
-                      <td className=" py-7 min-width-px-80">
+                      <td className="py-5 min-width-px-80">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-green text-uppercase"
@@ -838,7 +838,7 @@ const AdminDashboard = () => {
                           Edit
                         </a>
                       </td>
-                      <td className=" py-7 min-width-px-100">
+                      <td className="py-5 min-width-px-100">
                         <a
                           href="/"
                           className="font-size-3 font-weight-bold text-red-2 text-uppercase"
@@ -855,7 +855,7 @@ const AdminDashboard = () => {
         </div>
       </div>
       {showEmployeeProfile === true ? (
-        <div className="dashboard-main-container mt-24">
+        <div className="dashboard-main-container mt-20">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">

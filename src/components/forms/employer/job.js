@@ -609,7 +609,7 @@ function AddJobModal(props) {
                   htmlFor="job_description"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Job Description : <span className="text-danger">*</span>
+                  Job Description: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <div
@@ -662,7 +662,7 @@ function AddJobModal(props) {
                   htmlFor="your_duties"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Your Duties : <span className="text-danger">*</span>
+                  Your Duties: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <div
@@ -712,7 +712,7 @@ function AddJobModal(props) {
                   htmlFor="requirement"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Requirement : <span className="text-danger">*</span>
+                  Requirement: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <div

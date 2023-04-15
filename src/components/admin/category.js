@@ -138,9 +138,9 @@ function Category() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader />
+        <AdminHeader  heading={"Manage Category"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar />
+        <AdminSidebar  heading={"Manage Category"}/>
         <div>
           <ToastContainer />
           <AddCategory
@@ -149,17 +149,17 @@ function Category() {
             close={() => setShowAddCategoryModal(false)}
           />
         </div>
-        <div className="dashboard-main-container mt-24" id="dashboard-body">
+        <div className="dashboard-main-container mt-20" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
               <div className="mb-8 align-items-center">
-                <div className="">
+                <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Category</h3>
                 </div>
-                <div className="row">
-                  <div className="col-xl-3 col-md-6">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
-                      Search by name :
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">
+                      Search by name:
                     </p>
                     <input
                       required
@@ -171,11 +171,11 @@ function Category() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Type:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="category"
                         value={categoryTypeFilterValue}
@@ -195,7 +195,7 @@ function Category() {
                     </div>
                   </div>
                   <div className="text-end px-6 col-xl-6">
-                    <div className="float-md-right mt-xl-12 mt-6">
+                    <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editJobCategory("0")}
@@ -206,9 +206,9 @@ function Category() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
-                  <table className="table table-striped">
+                  <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -255,37 +255,39 @@ function Category() {
                         (categoryData || []).map((catdata) =>
                           catdata.is_deleted === "1" ? null : (
                             <tr
-                              className="border border-color-2"
+                              className=""
                               key={catdata.job_category_id}
                             >
-                              <th scope="row" className=" border-0 py-7 ">
+                              <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {catdata.category_name}
                                 </div>
                               </th>
-                              <th className=" py-7">
+                              <th className=" py-5">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {catdata.category_type}
                                 </h3>
                               </th>
-                              <th className=" py-7 min-width-px-100">
-                                <Link
-                                  to=""
+                              <th className="py-5 min-width-px-100">
+                              <div class="btn-group button_group" role="group">
+                                <button
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() => editJobCategory(catdata)}
                                 >
-                                  <span className=" fas fa-edit text-gray px-5">
+                                  <span className=" fas fa-edit text-gray">
                                     {" "}
                                   </span>
-                                </Link>
-                                <Link
-                                  to=""
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() => ShowDeleteAlert(catdata)}
                                 >
                                   <span className=" text-danger">
                                     {" "}
                                     <i className="fa fa-trash"></i>
                                   </span>
-                                </Link>
+                                </button>
+                                </div>
                               </th>
                             </tr>
                           )

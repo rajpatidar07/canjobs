@@ -233,21 +233,21 @@ function Employee() {
     }
   };
   /*Sorting Function by specialization */
-  let sortBySpecializationClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("specialization");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("specialization");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
+  // let sortBySpecializationClick = () => {
+  //   if (
+  //     clicksort === 0 ||
+  //     sortOrder === "DESC" ||
+  //     columnName === "employee_id"
+  //   ) {
+  //     setcolumnName("specialization");
+  //     setSortOrder("ASC");
+  //     setClicksort(1);
+  //   } else {
+  //     setcolumnName("specialization");
+  //     setSortOrder("DESC");
+  //     setClicksort(0);
+  //   }
+  // };
   /*Sorting Function by experience */
   let sortByExperienceClick = () => {
     if (
@@ -285,9 +285,9 @@ function Employee() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader />
+        <AdminHeader  heading={"Manage Applicants"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar />
+        <AdminSidebar  heading={"Manage Applicants"}/>
         <ToastContainer />
         <PersonalDetails
           show={showAddEmployeeModal}
@@ -312,7 +312,7 @@ function Employee() {
         <div
           className={
             showEmployeeProfile === false
-              ? "dashboard-main-container mt-24"
+              ? "dashboard-main-container mt-20"
               : "d-none"
           }
           id="dashboard-body"
@@ -320,12 +320,12 @@ function Employee() {
           <div className="container">
             <div className="mb-18">
               <div className="mb-8 align-items-center">
-                <div className="">
+                <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
-                <div className="row">
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Search Employee:
                     </p>
                     <input
@@ -338,17 +338,17 @@ function Employee() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Experience:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="experience"
                         value={experienceFilterValue}
                         id="experience"
                         onChange={onExperienceFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value={""}>Select Experience</option>
                         {(FilterJson.experience || []).map((ex, i) => (
@@ -359,17 +359,17 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Skill:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="skill"
                         value={skillFilterValue}
                         id="Skill"
                         onChange={onSkillFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value={""}>Select Skill</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
@@ -382,17 +382,17 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Education:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="education"
                         value={educationFilterValue}
                         id="education"
                         onChange={onEducationFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="" data-display="Product Designer">
                           Select Education
@@ -419,11 +419,11 @@ function Employee() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-8 px-2 ">
-                <div className="table-responsive">
-                  <table className="table table-striped">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+                <div className="table-responsive main_table_div">
+                  <table className="table table-striped main_data_table">
                     <thead>
-                      <tr className="border border-color-2">
+                      <tr className="">
                         <th
                           scope="col"
                           className="pl-0 text-center border-0 font-size-4 font-weight-normal"
@@ -490,7 +490,7 @@ function Employee() {
                             Skills
                           </Link>
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
@@ -501,7 +501,7 @@ function Employee() {
                           >
                             Specialization
                           </Link>
-                        </th>
+                        </th> */}
                         <th
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
@@ -527,10 +527,10 @@ function Employee() {
                       {totalData !== 0 ? (
                         (employeeData || []).map((empdata) => (
                           <tr
-                            className="border border-color-2"
+                            className=""
                             key={empdata.employee_id}
                           >
-                            <td className=" border-0 py-7 ">
+                            <td className="py-5 pr-0">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">
                                   {empdata.profile_photo === null ? (
@@ -549,7 +549,7 @@ function Employee() {
                                 </div>
                               </div>
                             </td>
-                            <td className=" py-7">
+                            <td className=" py-5">
                               <Link
                                 to={""}
                                 onClick={
@@ -578,7 +578,7 @@ function Employee() {
                                 )}
                               </Link>
                             </td>
-                            <td className=" py-7 ">
+                            <td className="py-5 ">
                               {empdata.contact_no === null ? (
                                 <h3 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -593,7 +593,7 @@ function Employee() {
                               </h3>
                             </td>
 
-                            <td className=" py-7">
+                            <td className=" py-5">
                               {empdata.language === null ? (
                                 <h3 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -604,7 +604,7 @@ function Employee() {
                                 </h3>
                               )}
                             </td>
-                            <td className=" py-7">
+                            <td className=" py-5">
                               {empdata.education === null ? (
                                 <h3 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -615,7 +615,7 @@ function Employee() {
                                 </h3>
                               )}
                             </td>
-                            <td className=" py-7">
+                            <td className=" py-5">
                               {empdata.skill === null ? (
                                 <h3 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -626,7 +626,7 @@ function Employee() {
                                 </h3>
                               )}
                             </td>
-                            <td className=" py-7">
+                            {/* <td className=" py-5">
                               {empdata.specialization === null ? (
                                 <h3 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -636,8 +636,8 @@ function Employee() {
                                   {empdata.specialization}
                                 </h3>
                               )}
-                            </td>
-                            <td className=" py-7">
+                            </td> */}
+                            <td className=" py-5">
                               {empdata.experience === null ? (
                                 <h3 className="font-size-3 font-weight-bold  mb-0">
                                   Unavailable
@@ -648,48 +648,49 @@ function Employee() {
                                 </h3>
                               )}
                             </td>
-                            <td className="d-flex py-7">
-                              <Link
-                                to=""
+                            <td className="d-flex py-5">
+                            <div class="btn-group button_group" role="group" aria-label="Basic example">
+                              <button  class="btn btn-outline-info action_btn"                                
                                 onClick={() =>
                                   editEmployeeLimiaStatus(empdata.employee_id)
                                 }
                               >
                                 <span className="fas fa-stream text-gray px-2"></span>
-                              </Link>
+                              </button>
 
-                              <Link
-                                to=""
+                              <button  class="btn btn-outline-info action_btn"
+                                
                                 onClick={() =>
                                   editEmployeeEducation(empdata.employee_id)
                                 }
                               >
                                 <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                              </Link>
-                              <Link
-                                to=""
+                              </button>
+                              <button  class="btn btn-outline-info action_btn"
+                                
                                 onClick={() =>
                                   editEmployeeSkills(empdata.employee_id)
                                 }
                               >
                                 <span className=" fa fa-cogs text-gray px-2"></span>
-                              </Link>
-                              <Link
-                                to=""
+                              </button>
+                              <button  class="btn btn-outline-info action_btn"
+                                
                                 onClick={() =>
                                   editEmployee(empdata.employee_id)
                                 }
                               >
                                 <span className=" fas fa-edit text-gray px-2"></span>
-                              </Link>
-                              <Link
-                                to=""
+                              </button>
+                              <button  class="btn btn-outline-info action_btn"
+                                
                                 onClick={() => ShowDeleteAlert(empdata)}
                               >
                                 <span className=" text-danger">
                                   <i className="fa fa-trash "></i>
                                 </span>
-                              </Link>
+                              </button>
+                              </div>
                             </td>
                           </tr>
                         ))
@@ -728,7 +729,7 @@ function Employee() {
           onCancel={CancelDelete}
         />
         {showEmployeeProfile === true ? (
-          <div className="dashboard-main-container mt-24">
+          <div className="dashboard-main-container mt-20">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

@@ -180,8 +180,8 @@ function EmployementDetails(props) {
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             {(employementData || []).map((CareerDetails) => (
-              <div className="w-100 border m-2" key={CareerDetails.career_id}>
-                <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
+              <div className="w-100 border mb-3 rounded-5" key={CareerDetails.career_id}>
+                <div className="d-flex align-items-center pr-11 mb-1 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
                   <div className="media align-items-center company_box col-md-6 p-0">
                     <div className="text_box text-left w-100 mt-n2">
                       <h3 className="mb-0">
@@ -453,7 +453,7 @@ function EmployementDetails(props) {
                   htmlFor="start_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Start Date : <span className="text-danger">*</span>
+                  Start Date: <span className="text-danger">*</span>
                 </label>
                 <input
                   max={moment().format("YYYY-MM-DD")}
@@ -484,7 +484,7 @@ function EmployementDetails(props) {
                   htmlFor="end_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  End Date : <span className="text-danger">*</span>
+                  End Date: <span className="text-danger">*</span>
                 </label>
                 <input
                   min={state.start_date}

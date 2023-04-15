@@ -121,7 +121,7 @@ function Addfollowup(props) {
                 htmlFor="remark"
                 className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
               >
-                Discription : <span className="text-danger">*</span>
+                Discription: <span className="text-danger">*</span>
               </label>
               <div className="position-relative">
                 <div

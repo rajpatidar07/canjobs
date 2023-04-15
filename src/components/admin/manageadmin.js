@@ -143,9 +143,9 @@ function ManageAdmin() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader />
+        <AdminHeader heading={"Manage Admin"}/>
         {/* <!-- navbar- --> */}
-        <AdminSidebar />
+        <AdminSidebar  heading={"Manage Admin"}/>
         <ToastContainer />{" "}
         <Addadmin
           show={showAddAdminModal}
@@ -155,7 +155,7 @@ function ManageAdmin() {
         <div
           className={
             showAminDetails === false
-              ? "dashboard-main-container mt-24"
+              ? "dashboard-main-container mt-20"
               : "d-none"
           }
           id="dashboard-body"
@@ -163,12 +163,12 @@ function ManageAdmin() {
           <div className="container">
             <div className="mb-18">
               <div className="mb-8 align-items-center">
-                <div className="">
+                <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Admin</h3>
                 </div>
-                <div className="row">
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Search by Name:
                     </p>
                     <input
@@ -181,17 +181,17 @@ function ManageAdmin() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6 ">
-                    <p className="font-size-4 mb-0 mr-6 py-2">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">
                       Filter by Type:
                     </p>
-                    <div className="h-px-48">
+                    <div className="select_div">
                       <select
                         name="type"
                         value={typeFilterValue}
                         id="type"
                         onChange={onTypeFilterChange}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 form-control text-black-2"
+                        className=" form-control"
                       >
                         <option value="">Select type</option>
                         {(FilterJson.AdminType || []).map((type, i) => (
@@ -212,14 +212,14 @@ function ManageAdmin() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 pt-7 rounded pb-9 px-5">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
-                  <table className="table table-striped">
+                  <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
                           scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                          className="border-0 font-size-4 font-weight-normal"
                         >
                           <Link
                             className="text-gray"
@@ -273,39 +273,41 @@ function ManageAdmin() {
                       ) : (
                         (adminData || []).map((admin) => (
                           <tr
-                            className="border border-color-2"
+                            className=""
                             key={admin.admin_id}
                           >
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {admin.name}
                               </h3>
                             </th>
-                            <th className=" py-7">
+                            <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {admin.admin_type}
                               </h3>
                             </th>
-                            <th className=" py-7 ">
+                            <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {admin.email}
                               </h3>
                             </th>
-                            <th className=" py-7 min-width-px-100">
-                              <Link
-                                to=""
+                            <th className="py-5 min-width-px-100">
+                            <div class="btn-group button_group" role="group">
+                              <button
+                                className="btn btn-outline-info action_btn"
                                 onClick={() => editAdmin(admin.admin_id)}
                               >
-                                <span className=" fas fa-edit text-gray px-5"></span>
-                              </Link>
-                              <Link
-                                to=""
+                                <span className=" fas fa-edit text-gray"></span>
+                              </button>
+                              <button
+                                className="btn btn-outline-info action_btn"
                                 onClick={() => ShowDeleteAlert(admin)}
                               >
                                 <span className=" text-danger">
                                   <i className="fa fa-trash"></i>
                                 </span>
-                              </Link>
+                              </button>
+                              </div>
                             </th>
                           </tr>
                         ))
@@ -333,7 +335,7 @@ function ManageAdmin() {
           onCancel={CancelDelete}
         />
         {/* {showJobDetails === true ? (
-        <div className="dashboard-main-container mt-24 ">
+        <div className="dashboard-main-container mt-20 ">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">
