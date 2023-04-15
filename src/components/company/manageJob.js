@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EmployeeFooter from "../common/footer";
 import Header from "../common/header";
 import SearchForm from "../common/search_form";
@@ -6,37 +6,34 @@ import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
 import JobDetail from "./jobDetail";
 import { ToastContainer } from "react-toastify";
-// import { getAllJobsCategory } from "../../api/api";
+import { getAllJobsCategory } from "../../api/api";
 import className from "../json/filterjson";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
-  // let [category, setCategory] = useState([]);
+  let [category, setCategory] = useState([]);
   /*Filter states */
-  // const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   // const [SkillFilterValue, setSkillFilterValue] = useState("");
   // const [locationFilterValue, setLocationFilterValue] = useState("");
   // const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
 
   /* Function to get the job category data*/
-  // const CategoryData = async () => {
-  //   const userData = await getAllJobsCategory();
-  //   setCategory(userData);
-  // };
+  const CategoryData = async () => {
+    const userData = await getAllJobsCategory();
+    setCategory(userData);
+  };
   const editJob = (e) => {
     // e.preventDefault();
     setShowAddJobModal(true);
     setJobId(e);
   };
-  // useEffect(() => {
-  //   CategoryData();
-  // }, []);
-  /*Category Onchange function to filter the data */
-  // let onCategoryFilterChange = (e) => {
-  //   setCategoryFilterValue(e.target.value);
-  // };
+  useEffect(() => {
+    CategoryData();
+  }, []);
+
   /*Skill Onchange function to filter the data */
   // let onSkillFilterChange = (e) => {
   //   setSkillFilterValue(e.target.value);
@@ -75,11 +72,14 @@ function ManageJobs() {
                 </h2>
                 <form className="mb-8">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                    {/* <div className="mr-5 mb-5">
+                    <div className="mr-5 mb-5">
                       <select
                         name="category"
                         id="category"
+                        value={categoryFilterValue}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        /*Category Onchange function to filter the data */
+                        onChange={(e) => setCategoryFilterValue(e.target.value)}
                       >
                         {(category || []).map((cat) => (
                           <option
@@ -90,7 +90,7 @@ function ManageJobs() {
                           </option>
                         ))}
                       </select>
-                    </div> */}
+                    </div>
                     <div className="mr-5 mb-5">
                       <select
                         name="skill"

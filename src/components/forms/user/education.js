@@ -74,14 +74,8 @@ function Education(props) {
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
@@ -316,7 +310,7 @@ function Education(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>select Course</option>
-                  {(FilterJson.course || []).map((course) => (
+                  {(FilterJson.education || []).map((course) => (
                     <option value={course} key={course}>
                       {course}
                     </option>

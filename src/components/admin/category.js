@@ -138,9 +138,9 @@ function Category() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader  heading={"Manage Category"}/>
+        <AdminHeader heading={"Manage Category"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar  heading={"Manage Category"}/>
+        <AdminSidebar heading={"Manage Category"} />
         <div>
           <ToastContainer />
           <AddCategory
@@ -158,9 +158,7 @@ function Category() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Search by name:
-                    </p>
+                    <p className="input_label">Search by name:</p>
                     <input
                       required
                       type="text"
@@ -172,9 +170,7 @@ function Category() {
                     />
                   </div>
                   <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Type:
-                    </p>
+                    <p className="input_label">Filter by Type:</p>
                     <div className="select_div">
                       <select
                         name="category"
@@ -254,10 +250,7 @@ function Category() {
                       ) : (
                         (categoryData || []).map((catdata) =>
                           catdata.is_deleted === "1" ? null : (
-                            <tr
-                              className=""
-                              key={catdata.job_category_id}
-                            >
+                            <tr className="" key={catdata.job_category_id}>
                               <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {catdata.category_name}
@@ -269,24 +262,27 @@ function Category() {
                                 </h3>
                               </th>
                               <th className="py-5 min-width-px-100">
-                              <div class="btn-group button_group" role="group">
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => editJobCategory(catdata)}
+                                <div
+                                  class="btn-group button_group"
+                                  role="group"
                                 >
-                                  <span className=" fas fa-edit text-gray">
-                                    {" "}
-                                  </span>
-                                </button>
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => ShowDeleteAlert(catdata)}
-                                >
-                                  <span className=" text-danger">
-                                    {" "}
-                                    <i className="fa fa-trash"></i>
-                                  </span>
-                                </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() => editJobCategory(catdata)}
+                                  >
+                                    <span className=" fas fa-edit text-gray">
+                                      {" "}
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() => ShowDeleteAlert(catdata)}
+                                  >
+                                    <span className=" text-danger">
+                                      {" "}
+                                      <i className="fa fa-trash"></i>
+                                    </span>
+                                  </button>
                                 </div>
                               </th>
                             </tr>

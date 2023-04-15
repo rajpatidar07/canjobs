@@ -20,63 +20,59 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
 
   return (
     <div>
-      { pageNumbers.length > 0?
-      <nav aria-label="Page navigation example">
-        <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
-          {/* To change page perivous page :- */}{" "}
-          <li className="page-item px-1">
-            <Link
-              onClick={prevPage}
-              className={
-                currentPage === 1
-                  ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
-                  : "page-link  font-size-3 py-2 font-weight-semibold px-3"
-              }
-              aria-label="Previous"
-            >
-              <i className="fas fa-chevron-left"></i>
-            </Link>
-          </li>
-          {/* No of pagination:- */}
-          {pageNumbers.map((pgNumber) => {
-            return (
-              <li
-                className= "page-item px-1"
-                key={pgNumber}
+      {pageNumbers.length > 0 ? (
+        <nav aria-label="Page navigation example">
+          <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
+            {/* To change page perivous page :- */}{" "}
+            <li className="page-item px-1">
+              <Link
+                onClick={prevPage}
+                className={
+                  currentPage === 1
+                    ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
+                    : "page-link  font-size-3 py-2 font-weight-semibold px-3"
+                }
+                aria-label="Previous"
               >
-                {pgNumber === 0 ? (
-                  <Link className="d-none"></Link>
-                ) : (
-                  <Link
-                    onClick={() => setCurrentPage(pgNumber)}
-                    className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
-                      currentPage === pgNumber ? "active " : ""
-                    } `}
-                  >
-                    {pgNumber}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
-          {/* To change page next page :- */}
-          <li className="page-item px-1">
-            <Link
-              onClick={nextPage}
-              className={
-                currentPage === pageNumbers.length
-                  ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
-                  : "page-link  font-size-3 py-2 font-weight-semibold px-3"
-              }
-              aria-label="Next"
-            >
-              <i className="fas fa-chevron-right"></i>
-            </Link>
-          </li>
-          
-        </ul>
-      </nav>
-      :null}
+                <i className="fas fa-chevron-left"></i>
+              </Link>
+            </li>
+            {/* No of pagination:- */}
+            {pageNumbers.map((pgNumber) => {
+              return (
+                <li className="page-item px-1" key={pgNumber}>
+                  {pgNumber === 0 ? (
+                    <Link className="d-none"></Link>
+                  ) : (
+                    <Link
+                      onClick={() => setCurrentPage(pgNumber)}
+                      className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
+                        currentPage === pgNumber ? "active " : ""
+                      } `}
+                    >
+                      {pgNumber}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+            {/* To change page next page :- */}
+            <li className="page-item px-1">
+              <Link
+                onClick={nextPage}
+                className={
+                  currentPage === pageNumbers.length
+                    ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
+                    : "page-link  font-size-3 py-2 font-weight-semibold px-3"
+                }
+                aria-label="Next"
+              >
+                <i className="fas fa-chevron-right"></i>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      ) : null}
     </div>
   );
 }

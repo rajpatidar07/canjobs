@@ -143,9 +143,9 @@ function ManageAdmin() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Admin"}/>
+        <AdminHeader heading={"Manage Admin"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar  heading={"Manage Admin"}/>
+        <AdminSidebar heading={"Manage Admin"} />
         <ToastContainer />{" "}
         <Addadmin
           show={showAddAdminModal}
@@ -168,9 +168,7 @@ function ManageAdmin() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Search by Name:
-                    </p>
+                    <p className="input_label">Search by Name:</p>
                     <input
                       required
                       type="text"
@@ -182,9 +180,7 @@ function ManageAdmin() {
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Type:
-                    </p>
+                    <p className="input_label">Filter by Type:</p>
                     <div className="select_div">
                       <select
                         name="type"
@@ -272,10 +268,7 @@ function ManageAdmin() {
                         </tr>
                       ) : (
                         (adminData || []).map((admin) => (
-                          <tr
-                            className=""
-                            key={admin.admin_id}
-                          >
+                          <tr className="" key={admin.admin_id}>
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {admin.name}
@@ -292,21 +285,21 @@ function ManageAdmin() {
                               </h3>
                             </th>
                             <th className="py-5 min-width-px-100">
-                            <div class="btn-group button_group" role="group">
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() => editAdmin(admin.admin_id)}
-                              >
-                                <span className=" fas fa-edit text-gray"></span>
-                              </button>
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() => ShowDeleteAlert(admin)}
-                              >
-                                <span className=" text-danger">
-                                  <i className="fa fa-trash"></i>
-                                </span>
-                              </button>
+                              <div class="btn-group button_group" role="group">
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => editAdmin(admin.admin_id)}
+                                >
+                                  <span className=" fas fa-edit text-gray"></span>
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => ShowDeleteAlert(admin)}
+                                >
+                                  <span className=" text-danger">
+                                    <i className="fa fa-trash"></i>
+                                  </span>
+                                </button>
                               </div>
                             </th>
                           </tr>

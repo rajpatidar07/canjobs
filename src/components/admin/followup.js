@@ -16,9 +16,8 @@ function Followup() {
   /*Filter and search state */
   const [jobFilterValue, setJobTypeFilterValue] = useState("");
   const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
-    ""
-  );
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    useState("");
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -192,9 +191,9 @@ function Followup() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Follow-ups"}/>
+        <AdminHeader heading={"Manage Follow-ups"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar  heading={"Manage Follow-ups"}/>
+        <AdminSidebar heading={"Manage Follow-ups"} />
         <Addfollowup
           show={followup}
           resData={resData}
@@ -209,9 +208,7 @@ function Followup() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Company:
-                    </p>
+                    <p className="input_label">Filter by Company:</p>
                     <input
                       required
                       type="text"
@@ -242,9 +239,7 @@ function Followup() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Company:
-                    </p>
+                    <p className="input_label">Filter by Company:</p>
                     <div className="select_div">
                       <select
                         name="company_name"
@@ -268,9 +263,7 @@ function Followup() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Experience:
-                    </p>
+                    <p className="input_label">Filter by Experience:</p>
                     <div className="select_div">
                       <select
                         name="experience"
@@ -401,10 +394,7 @@ function Followup() {
                         </tr>
                       ) : (
                         (response || []).map((res) => (
-                          <tr
-                            className=""
-                            key={res.apply_id}
-                          >
+                          <tr className="" key={res.apply_id}>
                             <th className="pl-5 py-5 pr-0   ">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">

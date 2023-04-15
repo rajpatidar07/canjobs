@@ -90,14 +90,8 @@ function EmployementDetails(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EmployeementData = async (data) => {
     let Employment = await EmployeeDetails(props.employeeId);
@@ -180,7 +174,10 @@ function EmployementDetails(props) {
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             {(employementData || []).map((CareerDetails) => (
-              <div className="w-100 border mb-3 rounded-5" key={CareerDetails.career_id}>
+              <div
+                className="w-100 border mb-3 rounded-5"
+                key={CareerDetails.career_id}
+              >
                 <div className="d-flex align-items-center pr-11 mb-1 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
                   <div className="media align-items-center company_box col-md-6 p-0">
                     <div className="text_box text-left w-100 mt-n2">

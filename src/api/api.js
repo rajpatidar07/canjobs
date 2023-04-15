@@ -50,10 +50,10 @@ export const AddEmployeeDetails = async (props) => {
 };
 /*Employee List Api */
 export const getallEmployeeData = async (
+  search,
   experience,
   skill,
   education,
-  search,
   page,
   limit,
   column,
@@ -187,7 +187,7 @@ export const EmployerSignUp = async (props) => {
   formData.append("email", props.email);
   formData.append("password", props.password);
   formData.append("contact_no", props.contact_no);
-  formData.append("remember", props.remember);
+  formData.append("term_and_condition", props.term_and_condition);
   const response = await axios.post(`${API_URL}employer_signup`, formData);
   return response.data;
 };
@@ -197,15 +197,23 @@ export const EmployerLogin = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
-  // formData.append("term_and_condition", props.term_and_condition);
+  formData.append("remember", props.remember);
   const response = await axios.post(`${API_URL}employer_login`, formData);
   return response.data;
 };
-
+/*Employer Forgot passsword api */
+export const EmployerForgotPassword = async (props) => {
+  const response = await axios.post(`${API_URL}company/forgetPassword`, {
+    forget_email: props.forget_email,
+  });
+  return response.data;
+};
 /*Response List Api */
 export const GetAllResponse = async (props) => {
-  // const response = await axios.get(`${API_URL}getJobResponse?job_id=1&user_type=company`);
-  // return response;
+  const response = await axios.post(
+    `${API_URL}getJobResponse?job_id=${props}&user_type=${user_type}`
+  );
+  return response;
 };
 export const GetAllJobs = async (
   search,
@@ -481,6 +489,7 @@ export const DeleteAdmin = async (props) => {
 };
 /*Add Followup Api */
 export const AddFollowup = async (props) => {
+  console.log(props);
   const response = await axios.post(
     `${API_URL}${user_type}/addFollowup`,
     {
@@ -488,7 +497,7 @@ export const AddFollowup = async (props) => {
       job_id: props.jobId,
       employee_id: props.employId,
       remark: props.state.remark,
-      next_followup_date: props.next_followup_date,
+      next_date: props.state.next_followup_date,
     },
     {
       headers: {

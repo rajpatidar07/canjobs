@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import EmployeeHeader from "../common/header" ;
-// import EmployeeFooter from "../common/footer";
+import EmployeeHeader from "../common/header";
+import EmployeeFooter from "../common/footer";
 import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
 import EducationDetails from "../forms/user/education";
@@ -9,7 +9,6 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import { EmployeeDetails } from "../../api/api";
 import moment from "moment";
-
 const UserProfile = (props) => {
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
@@ -18,9 +17,11 @@ const UserProfile = (props) => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
-  const employeeId = props.employeeId;
+  const user_type = localStorage.getItem("userType");
+  let id = localStorage.getItem("employeeId");
+  const employeeId = user_type === "company" ? id : props.employeeId;
   const UserData = async () => {
-    const userData = await EmployeeDetails(props.employeeId);
+    const userData = await EmployeeDetails(employeeId);
     setuserDetail(userData.data);
     setPersonalDetail(userData.data.employee[0]);
   };
@@ -40,9 +41,29 @@ const UserProfile = (props) => {
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
-      {/* <EmployeeHeader /> */}
+      {user_type === "admin" ? "" : <EmployeeHeader />}
+
       <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32 mt-5">
         <div className="container mt-5 pt-5">
+          {user_type === "admin" ? (
+            ""
+          ) : (
+            <div className="row justify-content-center">
+              <div className="col-12 dark-mode-texts">
+                <div className="mb-9">
+                  <Link
+                    to={"/company"}
+                    className="d-flex align-items-center ml-4"
+                  >
+                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                      Back
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="row text-left mt-5 pt-5">
             <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
               <div className="pl-lg-5">
@@ -79,7 +100,8 @@ const UserProfile = (props) => {
                       <span className="age_gender font-size-3 text-smoke">
                         ({PersonalDetail.gender},{" "}
                         {PersonalDetail.marital_status},{" "}
-                        {moment().diff(PersonalDetail.date_of_birth, "years")}Y)
+                        {moment().diff(PersonalDetail.date_of_birth, "years")}
+                        Y)
                       </span>
                       {/* </Link>
                       <Registration
@@ -94,10 +116,12 @@ const UserProfile = (props) => {
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Personal Info</span>
-                      <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowPersonalDetails(true)}
-                      />
+                      {user_type === "company" ? null : (
+                        <CustomButton
+                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                          onClick={() => setShowPersonalDetails(true)}
+                        />
+                      )}
                       <PersonalDetails
                         show={showPersonalDetails}
                         employeeId={employeeId}
@@ -205,10 +229,12 @@ const UserProfile = (props) => {
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Skill</span>
-                      <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        onClick={() => setShowItSkills(true)}
-                      />
+                      {user_type === "company" ? null : (
+                        <CustomButton
+                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                          onClick={() => setShowItSkills(true)}
+                        />
+                      )}
                     </h4>
                     <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
                       {/*----Employee's Skills----*/}
@@ -306,10 +332,12 @@ const UserProfile = (props) => {
                     >
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                         <span>Career Profile</span>
-                        <CustomButton
-                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                          onClick={() => setShowEmplyomentDetails(true)}
-                        />
+                        {user_type === "company" ? null : (
+                          <CustomButton
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowEmplyomentDetails(true)}
+                          />
+                        )}
                         <EmployementDetails
                           show={showEmplyomentDetails}
                           employeeId={employeeId}
@@ -373,10 +401,12 @@ const UserProfile = (props) => {
                     >
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                         <span>Education</span>
-                        <CustomButton
-                          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                          onClick={() => setShowEducation(true)}
-                        />
+                        {user_type === "company" ? null : (
+                          <CustomButton
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowEducation(true)}
+                          />
+                        )}
                         <EducationDetails
                           show={showEducation}
                           employeeId={employeeId}
@@ -866,7 +896,7 @@ const UserProfile = (props) => {
           </div>
         </div>
       </div>
-      {/* <EmployeeFooter /> */}
+      {user_type === "admin" ? "" : <EmployeeFooter />}
     </div>
   );
 };

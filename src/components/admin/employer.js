@@ -259,7 +259,7 @@ function Employer() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Companies"}/>
+        <AdminHeader heading={"Manage Companies"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Companies"} />
         <ToastContainer />
@@ -305,9 +305,7 @@ function Employer() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Search by Name:
-                    </p>
+                    <p className="input_label">Search by Name:</p>
                     <input
                       required
                       type="text"
@@ -319,9 +317,7 @@ function Employer() {
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Corporation:
-                    </p>
+                    <p className="input_label">Filter by Corporation:</p>
                     <div className="select_div">
                       <select
                         name="corporation"
@@ -342,9 +338,7 @@ function Employer() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Industry:
-                    </p>
+                    <p className="input_label">Filter by Industry:</p>
                     <div className="select_div">
                       <select
                         name="industry"
@@ -502,14 +496,8 @@ function Employer() {
                         </tr>
                       ) : (
                         (employerData || []).map((empdata) => (
-                          <tr
-                            className=""
-                            key={empdata.company_id}
-                          >
-                            <th
-                              scope="row"
-                              className="pl-5 py-5 pr-0   "
-                            >
+                          <tr className="" key={empdata.company_id}>
+                            <th scope="row" className="pl-5 py-5 pr-0   ">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">
                                   {empdata.logo === null ? (
@@ -613,39 +601,41 @@ function Employer() {
                               </h3>
                             </th>
                             <th className="  py-5  d-flex">
-                            <div class="btn-group button_group" role="group">
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() =>
-                                  editEmployerContact(empdata.company_id)
-                                }
-                              >
-                                <span className="fa fa-address-book text-gray px-1"></span>
-                              </button>
+                              <div class="btn-group button_group" role="group">
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployerContact(empdata.company_id)
+                                  }
+                                >
+                                  <span className="fa fa-address-book text-gray px-1"></span>
+                                </button>
 
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() =>
-                                  editEmployerKyc(empdata.company_id)
-                                }
-                              >
-                                <span className="fa fa-file text-gray px-1 "></span>
-                              </button>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployerKyc(empdata.company_id)
+                                  }
+                                >
+                                  <span className="fa fa-file text-gray px-1 "></span>
+                                </button>
 
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() => editEmployer(empdata.company_id)}
-                              >
-                                <span className=" fas fa-edit text-gray px-1">
-                                  {" "}
-                                </span>
-                              </button>
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() => ShowDeleteAlert(empdata)}
-                              >
-                                <span className="fa fa-trash text-danger px-1"></span>
-                              </button>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployer(empdata.company_id)
+                                  }
+                                >
+                                  <span className=" fas fa-edit text-gray px-1">
+                                    {" "}
+                                  </span>
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => ShowDeleteAlert(empdata)}
+                                >
+                                  <span className="fa fa-trash text-danger px-1"></span>
+                                </button>
                               </div>
                             </th>
                           </tr>

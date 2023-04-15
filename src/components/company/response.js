@@ -107,26 +107,7 @@ function Response() {
                     <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBoxResponse />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBoxResponse />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBoxResponse />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBoxResponse />
+
                       {/* <!-- End Single Featured Job --> */}
                     </div>
                   </div>

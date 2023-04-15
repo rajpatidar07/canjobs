@@ -9,7 +9,7 @@ const AdminHeader = (props) => {
       <div className="container-fluid-fluid px-7">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Page Heading--> */}
-          
+
           <h3 class="font-size-6 mb-0">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">

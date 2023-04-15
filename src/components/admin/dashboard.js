@@ -10,9 +10,9 @@ const AdminDashboard = () => {
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
-      <AdminHeader heading={"Dashboard"}/>
+      <AdminHeader heading={"Dashboard"} />
       {/* <!-- navbar- --> */}
-      <AdminSidebar  heading={"Dashboard"}/>
+      <AdminSidebar heading={"Dashboard"} />
 
       <div
         className={
@@ -644,10 +644,7 @@ const AdminDashboard = () => {
                   </thead>
                   <tbody>
                     <tr className="">
-                      <th
-                        scope="row"
-                        className="pl-6py-7 min-width-px-235"
-                      >
+                      <th scope="row" className="pl-6py-7 min-width-px-235">
                         <div>
                           <a
                             className="font-size-4 mb-0 font-weight-semibold text-black-2"
@@ -695,10 +692,7 @@ const AdminDashboard = () => {
                       </td>
                     </tr>
                     <tr className="">
-                      <th
-                        scope="row"
-                        className="pl-6py-7 min-width-px-235"
-                      >
+                      <th scope="row" className="pl-6py-7 min-width-px-235">
                         <div>
                           <a
                             href="/"
@@ -746,10 +740,7 @@ const AdminDashboard = () => {
                       </td>
                     </tr>
                     <tr className="">
-                      <th
-                        scope="row"
-                        className="pl-6py-7 min-width-px-235"
-                      >
+                      <th scope="row" className="pl-6py-7 min-width-px-235">
                         <div>
                           <a
                             href="/"
@@ -797,10 +788,7 @@ const AdminDashboard = () => {
                       </td>
                     </tr>
                     <tr className="">
-                      <th
-                        scope="row"
-                        className="pl-6py-7 min-width-px-235"
-                      >
+                      <th scope="row" className="pl-6py-7 min-width-px-235">
                         <div>
                           <a
                             href="/"

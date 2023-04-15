@@ -260,9 +260,9 @@ function Job() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Jobs"}/>
+        <AdminHeader heading={"Manage Jobs"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar  heading={"Manage Jobs"}/>
+        <AdminSidebar heading={"Manage Jobs"} />
         <ToastContainer />
         <div
           className={
@@ -280,9 +280,7 @@ function Job() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Search by Name:
-                    </p>
+                    <p className="input_label">Search by Name:</p>
                     <input
                       required
                       type="text"
@@ -294,9 +292,7 @@ function Job() {
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Category:
-                    </p>
+                    <p className="input_label">Filter by Category:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -320,9 +316,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Job Swap:
-                    </p>
+                    <p className="input_label">Filter by Job Swap:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -341,9 +335,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Key Skill:
-                    </p>
+                    <p className="input_label">Filter by Key Skill:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -364,9 +356,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Location:
-                    </p>
+                    <p className="input_label">Filter by Location:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -533,10 +523,7 @@ function Job() {
                         </tr>
                       ) : (
                         (jobData || []).map((job) => (
-                          <tr
-                            className=""
-                            key={job.job_id}
-                          >
+                          <tr className="" key={job.job_id}>
                             <th scope="row" className="py-5 ">
                               <div className="">
                                 <Link
@@ -590,10 +577,16 @@ function Job() {
                             </th>
                             <th className="py-5 min-width-px-100">
                               <div class="btn-group button_group" role="group">
-                                <button className="btn btn-outline-info action_btn" onClick={() => editJob(job.job_id)}>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => editJob(job.job_id)}
+                                >
                                   <span className=" fas fa-edit text-gray"></span>
                                 </button>
-                                <button className="btn btn-outline-info action_btn" onClick={() => ShowDeleteAlert(job)}>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => ShowDeleteAlert(job)}
+                                >
                                   <span className=" text-danger">
                                     <i className="fa fa-trash"></i>
                                   </span>

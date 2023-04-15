@@ -46,10 +46,10 @@ function Employee() {
   /* Function to get Employee data*/
   const EmpData = async () => {
     const userData = await getallEmployeeData(
+      search,
       experienceFilterValue,
       skillFilterValue,
       educationFilterValue,
-      search,
       currentPage,
       recordsPerPage,
       columnName,
@@ -285,9 +285,9 @@ function Employee() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader  heading={"Manage Applicants"}/>
+        <AdminHeader heading={"Manage Applicants"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar  heading={"Manage Applicants"}/>
+        <AdminSidebar heading={"Manage Applicants"} />
         <ToastContainer />
         <PersonalDetails
           show={showAddEmployeeModal}
@@ -325,9 +325,7 @@ function Employee() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Search Employee:
-                    </p>
+                    <p className="input_label">Search Employee:</p>
                     <input
                       required
                       type="text"
@@ -339,9 +337,7 @@ function Employee() {
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Experience:
-                    </p>
+                    <p className="input_label">Filter by Experience:</p>
                     <div className="select_div">
                       <select
                         name="experience"
@@ -360,9 +356,7 @@ function Employee() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Skill:
-                    </p>
+                    <p className="input_label">Filter by Skill:</p>
                     <div className="select_div">
                       <select
                         name="skill"
@@ -383,9 +377,7 @@ function Employee() {
                     </div>
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">
-                      Filter by Education:
-                    </p>
+                    <p className="input_label">Filter by Education:</p>
                     <div className="select_div">
                       <select
                         name="education"
@@ -526,10 +518,7 @@ function Employee() {
                       {/* Map function to show the data in the list*/}
                       {totalData !== 0 ? (
                         (employeeData || []).map((empdata) => (
-                          <tr
-                            className=""
-                            key={empdata.employee_id}
-                          >
+                          <tr className="" key={empdata.employee_id}>
                             <td className="py-5 pr-0">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto">
@@ -649,47 +638,52 @@ function Employee() {
                               )}
                             </td>
                             <td className="d-flex py-5">
-                            <div class="btn-group button_group" role="group" aria-label="Basic example">
-                              <button  class="btn btn-outline-info action_btn"                                
-                                onClick={() =>
-                                  editEmployeeLimiaStatus(empdata.employee_id)
-                                }
+                              <div
+                                class="btn-group button_group"
+                                role="group"
+                                aria-label="Basic example"
                               >
-                                <span className="fas fa-stream text-gray px-2"></span>
-                              </button>
+                                <button
+                                  class="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployeeLimiaStatus(empdata.employee_id)
+                                  }
+                                >
+                                  <span className="fas fa-stream text-gray px-2"></span>
+                                </button>
 
-                              <button  class="btn btn-outline-info action_btn"
-                                
-                                onClick={() =>
-                                  editEmployeeEducation(empdata.employee_id)
-                                }
-                              >
-                                <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                              </button>
-                              <button  class="btn btn-outline-info action_btn"
-                                
-                                onClick={() =>
-                                  editEmployeeSkills(empdata.employee_id)
-                                }
-                              >
-                                <span className=" fa fa-cogs text-gray px-2"></span>
-                              </button>
-                              <button  class="btn btn-outline-info action_btn"
-                                
-                                onClick={() =>
-                                  editEmployee(empdata.employee_id)
-                                }
-                              >
-                                <span className=" fas fa-edit text-gray px-2"></span>
-                              </button>
-                              <button  class="btn btn-outline-info action_btn"
-                                
-                                onClick={() => ShowDeleteAlert(empdata)}
-                              >
-                                <span className=" text-danger">
-                                  <i className="fa fa-trash "></i>
-                                </span>
-                              </button>
+                                <button
+                                  class="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployeeEducation(empdata.employee_id)
+                                  }
+                                >
+                                  <span className="	fas fa-graduation-cap text-gray px-2"></span>
+                                </button>
+                                <button
+                                  class="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployeeSkills(empdata.employee_id)
+                                  }
+                                >
+                                  <span className=" fa fa-cogs text-gray px-2"></span>
+                                </button>
+                                <button
+                                  class="btn btn-outline-info action_btn"
+                                  onClick={() =>
+                                    editEmployee(empdata.employee_id)
+                                  }
+                                >
+                                  <span className=" fas fa-edit text-gray px-2"></span>
+                                </button>
+                                <button
+                                  class="btn btn-outline-info action_btn"
+                                  onClick={() => ShowDeleteAlert(empdata)}
+                                >
+                                  <span className=" text-danger">
+                                    <i className="fa fa-trash "></i>
+                                  </span>
+                                </button>
                               </div>
                             </td>
                           </tr>

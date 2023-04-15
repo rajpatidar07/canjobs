@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import useValidation from "../common/useValidation";
-import { EmployerLogin } from "../../api/api";
+import { EmployerLogin, EmployerForgotPassword } from "../../api/api";
 import { toast } from "react-toastify";
 export default function CompanyLogin(props) {
-  let [showCompanyForgotPassword, setShowCompanyForgotPassword] = useState(
-    false
-  );
+  let [showCompanyForgotPassword, setShowCompanyForgotPassword] =
+    useState(false);
   let Navigate = useNavigate();
   /* Functionality to close the modal */
 
@@ -22,6 +21,7 @@ export default function CompanyLogin(props) {
     password: "",
     remember: "",
     Credentials: "",
+    forget_email: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -47,16 +47,18 @@ export default function CompanyLogin(props) {
     //   (value) =>
     //     value ? null : "Please accept terms and conditions to continue",
     // ],
+    forget_email: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
+    ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   /*----LOGIN SUBMIT FUNCTION----*/
   const onCompanyLoginClick = async (event) => {
@@ -75,6 +77,7 @@ export default function CompanyLogin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        close();
         Navigate("/company");
       } else if (Response.message === "Invalid Credentials !") {
         setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
@@ -82,6 +85,24 @@ export default function CompanyLogin(props) {
       }
     }
   };
+  const onCompanyForgotPasswordClick = async (event) => {
+    event.preventDefault();
+
+    if (validate()) {
+      let Response = await EmployerForgotPassword(state);
+      if (Response.status === 1 || Response.message === "Sent you a mail") {
+        toast.success("Email sent Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        close();
+      } else if (Response.message === "No user found") {
+        setErrors({ ...errors, Credentials: ["No user found"] });
+        //   handle form submission
+      }
+    }
+  };
+
   // END USER LOGIN VALIDATION
   return (
     <>
@@ -333,6 +354,7 @@ export default function CompanyLogin(props) {
                     className={
                       showCompanyForgotPassword === true ? "" : "d-none"
                     }
+                    onSubmit={onCompanyForgotPasswordClick}
                   >
                     <div className="form-group">
                       <label
@@ -343,10 +365,41 @@ export default function CompanyLogin(props) {
                       </label>
                       <input
                         type="email"
-                        className="form-control"
+                        className={
+                          errors.forget_email
+                            ? "form-control border border-danger"
+                            : "form-control"
+                        }
                         placeholder="example@gmail.com"
-                        id="email2"
+                        id="forget_email"
+                        value={state.forget_email}
+                        onChange={onInputChange}
+                        name="forget_email"
                       />
+                      {errors.forget_email && (
+                        <span>
+                          {errors.forget_email.map((error) => (
+                            <span
+                              key={error}
+                              className="text-danger font-size-3"
+                            >
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
+                      {errors.Credentials && (
+                        <span>
+                          {errors.Credentials.map((error) => (
+                            <span
+                              key={error}
+                              className="text-danger font-size-3"
+                            >
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group d-flex flex-wrap justify-content-between mb-1">
                       <label
@@ -372,7 +425,7 @@ export default function CompanyLogin(props) {
                         className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                         type="submit"
                       >
-                        Login
+                        Send
                       </button>
                     </div>
                     <p className="font-size-4 text-center heading-default-color">

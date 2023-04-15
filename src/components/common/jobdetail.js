@@ -16,7 +16,7 @@ function JobDetailPage(props) {
   /*Render method to get job detail data */
   useEffect(() => {
     JobData();
-  });
+  }, [props.jobdata]);
   /*Set skill variable to array frm string */
   if (jobDetatilsData !== "") {
     skill = jobDetatilsData.keyskill.split(",");
@@ -50,25 +50,27 @@ function JobDetailPage(props) {
             {/* <!-- media end --> */}
           </div>
         </div>
-        {/* <div className="row pt-9">
-                          <div className="col-12">
-                            <div className="card-btn-group">
-                              <Link to={''}
-                                className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                                href="#"
-                              >
-                                Apply to this job
-                              </Link>
-                              <Link to={''}
-                                className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                                href="#"
-                              >
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save job
-                              </Link>
-                            </div>
-                          </div>
-                        </div> */}
+        <div className="row pt-9">
+          <div className="col-12">
+            <div className="card-btn-group">
+              <Link
+                to={""}
+                className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
+                href="#"
+              >
+                Apply to this job
+              </Link>
+              <Link
+                to={""}
+                className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
+                href="#"
+              >
+                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                Save job
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts">
         <div className="row mb-5">
@@ -126,7 +128,6 @@ function JobDetailPage(props) {
                     <Link
                       to={""}
                       className="bg-polar text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                      href="#"
                     >
                       {skill}
                     </Link>

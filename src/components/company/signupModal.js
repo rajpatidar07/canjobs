@@ -3,9 +3,13 @@ import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../common/useValidation";
 import { EmployerSignUp } from "../../api/api";
-
+import { toast } from "react-toastify";
 export default function CompanySignUp(props) {
-  // USER SIGNUP VALIDATION
+  const close = () => {
+    setErrors("");
+    setState("");
+    props.close();
+  }; // USER SIGNUP VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -50,14 +54,8 @@ export default function CompanySignUp(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   // USER SIGNUP SUBMIT BUTTON
   const onCompanySignUpClick = async (event) => {
@@ -66,6 +64,14 @@ export default function CompanySignUp(props) {
     event.preventDefault();
     if (validate()) {
       let Response = await EmployerSignUp(state);
+      if (Response.message === "Employer has been registered") {
+        toast.success("Registered Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        close();
+      }
+
       if (Response.message === "Email already exists") {
         setErrors({ ...errors, email: ["Email already exists"] });
       }
@@ -86,7 +92,7 @@ export default function CompanySignUp(props) {
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10  z-index-supper"
             data-dismiss="modal"
-            onClick={props.close}
+            onClick={close}
           >
             <i className="fas fa-times"></i>
           </button>

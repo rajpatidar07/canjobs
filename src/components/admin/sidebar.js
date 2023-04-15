@@ -105,7 +105,7 @@ const AdminSidebar = (props) => {
               <i className="fas fa-qrcode mr-7"></i>Manage Job Category
             </Link>
           </li>
-          <li className={props.heading === "Manage Admin"? "active" : ""}>
+          <li className={props.heading === "Manage Admin" ? "active" : ""}>
             <Link
               to="/adminprofile"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
