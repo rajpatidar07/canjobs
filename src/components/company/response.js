@@ -47,14 +47,14 @@ function Response() {
                         id="category"
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        {(category || []).map((cat) => (
+                        {/* {(category || []).map((cat) => (
                           <option
                             key={cat.job_category_id}
                             value={cat.job_category_id}
                           >
                             {cat.category_name}
                           </option>
-                        ))}
+                        ))} */}
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
