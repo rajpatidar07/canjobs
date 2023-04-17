@@ -360,59 +360,6 @@ function PersonalDetails(props) {
                 )}
               </div>
             </div>
-            {/* DECRIBE YOUSELF */}
-            {/* <div className="row">
-              <div className="form-group col-md-12">
-                <label
-                  htmlFor="description"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Description: <span className="text-danger">*</span>
-                </label>
-                <div className="position-relative">
-                  <div
-                    sm="12"
-                    className={
-                      errors.description
-                        ? "border border-danger rounded overflow-hidden"
-                        : "border rounded overflow-hidden"
-                    }
-                  >
-                    <CKEditor
-                      initData={state.description}
-                      // onInstanceReady={() => {
-                      //   alert("Editor is ready!");
-                      // }}
-                    />
-                    {/* <CKEditor
-                      // data={emailText}
-                      // initData={emailText}
-                      type={"classic"}
-                      name={"description"}
-                      id={"description"}
-                      editor={ClassicEditor}
-                      onReady={editor=>}
-                      data={contentEditor}
-                      // onChange={DescriptionChange}
-                      onChange={(event, editor) => {
-                        //console.log((event, "Description", editor);
-                        const data = editor.getData();
-                        setState({ ...state, description: data });
-                      }}
-                      initData="Describe Yourself"
-                    /> */}
-            {/* </div>  */}
-            {/* {errors.description && (
-                    <span
-                      key={errors.description}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.description}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div> */}
             <div className="row">
               {" "}
               <div className="form-group col-md-12">
@@ -550,8 +497,7 @@ function PersonalDetails(props) {
                   htmlFor="nationality"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  nationality / Citizenship :{" "}
-                  <span className="text-danger">*</span>
+                  nationality / Citizenship: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -613,8 +559,7 @@ function PersonalDetails(props) {
                   htmlFor="currently_located_country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Currently Located Country :{" "}
-                  <span className="text-danger">*</span>
+                  Currently Located Country: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -649,8 +594,7 @@ function PersonalDetails(props) {
                   htmlFor="language"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Languages Known (Max 3) :{" "}
-                  <span className="text-danger">*</span>
+                  Languages Known (Max 3): <span className="text-danger">*</span>
                 </label>
                 <select
                   name="language"
@@ -816,8 +760,7 @@ function PersonalDetails(props) {
                   htmlFor="otherpermit"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Work Permit of Other Country :{" "}
-                  <span className="text-danger">*</span>
+                  Work Permit of Other Country: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -851,7 +794,7 @@ function PersonalDetails(props) {
                   htmlFor="resume"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Resume <span className="text-danger">*</span>:
+                  Resume: <span className="text-danger">*</span>
                 </label>
                 <input
                   type="file"

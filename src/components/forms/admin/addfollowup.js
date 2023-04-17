@@ -10,8 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let employId = props.resData.employee_id;
-  let jobId = props.resData.job_id;
+  let jobId = props.job_id;
   /* Functionality to close the modal */
+  console.log("RESPONSE---"+JSON.stringify(props.job_id))
 
   const close = () => {
     setState(initialFormState);
@@ -24,7 +25,7 @@ function Addfollowup(props) {
   const ResponseData = async () => {
     const userData = await getSingleFollowup(
       props.resData.employee_id,
-      props.resData.job_id
+      props.job_id
     );
     setResponseData(userData.data.followup);
   };
@@ -33,7 +34,7 @@ function Addfollowup(props) {
   useEffect(() => {
     if (
       props.resData.employee_id !== undefined ||
-      props.resData.job_id !== undefined
+      props.job_id !== undefined
     ) {
       ResponseData();
     }
@@ -80,7 +81,7 @@ function Addfollowup(props) {
       <ToastContainer />
       <Modal
         show={props.show}
-        size="md"
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >

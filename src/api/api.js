@@ -211,7 +211,11 @@ export const EmployerForgotPassword = async (props) => {
 /*Response List Api */
 export const GetAllResponse = async (props) => {
   const response = await axios.post(
-    `${API_URL}getJobResponse?job_id=${props}&user_type=${user_type}`
+    `${API_URL}getJobResponse`,
+    {
+      job_id: props,
+      user_type:user_type
+    }
   );
   return response;
 };

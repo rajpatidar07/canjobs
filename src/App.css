@@ -103,6 +103,12 @@ button.btn.action_btn {
 .main_data_table br{
   display: none;
 }
+.main_data_table_inn thead tr {
+  background: #fff;
+}
+.main_data_table_inn thead th, .main_data_table_inn thead a.text-gray{
+  color: #333!important;
+}
 /* header */
 .main-menu>li>.nav-link {
   padding-top: 24px !important;
@@ -356,4 +362,13 @@ label.image_upload_btn {
 .custom-opacity{
     opacity: 1 !important;
   }
+}
+
+.response_filters .form-control {
+  height: 2rem;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.response_filters .input_label{
+  font-size: 12px;
 }
