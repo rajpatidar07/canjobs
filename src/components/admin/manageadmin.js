@@ -285,7 +285,10 @@ function ManageAdmin() {
                               </h3>
                             </th>
                             <th className="py-5 min-width-px-100">
-                              <div class="btn-group button_group" role="group">
+                              <div
+                                className="btn-group button_group"
+                                role="group"
+                              >
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => editAdmin(admin.admin_id)}

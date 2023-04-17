@@ -285,6 +285,7 @@ export const EmployerDetails = async (props) => {
 };
 /*Add Employer / Company Api */
 export const AddCompany = async (props) => {
+  console.log(props);
   const response = await axios.put(`${API_URL}company_detail`, props);
   return response.data;
 };
@@ -473,6 +474,35 @@ export const AddAdmin = async (props) => {
   });
   return response.data;
 };
+/*Get Filter Api */
+export const GetFilter = async (props) => {
+  const response = await axios.post(
+    `${API_URL}${user_type}/getFilterList`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Add Filters Api */
+export const AddFIlter = async (props) => {
+  const response = await axios.put(
+    `${API_URL}${user_type}/addUpdatefilterList`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    }
+  );
+  return response.data;
+};
+
 /*Delete Admin Api */
 export const DeleteAdmin = async (props) => {
   const response = await axios.post(
@@ -510,7 +540,6 @@ export const AddFollowup = async (props) => {
 };
 /*Add Followup single data Api */
 export const getSingleFollowup = async (employee_id, job_id) => {
-  //console.log((employee_id, job_id);
   const response = await axios.get(
     `${API_URL}${user_type}/getFollowup?job_id=${job_id}&employee_id=${employee_id}`,
     {

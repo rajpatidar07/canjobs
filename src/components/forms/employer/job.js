@@ -210,14 +210,8 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
@@ -280,6 +274,16 @@ function AddJobModal(props) {
   // //console.log(("JSON" + JSON.stringify(FilterJson.location))
 
   // END ADD JOBS VALIDATION
+  /*Category type array to filter*/
+  const CategoryType = category.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.category_name === thing.category_name)
+  );
+  /*Category type array to filter*/
+  const Company = company.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.company_name === thing.company_name)
+  );
   return (
     <>
       <Modal
@@ -359,11 +363,13 @@ function AddJobModal(props) {
                       id="company_id"
                     >
                       <option value={""}>Select Company</option>
-                      {(company || []).map((com) => (
-                        <option key={com.company_id} value={com.company_id}>
-                          {com.company_name}
-                        </option>
-                      ))}
+                      {(Company || []).map((com) =>
+                        com.company_name === null ? null : (
+                          <option key={com.company_id} value={com.company_id}>
+                            {com.company_name}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                   {/*----ERROR MESSAGE FOR COMPANY----*/}
@@ -398,14 +404,16 @@ function AddJobModal(props) {
                     id="job_category_id"
                   >
                     <option value={""}>select Category</option>
-                    {(category || []).map((cat) => (
-                      <option
-                        key={cat.job_category_id}
-                        value={cat.job_category_id}
-                      >
-                        {cat.category_name}
-                      </option>
-                    ))}
+                    {(CategoryType || []).map((cat) =>
+                      cat.category_name === null ? null : (
+                        <option
+                          key={cat.job_category_id}
+                          value={cat.job_category_id}
+                        >
+                          {cat.category_name}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
                 {/*----ERROR MESSAGE FOR job_category_id----*/}

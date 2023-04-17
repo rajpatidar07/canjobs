@@ -91,5 +91,6 @@ const FilterJson = {
   Language: ["English", "Hindi", "French", "Gujrati", "Marathi", "Other"],
   AdminType: ["Manager", "Sub-admin", "Admin", "Super-Admin"],
   lmia_status: ["Pending", "Approved", "Reject", "Draft", "Complete", "Other"],
+  Duration: ["Last week", "Last month", "last 3 months", "Last year"],
 };
 export default FilterJson;

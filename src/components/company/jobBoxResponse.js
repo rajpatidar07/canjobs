@@ -7,7 +7,7 @@ function JobBoxResponse() {
   let [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   let [noData, setNoData] = useState("");
-  const user_type = localStorage.getItem("userType");
+  // const user_type = localStorage.getItem("userType");
   let Skill = [];
   /* Function to get Job data*/
   const JobData = async () => {

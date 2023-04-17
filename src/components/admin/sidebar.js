@@ -113,6 +113,14 @@ const AdminSidebar = (props) => {
               <i className="fas fa-user mr-7"></i>Manage Admin
             </Link>
           </li>
+          <li className={props.heading === "Filter List" ? "active" : ""}>
+            <Link
+              to="/filter"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-user mr-7"></i>Manage Filter List
+            </Link>
+          </li>
           {/* <li className="">
             <Link
               to=""

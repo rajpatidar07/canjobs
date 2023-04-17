@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddJobCategory } from "../../../api/api";
-import filterjson from "../../json/filterjson";
+import { AddJobCategory, getAllJobsCategory } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddCategory(props) {
-  // const [catdata, setCatdata] = useState([]);
+  const [catType, setCatType] = useState([]);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -21,12 +20,15 @@ function AddCategory(props) {
   const initialFormState = {
     category_name: "",
     category_type: "",
+    parent_id: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
     category_name: [
       (value) =>
-        value === "" || value.trim() === ""
+        state.parent_id === ""
+          ? ""
+          : value === "" || value.trim() === ""
           ? "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
@@ -44,16 +46,13 @@ function AddCategory(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
-  const CatData = () => {
+  const CatData = async () => {
+    let categoryType = await getAllJobsCategory();
+    setCatType(categoryType.data);
+    console.log(catType);
     if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
       setState(initialFormState);
     } else {
@@ -67,6 +66,11 @@ function AddCategory(props) {
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
+    console.log(state);
+    if (state.parent_id === "") {
+      setState({ ...state, category_name: "" });
+      setErrors({ ...errors, category_name: "" });
+    }
     event.preventDefault();
     if (validate()) {
       // //console.log((state);
@@ -89,7 +93,11 @@ function AddCategory(props) {
   }
 
   // END USER PERSONAL DETAIL VALIDATION
-
+  /*Category type array to filter*/
+  const CategoryType = catType.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.category_type === thing.category_type)
+  );
   return (
     <>
       <Modal
@@ -113,6 +121,59 @@ function AddCategory(props) {
               <h5 className="text-center pt-2">Add Category</h5>
             ) : (
               <h5 className="text-center pt-2">Update Category</h5>
+            )}
+            <div className="form-group row ">
+              <label
+                htmlFor="category_type"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Add Category Type <span className="text-danger">*</span> :
+              </label>
+              <input
+                type="text"
+                className={
+                  errors.category_type
+                    ? "form-control mx-5 border border-danger col"
+                    : "form-control col mx-5"
+                }
+                value={state.category_type}
+                onChange={onInputChange}
+                placeholder="Category Type"
+                id="category_type"
+                name="category_type"
+              />
+              <select
+                name="category_type"
+                className={
+                  errors.category_type
+                    ? "form-control mx-5 col border border-danger"
+                    : "form-control col mx-5"
+                }
+                value={state.category_type}
+                onChange={onInputChange}
+                id="category_type"
+              >
+                <option value={""}>select category</option>
+                {(CategoryType || []).map((data) => {
+                  return data.parent_id === "0" ? (
+                    <option
+                      value={data.category_type}
+                      key={data.job_category_id}
+                    >
+                      {data.category_type}
+                    </option>
+                  ) : null;
+                })}
+              </select>
+            </div>
+            {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
+            {errors.category_type && (
+              <span
+                key={errors.category_type}
+                className="text-danger font-size-3 mx-5"
+              >
+                {errors.category_type}
+              </span>
             )}
             <div className="form-group mt-5">
               <label
@@ -144,43 +205,7 @@ function AddCategory(props) {
                 </span>
               )}
             </div>
-            <div className="form-group ">
-              <label
-                htmlFor="category_type"
-                className="font-size-4 text-black-2  line-height-reset"
-              >
-                Category Type <span className="text-danger">*</span> :
-              </label>
-              <select
-                name="category_type"
-                className={
-                  errors.category_type
-                    ? "form-control border border-danger"
-                    : "form-control"
-                }
-                value={state.category_type}
-                onChange={onInputChange}
-                id="category_type"
-              >
-                <option value={""}>select category</option>
-                {(filterjson.category || []).map((data, i) => {
-                  return (
-                    <option value={data} key={i}>
-                      {data}
-                    </option>
-                  );
-                })}
-              </select>
-              {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
-              {errors.category_type && (
-                <span
-                  key={errors.category_type}
-                  className="text-danger font-size-3"
-                >
-                  {errors.category_type}
-                </span>
-              )}
-            </div>
+
             <div className="form-group text-center">
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"

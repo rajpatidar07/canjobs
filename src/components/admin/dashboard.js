@@ -4,6 +4,7 @@ import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import EmployeeDetails from "../common/employeeDetail";
 import { ToastContainer } from "react-toastify";
+import Interview from "../common/interview";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
@@ -114,9 +115,9 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row mb-11 align-items-center">
               <div className="col-lg-6 mb-lg-0 mb-4">
-                <h3 className="font-size-6 mb-0">Applicants List (12)</h3>
+                <h3 className="font-size-6 mb-0">Interview</h3>
               </div>
-              <div className="col-lg-6">
+              {/* <div className="col-lg-6">
                 <div className="d-flex flex-wrap align-items-center justify-content-lg-end">
                   <p className="font-size-4 mb-0 mr-6 py-2">Filter by Job:</p>
                   <div className="select_div">
@@ -135,9 +136,10 @@ const AdminDashboard = () => {
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
-            <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
+            <Interview />
+            {/* <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
               <div className="table-responsive main_table_div">
                 <table className="table table-striped main_data_table">
                   <thead>
@@ -572,7 +574,7 @@ const AdminDashboard = () => {
                   </ul>
                 </nav>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="mb-18">
             <div className="row mb-11 align-items-center">

@@ -639,12 +639,12 @@ function Employee() {
                             </td>
                             <td className="d-flex py-5">
                               <div
-                                class="btn-group button_group"
+                                className="btn-group button_group"
                                 role="group"
                                 aria-label="Basic example"
                               >
                                 <button
-                                  class="btn btn-outline-info action_btn"
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() =>
                                     editEmployeeLimiaStatus(empdata.employee_id)
                                   }
@@ -653,7 +653,7 @@ function Employee() {
                                 </button>
 
                                 <button
-                                  class="btn btn-outline-info action_btn"
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() =>
                                     editEmployeeEducation(empdata.employee_id)
                                   }
@@ -661,7 +661,7 @@ function Employee() {
                                   <span className="	fas fa-graduation-cap text-gray px-2"></span>
                                 </button>
                                 <button
-                                  class="btn btn-outline-info action_btn"
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() =>
                                     editEmployeeSkills(empdata.employee_id)
                                   }
@@ -669,7 +669,7 @@ function Employee() {
                                   <span className=" fa fa-cogs text-gray px-2"></span>
                                 </button>
                                 <button
-                                  class="btn btn-outline-info action_btn"
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() =>
                                     editEmployee(empdata.employee_id)
                                   }
@@ -677,7 +677,7 @@ function Employee() {
                                   <span className=" fas fa-edit text-gray px-2"></span>
                                 </button>
                                 <button
-                                  class="btn btn-outline-info action_btn"
+                                  className="btn btn-outline-info action_btn"
                                   onClick={() => ShowDeleteAlert(empdata)}
                                 >
                                   <span className=" text-danger">

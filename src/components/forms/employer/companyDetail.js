@@ -29,6 +29,7 @@ function CompanyDetails(props) {
     company_size: "",
     about: "",
     vacancy_for_post: "",
+    franchise: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -116,14 +117,14 @@ function CompanyDetails(props) {
     //       ? "Write the correct URL"
     //       : "",
     // ],
-    // alias: [
-    //   (value) =>
-    //     value === ""
-    //       ? ""
-    //       : value.length < 2
-    //       ? "Alias should have 2 or more letters"
-    //       : "",
-    // ],
+    franchise: [
+      (value) =>
+        value === ""
+          ? "Franchise is required"
+          : value.length < 2
+          ? "Franchise have 2 or more letters"
+          : "",
+    ],
     // companylogo: [
     //   (value) =>
     //     value === "" || value === null||value===undefined|| value.trim() === "" ? "Company logo is required" : null,
@@ -150,17 +151,12 @@ function CompanyDetails(props) {
     }
   }, [props.employerId]);
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
+    console.log(state);
     event.preventDefault();
     if (validate()) {
       let responseData = await AddCompany(state);
@@ -451,7 +447,7 @@ function CompanyDetails(props) {
                   htmlFor="vacancy_for_post"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Vacancy FOr Post <span className="text-danger"> *</span> :
+                  Vacancy For Post <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
@@ -475,6 +471,41 @@ function CompanyDetails(props) {
                       className="text-danger font-size-3"
                     >
                       {errors.vacancy_for_post}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="franchise"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Franchise <span className="text-danger"> *</span> :
+                </label>
+                <div className="position-relative">
+                  <input
+                    maxLength={30}
+                    name="franchise"
+                    value={state.franchise}
+                    onChange={onInputChange}
+                    type="text"
+                    className={
+                      errors.franchise
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Franchise"
+                    id="franchise"
+                  />
+                  {/*----ERROR MESSAGE FOR franchise----*/}
+                  {errors.franchise && (
+                    <span
+                      key={errors.franchise}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.franchise}
                     </span>
                   )}
                 </div>

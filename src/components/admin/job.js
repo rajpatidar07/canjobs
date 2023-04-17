@@ -51,6 +51,7 @@ function Job() {
       sortOrder
     );
     setjobData(userData.data.data);
+    console.log(userData.data.data);
     setTotalData(userData.data.total_rows);
 
     // if (userData.message === "No data found") {
@@ -308,7 +309,7 @@ function Job() {
                               value={data.job_category_id}
                               key={data.category_type}
                             >
-                              {data.category_name}
+                              {data.category_type}
                             </option>
                           );
                         })}
@@ -531,7 +532,8 @@ function Job() {
                                   onClick={() => JobDetail(job.job_id)}
                                   className="font-size-3 mb-0 font-weight-semibold text-black-2"
                                 >
-                                  {job.job_title} ({job.industry_type})
+                                  {job.job_title} {job.company_name}(
+                                  {job.industry_type})
                                 </Link>
                               </div>
                             </th>
@@ -576,7 +578,10 @@ function Job() {
                               </h3>
                             </th>
                             <th className="py-5 min-width-px-100">
-                              <div class="btn-group button_group" role="group">
+                              <div
+                                className="btn-group button_group"
+                                role="group"
+                              >
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => editJob(job.job_id)}

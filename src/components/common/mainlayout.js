@@ -17,6 +17,7 @@ import EmployeeSearch from "../company/employeeSearch";
 import ManageAdmin from "../admin/manageadmin";
 import Followup from "../admin/followup";
 import AdminLoginFrom from "../admin/login";
+import FilterList from "../admin/filterList";
 
 function MainLayout() {
   return (
@@ -49,6 +50,7 @@ function MainLayout() {
         <Route path="/employer" element={<Employer />} />
         <Route path="/adminprofile" element={<ManageAdmin />} />
         <Route path="/followup" element={<Followup />} />
+        <Route path="/filter" element={<FilterList />} />
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
       </Routes>
     </BrowserRouter>

@@ -249,7 +249,8 @@ function Category() {
                         </tr>
                       ) : (
                         (categoryData || []).map((catdata) =>
-                          catdata.is_deleted === "1" ? null : (
+                          catdata.is_deleted === "1" ||
+                          catdata.category_name === null ? null : (
                             <tr className="" key={catdata.job_category_id}>
                               <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
@@ -263,7 +264,7 @@ function Category() {
                               </th>
                               <th className="py-5 min-width-px-100">
                                 <div
-                                  class="btn-group button_group"
+                                  className="btn-group button_group"
                                   role="group"
                                 >
                                   <button

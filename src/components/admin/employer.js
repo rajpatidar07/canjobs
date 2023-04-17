@@ -601,7 +601,10 @@ function Employer() {
                               </h3>
                             </th>
                             <th className="  py-5  d-flex">
-                              <div class="btn-group button_group" role="group">
+                              <div
+                                className="btn-group button_group"
+                                role="group"
+                              >
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() =>
