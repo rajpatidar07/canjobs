@@ -52,7 +52,7 @@ function AddCategory(props) {
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
     setCatType(categoryType.data);
-    console.log(catType);
+    // console.log(catType);
     if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
       setState(initialFormState);
     } else {
@@ -66,7 +66,7 @@ function AddCategory(props) {
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    console.log(state);
+    // console.log(state);
     if (state.parent_id === "") {
       setState({ ...state, category_name: "" });
       setErrors({ ...errors, category_name: "" });

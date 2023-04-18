@@ -51,7 +51,7 @@ function Job() {
       sortOrder
     );
     setjobData(userData.data.data);
-    console.log(userData.data.data);
+    // console.log(userData.data.data);
     setTotalData(userData.data.total_rows);
 
     // if (userData.message === "No data found") {

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import {
-  getAllEmployer,
-  EmployeeDetails,
-  AddEmployeeDetails,
-} from "../../../api//api";
+import { AddLimia } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 
 function LmiaStatus(props) {
-  const [company, setCompany] = useState([]);
+  console.log(props);
+  let employeeId = props.resData.employee_id;
+  let jobId = props.job_id;
+  const [company] = useState([]);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -24,26 +23,22 @@ function LmiaStatus(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     lmia_status: "",
-    expected_time_of_completion: "",
-    posted: "",
-    posted_company_id: "",
-    date_of_posting: "",
-    designation: "",
+    completion_time: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    // lmia_status: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Lmia status is required"
-    //       : "",
-    // ],
-    // expected_time_of_completion: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Expected time of completion is required"
-    //       : "",
-    // ],
+    lmia_status: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "Lmia status is required"
+          : "",
+    ],
+    completion_time: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "Expected time of completion is required"
+          : "",
+    ],
     // posted: [
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
@@ -62,38 +57,32 @@ function LmiaStatus(props) {
     //       ? "Date of posting is required"
     //       : null,
     // ],
-    designation: [
-      (value) =>
-        value < 2 ? "designation should have 2 or more letters." : "null",
-    ],
+    // designation: [
+    //   (value) =>
+    //     value < 2 ? "designation should have 2 or more letters." : "null",
+    // ],
   };
   /* Function to get Company data*/
-  const CompnayData = async () => {
-    const userData = await getAllEmployer();
-    setCompany(userData.data);
-  };
+  // const CompnayData = async () => {
+  //   const userData = await getAllEmployer();
+  //   setCompany(userData.data);
+  // };
   /* Function to get Employee data*/
-  const UserData = async () => {
-    const userData = await EmployeeDetails(props.employeeId);
-    setState(userData.data.employee[0]);
-  };
+  // const UserData = async () => {
+  //   const userData = await EmployeeDetails(props.employeeId);
+  //   setState(userData.data.employee[0]);
+  // };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   useEffect(() => {
-    CompnayData();
-    if (props.employeeId === undefined || props.employeeId === "0") {
-      setState(initialFormState);
-    } else {
-      UserData();
-    }
+    // CompnayData();
+    // if (props.employeeId === undefined || props.employeeId === "0") {
+    //   setState(initialFormState);
+    // } else {
+    //   UserData();
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
@@ -101,8 +90,8 @@ function LmiaStatus(props) {
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      const responseData = await AddEmployeeDetails(state);
-      if (responseData.message === "Employee data updated successfully") {
+      const responseData = await AddLimia(state, employeeId, jobId);
+      if (responseData.message === "Data added successfully") {
         toast.success("Lmia Status Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
@@ -177,7 +166,7 @@ function LmiaStatus(props) {
             </div>
             <div className="form-group mt-5">
               <label
-                htmlFor="expected_time_of_completion"
+                htmlFor="completion_time"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Expected time of completion
@@ -185,22 +174,22 @@ function LmiaStatus(props) {
               <input
                 type="date"
                 className={
-                  errors.expected_time_of_completion
+                  errors.completion_time
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.expected_time_of_completion}
+                value={state.completion_time}
                 onChange={onInputChange}
-                id="expected_time_of_completion"
-                name="expected_time_of_completion"
+                id="completion_time"
+                name="completion_time"
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
-              {errors.expected_time_of_completion && (
+              {errors.completion_time && (
                 <span
-                  key={errors.expected_time_of_completion}
+                  key={errors.completion_time}
                   className="text-danger font-size-3"
                 >
-                  {errors.expected_time_of_completion}
+                  {errors.completion_time}
                 </span>
               )}
             </div>

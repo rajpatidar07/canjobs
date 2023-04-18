@@ -40,8 +40,6 @@ function CompanyDetails(props) {
         value === undefined ||
         value.trim() === ""
           ? "Company name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 2
           ? "Company Name should have 2 or more letters"
           : "",
@@ -156,7 +154,7 @@ function CompanyDetails(props) {
 
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
-    console.log(state);
+    // console.log(state);
     event.preventDefault();
     if (validate()) {
       let responseData = await AddCompany(state);

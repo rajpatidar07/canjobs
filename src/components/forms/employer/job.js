@@ -251,7 +251,7 @@ function AddJobModal(props) {
     if (user_type === "company") {
       setState({ ...state, company_id: company_id });
     }
-    console.log(errors);
+    // console.log(errors);
 
     if (validate()) {
       let responseData = await AddJob(state);

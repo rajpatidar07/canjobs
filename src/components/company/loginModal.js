@@ -49,7 +49,9 @@ export default function CompanyLogin(props) {
     // ],
     forget_email: [
       (value) =>
-        value === null || value.trim() === ""
+        state.email
+          ? ""
+          : value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
           ? null
@@ -63,8 +65,10 @@ export default function CompanyLogin(props) {
   /*----LOGIN SUBMIT FUNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
+    console.log(errors);
 
     if (validate()) {
+      console.log("555");
       let Response = await EmployerLogin(state);
       if (
         Response.status === true ||

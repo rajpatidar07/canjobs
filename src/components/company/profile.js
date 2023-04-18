@@ -14,16 +14,14 @@ function CompanyProfile(props) {
 
   /*Show modal and data state */
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
-  const [
-    showKycComplainDetailsModal,
-    setShowKycComplainDetailsModal,
-  ] = useState(false);
+  const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
+    useState(false);
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
   /*Function to get employer data */
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
-    console.log(userData);
+    // console.log(userData);
     if (userData === undefined) {
       setEmployerData("");
       setEmployerKycData("");

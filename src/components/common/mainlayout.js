@@ -18,7 +18,7 @@ import ManageAdmin from "../admin/manageadmin";
 import Followup from "../admin/followup";
 import AdminLoginFrom from "../admin/login";
 import FilterList from "../admin/filterList";
-
+import ResumeGrerator from "../admin/Resume";
 function MainLayout() {
   return (
     <BrowserRouter>
@@ -28,20 +28,16 @@ function MainLayout() {
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/profile" element={<UserProfile />} />
-
         {/* Employer */}
-
         <Route path="/company" element={<EmployerHome />} />
         <Route path="/companyprofile" element={<CompanyProfile />} />
         <Route path="/managejobs" element={<ManageJobs />} />
         <Route path="/response" element={<Response />} />
         <Route path="/empsearch" element={<EmployeeSearch />} />
-
         {/* <Route path="/employerhome" element={<EmployerHomePage/>} />
         <Route path="/companyprofile" element={<CompanyProfile />} />
         <Route path="/managejobs" element={<ManageJobs />} />
         <Route path="/response" element={<Response />} /> */}
-
         {/* Admin */}
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/job" element={<Job />} />
@@ -52,6 +48,7 @@ function MainLayout() {
         <Route path="/followup" element={<Followup />} />
         <Route path="/filter" element={<FilterList />} />
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
+        {/* <Route path="/resume" element={<ResumeGrerator />} /> */}
       </Routes>
     </BrowserRouter>
   );

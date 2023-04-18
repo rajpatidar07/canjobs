@@ -1,11 +1,13 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddFIlter } from "../../../api//api";
+import { AddInterviewSheduale } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-function AddFilter(props) {
+import moment from "moment";
+function AddInterview(props) {
+  let employeeId = props.resData.employee_id;
+  let jobId = props.job_id;
   // let [adminDetails, setAdmindetails] = useState([]);
   /* Functionality to close the modal */
 
@@ -18,14 +20,15 @@ function AddFilter(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    id: "",
-    json_item: "",
+    interview_date: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    json_item: [
+    interview_date: [
       (value) =>
-        value === "" || value.trim() === "" ? "Filter type is required" : null,
+        value === "" || value.trim() === ""
+          ? "Interview date is required"
+          : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -34,13 +37,11 @@ function AddFilter(props) {
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
-    setState({ ...state, id: props.id });
     event.preventDefault();
     if (validate()) {
-      setState({ ...state, id: props.id });
-      const responseData = await AddFIlter(state);
-      if (responseData.message === "filter item added successfully") {
-        toast.success("Filter added successfully", {
+      const responseData = await AddInterviewSheduale(state, employeeId, jobId);
+      if (responseData.message === "data inserted successfully") {
+        toast.success("Interview shedualed successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -66,36 +67,37 @@ function AddFilter(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Add Filter Type</h5>
+          <h5 className="text-center pt-2">Add Interview</h5>
 
           <form onSubmit={onAddFIlterClick}>
             <div className="form-group ">
               <label
-                htmlFor="json_item"
+                htmlFor="interview_date"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Filter Type <span className="text-danger">*</span> :
+                Interview date <span className="text-danger">*</span> :
               </label>
               <input
                 className={
-                  errors.json_item
+                  errors.interview_date
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.json_item}
+                value={state.interview_date}
                 onChange={onInputChange}
-                id="json_item"
-                name="json_item"
-                type={"text"}
-                placeholder="Type"
+                id="interview_date"
+                name="interview_date"
+                type={"date"}
+                placeholder="Interview date"
+                min={moment().format("YYYY-MM-DD")}
               />
               {/*----ERROR MESSAGE FOR EMAIL----*/}
-              {errors.json_item && (
+              {errors.interview_date && (
                 <span
-                  key={errors.json_item}
+                  key={errors.interview_date}
                   className="text-danger font-size-3"
                 >
-                  {errors.json_item}
+                  {errors.interview_date}
                 </span>
               )}
             </div>
@@ -114,4 +116,4 @@ function AddFilter(props) {
   );
 }
 
-export default AddFilter;
+export default AddInterview;

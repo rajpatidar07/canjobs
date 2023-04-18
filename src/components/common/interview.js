@@ -1,18 +1,19 @@
-import React /*,{ useState, useEffect }*/ from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import CustomButton from "../common/button";
 // import AdminHeader from "./header";
 // import AdminSidebar from "./sidebar";
 // import AddCategory from "../forms/admin/category";
-// import { DeleteJobCategory, getAllJobsCategory } from "../../api/api";
+import { getInterview } from "../../api/api";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import SAlert from "../common/sweetAlert";
 // import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
+import userEvent from "@testing-library/user-event";
 function Interview() {
   //   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  //   const [categoryData, setCategoryData] = useState([]);
+  const [interviewData, setInterviewData] = useState([]);
   //   const [CategoryId, setCategoryId] = useState([]);
   //   /*delete states */
   //   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -31,32 +32,18 @@ function Interview() {
   //   const [clicksort, setClicksort] = useState(0);
 
   //   /* Function to get the job category data*/
-  //   const CategoryData = async () => {
-  //     const userData = await getAllJobsCategory(
-  //       categoryTypeFilterValue,
-  //       search,
-  //       currentPage,
-  //       recordsPerPage,
-  //       columnName,
-  //       sortOrder
-  //     );
-  //     setCategoryData(userData.data);
-  //     setTotalData(userData.total_rows);
-  //   };
+  const InterviewData = async () => {
+    const userData = await getInterview();
+    // console.log(userData);
+    setInterviewData(userData);
+    // setTotalData(userData.total_rows);
+  };
 
   //   /*Render function to get the job category*/
-  //   useEffect(() => {
-  //     CategoryData();
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [
-  //     categoryTypeFilterValue,
-  //     search,
-  //     currentPage,
-  //     showAddCategoryModal,
-  //     deleteAlert,
-  //     columnName,
-  //     sortOrder,
-  //   ]);
+  useEffect(() => {
+    InterviewData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //   /* Function to show the single data to update job category*/
   //   const editJobCategory = (e) => {
@@ -129,7 +116,7 @@ function Interview() {
   //     }
   //   };
   /*Category type array to filter*/
-  // const CategoryType = categoryData.filter(
+  // const CategoryType = InterviewData.filter(
   //   (thing, index, self) =>
   //     index === self.findIndex((t) => t.category_type === thing.category_type)
   // );
@@ -230,55 +217,56 @@ function Interview() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {/* {totalData === 0 ? (
-                      <tr>
-                        <th className="bg-white"></th>
-                        <th className="bg-white">No Data Found</th>
-                        <th className="bg-white"></th>
-                      </tr>
-                    ) : (
-                      (categoryData || []).map((catdata) =>
-                        catdata.is_deleted === "1" ||
-                        catdata.category_name === null ? null : (
-                          <tr className="" key={catdata.job_category_id}>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {catdata.category_name}
-                              </div>
-                            </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {catdata.category_type}
-                              </h3>
-                            </th>
-                            <th className="py-5 min-width-px-100">
-                              <div
-                                className="btn-group button_group"
-                                role="group"
-                              >
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => editJobCategory(catdata)}
+                      {
+                        // totalData === 0 ? (
+                        //   <tr>
+                        //     <th className="bg-white"></th>
+                        //     <th className="bg-white">No Data Found</th>
+                        //     <th className="bg-white"></th>
+                        //   </tr>
+                        // ) : (
+                        (interviewData || []).map(
+                          (data) => (
+                            <tr className="" key={data.id}>
+                              <th scope="row" className="py-5 ">
+                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  {/* {data.category_name} */}Shedule
+                                </div>
+                              </th>
+                              <th className=" py-5">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {data.interview_date}
+                                </h3>
+                              </th>
+                              <th className="py-5 min-width-px-100">
+                                <div
+                                  className="btn-group button_group"
+                                  role="group"
                                 >
-                                  <span className=" fas fa-edit text-gray">
-                                    {" "}
-                                  </span>
-                                </button>
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => ShowDeleteAlert(catdata)}
-                                >
-                                  <span className=" text-danger">
-                                    {" "}
-                                    <i className="fa fa-trash"></i>
-                                  </span>
-                                </button>
-                              </div>
-                            </th>
-                          </tr>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    // onClick={() => editJobCategory(data)}
+                                  >
+                                    <span className=" fas fa-edit text-gray">
+                                      {" "}
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    // onClick={() => ShowDeleteAlert(data)}
+                                  >
+                                    <span className=" text-danger">
+                                      {" "}
+                                      <i className="fa fa-trash"></i>
+                                    </span>
+                                  </button>
+                                </div>
+                              </th>
+                            </tr>
+                          )
+                          // )
                         )
-                      )
-                    )} */}
+                      }
                     </tbody>
                   </table>
                 </div>

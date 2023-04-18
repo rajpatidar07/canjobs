@@ -20,7 +20,7 @@ function JobBoxResponse() {
     setJobId(e);
     setShowTable(!showTable);
     const userData = await GetAllResponse(JobId);
-    console.log(userData);
+    // console.log(userData);
   };
 
   useEffect(() => {

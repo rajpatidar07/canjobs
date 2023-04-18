@@ -3,22 +3,30 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { getAllFollowUpData, getAllEmployer, GetAllResponse } from "../../api/api";
+import {
+  getAllFollowUpData,
+  getAllEmployer,
+  GetAllResponse,
+} from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
+import AddInterview from "../forms/admin/addInterview.js";
+import LmiaStatus from "../forms/admin/lmiastatus";
 function JobResponse(props) {
   /*show modal and data states */
   let [followup, setFollowUp] = useState(false);
+  let [interview, setInterview] = useState(false);
+  let [limia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
   const [company, setCompany] = useState([]);
   /*Filter and search state */
-  const [jobFilterValue, setJobTypeFilterValue] = useState("");
-  const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
-    useState("");
-  const [search, setSearch] = useState("");
+  // const [jobFilterValue, setJobTypeFilterValue] = useState("");
+  // const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
+  // const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+  // useState("");
+  // const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +35,7 @@ function JobResponse(props) {
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [clicksort, setClicksort] = useState(0);
-  const [jobId, setjobId] = useState(props.responseId);
+  const [jobId] = useState(props.responseId);
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(jobId);
@@ -39,7 +47,7 @@ function JobResponse(props) {
     //   currentPage,
     //   recordsPerPage,
     //   columnName,
-    //   sortOrder 
+    //   sortOrder
     // );
     setResponseData(userData.data.data);
     setTotalData(userData.total_rows);
@@ -66,7 +74,7 @@ function JobResponse(props) {
     // columnName,
     // sortOrder,
     // followup,
-    jobId
+    jobId,
   ]);
 
   /*Function to open add follow up modal */
@@ -74,6 +82,18 @@ function JobResponse(props) {
     setFollowUp(true);
     setResData(e);
   };
+  /*Function to open add Interview up modal */
+  const addnterview = (e) => {
+    setInterview(true);
+    setResData(e);
+  };
+  /*Function to open add Limia up modal */
+  const addLimia = (e) => {
+    setLimia(true);
+    setResData(e);
+  };
+
+  console.log(resData);
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -178,21 +198,32 @@ function JobResponse(props) {
   // const Job = (response.filter||[])(
   //   (thing, index, self) => index === self.findIndex((t) => t.job_title === thing.job_title)
   // );
-  
+
   return (
     <div className="response_main_div">
-        <Addfollowup
+      <Addfollowup
         show={followup}
         job_id={jobId}
-          resData={resData}
-          close={() => setFollowUp(false)}
-        />
-        <div className="response__container" >
-          <div className="container p-0">
-            <div className="mb-8">
-              
+        resData={resData}
+        close={() => setFollowUp(false)}
+      />
+      <AddInterview
+        show={interview}
+        job_id={jobId}
+        resData={resData}
+        close={() => setInterview(false)}
+      />
+      <LmiaStatus
+        show={limia}
+        job_id={jobId}
+        resData={resData}
+        close={() => setLimia(false)}
+      />
+      <div className="response__container">
+        <div className="container p-0">
+          <div className="mb-8">
             <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                {/* <div className="response_filters mb-2 align-items-center">
+              {/* <div className="response_filters mb-2 align-items-center">
                   <div className="page___heading">
                     <h3 className="font-size-6 mb-0">Follow Up</h3>
                   </div>
@@ -277,186 +308,192 @@ function JobResponse(props) {
                     <div className="float-md-right mt-6"></div>
                   </div>
                 </div> */}
-                <div className="table-responsive ">
-                  <table className="table table-striped main_data_table_inn">
-                    <thead>
+              <div className="table-responsive ">
+                <table className="table table-striped main_data_table_inn">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="pl-0 border-0 font-size-4 font-weight-normal text-center"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-0 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={sortByNameClick}
+                          className="text-gray"
+                        >
+                          Name
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-0 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={sortByExperienceClick}
+                          className="text-gray"
+                        >
+                          Experience
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={sortByJobClick}
+                          className="text-gray"
+                        >
+                          Job Type
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={sortByCompanyClick}
+                          className="text-gray"
+                        >
+                          Company
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={sortByContactClick}
+                          className="text-gray"
+                        >
+                          Contact
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={sortByAddressClick}
+                          className="text-gray"
+                        >
+                          Address
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {totalData === 0 ? (
                       <tr>
-                        <th
-                          scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal text-center"
-                        >
-                          #
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={sortByNameClick}
-                            className="text-gray"
-                          >
-                            Name
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={sortByExperienceClick}
-                            className="text-gray"
-                          >
-                            Experience
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={sortByJobClick}
-                            className="text-gray"
-                          >
-                            Job Type
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={sortByCompanyClick}
-                            className="text-gray"
-                          >
-                            Company
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={sortByContactClick}
-                            className="text-gray"
-                          >
-                            Contact
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={sortByAddressClick}
-                            className="text-gray"
-                          >
-                            Address
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
-                        </th>
+                        <td className="bg-white">No Data Found</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {totalData === 0 ? (
-                        <tr>
-                          <td className="bg-white">No Data Found</td>
-                        </tr>
-                      ) : (
-                        (response || []).map((res) => (
-                          <tr className="" key={res.apply_id}>
-                            <th className="pl-5 py-5 pr-0   ">
-                              <div className="media  align-items-center">
-                                <div className="circle-36 mx-auto">
-                                  {/* {res.profile_photo === null ? ( */}
-                                  <img
-                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                  {/* ) : (
+                    ) : (
+                      (response || []).map((res) => (
+                        <tr className="" key={res.apply_id}>
+                          <th className="pl-5 py-5 pr-0   ">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto">
+                                {/* {res.profile_photo === null ? ( */}
+                                <img
+                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  alt=""
+                                  className="w-100"
+                                />
+                                {/* ) : (
                               <img
                                 src={empdata.profile_photo}
                                 alt=""
                                 className="w-100"
                               />
                             )} */}
-                                </div>
                               </div>
-                            </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.name}(
-                                {moment().diff(res.date_of_birth, "years")})
-                                <br />
-                                {res.gender}
-                              </h3>
-                            </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.experience} years <br />
-                              </h3>
-                            </th>
-                            <th className="py-5 ">
-                              <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.job_title}
-                              </div>
-                            </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.company_name}
-                              </h3>
-                            </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                +{res.contact_no} <br /> {res.email}
-                              </h3>
-                            </th>
-                            <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                <span>{res.current_location}</span>
-                                <span className="px-1">
-                                  {res.currently_located_country}
-                                </span>
-                              </h3>
-                            </th>
-                            <th className="py-5  min-width-px-100">
-                              <Link to="" onClick={() => addFollow(res)}>
-                                <span className=" fas fa-plus text-gray px-2"></span>
-                              </Link>
-                              {/* <Link to="">
-                              <span className=" text-danger">
-                                <i className="fa fa-trash"></i>
+                            </div>
+                          </th>
+                          <th className=" py-5">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.name}(
+                              {moment().diff(res.date_of_birth, "years")})
+                              <br />
+                              {res.gender}
+                            </h3>
+                          </th>
+                          <th className=" py-5">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.experience} years <br />
+                            </h3>
+                          </th>
+                          <th className="py-5 ">
+                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.job_title}
+                            </div>
+                          </th>
+                          <th className=" py-5">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.company_name}
+                            </h3>
+                          </th>
+                          <th className=" py-5">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              +{res.contact_no} <br /> {res.email}
+                            </h3>
+                          </th>
+                          <th className="py-5 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <span>{res.current_location}</span>
+                              <span className="px-1">
+                                {res.currently_located_country}
                               </span>
-                            </Link> */}
-                            </th>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="pt-2">
-                  <Pagination
-                    nPages={nPages}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                  />
-                </div>
+                            </h3>
+                          </th>
+                          <th className="py-5  min-width-px-100">
+                            <Link to="" onClick={() => addFollow(res)}>
+                              <i className=" fas fa-plus text-gray px-2"></i>
+                            </Link>
+                            <Link to="" onClick={() => addnterview(res)}>
+                              <i className="fa fa-podcast text-gray px-2"></i>
+                            </Link>
+                            <Link to="">
+                              <span
+                                className=" text-danger"
+                                onClick={() => addLimia(res)}
+                              >
+                                <i className="fas fa-stream text-gray"></i>
+                              </span>
+                            </Link>
+                          </th>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="pt-2">
+                <Pagination
+                  nPages={nPages}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
               </div>
             </div>
           </div>
         </div>
+      </div>
     </div>
   );
 }

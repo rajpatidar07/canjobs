@@ -12,7 +12,7 @@ function Addfollowup(props) {
   let employId = props.resData.employee_id;
   let jobId = props.job_id;
   /* Functionality to close the modal */
-  console.log("RESPONSE---"+JSON.stringify(props.job_id))
+  // console.log("RESPONSE---"+JSON.stringify(props.job_id))
 
   const close = () => {
     setState(initialFormState);
@@ -32,10 +32,7 @@ function Addfollowup(props) {
 
   /*Render function to get the Response*/
   useEffect(() => {
-    if (
-      props.resData.employee_id !== undefined ||
-      props.job_id !== undefined
-    ) {
+    if (props.resData.employee_id !== undefined || props.job_id !== undefined) {
       ResponseData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

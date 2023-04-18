@@ -210,13 +210,10 @@ export const EmployerForgotPassword = async (props) => {
 };
 /*Response List Api */
 export const GetAllResponse = async (props) => {
-  const response = await axios.post(
-    `${API_URL}getJobResponse`,
-    {
-      job_id: props,
-      user_type:user_type
-    }
-  );
+  const response = await axios.post(`${API_URL}getJobResponse`, {
+    job_id: props,
+    user_type: user_type,
+  });
   return response;
 };
 export const GetAllJobs = async (
@@ -289,7 +286,7 @@ export const EmployerDetails = async (props) => {
 };
 /*Add Employer / Company Api */
 export const AddCompany = async (props) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.put(`${API_URL}company_detail`, props);
   return response.data;
 };
@@ -328,6 +325,34 @@ export const DeleteEmployer = async (props) => {
 /*Delete Job Api */
 export const DeleteJob = async (props) => {
   const response = await axios.delete(`${API_URL}deletejob/${props}`, props);
+  return response.data;
+};
+/*Get Interview list api */
+export const getInterview = async () => {
+  const response = await axios.post(`${API_URL}${user_type}/getInterview`);
+  return response.data.data;
+};
+/*Add interview login Api */
+export const AddInterviewSheduale = async (props, employee_id, job_id) => {
+  const response = await axios.post(
+    `${API_URL}${user_type}/addUpdateInterview`,
+    {
+      job_id: job_id,
+      employee_id: employee_id,
+      interview_date: props.interview_date,
+      created_by_admin: admin_id,
+    }
+  );
+  return response.data;
+};
+/*Add interview login Api */
+export const AddLimia = async (props, employee_id, job_id) => {
+  const response = await axios.put(`${API_URL}${user_type}/addUpdateLmia`, {
+    job_id: job_id,
+    employee_id: employee_id,
+    lmia_status: props.lmia_status,
+    completion_time: props.completion_time,
+  });
   return response.data;
 };
 
@@ -493,10 +518,26 @@ export const GetFilter = async (props) => {
   return response.data;
 };
 /*Add Filters Api */
-export const AddFIlter = async (props) => {
+export const AddFIlter = async (props, id) => {
+  console.log(props);
   const response = await axios.put(
     `${API_URL}${user_type}/addUpdatefilterList`,
     props,
+    // { id: id, json_item: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    }
+  );
+  return response.data;
+}; /*Delete Filter Api */
+export const DeleteFilter = async (pId, cId) => {
+  console.log(pId, cId);
+  const response = await axios.post(
+    `${API_URL}${user_type}/deleteFilterListItem`,
+    { id: pId, json_item_id: cId },
     {
       headers: {
         "Content-Type": "application/json",
@@ -523,7 +564,7 @@ export const DeleteAdmin = async (props) => {
 };
 /*Add Followup Api */
 export const AddFollowup = async (props) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.post(
     `${API_URL}${user_type}/addFollowup`,
     {
