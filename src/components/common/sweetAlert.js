@@ -1,6 +1,6 @@
 import React from "react";
 import SweetAlert from "sweetalert-react";
-import "sweetalert/dist/sweetalert.css";
+import "../common/sweetalert.css";
 
 const SAlert = (props) => {
   return (
