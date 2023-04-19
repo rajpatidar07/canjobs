@@ -27,6 +27,7 @@ function Job() {
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
+  const [company, setCompany] = useState("");
   const [Categorylist, setCategoryList] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -48,7 +49,8 @@ function Job() {
       currentPage,
       recordsPerPage,
       columnName,
-      sortOrder
+      sortOrder,
+      company
     );
     setjobData(userData.data.data);
     // console.log(userData.data.data);
@@ -76,6 +78,7 @@ function Job() {
     currentPage,
     columnName,
     sortOrder,
+    company,
   ]);
 
   /* Function to show the Job detail data */
@@ -96,10 +99,7 @@ function Job() {
     setDeleteName(e.job_title);
     setDeleteAlert(true);
   };
-  /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
+
   /*To call Api to delete Job */
   async function deleteJob(e) {
     const responseData = await DeleteJob(e);
@@ -111,32 +111,13 @@ function Job() {
       setDeleteAlert(false);
     }
   }
-  /*Category Onchange function to filter the data */
-  let onCategoryFilterChange = (e) => {
-    setCategoryFilterValue(e.target.value);
-  };
+
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
     setCategoryList(userData.data);
   };
 
-  /*Skill Onchange function to filter the data */
-  let onSkillFilterChange = (e) => {
-    setSkillFilterValue(e.target.value);
-  };
-  /*Location Onchange function to filter the data */
-  let onLocationFilterChange = (e) => {
-    setLocationFilterValue(e.target.value);
-  };
-  /*JobSwap Onchange function to filter the data */
-  let onJobSwapFilterChange = (e) => {
-    setJobSwapFilterValue(e.target.value);
-  };
-  /*Searcg Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -281,15 +262,27 @@ function Job() {
                 </div>
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">Search by Name:</p>
+                    <p className="input_label">Search by Job:</p>
                     <input
                       required
                       type="text"
                       className="form-control w-100"
                       placeholder={"Search Job"}
                       value={search}
-                      name={"category_name"}
-                      onChange={(e) => onSearch(e)}
+                      name={"name"}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </div>{" "}
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">Search by Company:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control w-100"
+                      placeholder={"Search Job by company"}
+                      value={company}
+                      name={"compnay_name"}
+                      onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
@@ -299,7 +292,7 @@ function Job() {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={onCategoryFilterChange}
+                        onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>
@@ -323,7 +316,9 @@ function Job() {
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={onJobSwapFilterChange}
+                        onChange={(e) => {
+                          setJobSwapFilterValue(e.target.value);
+                        }}
                         className=" form-control"
                       >
                         <option value="">Select Job Type</option>
@@ -342,7 +337,7 @@ function Job() {
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={onSkillFilterChange}
+                        onChange={(e) => setSkillFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
@@ -363,7 +358,7 @@ function Job() {
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={onLocationFilterChange}
+                        onChange={(e) => setLocationFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Location</option>
@@ -620,7 +615,7 @@ function Job() {
             text="Are you Sure you want to delete !"
             onConfirm={() => deleteJob(deleteId)}
             showCancelButton={true}
-            onCancel={CancelDelete}
+            onCancel={() => setDeleteAlert(false)}
           />
         </div>
         {showJobDetails === true ? (

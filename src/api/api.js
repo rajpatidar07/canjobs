@@ -225,7 +225,8 @@ export const GetAllJobs = async (
   page,
   limit,
   column_name,
-  sort_order
+  sort_order,
+  company
 ) => {
   const response = await axios.post(`${API_URL}getAllJobs`, {
     // employee_id: id,
@@ -238,6 +239,7 @@ export const GetAllJobs = async (
     limit: limit,
     column_name: column_name,
     sort_order: sort_order,
+    company_name: company,
   });
   return response;
 };
@@ -334,6 +336,7 @@ export const getInterview = async () => {
 };
 /*Add interview login Api */
 export const AddInterviewSheduale = async (props, employee_id, job_id) => {
+  console.log(props, employee_id, job_id);
   const response = await axios.post(
     `${API_URL}${user_type}/addUpdateInterview`,
     {

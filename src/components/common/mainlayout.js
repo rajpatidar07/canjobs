@@ -48,7 +48,7 @@ function MainLayout() {
         <Route path="/followup" element={<Followup />} />
         <Route path="/filter" element={<FilterList />} />
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        {/* <Route path="/resume" element={<ResumeGrerator />} /> */}
+        <Route path="/resume" element={<ResumeGrerator />} />
       </Routes>
     </BrowserRouter>
   );

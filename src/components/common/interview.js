@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 // import CustomButton from "../common/button";
 // import AdminHeader from "./header";
 // import AdminSidebar from "./sidebar";
-// import AddCategory from "../forms/admin/category";
 import { getInterview } from "../../api/api";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
@@ -11,10 +10,13 @@ import { getInterview } from "../../api/api";
 // import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import userEvent from "@testing-library/user-event";
+import AddInterview from "../forms/admin/addInterview";
 function Interview() {
-  //   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);
   const [interviewData, setInterviewData] = useState([]);
-  //   const [CategoryId, setCategoryId] = useState([]);
+  const [jobId, setJobId] = useState();
+  let [resData, setResData] = useState("");
+
   //   /*delete states */
   //   const [deleteAlert, setDeleteAlert] = useState(false);
   //   const [deleteId, setDeleteID] = useState();
@@ -36,6 +38,7 @@ function Interview() {
     const userData = await getInterview();
     // console.log(userData);
     setInterviewData(userData);
+
     // setTotalData(userData.total_rows);
   };
 
@@ -43,14 +46,15 @@ function Interview() {
   useEffect(() => {
     InterviewData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [showAddInterviewModal]);
 
-  //   /* Function to show the single data to update job category*/
-  //   const editJobCategory = (e) => {
-  //     // e.preventDefault();
-  //     setShowAddCategoryModal(true);
-  //     setCategoryId(e);
-  //   };
+  /* Function to show the single data to update job category*/
+  const editJobCategory = (e) => {
+    // e.preventDefault();
+    setShowAddInterviewModal(true);
+    setJobId(e.job_id);
+    setResData(e);
+  };
   //   /*To Show the delete alert box */
   //   const ShowDeleteAlert = (e) => {
   //     setDeleteID(e.job_category_id);
@@ -123,7 +127,14 @@ function Interview() {
 
   return (
     <>
-      {" "}
+      <AddInterview
+        resData={resData}
+        close={() => {
+          setShowAddInterviewModal(false);
+        }}
+        job_id={jobId}
+        show={showAddInterviewModal}
+      />
       <div className="site-wrapper overflow-hidden bg-default-2">
         <div className="mt-5" id="dashboard-body">
           <div className="container">
@@ -245,20 +256,9 @@ function Interview() {
                                 >
                                   <button
                                     className="btn btn-outline-info action_btn"
-                                    // onClick={() => editJobCategory(data)}
+                                    onClick={() => editJobCategory(data)}
                                   >
-                                    <span className=" fas fa-edit text-gray">
-                                      {" "}
-                                    </span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    // onClick={() => ShowDeleteAlert(data)}
-                                  >
-                                    <span className=" text-danger">
-                                      {" "}
-                                      <i className="fa fa-trash"></i>
-                                    </span>
+                                    Reshedule
                                   </button>
                                 </div>
                               </th>

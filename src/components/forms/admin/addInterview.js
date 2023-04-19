@@ -8,19 +8,17 @@ import moment from "moment";
 function AddInterview(props) {
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
-  // let [adminDetails, setAdmindetails] = useState([]);
-  /* Functionality to close the modal */
 
+  /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
     setErrors("");
     props.close();
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
-
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    interview_date: "",
+    interview_date: props.resData.interview_date,
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -67,7 +65,7 @@ function AddInterview(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Add Interview</h5>
+          <h5 className="text-center pt-2">Shedual Interview</h5>
 
           <form onSubmit={onAddFIlterClick}>
             <div className="form-group ">
@@ -83,7 +81,7 @@ function AddInterview(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.interview_date}
+                value={moment(state.interview_date).format("YYYY-MM-DD")}
                 onChange={onInputChange}
                 id="interview_date"
                 name="interview_date"
