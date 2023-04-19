@@ -8,11 +8,9 @@ import { getInterview } from "../../api/api";
 import Pagination from "./pagination";
 // import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview";
-import ChangeJob from "../forms/admin/changeJobs";
 function Interview(props) {
   let search = props.search;
   let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);
-  let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   const [interviewData, setInterviewData] = useState([]);
   const [jobId, setJobId] = useState();
   let [resData, setResData] = useState("");
@@ -62,13 +60,6 @@ function Interview(props) {
   const editInterview = (e) => {
     // e.preventDefault();
     setShowAddInterviewModal(true);
-    setJobId(e.job_id);
-    setResData(e);
-  };
-  /* Function to show the single data to update job */
-  const editJob = (e) => {
-    // e.preventDefault();
-    setShowChangeJobModal(true);
     setJobId(e.job_id);
     setResData(e);
   };
@@ -127,14 +118,7 @@ function Interview(props) {
         job_id={jobId}
         show={showAddInterviewModal}
       />
-      <ChangeJob
-        resData={resData}
-        close={() => {
-          setShowChangeJobModal(false);
-        }}
-        job_id={jobId}
-        show={showChangeJobModal}
-      />
+
       <div className="site-wrapper overflow-hidden bg-default-2">
         <div className="mt-5" id="dashboard-body">
           <div className="container">
@@ -310,14 +294,14 @@ function Interview(props) {
                                   >
                                     Reshedule
                                   </button>
-                                  {props.heading === "Interview" ? (
+                                  {/* {props.heading === "Interview" ? (
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() => editJob(data)}
                                     >
                                       Change job
                                     </button>
-                                  ) : null}
+                                  ) : null} */}
                                 </div>
                               </th>
                             </tr>

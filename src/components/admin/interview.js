@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import CustomButton from "../common/button";
 import Interview from "../common/interviewTable";
 export default function ManageInterview() {
   let [search, setSearch] = useState("");

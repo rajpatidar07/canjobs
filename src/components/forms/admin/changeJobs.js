@@ -3,12 +3,12 @@ import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GetAllJobs } from "../../../api/api";
+import { GetAllJobs, ApplyJob } from "../../../api/api";
 function ChangeJob(props) {
-  console.log(props);
+  // console.log(props.resData.job_id);
 
   let employeeId = props.resData.employee_id;
-  let jobId = props.job_id;
+  let applyId = props.resData.apply_id;
   let [jobData, setJobData] = useState([]);
   /* Functionality to close the modal */
   const close = () => {
@@ -34,24 +34,24 @@ function ChangeJob(props) {
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs();
-    console.log(userData.data.data);
+    // console.log(userData.data.data);
     setJobData(userData.data.data);
   };
   useEffect(() => {
     JobData();
   }, [props]);
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
-  const onAddFIlterClick = async (event) => {
+  const onChangeJobClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      //   const responseData = await AddInterviewSheduale(state, employeeId, jobId);
-      //   if (responseData.message === "data inserted successfully") {
-      //     toast.success("Interview shedualed successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     return close();
-      //   }
+      const responseData = await ApplyJob(applyId, employeeId, state);
+      if (responseData.message === "Job applied successfully") {
+        toast.success("Job Changed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
@@ -80,7 +80,7 @@ function ChangeJob(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <h5 className="text-center pt-2">Change Jobs</h5>
 
-          <form onSubmit={onAddFIlterClick}>
+          <form onSubmit={onChangeJobClick}>
             <div className="form-group ">
               <label
                 htmlFor="job_title"

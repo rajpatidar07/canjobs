@@ -3,21 +3,20 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import {
-  getAllFollowUpData,
-  getAllEmployer,
-  GetAllResponse,
-} from "../../api/api";
+import { getAllEmployer, GetAllResponse } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
 import { ToastContainer } from "react-toastify";
+import ChangeJob from "../forms/admin/changeJobs";
+
 function JobResponse(props) {
   console.log(props);
 
   /*show modal and data states */
+  let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
   let [limia, setLimia] = useState(false);
@@ -38,7 +37,7 @@ function JobResponse(props) {
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [clicksort, setClicksort] = useState(0);
-  const [jobId] = useState(props.responseId);
+  const [jobId, setJobId] = useState(props.responseId);
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(jobId);
@@ -78,6 +77,7 @@ function JobResponse(props) {
     // sortOrder,
     // followup,
     jobId,
+    showChangeJobModal,
   ]);
 
   /*Function to open add follow up modal */
@@ -95,8 +95,13 @@ function JobResponse(props) {
     setLimia(true);
     setResData(e);
   };
-
-  console.log(resData);
+  /* Function to show the single data to update job */
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowChangeJobModal(true);
+    setJobId(e.job_id);
+    setResData(e);
+  };
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -253,6 +258,14 @@ function JobResponse(props) {
         job_id={jobId}
         resData={resData}
         close={() => setLimia(false)}
+      />{" "}
+      <ChangeJob
+        resData={resData}
+        close={() => {
+          setShowChangeJobModal(false);
+        }}
+        job_id={jobId}
+        show={showChangeJobModal}
       />
       <div
         className={
@@ -540,6 +553,14 @@ function JobResponse(props) {
                                 onClick={() => addLimia(res)}
                               >
                                 <i className="fas fa-stream text-gray"></i>
+                              </span>
+                            </Link>
+                            <Link to="">
+                              <span
+                                className="px-3 text-gray"
+                                onClick={() => editJob(res)}
+                              >
+                                <i class="fas fa-briefcase"></i>
                               </span>
                             </Link>
                           </th>

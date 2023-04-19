@@ -7,7 +7,7 @@ const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
 
 // EMPLOYEE'S API
-/*Employee sign Up */
+/*Employee sign */
 export const EmployeeSignUp = async (props) => {
   const formData = new FormData();
   formData.append("email", props.useremail);
@@ -153,7 +153,7 @@ export const DeleteEmployeeSkill = async (props) => {
   });
   return response.data;
 };
-/*Delete Employee Skill Api */
+/*Delete Employee Education Api */
 export const DeleteEmployeeEducation = async (props) => {
   const response = await axios.post(`${API_URL}deleteEmployeeEducation`, {
     education_id: props,
@@ -164,6 +164,15 @@ export const DeleteEmployeeEducation = async (props) => {
 export const DeleteEmployeeCareer = async (props) => {
   const response = await axios.post(`${API_URL}deleteEmployeeCareer`, {
     career_id: props,
+  });
+  return response.data;
+};
+/*Apply job Api */
+export const ApplyJob = async (apply_id, employee_id, job_id) => {
+  const response = await axios.post(`${API_URL}applyJob`, {
+    apply_id: apply_id,
+    job_id: job_id.job_title,
+    employee_id: employee_id,
   });
   return response.data;
 };
@@ -358,6 +367,8 @@ export const AddInterviewSheduale = async (props, employee_id, job_id) => {
 };
 /*Add interview login Api */
 export const AddLimia = async (props, employee_id, job_id) => {
+  console.log(job_id);
+
   const response = await axios.put(`${API_URL}${user_type}/addUpdateLmia`, {
     job_id: job_id,
     employee_id: employee_id,
