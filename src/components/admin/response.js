@@ -13,7 +13,10 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
+import { ToastContainer } from "react-toastify";
 function JobResponse(props) {
+  console.log(props);
+
   /*show modal and data states */
   let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
@@ -22,11 +25,11 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   const [company, setCompany] = useState([]);
   /*Filter and search state */
-  // const [jobFilterValue, setJobTypeFilterValue] = useState("");
-  // const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
-  // const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
-  // useState("");
-  // const [search, setSearch] = useState("");
+  const [jobFilterValue, setJobTypeFilterValue] = useState("");
+  const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    useState("");
+  const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -195,12 +198,44 @@ function JobResponse(props) {
     }
   };
   /*Job array to filter*/
-  // const Job = (response.filter||[])(
-  //   (thing, index, self) => index === self.findIndex((t) => t.job_title === thing.job_title)
+  // const Job = (response.filter || [])(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t) => t.job_title === thing.job_title)
   // );
+  console.log(response);
 
   return (
-    <div className="response_main_div">
+    // <div className="site-wrapper overflow-hidden bg-default-2">
+    // {/* <!-- Header Area --> */}
+    // <AdminHeader heading={"Manage Jobs"} />
+    // {/* <!-- navbar- --> */}
+    // <AdminSidebar heading={"Manage Jobs"} />
+    // <ToastContainer />
+    // <div
+    //   className={
+    //     showJobDetails === false
+    //       ? "dashboard-main-container mt-20"
+    //       : "d-none"
+    //   }
+    //   id="dashboard-body"
+    // >
+
+    <div
+      className={
+        props.heading === "Manage Follow-ups"
+          ? "response_main_div"
+          : "site-wrapper overflow-hidden bg-default-2"
+      }
+    >
+      {props.heading !== "Manage Follow-ups" ? (
+        <>
+          {/* <!-- Header Area --> */}
+          <AdminHeader heading={"Response"} />
+          {/* <!-- navbar- --> */}
+          <AdminSidebar heading={"Response"} />
+          <ToastContainer />{" "}
+        </>
+      ) : null}
       <Addfollowup
         show={followup}
         job_id={jobId}
@@ -219,97 +254,128 @@ function JobResponse(props) {
         resData={resData}
         close={() => setLimia(false)}
       />
-      <div className="response__container">
-        <div className="container p-0">
-          <div className="mb-8">
-            <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-              {/* <div className="response_filters mb-2 align-items-center">
-                  <div className="page___heading">
-                    <h3 className="font-size-6 mb-0">Follow Up</h3>
+      <div
+        className={
+          props.heading === "Manage Follow-ups"
+            ? "response__container"
+            : "dashboard-main-container mt-20"
+        }
+      >
+        <div
+          className={
+            props.heading === "Manage Follow-ups"
+              ? "container p-0"
+              : "container"
+          }
+        >
+          <div className="mb-8" /*"mb-18" */>
+            <div
+              className={
+                props.heading === "Manage Follow-ups"
+                  ? "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
+                  : ""
+              }
+            >
+              <div
+                className={
+                  props.heading === "Manage Follow-ups"
+                    ? "response_filters mb-2 align-items-center"
+                    : "mb-8 align-items-center"
+                }
+              >
+                <div className="page___heading">
+                  <h3 className="font-size-6 mb-0">Follow Up</h3>
+                </div>
+                <div className="row align-items-center">
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">Filter by Company:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      placeholder={"Search Category"}
+                      value={search}
+                      name={"category_name"}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
                   </div>
-                  <div className="row align-items-center">
-                    <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                      <p className="input_label">Filter by Company:</p>
-                      <input
-                        required
-                        type="text"
-                        className="form-control"
-                        placeholder={"Search Category"}
-                        value={search}
-                        name={"category_name"}
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">Filter by Job:</p>
+                    <div className="select_div">
+                      <select
+                        name="job"
+                        id="job"
+                        value={jobFilterValue}
+                        onChange={(e) => setJobTypeFilterValue(e.target.value)}
+                        className=" form-control"
+                      >
+                        <option value="">Select Job</option>
+                        {/* {(Job || []).map((job, i) => (
+                          <option value={job.job_title} key={i}>
+                            {job.job_title}
+                          </option>
+                        ))} */}
+                      </select>
                     </div>
-                    <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                      <p className="input_label">Filter by Job:</p>
-                      <div className="select_div">
-                        <select
-                          name="job"
-                          id="job"
-                          value={jobFilterValue}
-                          onChange={(e) => setJobTypeFilterValue(e.target.value)}
-                          className=" form-control"
-                        >
-                          <option value="">Select Job</option>
-                          {(Job || []).map((job, i) => (
-                            <option value={job.job_title} key={i}>
-                              {job.job_title}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                      <p className="input_label">Filter by Company:</p>
-                      <div className="select_div">
-                        <select
-                          name="company_name"
-                          id="company_name"
-                          value={companyFilterValue}
-                          onChange={(e) =>
-                            setCompanyTypeFilterValue(e.target.value)
-                          }
-                          className=" form-control"
-                        >
-                          <option value="">Select Company</option>
-                          {(company || []).map((company) => (
-                            <option
-                              value={company.company_name}
-                              key={company.company_id}
-                            >
-                              {company.company_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                      <p className="input_label">Filter by Experience:</p>
-                      <div className="select_div">
-                        <select
-                          name="experience"
-                          id="experience"
-                          value={experienceTypeFilterValue}
-                          onChange={(e) =>
-                            setExperienceTypeFilterValue(e.target.value)
-                          }
-                          className=" form-control"
-                        >
-                          <option value="">Select Experience</option>
-                          {(FilterJson.experience || []).map((ex, i) => (
-                            <option value={ex} key={i}>
-                              {ex}
-                              {ex === "Fresher" || ex === "Other" ? "" : "Years"}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="float-md-right mt-6"></div>
                   </div>
-                </div> */}
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">Filter by Company:</p>
+                    <div className="select_div">
+                      <select
+                        name="company_name"
+                        id="company_name"
+                        value={companyFilterValue}
+                        onChange={(e) =>
+                          setCompanyTypeFilterValue(e.target.value)
+                        }
+                        className=" form-control"
+                      >
+                        <option value="">Select Company</option>
+                        {(company || []).map((company) => (
+                          <option
+                            value={company.company_name}
+                            key={company.company_id}
+                          >
+                            {company.company_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                    <p className="input_label">Filter by Experience:</p>
+                    <div className="select_div">
+                      <select
+                        name="experience"
+                        id="experience"
+                        value={experienceTypeFilterValue}
+                        onChange={(e) =>
+                          setExperienceTypeFilterValue(e.target.value)
+                        }
+                        className=" form-control"
+                      >
+                        <option value="">Select Experience</option>
+                        {(FilterJson.experience || []).map((ex, i) => (
+                          <option value={ex} key={i}>
+                            {ex}
+                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="float-md-right mt-6"></div>
+                </div>
+              </div>
+
               <div className="table-responsive ">
-                <table className="table table-striped main_data_table_inn">
+                <table
+                  className={
+                    props.heading === "Manage Follow-ups"
+                      ? "table table-striped main_data_table_inn"
+                      : "table table-striped main_data_table"
+                  }
+                >
                   <thead>
                     <tr>
                       <th

@@ -121,14 +121,22 @@ const AdminSidebar = (props) => {
               <i className="fas fa-user mr-7"></i>Manage Filter List
             </Link>
           </li>
-          {/* <li className="">
+          <li className={props.heading === "Interview" ? "active" : ""}>
             <Link
-              to=""
+              to="/interview"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-cog mr-7"></i>Settings
+              <i className="fas fa-cog mr-7"></i>Interview
             </Link>
-          </li> */}
+          </li>
+          <li className={props.heading === "Interview" ? "active" : ""}>
+            <Link
+              to="/responses"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-reply mr-7"></i>Response
+            </Link>
+          </li>
         </ul>
       </div>
     </>

@@ -7,8 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 
 function LmiaStatus(props) {
-  console.log(props);
-  let employeeId = props.resData.employee_id;
+  // console.log(props);
+  let employeeId =
+    props.resData === undefined ? null : props.resData.employee_id;
   let jobId = props.job_id;
   const [company] = useState([]);
   /* Functionality to close the modal */

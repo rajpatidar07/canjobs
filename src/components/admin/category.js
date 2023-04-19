@@ -96,38 +96,13 @@ function Category() {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "job_category_id"
-    ) {
-      setcolumnName("category_name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("category_name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setClicksort(clicksort === 0 ? 1 : 0);
+    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
+    setcolumnName(columnName);
   };
-  /*Sorting Function by type */
-  let sortBytypeClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "job_category_id"
-    ) {
-      setcolumnName("category_type");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("category_type");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
+
   /*Category type array to filter*/
   // const CategoryType = categoryData.filter(
   //   (thing, index, self) =>
@@ -213,7 +188,7 @@ function Category() {
                         >
                           <Link
                             to={""}
-                            onClick={sortByNameClick}
+                            onClick={() => handleSort("category_name")}
                             className="text-gray"
                           >
                             Name
@@ -225,7 +200,7 @@ function Category() {
                         >
                           <Link
                             to={""}
-                            onClick={sortBytypeClick}
+                            onClick={() => handleSort("category_type")}
                             className="text-gray"
                           >
                             Category Type

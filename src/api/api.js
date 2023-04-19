@@ -7,7 +7,7 @@ const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
 
 // EMPLOYEE'S API
-
+/*Employee sign Up */
 export const EmployeeSignUp = async (props) => {
   const formData = new FormData();
   formData.append("email", props.useremail);
@@ -15,7 +15,7 @@ export const EmployeeSignUp = async (props) => {
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
-
+/*Employee Login */
 export const EmployeeLogin = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
@@ -23,6 +23,7 @@ export const EmployeeLogin = async (props) => {
   const response = await axios.post(`${API_URL}employee_login`, formData);
   return response.data;
 };
+/*Employee detail api */
 export const EmployeeDetails = async (props) => {
   // if (props !== undefined) {
   const formData = new FormData();
@@ -39,6 +40,7 @@ export const EmployeeDetails = async (props) => {
   return response.data;
   // }
 };
+/*Add Employee detail api */
 export const AddEmployeeDetails = async (props) => {
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: {
@@ -330,8 +332,14 @@ export const DeleteJob = async (props) => {
   return response.data;
 };
 /*Get Interview list api */
-export const getInterview = async () => {
-  const response = await axios.post(`${API_URL}${user_type}/getInterview`);
+export const getInterview = async (search, page, column, limit, sort) => {
+  const response = await axios.post(`${API_URL}${user_type}/getInterview`, {
+    search: search,
+    column_name: column,
+    sort_order: sort,
+    page: page,
+    limit: limit,
+  });
   return response.data.data;
 };
 /*Add interview login Api */

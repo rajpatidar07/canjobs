@@ -366,7 +366,7 @@ function Followup() {
                 </div>
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                <div className="table-responsive main_table_div">
+                <div className="table-responsive">
                   <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
@@ -574,7 +574,10 @@ function Followup() {
                             job.total_applicants > 0 ? (
                               <tr>
                                 <td colSpan={10}>
-                                  <JobResponse responseId={responseId} />
+                                  <JobResponse
+                                    responseId={responseId}
+                                    heading={"Manage Follow-ups"}
+                                  />
                                 </td>
                               </tr>
                             ) : null}

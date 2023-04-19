@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import CustomButton from "../common/button";
-// import AdminHeader from "./header";
-// import AdminSidebar from "./sidebar";
 import { getInterview } from "../../api/api";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import SAlert from "../common/sweetAlert";
-// import Pagination from "../common/pagination";
-import FilterJson from "../json/filterjson";
-import userEvent from "@testing-library/user-event";
+import Pagination from "./pagination";
+// import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview";
-function Interview() {
+import ChangeJob from "../forms/admin/changeJobs";
+function Interview(props) {
+  let search = props.search;
   let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);
+  let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   const [interviewData, setInterviewData] = useState([]);
   const [jobId, setJobId] = useState();
   let [resData, setResData] = useState("");
@@ -23,38 +23,56 @@ function Interview() {
   //   const [deleteName, setDeleteName] = useState("");
   //   /*Filter and search state */
   //   const [categoryTypeFilterValue, setCategoryTypeFilterValue] = useState("");
-  //   const [search, setSearch] = useState("");
-  //   /*Pagination states */
-  //   const [totalData, setTotalData] = useState("");
-  //   const [currentPage, setCurrentPage] = useState(1);
-  //   const [recordsPerPage] = useState(5);
-  //   /*Shorting states */
-  //   const [columnName, setcolumnName] = useState("job_category_id");
-  //   const [sortOrder, setSortOrder] = useState("DESC");
-  //   const [clicksort, setClicksort] = useState(0);
+  /*Pagination states */
+  const [totalData, setTotalData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(5);
+  /*Shorting states */
+  const [columnName, setcolumnName] = useState("id");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  const [clicksort, setClicksort] = useState(0);
 
-  //   /* Function to get the job category data*/
+  //   /* Function to get the intervew data*/
   const InterviewData = async () => {
-    const userData = await getInterview();
-    // console.log(userData);
-    setInterviewData(userData);
-
-    // setTotalData(userData.total_rows);
+    const userData = await getInterview(
+      search,
+      currentPage,
+      columnName,
+      recordsPerPage,
+      sortOrder
+    );
+    setInterviewData(userData.data);
+    setTotalData(userData.total_rows);
   };
 
-  //   /*Render function to get the job category*/
+  /*Render function to get the interview*/
   useEffect(() => {
     InterviewData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAddInterviewModal]);
+  }, [
+    search,
+    currentPage,
+    columnName,
+    recordsPerPage,
+    sortOrder,
+    showAddInterviewModal,
+  ]);
 
-  /* Function to show the single data to update job category*/
-  const editJobCategory = (e) => {
+  /* Function to show the single data to update interview*/
+  const editInterview = (e) => {
     // e.preventDefault();
     setShowAddInterviewModal(true);
     setJobId(e.job_id);
     setResData(e);
   };
+  /* Function to show the single data to update job */
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowChangeJobModal(true);
+    setJobId(e.job_id);
+    setResData(e);
+  };
+
   //   /*To Show the delete alert box */
   //   const ShowDeleteAlert = (e) => {
   //     setDeleteID(e.job_category_id);
@@ -84,46 +102,20 @@ function Interview() {
   //   let onSearch = (e) => {
   //     setSearch(e.target.value);
   //   };
-  //   /*Pagination Calculation */
-  //   const nPages = Math.ceil(totalData / recordsPerPage);
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
 
-  //   /*Sorting Function by name */
-  //   let sortByNameClick = () => {
-  //     if (
-  //       clicksort === 0 ||
-  //       sortOrder === "DESC" ||
-  //       columnName === "job_category_id"
-  //     ) {
-  //       setcolumnName("category_name");
-  //       setSortOrder("ASC");
-  //       setClicksort(1);
-  //     } else {
-  //       setcolumnName("category_name");
-  //       setSortOrder("DESC");
-  //       setClicksort(0);
-  //     }
-  //   };
-  //   /*Sorting Function by type */
-  //   let sortBytypeClick = () => {
-  //     if (
-  //       clicksort === 0 ||
-  //       sortOrder === "DESC" ||
-  //       columnName === "job_category_id"
-  //     ) {
-  //       setcolumnName("category_type");
-  //       setSortOrder("ASC");
-  //       setClicksort(1);
-  //     } else {
-  //       setcolumnName("category_type");
-  //       setSortOrder("DESC");
-  //       setClicksort(0);
-  //     }
-  //   };
   /*Category type array to filter*/
   // const CategoryType = InterviewData.filter(
   //   (thing, index, self) =>
   //     index === self.findIndex((t) => t.category_type === thing.category_type)
   // );
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setClicksort(clicksort === 0 ? 1 : 0);
+    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
+    setcolumnName(columnName);
+  };
 
   return (
     <>
@@ -134,6 +126,14 @@ function Interview() {
         }}
         job_id={jobId}
         show={showAddInterviewModal}
+      />
+      <ChangeJob
+        resData={resData}
+        close={() => {
+          setShowChangeJobModal(false);
+        }}
+        job_id={jobId}
+        show={showChangeJobModal}
       />
       <div className="site-wrapper overflow-hidden bg-default-2">
         <div className="mt-5" id="dashboard-body">
@@ -156,7 +156,7 @@ function Interview() {
                     onChange={(e) => onSearch(e)}
                   />
                 </div> */}
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                  {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
                     <p className="input_label">Filter by Duration:</p>
                     <div className="select_div">
                       <select
@@ -176,12 +176,12 @@ function Interview() {
                         })}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   {/* <div className="text-end px-6 col-xl-6">
                   <div className="float-md-right">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
-                      //   onClick={() => editJobCategory("0")}
+                      //   onClick={() => editInterview("0")}
                     >
                       Add category
                     </CustomButton>
@@ -200,10 +200,46 @@ function Interview() {
                         >
                           <Link
                             to={""}
-                            //   onClick={sortByNameClick}
+                            onClick={() => handleSort("name")}
                             className="text-gray"
                           >
                             Name
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => handleSort("job_title")}
+                            className="text-gray"
+                          >
+                            Applied Job
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => handleSort("company_name")}
+                            className="text-gray"
+                          >
+                            Company Name
+                          </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={() => handleSort("skill")}
+                            className="text-gray"
+                          >
+                            Skill
                           </Link>
                         </th>
                         <th
@@ -212,7 +248,7 @@ function Interview() {
                         >
                           <Link
                             to={""}
-                            //   onClick={sortBytypeClick}
+                            onClick={() => handleSort("interview_date")}
                             className="text-gray"
                           >
                             Interview date
@@ -228,20 +264,34 @@ function Interview() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {
-                        // totalData === 0 ? (
-                        //   <tr>
-                        //     <th className="bg-white"></th>
-                        //     <th className="bg-white">No Data Found</th>
-                        //     <th className="bg-white"></th>
-                        //   </tr>
-                        // ) : (
+                      {totalData === 0 ? (
+                        <tr>
+                          <th className="bg-white"></th>
+                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
+                        </tr>
+                      ) : (
                         (interviewData || []).map(
                           (data) => (
                             <tr className="" key={data.id}>
                               <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {/* {data.category_name} */}Shedule
+                                  {data.name}
+                                </div>
+                              </th>
+                              <th scope="row" className="py-5 ">
+                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  {data.job_title}
+                                </div>
+                              </th>
+                              <th scope="row" className="py-5 ">
+                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  {data.company_name}
+                                </div>
+                              </th>
+                              <th scope="row" className="py-5 ">
+                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  {data.skill}
                                 </div>
                               </th>
                               <th className=" py-5">
@@ -256,26 +306,34 @@ function Interview() {
                                 >
                                   <button
                                     className="btn btn-outline-info action_btn"
-                                    onClick={() => editJobCategory(data)}
+                                    onClick={() => editInterview(data)}
                                   >
                                     Reshedule
                                   </button>
+                                  {props.heading === "Interview" ? (
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => editJob(data)}
+                                    >
+                                      Change job
+                                    </button>
+                                  ) : null}
                                 </div>
                               </th>
                             </tr>
                           )
                           // )
                         )
-                      }
+                      )}
                     </tbody>
                   </table>
                 </div>
                 <div className="pt-2">
-                  {/* <Pagination
-                  nPages={nPages}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                /> */}
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
               </div>
             </div>
