@@ -150,120 +150,13 @@ function Employee() {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Contact no */
-  let sortByContactClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("contact_no");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("contact_no");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by language */
-  let sortByLanguageClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("language");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("language");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setClicksort(clicksort === 0 ? 1 : 0);
+    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
+    setcolumnName(columnName);
   };
 
-  /*Sorting Function by Education */
-  let sortByEducationClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("education");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("education");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-
-  /*Sorting Function by Skill */
-  let sortBySkillClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("skill");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("skill");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by specialization */
-  // let sortBySpecializationClick = () => {
-  //   if (
-  //     clicksort === 0 ||
-  //     sortOrder === "DESC" ||
-  //     columnName === "employee_id"
-  //   ) {
-  //     setcolumnName("specialization");
-  //     setSortOrder("ASC");
-  //     setClicksort(1);
-  //   } else {
-  //     setcolumnName("specialization");
-  //     setSortOrder("DESC");
-  //     setClicksort(0);
-  //   }
-  // };
-  /*Sorting Function by experience */
-  let sortByExperienceClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("experience");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("experience");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
   /*Experience type array to filter*/
   // const Experience = employeeData.filter(
   //   (thing, index, self) =>
@@ -296,7 +189,7 @@ function Employee() {
         />
         <LmiaStatus
           close={() => setShowLimiaStatusModal(false)}
-          employeeId={employeeId}
+          resData={employeeId}
           show={showLimiaSttusModal}
         />
         <Education
@@ -429,7 +322,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortByNameClick}
+                            onClick={() => handleSort("name")}
                             className="text-gray"
                           >
                             Name
@@ -441,7 +334,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortByContactClick}
+                            onClick={() => handleSort("contact_no")}
                             className="text-gray"
                           >
                             Contact
@@ -453,7 +346,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortByLanguageClick}
+                            onClick={() => handleSort("languages")}
                             className="text-gray"
                           >
                             Languages
@@ -465,7 +358,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortByEducationClick}
+                            onClick={() => handleSort("education")}
                             className="text-gray"
                           >
                             Education
@@ -477,7 +370,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortBySkillClick}
+                            onClick={() => handleSort("skill")}
                             className="text-gray"
                           >
                             Skills
@@ -489,7 +382,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortBySpecializationClick}
+                            onClick={()=>handleSort("name")}
                             className="text-gray"
                           >
                             Specialization
@@ -501,7 +394,7 @@ function Employee() {
                         >
                           <Link
                             to={""}
-                            onClick={sortByExperienceClick}
+                            onClick={() => handleSort("experience")}
                             className="text-gray"
                           >
                             Experience
@@ -647,7 +540,7 @@ function Employee() {
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() =>
-                                    editEmployeeLimiaStatus(empdata.employee_id)
+                                    editEmployeeLimiaStatus(empdata)
                                   }
                                 >
                                   <span className="fas fa-stream text-gray px-2"></span>

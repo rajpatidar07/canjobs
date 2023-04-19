@@ -19,6 +19,8 @@ import Followup from "../admin/followup";
 import AdminLoginFrom from "../admin/login";
 import FilterList from "../admin/filterList";
 import ResumeGrerator from "../admin/Resume";
+import ManageInterview from "../admin/interview";
+import JobResponse from "../admin/response";
 function MainLayout() {
   return (
     <BrowserRouter>
@@ -48,7 +50,9 @@ function MainLayout() {
         <Route path="/followup" element={<Followup />} />
         <Route path="/filter" element={<FilterList />} />
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        <Route path="/resume" element={<ResumeGrerator />} />
+        <Route path="/interview" element={<ManageInterview />} />
+        <Route path="/responses" element={<JobResponse />} />
+        {/* <Route path="/resume" element={<ResumeGrerator />} /> */}
       </Routes>
     </BrowserRouter>
   );

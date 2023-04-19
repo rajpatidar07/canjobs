@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddInterviewSheduale } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import moment from "moment";
-function AddInterview(props) {
-  // console.log(props);
+import { GetAllJobs } from "../../../api/api";
+function ChangeJob(props) {
+  console.log(props);
 
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
-
+  let [jobData, setJobData] = useState([]);
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
@@ -20,36 +19,48 @@ function AddInterview(props) {
   // USER ADMIN PROFILE UPDATE VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    interview_date: "",
+    job_title: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    interview_date: [
+    job_title: [
       (value) =>
-        value === "" || value.trim() === ""
-          ? "Interview date is required"
-          : null,
+        value === "" || value.trim() === "" ? "Job is required" : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
-
+  /* Function to get Job data*/
+  const JobData = async () => {
+    const userData = await GetAllJobs();
+    console.log(userData.data.data);
+    setJobData(userData.data.data);
+  };
+  useEffect(() => {
+    JobData();
+  }, [props]);
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
     event.preventDefault();
     if (validate()) {
-      const responseData = await AddInterviewSheduale(state, employeeId, jobId);
-      if (responseData.message === "data inserted successfully") {
-        toast.success("Interview shedualed successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        return close();
-      }
+      //   const responseData = await AddInterviewSheduale(state, employeeId, jobId);
+      //   if (responseData.message === "data inserted successfully") {
+      //     toast.success("Interview shedualed successfully", {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     });
+      //     return close();
+      //   }
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
+  /*Admin type array to filter*/
+  const Job = jobData.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t) => t.job_title === thing.job_title)
+  );
+
   return (
     <>
       <Modal
@@ -67,41 +78,44 @@ function AddInterview(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Shedual Interview</h5>
+          <h5 className="text-center pt-2">Change Jobs</h5>
 
           <form onSubmit={onAddFIlterClick}>
             <div className="form-group ">
               <label
-                htmlFor="interview_date"
+                htmlFor="job_title"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Interview date <span className="text-danger">*</span> :
+                Jobs <span className="text-danger">*</span> :
               </label>
-              <input
+              <select
                 className={
-                  errors.interview_date
+                  errors.job_title
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={
-                  props.resData.id
-                    ? moment(props.resData.interview_date).format("YYYY-MM-DD")
-                    : moment(state.interview_date).format("YYYY-MM-DD")
-                }
+                value={state.job_title}
                 onChange={onInputChange}
-                id="interview_date"
-                name="interview_date"
-                type={"date"}
-                placeholder="Interview date"
-                min={moment().format("YYYY-MM-DD")}
-              />
+                id="job_title"
+                name="job_title"
+              >
+                {" "}
+                <option value={""}>select Job</option>
+                {(Job || []).map((data) => {
+                  return (
+                    <option value={data.job_id} key={data.job_id}>
+                      {data.job_title}
+                    </option>
+                  );
+                })}
+              </select>
               {/*----ERROR MESSAGE FOR EMAIL----*/}
-              {errors.interview_date && (
+              {errors.job_title && (
                 <span
-                  key={errors.interview_date}
+                  key={errors.job_title}
                   className="text-danger font-size-3"
                 >
-                  {errors.interview_date}
+                  {errors.job_title}
                 </span>
               )}
             </div>
@@ -120,4 +134,4 @@ function AddInterview(props) {
   );
 }
 
-export default AddInterview;
+export default ChangeJob;

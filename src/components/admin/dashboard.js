@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import EmployeeDetails from "../common/employeeDetail";
 import { ToastContainer } from "react-toastify";
-import Interview from "../common/interview";
+import Interview from "../common/interviewTable";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
                 </div>
               </div> */}
             </div>
-            <Interview />
+            <Interview heading={"Dashboard"} />
             {/* <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
               <div className="table-responsive main_table_div">
                 <table className="table table-striped main_data_table">
