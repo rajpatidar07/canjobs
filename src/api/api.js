@@ -171,7 +171,7 @@ export const DeleteEmployeeCareer = async (props) => {
 export const ApplyJob = async (apply_id, employee_id, job_id) => {
   const response = await axios.post(`${API_URL}applyJob`, {
     apply_id: apply_id,
-    job_id: job_id.job_title,
+    job_id: job_id,
     employee_id: employee_id,
   });
   return response.data;
@@ -562,8 +562,8 @@ export const AddFIlter = async (props, id) => {
   console.log(props);
   const response = await axios.put(
     `${API_URL}${user_type}/addUpdatefilterList`,
-    props,
-    // { id: id, json_item: props },
+    // props,
+    { id: id, json_item: props.json_item },
     {
       headers: {
         "Content-Type": "application/json",

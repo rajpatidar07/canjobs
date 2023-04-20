@@ -72,6 +72,7 @@ function JobResponse(props) {
     limia,
     interview,
     followup,
+    showChangeJobModal,
   ]);
 
   /*Function to open add follow up modal */
@@ -93,7 +94,6 @@ function JobResponse(props) {
   const editJob = (e) => {
     // e.preventDefault();
     setShowChangeJobModal(true);
-    setJobId(e.job_id);
     setResData(e);
   };
 

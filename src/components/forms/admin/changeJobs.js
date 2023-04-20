@@ -4,61 +4,65 @@ import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GetAllJobs, ApplyJob } from "../../../api/api";
+import SelectBox from "../../common/select";
 // import { Select, Button } from "antd"; // "3.26.7" worked
 // import Select from "react-select";
-
+import Select from "react-select";
 function ChangeJob(props) {
   // console.log(props.resData.job_id);
 
   let employeeId = props.resData.employee_id;
   let applyId = props.resData.apply_id;
-  let [jobData, setJobData] = useState([]);
+  let [allJobData, setAllJobData] = useState([]);
+  let [JobId, setJobId] = useState("");
   /* Functionality to close the modal */
   const close = () => {
-    setState(initialFormState);
-    setErrors("");
+    // setErrors("");
     props.close();
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
   // INITIAL STATE ASSIGNMENT
-  const initialFormState = {
-    job_title: "",
-  };
-  // VALIDATION CONDITIONS
-  const validators = {
-    job_title: [
-      (value) =>
-        value === "" || value.trim() === "" ? "Job is required" : null,
-    ],
-  };
-  // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, /* onInputChange,*/ errors, validate } =
-    useValidation(initialFormState, validators);
-  /* Function to get Job data*/
+
   const JobData = async () => {
     const userData = await GetAllJobs();
     // console.log(userData.data.data);
-    setJobData(userData.data.data);
+    setAllJobData(userData.data.data);
   };
+
   useEffect(() => {
     JobData();
   }, [props]);
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  const onSelectChange = (option) => {
+    // e.preventDefault();
+    console.log("+++++++++++++" + JSON.stringify(option.value));
+
+    setJobId(option.value);
+  };
   const onChangeJobClick = async (event) => {
     event.preventDefault();
-    if (validate()) {
-      const responseData = await ApplyJob(applyId, employeeId, state);
-      if (responseData.message === "Job applied successfully") {
-        toast.success("Job Changed successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        return close();
-      }
+
+    // if (validate()) {
+    const responseData = await ApplyJob(applyId, employeeId, JobId);
+    if (responseData.message === "Job switched successfully") {
+      toast.success("Job Changed successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      return close();
     }
+    // }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
+  const [state, setState] = useState([]);
 
+  useEffect(() => {
+    const options = allJobData.map((option) => ({
+      value: option.job_id,
+      label: option.job_title + " - " + option.company_name,
+    }));
+    setState(options);
+  }, [allJobData]);
   return (
     <>
       <Modal
@@ -81,11 +85,30 @@ function ChangeJob(props) {
           <form onSubmit={onChangeJobClick}>
             <div className="form-group ">
               <label
-                htmlFor="job_title"
+                htmlFor="job_id"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Jobs <span className="text-danger">*</span> :
               </label>
+              <Select
+                // getOptionValue={onSelectChange}
+                options={state}
+                onChange={onSelectChange}
+                // onSelectChange={(e) => {
+                //   setJobId(e.target.value);
+                // }}
+
+                id="job_id"
+              />
+              {/* <SelectBox
+                value={JobId}
+                options={allJobData}
+                onSelectChange={(e) => {
+                  setJobId(e.target.value);
+                }}
+              /> */}
+              {/* <SelectBox options={allJobData} onSelectChange={onSelectChange} /> */}
+
               {/* <select
                 className={
                   errors.job_title
@@ -124,14 +147,11 @@ function ChangeJob(props) {
                 isMulti
               /> */}
               {/*----ERROR MESSAGE FOR EMAIL----*/}
-              {errors.job_title && (
-                <span
-                  key={errors.job_title}
-                  className="text-danger font-size-3"
-                >
-                  {errors.job_title}
+              {/* {errors.job_id && (
+                <span key={errors.job_id} className="text-danger font-size-3">
+                  {errors.job_id}
                 </span>
-              )}
+              )} */}
             </div>
             <div className="form-group text-center">
               <button
