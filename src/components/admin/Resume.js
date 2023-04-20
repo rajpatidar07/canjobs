@@ -9,6 +9,7 @@ import {
 } from "@react-pdf/renderer";
 import React, { useEffect, useState } from "react";
 import { EmployeeDetails } from "../../api/api";
+import moment from "moment";
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 10,
     fontSize: "10px",
+    lineHeight: 1.5,
   },
   section_right: {
     padding: "0 0 10px 10px",
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: "5px",
     lineHeight: 2,
+    textTransform: "capitalize",
   },
   icon: {
     fontWeight: "600",
@@ -65,15 +68,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
     textTransform: "uppercase",
-    borderBottom: "1px solid #fff",
+    borderBottom: "1px solid #ccc",
     width: "auto",
-    paddingBottom: "5px",
+    paddingBottom: 0,
   },
   subHeadingRight: {
     fontSize: 16,
     marginBottom: 10,
     textTransform: "uppercase",
-    borderBottom: "1px solid #333",
+    borderBottom: "1px solid #ccc",
     width: "auto",
     paddingBottom: "5px",
   },
@@ -89,14 +92,42 @@ const styles = StyleSheet.create({
     padding: "3px 5px",
     textTransform: "uppercase",
     borderRadius: "3px",
+    margin: 0,
+    lineHeight: 1,
   },
   userName: {
     padding: "30px 15px",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fafafa",
     name: {
       fontSize: 24,
       textTransform: "uppercase",
     },
+  },
+  eduInner: {
+    display: "flex",
+    flexDirection: "row",
+    padding: "5px 10px",
+    marginBottom: 5,
+    backgroundColor: "#fafafa",
+    alignItems: "center",
+    textTransform: "capitalize",
+  },
+  eduLeft: {
+    width: "70%",
+  },
+  eduRight: {
+    width: "30%",
+    textAlign: "right",
+  },
+  quaUni: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  qualification: {
+    fontSize: 14,
+    textTransform: "capitalize",
+    marginRight: 5,
   },
 });
 
@@ -104,16 +135,20 @@ const styles = StyleSheet.create({
 function ResumeGrerator(props) {
   const [User, setUser] = useState([]);
   const [Skills, setSkills] = useState([]);
+  const [Education, setEducation] = useState([]);
+  const [userCareer, setuserCareer] = useState([]);
   const UserData = async () => {
-    const userData = await EmployeeDetails(7);
+    const userData = await EmployeeDetails(props);
     setUser(userData.data.employee[0]);
     setSkills(userData.data.skill);
+    setuserCareer(userData.data.career);
+    setEducation(userData.data.education);
   };
   useEffect(() => {
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
-  console.log(Skills);
+  }, [props]);
+  console.log("________________________" + Skills);
   return (
     <PDFViewer style={styles.pagesetup}>
       <Document>
@@ -196,7 +231,6 @@ function ResumeGrerator(props) {
             <View style={styles.userName}>
               <Text style={styles.userName.name}>{User.name}</Text>
             </View>
-
             <View style={styles.divBox}>
               <Text style={styles.subHeadingRight}>About</Text>
               <View style={styles.AboutDiv}>
@@ -206,20 +240,93 @@ function ResumeGrerator(props) {
             <View style={styles.divBox}>
               <Text style={styles.subHeadingRight}>Education</Text>
               <View style={styles.eduDiv}>
-                {(Skills || []).map((skill) => (
-                  <Text key={skill.skill_id} style={styles.eduInner}>
-                    {skill.skill}
-                  </Text>
+                {(Education || []).map((edu) => (
+                  <View key={edu.education_id} style={styles.eduInner}>
+                    <View style={styles.eduLeft}>
+                      <View style={styles.quaUni}>
+                        <Text style={styles.qualification}>
+                          {edu.qualification}
+                        </Text>
+                        <Text style={styles.university}>
+                          ({edu.university_institute})
+                        </Text>
+                      </View>
+                      <View style={styles.couSpec}>
+                        <Text style={styles.course}>
+                          {edu.course} - {edu.specialization}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.eduRight}>
+                      <Text style={styles.year}>{edu.passing_year}</Text>
+                      <Text style={styles.location}>
+                        {edu.institute_location}
+                      </Text>
+                    </View>
+                  </View>
                 ))}
               </View>
             </View>
             <View style={styles.divBox}>
               <Text style={styles.subHeadingRight}>Experience</Text>
               <View style={styles.expDiv}>
-                {(Skills || []).map((skill) => (
-                  <Text key={skill.skill_id} style={styles.expInner}>
-                    {skill.skill}
-                  </Text>
+                {(userCareer || []).map((edu) => (
+                  <View key={edu.career_id} style={styles.eduInner}>
+                    <View style={styles.eduLeft}>
+                      <View style={styles.quaUni}>
+                        <Text style={styles.qualification}>
+                          {edu.designation}
+                        </Text>
+                        <Text style={styles.university}>
+                          ({edu.functional_area})
+                        </Text>
+                      </View>
+                      <View style={styles.couSpec}>
+                        <Text style={styles.course}>
+                          {edu.company} - ({edu.industry})
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.eduRight}>
+                      {/* {
+                        let a = moment([2015, 11, 29]);
+                        let b = moment([2007, 06, 27]);
+                        
+                        let years = ((moment([2015, 11, 29])).diff(moment([2015, 11, 29]), 'year').add(years, 'years'));
+                        
+                        let months = a.diff(b, 'months');
+                        b.add(months, 'months');
+                      } */}
+                      <Text style={styles.year}>
+                        {edu.currently_work_here != null
+                          ? moment(edu.end_date).diff(
+                              moment(edu.start_date),
+                              "year"
+                            ) !== 0
+                            ? moment(edu.end_date).diff(
+                                moment(edu.start_date),
+                                "year"
+                              ) + "Y, "
+                            : null +
+                                moment(edu.end_date).diff(
+                                  moment(edu.start_date),
+                                  "month"
+                                ) !==
+                              0
+                            ? moment(edu.end_date).diff(
+                                moment(edu.start_date),
+                                "month"
+                              ) + "M"
+                            : null
+                          : edu.start_date + "- Now"}
+                        {/* {edu.start_date}-{" "}
+                        {edu.end_date || edu.currently_work_here} */}
+                      </Text>
+                      <Text style={styles.location}>
+                        {edu.company_location}
+                      </Text>
+                    </View>
+                  </View>
                 ))}
               </View>
             </View>

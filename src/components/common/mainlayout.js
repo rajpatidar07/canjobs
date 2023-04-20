@@ -52,7 +52,7 @@ function MainLayout() {
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
         <Route path="/interview" element={<ManageInterview />} />
         <Route path="/responses" element={<JobResponse />} />
-        {/* <Route path="/resume" element={<ResumeGrerator />} /> */}
+        <Route path="/resume" element={<ResumeGrerator />} />
       </Routes>
     </BrowserRouter>
   );
