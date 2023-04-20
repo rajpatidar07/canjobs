@@ -33,7 +33,7 @@ function Employer() {
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(5);
+  const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("company_id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -559,8 +559,12 @@ function Employer() {
                                 </h4>
                               ) : (
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  +{empdata.contact_no} +
-                                  {empdata.contact_no_other}
+                                  +{empdata.contact_no}
+                                  {empdata.contact_no_other === null ||
+                                  empdata.contact_no_other === undefined ||
+                                  empdata.contact_no_other === ""
+                                    ? " "
+                                    : " +" + empdata.contact_no_other}
                                   <br />
                                   <span className="text-gray font-size-2">
                                     {empdata.email}

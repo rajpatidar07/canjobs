@@ -59,7 +59,7 @@ function Skills(props) {
       SkillData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, deleteAlert]);
+  }, [props, deleteAlert, state]);
 
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
@@ -71,7 +71,8 @@ function Skills(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        return close();
+        setState(initialFormState);
+        setErrors("");
       }
     }
   };
@@ -117,7 +118,7 @@ function Skills(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserSkillsClick}>
             <h5 className="text-center mb-7">Add It Skills </h5>{" "}
-            <div className="form-group ">
+            <div className="form-group d-flex">
               <label
                 htmlFor="skill"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -137,7 +138,13 @@ function Skills(props) {
                 name="skill"
                 value={state.skill}
                 onChange={onInputChange}
-              />
+              />{" "}
+              <button
+                className=" btn-primary px-5  mx-2 rounded-5 text-uppercase"
+                type="submit"
+              >
+                +
+              </button>
               {/*----ERROR MESSAGE FOR SKILLS----*/}
               {errors.skill && (
                 <span key={errors.skill} className="text-danger font-size-3">
@@ -162,14 +169,6 @@ function Skills(props) {
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
             </div>
           </form>
           {/* </div> */}

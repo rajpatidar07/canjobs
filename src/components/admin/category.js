@@ -24,7 +24,7 @@ function Category() {
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(5);
+  const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_category_id");
   const [sortOrder, setSortOrder] = useState("DESC");

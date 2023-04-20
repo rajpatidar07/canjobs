@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "../common/button";
+// import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import AddJobModal from "../forms/employer/job";
+// import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
@@ -32,7 +32,7 @@ function Followup() {
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(5);
+  const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -86,17 +86,17 @@ function Followup() {
     setJobId(e);
   };
   /* Function to show the single data to update job */
-  const getJobResponse = (e) => {
-    // e.preventDefault();
-    setShowAddJobsModal(true);
-    setJobId(e);
-  };
+  // const getJobResponse = (e) => {
+  //   // e.preventDefault();
+  //   setShowAddJobsModal(true);
+  //   setJobId(e);
+  // };
   /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.job_id);
-    setDeleteName(e.job_title);
-    setDeleteAlert(true);
-  };
+  // const ShowDeleteAlert = (e) => {
+  //   setDeleteID(e.job_id);
+  //   setDeleteName(e.job_title);
+  //   setDeleteAlert(true);
+  // };
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);

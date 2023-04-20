@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "https://apnaorganicstore.in/canjobs/",
   "dependencies": {
+    "@react-pdf/renderer": "^3.1.9",
     "@sweetalert/with-react": "^0.1.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

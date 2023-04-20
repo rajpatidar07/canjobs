@@ -9,12 +9,9 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
-
 function JobResponse(props) {
-  console.log(props);
-
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [followup, setFollowUp] = useState(false);
@@ -24,15 +21,15 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   const [company, setCompany] = useState([]);
   /*Filter and search state */
-  const [jobFilterValue, setJobTypeFilterValue] = useState("");
-  const [companyFilterValue, setCompanyTypeFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilter] = useState("");
+  const [educationFilterValue, setEducationFilterValue] = useState("");
   const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
     useState("");
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(5);
+  const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -40,44 +37,41 @@ function JobResponse(props) {
   const [jobId, setJobId] = useState(props.responseId);
   /* Function to get the Response data*/
   const ResponseData = async () => {
-    const userData = await GetAllResponse(jobId);
-
-    //   jobFilterValue,
-    //   companyFilterValue,
-    //   experienceTypeFilterValue,
-    //   search,
-    //   currentPage,
-    //   recordsPerPage,
-    //   columnName,
-    //   sortOrder
-    // );
+    const userData = await GetAllResponse(
+      jobId,
+      skillFilterValue,
+      educationFilterValue,
+      experienceTypeFilterValue,
+      search,
+      currentPage,
+      recordsPerPage,
+      columnName,
+      sortOrder
+    );
     setResponseData(userData.data.data);
-    setTotalData(userData.total_rows);
-  };
-  /* Function to get Employer data*/
-  const CompnayData = async () => {
-    const userData = await getAllEmployer();
-    setCompany(userData.data);
-    // //console.log((userData);
+    setTotalData(userData.data.total_rows);
+    const CompanyData = await getAllEmployer();
+    setCompany(CompanyData.data);
   };
 
   /*Render function to get the Response*/
   useEffect(() => {
-    CompnayData();
     ResponseData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    // jobFilterValue,
-    // companyFilterValue,
-    // experienceTypeFilterValue,
-    // search,
-    // currentPage,
-    // recordsPerPage,
-    // columnName,
-    // sortOrder,
-    // followup,
-    jobId,
-    showChangeJobModal,
+    skillFilterValue,
+    educationFilterValue,
+    experienceTypeFilterValue,
+    search,
+    currentPage,
+    recordsPerPage,
+    columnName,
+    sortOrder,
+    followup,
+    // jobId,
+    limia,
+    interview,
+    followup,
   ]);
 
   /*Function to open add follow up modal */
@@ -105,7 +99,6 @@ function JobResponse(props) {
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
-
   /*Sorting Function by name */
   let sortByNameClick = () => {
     if (
@@ -207,24 +200,8 @@ function JobResponse(props) {
   //   (thing, index, self) =>
   //     index === self.findIndex((t) => t.job_title === thing.job_title)
   // );
-  console.log(response);
 
   return (
-    // <div className="site-wrapper overflow-hidden bg-default-2">
-    // {/* <!-- Header Area --> */}
-    // <AdminHeader heading={"Manage Jobs"} />
-    // {/* <!-- navbar- --> */}
-    // <AdminSidebar heading={"Manage Jobs"} />
-    // <ToastContainer />
-    // <div
-    //   className={
-    //     showJobDetails === false
-    //       ? "dashboard-main-container mt-20"
-    //       : "d-none"
-    //   }
-    //   id="dashboard-body"
-    // >
-
     <div
       className={
         props.heading === "Manage Follow-ups"
@@ -313,43 +290,19 @@ function JobResponse(props) {
                     />
                   </div>
                   <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Job:</p>
+                    <p className="input_label">Filter by Skill:</p>
                     <div className="select_div">
                       <select
                         name="job"
                         id="job"
-                        value={jobFilterValue}
-                        onChange={(e) => setJobTypeFilterValue(e.target.value)}
+                        value={skillFilterValue}
+                        onChange={(e) => setSkillFilter(e.target.value)}
                         className=" form-control"
                       >
-                        <option value="">Select Job</option>
-                        {/* {(Job || []).map((job, i) => (
-                          <option value={job.job_title} key={i}>
-                            {job.job_title}
-                          </option>
-                        ))} */}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Company:</p>
-                    <div className="select_div">
-                      <select
-                        name="company_name"
-                        id="company_name"
-                        value={companyFilterValue}
-                        onChange={(e) =>
-                          setCompanyTypeFilterValue(e.target.value)
-                        }
-                        className=" form-control"
-                      >
-                        <option value="">Select Company</option>
-                        {(company || []).map((company) => (
-                          <option
-                            value={company.company_name}
-                            key={company.company_id}
-                          >
-                            {company.company_name}
+                        <option value="">Select Skil</option>
+                        {(FilterJson.keyskill || []).map((skill, i) => (
+                          <option value={skill} key={i}>
+                            {skill}
                           </option>
                         ))}
                       </select>
@@ -371,7 +324,7 @@ function JobResponse(props) {
                         {(FilterJson.experience || []).map((ex, i) => (
                           <option value={ex} key={i}>
                             {ex}
-                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
+                            {ex === "Fresher" || ex === "Other" ? "" : "Year"}
                           </option>
                         ))}
                       </select>
@@ -541,28 +494,37 @@ function JobResponse(props) {
                             </h3>
                           </th>
                           <th className="py-5  min-width-px-100">
-                            <Link to="" onClick={() => addFollow(res)}>
-                              <i className=" fas fa-plus text-gray px-2"></i>
-                            </Link>
-                            <Link to="" onClick={() => addnterview(res)}>
-                              <i className="fa fa-podcast text-gray px-2"></i>
-                            </Link>
-                            <Link to="">
-                              <span
-                                className=" text-danger"
+                            {" "}
+                            <div
+                              className="btn-group button_group"
+                              role="group"
+                              aria-label="Basic example"
+                            >
+                              <button
+                                className="btn btn-outline-info action_btn"
+                                onClick={() => addFollow(res)}
+                              >
+                                <i className=" fas fa-plus text-gray px-2"></i>
+                              </button>
+                              <button
+                                className="btn btn-outline-info action_btn"
+                                onClick={() => addnterview(res)}
+                              >
+                                <i className="fa fa-podcast text-gray px-2"></i>
+                              </button>
+                              <button
+                                className="btn btn-outline-info action_btn text-gray"
                                 onClick={() => addLimia(res)}
                               >
-                                <i className="fas fa-stream text-gray"></i>
-                              </span>
-                            </Link>
-                            <Link to="">
-                              <span
-                                className="px-3 text-gray"
+                                LIMIA
+                              </button>
+                              <button
+                                className="btn btn-outline-info action_btn text-gray"
                                 onClick={() => editJob(res)}
                               >
-                                <i class="fas fa-briefcase"></i>
-                              </span>
-                            </Link>
+                                <i className="fas fa-briefcase"></i>
+                              </button>
+                            </div>
                           </th>
                         </tr>
                       ))

@@ -4,6 +4,9 @@ import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GetAllJobs, ApplyJob } from "../../../api/api";
+// import { Select, Button } from "antd"; // "3.26.7" worked
+// import Select from "react-select";
+
 function ChangeJob(props) {
   // console.log(props.resData.job_id);
 
@@ -29,7 +32,7 @@ function ChangeJob(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
+  const { state, setState, setErrors, /* onInputChange,*/ errors, validate } =
     useValidation(initialFormState, validators);
   /* Function to get Job data*/
   const JobData = async () => {
@@ -55,11 +58,6 @@ function ChangeJob(props) {
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
-  /*Admin type array to filter*/
-  const Job = jobData.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.job_title === thing.job_title)
-  );
 
   return (
     <>
@@ -88,7 +86,7 @@ function ChangeJob(props) {
               >
                 Jobs <span className="text-danger">*</span> :
               </label>
-              <select
+              {/* <select
                 className={
                   errors.job_title
                     ? "form-control border border-danger"
@@ -108,7 +106,23 @@ function ChangeJob(props) {
                     </option>
                   );
                 })}
-              </select>
+              </select> */}
+              {/* <Select mode="multiple" style={{ width: 120 }}>
+                <Select.Option value="jack">Jack</Select.Option>
+                <Select.Option value="lucy">Lucy</Select.Option>
+                <Select.Option value="disabled" disabled>
+                  Disabled
+                </Select.Option>
+                <Select.Option value="Yiminghe">yiminghe</Select.Option>
+              </Select> */}
+              {/* <Select
+                options={jobData}
+                placeholder="Select color"
+                value={state.job_title}
+                onChange={onInputChange}
+                isSearchable={true}
+                isMulti
+              /> */}
               {/*----ERROR MESSAGE FOR EMAIL----*/}
               {errors.job_title && (
                 <span

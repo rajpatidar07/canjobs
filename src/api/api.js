@@ -220,10 +220,28 @@ export const EmployerForgotPassword = async (props) => {
   return response.data;
 };
 /*Response List Api */
-export const GetAllResponse = async (props) => {
+export const GetAllResponse = async (
+  job_id,
+  filter_skill,
+  filter_education,
+  filter_experience,
+  search,
+  page,
+  limit,
+  column,
+  sort
+) => {
   const response = await axios.post(`${API_URL}getJobResponse`, {
-    job_id: props,
+    job_id: job_id,
     user_type: user_type,
+    page: page,
+    limit: limit,
+    filter_experience: filter_experience,
+    filter_skill: filter_skill,
+    filter_education: filter_education,
+    column_name: column,
+    sort_order: sort,
+    search: search,
   });
   return response;
 };

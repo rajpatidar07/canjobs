@@ -48,7 +48,7 @@ const FilterJson = {
     "Other",
   ],
   industry: ["Hospitality", "Transport", "IT", "Tourism", "Health", "Other"],
-  experience: ["Fresher", "0-1 ", "1-3 ", "3-5 ", "5+ ", "10+ ", "Other"],
+  experience: ["Fresher", "0-1 ", "1-3 ", "3-5 ", "5-7 ", "7+ ", "Other"],
   job_type: [
     "Full Time",
     "Part Time",
