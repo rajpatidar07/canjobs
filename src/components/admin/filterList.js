@@ -9,28 +9,19 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-// import FilterJson from "../json/filterjson";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {
   let [apiCall, setApiCall] = useState(false);
   const [filterData, setFilterData] = useState([]);
-  const [id, setId] = useState();
   /*delete states */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteChildId, setDeleteChildID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  /*Filter and search state */
-  // const [categoryTypeFilterValue, setCategoryTypeFilterValue] = useState("");
-  // const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData /*setTotalData*/] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
-  /*Shorting states */
-  // const [columnName, setcolumnName] = useState("job_category_id");
-  // const [sortOrder, setSortOrder] = useState("DESC");
-  // const [clicksort, setClicksort] = useState(0);
 
   /* Function to get the filter data*/
   const FilterData = async () => {
@@ -39,7 +30,6 @@ function FilterList() {
     setApiCall(false);
     // console.log(Data.data);
   };
-  console.log(filterData);
 
   /*Render function to get the filter data*/
   useEffect(() => {
@@ -62,6 +52,7 @@ function FilterList() {
   async function deleteFilter(e, f) {
     console.log(e, f);
 
+    /*Function to delete the filter */
     const responseData = await DeleteFilter(e, f);
     if (responseData.message === "List item has been deleted") {
       toast.error("Filter deleted Successfully", {
@@ -73,12 +64,6 @@ function FilterList() {
   }
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
-
-  /*Category type array to filter*/
-  // const CategoryType = categoryData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.category_type === thing.category_type)
-  // );
 
   return (
     <>
@@ -101,7 +86,7 @@ function FilterList() {
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -140,77 +125,258 @@ function FilterList() {
                             )
                           )}
                         </ul>
-                        {/* <div className="float-md-right">
-                          <i
-                            className="font-size-3  fa fa-plus"
-                            onClick={() => {
-                              const hasSkillFilter = filterData
-                                .map((data) => data.item_name === "Skill")
-                                .includes(true);
-                              if (hasSkillFilter) {
-                                setId("1");
-                                setShowAddFilterModal(true);
-                              }
-                            }}
-                          ></i>
-                        </div> */}
                       </div>
                     </div>{" "}
                   </div>
-                  <div className="col-6">
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <div className="card job_filter_card">
-                      <div className="card-body row m-0">
+                      <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Industry{" "}
                         </h4>
-                        {totalData === 0 ? (
-                          <tr>
-                            <th className="bg-white"></th>
-                            <th className="bg-white">No Data Found</th>
-                            <th className="bg-white"></th>
-                          </tr>
-                        ) : (
-                          (filterData || []).map((data) =>
-                            data.item_name === "Industry"
-                              ? Object.entries(JSON.parse(data.json)).map(
-                                  (value) => (
-                                    <>
-                                      <li
-                                        className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                        key={value[0]}
-                                      >
-                                        {value[1]}
-                                        <Link
-                                          onClick={() =>
-                                            ShowDeleteAlert(value, data)
-                                          }
+                        <AddFilter setApiCall={() => setApiCall(true)} id={4} />
+                        <ul className="row m-0 p-0">
+                          {totalData === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData || []).map((data) =>
+                              data.item_name === "Industry"
+                                ? Object.entries(JSON.parse(data.json)).map(
+                                    (value) => (
+                                      <>
+                                        <li
+                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                          key={value[0]}
                                         >
-                                          <i
-                                            className="px-3 fa fa-times-circle"
-                                            aria-hidden="true"
-                                          ></i>
-                                        </Link>
-                                      </li>
-                                    </>
+                                          {value[1]}
+                                          <Link
+                                            onClick={() =>
+                                              ShowDeleteAlert(value, data)
+                                            }
+                                          >
+                                            <i
+                                              className="px-3 fa fa-times-circle"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
                                   )
-                                )
-                              : null
-                          )
-                        )}
-                        {/* <div className="float-md-right">
-                          <i
-                            className="font-size-3  fa fa-plus"
-                            onClick={() => {
-                              const hasSkillFilter = filterData
-                                .map((data) => data.item_name === "Location")
-                                .includes(true);
-                              if (hasSkillFilter) {
-                                setId("4");
-                                setShowAddFilterModal(true);
-                              }
-                            }}
-                          ></i>
-                        </div> */}
+                                : null
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                          Education{" "}
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={5} />
+                        <ul className="row m-0 p-0">
+                          {totalData === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData || []).map((data) =>
+                              data.item_name === "Education"
+                                ? Object.entries(JSON.parse(data.json)).map(
+                                    (value) => (
+                                      <>
+                                        <li
+                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                          key={value[0]}
+                                        >
+                                          {value[1]}
+                                          <Link
+                                            onClick={() =>
+                                              ShowDeleteAlert(value, data)
+                                            }
+                                          >
+                                            <i
+                                              className="px-3 fa fa-times-circle"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
+                                  )
+                                : null
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                          Category{" "}
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={2} />
+                        <ul className="row m-0 p-0">
+                          {totalData === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData || []).map((data) =>
+                              data.item_name === "Category"
+                                ? Object.entries(JSON.parse(data.json)).map(
+                                    (value) => (
+                                      <>
+                                        <li
+                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                          key={value[0]}
+                                        >
+                                          {value[1]}
+                                          <Link
+                                            onClick={() =>
+                                              ShowDeleteAlert(value, data)
+                                            }
+                                          >
+                                            <i
+                                              className="px-3 fa fa-times-circle"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
+                                  )
+                                : null
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                          Location{" "}
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={3} />
+                        <ul className="row m-0 p-0">
+                          {totalData === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData || []).map((data) =>
+                              data.item_name === "Location"
+                                ? Object.entries(JSON.parse(data.json)).map(
+                                    (value) => (
+                                      <>
+                                        <li
+                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                          key={value[0]}
+                                        >
+                                          {value[1]}
+                                          <Link
+                                            onClick={() =>
+                                              ShowDeleteAlert(value, data)
+                                            }
+                                          >
+                                            <i
+                                              className="px-3 fa fa-times-circle"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
+                                  )
+                                : null
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>{" "}
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                          Corporation{" "}
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={6} />
+                        <ul className="row m-0 p-0">
+                          {totalData === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData || []).map((data) =>
+                              data.item_name === "Corporation "
+                                ? Object.entries(JSON.parse(data.json)).map(
+                                    (value) => (
+                                      <>
+                                        <li
+                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                          key={value[0]}
+                                        >
+                                          {value[1]}
+                                          <Link
+                                            onClick={() =>
+                                              ShowDeleteAlert(value, data)
+                                            }
+                                          >
+                                            <i
+                                              className="px-3 fa fa-times-circle"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
+                                  )
+                                : null
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>{" "}
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                          Language{" "}
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={7} />
+                        <ul className="row m-0 p-0">
+                          {totalData === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData || []).map((data) =>
+                              data.item_name === "Language"
+                                ? Object.entries(JSON.parse(data.json)).map(
+                                    (value) => (
+                                      <>
+                                        <li
+                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                          key={value[0]}
+                                        >
+                                          {value[1]}
+                                          <Link
+                                            onClick={() =>
+                                              ShowDeleteAlert(value, data)
+                                            }
+                                          >
+                                            <i
+                                              className="px-3 fa fa-times-circle"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
+                                  )
+                                : null
+                            )
+                          )}
+                        </ul>
                       </div>
                     </div>
                   </div>

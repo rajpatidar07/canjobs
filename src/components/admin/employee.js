@@ -13,16 +13,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import UserProfile from "../user/profile";
-import LmiaStatus from "../forms/admin/lmiastatus";
 import FilterJson from "../json/filterjson";
 function Employee() {
   /*Show modal states */
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
-  let [showLimiaSttusModal, setShowLimiaStatusModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
+  // let [showResume, setShowResume] = useState(false);
   /*data and id states */
+  // let [resumeid, setResumeId] = useState(false);
   const [employeeData, setemployeeData] = useState([]);
   let [employeeId, setemployeeId] = useState();
   /*delete state */
@@ -91,12 +91,6 @@ function Employee() {
     setShowEducationModal(true);
     setemployeeId(e);
   };
-  /* Function to show the single data to update Employee Limia status*/
-  const editEmployeeLimiaStatus = (e) => {
-    // e.preventDefault();
-    setShowLimiaStatusModal(true);
-    setemployeeId(e);
-  };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
     // e.preventDefault();
@@ -157,6 +151,10 @@ function Employee() {
     setcolumnName(columnName);
   };
 
+  const ResumeClick = (employee_id) => {
+    const id = employee_id;
+    window.open(`/resume/${id}`, "_blank");
+  };
   /*Experience type array to filter*/
   // const Experience = employeeData.filter(
   //   (thing, index, self) =>
@@ -187,11 +185,6 @@ function Employee() {
           employeeId={employeeId}
           close={() => setShowEmployeeMOdal(false)}
         />
-        <LmiaStatus
-          close={() => setShowLimiaStatusModal(false)}
-          resData={employeeId}
-          show={showLimiaSttusModal}
-        />
         <Education
           close={() => setShowEducationModal(false)}
           employeeId={employeeId}
@@ -202,6 +195,11 @@ function Employee() {
           employeeId={employeeId}
           close={() => setShowSkillsModal(false)}
         />
+        {/* <ResumeGrerator
+          id={resumeid}
+          show={showResume}
+          close={() => setShowResume(false)}
+        /> */}
         <div
           className={
             showEmployeeProfile === false
@@ -469,7 +467,7 @@ function Employee() {
                               ) : (
                                 <p className="m-0">+{empdata.contact_no}</p>
                               )}
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                 <p className="text-gray font-size-2 m-0">
                                   {empdata.email}
                                 </p>
@@ -493,7 +491,7 @@ function Employee() {
                                   Unavailable
                                 </h3>
                               ) : (
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                   {empdata.education}
                                 </h3>
                               )}
@@ -504,7 +502,7 @@ function Employee() {
                                   Unavailable
                                 </h3>
                               ) : (
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                   {empdata.skill}
                                 </h3>
                               )}
@@ -540,15 +538,6 @@ function Employee() {
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() =>
-                                    editEmployeeLimiaStatus(empdata)
-                                  }
-                                >
-                                  <span className="fas fa-stream text-gray px-2"></span>
-                                </button>
-
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() =>
                                     editEmployeeEducation(empdata.employee_id)
                                   }
                                 >
@@ -569,6 +558,14 @@ function Employee() {
                                   }
                                 >
                                   <span className=" fas fa-edit text-gray px-2"></span>
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn text-center"
+                                  onClick={() =>
+                                    ResumeClick(empdata.employee_id)
+                                  }
+                                >
+                                  <span className="lh-sm">Generate Resume</span>
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn"

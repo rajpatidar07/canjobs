@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { EmployeeDetails } from "../../api/api";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -133,12 +134,14 @@ const styles = StyleSheet.create({
 
 // Create Document Component
 function ResumeGrerator(props) {
+  const { id } = useParams();
+  console.log(id);
   const [User, setUser] = useState([]);
   const [Skills, setSkills] = useState([]);
   const [Education, setEducation] = useState([]);
   const [userCareer, setuserCareer] = useState([]);
   const UserData = async () => {
-    const userData = await EmployeeDetails(props);
+    const userData = await EmployeeDetails(id);
     setUser(userData.data.employee[0]);
     setSkills(userData.data.skill);
     setuserCareer(userData.data.career);

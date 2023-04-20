@@ -145,13 +145,13 @@ function Skills(props) {
               >
                 +
               </button>
-              {/*----ERROR MESSAGE FOR SKILLS----*/}
-              {errors.skill && (
-                <span key={errors.skill} className="text-danger font-size-3">
-                  {errors.skill}
-                </span>
-              )}
-            </div>
+            </div>{" "}
+            {/*----ERROR MESSAGE FOR SKILLS----*/}
+            {errors.skill && (
+              <span key={errors.skill} className="text-danger font-size-3 mx-5">
+                {errors.skill}
+              </span>
+            )}
             <div className="">
               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                 {(skillData || []).map((skill) => (

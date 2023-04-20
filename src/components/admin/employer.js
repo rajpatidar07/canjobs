@@ -573,25 +573,46 @@ function Employer() {
                               )}
                             </th>
                             <th className=" py-5  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.company_name}
-                              </h3>
+                              {empdata.company_name === null ? (
+                                <h4 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h4>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.company_name}
+                                </h3>
+                              )}
                             </th>
                             <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.industry}
-                              </h3>
+                              {empdata.industry === null ? (
+                                <h4 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h4>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.industry}
+                                </h3>
+                              )}
                             </th>
                             <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.vacancy_for_post}
-                              </h3>
+                              {empdata.vacancy_for_post === null ? (
+                                <h4 className="font-size-3 font-weight-bold  mb-0">
+                                  Unavailable
+                                </h4>
+                              ) : (
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {empdata.vacancy_for_post}
+                                </h3>
+                              )}
                             </th>
                             <th className="  py-5 ">
                               <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
                                 {empdata.contact_person_name === null ||
                                 empdata.contact_no === null ||
-                                empdata.address === null ? (
+                                empdata.address === null ||
+                                empdata.industry === null ||
+                                empdata.company_name === null ||
+                                empdata.vacancy_for_post === null ? (
                                   <>
                                     <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                                       Incompelete Profile
