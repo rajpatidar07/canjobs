@@ -118,7 +118,7 @@ const AdminSidebar = (props) => {
               to="/filter"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-7"></i>Manage Filter List
+              <i className="fas fa-filter mr-7"></i>Manage Filter List
             </Link>
           </li>
           <li className={props.heading === "Interview" ? "active" : ""}>
@@ -126,10 +126,10 @@ const AdminSidebar = (props) => {
               to="/interview"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-cog mr-7"></i>Manage Interview
+              <i className="fas fa-podcast mr-7"></i>Manage Interview
             </Link>
           </li>
-          <li className={props.heading === "Interview" ? "active" : ""}>
+          <li className={props.heading === "Response" ? "active" : ""}>
             <Link
               to="/responses"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"

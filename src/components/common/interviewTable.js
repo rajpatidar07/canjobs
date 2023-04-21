@@ -127,8 +127,8 @@ function Interview(props) {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
-                <div className="row align-items-center">
-                  {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                {/* <div className="row align-items-center"> */}
+                {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
                   <p className="input_label">Search by name:</p>
                   <input
                     required
@@ -140,7 +140,7 @@ function Interview(props) {
                     onChange={(e) => onSearch(e)}
                   />
                 </div> */}
-                  {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
                     <p className="input_label">Filter by Duration:</p>
                     <div className="select_div">
                       <select
@@ -161,7 +161,7 @@ function Interview(props) {
                       </select>
                     </div>
                   </div> */}
-                  {/* <div className="text-end px-6 col-xl-6">
+                {/* <div className="text-end px-6 col-xl-6">
                   <div className="float-md-right">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -171,7 +171,7 @@ function Interview(props) {
                     </CustomButton>
                   </div>
                 </div> */}
-                </div>
+                {/* </div> */}
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
@@ -214,18 +214,22 @@ function Interview(props) {
                             Company Name
                           </Link>
                         </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("skill")}
-                            className="text-gray"
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="border-0 font-size-4 font-weight-normal"
                           >
-                            Skill
-                          </Link>
-                        </th>
+                            <Link
+                              to={""}
+                              onClick={() => handleSort("skill")}
+                              className="text-gray"
+                            >
+                              Skill
+                            </Link>
+                          </th>
+                        )}
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
@@ -255,59 +259,53 @@ function Interview(props) {
                           <th className="bg-white"></th>
                         </tr>
                       ) : (
-                        (interviewData || []).map(
-                          (data) => (
-                            <tr className="" key={data.id}>
-                              <th scope="row" className="py-5 ">
-                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {data.name}
-                                </div>
-                              </th>
-                              <th scope="row" className="py-5 ">
-                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {data.job_title}
-                                </div>
-                              </th>
-                              <th scope="row" className="py-5 ">
-                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {data.company_name}
-                                </div>
-                              </th>
+                        (interviewData || []).map((data) => (
+                          <tr className="" key={data.id}>
+                            <th scope="row" className="py-5 ">
+                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                {data.name}
+                              </div>
+                            </th>
+                            <th scope="row" className="py-5 ">
+                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                {data.job_title}
+                              </div>
+                            </th>
+                            <th scope="row" className="py-5 ">
+                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                {data.company_name}
+                              </div>
+                            </th>
+                            {props.heading === "Dashboard" ? (
+                              ""
+                            ) : (
                               <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {data.skill}
                                 </div>
                               </th>
-                              <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {data.interview_date}
-                                </h3>
-                              </th>
-                              <th className="py-5 min-width-px-100">
-                                <div
-                                  className="btn-group button_group"
-                                  role="group"
+                            )}
+                            <th className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {data.interview_date}
+                              </h3>
+                            </th>
+                            <th className="py-5 ">
+                              <div
+                                className="btn-group button_group"
+                                role="group"
+                              >
+                                <button
+                                  className="btn btn-outline-info action_btn "
+                                  style={{ fontSize: "10px" }}
+                                  onClick={() => editInterview(data)}
                                 >
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => editInterview(data)}
-                                  >
-                                    Reshedule
-                                  </button>
-                                  {/* {props.heading === "Interview" ? (
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => editJob(data)}
-                                    >
-                                      Change job
-                                    </button>
-                                  ) : null} */}
-                                </div>
-                              </th>
-                            </tr>
-                          )
-                          // )
-                        )
+                                  Reshedule
+                                </button>
+                              </div>
+                            </th>
+                          </tr>
+                        ))
                       )}
                     </tbody>
                   </table>

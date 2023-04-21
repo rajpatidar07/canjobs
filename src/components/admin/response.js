@@ -212,10 +212,26 @@ function JobResponse(props) {
       {props.heading !== "Manage Follow-ups" ? (
         <>
           {/* <!-- Header Area --> */}
-          <AdminHeader heading={"Response"} />
+          <AdminHeader
+            heading={
+              props.heading === "Manage Follow-ups"
+                ? "Manage Follow-ups"
+                : props.heading === "Dashboard"
+                ? "Dashboard"
+                : "Response"
+            }
+          />
           {/* <!-- navbar- --> */}
-          <AdminSidebar heading={"Response"} />
-          <ToastContainer />{" "}
+          <AdminSidebar
+            heading={
+              props.heading === "Manage Follow-ups"
+                ? "Manage Follow-ups"
+                : props.heading === "Dashboard"
+                ? "Dashboard"
+                : "Response"
+            }
+          />
+          <ToastContainer />
         </>
       ) : null}
       <Addfollowup
@@ -232,10 +248,9 @@ function JobResponse(props) {
       />
       <LmiaStatus
         show={limia}
-        job_id={jobId}
         resData={resData}
         close={() => setLimia(false)}
-      />{" "}
+      />
       <ChangeJob
         resData={resData}
         close={() => {
@@ -248,6 +263,8 @@ function JobResponse(props) {
         className={
           props.heading === "Manage Follow-ups"
             ? "response__container"
+            : props.heading === "Dashboard"
+            ? ""
             : "dashboard-main-container mt-20"
         }
       >
@@ -255,85 +272,90 @@ function JobResponse(props) {
           className={
             props.heading === "Manage Follow-ups"
               ? "container p-0"
+              : props.heading === "Dashboard"
+              ? ""
               : "container"
           }
         >
-          <div className="mb-8" /*"mb-18" */>
+          {props.heading === "Dashboard" ? (
+            ""
+          ) : (
             <div
               className={
                 props.heading === "Manage Follow-ups"
-                  ? "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
-                  : ""
+                  ? "response_filters mb-2 align-items-center"
+                  : "mb-8 align-items-center"
               }
             >
-              <div
-                className={
-                  props.heading === "Manage Follow-ups"
-                    ? "response_filters mb-2 align-items-center"
-                    : "mb-8 align-items-center"
-                }
-              >
-                <div className="page___heading">
-                  <h3 className="font-size-6 mb-0">Follow Up</h3>
-                </div>
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Company:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control"
-                      placeholder={"Search Category"}
-                      value={search}
-                      name={"category_name"}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                  </div>
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Skill:</p>
-                    <div className="select_div">
-                      <select
-                        name="job"
-                        id="job"
-                        value={skillFilterValue}
-                        onChange={(e) => setSkillFilter(e.target.value)}
-                        className=" form-control"
-                      >
-                        <option value="">Select Skil</option>
-                        {(FilterJson.keyskill || []).map((skill, i) => (
-                          <option value={skill} key={i}>
-                            {skill}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Experience:</p>
-                    <div className="select_div">
-                      <select
-                        name="experience"
-                        id="experience"
-                        value={experienceTypeFilterValue}
-                        onChange={(e) =>
-                          setExperienceTypeFilterValue(e.target.value)
-                        }
-                        className=" form-control"
-                      >
-                        <option value="">Select Experience</option>
-                        {(FilterJson.experience || []).map((ex, i) => (
-                          <option value={ex} key={i}>
-                            {ex}
-                            {ex === "Fresher" || ex === "Other" ? "" : "Year"}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="float-md-right mt-6"></div>
-                </div>
+              <div className="page___heading">
+                <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
-
+              <div className="row align-items-center">
+                <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <p className="input_label">Filter by Company:</p>
+                  <input
+                    required
+                    type="text"
+                    className="form-control"
+                    placeholder={"Search Category"}
+                    value={search}
+                    name={"category_name"}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                  <p className="input_label">Filter by Skill:</p>
+                  <div className="select_div">
+                    <select
+                      name="job"
+                      id="job"
+                      value={skillFilterValue}
+                      onChange={(e) => setSkillFilter(e.target.value)}
+                      className=" form-control"
+                    >
+                      <option value="">Select Skil</option>
+                      {(FilterJson.keyskill || []).map((skill, i) => (
+                        <option value={skill} key={i}>
+                          {skill}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                  <p className="input_label">Filter by Experience:</p>
+                  <div className="select_div">
+                    <select
+                      name="experience"
+                      id="experience"
+                      value={experienceTypeFilterValue}
+                      onChange={(e) =>
+                        setExperienceTypeFilterValue(e.target.value)
+                      }
+                      className=" form-control"
+                    >
+                      <option value="">Select Experience</option>
+                      {(FilterJson.experience || []).map((ex, i) => (
+                        <option value={ex} key={i}>
+                          {ex}
+                          {ex === "Fresher" || ex === "Other" ? "" : "Year"}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="float-md-right mt-6"></div>
+              </div>
+            </div>
+          )}
+          <div className="mb-8" /*"mb-18" */>
+            <div
+              className={
+                props.heading === "Response"
+                  ? ""
+                  : "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+              }
+            >
               <div className="table-responsive ">
                 <table
                   className={
@@ -362,18 +384,22 @@ function JobResponse(props) {
                           Name
                         </Link>
                       </th>
-                      <th
-                        scope="col"
-                        className="pl-0 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={sortByExperienceClick}
-                          className="text-gray"
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th
+                          scope="col"
+                          className="pl-0 border-0 font-size-4 font-weight-normal"
                         >
-                          Experience
-                        </Link>
-                      </th>
+                          <Link
+                            to={""}
+                            onClick={sortByExperienceClick}
+                            className="text-gray"
+                          >
+                            Experience
+                          </Link>
+                        </th>
+                      )}
                       <th
                         scope="col"
                         className="pl-4 border-0 font-size-4 font-weight-normal"
@@ -404,24 +430,44 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={sortByContactClick}
+                          // onClick={sortByCompanyClick}
                           className="text-gray"
                         >
-                          Contact
+                          Limia
                         </Link>
                       </th>
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={sortByAddressClick}
-                          className="text-gray"
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          Address
-                        </Link>
-                      </th>
+                          <Link
+                            to={""}
+                            onClick={sortByContactClick}
+                            className="text-gray"
+                          >
+                            Contact
+                          </Link>
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          <Link
+                            to={""}
+                            onClick={sortByAddressClick}
+                            className="text-gray"
+                          >
+                            Address
+                          </Link>
+                        </th>
+                      )}
                       <th
                         scope="col"
                         className="pl-4 border-0 font-size-4 font-weight-normal"
@@ -465,11 +511,15 @@ function JobResponse(props) {
                               {res.gender}
                             </h3>
                           </th>
-                          <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.experience} years <br />
-                            </h3>
-                          </th>
+                          {props.heading === "Dashboard" ? (
+                            ""
+                          ) : (
+                            <th className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.experience} years <br />
+                              </h3>
+                            </th>
+                          )}
                           <th className="py-5 ">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {res.job_title}
@@ -482,50 +532,66 @@ function JobResponse(props) {
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              +{res.contact_no} <br /> {res.email}
+                              {res.lmia_status}
                             </h3>
                           </th>
-                          <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <span>{res.current_location}</span>
-                              <span className="px-1">
-                                {res.currently_located_country}
-                              </span>
-                            </h3>
-                          </th>
-                          <th className="py-5  min-width-px-100">
-                            {" "}
-                            <div
-                              className="btn-group button_group"
-                              role="group"
-                              aria-label="Basic example"
-                            >
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() => addFollow(res)}
+                          {props.heading === "Dashboard" ? (
+                            ""
+                          ) : (
+                            <th className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                                +{res.contact_no} <br /> {res.email}
+                              </h3>
+                            </th>
+                          )}
+                          {props.heading === "Dashboard" ? (
+                            ""
+                          ) : (
+                            <th className="py-5 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <span>{res.current_location}</span>
+                                <span className="px-1">
+                                  {res.currently_located_country}
+                                </span>
+                              </h3>
+                            </th>
+                          )}
+                          {props.heading === "Dashboard" ? (
+                            ""
+                          ) : (
+                            <th className="py-5  min-width-px-100">
+                              <div
+                                className="btn-group button_group"
+                                role="group"
+                                aria-label="Basic example"
                               >
-                                <i className=" fas fa-plus text-gray px-2"></i>
-                              </button>
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                onClick={() => addnterview(res)}
-                              >
-                                <i className="fa fa-podcast text-gray px-2"></i>
-                              </button>
-                              <button
-                                className="btn btn-outline-info action_btn text-gray"
-                                onClick={() => addLimia(res)}
-                              >
-                                LIMIA
-                              </button>
-                              <button
-                                className="btn btn-outline-info action_btn text-gray"
-                                onClick={() => editJob(res)}
-                              >
-                                <i className="fas fa-briefcase"></i>
-                              </button>
-                            </div>
-                          </th>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => addFollow(res)}
+                                >
+                                  <i className=" fas fa-plus text-gray px-2"></i>
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => addnterview(res)}
+                                >
+                                  <i className="fa fa-podcast text-gray px-2"></i>
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn text-gray"
+                                  onClick={() => addLimia(res)}
+                                >
+                                  LIMIA
+                                </button>
+                                <button
+                                  className="btn btn-outline-info action_btn text-gray"
+                                  onClick={() => editJob(res)}
+                                >
+                                  <i className="fas fa-briefcase"></i>
+                                </button>
+                              </div>
+                            </th>
+                          )}
                         </tr>
                       ))
                     )}

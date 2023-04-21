@@ -1,34 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "./button";
-import JobDetailsBox from "./jobdetail";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
-import SAlert from "./sweetAlert";
-import Pagination from "./pagination";
-import FilterJson from "../json/filterjson";
-import JobResponse from "./response";
+import { toast } from "react-toastify";
+import SAlert from "../common/sweetAlert";
+import Pagination from "../common/pagination";
 
-function FollowupTable() {
+export default function JobTable(props) {
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
-  let [showJobDetails, setShowJobDetails] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  /*Filter and search state */
-  const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("");
-  const [locationFilterValue, setLocationFilterValue] = useState("");
-  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [search, setSearch] = useState("");
-  const [Categorylist, setCategoryList] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,56 +23,52 @@ function FollowupTable() {
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [clicksort, setClicksort] = useState(0);
-  const [responseId, setresponseId] = useState();
 
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
-      search,
-      locationFilterValue,
-      categoryFilterValue,
-      SkillFilterValue,
-      jobSwapFilterValue,
+      props.search,
+      props.locationFilterValue,
+      props.categoryFilterValue,
+      props.SkillFilterValue,
+      props.jobSwapFilterValue,
       currentPage,
       recordsPerPage,
       columnName,
-      sortOrder
+      sortOrder,
+      props.company
     );
     setjobData(userData.data.data);
+    // console.log(userData.data.data);
     setTotalData(userData.data.total_rows);
-    setresponseId(userData.data.data[0].job_id);
-    // if (userData.message === "No data found") {
-    // //console.log((userData.status);
-    // }
   };
 
   /*Render function to get the job */
   useEffect(() => {
     JobData();
-    CategoryData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    categoryFilterValue,
-    SkillFilterValue,
-    locationFilterValue,
-    jobSwapFilterValue,
+    props.categoryFilterValue,
+    props.SkillFilterValue,
+    props.locationFilterValue,
+    props.jobSwapFilterValue,
     showAddJobsModal,
-    search,
+    props.search,
     deleteAlert,
     currentPage,
     columnName,
     sortOrder,
+    props.company,
   ]);
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
     // e.preventDefault();
-    setShowJobDetails(true);
-    setJobId(e);
+    props.JobDetail(e);
   };
   /* Function to show the single data to update job */
-  const getJobResponse = (e) => {
+  const editJob = (e) => {
     // e.preventDefault();
     setShowAddJobsModal(true);
     setJobId(e);
@@ -97,10 +79,7 @@ function FollowupTable() {
     setDeleteName(e.job_title);
     setDeleteAlert(true);
   };
-  /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
+
   /*To call Api to delete Job */
   async function deleteJob(e) {
     const responseData = await DeleteJob(e);
@@ -112,32 +91,6 @@ function FollowupTable() {
       setDeleteAlert(false);
     }
   }
-  /*Category Onchange function to filter the data */
-  let onCategoryFilterChange = (e) => {
-    setCategoryFilterValue(e.target.value);
-  };
-  /* Function to get the job category data*/
-  const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    setCategoryList(userData.data);
-  };
-
-  /*Skill Onchange function to filter the data */
-  let onSkillFilterChange = (e) => {
-    setSkillFilterValue(e.target.value);
-  };
-  /*Location Onchange function to filter the data */
-  let onLocationFilterChange = (e) => {
-    setLocationFilterValue(e.target.value);
-  };
-  /*JobSwap Onchange function to filter the data */
-  let onJobSwapFilterChange = (e) => {
-    setJobSwapFilterValue(e.target.value);
-  };
-  /*Searcg Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -237,15 +190,21 @@ function FollowupTable() {
       setClicksort(0);
     }
   };
-  /*Category type array to filter*/
-  const CategoryType = (Categorylist || []).filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.category_type === thing.category_type)
-  );
 
   return (
     <>
+      {" "}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+        {props.heading === "Dashboard" ? (
+          <Link
+            className="btn btn-outline-info action_btn float-right mb-2"
+            to={"/job"}
+          >
+            View All
+          </Link>
+        ) : (
+          ""
+        )}
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
             <thead>
@@ -258,58 +217,82 @@ function FollowupTable() {
                     Job title / Industry
                   </Link>
                 </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" onClick={sortByTypeClick} className="text-gray">
-                    Job Type
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to=""
-                    onClick={sortByLocationClick}
-                    className="text-gray"
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Address
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to=""
-                    onClick={sortByEducationClick}
-                    className="text-gray"
+                    <Link to="" onClick={sortByTypeClick} className="text-gray">
+                      Job Type
+                    </Link>
+                  </th>
+                )}
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Education
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link to="" onClick={sortBySkillClick} className="text-gray">
-                    Skills
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to=""
-                    onClick={sortByLanguageClick}
-                    className="text-gray"
+                    <Link
+                      to=""
+                      onClick={sortByLocationClick}
+                      className="text-gray"
+                    >
+                      Address
+                    </Link>
+                  </th>
+                )}
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Language
-                  </Link>
-                </th>
+                    <Link
+                      to=""
+                      onClick={sortByEducationClick}
+                      className="text-gray"
+                    >
+                      Education
+                    </Link>
+                  </th>
+                )}
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to=""
+                      onClick={sortBySkillClick}
+                      className="text-gray"
+                    >
+                      Skills
+                    </Link>
+                  </th>
+                )}
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to=""
+                      onClick={sortByLanguageClick}
+                      className="text-gray"
+                    >
+                      Language
+                    </Link>
+                  </th>
+                )}
                 <th
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
@@ -338,12 +321,16 @@ function FollowupTable() {
                     Total Applicants
                   </Link>
                 </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  Action
-                </th>
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    Action
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -363,86 +350,112 @@ function FollowupTable() {
                 </tr>
               ) : (
                 (jobData || []).map((job) => (
-                  <>
-                    <tr
-                      className="aos-init aos-animate"
-                      data-aos="fade-right"
-                      data-aos-duration="800"
-                      data-aos-once="true"
-                      key={job.job_id}
-                    >
-                      <td scope="row" className="py-5 ">
-                        <div className="">
+                  <tr className="" key={job.job_id}>
+                    <th scope="row" className="py-5 ">
+                      <div className="">
+                        {props.heading === "Dashboard" ? (
+                          <span className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            {job.job_title} {job.company_name}(
+                            {job.industry_type})
+                          </span>
+                        ) : (
                           <Link
+                            title="Job Details"
                             to={""}
                             onClick={() => JobDetail(job.job_id)}
                             className="font-size-3 mb-0 font-weight-semibold text-black-2"
                           >
-                            {job.job_title} ({job.industry_type})
+                            {job.job_title} {job.company_name}(
+                            {job.industry_type})
                           </Link>
-                        </div>
-                      </td>
-                      <td className=" py-5">
+                        )}
+                      </div>
+                    </th>
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {job.employement} - {job.job_type}
                         </h3>
-                      </td>
-                      <td className=" py-5">
+                      </th>
+                    )}
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {job.location}
                         </h3>
-                      </td>
-                      <td className="py-5 ">
+                      </th>
+                    )}
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th className="py-5 ">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {job.education}
                         </h3>
-                      </td>
-                      <td className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                      </th>
+                    )}
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th className="py-5 ">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                           {job.keyskill}
                         </h3>
-                      </td>
-                      <td className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                      </th>
+                    )}
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th className="py-5 ">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                           {job.language}
                         </h3>
-                      </td>
-                      <td className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {job.salary}
-                        </h3>
-                      </td>
-                      <td className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {job.experience_required}
-                        </h3>
-                      </td>
-                      <td className="py-5 ">
-                        <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                          {job.total_applicants}
-                        </h3>
-                      </td>
-                      <td className="py-5 min-width-px-100">
-                        {job.total_applicants > 0 ? (
-                          <div class="btn-group button_group" role="group">
-                            <button
-                              className="btn btn-outline-info action_btn"
-                              onClick={() => setresponseId(job.job_id)}
-                            >
-                              Responses
-                            </button>
-                          </div>
-                        ) : null}
-                      </td>
-                    </tr>
-                    {job.job_id === responseId && job.total_applicants > 0 ? (
-                      <tr>
-                        <td colSpan={10}>
-                          <JobResponse responseId={responseId} />
-                        </td>
-                      </tr>
-                    ) : null}
-                  </>
+                      </th>
+                    )}
+                    <th className="py-5 ">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        {job.salary}
+                      </h3>
+                    </th>
+                    <th className="py-5 ">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        {job.experience_required}
+                      </h3>
+                    </th>
+                    <th className="py-5 ">
+                      <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                        {job.total_applicants}
+                      </h3>
+                    </th>
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th className="py-5 min-width-px-100">
+                        <div className="btn-group button_group" role="group">
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => editJob(job.job_id)}
+                            title="Edit Job"
+                          >
+                            <span className=" fas fa-edit text-gray"></span>
+                          </button>
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => ShowDeleteAlert(job)}
+                            title="Delete"
+                          >
+                            <span className=" text-danger">
+                              <i className="fa fa-trash"></i>
+                            </span>
+                          </button>
+                        </div>
+                      </th>
+                    )}
+                  </tr>
                 ))
               )}
             </tbody>
@@ -456,8 +469,19 @@ function FollowupTable() {
           />
         </div>
       </div>
+      <AddJobModal
+        show={showAddJobsModal}
+        jobdata={JobId}
+        close={() => setShowAddJobsModal(false)}
+      />{" "}
+      <SAlert
+        show={deleteAlert}
+        title={deleteName}
+        text="Are you Sure you want to delete !"
+        onConfirm={() => deleteJob(deleteId)}
+        showCancelButton={true}
+        onCancel={() => setDeleteAlert(false)}
+      />
     </>
   );
 }
-
-export default FollowupTable;

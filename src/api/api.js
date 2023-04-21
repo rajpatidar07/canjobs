@@ -268,7 +268,7 @@ export const GetAllJobs = async (
     limit: limit,
     column_name: column_name,
     sort_order: sort_order,
-    company_name: company,
+    search: company,
   });
   return response;
 };

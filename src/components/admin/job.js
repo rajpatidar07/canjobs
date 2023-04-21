@@ -8,14 +8,13 @@ import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
-import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
+import JobTable from "../common/jobTable";
 
 function Job() {
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
-  const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -29,41 +28,12 @@ function Job() {
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState("");
   const [Categorylist, setCategoryList] = useState([]);
-  /*Pagination states */
-  const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(10);
-  /*Shorting states */
-  const [columnName, setcolumnName] = useState("job_id");
-  const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
-  /* Function to get Job data*/
-  const JobData = async () => {
-    const userData = await GetAllJobs(
-      search,
-      locationFilterValue,
-      categoryFilterValue,
-      SkillFilterValue,
-      jobSwapFilterValue,
-      currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder,
-      company
-    );
-    setjobData(userData.data.data);
-    // console.log(userData.data.data);
-    setTotalData(userData.data.total_rows);
-
-    // if (userData.message === "No data found") {
-    // //console.log((userData.status);
-    // }
-  };
-
+  // if (userData.message === "No data found") {
+  // //console.log((userData.status);
+  // }
   /*Render function to get the job */
   useEffect(() => {
-    JobData();
     CategoryData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,10 +44,6 @@ function Job() {
     jobSwapFilterValue,
     showAddJobsModal,
     search,
-    deleteAlert,
-    currentPage,
-    columnName,
-    sortOrder,
     company,
   ]);
 
@@ -93,24 +59,6 @@ function Job() {
     setShowAddJobsModal(true);
     setJobId(e);
   };
-  /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.job_id);
-    setDeleteName(e.job_title);
-    setDeleteAlert(true);
-  };
-
-  /*To call Api to delete Job */
-  async function deleteJob(e) {
-    const responseData = await DeleteJob(e);
-    if (responseData.message === "job has been deleted") {
-      toast.error("Job deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setDeleteAlert(false);
-    }
-  }
 
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -118,126 +66,11 @@ function Job() {
     setCategoryList(userData.data);
   };
 
-  /*Pagination Calculation */
-  const nPages = Math.ceil(totalData / recordsPerPage);
-
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("job_title");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_title");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Type */
-  let sortByTypeClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("job_type");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_type");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Location */
-  let sortByLocationClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("location");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("location");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Education */
-  let sortByEducationClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("education");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("education");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Skill */
-  let sortBySkillClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("keyskill");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("keyskill");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Language */
-  let sortByLanguageClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("language");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("language");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Salary */
-  let sortBySalaryClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("salary");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("salary");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Experience  */
-  let sortByExperienceClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("experience_required");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("experience_required");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
   /*Category type array to filter*/
   const CategoryType = Categorylist.filter(
     (thing, index, self) =>
       index === self.findIndex((t) => t.category_type === thing.category_type)
   );
-  /*Job type array to filter*/
-  // const JobType = jobData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.job_type === thing.job_type)
-  // );
-  /*Skill type array to filter*/
-  // const SkillType = jobData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.skill === thing.skill)
-  // );
-  /*Location type array to filter*/
-  // const LocationType = jobData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.location === thing.location)
-  // );
-
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -372,7 +205,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="text-end col-xl-9">
+                  <div className="text-end col-xl-12">
                     <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -389,7 +222,16 @@ function Job() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+              <JobTable
+                search={search}
+                jobSwapFilterValue={jobSwapFilterValue}
+                locationFilterValue={locationFilterValue}
+                SkillFilterValue={SkillFilterValue}
+                categoryFilterValue={categoryFilterValue}
+                company={company}
+                JobDetail={JobDetail}
+              />
+              {/* <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive main_table_div">
                   <table className="table table-striped main_data_table">
                     <thead>
@@ -502,9 +344,9 @@ function Job() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {/* Map function to show the data in the list*/}
-                      {totalData === 0 ? (
+                    <tbody> */}
+              {/* Map function to show the data in the list*/}
+              {/* {totalData === 0 ? (
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>
@@ -548,12 +390,12 @@ function Job() {
                               </h3>
                             </th>
                             <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                 {job.keyskill}
                               </h3>
                             </th>
                             <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                                 {job.language}
                               </h3>
                             </th>
@@ -606,17 +448,9 @@ function Job() {
                     setCurrentPage={setCurrentPage}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
-          <SAlert
-            show={deleteAlert}
-            title={deleteName}
-            text="Are you Sure you want to delete !"
-            onConfirm={() => deleteJob(deleteId)}
-            showCancelButton={true}
-            onCancel={() => setDeleteAlert(false)}
-          />
         </div>
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-20 ">

@@ -1,76 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
-import ContactInfo from "../forms/employer/contactInfo";
-import KycComplianceDetails from "../forms/employer/kyc";
-import { getAllEmployer, DeleteEmployer } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
-import SAlert from "../common/sweetAlert";
-import Pagination from "../common/pagination";
+import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
+import EmployerTable from "../common/employerTable";
 
 function Employer() {
   // eslint-disable-next-line
   /*show modal and data, id state */
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
-  let [showKycModal, setShowkycMOdal] = useState(false);
-  let [showContactModal, setShowContactMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
-  const [employerData, setemployerData] = useState([]);
   const [employerId, setEmployerID] = useState();
-  /*delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
+
   /*Filter and search state */
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
-  /*Pagination states */
-  const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(10);
-  /*Shorting states */
-  const [columnName, setcolumnName] = useState("company_id");
-  const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
-
-  /* Function to get Employer data*/
-  const EmployerData = async () => {
-    const userData = await getAllEmployer(
-      industryFilterValue,
-      corporationFilterValue,
-      search,
-      currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder
-    );
-    setemployerData(userData.data);
-    setTotalData(userData.total_rows);
-  };
-
-  /*Render function to get the employer*/
-  useEffect(() => {
-    EmployerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    industryFilterValue,
-    corporationFilterValue,
-    search,
-    showAddEmployerModal,
-    showKycModal,
-    showContactModal,
-    deleteAlert,
-    currentPage,
-    recordsPerPage,
-    columnName,
-    sortOrder,
-  ]);
 
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
@@ -78,167 +27,7 @@ function Employer() {
     setShowEmployerMOdal(true);
     setEmployerID(e);
   };
-  /* Function to show the single data to update Employer Contact*/
-  const editEmployerContact = (e) => {
-    // e.preventDefault();
-    setShowContactMOdal(true);
-    setEmployerID(e);
-  };
-  /* Function to show the single data to update Kyc*/
-  const editEmployerKyc = (e) => {
-    // e.preventDefault();
-    setShowkycMOdal(true);
-    setEmployerID(e);
-  };
 
-  /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.company_id);
-    setDeleteName(e.company_name);
-    setDeleteAlert(true);
-  };
-  /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
-  /*To call Api to delete Employer */
-  async function deleteEmployer(e) {
-    const responseData = await DeleteEmployer(e);
-    if (responseData.message === "company has been deleted") {
-      toast.error("Employer deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setDeleteAlert(false);
-    }
-  }
-  /*Corporation Onchange function to filter the data */
-  let onCorporationFilterChange = (e) => {
-    setcorporationFilterValue(e.target.value);
-  };
-  /*industry Onchange function to filter the data */
-  let onIndustryFilterChange = (e) => {
-    setIndutryFilterValue(e.target.value);
-  };
-  /*Search Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
-  /*Pagination Calculation */
-  const nPages = Math.ceil(totalData / recordsPerPage);
-
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("contact_person_name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("contact_person_name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Vacancies */
-  // let sortByVananciesClick = () => {
-  //   if (
-  //     clicksort === 0 ||
-  //     sortOrder === "DESC" ||
-  //     columnName === "company_id"
-  //   ) {
-  //     setcolumnName("job_type");
-  //     setSortOrder("ASC");
-  //     setClicksort(1);
-  //   } else {
-  //     setcolumnName("job_type");
-  //     setSortOrder("DESC");
-  //     setClicksort(0);
-  //   }
-  // };
-  /*Sorting Function by Location */
-  let sortByLocationClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("address");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("address");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Contact no */
-  let sortByContactClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("contact_no");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("contact_no");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Company name */
-  let sortByCompanyNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("company_name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("company_name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Industry */
-  let sortByIndustryClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("industry");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("industry");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by post available */
-  let sortByPostClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("vacancy_for_post");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("vacancy_for_post");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
   /*Industry array to filter*/
   // const Industry = employerData.filter(
   //   (thing, index, self) =>
@@ -268,7 +57,7 @@ function Employer() {
           employerId={employerId}
           close={() => setShowEmployerMOdal(false)}
         />
-        <ContactInfo
+        {/* <ContactInfo
           show={showContactModal}
           employerId={employerId}
           close={() => setShowContactMOdal(false)}
@@ -277,7 +66,7 @@ function Employer() {
           show={showKycModal}
           employerId={employerId}
           close={() => setShowkycMOdal(false)}
-        />
+        /> */}
         {/* <Link
           to={""}
           className="sidebar-mobile-button"
@@ -313,7 +102,7 @@ function Employer() {
                       placeholder={"Search Employer"}
                       value={search}
                       name={"Employer_name"}
-                      onChange={(e) => onSearch(e)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
@@ -323,7 +112,9 @@ function Employer() {
                         name="corporation"
                         value={corporationFilterValue}
                         id="corporation"
-                        onChange={onCorporationFilterChange}
+                        onChange={(e) =>
+                          setcorporationFilterValue(e.target.value)
+                        }
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Select Corporation</option>
@@ -344,7 +135,7 @@ function Employer() {
                         name="industry"
                         value={industryFilterValue}
                         id="industry"
-                        onChange={onIndustryFilterChange}
+                        onChange={(e) => setIndutryFilterValue(e.target.value)}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Select Industry</option>
@@ -366,7 +157,13 @@ function Employer() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
+              <EmployerTable
+                EmployerDetail={EmployerDetail}
+                search={search}
+                industryFilterValue={industryFilterValue}
+                corporationFilterValue={corporationFilterValue}
+              />
+              {/* <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
                 <div className="table-responsive main_table_div">
                   <table className="table table-striped main_data_table">
                     <thead>
@@ -481,7 +278,7 @@ function Employer() {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {totalData === 0 ? (
+              {/* {totalData === 0 ? (
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>
@@ -566,7 +363,7 @@ function Employer() {
                                     ? " "
                                     : " +" + empdata.contact_no_other}
                                   <br />
-                                  <span className="text-gray font-size-2">
+                                  <span className="text-gray font-size-2 text-truncate">
                                     {empdata.email}
                                   </span>
                                 </h3>
@@ -679,17 +476,17 @@ function Employer() {
                     setCurrentPage={setCurrentPage}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
-          <SAlert
+          {/* <SAlert
             show={deleteAlert}
             title={deleteName}
             text="Are you Sure you want to delete !"
             onConfirm={() => deleteEmployer(deleteId)}
             showCancelButton={true}
             onCancel={CancelDelete}
-          />
+          /> */}
         </div>
         {showEmployerDetails === true ? (
           <div className="dashboard-main-container mt-30">
