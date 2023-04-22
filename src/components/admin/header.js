@@ -1,9 +1,63 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
+import { getallAdminData, GetAdminToken } from "../../api/api";
+import Select from "react-select";
+
 const AdminHeader = (props) => {
   const [showChangePass, setShowChangePass] = useState(false);
+  let [allAdmin, setAllAdmin] = useState([]);
+  let [AdminId, setAdminId] = useState("");
+  const [state, setState] = useState([]);
+  // let [loading, setLoading] = useState(false);
+  let navigate = useNavigate("");
+  const AdminData = async () => {
+    const userData = await getallAdminData();
+    setAllAdmin(userData.data);
+  };
+
+  useEffect(() => {
+    AdminData();
+  }, [props]);
+
+  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  const onSelectChange = (option) => {
+    setAdminId(option.value);
+  };
+  useEffect(() => {
+    const options = allAdmin.map((option) => ({
+      value: option.admin_id,
+      label: option.name + " - " + option.admin_type,
+    }));
+    setState(options);
+  }, [allAdmin]);
+
+  const onTokenGenerateClick = async (event) => {
+    event.preventDefault();
+    // setLoading(true);
+    const responseData = await GetAdminToken(AdminId);
+    if (responseData.message === "successful") {
+      localStorage.setItem("view_as_token", responseData.token);
+      toast.success("Token Generated successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setState([]);
+      setAdminId("");
+      navigate("/dashboard");
+    }
+  };
+  const onRest = () => {
+    localStorage.setItem("view_as_token", "");
+    toast.success("Token Reset successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+    });
+    setState([]);
+    setAdminId("");
+    navigate("/dashboard");
+  };
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
@@ -12,6 +66,33 @@ const AdminHeader = (props) => {
 
           <h3 className="font-size-6 mb-0">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
+          <div className="form-group w-50 d-flex">
+            <label
+              htmlFor="view_layout"
+              className="font-size-4 text-black-2  line-height-reset"
+            >
+              View as Layout :
+            </label>
+            <Select
+              options={state}
+              onChange={onSelectChange}
+              id="view_layout"
+              className="mx-1"
+            />{" "}
+            <button
+              className="btn btn-secondary rounded-5 text-uppercase mx-5"
+              type="submit"
+              onClick={onTokenGenerateClick}
+            >
+              Generate Token
+            </button>
+            <button
+              className="btn btn-primary rounded-5 text-uppercase mx-5"
+              onClick={onRest}
+            >
+              Reset
+            </button>
+          </div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
             <div>
               <Link

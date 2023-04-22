@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 
 function LmiaStatus(props) {
+  let [loading, setLoading] = useState(false);
   // console.log(props);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
@@ -18,6 +19,7 @@ function LmiaStatus(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
@@ -92,6 +94,7 @@ function LmiaStatus(props) {
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       const responseData = await AddLimia(state, employeeId, jobId);
       if (responseData.message === "Data added successfully") {
         toast.success("Lmia Status Updated successfully", {
@@ -331,12 +334,27 @@ function LmiaStatus(props) {
             ) : null}
 
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

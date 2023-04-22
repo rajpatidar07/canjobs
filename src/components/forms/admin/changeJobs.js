@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import useValidation from "../../common/useValidation";
+// import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GetAllJobs, ApplyJob } from "../../../api/api";
-import SelectBox from "../../common/select";
+// import SelectBox from "../../common/select";
 // import { Select, Button } from "antd"; // "3.26.7" worked
 // import Select from "react-select";
 import Select from "react-select";
 function ChangeJob(props) {
+  let [loading, setLoading] = useState(false);
   // console.log(props.resData.job_id);
 
   let employeeId = props.resData.employee_id;
@@ -18,6 +19,7 @@ function ChangeJob(props) {
   /* Functionality to close the modal */
   const close = () => {
     // setErrors("");
+    setLoading(false);
     props.close();
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
@@ -35,13 +37,13 @@ function ChangeJob(props) {
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onSelectChange = (option) => {
     // e.preventDefault();
-    console.log("+++++++++++++" + JSON.stringify(option.value));
+    // console.log("+++++++++++++" + JSON.stringify(option.value));
 
     setJobId(option.value);
   };
   const onChangeJobClick = async (event) => {
     event.preventDefault();
-
+    setLoading(true);
     // if (validate()) {
     const responseData = await ApplyJob(applyId, employeeId, JobId);
     if (responseData.message === "Job switched successfully") {
@@ -154,12 +156,27 @@ function ChangeJob(props) {
               )} */}
             </div>
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

@@ -9,8 +9,6 @@ import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
-import UserProfile from "../user/profile";
-import FilterJson from "../json/filterjson";
 
 export default function EmployeeTable(props) {
   /*Show modal states */
@@ -27,11 +25,6 @@ export default function EmployeeTable(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  /*Filter and search state */
-  const [experienceFilterValue, setExperienceFilterValue] = useState("");
-  const [skillFilterValue, setSkillFilterValue] = useState("");
-  const [educationFilterValue, setEducationFilterValue] = useState("");
-  const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -158,6 +151,7 @@ export default function EmployeeTable(props) {
           <Link
             className="btn btn-outline-info action_btn float-right mb-2"
             to={"/employer"}
+            title="View All Employee"
           >
             View All
           </Link>
@@ -182,6 +176,7 @@ export default function EmployeeTable(props) {
                     to={""}
                     onClick={() => handleSort("name")}
                     className="text-gray"
+                    title="Sort by Name"
                   >
                     Name
                   </Link>
@@ -194,6 +189,7 @@ export default function EmployeeTable(props) {
                     to={""}
                     onClick={() => handleSort("contact_no")}
                     className="text-gray"
+                    title="Sort by Contact"
                   >
                     Contact
                   </Link>
@@ -209,6 +205,7 @@ export default function EmployeeTable(props) {
                       to={""}
                       onClick={() => handleSort("languages")}
                       className="text-gray"
+                      title="Sort by Languages"
                     >
                       Languages
                     </Link>
@@ -225,6 +222,7 @@ export default function EmployeeTable(props) {
                       to={""}
                       onClick={() => handleSort("education")}
                       className="text-gray"
+                      title="Sort by Education"
                     >
                       Education
                     </Link>
@@ -241,6 +239,7 @@ export default function EmployeeTable(props) {
                       to={""}
                       onClick={() => handleSort("skill")}
                       className="text-gray"
+                      title="Sort by Skill"
                     >
                       Skills
                     </Link>
@@ -266,6 +265,7 @@ export default function EmployeeTable(props) {
                     to={""}
                     onClick={() => handleSort("experience")}
                     className="text-gray"
+                    title="Sort by Experience"
                   >
                     Experience
                   </Link>
@@ -486,12 +486,22 @@ export default function EmployeeTable(props) {
                 <tr>
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
+                  {props.heading === "Dashboard" ? (
+                    <th className="bg-white">No Data Found</th>
+                  ) : (
+                    <th className="bg-white"></th>
+                  )}{" "}
                   <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white">No Data Found</th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
+                  <th className="bg-white"></th> <th className="bg-white"></th>
+                  {props.heading !== "Dashboard" ? (
+                    <>
+                      {" "}
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </tr>
               )}
             </tbody>

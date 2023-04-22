@@ -17,11 +17,14 @@ function EmployementDetails(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
+  const [loading, setLoading] = useState(false);
+
   /* Functionality to close the modal */
 
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
 
@@ -114,6 +117,7 @@ function EmployementDetails(props) {
   const onCarrerProfileClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       let responseData = await AddEmployeement(state, props.employeeId);
       if (responseData.message === "Employee data inserted successfully") {
         toast.success("Career Updated successfully", {
@@ -544,12 +548,27 @@ function EmployementDetails(props) {
               onCancel={CancelDelete}
             />
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

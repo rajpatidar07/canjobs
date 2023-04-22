@@ -18,10 +18,6 @@ function Followup() {
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
-  /*Delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -73,7 +69,6 @@ function Followup() {
     jobSwapFilterValue,
     showAddJobsModal,
     search,
-    deleteAlert,
     currentPage,
     columnName,
     sortOrder,
@@ -85,33 +80,6 @@ function Followup() {
     setShowJobDetails(true);
     setJobId(e);
   };
-  /* Function to show the single data to update job */
-  // const getJobResponse = (e) => {
-  //   // e.preventDefault();
-  //   setShowAddJobsModal(true);
-  //   setJobId(e);
-  // };
-  /*To Show the delete alert box */
-  // const ShowDeleteAlert = (e) => {
-  //   setDeleteID(e.job_id);
-  //   setDeleteName(e.job_title);
-  //   setDeleteAlert(true);
-  // };
-  /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
-  /*To call Api to delete Job */
-  async function deleteJob(e) {
-    const responseData = await DeleteJob(e);
-    if (responseData.message === "job has been deleted") {
-      toast.error("Job deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setDeleteAlert(false);
-    }
-  }
   /*Category Onchange function to filter the data */
   let onCategoryFilterChange = (e) => {
     setCategoryFilterValue(e.target.value);
@@ -374,7 +342,11 @@ function Followup() {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
-                          <Link onClick={sortByNameClick} className="text-gray">
+                          <Link
+                            onClick={sortByNameClick}
+                            className="text-gray"
+                            title="Sort by Industry"
+                          >
                             Job title / Industry
                           </Link>
                         </th>
@@ -386,6 +358,7 @@ function Followup() {
                             to=""
                             onClick={sortByTypeClick}
                             className="text-gray"
+                            title="Sort by Job"
                           >
                             Job Type
                           </Link>
@@ -398,6 +371,7 @@ function Followup() {
                             to=""
                             onClick={sortByLocationClick}
                             className="text-gray"
+                            title="Sort by Address"
                           >
                             Address
                           </Link>
@@ -410,6 +384,7 @@ function Followup() {
                             to=""
                             onClick={sortByEducationClick}
                             className="text-gray"
+                            title="Sort by Education"
                           >
                             Education
                           </Link>
@@ -422,6 +397,7 @@ function Followup() {
                             to=""
                             onClick={sortBySkillClick}
                             className="text-gray"
+                            title="Sort by Skills"
                           >
                             Skills
                           </Link>
@@ -434,6 +410,7 @@ function Followup() {
                             to=""
                             onClick={sortByLanguageClick}
                             className="text-gray"
+                            title="Sort by Language"
                           >
                             Language
                           </Link>
@@ -446,6 +423,7 @@ function Followup() {
                             to=""
                             onClick={sortBySalaryClick}
                             className="text-gray"
+                            title="Sort by Salary"
                           >
                             Salary
                           </Link>
@@ -458,6 +436,7 @@ function Followup() {
                             to=""
                             onClick={sortByExperienceClick}
                             className="text-gray"
+                            title="Sort by Experience"
                           >
                             Experience
                           </Link>
@@ -563,6 +542,7 @@ function Followup() {
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() => setresponseId(job.job_id)}
+                                      title="Job Response"
                                     >
                                       Responses
                                     </button>
@@ -597,14 +577,6 @@ function Followup() {
               </div>
             </div>
           </div>
-          <SAlert
-            show={deleteAlert}
-            title={deleteName}
-            text="Are you Sure you want to delete !"
-            onConfirm={() => deleteJob(deleteId)}
-            showCancelButton={true}
-            onCancel={CancelDelete}
-          />
         </div>
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-20 ">

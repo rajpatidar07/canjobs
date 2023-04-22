@@ -13,6 +13,7 @@ import SAlert from "../../common/sweetAlert";
 
 function Skills(props) {
   let [skillData, SetSkillData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -22,6 +23,7 @@ function Skills(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
 
@@ -65,6 +67,7 @@ function Skills(props) {
   const onUserSkillsClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       let responseData = await AddEmployeeSkill(state, props.employeeId);
       if (responseData.message === "Employee data updated successfully") {
         toast.success("Skill Updated successfully", {
@@ -73,6 +76,7 @@ function Skills(props) {
         });
         setState(initialFormState);
         setErrors("");
+        setLoading(false);
       }
     }
   };
@@ -139,12 +143,27 @@ function Skills(props) {
                 value={state.skill}
                 onChange={onInputChange}
               />{" "}
-              <button
-                className=" btn-primary px-5  mx-2 rounded-5 text-uppercase"
-                type="submit"
-              >
-                +
-              </button>
+              {loading === true ? (
+                <button
+                  class=" btn-primary btn-small mx-2 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className=" btn-primary px-5  mx-2 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  +
+                </button>
+              )}
             </div>{" "}
             {/*----ERROR MESSAGE FOR SKILLS----*/}
             {errors.skill && (

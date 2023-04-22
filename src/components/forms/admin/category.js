@@ -7,11 +7,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddCategory(props) {
   const [catType, setCatType] = useState([]);
+  let [loading, setLoading] = useState(false);
   /* Functionality to close the modal */
 
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // USER CATEGORY VALIDATION
@@ -73,6 +75,7 @@ function AddCategory(props) {
     }
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       // //console.log((state);
       const responseData = await AddJobCategory(state);
       if (responseData.message === "Category added successfully") {
@@ -207,12 +210,27 @@ function AddCategory(props) {
             </div>
 
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

@@ -170,6 +170,7 @@ function Category() {
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editJobCategory("0")}
+                        title="Add Category"
                       >
                         Add category
                       </CustomButton>
@@ -190,6 +191,7 @@ function Category() {
                             to={""}
                             onClick={() => handleSort("category_name")}
                             className="text-gray"
+                            title="Sort by Name"
                           >
                             Name
                           </Link>
@@ -202,6 +204,7 @@ function Category() {
                             to={""}
                             onClick={() => handleSort("category_type")}
                             className="text-gray"
+                            title="Sort by Type"
                           >
                             Category Type
                           </Link>
@@ -245,17 +248,16 @@ function Category() {
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => editJobCategory(catdata)}
+                                    title="Edit Category"
                                   >
-                                    <span className=" fas fa-edit text-gray">
-                                      {" "}
-                                    </span>
+                                    <span className=" fas fa-edit text-gray"></span>
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ShowDeleteAlert(catdata)}
+                                    title="Delete"
                                   >
                                     <span className=" text-danger">
-                                      {" "}
                                       <i className="fa fa-trash"></i>
                                     </span>
                                   </button>

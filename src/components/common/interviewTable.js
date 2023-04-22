@@ -186,6 +186,7 @@ function Interview(props) {
                             to={""}
                             onClick={() => handleSort("name")}
                             className="text-gray"
+                            title="Sort by Name"
                           >
                             Name
                           </Link>
@@ -198,6 +199,7 @@ function Interview(props) {
                             to={""}
                             onClick={() => handleSort("job_title")}
                             className="text-gray"
+                            title="Sort by Job"
                           >
                             Applied Job
                           </Link>
@@ -210,6 +212,7 @@ function Interview(props) {
                             to={""}
                             onClick={() => handleSort("company_name")}
                             className="text-gray"
+                            title="Sort by Company"
                           >
                             Company Name
                           </Link>
@@ -225,6 +228,7 @@ function Interview(props) {
                               to={""}
                               onClick={() => handleSort("skill")}
                               className="text-gray"
+                              title="Sort by Skill"
                             >
                               Skill
                             </Link>
@@ -238,6 +242,7 @@ function Interview(props) {
                             to={""}
                             onClick={() => handleSort("interview_date")}
                             className="text-gray"
+                            title="Sort by Date"
                           >
                             Interview date
                           </Link>
@@ -254,6 +259,7 @@ function Interview(props) {
                       {/* Map function to show the data in the list*/}
                       {totalData === 0 ? (
                         <tr>
+                          <th className="bg-white"></th>
                           <th className="bg-white"></th>
                           <th className="bg-white">No Data Found</th>
                           <th className="bg-white"></th>
@@ -299,6 +305,7 @@ function Interview(props) {
                                   className="btn btn-outline-info action_btn "
                                   style={{ fontSize: "10px" }}
                                   onClick={() => editInterview(data)}
+                                  title=" Reshedule Interview"
                                 >
                                   Reshedule
                                 </button>

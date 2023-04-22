@@ -147,6 +147,7 @@ function Employee() {
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editEmployee("0")}
+                        title="Add Employee"
                       >
                         Add Employee
                       </CustomButton>

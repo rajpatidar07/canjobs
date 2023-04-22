@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
+import { GetAllJobs, DeleteJob } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
@@ -199,6 +199,7 @@ export default function JobTable(props) {
           <Link
             className="btn btn-outline-info action_btn float-right mb-2"
             to={"/job"}
+            title="Veiw All Jobs"
           >
             View All
           </Link>
@@ -213,7 +214,11 @@ export default function JobTable(props) {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link onClick={sortByNameClick} className="text-gray">
+                  <Link
+                    onClick={sortByNameClick}
+                    title="Sort by Industry"
+                    className="text-gray"
+                  >
                     Job title / Industry
                   </Link>
                 </th>
@@ -224,7 +229,12 @@ export default function JobTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    <Link to="" onClick={sortByTypeClick} className="text-gray">
+                    <Link
+                      to=""
+                      onClick={sortByTypeClick}
+                      title="Sort by Job"
+                      className="text-gray"
+                    >
                       Job Type
                     </Link>
                   </th>
@@ -240,6 +250,7 @@ export default function JobTable(props) {
                       to=""
                       onClick={sortByLocationClick}
                       className="text-gray"
+                      title="Sort by Address"
                     >
                       Address
                     </Link>
@@ -256,6 +267,7 @@ export default function JobTable(props) {
                       to=""
                       onClick={sortByEducationClick}
                       className="text-gray"
+                      title="Sort by Education"
                     >
                       Education
                     </Link>
@@ -272,6 +284,7 @@ export default function JobTable(props) {
                       to=""
                       onClick={sortBySkillClick}
                       className="text-gray"
+                      title="Sort by Skill"
                     >
                       Skills
                     </Link>
@@ -288,6 +301,7 @@ export default function JobTable(props) {
                       to=""
                       onClick={sortByLanguageClick}
                       className="text-gray"
+                      title="Sort by Language"
                     >
                       Language
                     </Link>
@@ -297,7 +311,12 @@ export default function JobTable(props) {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to="" onClick={sortBySalaryClick} className="text-gray">
+                  <Link
+                    to=""
+                    onClick={sortBySalaryClick}
+                    className="text-gray"
+                    title="Sort by Salary"
+                  >
                     Salary
                   </Link>
                 </th>
@@ -309,6 +328,7 @@ export default function JobTable(props) {
                     to=""
                     onClick={sortByExperienceClick}
                     className="text-gray"
+                    title="Sort by Experience"
                   >
                     Experience
                   </Link>
@@ -338,15 +358,26 @@ export default function JobTable(props) {
               {totalData === 0 ? (
                 <tr>
                   <th className="bg-white"></th>
+                  {props.heading === "Dashboard" ? (
+                    <th className="bg-white">No Data Found</th>
+                  ) : (
+                    <th className="bg-white"></th>
+                  )}{" "}
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white">No Data Found</th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
+                  {props.heading !== "Dashboard" ? (
+                    <>
+                      <th className="bg-white"></th>
+                      <th className="bg-white">No Data Found</th>{" "}
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </tr>
               ) : (
                 (jobData || []).map((job) => (

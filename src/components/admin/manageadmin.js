@@ -202,6 +202,7 @@ function ManageAdmin() {
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editAdmin("0")}
+                      title="Add Admin"
                     >
                       Add Admin
                     </CustomButton>
@@ -221,6 +222,7 @@ function ManageAdmin() {
                             className="text-gray"
                             to={""}
                             onClick={sortByNameClick}
+                            title="Sort by Name"
                           >
                             {" "}
                             Name
@@ -234,6 +236,7 @@ function ManageAdmin() {
                             className="text-gray"
                             to={""}
                             onClick={sortByTypeClick}
+                            title="Sort by Type"
                           >
                             Admin Type
                           </Link>
@@ -246,6 +249,7 @@ function ManageAdmin() {
                             className="text-gray"
                             to={""}
                             onClick={sortByEmailClick}
+                            title="Sort by Email"
                           >
                             Email
                           </Link>
@@ -292,12 +296,14 @@ function ManageAdmin() {
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => editAdmin(admin.admin_id)}
+                                  title="Edit Admin"
                                 >
                                   <span className=" fas fa-edit text-gray"></span>
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => ShowDeleteAlert(admin)}
+                                  title="Delete"
                                 >
                                   <span className=" text-danger">
                                     <i className="fa fa-trash"></i>

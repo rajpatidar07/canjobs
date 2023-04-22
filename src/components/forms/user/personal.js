@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
@@ -10,6 +10,7 @@ import FilterJson from "../../json/filterjson";
 
 function PersonalDetails(props) {
   let encoded;
+  const [loading, setLoading] = useState(false);
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -36,6 +37,7 @@ function PersonalDetails(props) {
   const close = () => {
     setState(initialFormStateuser);
     setErrors("");
+    setLoading(false);
     props.close();
   };
 
@@ -170,14 +172,8 @@ function PersonalDetails(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-    setErrors,
-  } = useValidation(initialFormStateuser, validators);
+  const { state, setState, onInputChange, errors, validate, setErrors } =
+    useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeeId);
@@ -197,6 +193,7 @@ function PersonalDetails(props) {
     //console.log((state);
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       const responseData = await AddEmployeeDetails(state);
       if (responseData.message === "Employee data inserted successfully") {
         toast.success("Employee added successfully", {
@@ -497,7 +494,8 @@ function PersonalDetails(props) {
                   htmlFor="nationality"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  nationality / Citizenship: <span className="text-danger">*</span>
+                  nationality / Citizenship:{" "}
+                  <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -559,7 +557,8 @@ function PersonalDetails(props) {
                   htmlFor="currently_located_country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Currently Located Country: <span className="text-danger">*</span>
+                  Currently Located Country:{" "}
+                  <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -594,7 +593,8 @@ function PersonalDetails(props) {
                   htmlFor="language"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Languages Known (Max 3): <span className="text-danger">*</span>
+                  Languages Known (Max 3):{" "}
+                  <span className="text-danger">*</span>
                 </label>
                 <select
                   name="language"
@@ -760,7 +760,8 @@ function PersonalDetails(props) {
                   htmlFor="otherpermit"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Work Permit of Other Country: <span className="text-danger">*</span>
+                  Work Permit of Other Country:{" "}
+                  <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -818,12 +819,27 @@ function PersonalDetails(props) {
               </div>
             </div>
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

@@ -19,10 +19,6 @@ export default function EmployerTable(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  /*Filter and search state */
-  const [industryFilterValue, setIndutryFilterValue] = useState("");
-  const [corporationFilterValue, setcorporationFilterValue] = useState("");
-  const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -233,6 +229,7 @@ export default function EmployerTable(props) {
           <Link
             className="btn btn-outline-info action_btn float-right mb-2"
             to={"/employee"}
+            title="View all Companies"
           >
             View All
           </Link>
@@ -257,6 +254,7 @@ export default function EmployerTable(props) {
                     to={""}
                     onClick={sortByCompanyNameClick}
                     className="text-gray"
+                    title="Sort by Company Name"
                   >
                     {" "}
                     Company name
@@ -273,6 +271,7 @@ export default function EmployerTable(props) {
                       to={""}
                       onClick={sortByNameClick}
                       className="text-gray"
+                      title="Sort by Name"
                     >
                       Name
                     </Link>
@@ -286,6 +285,7 @@ export default function EmployerTable(props) {
                     to={""}
                     // onClick={sortByVananciesClick}
                     className="text-gray"
+                    title="Sort by Vacancies"
                   >
                     Vacancies
                   </Link>
@@ -301,6 +301,7 @@ export default function EmployerTable(props) {
                       to={""}
                       onClick={sortByLocationClick}
                       className="text-gray"
+                      title="Sort by Location"
                     >
                       Location
                     </Link>
@@ -317,6 +318,7 @@ export default function EmployerTable(props) {
                       to={""}
                       onClick={sortByContactClick}
                       className="text-gray"
+                      title="Sort by Contact"
                     >
                       {" "}
                       Contact Info
@@ -331,6 +333,7 @@ export default function EmployerTable(props) {
                     to={""}
                     onClick={sortByIndustryClick}
                     className="text-gray"
+                    title="Sort by Industry"
                   >
                     {" "}
                     Industry
@@ -341,7 +344,12 @@ export default function EmployerTable(props) {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to={""} onClick={sortByPostClick} className="text-gray">
+                  <Link
+                    to={""}
+                    onClick={sortByPostClick}
+                    className="text-gray"
+                    title="Sort by Skill"
+                  >
                     {" "}
                     Posts Available
                   </Link>
@@ -374,14 +382,24 @@ export default function EmployerTable(props) {
                 <tr>
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
+                  {props.heading === "Dashboard" ? (
+                    <th className="bg-white">No Data Found</th>
+                  ) : (
+                    <th className="bg-white"></th>
+                  )}{" "}
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white">No Data Found</th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
+                  {props.heading !== "Dashboard" ? (
+                    <>
+                      <th className="bg-white">No Data Found</th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </tr>
               ) : (
                 (employerData || []).map((empdata) => (

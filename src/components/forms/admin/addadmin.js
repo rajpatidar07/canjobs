@@ -8,12 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 function Addadmin(props) {
   // let [adminDetails, setAdmindetails] = useState([]);
   let [already, setAlready] = useState("");
+  let [loading, setLoading] = useState(false);
   /* Functionality to close the modal */
 
   const close = () => {
     setState(initialFormState);
     setErrors("");
     props.close();
+    setLoading(false);
     setAlready("");
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
@@ -65,14 +67,8 @@ function Addadmin(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
     if (userData !== undefined || userData) {
@@ -94,6 +90,7 @@ function Addadmin(props) {
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       const responseData = await AddAdmin(state);
       if (responseData.message === "admin added successfully") {
         toast.success("Admin added successfully", {
@@ -111,6 +108,7 @@ function Addadmin(props) {
       }
       if (responseData.message === "Admin already exists") {
         setAlready("Admin already exists");
+        setLoading(false);
       }
     }
   };
@@ -290,12 +288,27 @@ function Addadmin(props) {
             </div>
             <span className="text-danger font-size-3">{already}</span>
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

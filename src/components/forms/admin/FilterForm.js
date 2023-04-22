@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddFIlter } from "../../../api//api";
@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddFilter(props) {
-  console.log(props);
+  let [loading, setLoading] = useState(false);
+  // console.log(props);
   // let [adminDetails, setAdmindetails] = useState([]);
 
   // USER ADMIN PROFILE UPDATE VALIDATION
@@ -32,6 +33,7 @@ function AddFilter(props) {
     // setState({ ...state, id: props.id });
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       // setState({ ...state, id: props.id });
       const responseData = await AddFIlter(state, props.id);
       if (responseData.message === "filter item added successfully") {
@@ -41,6 +43,7 @@ function AddFilter(props) {
         });
         props.setApiCall();
         setState(initialFormState);
+        setLoading(false);
       }
     }
   };
@@ -63,14 +66,31 @@ function AddFilter(props) {
               type={"text"}
               placeholder="Type"
             />
-            <button
-              className="btn btn-primary "
-              type="submit"
-              id="button-addon2"
-              style={{ height: "3rem", minWidth: "40px" }}
-            >
-              +{" "}
-            </button>
+            {loading === true ? (
+              <button
+                class="btn btn-primary"
+                type="button"
+                disabled
+                style={{ height: "3rem", minWidth: "40px" }}
+              >
+                <span
+                  class="spinner-border spinner-border-sm "
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Loading...</span>
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary "
+                type="submit"
+                id="button-addon2"
+                style={{ height: "3rem", minWidth: "40px" }}
+                title="Add Filter"
+              >
+                +{" "}
+              </button>
+            )}
           </div>
           {/*----ERROR MESSAGE FOR EMAIL----*/}
           {errors.json_item && (

@@ -114,7 +114,7 @@ const AdminDashboard = () => {
               </Link>
               {/* <!-- End Single Category --> */}
             </div>
-          </div>{" "}
+          </div>
           <div className="mb-14">
             <div className="row mb-11 ">
               <div className="col-6">
@@ -132,41 +132,110 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row">
               <div className="col-lg-6">
-                <div className="d-flex">
-                  <h3 className="font-size-6 col-lg-6">Shedualed Interview</h3>
-                  <div className="col-lg-6 form_control">
-                    <p className="input_label">Filter by Duration:</p>
-                    <div className="select_div">
-                      <select
-                        name="category"
-                        // value={categoryTypeFilterValue}
-                        id="category"
-                        // onChange={onCategoryTypeFilterChange}
-                        className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
-                      >
-                        <option value={""}>Select Duration</option>
-                        {/* {(FilterJson.Duration || []).map((data, i) => {
+                <div className="bg-white">
+                  <div className="d-felx">
+                    <h3 className="font-size-6 mb-5 pb-5">
+                      Recently Added Interview
+                    </h3>
+                    <div className="col-lg-6 form_control">
+                      <p className="input_label">Filter by Duration:</p>
+                      <div className="select_div">
+                        <select
+                          name="category"
+                          // value={categoryTypeFilterValue}
+                          id="category"
+                          // onChange={onCategoryTypeFilterChange}
+                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                        >
+                          <option value={""}>Select Duration</option>
+                          {/* {(FilterJson.Duration || []).map((data, i) => {
                         return (
                           <option value={data} key={i}>
                             {data}
                           </option>
                         );
                       })} */}
-                      </select>
+                        </select>
+                      </div>
                     </div>
                   </div>
+                  <Interview heading={"Dashboard"} />
                 </div>
-                <Interview heading={"Dashboard"} />
               </div>
               <div className="col-lg-6">
-                <h3 className="font-size-6 mb-5 pb-5">
-                  Recently Added Companies
-                </h3>
-                <EmployerTable heading="Dashboard" />
+                <div className="bg-white">
+                  <div className="d-felx">
+                    <h3 className="font-size-6 mb-5 pb-5">
+                      Recently Added Companies
+                    </h3>
+                    <div className="col-lg-6 form_control">
+                      <p className="input_label">Filter by Duration:</p>
+                      <div className="select_div">
+                        <select
+                          name="category"
+                          // value={categoryTypeFilterValue}
+                          id="category"
+                          // onChange={onCategoryTypeFilterChange}
+                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                        >
+                          <option value={""}>Select Duration</option>
+                          {/* {(FilterJson.Duration || []).map((data, i) => {
+                        return (
+                          <option value={data} key={i}>
+                            {data}
+                          </option>
+                        );
+                      })} */}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <EmployerTable heading="Dashboard" />
+                </div>
               </div>
             </div>
-          </div>{" "}
-          <JobResponse heading={"Dashboard"} />
+          </div>
+          <div className="mb-14">
+            <div className="row mb-11 ">
+              <div className="col-6">
+                <div className="bg-white">
+                  <div className="d-felx">
+                    <h3 className="font-size-6 mb-5 pb-5">
+                      Recently Added Job Response
+                    </h3>
+                    <div className="col-lg-6 form_control">
+                      <p className="input_label">Filter by Duration:</p>
+                      <div className="select_div">
+                        <select
+                          name="category"
+                          // value={categoryTypeFilterValue}
+                          id="category"
+                          // onChange={onCategoryTypeFilterChange}
+                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                        >
+                          <option value={""}>Select Duration</option>
+                          {/* {(FilterJson.Duration || []).map((data, i) => {
+                        return (
+                          <option value={data} key={i}>
+                            {data}
+                          </option>
+                        );
+                      })} */}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <JobResponse heading={"Dashboard"} />
+                </div>
+              </div>
+              <div className="col-6">
+                <h3 className="font-size-6 mb-5 pb-5">
+                  {/* Recently Added Applicants */}
+                </h3>
+                {/* <EmployeeTable heading={"Dashboard"} /> */}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       {showEmployeeProfile === true ? (

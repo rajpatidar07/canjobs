@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
@@ -9,11 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 
 function CompanyDetails(props) {
+  const [loading, setLoading] = useState(false);
+
   /* Functionality to close the modal */
 
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // COMPANY DETAIL VALIDATION
@@ -105,16 +108,16 @@ function CompanyDetails(props) {
           : "",
     ],
 
-    // website_url: [
-    //   (value) =>
-    //     value === ""
-    //       ? ""
-    //       : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-    //           value
-    //         )
-    //       ? "Write the correct URL"
-    //       : "",
-    // ],
+    website_url: [
+      (value) =>
+        value === "" || value === null
+          ? ""
+          : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
+              value
+            )
+          ? "Write the correct URL"
+          : "",
+    ],
     franchise: [
       (value) =>
         value === ""
@@ -157,6 +160,7 @@ function CompanyDetails(props) {
     // console.log(state);
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       let responseData = await AddCompany(state);
       if (responseData.message === "Employer data inserted successfully") {
         toast.success("Company Added successfully", {
@@ -561,13 +565,28 @@ function CompanyDetails(props) {
                 </div>
               </div>
             </div>
-            <div className="form-group mb-8">
-              <button
-                className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+            <div className="form-group mb-8 text-center">
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { EmployerDetails, AddContact } from "../../../api/api";
@@ -6,12 +6,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ContactInfo(props) {
+  const [loading, setLoading] = useState(false);
+
   // COMPANY PERSONAL INFO VALIDATION
   /* Functionality to close the modal */
 
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // INITIAL STATE ASSIGNMENT
@@ -106,14 +109,8 @@ function ContactInfo(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
@@ -136,6 +133,7 @@ function ContactInfo(props) {
   const onCompanyContactClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       let responseData = await AddContact(state);
       if (responseData.message === "contact data updated successfully") {
         toast.success("Contact Updated successfully", {
@@ -468,12 +466,27 @@ function ContactInfo(props) {
               </div>
             </div>
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

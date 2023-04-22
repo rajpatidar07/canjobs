@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "./button";
-import JobDetailsBox from "./jobdetail";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
-import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
-import SAlert from "./sweetAlert";
-import Pagination from "./pagination";
-import FilterJson from "../json/filterjson";
+import { toast } from "react-toastify";
 import JobResponse from "./response";
 
 function FollowupTable() {
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
-  let [showJobDetails, setShowJobDetails] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -82,62 +70,15 @@ function FollowupTable() {
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
     // e.preventDefault();
-    setShowJobDetails(true);
     setJobId(e);
   };
-  /* Function to show the single data to update job */
-  const getJobResponse = (e) => {
-    // e.preventDefault();
-    setShowAddJobsModal(true);
-    setJobId(e);
-  };
-  /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.job_id);
-    setDeleteName(e.job_title);
-    setDeleteAlert(true);
-  };
-  /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
-  /*To call Api to delete Job */
-  async function deleteJob(e) {
-    const responseData = await DeleteJob(e);
-    if (responseData.message === "job has been deleted") {
-      toast.error("Job deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setDeleteAlert(false);
-    }
-  }
-  /*Category Onchange function to filter the data */
-  let onCategoryFilterChange = (e) => {
-    setCategoryFilterValue(e.target.value);
-  };
+
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
     setCategoryList(userData.data);
   };
 
-  /*Skill Onchange function to filter the data */
-  let onSkillFilterChange = (e) => {
-    setSkillFilterValue(e.target.value);
-  };
-  /*Location Onchange function to filter the data */
-  let onLocationFilterChange = (e) => {
-    setLocationFilterValue(e.target.value);
-  };
-  /*JobSwap Onchange function to filter the data */
-  let onJobSwapFilterChange = (e) => {
-    setJobSwapFilterValue(e.target.value);
-  };
-  /*Searcg Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -254,7 +195,11 @@ function FollowupTable() {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link onClick={sortByNameClick} className="text-gray">
+                  <Link
+                    onClick={sortByNameClick}
+                    title="Sort by Industry"
+                    className="text-gray"
+                  >
                     Job title / Industry
                   </Link>
                 </th>
@@ -262,7 +207,12 @@ function FollowupTable() {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to="" onClick={sortByTypeClick} className="text-gray">
+                  <Link
+                    to=""
+                    title="Sort by Job"
+                    onClick={sortByTypeClick}
+                    className="text-gray"
+                  >
                     Job Type
                   </Link>
                 </th>
@@ -274,6 +224,7 @@ function FollowupTable() {
                     to=""
                     onClick={sortByLocationClick}
                     className="text-gray"
+                    title="Sort by Address"
                   >
                     Address
                   </Link>
@@ -286,6 +237,7 @@ function FollowupTable() {
                     to=""
                     onClick={sortByEducationClick}
                     className="text-gray"
+                    title="Sort by Education"
                   >
                     Education
                   </Link>
@@ -294,7 +246,12 @@ function FollowupTable() {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to="" onClick={sortBySkillClick} className="text-gray">
+                  <Link
+                    to=""
+                    onClick={sortBySkillClick}
+                    title="Sort by Skills"
+                    className="text-gray"
+                  >
                     Skills
                   </Link>
                 </th>
@@ -306,6 +263,7 @@ function FollowupTable() {
                     to=""
                     onClick={sortByLanguageClick}
                     className="text-gray"
+                    title="Sort by Language"
                   >
                     Language
                   </Link>
@@ -314,7 +272,12 @@ function FollowupTable() {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to="" onClick={sortBySalaryClick} className="text-gray">
+                  <Link
+                    to=""
+                    onClick={sortBySalaryClick}
+                    title="Sort by Salary"
+                    className="text-gray"
+                  >
                     Salary
                   </Link>
                 </th>
@@ -326,6 +289,7 @@ function FollowupTable() {
                     to=""
                     onClick={sortByExperienceClick}
                     className="text-gray"
+                    title="Sort by Experience"
                   >
                     Experience
                   </Link>
@@ -334,7 +298,7 @@ function FollowupTable() {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to="" className="text-gray">
+                  <Link to="" className="text-gray" title="Sort by Experience">
                     Total Applicants
                   </Link>
                 </th>
@@ -352,9 +316,17 @@ function FollowupTable() {
                 <tr>
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
+                  {props.heading === "Dashboard" ? (
+                    <th className="bg-white">No Data Found</th>
+                  ) : (
+                    <th className="bg-white"></th>
+                  )}
                   <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white">No Data Found</th>
+                  {props.heading !== "Dashboard" ? (
+                    <th className="bg-white">No Data Found</th>
+                  ) : (
+                    <th className="bg-white"></th>
+                  )}{" "}
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
@@ -375,6 +347,7 @@ function FollowupTable() {
                         <div className="">
                           <Link
                             to={""}
+                            title="Job Detail"
                             onClick={() => JobDetail(job.job_id)}
                             className="font-size-3 mb-0 font-weight-semibold text-black-2"
                           >
@@ -428,6 +401,7 @@ function FollowupTable() {
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => setresponseId(job.job_id)}
+                              title="Job Responses"
                             >
                               Responses
                             </button>

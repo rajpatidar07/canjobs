@@ -11,10 +11,11 @@ import {
   getAllJobsCategory,
   getAllEmployer,
 } from "../../../api/api";
+
 function AddJobModal(props) {
   const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
 
@@ -22,6 +23,7 @@ function AddJobModal(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // CKEDITOR
@@ -251,15 +253,16 @@ function AddJobModal(props) {
     if (user_type === "company") {
       setState({ ...state, company_id: company_id });
     }
-    // console.log(errors);
-
+    setLoading(true);
     if (validate()) {
+      setLoading(true);
       let responseData = await AddJob(state);
       if (responseData.message === "job data inserted successfully") {
         toast.success("Job Added successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+
         return close();
       }
       if (responseData.message === "job data updated successfully") {
@@ -267,10 +270,12 @@ function AddJobModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+
         return close();
       }
     }
   };
+
   // //console.log(("JSON" + JSON.stringify(FilterJson.location))
 
   // END ADD JOBS VALIDATION
@@ -1023,9 +1028,24 @@ function AddJobModal(props) {
             </div>
 
             <div className="form-group text-center">
-              <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button className="btn btn-primary btn-small w-25 rounded-5 text-uppercase">
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
+  let [loading, setLoading] = useState(false);
   let employId = props.resData.employee_id;
   let jobId = props.job_id;
   /* Functionality to close the modal */
@@ -17,6 +18,7 @@ function Addfollowup(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
@@ -62,6 +64,7 @@ function Addfollowup(props) {
   const onAminFollowClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       let responseData = await AddFollowup({ state, employId, jobId });
       if (responseData.message === "follow up updated successfully") {
         toast.success("Followup Updated successfully", {
@@ -188,12 +191,27 @@ function Addfollowup(props) {
               </div>
             </div>
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

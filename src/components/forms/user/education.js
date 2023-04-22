@@ -15,6 +15,7 @@ import FilterJson from "../../json/filterjson";
 
 function Education(props) {
   let [educationData, setEducationData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -32,6 +33,7 @@ function Education(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   /*----VALIDATION CONTENT----*/
@@ -97,25 +99,30 @@ function Education(props) {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, deleteAlert]);
+  }, [state, deleteAlert]);
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       let responseData = await AddEmployeeEducation(state, props.employeeId);
       if (responseData.message === "Employee data updated successfully") {
         toast.success("Education Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        return close();
+        setState(initialFormState);
+        setErrors("");
+        setLoading(false);
       }
       if (responseData.message === "Employee data inserted successfully") {
         toast.success("Education Added successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        return close();
+        setState(initialFormState);
+        setErrors("");
+        setLoading(false);
       } //"
       // handle form submission
     }
@@ -171,7 +178,7 @@ function Education(props) {
               {(educationData || []).map((education) => (
                 <div className="col-6" key={education.education_id}>
                   <div className=" border m-1">
-                    <div className="p-1 d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between ">
+                    <div className="p-1 d-flex align-items-center  mb-9 flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box p-0">
                         <div className="text_box text-left w-100 mt-n2">
                           <h3 className="mb-0">
@@ -206,13 +213,13 @@ function Education(props) {
                       </div>
                       <Link
                         to=""
-                        className="fa fa-times-circle"
-                        onClick={() => ShowDeleteAlert(education)}
+                        className="fa fa-edit text-gray px-5"
+                        onClick={() => EducationData(education)}
                       ></Link>
                       <Link
                         to=""
-                        className="fa fa-edit text-gray px-3"
-                        onClick={() => EducationData(education)}
+                        className="fa fa-times-circle px-5"
+                        onClick={() => ShowDeleteAlert(education)}
                       ></Link>
                     </div>
                   </div>
@@ -435,12 +442,27 @@ function Education(props) {
             </div>
 
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

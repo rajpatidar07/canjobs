@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddInterviewSheduale } from "../../../api/api";
@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 function AddInterview(props) {
   // console.log(props);
-
+  let [loading, setLoading] = useState(false);
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
 
@@ -15,6 +15,7 @@ function AddInterview(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
@@ -22,6 +23,7 @@ function AddInterview(props) {
   const initialFormState = {
     interview_date: "",
   };
+  console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
   const validators = {
     interview_date: [
@@ -39,6 +41,7 @@ function AddInterview(props) {
   const onAddFIlterClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       const responseData = await AddInterviewSheduale(state, employeeId, jobId);
       if (responseData.message === "data inserted successfully") {
         toast.success("Interview shedualed successfully", {
@@ -77,6 +80,7 @@ function AddInterview(props) {
               >
                 Interview date <span className="text-danger">*</span> :
               </label>
+              {console.log(props.resData.interview_date)}
               <input
                 className={
                   errors.interview_date
@@ -84,9 +88,9 @@ function AddInterview(props) {
                     : "form-control"
                 }
                 value={
-                  props.resData.id
-                    ? moment(props.resData.interview_date).format("YYYY-MM-DD")
-                    : moment(state.interview_date).format("YYYY-MM-DD")
+                  !props.resData.id
+                    ? moment(state.interview_date).format("YYYY-MM-DD")
+                    : moment(props.resData.interview_date).format("YYYY-MM-DD")
                 }
                 onChange={onInputChange}
                 id="interview_date"
@@ -106,12 +110,27 @@ function AddInterview(props) {
               )}
             </div>
             <div className="form-group text-center">
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

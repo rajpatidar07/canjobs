@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { EmployerDetails, AddKyc } from "../../../api/api";
@@ -7,12 +7,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function KycComplianceDetails(props) {
+  const [loading, setLoading] = useState(false);
+
   //console.log(props.employerId);
   /* Functionality to close the modal */
 
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setLoading(false);
     props.close();
   };
   let encoded;
@@ -100,7 +103,7 @@ function KycComplianceDetails(props) {
     ],
     gstin: [
       (value) =>
-        value === ""
+        value === "" || value === null
           ? ""
           : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
           ? "Invalid GSTIN"
@@ -108,7 +111,7 @@ function KycComplianceDetails(props) {
     ],
     tan_number: [
       (value) =>
-        value === ""
+        value === "" || value === null
           ? ""
           : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
           ? "Invalid TAN"
@@ -122,26 +125,16 @@ function KycComplianceDetails(props) {
     ],
     fax_number: [
       (value) =>
-        value === ""
+        value === "" || value === null
           ? ""
           : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
           ? "Invalid Fax"
           : "",
     ],
-    // fax_number: [
-    //   (value) =>
-    //     !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.text(value) ? "Invalid Fax" : "",
-    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
@@ -168,6 +161,7 @@ function KycComplianceDetails(props) {
   const onKycInfoClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(false);
       let responseData = await AddKyc(state, props.employerId);
       if (responseData.message === "Employee data inserted successfully") {
         toast.success("Kyc Added successfully", {
@@ -244,8 +238,8 @@ function KycComplianceDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.pan_no
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control border border-danger text-uppercase"
+                      : "form-control text-uppercase"
                   }
                 />
                 {/*----ERROR MESSAGE FOR pan_no----*/}
@@ -271,8 +265,8 @@ function KycComplianceDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.name
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control border border-danger "
+                      : "form-control "
                   }
                   max={25}
                 />
@@ -582,10 +576,25 @@ function KycComplianceDetails(props) {
                 />
               </div>
             </div>
-            <div className="form-group mb-8">
-              <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                Submit
-              </button>
+            <div className="form-group mb-8 text-center">
+              {loading === true ? (
+                <button
+                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    class="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase">
+                  Submit
+                </button>
+              )}
             </div>
           </form>
           {/* </div> */}

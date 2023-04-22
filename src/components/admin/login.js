@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 export default function AdminLoginFrom() {
   let navigate = useNavigate();
+  let [loading, setLoading] = useState(false);
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -34,6 +35,7 @@ export default function AdminLoginFrom() {
     event.preventDefault();
 
     if (validate()) {
+      setLoading(true);
       // handle form submission
       const updatedTodo = await AdminLogin(state);
       if (
@@ -47,8 +49,10 @@ export default function AdminLoginFrom() {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoading(false);
         return navigate("/dashboard");
       } else if (updatedTodo.message === "Invalid Credentials") {
+        setLoading(false);
         setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
       }
     }
@@ -186,12 +190,23 @@ export default function AdminLoginFrom() {
               {/* </div> */}
 
               <div className="form-group mb-8">
-                <button
-                  className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
-                  type="submit"
-                >
-                  Log in{" "}
-                </button>
+                {loading === true ? (
+                  <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                    <span
+                      class="spinner-border spinner-border-sm "
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Loading...</span>
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                    type="submit"
+                  >
+                    Log in{" "}
+                  </button>
+                )}
               </div>
             </form>
           </div>

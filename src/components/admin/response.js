@@ -3,14 +3,15 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { getAllEmployer, GetAllResponse } from "../../api/api";
+import { GetAllResponse } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
+
 function JobResponse(props) {
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
@@ -19,7 +20,6 @@ function JobResponse(props) {
   let [limia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
-  const [company, setCompany] = useState([]);
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
@@ -34,7 +34,7 @@ function JobResponse(props) {
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [clicksort, setClicksort] = useState(0);
-  const [jobId, setJobId] = useState(props.responseId);
+  const [jobId] = useState(props.responseId);
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(
@@ -50,8 +50,6 @@ function JobResponse(props) {
     );
     setResponseData(userData.data.data);
     setTotalData(userData.data.total_rows);
-    const CompanyData = await getAllEmployer();
-    setCompany(CompanyData.data);
   };
 
   /*Render function to get the Response*/
@@ -356,6 +354,20 @@ function JobResponse(props) {
                   : "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
               }
             >
+              {" "}
+              {props.heading === "Dashboard" ? (
+                <div className="d-flex">
+                  <Link
+                    className="btn btn-outline-info action_btn float-right mb-2 mx-5"
+                    to={"/responses"}
+                    title="View All Employee"
+                  >
+                    View All
+                  </Link>
+                </div>
+              ) : (
+                ""
+              )}
               <div className="table-responsive ">
                 <table
                   className={
@@ -380,6 +392,7 @@ function JobResponse(props) {
                           to={""}
                           onClick={sortByNameClick}
                           className="text-gray"
+                          title="Sort by Name"
                         >
                           Name
                         </Link>
@@ -395,6 +408,7 @@ function JobResponse(props) {
                             to={""}
                             onClick={sortByExperienceClick}
                             className="text-gray"
+                            title="Sort by Experience"
                           >
                             Experience
                           </Link>
@@ -408,6 +422,7 @@ function JobResponse(props) {
                           to={""}
                           onClick={sortByJobClick}
                           className="text-gray"
+                          title="Sort by Job"
                         >
                           Job Type
                         </Link>
@@ -420,6 +435,7 @@ function JobResponse(props) {
                           to={""}
                           onClick={sortByCompanyClick}
                           className="text-gray"
+                          title="Sort by Company"
                         >
                           Company
                         </Link>
@@ -430,8 +446,9 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          // onClick={sortByCompanyClick}
+                          // onClick={sortByLimiaClick}
                           className="text-gray"
+                          title="Sort by LIMIA Status"
                         >
                           Limia
                         </Link>
@@ -447,6 +464,7 @@ function JobResponse(props) {
                             to={""}
                             onClick={sortByContactClick}
                             className="text-gray"
+                            title="Sort by Contact"
                           >
                             Contact
                           </Link>
@@ -463,23 +481,29 @@ function JobResponse(props) {
                             to={""}
                             onClick={sortByAddressClick}
                             className="text-gray"
+                            title="Sort by Address"
                           >
                             Address
                           </Link>
                         </th>
                       )}
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        Action
-                      </th>
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Action
+                        </th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
                     {totalData === 0 ? (
                       <tr>
                         <td className="bg-white">No Data Found</td>
+                        <td className="bg-white"></td>
                       </tr>
                     ) : (
                       (response || []).map((res) => (
@@ -568,24 +592,28 @@ function JobResponse(props) {
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => addFollow(res)}
+                                  title=" Add Follow Up"
                                 >
                                   <i className=" fas fa-plus text-gray px-2"></i>
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => addnterview(res)}
+                                  title=" Add Interview"
                                 >
                                   <i className="fa fa-podcast text-gray px-2"></i>
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn text-gray"
                                   onClick={() => addLimia(res)}
+                                  title="Add LMIA"
                                 >
                                   LIMIA
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn text-gray"
                                   onClick={() => editJob(res)}
+                                  title="Change Job"
                                 >
                                   <i className="fas fa-briefcase"></i>
                                 </button>

@@ -111,6 +111,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
@@ -153,6 +154,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
@@ -195,6 +197,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
@@ -237,6 +240,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
@@ -279,6 +283,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
@@ -321,6 +326,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
@@ -363,6 +369,7 @@ function FilterList() {
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
                                             }
+                                            title="Delete"
                                           >
                                             <i
                                               className="px-3 fa fa-times-circle"
