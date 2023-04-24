@@ -21,7 +21,7 @@ function CompanyProfile(props) {
   /*Function to get employer data */
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
-    // console.log(userData);
+    // // console.log(userData);
     if (userData === undefined) {
       setEmployerData("");
       setEmployerKycData("");
@@ -41,8 +41,8 @@ function CompanyProfile(props) {
   };
   /*Render method to get employer data */
   useEffect(() => {
-    // if (props.employerId !== "0" || props.employerId !== undefined) {
     EmployerData();
+    // if (props.employerId !== "0" || props.employerId !== undefined) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }
   }, [showKycComplainDetailsModal, showCompanyInfoModal]);

@@ -8,10 +8,10 @@ import FilterJson from "../../json/filterjson";
 
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
-  // console.log(props);
+  // // console.log(props.resData);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
-
+  let lmia_status = props.resData.lmia_status;
   let jobId = props.resData.job_id;
   const [company] = useState([]);
   /* Functionality to close the modal */
@@ -23,6 +23,7 @@ function LmiaStatus(props) {
     props.close();
   };
   // USER ADMIN PROFILE UPDATE VALIDATION
+  // // console.log(lmia_status);
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -146,7 +147,7 @@ function LmiaStatus(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.lmia_status}
+                value={lmia_status ? lmia_status : state.lmia_status}
                 onChange={onInputChange}
                 id="lmia_status"
                 name="lmia_status"
@@ -336,16 +337,16 @@ function LmiaStatus(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

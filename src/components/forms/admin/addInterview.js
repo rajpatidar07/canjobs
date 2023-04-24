@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddInterviewSheduale } from "../../../api/api";
+import { AddInterviewSheduale, getInterview } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 function AddInterview(props) {
-  // console.log(props);
+  // // console.log(props);
   let [loading, setLoading] = useState(false);
+  let [date, setDate] = useState();
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
 
@@ -21,9 +22,9 @@ function AddInterview(props) {
   // USER ADMIN PROFILE UPDATE VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    interview_date: "",
+    interview_date: date ? date : "",
   };
-  console.log(props.resData.interview_date);
+  // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
   const validators = {
     interview_date: [
@@ -36,6 +37,26 @@ function AddInterview(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
+
+  const InterviewData = async () => {
+    const userData = await getInterview(jobId, employeeId);
+    // search,
+    // currentPage,
+    // columnName,
+    // recordsPerPage,
+    // sortOrder
+    // setInterviewData(userData.data);
+    // setTotalData(userData.total_rows);
+    // console.log(userData.data[0].interview_date);
+    setDate(userData.data[0].interview_date);
+  };
+  // // console.log(state.interview_date, "lol");
+
+  /*Render function to get the interview*/
+  useEffect(() => {
+    InterviewData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
@@ -80,18 +101,14 @@ function AddInterview(props) {
               >
                 Interview date <span className="text-danger">*</span> :
               </label>
-              {console.log(props.resData.interview_date)}
+              {/* {// console.log(props.resData.interview_date)} */}
               <input
                 className={
                   errors.interview_date
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={
-                  !props.resData.id
-                    ? moment(state.interview_date).format("YYYY-MM-DD")
-                    : moment(props.resData.interview_date).format("YYYY-MM-DD")
-                }
+                value={state.interview_date}
                 onChange={onInputChange}
                 id="interview_date"
                 name="interview_date"
@@ -112,16 +129,16 @@ function AddInterview(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

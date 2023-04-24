@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 // Create Document Component
 function ResumeGrerator(props) {
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const [User, setUser] = useState([]);
   const [Skills, setSkills] = useState([]);
   const [Education, setEducation] = useState([]);
@@ -151,7 +151,7 @@ function ResumeGrerator(props) {
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-  console.log("________________________" + Skills);
+  // console.log("________________________" + Skills);
   return (
     <PDFViewer style={styles.pagesetup}>
       <Document>

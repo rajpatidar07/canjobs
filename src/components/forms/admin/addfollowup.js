@@ -8,12 +8,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Addfollowup(props) {
+  // console.log(props);
+
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   let employId = props.resData.employee_id;
   let jobId = props.job_id;
   /* Functionality to close the modal */
-  // console.log("RESPONSE---"+JSON.stringify(props.job_id))
+  // // console.log("RESPONSE---"+JSON.stringify(props.job_id))
 
   const close = () => {
     setState(initialFormState);
@@ -30,6 +32,7 @@ function Addfollowup(props) {
       props.job_id
     );
     setResponseData(userData.data.followup);
+    // // console.log(userData.data);
   };
 
   /*Render function to get the Response*/
@@ -193,16 +196,16 @@ function Addfollowup(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

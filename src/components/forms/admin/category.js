@@ -28,10 +28,12 @@ function AddCategory(props) {
   const validators = {
     category_name: [
       (value) =>
-        state.parent_id === ""
-          ? ""
-          : value === "" || value.trim() === ""
-          ? "Category Name  is required"
+        // state.parent_id === ""
+        //   ? ""
+        // :
+        value === "" || value.trim() === ""
+          ? // || errors.category_type === "Category Type is required"
+            "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : /[-]?\d+(\.\d+)?/.test(value)
@@ -47,6 +49,7 @@ function AddCategory(props) {
           : null,
     ],
   };
+
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
@@ -54,7 +57,7 @@ function AddCategory(props) {
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
     setCatType(categoryType.data);
-    // console.log(catType);
+    // // console.log(catType);
     if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
       setState(initialFormState);
     } else {
@@ -68,7 +71,7 @@ function AddCategory(props) {
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    // console.log(state);
+    // // console.log(state);
     if (state.parent_id === "") {
       setState({ ...state, category_name: "" });
       setErrors({ ...errors, category_name: "" });
@@ -76,7 +79,7 @@ function AddCategory(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      // //console.log((state);
+      // //// console.log((state);
       const responseData = await AddJobCategory(state);
       if (responseData.message === "Category added successfully") {
         toast.success("Category added successfully", {
@@ -125,7 +128,7 @@ function AddCategory(props) {
             ) : (
               <h5 className="text-center pt-2">Update Category</h5>
             )}
-            <div className="form-group row ">
+            <div className="form-group row mb-0">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -212,16 +215,16 @@ function AddCategory(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

@@ -550,16 +550,16 @@ function EmployementDetails(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

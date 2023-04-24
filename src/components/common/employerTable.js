@@ -37,7 +37,8 @@ export default function EmployerTable(props) {
       currentPage,
       recordsPerPage,
       columnName,
-      sortOrder
+      sortOrder,
+      props.filter_by_time
     );
     setemployerData(userData.data);
     setTotalData(userData.total_rows);
@@ -59,6 +60,7 @@ export default function EmployerTable(props) {
     recordsPerPage,
     columnName,
     sortOrder,
+    props.filter_by_time,
   ]);
 
   /* Function to show the single data to update Employer */

@@ -22,7 +22,6 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
-  const [educationFilterValue, setEducationFilterValue] = useState("");
   const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
     useState("");
   const [search, setSearch] = useState("");
@@ -34,19 +33,21 @@ function JobResponse(props) {
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [clicksort, setClicksort] = useState(0);
-  const [jobId] = useState(props.responseId);
+  const [jobId, setJobId] = useState(props.responseId);
+  // console.log(props.responseId);
+
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(
       jobId,
       skillFilterValue,
-      educationFilterValue,
       experienceTypeFilterValue,
       search,
       currentPage,
       recordsPerPage,
       columnName,
-      sortOrder
+      sortOrder,
+      props.filter_by_time
     );
     setResponseData(userData.data.data);
     setTotalData(userData.data.total_rows);
@@ -58,7 +59,6 @@ function JobResponse(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     skillFilterValue,
-    educationFilterValue,
     experienceTypeFilterValue,
     search,
     currentPage,
@@ -71,28 +71,33 @@ function JobResponse(props) {
     interview,
     followup,
     showChangeJobModal,
+    props.filter_by_time,
   ]);
 
   /*Function to open add follow up modal */
   const addFollow = (e) => {
     setFollowUp(true);
     setResData(e);
+    setJobId(e.job_id);
   };
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
     setInterview(true);
     setResData(e);
+    setJobId(e.job_id);
   };
   /*Function to open add Limia up modal */
   const addLimia = (e) => {
     setLimia(true);
     setResData(e);
+    setJobId(e.job_id);
   };
   /* Function to show the single data to update job */
   const editJob = (e) => {
     // e.preventDefault();
     setShowChangeJobModal(true);
     setResData(e);
+    setJobId(e.job_id);
   };
 
   /*Pagination Calculation */

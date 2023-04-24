@@ -120,7 +120,7 @@ function ContactInfo(props) {
     ) {
       setState(userData.data.company_detail[0]);
     }
-    //console.log(userData.data);
+    //// console.log(userData.data);
   };
   useEffect(() => {
     props.employerId === undefined || props.employerId === "0"
@@ -468,16 +468,16 @@ function ContactInfo(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

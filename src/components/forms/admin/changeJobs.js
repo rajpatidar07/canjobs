@@ -10,7 +10,7 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 import Select from "react-select";
 function ChangeJob(props) {
   let [loading, setLoading] = useState(false);
-  // console.log(props.resData.job_id);
+  // console.log(props);
 
   let employeeId = props.resData.employee_id;
   let applyId = props.resData.apply_id;
@@ -27,7 +27,7 @@ function ChangeJob(props) {
 
   const JobData = async () => {
     const userData = await GetAllJobs();
-    // console.log(userData.data.data);
+    // // console.log(userData.data.data);
     setAllJobData(userData.data.data);
   };
 
@@ -37,7 +37,7 @@ function ChangeJob(props) {
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onSelectChange = (option) => {
     // e.preventDefault();
-    // console.log("+++++++++++++" + JSON.stringify(option.value));
+    // // console.log("+++++++++++++" + JSON.stringify(option.value));
 
     setJobId(option.value);
   };
@@ -158,16 +158,16 @@ function ChangeJob(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

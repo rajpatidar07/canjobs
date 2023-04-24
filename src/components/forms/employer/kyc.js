@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 function KycComplianceDetails(props) {
   const [loading, setLoading] = useState(false);
 
-  //console.log(props.employerId);
+  //// console.log(props.employerId);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -149,7 +149,7 @@ function KycComplianceDetails(props) {
     } else {
       setState(userData.data.kyc_detail[0]);
     }
-    //console.log(userData.data.kyc_detail[0]);
+    //// console.log(userData.data.kyc_detail[0]);
   };
   useEffect(() => {
     props.employerId === undefined
@@ -579,16 +579,16 @@ function KycComplianceDetails(props) {
             <div className="form-group mb-8 text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase">

@@ -65,10 +65,10 @@ export default function CompanyLogin(props) {
   /*----LOGIN SUBMIT FUNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
-    console.log(errors);
+    // console.log(errors);
 
     if (validate()) {
-      console.log("555");
+      // console.log("555");
       let Response = await EmployerLogin(state);
       if (
         Response.status === true ||

@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { useEffect } from "react";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
@@ -15,7 +16,8 @@ if (
   Token = view_as_token;
 }
 
-console.log("new Token", view_as_token);
+// console.log("new Token", view_as_token);
+
 // Location Api
 /*Country*/
 export const GetCountry = async () => {
@@ -81,7 +83,8 @@ export const getallEmployeeData = async (
   page,
   limit,
   column,
-  sort
+  sort,
+  time
 ) => {
   const response = await axios.post(
     `${API_URL}${user_type}/getallEmployeeView`,
@@ -95,6 +98,7 @@ export const getallEmployeeData = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
+      filter_by_time: time,
     },
     {
       headers: {
@@ -295,7 +299,7 @@ export const GetJobDetail = async (props) => {
 // EMPLOYER'S API
 /*Employer sign up */
 export const EmployerSignUp = async (props) => {
-  // console.log(props);
+  // // console.log(props);
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
@@ -306,7 +310,7 @@ export const EmployerSignUp = async (props) => {
 };
 /*Employer Login */
 export const EmployerLogin = async (props) => {
-  // console.log(props);
+  // // console.log(props);
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
@@ -334,13 +338,13 @@ export const EmployerForgotPassword = async (props) => {
 export const GetAllResponse = async (
   job_id,
   filter_skill,
-  filter_education,
   filter_experience,
   search,
   page,
   limit,
   column,
-  sort
+  sort,
+  time
 ) => {
   const response = await axios.post(
     `${API_URL}getJobResponse`,
@@ -351,10 +355,10 @@ export const GetAllResponse = async (
       limit: limit,
       filter_experience: filter_experience,
       filter_skill: filter_skill,
-      filter_education: filter_education,
       column_name: column,
       sort_order: sort,
       search: search,
+      filter_by_time: time,
     },
     {
       headers: {
@@ -375,8 +379,10 @@ export const GetAllJobs = async (
   limit,
   column_name,
   sort_order,
-  company
+  company,
+  time
 ) => {
+  console.log("time", time);
   const response = await axios.post(
     `${API_URL}getAllJobs`,
     {
@@ -390,7 +396,7 @@ export const GetAllJobs = async (
       limit: limit,
       column_name: column_name,
       sort_order: sort_order,
-      // search: company,
+      filter_by_time: time,
     },
     {
       headers: {
@@ -419,7 +425,8 @@ export const getAllEmployer = async (
   page,
   limit,
   column,
-  sort
+  sort,
+  time
 ) => {
   const response = await axios.post(
     `${API_URL}${user_type}/getAllEmployer`,
@@ -431,6 +438,7 @@ export const getAllEmployer = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
+      filter_by_time: time,
     },
     {
       headers: {
@@ -461,7 +469,7 @@ export const EmployerDetails = async (props) => {
 };
 /*Add Employer / Company Api */
 export const AddCompany = async (props) => {
-  // console.log(props);
+  // // console.log(props);
   const response = await axios.put(`${API_URL}company_detail`, props, {
     headers: {
       "Content-Type": "application/json",
@@ -512,13 +520,13 @@ export const AddKyc = async (props, id) => {
 export const DeleteEmployer = async (props) => {
   const response = await axios.delete(
     `${API_URL}deleteEmployer/${props}`,
-    props,
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    }
+    },
+    props
   );
   return response.data;
 };
@@ -533,7 +541,17 @@ export const DeleteJob = async (props) => {
   return response.data;
 };
 /*Get Interview list api */
-export const getInterview = async (search, page, column, limit, sort) => {
+export const getInterview = async (
+  job_id,
+  employee_id,
+  search,
+  page,
+  column,
+  limit,
+  sort,
+  time
+) => {
+  // console.log(job_id, employee_id);
   const response = await axios.post(
     `${API_URL}${user_type}/getInterview`,
     {
@@ -542,6 +560,9 @@ export const getInterview = async (search, page, column, limit, sort) => {
       sort_order: sort,
       page: page,
       limit: limit,
+      job_id: job_id,
+      employee_id: employee_id,
+      filter_by_time: time,
     },
     {
       headers: {
@@ -554,7 +575,7 @@ export const getInterview = async (search, page, column, limit, sort) => {
 };
 /*Add interview Shedual Api */
 export const AddInterviewSheduale = async (props, employee_id, job_id) => {
-  console.log(props, employee_id, job_id);
+  // console.log(props, employee_id, job_id);
   const response = await axios.post(
     `${API_URL}${user_type}/addUpdateInterview`,
     {
@@ -574,7 +595,7 @@ export const AddInterviewSheduale = async (props, employee_id, job_id) => {
 };
 /*Add LIMA Api */
 export const AddLimia = async (props, employee_id, job_id) => {
-  console.log(job_id);
+  // console.log(job_id);
 
   const response = await axios.put(
     `${API_URL}${user_type}/addUpdateLmia`,
@@ -593,8 +614,39 @@ export const AddLimia = async (props, employee_id, job_id) => {
   );
   return response.data;
 };
+/*Get Interview list api */
+export const getFollowupLastData = async (page, column, limit, sort, time) => {
+  // console.log(job_id, employee_id);
+  const response = await axios.post(
+    `${API_URL}${user_type}/getAllLastFollowup`,
+    {
+      column_name: column,
+      sort_order: sort,
+      page: page,
+      limit: limit,
+      filter_by_time: time,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data.data;
+};
 
 // ADMIN'S API
+/*Get Summary Count Api */
+export const getSummaryCount = async () => {
+  const response = await axios.get(`${API_URL}${user_type}/getSummaryCounts`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data.data;
+};
 /*Admin login Api */
 export const AdminLogin = async (props) => {
   const formData = new FormData();
@@ -604,15 +656,15 @@ export const AdminLogin = async (props) => {
   return response.data;
 };
 /*Job List Api */
-export const getAllJobs = async () => {
-  const response = await axios.get(`${API_URL}${user_type}/getAllJobs`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
-  return response.data.data;
-};
+// export const getAllJobs = async () => {
+//   const response = await axios.get(`${API_URL}${user_type}/getAllJobs`, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: Token,
+//     },
+//   });
+//   return response.data.data;
+// };
 /*Admin List Api */
 export const getallAdminData = async (
   type,
@@ -789,7 +841,7 @@ export const GetFilter = async (props) => {
 };
 /*Add Filters Api */
 export const AddFIlter = async (props, id) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.put(
     `${API_URL}${user_type}/addUpdatefilterList`,
     // props,
@@ -804,7 +856,7 @@ export const AddFIlter = async (props, id) => {
   return response.data;
 }; /*Delete Filter Api */
 export const DeleteFilter = async (pId, cId) => {
-  console.log(pId, cId);
+  // console.log(pId, cId);
   const response = await axios.post(
     `${API_URL}${user_type}/deleteFilterListItem`,
     { id: pId, json_item_id: cId },
@@ -855,8 +907,9 @@ export const AddFollowup = async (props) => {
 };
 /*Add Followup single data Api */
 export const getSingleFollowup = async (employee_id, job_id) => {
-  const response = await axios.get(
-    `${API_URL}${user_type}/getFollowup?job_id=${job_id}&employee_id=${employee_id}`,
+  const response = await axios.post(
+    `${API_URL}${user_type}/getFollowup`,
+    { job_id: job_id, employee_id: employee_id },
     {
       headers: {
         "Content-Type": "application/json",
@@ -867,7 +920,7 @@ export const getSingleFollowup = async (employee_id, job_id) => {
   return response.data;
 };
 export const GetAdminToken = async (props) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.post(
     `${API_URL}${user_type}/getToken`,
     {
@@ -882,3 +935,40 @@ export const GetAdminToken = async (props) => {
   );
   return response.data;
 };
+// useEffect(() => {
+//   GetCountry();
+//   EmployeeDetails();
+//   AddEmployeeDetails();
+//   getallEmployeeData();
+//   EmployeeEducationDetails();
+//   AddEmployeeEducation();
+//   EmployeeSkillDetails();
+//   AddEmployeement();
+//   AddEmployeeSkill();
+//   ApplyJob();
+//   GetJob();
+//   GetJobDetail();
+//   GetAllResponse();
+//   GetAllJobs();
+//   AddJob();
+//   getAllEmployer();
+//   EmployerDetails();
+//   AddCompany();
+//   AddContact();
+//   AddKyc();
+//   getInterview();
+//   AddInterviewSheduale();
+//   AddLimia();
+//   getAllJobs();
+//   getallAdminData();
+//   getAllFollowUpData();
+//   getAllJobsCategory();
+//   AddJobCategory();
+//   AdminDetails();
+//   AddAdmin();
+//   GetFilter();
+//   AddFIlter();
+//   AddFollowup();
+//   getSingleFollowup();
+//   GetAdminToken();
+// }, [Token]);

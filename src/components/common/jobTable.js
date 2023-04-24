@@ -7,6 +7,8 @@ import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 
 export default function JobTable(props) {
+  console.log(props.filter_by_time);
+
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   const [jobData, setjobData] = useState([]);
@@ -36,10 +38,11 @@ export default function JobTable(props) {
       recordsPerPage,
       columnName,
       sortOrder,
-      props.company
+      props.company,
+      props.filter_by_time
     );
     setjobData(userData.data.data);
-    // console.log(userData.data.data);
+    // // console.log(userData.data.data);
     setTotalData(userData.data.total_rows);
   };
 
@@ -60,6 +63,7 @@ export default function JobTable(props) {
     columnName,
     sortOrder,
     props.company,
+    props.filter_by_time,
   ]);
 
   /* Function to show the Job detail data */

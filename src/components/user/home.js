@@ -20,7 +20,7 @@ function EmployeeHomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("user_id")]);
 
-  //console.log(("JobDetail===" + JSON.stringify(JobDetail))
+  //// console.log(("JobDetail===" + JSON.stringify(JobDetail))
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />

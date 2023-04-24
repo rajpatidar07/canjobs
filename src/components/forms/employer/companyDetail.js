@@ -121,7 +121,7 @@ function CompanyDetails(props) {
     franchise: [
       (value) =>
         value === ""
-          ? "Franchise is required"
+          ? ""
           : value.length < 2
           ? "Franchise have 2 or more letters"
           : "",
@@ -134,22 +134,21 @@ function CompanyDetails(props) {
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
-    if (userData !== undefined) {
-      setState(userData.data.company_detail[0]);
-    }
-    //console.log((userData);
-  };
-  useEffect(() => {
     if (
+      userData === undefined ||
       props.employerId === "0" ||
       props.employerId === undefined ||
       props.employerId.length === 0
     ) {
       setState(initialFormState);
     } else {
-      EmployerData();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      setState(userData.data.company_detail[0]);
     }
+    // console.log(userData);
+  };
+  useEffect(() => {
+    EmployerData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.employerId]);
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
@@ -157,7 +156,7 @@ function CompanyDetails(props) {
 
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
-    // console.log(state);
+    // // console.log(state);
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -200,7 +199,7 @@ function CompanyDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
             <h5 className="text-center pt-2 mb-7"> Company Details</h5>
-            <input type="hidden" value={state.company_id || null} />
+            <input type="hidden" value={state.company_id} />
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
@@ -484,7 +483,7 @@ function CompanyDetails(props) {
                   htmlFor="franchise"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Franchise <span className="text-danger"> *</span> :
+                  Franchise :
                 </label>
                 <div className="position-relative">
                   <input
@@ -568,16 +567,16 @@ function CompanyDetails(props) {
             <div className="form-group mb-8 text-center">
               {loading === true ? (
                 <button
-                  class="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button

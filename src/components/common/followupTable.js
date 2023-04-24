@@ -44,7 +44,7 @@ function FollowupTable() {
     setTotalData(userData.data.total_rows);
     setresponseId(userData.data.data[0].job_id);
     // if (userData.message === "No data found") {
-    // //console.log((userData.status);
+    // //// console.log((userData.status);
     // }
   };
 
@@ -397,7 +397,7 @@ function FollowupTable() {
                       </td>
                       <td className="py-5 min-width-px-100">
                         {job.total_applicants > 0 ? (
-                          <div class="btn-group button_group" role="group">
+                          <div className="btn-group button_group" role="group">
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => setresponseId(job.job_id)}

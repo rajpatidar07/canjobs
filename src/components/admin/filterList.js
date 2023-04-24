@@ -28,7 +28,7 @@ function FilterList() {
     let Data = await GetFilter();
     setFilterData(Data.data);
     setApiCall(false);
-    // console.log(Data.data);
+    // // console.log(Data.data);
   };
 
   /*Render function to get the filter data*/
@@ -50,7 +50,7 @@ function FilterList() {
   };
   /*To call Api to delete category */
   async function deleteFilter(e, f) {
-    console.log(e, f);
+    // console.log(e, f);
 
     /*Function to delete the filter */
     const responseData = await DeleteFilter(e, f);

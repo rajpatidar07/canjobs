@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddFIlter } from "../../../api//api";
 import { toast } from "react-toastify";
@@ -7,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddFilter(props) {
   let [loading, setLoading] = useState(false);
-  // console.log(props);
+  // // console.log(props);
   // let [adminDetails, setAdmindetails] = useState([]);
 
   // USER ADMIN PROFILE UPDATE VALIDATION
@@ -25,8 +24,10 @@ function AddFilter(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
@@ -52,7 +53,7 @@ function AddFilter(props) {
     <div className="p-0 m-0">
       <form onSubmit={onAddFIlterClick}>
         <div className="form-group p-0">
-          <div class="input-group mb-3">
+          <div className="input-group mb-3">
             <input
               className={
                 errors.json_item
@@ -68,17 +69,17 @@ function AddFilter(props) {
             />
             {loading === true ? (
               <button
-                class="btn btn-primary"
+                className="btn btn-primary"
                 type="button"
                 disabled
                 style={{ height: "3rem", minWidth: "40px" }}
               >
                 <span
-                  class="spinner-border spinner-border-sm "
+                  className="spinner-border spinner-border-sm "
                   role="status"
                   aria-hidden="true"
                 ></span>
-                <span class="sr-only">Loading...</span>
+                <span className="sr-only">Loading...</span>
               </button>
             ) : (
               <button

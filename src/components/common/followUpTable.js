@@ -1,28 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import CustomButton from "../common/button";
-import { getInterview } from "../../api/api";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import SAlert from "../common/sweetAlert";
+import { getFollowupLastData } from "../../api/api";
 import Pagination from "./pagination";
-// import FilterJson from "../json/filterjson";
-import AddInterview from "../forms/admin/addInterview";
-function Interview(props) {
-  let search = props.search;
-  let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);
-  const [interviewData, setInterviewData] = useState([]);
-  const [jobId, setJobId] = useState();
-  let [resData, setResData] = useState("");
-
-  //   /*delete states */
-  //   const [deleteAlert, setDeleteAlert] = useState(false);
-  //   const [deleteId, setDeleteID] = useState();
-  //   const [deleteName, setDeleteName] = useState("");
-  //   /*Filter and search state */
-  //   const [categoryTypeFilterValue, setCategoryTypeFilterValue] = useState("");
+function FollowUpDashBoard(props) {
+  //   const [followUpData, setFollowUpData] = useState([]);
   /*Pagination states */
-  const [totalData, setTotalData] = useState("");
+  const [totalData /*setTotalData*/] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -30,73 +13,31 @@ function Interview(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [clicksort, setClicksort] = useState(0);
 
-  //   /* Function to get the intervew data*/
-  const InterviewData = async () => {
-    const userData = await getInterview(
-      "",
-      "",
-      search,
+  /* Function to get the FollowUp data*/
+  const FollowUpData = async () => {
+    const userData = await getFollowupLastData(
       currentPage,
       columnName,
       recordsPerPage,
       sortOrder,
       props.filter_by_time
     );
-    setInterviewData(userData.data);
-    setTotalData(userData.total_rows);
+    console.log(userData);
+    // setFollowUpData(userData.data);
+    // setTotalData(userData.total_rows);
   };
 
   /*Render function to get the interview*/
   useEffect(() => {
-    InterviewData();
+    FollowUpData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    search,
     currentPage,
     columnName,
     recordsPerPage,
     sortOrder,
-    showAddInterviewModal,
     props.filter_by_time,
   ]);
-
-  /* Function to show the single data to update interview*/
-  const editInterview = (e) => {
-    // e.preventDefault();
-    setShowAddInterviewModal(true);
-    setJobId(e.job_id);
-    setResData(e);
-  };
-
-  //   /*To Show the delete alert box */
-  //   const ShowDeleteAlert = (e) => {
-  //     setDeleteID(e.job_category_id);
-  //     setDeleteName(e.category_name);
-  //     setDeleteAlert(true);
-  //   };
-  //   /*To cancel the delete alert box */
-  //   const CancelDelete = () => {
-  //     setDeleteAlert(false);
-  //   };
-  //   /*To call Api to delete category */
-  //   async function deleteCategory(e) {
-  //     const responseData = await DeleteJobCategory(e);
-  //     if (responseData.message === "job category has been deleted") {
-  //       toast.error("Category deleted Successfully", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //         autoClose: 1000,
-  //       });
-  //       setDeleteAlert(false);
-  //     }
-  //   }
-  //   /*Category Type Onchange function to filter the data */
-  //   let onCategoryTypeFilterChange = (e) => {
-  //     setCategoryTypeFilterValue(e.target.value);
-  //   };
-  //   /*Search Onchange function to filter the data */
-  //   let onSearch = (e) => {
-  //     setSearch(e.target.value);
-  //   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -114,15 +55,6 @@ function Interview(props) {
 
   return (
     <>
-      <AddInterview
-        resData={resData}
-        close={() => {
-          setShowAddInterviewModal(false);
-        }}
-        job_id={jobId}
-        show={showAddInterviewModal}
-      />
-
       <div className="bg-white site-wrapper overflow-hidden bg-default-2">
         <div className="mt-5" id="dashboard-body">
           <div className="container">
@@ -131,51 +63,6 @@ function Interview(props) {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
-                {/* <div className="row align-items-center"> */}
-                {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                  <p className="input_label">Search by name:</p>
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder={"Search Category"}
-                    value={search}
-                    name={"category_name"}
-                    onChange={(e) => onSearch(e)}
-                  />
-                </div> */}
-                {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Duration:</p>
-                    <div className="select_div">
-                      <select
-                        name="category"
-                        //   value={categoryTypeFilterValue}
-                        id="category"
-                        //   onChange={onCategoryTypeFilterChange}
-                        className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
-                      >
-                        <option value={""}>Select Duration</option>
-                        {(FilterJson.Duration || []).map((data, i) => {
-                          return (
-                            <option value={data} key={i}>
-                              {data}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div> */}
-                {/* <div className="text-end px-6 col-xl-6">
-                  <div className="float-md-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      //   onClick={() => editInterview("0")}
-                    >
-                      Add category
-                    </CustomButton>
-                  </div>
-                </div> */}
-                {/* </div> */}
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
@@ -261,7 +148,7 @@ function Interview(props) {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {totalData === 0 ? (
+                      {/* {totalData === 0 ? (
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>
@@ -317,7 +204,7 @@ function Interview(props) {
                             </th>
                           </tr>
                         ))
-                      )}
+                      )} */}
                     </tbody>
                   </table>
                 </div>
@@ -331,18 +218,10 @@ function Interview(props) {
               </div>
             </div>
           </div>
-          {/* <SAlert
-          show={deleteAlert}
-          title={deleteName}
-          text="Are you Sure you want to delete !"
-          onConfirm={() => deleteCategory(deleteId)}
-          showCancelButton={true}
-          onCancel={CancelDelete}
-        /> */}
         </div>
       </div>
     </>
   );
 }
 
-export default Interview;
+export default FollowUpDashBoard;

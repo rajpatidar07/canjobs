@@ -122,7 +122,7 @@ function Skills(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserSkillsClick}>
             <h5 className="text-center mb-7">Add It Skills </h5>{" "}
-            <div className="form-group d-flex">
+            <div className="form-group d-flex mb-0">
               <label
                 htmlFor="skill"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -145,20 +145,20 @@ function Skills(props) {
               />{" "}
               {loading === true ? (
                 <button
-                  class=" btn-primary btn-small mx-2 rounded-5 text-uppercase"
+                  className=" btn-primary btn-small mx-2 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >
                   <span
-                    class="spinner-border spinner-border-sm "
+                    className="spinner-border spinner-border-sm "
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </button>
               ) : (
                 <button
-                  className=" btn-primary px-5  mx-2 rounded-5 text-uppercase"
+                  className=" btn-primary px-5  mx-2  rounded-5 text-uppercase"
                   type="submit"
                 >
                   +

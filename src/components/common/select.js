@@ -9,7 +9,7 @@ const SelectBox = (props) => {
       value: option.job_id,
       label: option.job_title + option.company_name,
     }));
-    console.log(options);
+    // console.log(options);
     setState(options);
   }, [props.options]);
 

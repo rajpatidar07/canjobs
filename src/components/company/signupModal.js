@@ -59,7 +59,7 @@ export default function CompanySignUp(props) {
 
   // USER SIGNUP SUBMIT BUTTON
   const onCompanySignUpClick = async (event) => {
-    // console.log(state);
+    // // console.log(state);
 
     event.preventDefault();
     if (validate()) {

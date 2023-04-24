@@ -5,9 +5,8 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
-import SAlert from "../common/sweetAlert";
+import { getAllJobsCategory } from "../../api/api";
+import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 
@@ -16,10 +15,7 @@ function Job() {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
-  /*Delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
+
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -30,7 +26,7 @@ function Job() {
   const [Categorylist, setCategoryList] = useState([]);
 
   // if (userData.message === "No data found") {
-  // //console.log((userData.status);
+  // //// console.log((userData.status);
   // }
   /*Render function to get the job */
   useEffect(() => {

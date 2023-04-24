@@ -5,16 +5,15 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
-import SAlert from "../common/sweetAlert";
+import { GetAllJobs, getAllJobsCategory } from "../../api/api";
+import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
 
 function Followup() {
   /*show Modal and props state */
-  let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [showAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
@@ -52,7 +51,7 @@ function Followup() {
     setTotalData(userData.data.total_rows);
     setresponseId(userData.data.data[0].job_id);
     // if (userData.message === "No data found") {
-    // //console.log((userData.status);
+    // //// console.log((userData.status);
     // }
   };
 
@@ -482,7 +481,7 @@ function Followup() {
                               data-aos-once="true"
                               key={job.job_id}
                             >
-                              <td scope="row" className="py-5 ">
+                              <td className="py-5 ">
                                 <div className="">
                                   <Link
                                     to={""}
@@ -536,7 +535,7 @@ function Followup() {
                               <td className="py-5 min-width-px-100">
                                 {job.total_applicants > 0 ? (
                                   <div
-                                    class="btn-group button_group"
+                                    className="btn-group button_group"
                                     role="group"
                                   >
                                     <button

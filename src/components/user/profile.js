@@ -34,9 +34,8 @@ const UserProfile = (props) => {
     showEducation,
     showAppliedJobs,
     showItSkills,
-    localStorage.getItem("user_id"),
   ]);
-  // //console.log((("userData--" + JSON.stringify(userDetail)))
+  // //// console.log((("userData--" + JSON.stringify(userDetail)))
 
   return (
     /*---- Employee Profile Details Page ----*/
