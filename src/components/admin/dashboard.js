@@ -156,7 +156,7 @@ const AdminDashboard = () => {
                     <h3 className="font-size-5 col-lg-4 col-sm-1 px-3 ">
                       Recently Added Jobs
                     </h3>
-                    <div className="col-1 form_control mt-5">
+                    <div className="col-2 form_control">
                       <div className="select_div">
                         <select
                           name="job"
@@ -192,7 +192,7 @@ const AdminDashboard = () => {
                     <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Employee
                     </h3>
-                    <div className="col-1 form_control mt-5">
+                    <div className="col-2 form_control">
                       <div className="select_div">
                         <select
                           name="employee"
@@ -235,7 +235,7 @@ const AdminDashboard = () => {
                     <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Interview
                     </h3>
-                    <div className="col-1 form_control mt-5">
+                    <div className="col-2 form_control">
                       <div className="select_div">
                         <select
                           name="interview"
@@ -271,7 +271,7 @@ const AdminDashboard = () => {
                     <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Companies
                     </h3>
-                    <div className="col-1 form_control mt-5">
+                    <div className="col-2 form_control">
                       <div className="select_div">
                         <select
                           name="employer"
@@ -314,7 +314,7 @@ const AdminDashboard = () => {
                     <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Job Response
                     </h3>
-                    <div className="col-1 form_control mt-5">
+                    <div className="col-2 form_control">
                       <div className="select_div">
                         <select
                           name="response"
@@ -353,7 +353,7 @@ const AdminDashboard = () => {
                     <h3 className="font-size-5 col-4 col-sm-1 px-3  ">
                       Recently Added FollowUp
                     </h3>
-                    <div className="col-1 form_control mt-5">
+                    <div className="col-2 form_control">
                       <div className="select_div">
                         <select
                           name="followup"
