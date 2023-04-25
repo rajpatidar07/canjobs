@@ -65,7 +65,13 @@ function FollowUpDashBoard(props) {
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
               </div>
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+              <div
+                className={
+                  props.heading === "Dashboard"
+                    ? ""
+                    : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
+                }
+              >
                 <div className="table-responsive ">
                   <table className="table table-striped main_data_table">
                     <thead>

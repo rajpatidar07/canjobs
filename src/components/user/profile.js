@@ -35,6 +35,11 @@ const UserProfile = (props) => {
     showAppliedJobs,
     showItSkills,
   ]);
+  /*Function to generate resume */
+  const ResumeClick = (employee_id) => {
+    const id = employee_id;
+    window.open(`/resume/${id}`, "_blank");
+  };
   // //// console.log((("userData--" + JSON.stringify(userDetail)))
 
   return (
@@ -69,7 +74,10 @@ const UserProfile = (props) => {
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
-                    <Link className="mb-4 position-relative">
+                    <Link
+                      className="mb-4 position-relative"
+                      onClick={() => setShowPersonalDetails(true)}
+                    >
                       <input
                         type="file"
                         id="ImgUploadInput"
@@ -220,7 +228,14 @@ const UserProfile = (props) => {
                       <div className="info_box text-left">
                         <span className="font-size-3 text-smoke  mr-7">
                           Resume:{" "}
-                          <Link to={PersonalDetail.resume}>View Resume</Link>
+                          <Link
+                            to={""}
+                            onClick={() =>
+                              ResumeClick(PersonalDetail.employee_id)
+                            }
+                          >
+                            View Resume
+                          </Link>
                         </span>
                       </div>
                     </div>

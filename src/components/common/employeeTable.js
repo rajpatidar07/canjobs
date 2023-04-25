@@ -126,7 +126,7 @@ export default function EmployeeTable(props) {
     setSortOrder(clicksort === 0 ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-
+  /*Function to generate resume */
   const ResumeClick = (employee_id) => {
     const id = employee_id;
     window.open(`/resume/${id}`, "_blank");

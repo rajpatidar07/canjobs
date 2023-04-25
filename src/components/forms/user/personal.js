@@ -191,7 +191,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    console.log(state);
+    // console.log(state);
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -238,7 +238,7 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
-  console.log(state.profile_photo);
+  // console.log(state.profile_photo);
 
   return (
     <>
@@ -268,6 +268,31 @@ function PersonalDetails(props) {
               </h5>
             )}
             {/* FIRST LINE */}
+            <div className="form-group mx-auto text-center">
+              {/* <Link className="mb-4 position-relative">
+                <input
+                  type="file"
+                  id="profile_photo"
+                  accept=" image/png,image/jpeg,image/jpg,image/gif"
+                  onChange={handleFileChange}
+                  className="d-none"
+                />
+                <label className="image_upload_btn m-0" htmlFor="profile_photo">
+                  <span className="fas fa-pen text-gray"> </span>
+                </label>
+                <img
+                  className="rounded-circle"
+                  src={
+                    state.profile_photo
+                      ? state.profile_photo
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  }
+                  alt=""
+                  width={"100px"}
+                  height={"100px"}
+                />
+              </Link> */}
+            </div>
             <div className="row pt-5">
               {" "}
               <input
@@ -837,7 +862,7 @@ function PersonalDetails(props) {
                 <div className="position-relative">
                   <input
                     type="file"
-                    accept=" image/png"
+                    accept=" image/png,image/jpeg,image/jpg,image/gif"
                     className="form-control"
                     onChange={handleFileChange}
                   />

@@ -100,11 +100,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Skill"
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value, index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link
@@ -143,11 +143,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Industry"
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value, index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link
@@ -186,11 +186,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Education"
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value, index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link
@@ -215,7 +215,7 @@ function FilterList() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -229,11 +229,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Category"
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value,index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link
@@ -257,8 +257,8 @@ function FilterList() {
                         </ul>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  </div> */}
+                  {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -272,11 +272,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Location"
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value,index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link
@@ -300,7 +300,7 @@ function FilterList() {
                         </ul>
                       </div>
                     </div>
-                  </div>{" "}
+                  </div>{" "} */}
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
@@ -315,11 +315,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Corporation "
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value, index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link
@@ -358,11 +358,11 @@ function FilterList() {
                             (filterData || []).map((data) =>
                               data.item_name === "Language"
                                 ? Object.entries(JSON.parse(data.json)).map(
-                                    (value) => (
+                                    (value, index) => (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={value[0]}
+                                          key={index}
                                         >
                                           {value[1]}
                                           <Link

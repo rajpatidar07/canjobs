@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
 // import { useEffect } from "react";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 let Token = localStorage.getItem("token");
@@ -11,9 +10,7 @@ const user_type = localStorage.getItem("userType");
 function GetToken() {
   // useEffect(() => {
   //   Token = localStorage.getItem("token");
-
   // }, []);
-  console.log("))))))))))))))))))0" + Token);
 }
 GetToken();
 if (
@@ -175,19 +172,28 @@ export const EmployeeSkillDetails = async (props) => {
 };
 /*Add Employee Skill Api */
 export const AddEmployeement = async (props, id) => {
-  const response = await axios.put(`${API_URL}employeeCareer_detail`, {
-    employee_id: id,
-    company: props.company,
-    designation: props.designation,
-    company_location: props.company_location,
-    industry: props.industry,
-    functional_area: props.functional_area,
-    work_level: props.work_level,
-    start_date: props.start_date,
-    end_date: props.end_date,
-    currently_work_here: props.currently_work_here,
-    career_id: props.career_id,
-  });
+  const response = await axios.put(
+    `${API_URL}employeeCareer_detail`,
+    {
+      employee_id: id,
+      company: props.company,
+      designation: props.designation,
+      company_location: props.company_location,
+      industry: props.industry,
+      functional_area: props.functional_area,
+      work_level: props.work_level,
+      start_date: props.start_date,
+      end_date: props.end_date,
+      currently_work_here: props.currently_work_here,
+      career_id: props.career_id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 /*Add Employee Skill Api */
@@ -391,7 +397,7 @@ export const GetAllJobs = async (
   company,
   time
 ) => {
-  console.log("time", time);
+  // console.log("time", time);
   const response = await axios.post(
     `${API_URL}getAllJobs`,
     {
@@ -541,12 +547,16 @@ export const DeleteEmployer = async (props) => {
 };
 /*Delete Job Api */
 export const DeleteJob = async (props) => {
-  const response = await axios.delete(`${API_URL}deletejob/${props}`, props, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+  const response = await axios.delete(
+    `${API_URL}deletejob/${props}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
     },
-  });
+    props
+  );
   return response.data;
 };
 /*Get Interview list api */
@@ -713,7 +723,7 @@ export const getAllFollowUpData = async (
   column,
   sort
 ) => {
-  console.log("Token---" + Token);
+  // console.log("Token---" + Token);
 
   const response = await axios.post(
     `${API_URL}${user_type}/getFollowupView`,
@@ -769,13 +779,14 @@ export const getAllJobsCategory = async (
 export const DeleteJobEmployee = async (props) => {
   const response = await axios.delete(
     `${API_URL}deleteEmployee/${props}`,
-    props,
+
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    }
+    },
+    props
   );
   return response.data;
 };

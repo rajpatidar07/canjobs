@@ -7,7 +7,7 @@ import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 
 export default function JobTable(props) {
-  console.log(props.filter_by_time);
+  // console.log(props.filter_by_time);
 
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);

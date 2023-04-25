@@ -102,15 +102,16 @@ function LmiaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoading(false);
         return close();
       }
-      //   if (responseData.message === "admin updated successfully") {
-      //     toast.success("Admin Updated successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     return close();
-      //   }
+      if (responseData.message === "Data updated successfully") {
+        toast.success("Lmia Status Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION

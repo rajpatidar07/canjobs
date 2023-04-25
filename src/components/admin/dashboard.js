@@ -153,11 +153,9 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3 ">
-                      Recently Added Jobs
-                    </h3>
-                    <div className="col-2 form_control">
-                      <div className="select_div">
+                    <h3 className="font-size-5 px-3 ">Recently Added Jobs</h3>
+                    <div className="d-flex justify-content-betwee form_control">
+                      <div className="select_div px-5">
                         <select
                           name="job"
                           value={job}
@@ -172,15 +170,16 @@ const AdminDashboard = () => {
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <Link
-                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
-                        to={"/employer"}
-                        title="View All Jobs"
-                      >
-                        View All
-                      </Link>
+                      <div className="">
+                        {" "}
+                        <Link
+                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          to={"/employer"}
+                          title="View All Jobs"
+                        >
+                          View All
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <JobTable heading={"Dashboard"} filter_by_time={job} />
@@ -189,11 +188,11 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
+                    <h3 className="font-size-5 px-3  ">
                       Recently Added Employee
                     </h3>
-                    <div className="col-2 form_control">
-                      <div className="select_div">
+                    <div className="d-flex justify-content-betwee form_control">
+                      <div className="select_div px-5">
                         <select
                           name="employee"
                           value={employee}
@@ -208,15 +207,16 @@ const AdminDashboard = () => {
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <Link
-                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
-                        to={"/employee"}
-                        title="View all Applicants"
-                      >
-                        View All
-                      </Link>
+                      <div className="">
+                        {" "}
+                        <Link
+                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          to={"/employee"}
+                          title="View all Applicants"
+                        >
+                          View All
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <EmployeeTable
@@ -232,11 +232,11 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
+                    <h3 className="font-size-5 px-3  ">
                       Recently Added Interview
                     </h3>
-                    <div className="col-2 form_control">
-                      <div className="select_div">
+                    <div className="d-flex justify-content-betwee form_control">
+                      <div className="select_div px-5">
                         <select
                           name="interview"
                           value={interview}
@@ -251,15 +251,15 @@ const AdminDashboard = () => {
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <Link
-                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
-                        to={"/interview"}
-                        title="View All Interview"
-                      >
-                        View All
-                      </Link>
+                      <div className="">
+                        <Link
+                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          to={"/interview"}
+                          title="View All Interview"
+                        >
+                          View All
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <Interview heading={"Dashboard"} filter_by_time={interview} />
@@ -268,11 +268,11 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
+                    <h3 className="font-size-5 px-3  ">
                       Recently Added Companies
                     </h3>
-                    <div className="col-2 form_control">
-                      <div className="select_div">
+                    <div className="d-flex justify-content-betwee form_control">
+                      <div className="select_div px-5">
                         <select
                           name="employer"
                           value={employer}
@@ -287,15 +287,16 @@ const AdminDashboard = () => {
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <Link
-                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
-                        to={"/employer"}
-                        title="View All Companies"
-                      >
-                        View All
-                      </Link>
+                      <div className="">
+                        {" "}
+                        <Link
+                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          to={"/employer"}
+                          title="View All Companies"
+                        >
+                          View All
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <EmployerTable
@@ -311,11 +312,11 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
-                      Recently Added Job Response
+                    <h3 className="font-size-5 px-3  ">
+                      Recently Job Response
                     </h3>
-                    <div className="col-2 form_control">
-                      <div className="select_div">
+                    <div className="d-flex justify-content-betwee form_control">
+                      <div className="select_div px-5">
                         <select
                           name="response"
                           value={response}
@@ -330,15 +331,15 @@ const AdminDashboard = () => {
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <Link
-                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
-                        to={"/responses"}
-                        title="View All Responses"
-                      >
-                        View All
-                      </Link>
+                      <div className="">
+                        <Link
+                          className="text-center  btn-outline-info border border-info mt-0 mb-0 pb-0 rounded-3"
+                          to={"/responses"}
+                          title="View All Responses"
+                        >
+                          View All
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <JobResponse
@@ -350,11 +351,11 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 col-4 col-sm-1 px-3  ">
+                    <h3 className="font-size-5 px-3">
                       Recently Added FollowUp
                     </h3>
-                    <div className="col-2 form_control">
-                      <div className="select_div">
+                    <div className="d-flex justify-content-betwee form_control">
+                      <div className="select_div px-5">
                         <select
                           name="followup"
                           value={followup}
@@ -369,15 +370,16 @@ const AdminDashboard = () => {
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <Link
-                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
-                        to={"/followup"}
-                        title="View All Followup"
-                      >
-                        View All
-                      </Link>
+                      <div className="">
+                        {" "}
+                        <Link
+                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          to={"/followup"}
+                          title="View All Followup"
+                        >
+                          View All
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <FollowUpDashBoard

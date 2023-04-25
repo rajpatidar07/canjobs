@@ -595,7 +595,7 @@ function CompanyDetails(props) {
                   <input
                     type="file"
                     className="form-control"
-                    accept=" image/png"
+                    accept=" image/png,image/jpeg,image/jpg,image/gif"
                     onChange={handleFileChange}
                   />
                 </div>

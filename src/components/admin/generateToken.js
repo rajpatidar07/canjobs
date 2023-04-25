@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getallAdminData, GetAdminToken } from "../../api/api";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 export default function GenerateToken(props) {
   let [allAdmin, setAllAdmin] = useState([]);
   let [AdminId, setAdminId] = useState("");
   const [state, setState] = useState([]);
-  let navigate = useNavigate("");
   const AdminData = async () => {
     const userData = await getallAdminData();
     setAllAdmin(userData.data);
@@ -40,13 +38,13 @@ export default function GenerateToken(props) {
     // setLoading(true);
     const responseData = await GetAdminToken(AdminId);
     if (responseData.message === "successful") {
-      localStorage.setItem("token", responseData.token);
+      localStorage.setItem("view_as_token", responseData.token);
       toast.success("Token Generated successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
       close();
-      navigate("/dashboard");
+      window.location.reload();
     }
   };
   const onRest = () => {
@@ -56,7 +54,7 @@ export default function GenerateToken(props) {
       autoClose: 1000,
     });
     close();
-    navigate("/dashboard");
+    window.location.reload();
   };
   return (
     <>
@@ -99,7 +97,7 @@ export default function GenerateToken(props) {
                 className="btn  btn-secondary btn-small w-25 rounded-5 text-uppercase"
                 type="submit"
               >
-                Generate Token
+                View as
               </button>{" "}
               <button
                 className="btn btn-primary rounded-5 text-uppercase mx-5"
