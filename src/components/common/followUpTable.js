@@ -23,6 +23,7 @@ function FollowUpDashBoard(props) {
       props.filter_by_time
     );
     console.log(userData);
+
     // setFollowUpData(userData.data);
     // setTotalData(userData.total_rows);
   };
