@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 // import { useEffect } from "react";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 let Token = localStorage.getItem("token");
@@ -7,6 +8,14 @@ const user_id = localStorage.getItem("user_id");
 const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
+function GetToken() {
+  // useEffect(() => {
+  //   Token = localStorage.getItem("token");
+
+  // }, []);
+  console.log("))))))))))))))))))0" + Token);
+}
+GetToken();
 if (
   view_as_token
   // view_as_token !== null ||
@@ -704,6 +713,8 @@ export const getAllFollowUpData = async (
   column,
   sort
 ) => {
+  console.log("Token---" + Token);
+
   const response = await axios.post(
     `${API_URL}${user_type}/getFollowupView`,
     {

@@ -130,37 +130,23 @@ const AdminHeader = (props) => {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <Link
-                    to=""
+                    to={""}
+                    onClick={() => setShowChangePass(true)}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    onClick={() =>
-                      dropDown === false
-                        ? setDropDown(true)
-                        : setDropDown(false)
-                    }
-                    // onMouseOut={() => setDropDown(false)}
                   >
-                    Settings{" "}
+                    Setting
+                  </Link>
+
+                  <Link
+                    to={""}
+                    onClick={() => setShowGenerateToken(true)}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                  >
+                    View as
                   </Link>
                   {dropDown ? (
                     <ul className="list-unstyled">
-                      <li>
-                        <Link
-                          to={""}
-                          onClick={() => setShowChangePass(true)}
-                          className="dropdown-item py-2 font-size-2 font-weight-semibold px-5 line-height-1p2 text-uppercase"
-                        >
-                          Change Password
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to={""}
-                          onClick={() => setShowGenerateToken(true)}
-                          className="dropdown-item py-2 font-size-2 font-weight-semibold px-5 line-height-1p2 text-uppercase"
-                        >
-                          Generate Token
-                        </Link>
-                      </li>
+                      <li></li>
                     </ul>
                   ) : null}
 
