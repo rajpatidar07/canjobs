@@ -31,6 +31,7 @@ function PersonalDetails(props) {
     work_permit_canada: "",
     work_permit_other_country: "",
     resume: "",
+    profile_photo: "",
   };
   /* Functionality to close the modal */
 
@@ -190,7 +191,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    //// console.log((state);
+    console.log(state);
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -231,6 +232,14 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, resume: base64Name });
   };
+  /*Onchange function of profile */
+  const handleFileChange = async (e) => {
+    encoded = await convertToBase64(e.target.files[0]);
+    let base64Name = encoded.base64;
+    setState({ ...state, profile_photo: base64Name });
+  };
+  console.log(state.profile_photo);
+
   return (
     <>
       <Modal
@@ -816,6 +825,23 @@ function PersonalDetails(props) {
                     {errors.resume}
                   </span>
                 )}
+              </div>
+
+              <div className="form-group col-md-12">
+                <label
+                  htmlFor="about"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Profile:
+                </label>
+                <div className="position-relative">
+                  <input
+                    type="file"
+                    accept=" image/png"
+                    className="form-control"
+                    onChange={handleFileChange}
+                  />
+                </div>
               </div>
             </div>
             <div className="form-group text-center">

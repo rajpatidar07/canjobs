@@ -10,7 +10,7 @@ import FilterJson from "../../json/filterjson";
 
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
-
+  let encoded;
   /* Functionality to close the modal */
 
   const close = () => {
@@ -33,6 +33,7 @@ function CompanyDetails(props) {
     about: "",
     vacancy_for_post: "",
     franchise: "",
+    logo: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -154,9 +155,29 @@ function CompanyDetails(props) {
   const { state, setErrors, setState, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
 
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  /*Onchange function of profile */
+  const handleFileChange = async (e) => {
+    encoded = await convertToBase64(e.target.files[0]);
+    let base64Name = encoded.base64;
+    setState({ ...state, logo: base64Name });
+  };
+  // console.log(state.logo);
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
-    // // console.log(state);
+    // console.log(state);
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -562,6 +583,28 @@ function CompanyDetails(props) {
                     </span>
                   )}
                 </div>
+              </div>
+              <div className="form-group col-md-12">
+                <label
+                  htmlFor="about"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Profile:
+                </label>
+                <div className="position-relative">
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept=" image/png"
+                    onChange={handleFileChange}
+                  />
+                </div>
+                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                {/* {errors.about && (
+                  <span key={errors.about} className="text-danger font-size-3">
+                    {errors.about}
+                  </span>
+                )} */}
               </div>
             </div>
             <div className="form-group mb-8 text-center">
