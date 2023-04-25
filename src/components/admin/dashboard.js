@@ -10,7 +10,7 @@ import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
 import { getSummaryCount } from "../../api/api";
-import FollowUpDashBoard from "../common/followUpTable";
+import FollowUpDashBoard from "../common/followUpTableDashboard";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
