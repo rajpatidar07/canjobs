@@ -1,63 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState /*useEffect*/ } from "react";
+import { Link /*useNavigate*/ } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
-import { getallAdminData, GetAdminToken } from "../../api/api";
-import Select from "react-select";
+import GenerateToken from "./generateToken";
+// import { getallAdminData, GetAdminToken } from "../../api/api";
+// import Select from "react-select";
 
 const AdminHeader = (props) => {
   const [showChangePass, setShowChangePass] = useState(false);
-  let [allAdmin, setAllAdmin] = useState([]);
-  let [AdminId, setAdminId] = useState("");
-  const [state, setState] = useState([]);
+  const [showGeneratToken, setShowGenerateToken] = useState(false);
+  // let [allAdmin, setAllAdmin] = useState([]);
+  // let [AdminId, setAdminId] = useState("");
+  // const [state, setState] = useState([]);
+  const [dropDown, setDropDown] = useState(false);
   // let [loading, setLoading] = useState(false);
-  let navigate = useNavigate("");
-  const AdminData = async () => {
-    const userData = await getallAdminData();
-    setAllAdmin(userData.data);
-  };
+  // let navigate = useNavigate("");
+  // const AdminData = async () => {
+  //   const userData = await getallAdminData();
+  //   setAllAdmin(userData.data);
+  // };
 
-  useEffect(() => {
-    AdminData();
-  }, [props]);
+  // useEffect(() => {
+  //   AdminData();
+  // }, [props]);
 
-  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
-  const onSelectChange = (option) => {
-    setAdminId(option.value);
-  };
-  useEffect(() => {
-    const options = allAdmin.map((option) => ({
-      value: option.admin_id,
-      label: option.name + " - " + option.admin_type,
-    }));
-    setState(options);
-  }, [allAdmin]);
+  // // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  // const onSelectChange = (option) => {
+  //   setAdminId(option.value);
+  // };
+  // useEffect(() => {
+  //   const options = allAdmin.map((option) => ({
+  //     value: option.admin_id,
+  //     label: option.name + " - " + option.admin_type,
+  //   }));
+  //   setState(options);
+  // }, [allAdmin]);
 
-  const onTokenGenerateClick = async (event) => {
-    event.preventDefault();
-    // setLoading(true);
-    const responseData = await GetAdminToken(AdminId);
-    if (responseData.message === "successful") {
-      localStorage.setItem("view_as_token", responseData.token);
-      toast.success("Token Generated successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setState([]);
-      setAdminId("");
-      navigate("/dashboard");
-    }
-  };
-  const onRest = () => {
-    localStorage.setItem("view_as_token", "");
-    toast.success("Token Reset successfully", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 1000,
-    });
-    setState([]);
-    setAdminId("");
-    navigate("/dashboard");
-  };
+  // const onTokenGenerateClick = async (event) => {
+  //   event.preventDefault();
+  //   // setLoading(true);
+  //   const responseData = await GetAdminToken(AdminId);
+  //   if (responseData.message === "successful") {
+  //     localStorage.setItem("view_as_token", responseData.token);
+  //     toast.success("Token Generated successfully", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
+  //     setState([]);
+  //     setAdminId("");
+  //     navigate("/dashboard");
+  //   }
+  // };
+  // const onRest = () => {
+  //   localStorage.setItem("view_as_token", "");
+  //   toast.success("Token Reset successfully", {
+  //     position: toast.POSITION.TOP_RIGHT,
+  //     autoClose: 1000,
+  //   });
+  //   setState([]);
+  //   setAdminId("");
+  //   navigate("/dashboard");
+  // };
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
@@ -66,7 +69,7 @@ const AdminHeader = (props) => {
 
           <h3 className="font-size-6 mb-0">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
-          <div className="form-group w-50 d-flex">
+          {/* <div className="form-group w-50 d-flex">
             <label
               htmlFor="view_layout"
               className="font-size-4 text-black-2  line-height-reset"
@@ -92,7 +95,7 @@ const AdminHeader = (props) => {
             >
               Reset
             </button>
-          </div>
+          </div> */}
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
             <div>
               <Link
@@ -115,6 +118,7 @@ const AdminHeader = (props) => {
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  onMouseOut={() => setDropDown(false)}
                 >
                   {/* <div className="circle-40">
                     <img src="image/header-profile.png" alt="" />
@@ -127,15 +131,39 @@ const AdminHeader = (props) => {
                 >
                   <Link
                     to=""
-                    onClick={() => setShowChangePass(true)}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    onClick={() =>
+                      dropDown === false
+                        ? setDropDown(true)
+                        : setDropDown(false)
+                    }
+                    // onMouseOut={() => setDropDown(false)}
                   >
                     Settings{" "}
                   </Link>
-                  <ChangePassword
-                    show={showChangePass}
-                    close={() => setShowChangePass(false)}
-                  />
+                  {dropDown ? (
+                    <ul className="list-unstyled">
+                      <li>
+                        <Link
+                          to={""}
+                          onClick={() => setShowChangePass(true)}
+                          className="dropdown-item py-2 font-size-2 font-weight-semibold px-5 line-height-1p2 text-uppercase"
+                        >
+                          Change Password
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to={""}
+                          onClick={() => setShowGenerateToken(true)}
+                          className="dropdown-item py-2 font-size-2 font-weight-semibold px-5 line-height-1p2 text-uppercase"
+                        >
+                          Generate Token
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : null}
+
                   <Link
                     to={"/adminprofile"}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
@@ -160,7 +188,15 @@ const AdminHeader = (props) => {
             </div>
           </div>
         </nav>
-      </div>
+      </div>{" "}
+      <ChangePassword
+        show={showChangePass}
+        close={() => setShowChangePass(false)}
+      />
+      <GenerateToken
+        show={showGeneratToken}
+        close={() => setShowGenerateToken(false)}
+      />
     </header>
   );
 };

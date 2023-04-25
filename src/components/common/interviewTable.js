@@ -15,12 +15,6 @@ function Interview(props) {
   const [jobId, setJobId] = useState();
   let [resData, setResData] = useState("");
 
-  //   /*delete states */
-  //   const [deleteAlert, setDeleteAlert] = useState(false);
-  //   const [deleteId, setDeleteID] = useState();
-  //   const [deleteName, setDeleteName] = useState("");
-  //   /*Filter and search state */
-  //   const [categoryTypeFilterValue, setCategoryTypeFilterValue] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,35 +62,6 @@ function Interview(props) {
     setResData(e);
   };
 
-  //   /*To Show the delete alert box */
-  //   const ShowDeleteAlert = (e) => {
-  //     setDeleteID(e.job_category_id);
-  //     setDeleteName(e.category_name);
-  //     setDeleteAlert(true);
-  //   };
-  //   /*To cancel the delete alert box */
-  //   const CancelDelete = () => {
-  //     setDeleteAlert(false);
-  //   };
-  //   /*To call Api to delete category */
-  //   async function deleteCategory(e) {
-  //     const responseData = await DeleteJobCategory(e);
-  //     if (responseData.message === "job category has been deleted") {
-  //       toast.error("Category deleted Successfully", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //         autoClose: 1000,
-  //       });
-  //       setDeleteAlert(false);
-  //     }
-  //   }
-  //   /*Category Type Onchange function to filter the data */
-  //   let onCategoryTypeFilterChange = (e) => {
-  //     setCategoryTypeFilterValue(e.target.value);
-  //   };
-  //   /*Search Onchange function to filter the data */
-  //   let onSearch = (e) => {
-  //     setSearch(e.target.value);
-  //   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 

@@ -15,7 +15,12 @@ const AdminDashboard = () => {
   // eslint-disable-next-line
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   const [countData, setCountData] = useState("");
-  let [state, setState] = useState("");
+  let [job, setJob] = useState("");
+  let [employee, setEmployee] = useState("");
+  let [employer, setEmployer] = useState("");
+  let [interview, setInterview] = useState("");
+  let [response, setResponse] = useState("");
+  let [followup, setFollowUP] = useState("");
   let AllCounts = async () => {
     let Data = await getSummaryCount();
     // console.log(Data);
@@ -23,7 +28,7 @@ const AdminDashboard = () => {
   };
   useEffect(() => {
     AllCounts();
-  }, [state]);
+  }, [job, employee, employer, interview, response, followup]);
   /*Function to get the percentage in correct form  */
   const appliedRateFormatted =
     countData && countData.applied_rate
@@ -53,7 +58,7 @@ const AdminDashboard = () => {
         <ToastContainer />
         <div className="container">
           <div className="row mb-7">
-            <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
+            <div className="col-xxl-3 col-xl-4 col-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
                 href="/job"
@@ -74,7 +79,7 @@ const AdminDashboard = () => {
               </a>
               {/* <!-- End Single Category --> */}
             </div>
-            <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
+            <div className="col-xxl-3 col-xl-4 col-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a
                 href="/employee"
@@ -97,7 +102,7 @@ const AdminDashboard = () => {
               </a>
               {/* <!-- End Single Category --> */}
             </div>
-            <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
+            <div className="col-xxl-3 col-xl-4 col-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <Link
                 to=""
@@ -118,7 +123,7 @@ const AdminDashboard = () => {
               </Link>
               {/* <!-- End Single Category --> */}
             </div>
-            <div className="col-xxl-3 col-xl-4 col-lg-6 col-sm-6">
+            <div className="col-xxl-3 col-xl-4 col-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <Link
                 to=""
@@ -147,120 +152,156 @@ const AdminDashboard = () => {
             <div className="row mb-11 ">
               <div className="col-6">
                 <div className="bg-white">
-                  {" "}
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-6  px-3 pb-5 ">
+                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3 ">
                       Recently Added Jobs
                     </h3>
-                    <div className="col-lg-6 form_control mt-5">
-                      <p className="input_label">Filter by Duration:</p>
+                    <div className="col-1 form_control mt-5">
                       <div className="select_div">
                         <select
-                          name="category"
-                          value={state}
-                          id="category"
-                          onChange={(e) => setState(e.target.value)}
-                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                          name="job"
+                          value={job}
+                          id="job"
+                          onChange={(e) => setJob(e.target.value)}
+                          className="form-control-sm bg-white"
                         >
-                          <option value={""}>Select Duration</option>
+                          <option value={""}>Select</option>
                           <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>{" "}
+                          <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
                     </div>
-                  </div>{" "}
-                  <JobTable heading={"Dashboard"} filter_by_time={state} />
+                    <div className="col-2">
+                      <Link
+                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
+                        to={"/employer"}
+                        title="View All Jobs"
+                      >
+                        View All
+                      </Link>
+                    </div>
+                  </div>
+                  <JobTable heading={"Dashboard"} filter_by_time={job} />
                 </div>
               </div>
               <div className="col-6">
                 <div className="bg-white">
-                  {" "}
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-6  px-3 pb-5 ">
+                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Employee
                     </h3>
-                    <div className="col-lg-6 form_control mt-5">
-                      <p className="input_label">Filter by Duration:</p>
+                    <div className="col-1 form_control mt-5">
                       <div className="select_div">
                         <select
-                          name="category"
-                          value={state}
-                          id="category"
-                          onChange={(e) => setState(e.target.value)}
-                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                          name="employee"
+                          value={employee}
+                          id="employee"
+                          onChange={(e) => setEmployee(e.target.value)}
+                          className="form-control-sm bg-white"
                         >
-                          <option value={""}>Select Duration</option>
+                          <option value={""}>Select</option>
                           <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>{" "}
+                          <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
                     </div>
+                    <div className="col-2">
+                      <Link
+                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
+                        to={"/employee"}
+                        title="View all Applicants"
+                      >
+                        View All
+                      </Link>
+                    </div>
                   </div>
-                  <EmployeeTable heading={"Dashboard"} filter_by_time={state} />
+                  <EmployeeTable
+                    heading={"Dashboard"}
+                    filter_by_time={employee}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="mb-14">
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-6  px-3 pb-5 ">
+                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Interview
                     </h3>
-                    <div className="col-lg-6 form_control mt-5">
-                      <p className="input_label">Filter by Duration:</p>
+                    <div className="col-1 form_control mt-5">
                       <div className="select_div">
                         <select
-                          name="category"
-                          value={state}
-                          id="category"
-                          onChange={(e) => setState(e.target.value)}
-                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                          name="interview"
+                          value={interview}
+                          id="interview"
+                          onChange={(e) => setInterview(e.target.value)}
+                          className="form-control-sm bg-white"
                         >
-                          <option value={""}>Select Duration</option>
+                          <option value={""}>Select</option>
                           <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>{" "}
+                          <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
                     </div>
+                    <div className="col-2">
+                      <Link
+                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
+                        to={"/interview"}
+                        title="View All Interview"
+                      >
+                        View All
+                      </Link>
+                    </div>
                   </div>
-                  <Interview heading={"Dashboard"} filter_by_time={state} />
+                  <Interview heading={"Dashboard"} filter_by_time={interview} />
                 </div>
               </div>
-              <div className="col-lg-6">
+              <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-6  px-3 pb-5 ">
+                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Companies
                     </h3>
-                    <div className="col-lg-6 form_control mt-5">
-                      <p className="input_label">Filter by Duration:</p>
+                    <div className="col-1 form_control mt-5">
                       <div className="select_div">
                         <select
-                          name="category"
-                          value={state}
-                          id="category"
-                          onChange={(e) => setState(e.target.value)}
-                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                          name="employer"
+                          value={employer}
+                          id="employer"
+                          onChange={(e) => setEmployer(e.target.value)}
+                          className="form-control-sm bg-white"
                         >
-                          <option value={""}>Select Duration</option>
+                          <option value={""}>Select</option>
                           <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>{" "}
+                          <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
                     </div>
+                    <div className="col-2">
+                      <Link
+                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
+                        to={"/employer"}
+                        title="View All Companies"
+                      >
+                        View All
+                      </Link>
+                    </div>
                   </div>
-                  <EmployerTable heading="Dashboard" filter_by_time={state} />
+                  <EmployerTable
+                    heading="Dashboard"
+                    filter_by_time={employer}
+                  />
                 </div>
               </div>
             </div>
@@ -270,58 +311,79 @@ const AdminDashboard = () => {
               <div className="col-6">
                 <div className="bg-white">
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-6  px-3 pb-5 ">
+                    <h3 className="font-size-5 col-lg-4 col-sm-1 px-3  ">
                       Recently Added Job Response
                     </h3>
-                    <div className="col-lg-6 form_control mt-5">
-                      <p className="input_label">Filter by Duration:</p>
+                    <div className="col-1 form_control mt-5">
                       <div className="select_div">
                         <select
-                          name="category"
-                          value={state}
-                          id="category"
-                          onChange={(e) => setState(e.target.value)}
-                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                          name="response"
+                          value={response}
+                          id="response"
+                          onChange={(e) => setResponse(e.target.value)}
+                          className="form-control-sm bg-white"
                         >
-                          <option value={""}>Select Duration</option>
+                          <option value={""}>Select</option>
                           <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>{" "}
+                          <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
                     </div>
+                    <div className="col-2">
+                      <Link
+                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
+                        to={"/responses"}
+                        title="View All Responses"
+                      >
+                        View All
+                      </Link>
+                    </div>
                   </div>
-                  <JobResponse heading={"Dashboard"} filter_by_time={state} />
+                  <JobResponse
+                    heading={"Dashboard"}
+                    filter_by_time={response}
+                  />
                 </div>
               </div>
               <div className="col-6">
                 <div className="bg-white">
-                  {" "}
                   <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-6  px-3 pb-5 ">
+                    <h3 className="font-size-5 col-4 col-sm-1 px-3  ">
                       Recently Added FollowUp
                     </h3>
-                    <div className="col-lg-6 form_control mt-5">
-                      <p className="input_label">Filter by Duration:</p>
+                    <div className="col-1 form_control mt-5">
                       <div className="select_div">
                         <select
-                          name="category"
-                          value={state}
-                          id="category"
-                          onChange={(e) => setState(e.target.value)}
-                          className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                          name="followup"
+                          value={followup}
+                          id="followup"
+                          onChange={(e) => setFollowUP(e.target.value)}
+                          className="form-control-sm bg-white"
                         >
-                          <option value={""}>Select Duration</option>
+                          <option value={""}>Select</option>
                           <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>{" "}
+                          <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
                           <option value={"current_month"}>Current Month</option>
                         </select>
                       </div>
                     </div>
+                    <div className="col-2">
+                      <Link
+                        className="p-1 text-center btn-sm btn-outline-info border border-info mt-0 rounded-3"
+                        to={"/followup"}
+                        title="View All Followup"
+                      >
+                        View All
+                      </Link>
+                    </div>
                   </div>
-                  <FollowUpDashBoard heading={"Dashboard"} />
+                  <FollowUpDashBoard
+                    heading={"Dashboard"}
+                    filter_by_time={followup}
+                  />
                 </div>
               </div>
             </div>

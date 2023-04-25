@@ -149,17 +149,6 @@ export default function EmployeeTable(props) {
         close={() => setShowSkillsModal(false)}
       />
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
-        {props.heading === "Dashboard" ? (
-          <Link
-            className="btn btn-outline-info action_btn float-right mb-2"
-            to={"/employer"}
-            title="View All Employee"
-          >
-            View All
-          </Link>
-        ) : (
-          ""
-        )}
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
             <thead>

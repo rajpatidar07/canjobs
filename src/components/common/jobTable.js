@@ -199,17 +199,6 @@ export default function JobTable(props) {
     <>
       {" "}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-        {props.heading === "Dashboard" ? (
-          <Link
-            className="btn btn-outline-info action_btn float-right mb-2"
-            to={"/job"}
-            title="Veiw All Jobs"
-          >
-            View All
-          </Link>
-        ) : (
-          ""
-        )}
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
             <thead>

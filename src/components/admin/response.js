@@ -359,20 +359,6 @@ function JobResponse(props) {
                   : "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
               }
             >
-              {" "}
-              {props.heading === "Dashboard" ? (
-                <div className="d-flex">
-                  <Link
-                    className="btn btn-outline-info action_btn float-right mb-2 mx-5"
-                    to={"/responses"}
-                    title="View All Employee"
-                  >
-                    View All
-                  </Link>
-                </div>
-              ) : (
-                ""
-              )}
               <div className="table-responsive ">
                 <table
                   className={

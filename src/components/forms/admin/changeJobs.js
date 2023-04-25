@@ -92,68 +92,7 @@ function ChangeJob(props) {
               >
                 Jobs <span className="text-danger">*</span> :
               </label>
-              <Select
-                // getOptionValue={onSelectChange}
-                options={state}
-                onChange={onSelectChange}
-                // onSelectChange={(e) => {
-                //   setJobId(e.target.value);
-                // }}
-
-                id="job_id"
-              />
-              {/* <SelectBox
-                value={JobId}
-                options={allJobData}
-                onSelectChange={(e) => {
-                  setJobId(e.target.value);
-                }}
-              /> */}
-              {/* <SelectBox options={allJobData} onSelectChange={onSelectChange} /> */}
-
-              {/* <select
-                className={
-                  errors.job_title
-                    ? "form-control border border-danger"
-                    : "form-control"
-                }
-                value={state.job_title}
-                onChange={onInputChange}
-                id="job_title"
-                name="job_title"
-              >
-                {" "}
-                <option value={""}>select Job</option>
-                {(Job || []).map((data) => {
-                  return (
-                    <option value={data.job_id} key={data.job_id}>
-                      {data.job_title}
-                    </option>
-                  );
-                })}
-              </select> */}
-              {/* <Select mode="multiple" style={{ width: 120 }}>
-                <Select.Option value="jack">Jack</Select.Option>
-                <Select.Option value="lucy">Lucy</Select.Option>
-                <Select.Option value="disabled" disabled>
-                  Disabled
-                </Select.Option>
-                <Select.Option value="Yiminghe">yiminghe</Select.Option>
-              </Select> */}
-              {/* <Select
-                options={jobData}
-                placeholder="Select color"
-                value={state.job_title}
-                onChange={onInputChange}
-                isSearchable={true}
-                isMulti
-              /> */}
-              {/*----ERROR MESSAGE FOR EMAIL----*/}
-              {/* {errors.job_id && (
-                <span key={errors.job_id} className="text-danger font-size-3">
-                  {errors.job_id}
-                </span>
-              )} */}
+              <Select options={state} onChange={onSelectChange} id="job_id" />
             </div>
             <div className="form-group text-center">
               {loading === true ? (
