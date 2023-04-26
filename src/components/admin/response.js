@@ -241,23 +241,33 @@ function JobResponse(props) {
         show={followup}
         job_id={jobId}
         resData={resData}
-        close={() => setFollowUp(false)}
+        close={() => {
+          setFollowUp(false);
+          setJobId(undefined);
+        }}
       />
       <AddInterview
         show={interview}
         job_id={jobId}
         resData={resData}
-        close={() => setInterview(false)}
+        close={() => {
+          setInterview(false);
+          setJobId(undefined);
+        }}
       />
       <LmiaStatus
         show={limia}
         resData={resData}
-        close={() => setLimia(false)}
+        close={() => {
+          setLimia(false);
+          setJobId(undefined);
+        }}
       />
       <ChangeJob
         resData={resData}
         close={() => {
           setShowChangeJobModal(false);
+          setJobId(undefined);
         }}
         job_id={jobId}
         show={showChangeJobModal}

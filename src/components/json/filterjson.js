@@ -13,6 +13,7 @@ const FilterJson = {
     "Other",
   ],
   category: [
+    "House Hold",
     "Typing",
     "Computer Operator",
     "Teacher",
@@ -28,6 +29,7 @@ const FilterJson = {
     "Domestic",
     "Nurse",
     "Other",
+    "IT",
   ],
   education: [
     "Metric",

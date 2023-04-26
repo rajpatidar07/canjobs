@@ -448,6 +448,7 @@ export default function JobTable(props) {
                     <th className="py-5 ">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         {job.experience_required}
+                        {job.experience_required === "Fresher" ? "" : "years"}
                       </h3>
                     </th>
                     <th className="py-5 ">

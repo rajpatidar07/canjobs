@@ -28,10 +28,9 @@ function AddCategory(props) {
   const validators = {
     category_name: [
       (value) =>
-        // state.parent_id === ""
-        //   ? ""
-        // :
-        value === "" || value.trim() === ""
+        state.parent_id === ""
+          ? ""
+          : value === "" || value.trim() === ""
           ? // || errors.category_type === "Category Type is required"
             "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)

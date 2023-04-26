@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddLimia } from "../../../api//api";
@@ -27,7 +27,7 @@ function LmiaStatus(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    lmia_status: "",
+    lmia_status: lmia_status ? lmia_status : "",
     completion_time: "",
   };
   // VALIDATION CONDITIONS
@@ -67,30 +67,9 @@ function LmiaStatus(props) {
     //     value < 2 ? "designation should have 2 or more letters." : "null",
     // ],
   };
-  /* Function to get Company data*/
-  // const CompnayData = async () => {
-  //   const userData = await getAllEmployer();
-  //   setCompany(userData.data);
-  // };
-  /* Function to get Employee data*/
-  // const UserData = async () => {
-  //   const userData = await EmployeeDetails(props.employeeId);
-  //   setState(userData.data.employee[0]);
-  // };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
-
-  useEffect(() => {
-    // CompnayData();
-    // if (props.employeeId === undefined || props.employeeId === "0") {
-    //   setState(initialFormState);
-    // } else {
-    //   UserData();
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
@@ -148,7 +127,7 @@ function LmiaStatus(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={lmia_status ? lmia_status : state.lmia_status}
+                value={state.lmia_status}
                 onChange={onInputChange}
                 id="lmia_status"
                 name="lmia_status"

@@ -164,6 +164,7 @@ const AdminDashboard = () => {
                           className="form-control-sm bg-white"
                         >
                           <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
                           <option value={"this_week"}>This Week </option>
                           <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
@@ -201,6 +202,7 @@ const AdminDashboard = () => {
                           className="form-control-sm bg-white"
                         >
                           <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
                           <option value={"this_week"}>This Week </option>
                           <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
@@ -245,6 +247,7 @@ const AdminDashboard = () => {
                           className="form-control-sm bg-white"
                         >
                           <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
                           <option value={"this_week"}>This Week </option>
                           <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
@@ -281,6 +284,7 @@ const AdminDashboard = () => {
                           className="form-control-sm bg-white"
                         >
                           <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
                           <option value={"this_week"}>This Week </option>
                           <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
@@ -325,6 +329,7 @@ const AdminDashboard = () => {
                           className="form-control-sm bg-white"
                         >
                           <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
                           <option value={"this_week"}>This Week </option>
                           <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>
@@ -364,6 +369,7 @@ const AdminDashboard = () => {
                           className="form-control-sm bg-white"
                         >
                           <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
                           <option value={"this_week"}>This Week </option>
                           <option value={"last_week"}>Last Week</option>
                           <option value={"last_month"}>Last Month</option>

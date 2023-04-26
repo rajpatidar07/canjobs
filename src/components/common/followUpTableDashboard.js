@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { getFollowupLastData } from "../../api/api";
 import Pagination from "./pagination";
 function FollowUpDashBoard(props) {
-  //   const [followUpData, setFollowUpData] = useState([]);
+  const [followUpData, setFollowUpData] = useState([]);
   /*Pagination states */
-  const [totalData /*setTotalData*/] = useState("");
+  const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -22,10 +22,8 @@ function FollowUpDashBoard(props) {
       sortOrder,
       props.filter_by_time
     );
-    console.log(userData);
-
-    // setFollowUpData(userData.data);
-    // setTotalData(userData.total_rows);
+    setFollowUpData(userData.data);
+    setTotalData(userData.total_rows);
   };
 
   /*Render function to get the interview*/
@@ -33,6 +31,7 @@ function FollowUpDashBoard(props) {
     FollowUpData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    props,
     currentPage,
     columnName,
     recordsPerPage,
@@ -115,47 +114,25 @@ function FollowUpDashBoard(props) {
                             Company Name
                           </Link>
                         </th>
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
-                          <th
-                            scope="col"
-                            className="border-0 font-size-4 font-weight-normal"
-                          >
-                            <Link
-                              to={""}
-                              onClick={() => handleSort("skill")}
-                              className="text-gray"
-                              title="Sort by Skill"
-                            >
-                              Skill
-                            </Link>
-                          </th>
-                        )}
+
                         <th
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("interview_date")}
+                            onClick={() => handleSort("next_followup_date")}
                             className="text-gray"
                             title="Sort by Date"
                           >
-                            Interview date
+                            Next_Followup date{" "}
                           </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {/* {totalData === 0 ? (
+                      {totalData === 0 ? (
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>
@@ -163,7 +140,7 @@ function FollowUpDashBoard(props) {
                           <th className="bg-white"></th>
                         </tr>
                       ) : (
-                        (interviewData || []).map((data) => (
+                        (followUpData || []).map((data) => (
                           <tr className="" key={data.id}>
                             <th scope="row" className="py-5 ">
                               <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
@@ -180,38 +157,16 @@ function FollowUpDashBoard(props) {
                                 {data.company_name}
                               </div>
                             </th>
-                            {props.heading === "Dashboard" ? (
-                              ""
-                            ) : (
-                              <th scope="row" className="py-5 ">
-                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {data.skill}
-                                </div>
-                              </th>
-                            )}
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {data.interview_date}
+                                {data.next_followup_date === "0000-00-00"
+                                  ? "N/A"
+                                  : data.next_followup_date}
                               </h3>
-                            </th>
-                            <th className="py-5 ">
-                              <div
-                                className="btn-group button_group"
-                                role="group"
-                              >
-                                <button
-                                  className="btn btn-outline-info action_btn "
-                                  style={{ fontSize: "10px" }}
-                                  onClick={() => editInterview(data)}
-                                  title=" Reshedule Interview"
-                                >
-                                  Reshedule
-                                </button>
-                              </div>
                             </th>
                           </tr>
                         ))
-                      )} */}
+                      )}
                     </tbody>
                   </table>
                 </div>

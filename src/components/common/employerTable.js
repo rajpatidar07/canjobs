@@ -49,12 +49,14 @@ export default function EmployerTable(props) {
     EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    props.industryFilterValue,
-    props.corporationFilterValue,
-    props.search,
+    props.showEmployerDetails,
+    props.showAddEmployerModal,
     showAddEmployerModal,
     showKycModal,
     showContactModal,
+    props.industryFilterValue,
+    props.corporationFilterValue,
+    props.search,
     deleteAlert,
     currentPage,
     recordsPerPage,
@@ -247,7 +249,6 @@ export default function EmployerTable(props) {
                     className="text-gray"
                     title="Sort by Company Name"
                   >
-                    {" "}
                     Company name
                   </Link>
                 </th>
@@ -311,7 +312,6 @@ export default function EmployerTable(props) {
                       className="text-gray"
                       title="Sort by Contact"
                     >
-                      {" "}
                       Contact Info
                     </Link>
                   </th>
@@ -326,7 +326,6 @@ export default function EmployerTable(props) {
                     className="text-gray"
                     title="Sort by Industry"
                   >
-                    {" "}
                     Industry
                   </Link>
                 </th>
@@ -341,7 +340,6 @@ export default function EmployerTable(props) {
                     className="text-gray"
                     title="Sort by Skill"
                   >
-                    {" "}
                     Posts Available
                   </Link>
                 </th>
@@ -377,7 +375,7 @@ export default function EmployerTable(props) {
                     <th className="bg-white">No Data Found</th>
                   ) : (
                     <th className="bg-white"></th>
-                  )}{" "}
+                  )}
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
@@ -436,7 +434,7 @@ export default function EmployerTable(props) {
                             </h4>
                           ) : (
                             <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.contact_person_name}{" "}
+                              {empdata.contact_person_name}
                             </h4>
                           )}
                         </Link>
@@ -561,9 +559,7 @@ export default function EmployerTable(props) {
                             onClick={() => editEmployer(empdata.company_id)}
                             title="Edit Employer"
                           >
-                            <span className=" fas fa-edit text-gray px-1">
-                              {" "}
-                            </span>
+                            <span className=" fas fa-edit text-gray px-1"></span>
                           </button>
                           <button
                             className="btn btn-outline-info action_btn"
@@ -603,7 +599,7 @@ export default function EmployerTable(props) {
         show={showKycModal}
         employerId={employerId}
         close={() => setShowkycMOdal(false)}
-      />{" "}
+      />
       <SAlert
         show={deleteAlert}
         title={deleteName}

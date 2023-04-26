@@ -56,8 +56,10 @@ export default function EmployeeTable(props) {
     EmpData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    props.showAddEmployeeModal,
     deleteAlert,
     showAddEmployeeModal,
+    props.showAddEmployeeModal,
     showEducationModal,
     showSkillsModal,
     showEmployeeProfile,
@@ -483,10 +485,10 @@ export default function EmployeeTable(props) {
                     <th className="bg-white"></th>
                   )}{" "}
                   <th className="bg-white"></th>
-                  <th className="bg-white"></th> <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
                     <>
                       {" "}
+                      <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                     </>

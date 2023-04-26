@@ -217,9 +217,12 @@ function AddJobModal(props) {
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
-    if (props.jobdata !== undefined && props.jobdata !== "0") {
+    if (props.jobdata === undefined || props.jobdata === "0") {
+      setState(initialFormState);
+    } else {
       setState(userData.data.data[0]);
     }
+    // console.log(userData.data.data[0]);
   };
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -231,7 +234,6 @@ function AddJobModal(props) {
   const CompnayData = async () => {
     const userData = await getAllEmployer();
     setCompany(userData.data);
-    // //// console.log((userData);
   };
 
   useEffect(() => {
@@ -289,6 +291,7 @@ function AddJobModal(props) {
     (thing, index, self) =>
       index === self.findIndex((t) => t.company_name === thing.company_name)
   );
+  // console.log(props.jobdata);
   return (
     <>
       <Modal

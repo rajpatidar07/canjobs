@@ -652,7 +652,7 @@ export const getFollowupLastData = async (page, column, limit, sort, time) => {
       },
     }
   );
-  return response.data.data;
+  return response.data;
 };
 
 // ADMIN'S API
@@ -808,13 +808,13 @@ export const AddJobCategory = async (props) => {
 export const DeleteJobCategory = async (props) => {
   const response = await axios.delete(
     `${API_URL}deletejobCategory/${props}`,
-    props,
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    }
+    },
+    props
   );
   return response.data;
 };

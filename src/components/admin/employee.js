@@ -156,6 +156,8 @@ function Employee() {
                 </div>
               </div>
               <EmployeeTable
+                showEmployeeProfile={showEmployeeProfile}
+                showAddEmployeeModal={showAddEmployeeModal}
                 employeeDetails={employeeDetails}
                 search={search}
                 experienceFilterValue={experienceFilterValue}

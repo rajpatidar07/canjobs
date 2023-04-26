@@ -7,7 +7,6 @@ import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-
 function PersonalDetails(props) {
   let encoded;
   const [loading, setLoading] = useState(false);
@@ -269,17 +268,37 @@ function PersonalDetails(props) {
             )}
             {/* FIRST LINE */}
             <div className="form-group mx-auto text-center">
-              {/* <Link className="mb-4 position-relative">
+              {/* <div className="mb-4 position-relative">
                 <input
                   type="file"
+                  id="fileInput"
+                  className="d-none"
+                  accept="image/png,image/jpeg,image/jpg,image/gif"
+                  onChange={handleFileChange}
+                />
+                <label htmlFor="fileInput">
+                  <span className="fas fa-pen text-gray"> </span>
+                  <img
+                    className="rounded-circle"
+                    src={
+                      state.profile_photo
+                        ? state.profile_photo
+                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                    }
+                    alt=""
+                    width={"100px"}
+                    height={"100px"}
+                  />
+                </label>
+              </div> */}
+              <div className="mb-4 position-relative">
+                <input
+                  type={"file"}
                   id="profile_photo"
-                  accept=" image/png,image/jpeg,image/jpg,image/gif"
+                  accept="image/png,image/jpeg,image/jpg,image/gif"
                   onChange={handleFileChange}
                   className="d-none"
                 />
-                <label className="image_upload_btn m-0" htmlFor="profile_photo">
-                  <span className="fas fa-pen text-gray"> </span>
-                </label>
                 <img
                   className="rounded-circle"
                   src={
@@ -291,7 +310,16 @@ function PersonalDetails(props) {
                   width={"100px"}
                   height={"100px"}
                 />
-              </Link> */}
+                <label
+                  className="mt-lg-20 mx-lg-35 bg-transparent"
+                  htmlFor="profile_photo"
+                >
+                  <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-14 mt-lg-3 ">
+                    {" "}
+                  </span>
+                </label>
+              </div>
+              {console.log(state.profile_photo)}
             </div>
             <div className="row pt-5">
               {" "}
@@ -850,23 +878,6 @@ function PersonalDetails(props) {
                     {errors.resume}
                   </span>
                 )}
-              </div>
-
-              <div className="form-group col-md-12">
-                <label
-                  htmlFor="about"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Profile:
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="file"
-                    accept=" image/png,image/jpeg,image/jpg,image/gif"
-                    className="form-control"
-                    onChange={handleFileChange}
-                  />
-                </div>
               </div>
             </div>
             <div className="form-group text-center">
