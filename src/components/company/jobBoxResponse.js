@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GetAllJobs, GetAllResponse } from "../../api/api";
 import moment from "moment";
-function JobBoxResponse() {
+function JobBoxResponse({ handleIdClick }) {
   const [showTable, setShowTable] = useState(false);
   let [jobData, setjobData] = useState([]);
+  let [resData, setResData] = useState([]);
   const [JobId, setJobId] = useState([]);
   let [noData, setNoData] = useState("");
   // const user_type = localStorage.getItem("userType");
@@ -19,8 +20,9 @@ function JobBoxResponse() {
   const OpenReposnseTable = async (e) => {
     setJobId(e);
     setShowTable(!showTable);
-    const userData = await GetAllResponse(JobId);
-    console.log(userData);
+    const userData = await GetAllResponse(e);
+    setResData(userData.data.data);
+    console.log(userData.data.data);
   };
 
   useEffect(() => {
@@ -41,8 +43,9 @@ function JobBoxResponse() {
         </div>
       ) : (
         (jobData || []).map((job) => (
-          <div
-            className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green"
+          <Link
+            onClick={() => handleIdClick(job.job_id)}
+            className="my-5 pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green"
             key={job.job_id}
           >
             <div className="row job_header m-0">
@@ -177,51 +180,55 @@ function JobBoxResponse() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="">
-                        <th scope="row" className="pl-5 py-5 pr-0   ">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              <img
-                                src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                alt=""
-                                className="w-100"
-                              />
-                            </div>
-                          </div>
-                        </th>
-                        <th className="border-0 py-5">
-                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            Nicolas Bradley
-                          </h4>
-                        </th>
-                        <td className=" py-5 pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            Senior Project Manager
-                          </h3>
-                        </td>
-                        <td className=" py-5  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            JAVA , REACT JS ,HTML and CSS
-                          </h3>
-                        </td>
-                        <td className=" py-5  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            4 years
-                          </h3>
-                        </td>
-                        <td className=" py-5  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            20,000
-                          </h3>
-                        </td>
-                        <td className=" py-5  pr-0">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +9632587410
-                            <br />
-                            email@gmail.com
-                          </h3>
-                        </td>
-                      </tr>
+                      {(resData || []).map((data) => {
+                        return (
+                          <tr className="" key={data.employee_id}>
+                            <th scope="row" className="pl-5 py-5 pr-0   ">
+                              <div className="media  align-items-center">
+                                <div className="circle-36 mx-auto">
+                                  <img
+                                    src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                </div>
+                              </div>
+                            </th>
+                            <th className="border-0 py-5">
+                              <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                {data.name}
+                              </h4>
+                            </th>
+                            <td className=" py-5 pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                Senior Project Manager
+                              </h3>
+                            </td>
+                            <td className=" py-5  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {data.skill}
+                              </h3>
+                            </td>
+                            <td className=" py-5  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {data.experience} years
+                              </h3>
+                            </td>
+                            <td className=" py-5  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                20,000
+                              </h3>
+                            </td>
+                            <td className=" py-5  pr-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                +9632587410
+                                <br />
+                                email@gmail.com
+                              </h3>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -291,7 +298,7 @@ function JobBoxResponse() {
                 </div>
               </div>
             ) : null}
-          </div>
+          </Link>
         ))
       )}
       {/* <!-- End Single Featured Job --> */}

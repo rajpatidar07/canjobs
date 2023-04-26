@@ -70,7 +70,7 @@ function AddJobModal(props) {
     keyskill: "",
     employement: "",
     job_category_id: "",
-    company_id: "",
+    company_id: user_type === "company" ? company_id : "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -252,12 +252,8 @@ function AddJobModal(props) {
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
     event.preventDefault();
-    if (user_type === "company") {
-      setState({ ...state, company_id: company_id });
-    }
     setLoading(true);
     if (validate()) {
-      setLoading(true);
       let responseData = await AddJob(state);
       if (responseData.message === "job data inserted successfully") {
         toast.success("Job Added successfully", {

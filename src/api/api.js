@@ -297,8 +297,9 @@ export const GetJob = async (props) => {
 
 /*single job Detail api */
 export const GetJobDetail = async (props) => {
+  console.log(props);
   const response = await axios.post(
-    `${API_URL}/${user_type}/jobDetail`,
+    `${API_URL}admin/jobDetail`,
     {
       job_id: props,
     },
@@ -424,6 +425,8 @@ export const GetAllJobs = async (
 };
 /*Add Job  Api */
 export const AddJob = async (props) => {
+  console.log(props);
+
   const response = await axios.put(`${API_URL}addJobs`, props, {
     headers: {
       "Content-Type": "application/json",

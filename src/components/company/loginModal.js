@@ -77,6 +77,8 @@ export default function CompanyLogin(props) {
         localStorage.setItem("token", Response.token);
         localStorage.setItem("userType", "company");
         localStorage.setItem("company_id", Response.company_id);
+        // console.log("------------------------------", Response.company_id);
+
         toast.success("Log in Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
@@ -89,6 +91,7 @@ export default function CompanyLogin(props) {
       }
     }
   };
+
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
 

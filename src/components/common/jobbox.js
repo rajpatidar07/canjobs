@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GetAllJobs } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
-function JobBox() {
+function JobBox({ showAddJobModal, handleIdClick }) {
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -25,7 +25,7 @@ function JobBox() {
   };
   useEffect(() => {
     JobData();
-  }, [showAddJobsModal]);
+  }, [showAddJobsModal, showAddJobModal]);
 
   return (
     <>
@@ -42,9 +42,10 @@ function JobBox() {
           </div>
         ) : (
           (jobData || []).map((job) => (
-            <div
+            <Link
               key={job.job_id}
-              className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
+              onClick={() => handleIdClick(job.job_id)}
+              className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
             >
               {job.job_type === "swap" ? (
                 <span className="job_swap_label">SWAP</span>
@@ -177,7 +178,7 @@ function JobBox() {
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         )}
         {/* <!-- End Maped Job --> */}

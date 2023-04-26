@@ -8,7 +8,11 @@ import JobDetail from "./jobDetail";
 import { getAllJobsCategory } from "../../api/api";
 function Response() {
   let [category, setCategory] = useState([]);
+  const [ids, setIds] = useState("");
 
+  const handleIdClick = (id) => {
+    setIds(id);
+  };
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
@@ -106,7 +110,7 @@ function Response() {
                   >
                     <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
-                      <JobBoxResponse />
+                      <JobBoxResponse handleIdClick={handleIdClick} />
 
                       {/* <!-- End Single Featured Job --> */}
                     </div>
@@ -124,7 +128,7 @@ function Response() {
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              <JobDetail />
+              <JobDetail ids={ids} />
             </div>
           </div>
         </div>

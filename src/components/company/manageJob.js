@@ -19,11 +19,15 @@ function ManageJobs() {
   // const [SkillFilterValue, setSkillFilterValue] = useState("");
   // const [locationFilterValue, setLocationFilterValue] = useState("");
   // const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [ids, setIds] = useState("");
 
+  const handleIdClick = (id) => {
+    setIds(id);
+  };
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
-    setCategory(userData);
+    // setCategory(userData);
   };
   const editJob = (e) => {
     // e.preventDefault();
@@ -180,7 +184,10 @@ function ManageJobs() {
                   >
                     <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBox
+                        showAddJobModal={showAddJobModal}
+                        handleIdClick={handleIdClick}
+                      />
                       {/* <!-- End Single Featured Job --> */}
                     </div>
                   </div>
@@ -194,7 +201,7 @@ function ManageJobs() {
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              <JobDetail />
+              <JobDetail ids={ids} />
             </div>
           </div>
         </div>
