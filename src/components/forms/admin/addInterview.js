@@ -48,7 +48,11 @@ function AddInterview(props) {
     // setInterviewData(userData.data);
     // setTotalData(userData.total_rows);
     // console.log(userData.data[0].interview_date);
-    setDate(userData.data[0].interview_date);
+    if (userData.data.length === 0) {
+      setState(initialFormState);
+    } else {
+      setDate(userData.data[0].interview_date);
+    }
   };
   // // console.log(state.interview_date, "lol");
 
