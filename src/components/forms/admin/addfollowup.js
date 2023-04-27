@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Addfollowup(props) {
-  // console.log(props);
+  console.log(props);
 
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
@@ -31,17 +31,22 @@ function Addfollowup(props) {
       props.resData.employee_id,
       props.job_id
     );
-    if (userData.data.followup.length === 0) {
+    if (
+      userData.data.followup.length === 0 ||
+      props.resData.employee_id === "" ||
+      props.resData.employee_id === undefined
+    ) {
       setResponseData([]);
     } else {
       setResponseData(userData.data.followup);
     }
-    // // console.log(userData.data);
+    console.log(userData.data.followup.length !== 0);
   };
-
+  console.log(props.resData.employee_id, props.job_id);
   /*Render function to get the Response*/
   useEffect(() => {
-    if (props.resData.employee_id !== undefined || props.job_id !== undefined) {
+    if (props.resData.employee_id === undefined || props.job_id === undefined) {
+    } else {
       ResponseData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,14 +69,8 @@ function Addfollowup(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {

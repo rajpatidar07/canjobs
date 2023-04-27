@@ -22,9 +22,8 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
-    ""
-  );
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    useState("");
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -50,7 +49,7 @@ function JobResponse(props) {
       sortOrder,
       props.filter_by_time
     );
-    if (userData.data.length === 0) {
+    if (userData.data.data.length === 0) {
       setResData([]);
     } else {
       setResponseData(userData.data.data);
