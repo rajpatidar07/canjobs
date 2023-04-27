@@ -70,33 +70,33 @@ function AddCategory(props) {
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    // // console.log(state);
-    if (state.parent_id === "") {
-      setState({ ...state, category_name: "" });
-      setErrors({ ...errors, category_name: "" });
-    }
+    console.log(state);
+    // if (state.parent_id === "") {
+    //   setState({ ...state, category_name: "" });
+    //   setErrors({ ...errors, category_name: "" });
+    // }
     event.preventDefault();
-    if (validate()) {
-      setLoading(true);
-      // //// console.log((state);
-      const responseData = await AddJobCategory(state);
-      if (responseData.message === "Category added successfully") {
-        toast.success("Category added successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        return close();
-      }
-      if (responseData.message === "Category updated successfully") {
-        toast.success("Category Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        return close();
-      }
-    } else {
-      setLoading(false);
-    }
+    // if (validate()) {
+    //   setLoading(true);
+    //   // //// console.log((state);
+    //   const responseData = await AddJobCategory(state);
+    //   if (responseData.message === "Category added successfully") {
+    //     toast.success("Category added successfully", {
+    //       position: toast.POSITION.TOP_RIGHT,
+    //       autoClose: 1000,
+    //     });
+    //     return close();
+    //   }
+    //   if (responseData.message === "Category updated successfully") {
+    //     toast.success("Category Updated successfully", {
+    //       position: toast.POSITION.TOP_RIGHT,
+    //       autoClose: 1000,
+    //     });
+    //     return close();
+    //   }
+    // } else {
+    //   setLoading(false);
+    // }
   }
 
   // END USER PERSONAL DETAIL VALIDATION
@@ -136,19 +136,7 @@ function AddCategory(props) {
               >
                 Add Category Type <span className="text-danger">*</span> :
               </label>
-              <input
-                type="text"
-                className={
-                  errors.category_type
-                    ? "form-control mx-5 border border-danger col"
-                    : "form-control col mx-5"
-                }
-                value={state.category_type}
-                onChange={onInputChange}
-                placeholder="Category Type"
-                id="category_type"
-                name="category_type"
-              />
+
               <select
                 name="category_type"
                 className={
@@ -166,6 +154,12 @@ function AddCategory(props) {
                     <option
                       value={data.category_type}
                       key={data.job_category_id}
+                      onChange={() =>
+                        setState({
+                          ...state,
+                          parent_id: data.job_category_id,
+                        })
+                      }
                     >
                       {data.category_type}
                     </option>

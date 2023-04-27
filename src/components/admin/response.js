@@ -213,34 +213,21 @@ function JobResponse(props) {
       className={
         props.heading === "Manage Follow-ups"
           ? "response_main_div"
-          : "site-wrapper overflow-hidden bg-default-2"
+          : props.heading === "Dashboard"
+          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+          : "site-wrapper overflow-hidden bg-default-2  "
       }
     >
-      {props.heading !== "Manage Follow-ups" ? (
+      {props.heading === "Manage Follow-ups" ||
+      props.heading === "Dashboard" ? null : (
         <>
           {/* <!-- Header Area --> */}
-          <AdminHeader
-            heading={
-              props.heading === "Manage Follow-ups"
-                ? "Manage Follow-ups"
-                : props.heading === "Dashboard"
-                ? "Dashboard"
-                : "Response"
-            }
-          />
+          <AdminHeader heading={"Response"} />
           {/* <!-- navbar- --> */}
-          <AdminSidebar
-            heading={
-              props.heading === "Manage Follow-ups"
-                ? "Manage Follow-ups"
-                : props.heading === "Dashboard"
-                ? "Dashboard"
-                : "Response"
-            }
-          />
+          <AdminSidebar heading={"Response"} />
           <ToastContainer />
         </>
-      ) : null}
+      )}
       <Addfollowup
         show={followup}
         job_id={jobId}

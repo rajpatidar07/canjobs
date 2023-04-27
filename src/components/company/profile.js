@@ -61,7 +61,7 @@ function CompanyProfile(props) {
                   className="d-flex align-items-center ml-4"
                   href="http://localhost:3000/"
                 >
-                  {" "}
+                  
                   <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                   <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                     Back
@@ -132,7 +132,6 @@ function CompanyProfile(props) {
               </div>
               {employerKycData === "" ? null : (
                 <>
-                  {" "}
                   <div className="font-size-3 mb-4 mr-10" title="PAN">
                     <span className="mr-2 font-weight-bold">PAN</span>
                     {employerKycData.pan_no}
@@ -179,7 +178,7 @@ function CompanyProfile(props) {
         employerId={user_type === "company" ? company_id : props.employerId}
         show={showCompanyInfoModal}
         close={() => setShowCompanyInfoModal(false)}
-      />{" "}
+      />
       <KycComplianceDetails
         employerId={user_type === "company" ? company_id : props.employerId}
         show={showKycComplainDetailsModal}
