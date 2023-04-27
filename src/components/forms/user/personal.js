@@ -321,7 +321,6 @@ function PersonalDetails(props) {
                   </span>
                 </label>
               </div>
-              {console.log(state.profile_photo)}
             </div>
             <div className="row pt-5">
               {" "}
