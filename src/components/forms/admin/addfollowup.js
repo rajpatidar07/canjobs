@@ -64,8 +64,14 @@ function Addfollowup(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {

@@ -372,3 +372,16 @@ label.image_upload_btn {
 .response_filters .input_label{
   font-size: 12px;
 }
+
+/* DASHBOARD */
+.dashboard_card{
+  overflow: hidden;
+  min-height: 100%;
+}
+.dashboard_card .dashboard_select{
+  padding: 0 5px;
+}
+.dashboard_card .datatable_div {
+  box-shadow: none;
+  border-radius: 0!important;
+}

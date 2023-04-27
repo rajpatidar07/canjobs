@@ -22,8 +22,9 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
-    useState("");
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
+    ""
+  );
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -455,7 +456,7 @@ function JobResponse(props) {
                           className="text-gray"
                           title="Sort by LIMIA Status"
                         >
-                          Limia
+                          LMIA
                         </Link>
                       </th>
                       {props.heading === "Dashboard" ? (
@@ -613,7 +614,7 @@ function JobResponse(props) {
                                   onClick={() => addLimia(res)}
                                   title="Add LMIA"
                                 >
-                                  LIMIA
+                                  LMIA
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn text-gray"

@@ -8,7 +8,7 @@ import moment from "moment";
 function AddInterview(props) {
   // // console.log(props);
   let [loading, setLoading] = useState(false);
-  let [date, setDate] = useState();
+  let [date, setDate] = useState("");
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
 
@@ -35,8 +35,14 @@ function AddInterview(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   const InterviewData = async () => {
     const userData = await getInterview(jobId, employeeId);
