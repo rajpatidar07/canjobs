@@ -30,13 +30,13 @@ const AdminDashboard = () => {
     AllCounts();
   }, [job, employee, employer, interview, response, followup]);
   /*Function to get the percentage in correct form  */
-  const appliedRateFormatted =
-    countData && countData.applied_rate
-      ? countData.applied_rate.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })
-      : null;
+  const appliedRateFormatted = countData.applied_rate;
+  // countData && countData.applied_rate
+  //   ? countData.applied_rate.toLocaleString("en-US", {
+  //       minimumFractionDigits: 2,
+  //       maximumFractionDigits: 2,
+  //     })
+  //   : null;
   // console.log(appliedRateFormatted);
 
   return (
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
                 <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">
-                      {appliedRateFormatted ?? "N/A"}
+                      {appliedRateFormatted || "N/A"}
                     </span>
                     %
                   </h5>
@@ -151,17 +151,19 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row mb-11 ">
               <div className="col-6">
-                <div className="bg-white">
-                  <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 px-3 ">Recently Added Jobs</h3>
-                    <div className="d-flex justify-content-betwee form_control">
-                      <div className="select_div px-5">
+                <div className="bg-white rounded dashboard_card">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0 ">
+                      Recently Added Jobs
+                    </h3>
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
                         <select
                           name="job"
                           value={job}
                           id="job"
                           onChange={(e) => setJob(e.target.value)}
-                          className="form-control-sm bg-white"
+                          className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
                           <option value={"today"}>Today </option>
@@ -174,11 +176,11 @@ const AdminDashboard = () => {
                       <div className="">
                         {" "}
                         <Link
-                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
-                          to={"/job"}
+                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                          to={"/employer"}
                           title="View All Jobs"
                         >
-                          <span className="px-2">View All</span>
+                          View All
                         </Link>
                       </div>
                     </div>
@@ -187,19 +189,19 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="col-6">
-                <div className="bg-white">
-                  <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 px-3  ">
+                <div className="bg-white rounded dashboard_card">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0  ">
                       Recently Added Employee
                     </h3>
-                    <div className="d-flex justify-content-betwee form_control">
-                      <div className="select_div px-5">
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
                         <select
                           name="employee"
                           value={employee}
                           id="employee"
                           onChange={(e) => setEmployee(e.target.value)}
-                          className="form-control-sm bg-white"
+                          className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
                           <option value={"today"}>Today </option>
@@ -212,11 +214,11 @@ const AdminDashboard = () => {
                       <div className="">
                         {" "}
                         <Link
-                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                           to={"/employee"}
                           title="View all Applicants"
                         >
-                          <span className="px-2">View All</span>
+                          View All
                         </Link>
                       </div>
                     </div>
@@ -232,19 +234,19 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row">
               <div className="col-6">
-                <div className="bg-white">
-                  <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 px-3  ">
+                <div className="bg-white rounded dashboard_card">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0  ">
                       Recently Added Interview
                     </h3>
-                    <div className="d-flex justify-content-betwee form_control">
-                      <div className="select_div px-5">
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
                         <select
                           name="interview"
                           value={interview}
                           id="interview"
                           onChange={(e) => setInterview(e.target.value)}
-                          className="form-control-sm bg-white"
+                          className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
                           <option value={"today"}>Today </option>
@@ -256,11 +258,11 @@ const AdminDashboard = () => {
                       </div>
                       <div className="">
                         <Link
-                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                           to={"/interview"}
                           title="View All Interview"
                         >
-                          <span className="px-2">View All</span>
+                          View All
                         </Link>
                       </div>
                     </div>
@@ -269,19 +271,19 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="col-6">
-                <div className="bg-white">
-                  <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 px-3  ">
+                <div className="bg-white rounded dashboard_card">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0  ">
                       Recently Added Companies
                     </h3>
-                    <div className="d-flex justify-content-betwee form_control">
-                      <div className="select_div px-5">
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
                         <select
                           name="employer"
                           value={employer}
                           id="employer"
                           onChange={(e) => setEmployer(e.target.value)}
-                          className="form-control-sm bg-white"
+                          className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
                           <option value={"today"}>Today </option>
@@ -294,11 +296,11 @@ const AdminDashboard = () => {
                       <div className="">
                         {" "}
                         <Link
-                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                           to={"/employer"}
                           title="View All Companies"
                         >
-                          <span className="px-2">View All</span>
+                          View All
                         </Link>
                       </div>
                     </div>
@@ -314,19 +316,19 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row mb-11 ">
               <div className="col-6">
-                <div className="bg-white">
-                  <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 px-3  ">
+                <div className="bg-white rounded dashboard_card">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0  ">
                       Recently Job Response
                     </h3>
-                    <div className="d-flex justify-content-betwee form_control">
-                      <div className="select_div px-5">
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
                         <select
                           name="response"
                           value={response}
                           id="response"
                           onChange={(e) => setResponse(e.target.value)}
-                          className="form-control-sm bg-white"
+                          className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
                           <option value={"today"}>Today </option>
@@ -338,11 +340,11 @@ const AdminDashboard = () => {
                       </div>
                       <div className="">
                         <Link
-                          className="text-center  btn-outline-info border border-info mt-0 mb-0 pb-0 rounded-3"
+                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                           to={"/responses"}
                           title="View All Responses"
                         >
-                          <span className="px-2">View All</span>
+                          View All
                         </Link>
                       </div>
                     </div>
@@ -354,19 +356,19 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="col-6">
-                <div className="bg-white">
-                  <div className="d-flex justify-content-between pt-5">
-                    <h3 className="font-size-5 px-3">
+                <div className="bg-white rounded dashboard_card">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0">
                       Recently Added FollowUp
                     </h3>
-                    <div className="d-flex justify-content-betwee form_control">
-                      <div className="select_div px-5">
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
                         <select
                           name="followup"
                           value={followup}
                           id="followup"
                           onChange={(e) => setFollowUP(e.target.value)}
-                          className="form-control-sm bg-white"
+                          className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
                           <option value={"today"}>Today </option>
@@ -379,11 +381,11 @@ const AdminDashboard = () => {
                       <div className="">
                         {" "}
                         <Link
-                          className="text-center  btn-outline-info border border-info mt-0 rounded-3"
+                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                           to={"/followup"}
                           title="View All Followup"
                         >
-                          <span className="px-2">View All</span>
+                          View All
                         </Link>
                       </div>
                     </div>
