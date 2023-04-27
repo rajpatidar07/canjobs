@@ -36,8 +36,12 @@ function Interview(props) {
       sortOrder,
       props.filter_by_time
     );
-    setInterviewData(userData.data);
-    setTotalData(userData.total_rows);
+    if (userData.data.length === 0) {
+      setInterviewData([]);
+    } else {
+      setInterviewData(userData.data);
+      setTotalData(userData.total_rows);
+    }
   };
 
   /*Render function to get the interview*/

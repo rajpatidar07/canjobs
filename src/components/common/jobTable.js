@@ -41,9 +41,13 @@ export default function JobTable(props) {
       props.company,
       props.filter_by_time
     );
-    setjobData(userData.data.data);
+    if (userData.data.data.length === 0) {
+      setjobData([]);
+    } else {
+      setjobData(userData.data.data);
+      setTotalData(userData.data.total_rows);
+    }
     // // console.log(userData.data.data);
-    setTotalData(userData.data.total_rows);
   };
 
   /*Render function to get the job */

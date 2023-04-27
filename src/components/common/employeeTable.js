@@ -47,8 +47,12 @@ export default function EmployeeTable(props) {
       sortOrder,
       props.filter_by_time
     );
-    setemployeeData(userData.data);
-    setTotalData(userData.total_rows);
+    if (userData.data.length === 0) {
+      setemployeeData([]);
+    } else {
+      setemployeeData(userData.data);
+      setTotalData(userData.total_rows);
+    }
   };
 
   /*Render function to get the employer*/

@@ -83,7 +83,11 @@ function Education(props) {
     let EducationDetails = await EmployeeEducationDetails(
       props.employeeId
     ); /*"No Employee found"*/
-    setEducationData(EducationDetails.data.education);
+    if (EducationDetails.data.education.length === 0) {
+      setEducationData([]);
+    } else {
+      setEducationData(EducationDetails.data.education);
+    }
     if (data !== undefined || data) {
       setState(data);
     }

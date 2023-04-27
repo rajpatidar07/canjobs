@@ -115,9 +115,12 @@ function ContactInfo(props) {
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
     if (
-      userData.data.company_detail !== undefined ||
-      userData.data.company_detail !== []
+      userData.data.company_detail === undefined ||
+      userData.data.company_detail === [] ||
+      userData.data.company_detail === 0
     ) {
+      setState(initialFormState);
+    } else {
       setState(userData.data.company_detail[0]);
     }
     //// console.log(userData.data);

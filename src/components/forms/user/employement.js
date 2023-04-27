@@ -99,7 +99,11 @@ function EmployementDetails(props) {
   const EmployeementData = async (data) => {
     let Employment = await EmployeeDetails(props.employeeId);
     // setEmployementData(Employment.data.career);
-    setEmployementData(Employment.data.career);
+    if (Employment.data.career.length === 0) {
+      setEmployementData([]);
+    } else {
+      setEmployementData(Employment.data.career);
+    }
     if (data !== undefined || data) {
       setState(data);
     }

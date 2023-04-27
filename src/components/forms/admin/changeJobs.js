@@ -28,7 +28,11 @@ function ChangeJob(props) {
   const JobData = async () => {
     const userData = await GetAllJobs();
     // // console.log(userData.data.data);
-    setAllJobData(userData.data.data);
+    if (userData.data.data.length === 0) {
+      setAllJobData([]);
+    } else {
+      setAllJobData(userData.data.data);
+    }
   };
 
   useEffect(() => {

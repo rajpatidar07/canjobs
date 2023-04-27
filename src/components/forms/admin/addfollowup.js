@@ -31,7 +31,11 @@ function Addfollowup(props) {
       props.resData.employee_id,
       props.job_id
     );
-    setResponseData(userData.data.followup);
+    if (userData.data.followup.length === 0) {
+      setResponseData([]);
+    } else {
+      setResponseData(userData.data.followup);
+    }
     // // console.log(userData.data);
   };
 

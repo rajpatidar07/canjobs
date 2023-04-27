@@ -26,9 +26,13 @@ function FilterList() {
   /* Function to get the filter data*/
   const FilterData = async () => {
     let Data = await GetFilter();
-    setFilterData(Data.data);
-    setApiCall(false);
-    // // console.log(Data.data);
+    if (Data.data.length === 0) {
+      setFilterData([]);
+    } else {
+      setFilterData(Data.data);
+      setApiCall(false);
+    }
+    // console.log(Data.data);
   };
 
   /*Render function to get the filter data*/

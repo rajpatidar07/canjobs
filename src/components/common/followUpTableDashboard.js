@@ -22,8 +22,12 @@ function FollowUpDashBoard(props) {
       sortOrder,
       props.filter_by_time
     );
-    setFollowUpData(userData.data);
-    setTotalData(userData.total_rows);
+    if (userData.data.length === 0) {
+      setFollowUpData([]);
+    } else {
+      setFollowUpData(userData.data);
+      setTotalData(userData.total_rows);
+    }
   };
 
   /*Render function to get the interview*/

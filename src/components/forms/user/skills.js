@@ -54,7 +54,11 @@ function Skills(props) {
   // API CALL
   const SkillData = async () => {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);
-    SetSkillData(SkillDetails.data.skill);
+    if (SkillDetails.data.skill.length === 0) {
+      SetSkillData([]);
+    } else {
+      SetSkillData(SkillDetails.data.skill);
+    }
   };
   useEffect(() => {
     if (props.employeeId !== undefined) {

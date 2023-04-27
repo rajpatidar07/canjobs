@@ -41,8 +41,12 @@ function ManageAdmin() {
       columnName,
       sortOrder
     );
-    setAdminData(userData.data);
-    setTotalData(userData.total_rows);
+    if (userData.data.length === 0) {
+      setAdminData([]);
+    } else {
+      setAdminData(userData.data);
+      setTotalData(userData.total_rows);
+    }
   };
   /*Render function to get the Admin*/
   useEffect(() => {

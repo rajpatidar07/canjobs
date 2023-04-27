@@ -11,7 +11,12 @@ function JobDetailPage(props) {
   /*Function to get job details data*/
   const JobData = async () => {
     let userData = await GetJobDetail(props.jobdata);
-    if (props.jobdata !== undefined && props.jobdata !== "0") {
+    if (
+      props.jobdata === undefined ||
+      props.jobdata === "0" ||
+      userData.data.data.length === 0
+    ) {
+    } else {
       setJobDetailsData(userData.data.data[0]);
     }
   };

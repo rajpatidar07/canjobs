@@ -24,7 +24,11 @@ const AdminDashboard = () => {
   let AllCounts = async () => {
     let Data = await getSummaryCount();
     // console.log(Data);
-    setCountData(Data);
+    if (Data.length === 0) {
+      setCountData("");
+    } else {
+      setCountData(Data);
+    }
   };
   useEffect(() => {
     AllCounts();

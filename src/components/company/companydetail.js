@@ -7,20 +7,21 @@ function CompanyDetailPage(props) {
   /*Show modal and data state */
   const [ContactDetails, setContactDetails] = useState(false);
   const [employerData, setEmployerData] = useState("");
-  /*Function to get employer data */
-  const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    if (userData !== undefined) {
-      setEmployerData(userData.data.company_detail[0]);
-    }
-  };
-  /*Render method to get employer data */
+
+  // /*Render method to get employer data */
   useEffect(() => {
+    const EmployerData = async () => {
+      let userData = await EmployerDetails(props.employerId);
+      if (userData === undefined || userData.data.company_detail.length === 0) {
+        setEmployerData([]);
+      } else {
+        setEmployerData(userData.data.company_detail[0]);
+      }
+    };
     if (props.employerId !== "0" || props.employerId !== undefined) {
       EmployerData();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }
-  }, [props, ContactDetails]);
+  }, [props.employerId, ContactDetails]);
   return (
     <div className="col-md-12 col-xl-3 col-lg-4 col-12 col-sm-12 border-right">
       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">

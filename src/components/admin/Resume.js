@@ -142,11 +142,19 @@ function ResumeGrerator(props) {
   const [userCareer, setuserCareer] = useState([]);
   const UserData = async () => {
     const userData = await EmployeeDetails(id);
-    setUser(userData.data.employee[0]);
-    setSkills(userData.data.skill);
-    setuserCareer(userData.data.career);
-    setEducation(userData.data.education);
+    if (userData.data.length === 0) {
+      setUser([]);
+      setSkills([]);
+      setuserCareer([]);
+      setEducation([]);
+    } else {
+      setUser(userData.data.employee[0]);
+      setSkills(userData.data.skill);
+      setuserCareer(userData.data.career);
+      setEducation(userData.data.education);
+    }
   };
+
   useEffect(() => {
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

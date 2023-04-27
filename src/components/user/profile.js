@@ -22,8 +22,13 @@ const UserProfile = (props) => {
   const employeeId = user_type === "company" ? id : props.employeeId;
   const UserData = async () => {
     const userData = await EmployeeDetails(employeeId);
-    setuserDetail(userData.data);
-    setPersonalDetail(userData.data.employee[0]);
+    if (userData.data.length === 0 || userData.data.employee.length === 0) {
+      setuserDetail([]);
+      setPersonalDetail([]);
+    } else {
+      setuserDetail(userData.data);
+      setPersonalDetail(userData.data.employee[0]);
+    }
   };
   useEffect(() => {
     UserData();

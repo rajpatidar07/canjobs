@@ -40,8 +40,12 @@ export default function EmployerTable(props) {
       sortOrder,
       props.filter_by_time
     );
-    setemployerData(userData.data);
-    setTotalData(userData.total_rows);
+    if (userData.data.length === 0) {
+      setemployerData([]);
+    } else {
+      setemployerData(userData.data);
+      setTotalData(userData.total_rows);
+    }
   };
 
   /*Render function to get the employer*/

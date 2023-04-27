@@ -10,8 +10,12 @@ function EmployeeBox() {
   /*Api function to get the employee data */
   const EmpData = async () => {
     const userData = await getallEmployeeData();
-    setEmployeeData(userData.data);
-    setTotalData(userData.totalData);
+    if (userData.data.data.length === 0) {
+      setEmployeeData([]);
+    } else {
+      setEmployeeData(userData.data);
+      setTotalData(userData.totalData);
+    }
   };
   useEffect(() => {
     EmpData();

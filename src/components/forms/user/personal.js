@@ -177,7 +177,11 @@ function PersonalDetails(props) {
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeeId);
-    setState(userData.data.employee[0]);
+    if (userData.data.employee.length === 0) {
+      setState([]);
+    } else {
+      setState(userData.data.employee[0]);
+    }
   };
   useEffect(() => {
     if (props.employeeId === "0" || props.employeeId === undefined) {

@@ -49,8 +49,12 @@ function JobResponse(props) {
       sortOrder,
       props.filter_by_time
     );
-    setResponseData(userData.data.data);
-    setTotalData(userData.data.total_rows);
+    if (userData.data.length === 0) {
+      setResData([]);
+    } else {
+      setResponseData(userData.data.data);
+      setTotalData(userData.data.total_rows);
+    }
   };
 
   /*Render function to get the Response*/

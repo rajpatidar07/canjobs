@@ -231,12 +231,21 @@ function AddJobModal(props) {
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
-    setCategory(userData.data);
+    if (userData.data.length === 0) {
+      setCategory([]);
+    } else {
+      setCategory(userData.data);
+    }
   };
 
   /* Function to get Employer data*/
   const CompnayData = async () => {
     const userData = await getAllEmployer();
+    if (userData.data.length === 0) {
+      setCompany([]);
+    } else {
+      setCompany(userData.data);
+    }
     setCompany(userData.data);
   };
   useEffect(() => {

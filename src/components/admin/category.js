@@ -40,8 +40,12 @@ function Category() {
       columnName,
       sortOrder
     );
-    setCategoryData(userData.data);
-    setTotalData(userData.total_rows);
+    if (userData.data.length === 0) {
+      setCategoryData([]);
+    } else {
+      setCategoryData(userData.data);
+      setTotalData(userData.total_rows);
+    }
   };
 
   /*Render function to get the job category*/

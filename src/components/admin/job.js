@@ -59,7 +59,11 @@ function Job() {
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
-    setCategoryList(userData.data);
+    if (userData.data.length === 0) {
+      setCategoryList([]);
+    } else {
+      setCategoryList(userData.data);
+    }
   };
 
   /*Category type array to filter*/

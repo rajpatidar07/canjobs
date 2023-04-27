@@ -9,7 +9,11 @@ export default function GenerateToken(props) {
   const [state, setState] = useState([]);
   const AdminData = async () => {
     const userData = await getallAdminData();
-    setAllAdmin(userData.data);
+    if (userData.data.length === 0) {
+      setAllAdmin([]);
+    } else {
+      setAllAdmin(userData.data);
+    }
   };
   /* Functionality to close the modal */
   const close = () => {

@@ -20,8 +20,12 @@ function JobBox({ showAddJobModal, handleIdClick }) {
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(search, country);
-    setjobData(userData.data.data);
-    setNoData(userData.data.total_rows);
+    if (userData.data.data.length === 0) {
+      setjobData([]);
+    } else {
+      setjobData(userData.data.data);
+      setNoData(userData.data.total_rows);
+    }
   };
   useEffect(() => {
     JobData();

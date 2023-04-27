@@ -40,9 +40,14 @@ function FollowupTable() {
       columnName,
       sortOrder
     );
-    setjobData(userData.data.data);
-    setTotalData(userData.data.total_rows);
-    setresponseId(userData.data.data[0].job_id);
+    if (userData.data.length === 0) {
+      setjobData([]);
+      setresponseId();
+    } else {
+      setjobData(userData.data.data);
+      setTotalData(userData.data.total_rows);
+      setresponseId(userData.data.data[0].job_id);
+    }
     // if (userData.message === "No data found") {
     // //// console.log((userData.status);
     // }
@@ -76,7 +81,11 @@ function FollowupTable() {
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
-    setCategoryList(userData.data);
+    if (userData.data.length === 0) {
+      setCategoryList([]);
+    } else {
+      setCategoryList(userData.data);
+    }
   };
 
   /*Pagination Calculation */

@@ -13,16 +13,24 @@ function JobBoxResponse({ handleIdClick }) {
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs();
-    setjobData(userData.data.data);
-    setNoData(userData.data.total_rows);
+    if (userData.data.data.length === 0) {
+      setjobData([]);
+    } else {
+      setjobData(userData.data.data);
+      setNoData(userData.data.total_rows);
+    }
   };
   /*---- Function to Open response Table on Click ----*/
   const OpenReposnseTable = async (e) => {
     setJobId(e);
     setShowTable(!showTable);
     const userData = await GetAllResponse(e);
-    setResData(userData.data.data);
-    console.log(userData.data.data);
+    if (userData.data.length === 0) {
+      setResData([]);
+    } else {
+      setResData(userData.data.data);
+    }
+    // console.log(userData.data.data);
   };
 
   useEffect(() => {
