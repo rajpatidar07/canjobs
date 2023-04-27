@@ -142,6 +142,8 @@ function ContactInfo(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
   // END COMPANY PERSONAL INFO VALIDATION

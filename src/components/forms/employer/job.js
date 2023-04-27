@@ -78,8 +78,6 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Job Title is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 2
           ? "Job Title should have 2 or more letters"
           : /[-]?\d+(\.\d+)?/.test(value)
@@ -217,7 +215,13 @@ function AddJobModal(props) {
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
-    if (props.jobdata === undefined || props.jobdata === "0") {
+    if (
+      props.jobdata === undefined ||
+      props.jobdata === "0" ||
+      props.jobdata.length === 0 ||
+      state === undefined ||
+      userData.data.data.length === 0
+    ) {
       setState(initialFormState);
     } else {
       setState(userData.data.data[0]);
@@ -235,13 +239,17 @@ function AddJobModal(props) {
     const userData = await getAllEmployer();
     setCompany(userData.data);
   };
-
   useEffect(() => {
     if (user_type === "admin") {
       CompnayData();
     }
     CategoryData();
-    if (props.jobdata === "0" || props.jobdata === undefined) {
+    if (
+      props.jobdata === "0" ||
+      props.jobdata === undefined ||
+      props.jobdata.length === 0 ||
+      state === undefined
+    ) {
       setState(initialFormState);
     } else {
       JobData();
@@ -271,6 +279,8 @@ function AddJobModal(props) {
 
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
 
@@ -643,7 +653,7 @@ function AddJobModal(props) {
                       initData="Job Description"
                     /> */}
                     <textarea
-                      maxLength={100}
+                      maxLength={500}
                       placeholder="Job Description"
                       name="job_description"
                       value={state.job_description}

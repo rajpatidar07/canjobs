@@ -133,6 +133,8 @@ function EmployementDetails(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
   // END USER CARRER PROFILE VALIDATION

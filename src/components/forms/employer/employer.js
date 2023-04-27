@@ -70,6 +70,8 @@ function AddEmployer(props) {
   const onUserEmployerClick = (event) => {
     event.preventDefault();
     if (validate()) {
+    } else {
+      // setLoading(false);
     }
   };
   // END USER PERSONAL DETAIL VALIDATION

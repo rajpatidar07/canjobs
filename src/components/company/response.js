@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
 import JobDetail from "./jobDetail";
-import { getAllJobsCategory } from "../../api/api";
+// import { getAllJobsCategory } from "../../api/api";
 function Response() {
-  let [category, setCategory] = useState([]);
+  // let [category, setCategory] = useState([]);
   const [ids, setIds] = useState("");
 
   const handleIdClick = (id) => {
     setIds(id);
   };
-  /* Function to get the job category data*/
-  const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    setCategory(userData);
-  };
-  useEffect(() => {
-    CategoryData();
-  }, []);
+  // /* Function to get the job category data*/
+  // const CategoryData = async () => {
+  //   const userData = await getAllJobsCategory();
+  //   setCategory(userData);
+  // };
+  // useEffect(() => {
+  //   CategoryData();
+  // }, []);
   return (
     <>
       <div>
@@ -111,7 +111,6 @@ function Response() {
                     <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse handleIdClick={handleIdClick} />
-
                       {/* <!-- End Single Featured Job --> */}
                     </div>
                   </div>

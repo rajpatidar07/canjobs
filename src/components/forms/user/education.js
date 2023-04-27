@@ -125,6 +125,8 @@ function Education(props) {
         setLoading(false);
       } //"
       // handle form submission
+    } else {
+      setLoading(false);
     }
   };
   // END USER Education VALIDATION

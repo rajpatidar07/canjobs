@@ -46,6 +46,8 @@ function AddFilter(props) {
         setState(initialFormState);
         setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION

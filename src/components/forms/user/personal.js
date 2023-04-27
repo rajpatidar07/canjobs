@@ -209,6 +209,8 @@ function PersonalDetails(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   }
   // END USER PERSONAL DETAIL VALIDATION

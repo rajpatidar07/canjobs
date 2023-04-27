@@ -5,15 +5,30 @@ import moment from "moment";
 function JobDetail({ ids }) {
   const [jobData, setJobData] = useState("");
   let userType = localStorage.getItem("userType");
-  let GetJobData = async () => {
-    console.log(ids);
-    let Response = await GetJobDetail(ids);
-    setJobData(Response.data.data[0]);
-    console.log(Response.data.data[0]);
-  };
+  // useEffect(() => {
+  //   const GetJobData = async () => {
+  //     let Response = await GetJobDetail(ids);
+  //     if (Response.data.data.length === 0) {
+  //       setJobData("");
+  //     } else {
+  //       setJobData(Response.data.data[0]);
+  //     }
+  //     // console.log(Response.data.data[0]);
+  //   };
+  //   GetJobData();
+  // }, [ids]);
   useEffect(() => {
+    const GetJobData = async () => {
+      let Response = await GetJobDetail(ids);
+      if (Response.data.data.length === 0) {
+        setJobData("");
+      } else {
+        setJobData(Response.data.data[0]);
+      }
+      // console.log(Response.data.data[0]);
+    };
     GetJobData();
-  }, [ids]);
+  }, [ids, jobData]);
   return (
     <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
       <div className="tab-content" id="serachlist-tab">
@@ -23,9 +38,9 @@ function JobDetail({ ids }) {
           role="tabpanel"
           aria-labelledby="tab-nav-1"
         >
-          <div className=" bg-white rounded-4 border border-mercury shadow-9 pos-abs-xl  overflow-y-scroll mt-9 mt-xl-0">
+          <div className=" bg-white rounded-4 border border-mercury shadow-9 pos-abs-xl h-1413 overflow-y-scroll mt-9 mt-xl-0">
             {/* <!-- Single Featured Job --> */}
-            <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 border-bottom border-width-1 border-default-color light-mode-texts">
+            <div className="pt-9 pl-sm-9 pl-5 pb-8 pr-sm-9 pr-5 border-bottom border-width-1 border-default-color light-mode-texts">
               <div className="row">
                 <div className="col-12">
                   {/* <!-- media start --> */}
@@ -34,9 +49,12 @@ function JobDetail({ ids }) {
                       <img
                         className="company_logo"
                         src={
-                          jobData.logo
-                            ? jobData.logo
-                            : "https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                          jobData.logo === null ||
+                          jobData.logo === undefined ||
+                          jobData.logo === "" ||
+                          jobData.logo === "undefined"
+                            ? "https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                            : jobData.logo
                         }
                         alt=""
                       />

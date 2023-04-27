@@ -175,10 +175,10 @@ const AdminDashboard = () => {
                         {" "}
                         <Link
                           className="text-center  btn-outline-info border border-info mt-0 rounded-3"
-                          to={"/employer"}
+                          to={"/job"}
                           title="View All Jobs"
                         >
-                          View All
+                          <span className="px-2">View All</span>
                         </Link>
                       </div>
                     </div>
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                           to={"/employee"}
                           title="View all Applicants"
                         >
-                          View All
+                          <span className="px-2">View All</span>
                         </Link>
                       </div>
                     </div>
@@ -260,7 +260,7 @@ const AdminDashboard = () => {
                           to={"/interview"}
                           title="View All Interview"
                         >
-                          View All
+                          <span className="px-2">View All</span>
                         </Link>
                       </div>
                     </div>
@@ -298,7 +298,7 @@ const AdminDashboard = () => {
                           to={"/employer"}
                           title="View All Companies"
                         >
-                          View All
+                          <span className="px-2">View All</span>
                         </Link>
                       </div>
                     </div>
@@ -342,7 +342,7 @@ const AdminDashboard = () => {
                           to={"/responses"}
                           title="View All Responses"
                         >
-                          View All
+                          <span className="px-2">View All</span>
                         </Link>
                       </div>
                     </div>
@@ -383,7 +383,7 @@ const AdminDashboard = () => {
                           to={"/followup"}
                           title="View All Followup"
                         >
-                          View All
+                          <span className="px-2">View All</span>
                         </Link>
                       </div>
                     </div>

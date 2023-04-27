@@ -177,6 +177,8 @@ function KycComplianceDetails(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
   // END COMPANY KYC DETAIL VALIDATION

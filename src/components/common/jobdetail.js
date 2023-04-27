@@ -54,7 +54,6 @@ function JobDetailPage(props) {
         </div>
         {user_type === "admin" ? null : (
           <div className="row pt-9">
-            d
             <div className="col-12">
               <div className="card-btn-group">
                 <Link

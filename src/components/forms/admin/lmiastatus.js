@@ -70,7 +70,7 @@ function LmiaStatus(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
-  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  // USER ADMIN PROFILE UPDATE FILTER SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
     if (validate()) {
@@ -91,6 +91,8 @@ function LmiaStatus(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION

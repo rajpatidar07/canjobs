@@ -197,6 +197,8 @@ function CompanyDetails(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
   // END COMPANY DETAIL VALIDATION

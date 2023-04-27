@@ -78,6 +78,8 @@ function Skills(props) {
         setErrors("");
         setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   };
   // END USER PERSONAL DETAIL VALIDATION

@@ -10,8 +10,8 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 import Select from "react-select";
 function ChangeJob(props) {
   let [loading, setLoading] = useState(false);
+  const [state, setState] = useState([]);
   // console.log(props);
-
   let employeeId = props.resData.employee_id;
   let applyId = props.resData.apply_id;
   let [allJobData, setAllJobData] = useState([]);
@@ -41,10 +41,10 @@ function ChangeJob(props) {
 
     setJobId(option.value);
   };
+  /*Function to change job */
   const onChangeJobClick = async (event) => {
     event.preventDefault();
     setLoading(true);
-    // if (validate()) {
     const responseData = await ApplyJob(applyId, employeeId, JobId);
     if (responseData.message === "Job switched successfully") {
       toast.success("Job Changed successfully", {
@@ -53,11 +53,9 @@ function ChangeJob(props) {
       });
       return close();
     }
-    // }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
-  const [state, setState] = useState([]);
-
+  /*FUnction to redender the data in the option of the select box*/
   useEffect(() => {
     const options = allJobData.map((option) => ({
       value: option.job_id,

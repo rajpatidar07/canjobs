@@ -227,6 +227,7 @@ function Job() {
                 categoryFilterValue={categoryFilterValue}
                 company={company}
                 JobDetail={JobDetail}
+                showAddJobsModal={showAddJobsModal}
               />
             </div>
           </div>

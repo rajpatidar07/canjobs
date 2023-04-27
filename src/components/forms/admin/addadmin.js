@@ -71,8 +71,9 @@ function Addadmin(props) {
     useValidation(initialFormState, validators);
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
-    if (userData !== undefined || userData) {
-      // setAdmindetails(userData.data[0]);
+    if (userData === undefined || userData.data.length === 0) {
+      setState(initialFormState); // setAdmindetails(userData.data[0]);
+    } else {
       setState(userData.data[0]);
     }
   };
@@ -110,6 +111,8 @@ function Addadmin(props) {
         setAlready("Admin already exists");
         setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   };
   // END USER ADMIN PROFILE UPDATE VALIDATION
@@ -221,35 +224,6 @@ function Addadmin(props) {
                 )}
               </div>
             )}
-            {/* <div className="form-group ">
-              <label
-                htmlFor="companyname"
-                className="font-size-4 text-black-2  line-height-reset"
-              >
-                Company Name <span className="text-danger">*</span> :
-              </label>
-              <input
-                type={"text"}
-                className={
-                  errors.companyname
-                    ? "form-control border border-danger"
-                    : "form-control"
-                }
-                value={state.companyname}
-                onChange={onInputChange}
-                id="companyname"
-                name="companyname"
-              /> */}
-            {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
-            {/* {errors.companyname && (
-                <span
-                  key={errors.companyname}
-                  className="text-danger font-size-3"
-                >
-                  {errors.companyname}
-                </span>
-              )}
-            </div> */}
             <div className="form-group ">
               <label
                 htmlFor="admin_type"

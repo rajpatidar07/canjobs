@@ -94,6 +94,8 @@ function AddCategory(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   }
 

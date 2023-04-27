@@ -76,6 +76,8 @@ function Addfollowup(props) {
         });
         return close();
       }
+    } else {
+      setLoading(false);
     }
   };
   // END USER FOLLOW UP PROFILE UPDATE VALIDATION

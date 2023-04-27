@@ -56,6 +56,7 @@ export default function JobTable(props) {
     props.SkillFilterValue,
     props.locationFilterValue,
     props.jobSwapFilterValue,
+    props.showAddJobsModal,
     showAddJobsModal,
     props.search,
     deleteAlert,
@@ -95,6 +96,7 @@ export default function JobTable(props) {
       setDeleteAlert(false);
     }
   }
+  // console.log(jobData, "List Data");
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -197,7 +199,6 @@ export default function JobTable(props) {
 
   return (
     <>
-      {" "}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
@@ -215,9 +216,7 @@ export default function JobTable(props) {
                     Job title / Industry
                   </Link>
                 </th>
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                {props.heading === "Dashboard" ? null : (
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -232,9 +231,7 @@ export default function JobTable(props) {
                     </Link>
                   </th>
                 )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                {props.heading === "Dashboard" ? null : (
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -249,9 +246,7 @@ export default function JobTable(props) {
                     </Link>
                   </th>
                 )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                {props.heading === "Dashboard" ? null : (
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -266,9 +261,7 @@ export default function JobTable(props) {
                     </Link>
                   </th>
                 )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                {props.heading === "Dashboard" ? null : (
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -283,9 +276,7 @@ export default function JobTable(props) {
                     </Link>
                   </th>
                 )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                {props.heading === "Dashboard" ? null : (
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -334,9 +325,7 @@ export default function JobTable(props) {
                     Total Applicants
                   </Link>
                 </th>
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                {props.heading === "Dashboard" ? null : (
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -348,29 +337,26 @@ export default function JobTable(props) {
             </thead>
             <tbody>
               {/* Map function to show the data in the list*/}
-              {totalData === 0 ? (
+              {totalData === 0 || jobData.length === 0 ? (
                 <tr>
                   <th className="bg-white"></th>
                   {props.heading === "Dashboard" ? (
                     <th className="bg-white">No Data Found</th>
                   ) : (
                     <th className="bg-white"></th>
-                  )}{" "}
+                  )}
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
                     <>
-                      <th className="bg-white"></th>
-                      <th className="bg-white">No Data Found</th>{" "}
+                      <th className="bg-white">No Data Found</th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                     </>
-                  ) : (
-                    ""
-                  )}
+                  ) : null}
                 </tr>
               ) : (
                 (jobData || []).map((job) => (
@@ -395,45 +381,35 @@ export default function JobTable(props) {
                         )}
                       </div>
                     </th>
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
+                    {props.heading === "Dashboard" ? null : (
                       <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {job.employement} - {job.job_type}
                         </h3>
                       </th>
                     )}
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
+                    {props.heading === "Dashboard" ? null : (
                       <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {job.location}
                         </h3>
                       </th>
                     )}
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
+                    {props.heading === "Dashboard" ? null : (
                       <th className="py-5 ">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {job.education}
                         </h3>
                       </th>
                     )}
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
+                    {props.heading === "Dashboard" ? null : (
                       <th className="py-5 ">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                           {job.keyskill}
                         </h3>
                       </th>
                     )}
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
+                    {props.heading === "Dashboard" ? null : (
                       <th className="py-5 ">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                           {job.language}
@@ -456,9 +432,7 @@ export default function JobTable(props) {
                         {job.total_applicants}
                       </h3>
                     </th>
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
+                    {props.heading === "Dashboard" ? null : (
                       <th className="py-5 min-width-px-100">
                         <div className="btn-group button_group" role="group">
                           <button
@@ -498,7 +472,7 @@ export default function JobTable(props) {
         show={showAddJobsModal}
         jobdata={JobId}
         close={() => setShowAddJobsModal(false)}
-      />{" "}
+      />
       <SAlert
         show={deleteAlert}
         title={deleteName}
