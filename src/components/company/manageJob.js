@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
-  let [filter, SetFilter] = useState([]);
+  let [/*filter,*/ SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");

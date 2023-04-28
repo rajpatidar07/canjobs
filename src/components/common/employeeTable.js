@@ -307,7 +307,7 @@ export default function EmployeeTable(props) {
                   <tr className="" key={empdata.employee_id}>
                     <td className="py-5 pr-0">
                       <div className="media  align-items-center">
-                        <div className="circle-36 mx-auto">
+                        <div className="circle-36 mx-auto overflow-hidden">
                           {empdata.profile_photo === null ? (
                             <img
                               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
@@ -328,7 +328,7 @@ export default function EmployeeTable(props) {
                       {props.heading === "Dashboard" ? (
                         <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
                           <p className="m-0">{empdata.name}</p>
-                          <p className="text-gray font-size-2 m-0">
+                          <p className="text-gray font-size-2 m-0 text-capitalize">
                             {empdata.marital_status} ({empdata.gender}
                             {/*Calculation of age from date of birth*/}
                             {moment().diff(empdata.date_of_birth, "years")}
@@ -346,14 +346,14 @@ export default function EmployeeTable(props) {
                           title="Employee Details"
                         >
                           {empdata.name === null ? (
-                            <h4 className="font-size-3 font-weight-bold  mb-0">
+                            <h4 className="font-size-3 mb-0 text-capitalize">
                               Unavailable
                             </h4>
                           ) : (
-                            <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            <h4 className="font-size-3 mb-0 font-weight-normal text-black-2 text-capitalize">
                               <p className="m-0">{empdata.name}</p>
                               <p className="text-gray font-size-2 m-0">
-                                {empdata.marital_status} ({empdata.gender}
+                                {empdata.marital_status} ({empdata.gender},{" "}
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
                                 Y)
@@ -365,13 +365,11 @@ export default function EmployeeTable(props) {
                     </td>
                     <td className="py-5 ">
                       {empdata.contact_no === null ? (
-                        <h3 className="font-size-3 font-weight-bold  mb-0">
-                          Unavailable
-                        </h3>
+                        <p className="font-size-3 mb-0">Unavailable</p>
                       ) : (
                         <p className="m-0">+{empdata.contact_no}</p>
                       )}
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                         <p className="text-gray font-size-2 m-0">
                           {empdata.email}
                         </p>
@@ -383,9 +381,7 @@ export default function EmployeeTable(props) {
                     ) : (
                       <td className=" py-5">
                         {empdata.language === null ? (
-                          <h3 className="font-size-3 font-weight-bold  mb-0">
-                            Unavailable
-                          </h3>
+                          <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {empdata.language}
@@ -398,9 +394,7 @@ export default function EmployeeTable(props) {
                     ) : (
                       <td className=" py-5">
                         {empdata.education === null ? (
-                          <h3 className="font-size-3 font-weight-bold  mb-0">
-                            Unavailable
-                          </h3>
+                          <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                             {empdata.education}
@@ -413,9 +407,7 @@ export default function EmployeeTable(props) {
                     ) : (
                       <td className=" py-5">
                         {empdata.skill === null ? (
-                          <h3 className="font-size-3 font-weight-bold  mb-0">
-                            Unavailable
-                          </h3>
+                          <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                             {empdata.skill}
@@ -425,7 +417,7 @@ export default function EmployeeTable(props) {
                     )}
                     {/* <td className=" py-5">
                 {empdata.specialization === null ? (
-                  <h3 className="font-size-3 font-weight-bold  mb-0">
+                  <h3 className="font-size-3  mb-0">
                     Unavailable
                   </h3>
                 ) : (
@@ -436,9 +428,7 @@ export default function EmployeeTable(props) {
               </td> */}
                     <td className=" py-5">
                       {empdata.experience === null ? (
-                        <h3 className="font-size-3 font-weight-bold  mb-0">
-                          Unavailable
-                        </h3>
+                        <p className="font-size-3 mb-0">Unavailable</p>
                       ) : (
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {empdata.experience} Years

@@ -49,8 +49,14 @@ function Skills(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const SkillData = async () => {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);
@@ -125,10 +131,10 @@ function Skills(props) {
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
-        <div className="bg-white rounded h-100 px-11 pt-7">
+        <div className="bg-white rounded h-100 p-7">
           <form onSubmit={onUserSkillsClick}>
             <h5 className="text-center mb-7">Add It Skills </h5>{" "}
-            <div className="form-group d-flex mb-0">
+            <div className="form-group d-flex mb-3 p-0">
               <label
                 htmlFor="skill"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -177,7 +183,7 @@ function Skills(props) {
                 {errors.skill}
               </span>
             )}
-            <div className="">
+            <div className="form-group">
               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                 {(skillData || []).map((skill) => (
                   <li
@@ -185,7 +191,10 @@ function Skills(props) {
                     key={skill.skill_id}
                   >
                     {skill.skill}
-                    <Link onClick={() => ShowDeleteAlert(skill)}>
+                    <Link
+                      className="p-0 ms-1"
+                      onClick={() => ShowDeleteAlert(skill)}
+                    >
                       <i
                         className="px-3 fa fa-times-circle"
                         aria-hidden="true"
@@ -194,6 +203,16 @@ function Skills(props) {
                   </li>
                 ))}
               </ul>
+            </div>
+            <div className="form-group text-center mb-0">
+              <button
+                type="button"
+                className="btn btn-primary ml-auto mr-auto"
+                data-dismiss="modal"
+                onClick={close}
+              >
+                Close
+              </button>
             </div>
           </form>
           {/* </div> */}

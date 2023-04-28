@@ -9,7 +9,7 @@ import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 
 function Response() {
-  let [filter, SetFilter] = useState([]);
+  let [/*filter, */ SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");

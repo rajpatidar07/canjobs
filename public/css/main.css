@@ -238,7 +238,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .text-default-color {
-  color: var(--color-texts);
+  color: #333;
 }
 
 .text-default-color-2 {
@@ -476,7 +476,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 .header-cart {
   position: relative;
   font-size: 20px;
-  color: var(--color-texts);
+  color: #333;
   margin-left: auto;
   margin-right: 15px;
   margin-right: 15px;
@@ -1175,8 +1175,8 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .navbar-toggler {
-  color: var(--color-texts) !important;
-  border-color: var(--color-texts) !important;
+  color: #333 !important;
+  border-color: #333 !important;
 }
 
 .hamburger-icon {
@@ -1216,7 +1216,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   transition-duration: .15s;
   transition-property: transform;
   border-radius: 4px;
-  background-color: var(--color-texts);
+  background-color: #333;
   top: 50%;
   display: block;
   margin-top: -2px;
@@ -1242,7 +1242,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   width: 20px;
   height: 3px;
   border-radius: 4px;
-  background-color: var(--color-texts);
+  background-color: #333;
 }
 
 .hamburger-icon[aria-expanded="true"] .hamburger .hamburger-box .hamburger-inner:after {
@@ -1283,7 +1283,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .offcanvas-btn-close i {
-  color: var(--color-texts) !important;
+  color: #333 !important;
 }
 
 .gr-cross-icon {
@@ -1294,7 +1294,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   transition-duration: .15s;
   transition-property: transform;
   border-radius: 4px;
-  background-color: var(--color-texts);
+  background-color: #333;
   top: 50%;
   display: block;
   margin-top: -2px;
@@ -1323,7 +1323,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   width: 20px;
   height: 3px;
   border-radius: 4px;
-  background-color: var(--color-texts);
+  background-color: #333;
 }
 
 /* ---------------------------
@@ -6854,7 +6854,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .gr-fill-color {
-  fill: var(--color-texts) !important;
+  fill: #333 !important;
 }
 
 .bg-default {
@@ -8093,7 +8093,7 @@ a {
 ------------------------------*/
 p {
   font-size: 1.125rem;
-  color: var(--color-texts);
+  color: #333;
 }
 
 .font-size-1 {

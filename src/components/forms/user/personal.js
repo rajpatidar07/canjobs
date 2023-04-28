@@ -437,7 +437,7 @@ function PersonalDetails(props) {
                   htmlFor="description"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  description: <span className="text-danger">*</span>
+                  Description: <span className="text-danger">*</span>
                 </label>
                 <textarea
                   name="description"
@@ -567,7 +567,7 @@ function PersonalDetails(props) {
                   htmlFor="nationality"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  nationality / Citizenship:{" "}
+                  Nationality / Citizenship:
                   <span className="text-danger">*</span>
                 </label>
                 <input
@@ -703,7 +703,7 @@ function PersonalDetails(props) {
                   htmlFor="religion"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  religion: <span className="text-danger">*</span>
+                  Religion: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -731,7 +731,7 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                  Interested ined In: <span className="text-danger">*</span>
+                  Interested In: <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -767,7 +767,7 @@ function PersonalDetails(props) {
                   htmlFor="experience"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  experience: <span className="text-danger">*</span>
+                  Experience: <span className="text-danger">*</span>
                 </label>
                 <select
                   name="experience"

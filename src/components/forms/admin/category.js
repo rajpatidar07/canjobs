@@ -61,6 +61,7 @@ function AddCategory(props) {
       : "";
     setState({ category_type: category_type, parent_id: value });
   };
+  console.log("--------" + JSON.stringify(state));
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();

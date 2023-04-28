@@ -76,14 +76,8 @@ function Education(props) {
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
@@ -109,7 +103,7 @@ function Education(props) {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, deleteAlert]);
+  }, [state, deleteAlert, props.employeeId]);
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
@@ -164,8 +158,8 @@ function Education(props) {
     }
   }
   /*Code to get current year */
-  let date = moment();
-  const currentYear = date.year();
+  // let date = moment();
+  // const currentYear = date.year();
   return (
     <>
       <Modal
@@ -186,11 +180,11 @@ function Education(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onEducationSubmitClick}>
             <h5 className="text-center pt-2">Education Details</h5>
-            <div className="row">
+            <div className="row mb-5">
               {(educationData || []).map((education) => (
-                <div className="col-6" key={education.education_id}>
-                  <div className=" border m-1">
-                    <div className="p-1 d-flex align-items-center  mb-9 flex-wrap flex-sm-nowrap justify-content-md-between ">
+                <div className="col-12" key={education.education_id}>
+                  <div className=" border m-1 rounded">
+                    <div className="py-2 px-4 d-flex align-items-center flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box p-0">
                         <div className="text_box text-left w-100 mt-n2">
                           <h3 className="mb-0">
@@ -214,7 +208,7 @@ function Education(props) {
                           {education.passing_year}
                         </span>
                         <span className="font-size-3 text-gray w-100">
-                          <span className="mr-4" style={{ marginTop: "-2px" }}>
+                          <span className="mr-4">
                             <img
                               src="image/svg/icon-loaction-pin-black.svg"
                               alt=""
@@ -223,16 +217,18 @@ function Education(props) {
                           {education.institute_location}
                         </span>
                       </div>
-                      <Link
-                        to=""
-                        className="fa fa-edit text-gray px-5"
-                        onClick={() => EducationData(education)}
-                      ></Link>
-                      <Link
-                        to=""
-                        className="fa fa-times-circle px-5"
-                        onClick={() => ShowDeleteAlert(education)}
-                      ></Link>
+                      <div className="d-flex">
+                        <Link
+                          to=""
+                          className="fa fa-edit text-gray px-5"
+                          onClick={() => EducationData(education)}
+                        ></Link>
+                        <Link
+                          to=""
+                          className="fa fa-times-circle px-5"
+                          onClick={() => ShowDeleteAlert(education)}
+                        ></Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -245,7 +241,7 @@ function Education(props) {
                   htmlFor="qualification"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Qualification <span className="text-danger">*</span> :
+                  Qualification: <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -258,7 +254,7 @@ function Education(props) {
                   value={state.qualification}
                   onChange={onInputChange}
                 >
-                  <option value={""}>Select qualification</option>
+                  <option value={""}>Select Qualification</option>
                   {(FilterJson.qualification || []).map((data, i) => {
                     return (
                       <option value={data} key={i}>
@@ -279,43 +275,10 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="university_institute"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  University/Institute <span className="text-danger">*</span> :
-                </label>
-                <input
-                  maxLength={40}
-                  type="text"
-                  placeholder="University/Institute "
-                  className={
-                    errors.university_institute
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  name="university_institute"
-                  id="university_institute"
-                  value={state.university_institute}
-                  onChange={onInputChange}
-                />
-                {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
-                {errors.university_institute && (
-                  <span
-                    key={errors.university_institute}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.university_institute}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
                   htmlFor="course"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Course <span className="text-danger">*</span> :
+                  Course: <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -344,49 +307,41 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="specialization"
+                  htmlFor="university_institute"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialization <span className="text-danger">*</span> :
+                  University/Institute: <span className="text-danger">*</span>
                 </label>
-                <select
+                <input
+                  maxLength={40}
+                  type="text"
+                  placeholder="University/Institute "
                   className={
-                    errors.specialization
+                    errors.university_institute
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  name="specialization"
-                  id="specialization"
-                  value={state.specialization}
+                  name="university_institute"
+                  id="university_institute"
+                  value={state.university_institute}
                   onChange={onInputChange}
-                >
-                  <option value={""}>Select Specialization</option>
-                  {(FilterJson.Specialization || []).map((Specialization) => (
-                    <option value={Specialization} key={Specialization}>
-                      {Specialization}
-                    </option>
-                  ))}
-                </select>
-                {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
-                {errors.specialization && (
+                />
+                {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
+                {errors.university_institute && (
                   <span
-                    key={errors.specialization}
+                    key={errors.university_institute}
                     className="text-danger font-size-3"
                   >
-                    {errors.specialization}
+                    {errors.university_institute}
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="institute_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Institute institute_location{" "}
-                  <span className="text-danger">*</span> :
+                  Institute Location: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -422,10 +377,56 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
+                  htmlFor="specialization"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Specialization: <span className="text-danger">*</span>
+                </label>
+                <input
+                  className={
+                    errors.specialization
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  name="specialization"
+                  id="specialization"
+                  value={state.specialization}
+                  onChange={onInputChange}
+                />
+                {/* <select
+                  className={
+                    errors.specialization
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  name="specialization"
+                  id="specialization"
+                  value={state.specialization}
+                  onChange={onInputChange}
+                >
+                  <option value={""}>Select Specialization</option>
+                  {(FilterJson.Specialization || []).map((Specialization) => (
+                    <option value={Specialization} key={Specialization}>
+                      {Specialization}
+                    </option>
+                  ))}
+                </select> */}
+                {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
+                {errors.specialization && (
+                  <span
+                    key={errors.specialization}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.specialization}
+                  </span>
+                )}
+              </div>
+              <div className="form-group col-md-6">
+                <label
                   htmlFor="passing_year"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Passing Year <span className="text-danger">*</span> :
+                  Passing Year: <span className="text-danger">*</span>
                 </label>
                 <input
                   type="number"
@@ -439,7 +440,7 @@ function Education(props) {
                   name="passing_year"
                   value={moment(state.passing_year).format("YYYY")}
                   onChange={onInputChange}
-                  max={currentYear}
+                  // max={currentYear}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
                 {errors.passing_year && (
