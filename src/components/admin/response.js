@@ -492,10 +492,12 @@ function JobResponse(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {totalData === 0 ? (
+                    {totalData === 0 || response.length === 0 ? (
                       <tr>
-                        <td className="bg-white">No Data Found</td>
-                        <td className="bg-white"></td>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white">No Data Found</th>
+                        <th className="bg-white"></th>
                       </tr>
                     ) : (
                       (response || []).map((res) => (

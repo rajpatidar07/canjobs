@@ -52,6 +52,14 @@ function AddCategory(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
+  /*Onchange function to get the Value of parent id and category type */
+  const onSelectChange = (event) => {
+    const value = event.target.value;
+    const parent_id =
+      CategoryType.find((data) => data.category_type === value)
+        ?.job_category_id ?? "";
+    setState({ category_type: value, parent_id: parent_id });
+  };
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
@@ -70,33 +78,28 @@ function AddCategory(props) {
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    console.log(state);
-    // if (state.parent_id === "") {
-    //   setState({ ...state, category_name: "" });
-    //   setErrors({ ...errors, category_name: "" });
-    // }
     event.preventDefault();
-    // if (validate()) {
-    //   setLoading(true);
-    //   // //// console.log((state);
-    //   const responseData = await AddJobCategory(state);
-    //   if (responseData.message === "Category added successfully") {
-    //     toast.success("Category added successfully", {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //       autoClose: 1000,
-    //     });
-    //     return close();
-    //   }
-    //   if (responseData.message === "Category updated successfully") {
-    //     toast.success("Category Updated successfully", {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //       autoClose: 1000,
-    //     });
-    //     return close();
-    //   }
-    // } else {
-    //   setLoading(false);
-    // }
+    if (validate()) {
+      setLoading(true);
+      // //// console.log((state);
+      const responseData = await AddJobCategory(state);
+      if (responseData.message === "Category added successfully") {
+        toast.success("Category added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
+      if (responseData.message === "Category updated successfully") {
+        toast.success("Category Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        return close();
+      }
+    } else {
+      setLoading(false);
+    }
   }
 
   // END USER PERSONAL DETAIL VALIDATION
@@ -136,7 +139,6 @@ function AddCategory(props) {
               >
                 Add Category Type <span className="text-danger">*</span> :
               </label>
-
               <select
                 name="category_type"
                 className={
@@ -145,7 +147,7 @@ function AddCategory(props) {
                     : "form-control col mx-5"
                 }
                 value={state.category_type}
-                onChange={onInputChange}
+                onChange={onSelectChange}
                 id="category_type"
               >
                 <option value={""}>select category</option>
@@ -154,12 +156,6 @@ function AddCategory(props) {
                     <option
                       value={data.category_type}
                       key={data.job_category_id}
-                      onChange={() =>
-                        setState({
-                          ...state,
-                          parent_id: data.job_category_id,
-                        })
-                      }
                     >
                       {data.category_type}
                     </option>

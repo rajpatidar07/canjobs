@@ -371,7 +371,7 @@ export default function EmployerTable(props) {
             </thead>
             <tbody>
               {/* Map function to show the data in the list*/}
-              {totalData === 0 ? (
+              {totalData === 0 || employerData.length === 0 ? (
                 <tr>
                   <th className="bg-white"></th>
                   <th className="bg-white"></th>
