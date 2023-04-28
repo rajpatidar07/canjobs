@@ -75,7 +75,7 @@ const AdminDashboard = () => {
                 <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">
-                      {countData.posted_jobs ?? "N/A"}
+                      {countData.posted_jobs || "N/A"}
                     </span>
                   </h5>
                   <p className="font-size-4 font-weight-normal text-gray mb-0">
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
                 <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">
-                      {countData.total_applicants ?? "N/A"}
+                      {countData.total_applicants || "N/A"}
                     </span>
                   </h5>
                   <p className="font-size-4 font-weight-normal text-gray mb-0">
@@ -121,7 +121,7 @@ const AdminDashboard = () => {
                 <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">
-                      {countData.jobs_viewed ?? "N/A"}
+                      {countData.jobs_viewed || "N/A"}
                     </span>
                   </h5>
                   <p className="font-size-4 font-weight-normal text-gray mb-0">

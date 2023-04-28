@@ -61,11 +61,15 @@ function AddCategory(props) {
   /*Onchange function to get the Value of parent id and category type */
   const onSelectChange = (event) => {
     const value = event.target.value;
-    const parent_id =
-      CategoryType.find((data) => data.category_type === value)
-        ?.job_category_id ?? "";
-    setState({ category_type: value, parent_id: parent_id });
+    const category_type = CategoryType.find(
+      (data) => data.job_category_id === value
+    )
+      ? CategoryType.find((data) => data.job_category_id === value)
+          .category_type
+      : "";
+    setState({ category_type: category_type, parent_id: value });
   };
+  console.log("--------" + JSON.stringify(state));
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
@@ -152,7 +156,7 @@ function AddCategory(props) {
                     ? "form-control mx-5 col border border-danger"
                     : "form-control col mx-5"
                 }
-                value={state.category_type}
+                value={state.job_category_id}
                 onChange={onSelectChange}
                 id="category_type"
               >
@@ -160,7 +164,7 @@ function AddCategory(props) {
                 {(CategoryType || []).map((data) => {
                   return data.parent_id === "0" ? (
                     <option
-                      value={data.category_type}
+                      value={data.job_category_id}
                       key={data.job_category_id}
                     >
                       {data.category_type}

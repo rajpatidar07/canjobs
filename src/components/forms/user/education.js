@@ -245,7 +245,7 @@ function Education(props) {
                   htmlFor="qualification"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Qualification <span className="text-danger">*</span> :
+                  Qualification: <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -279,43 +279,10 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="university_institute"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  University/Institute <span className="text-danger">*</span> :
-                </label>
-                <input
-                  maxLength={40}
-                  type="text"
-                  placeholder="University/Institute "
-                  className={
-                    errors.university_institute
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  name="university_institute"
-                  id="university_institute"
-                  value={state.university_institute}
-                  onChange={onInputChange}
-                />
-                {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
-                {errors.university_institute && (
-                  <span
-                    key={errors.university_institute}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.university_institute}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
                   htmlFor="course"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Course <span className="text-danger">*</span> :
+                  Course: <span className="text-danger">*</span>
                 </label>
                 <select
                   className={
@@ -344,49 +311,41 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
-                  htmlFor="specialization"
+                  htmlFor="university_institute"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialization <span className="text-danger">*</span> :
+                  University/Institute: <span className="text-danger">*</span>
                 </label>
-                <select
+                <input
+                  maxLength={40}
+                  type="text"
+                  placeholder="University/Institute "
                   className={
-                    errors.specialization
+                    errors.university_institute
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  name="specialization"
-                  id="specialization"
-                  value={state.specialization}
+                  name="university_institute"
+                  id="university_institute"
+                  value={state.university_institute}
                   onChange={onInputChange}
-                >
-                  <option value={""}>Select Specialization</option>
-                  {(FilterJson.Specialization || []).map((Specialization) => (
-                    <option value={Specialization} key={Specialization}>
-                      {Specialization}
-                    </option>
-                  ))}
-                </select>
-                {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
-                {errors.specialization && (
+                />
+                {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
+                {errors.university_institute && (
                   <span
-                    key={errors.specialization}
+                    key={errors.university_institute}
                     className="text-danger font-size-3"
                   >
-                    {errors.specialization}
+                    {errors.university_institute}
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="institute_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Institute institute_location{" "}
-                  <span className="text-danger">*</span> :
+                  Institute Location: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -422,10 +381,45 @@ function Education(props) {
               </div>
               <div className="form-group col-md-6">
                 <label
+                  htmlFor="specialization"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Specialization: <span className="text-danger">*</span>
+                </label>
+                <select
+                  className={
+                    errors.specialization
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  name="specialization"
+                  id="specialization"
+                  value={state.specialization}
+                  onChange={onInputChange}
+                >
+                  <option value={""}>Select Specialization</option>
+                  {(FilterJson.Specialization || []).map((Specialization) => (
+                    <option value={Specialization} key={Specialization}>
+                      {Specialization}
+                    </option>
+                  ))}
+                </select>
+                {/*----ERROR MESSAGE FOR SPECIALIZATION----*/}
+                {errors.specialization && (
+                  <span
+                    key={errors.specialization}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.specialization}
+                  </span>
+                )}
+              </div>
+              <div className="form-group col-md-6">
+                <label
                   htmlFor="passing_year"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Passing Year <span className="text-danger">*</span> :
+                  Passing Year: <span className="text-danger">*</span>
                 </label>
                 <input
                   type="number"
