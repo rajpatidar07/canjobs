@@ -211,15 +211,14 @@ function JobResponse(props) {
   return (
     <div
       className={
-        props.heading === "Manage Follow-ups"
-          ? "response_main_div"
+        props.heading === "Response"
+          ? "site-wrapper overflow-hidden bg-default-2  "
           : props.heading === "Dashboard"
           ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-          : "site-wrapper overflow-hidden bg-default-2  "
+          : "response_main_div"
       }
     >
-      {props.heading === "Manage Follow-ups" ||
-      props.heading === "Dashboard" ? null : (
+      {props.heading === "Response" ? (
         <>
           {/* <!-- Header Area --> */}
           <AdminHeader heading={"Response"} />
@@ -227,7 +226,7 @@ function JobResponse(props) {
           <AdminSidebar heading={"Response"} />
           <ToastContainer />
         </>
-      )}
+      ) : null}
       <Addfollowup
         show={followup}
         job_id={jobId}
@@ -265,17 +264,17 @@ function JobResponse(props) {
       />
       <div
         className={
-          props.heading === "Manage Follow-ups"
-            ? "response__container"
+          props.heading === "Response"
+            ? "dashboard-main-container mt-20"
             : props.heading === "Dashboard"
             ? ""
-            : "dashboard-main-container mt-20"
+            : "response__container"
         }
       >
         <div
           className={
-            props.heading === "Manage Follow-ups"
-              ? "container p-0"
+            props.heading === "Response"
+              ? "container"
               : props.heading === "Dashboard"
               ? ""
               : "container"
@@ -295,18 +294,20 @@ function JobResponse(props) {
                 <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
               <div className="row align-items-center">
-                <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
-                  <p className="input_label">Filter by Company:</p>
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder={"Search Category"}
-                    value={search}
-                    name={"category_name"}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </div>
+                {props.heading === "" ? null : (
+                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                    <p className="input_label">Filter by Company:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      placeholder={"Search Company"}
+                      value={search}
+                      name={"category_name"}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </div>
+                )}
                 <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
                   <p className="input_label">Filter by Skill:</p>
                   <div className="select_div">
@@ -357,7 +358,9 @@ function JobResponse(props) {
               className={
                 props.heading === "Response"
                   ? ""
-                  : "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                  : props.heading === "Dashboard"
+                  ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                  : ""
               }
             >
               <div className="table-responsive ">
@@ -496,7 +499,12 @@ function JobResponse(props) {
                       <tr>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
                         <th className="bg-white">No Data Found</th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
                         <th className="bg-white"></th>
                       </tr>
                     ) : (

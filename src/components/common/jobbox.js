@@ -4,7 +4,13 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GetAllJobs } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
-function JobBox({ showAddJobModal, handleIdClick }) {
+function JobBox({
+  showAddJobModal,
+  categoryFilterValue,
+  SkillFilterValue,
+  jobSwapFilterValue,
+  locationFilterValue,
+}) {
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -19,7 +25,13 @@ function JobBox({ showAddJobModal, handleIdClick }) {
 
   /* Function to get Job data*/
   const JobData = async () => {
-    const userData = await GetAllJobs(search, country);
+    const userData = await GetAllJobs(
+      search,
+      country,
+      categoryFilterValue,
+      SkillFilterValue,
+      jobSwapFilterValue
+    );
     if (userData.data.data.length === 0) {
       setjobData([]);
     } else {
@@ -29,7 +41,14 @@ function JobBox({ showAddJobModal, handleIdClick }) {
   };
   useEffect(() => {
     JobData();
-  }, [showAddJobsModal, showAddJobModal]);
+  }, [
+    showAddJobsModal,
+    showAddJobModal,
+    categoryFilterValue,
+    SkillFilterValue,
+    jobSwapFilterValue,
+    locationFilterValue,
+  ]);
 
   return (
     <>
@@ -48,7 +67,8 @@ function JobBox({ showAddJobModal, handleIdClick }) {
           (jobData || []).map((job) => (
             <Link
               key={job.job_id}
-              onClick={() => handleIdClick(job.job_id)}
+              to={"/jobdetail"}
+              onClick={() => localStorage.setItem("jobId", job.job_id)}
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
             >
               {job.job_type === "swap" ? (
@@ -56,7 +76,7 @@ function JobBox({ showAddJobModal, handleIdClick }) {
               ) : null}
               <div className="row job_header m-0">
                 <div className="media align-items-center company_box col-md-6 p-0">
-                  <div className="text_box text-left" to={"/jobdetail"}>
+                  <div className="text_box text-left">
                     <img
                       className="company_logo"
                       src={

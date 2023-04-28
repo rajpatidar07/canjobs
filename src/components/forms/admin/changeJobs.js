@@ -112,6 +112,7 @@ function ChangeJob(props) {
                 </button>
               ) : (
                 <button
+                  onClick={onChangeJobClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getallEmployeeData } from "../../api/api";
 import moment from "moment";
-
 function EmployeeBox() {
   let [employeeData, setEmployeeData] = useState([]);
   let [totalData, setTotalData] = useState([]);
@@ -10,21 +9,28 @@ function EmployeeBox() {
   /*Api function to get the employee data */
   const EmpData = async () => {
     const userData = await getallEmployeeData();
-    if (userData.data.data.length === 0) {
+    if (userData.data.length === 0) {
       setEmployeeData([]);
     } else {
       setEmployeeData(userData.data);
       setTotalData(userData.totalData);
     }
   };
+  /*Render Method*/
   useEffect(() => {
     EmpData();
   }, []);
 
+  console.log(employeeData);
+
   return (
     <>
       {/* <!-- Single Featured Job --> */}
-      {totalData !== 0 ? (
+      {totalData === 0 || employeeData.length === 0 ? (
+        <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
+          <h4>No Data Found</h4>
+        </div>
+      ) : (
         (employeeData || []).map((empdata) => (
           <div
             className="col-xxl-4 col-xl-4 col-lg-6 col-md-6 job_box p-3"
@@ -76,11 +82,14 @@ function EmployeeBox() {
                 <div className="media justify-content-md-end col-3 p-0">
                   <Link
                     className="btn btn-secondary text-uppercase font-size-3 connect_btn"
-                    to=""
                     data-toggle="modal"
                     data-target="#signup"
+                    to={"/profile"}
+                    onClick={() =>
+                      localStorage.setItem("employeeId", empdata.employee_id)
+                    }
                   >
-                    Connect
+                    View
                   </Link>
                 </div>
                 <div className="col-md-12 p-0 mt-2">
@@ -102,7 +111,10 @@ function EmployeeBox() {
                         <img src="image/svg/icon-suitecase.svg" alt="" />
                       </span>
                       <span className="font-weight-semibold">
-                        {empdata.experience}Y Experience
+                        {empdata.experience === "fresher"
+                          ? empdata.experience
+                          : empdata.experience + "Y"}{" "}
+                        Experience
                       </span>
                     </li>
                     <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
@@ -149,10 +161,6 @@ function EmployeeBox() {
             </div>
           </div>
         ))
-      ) : (
-        <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
-          <h4>No Data Found</h4>
-        </div>
       )}
       {/* <!-- End Single Featured Job --> */}
     </>

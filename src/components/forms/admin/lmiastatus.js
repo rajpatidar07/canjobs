@@ -5,6 +5,7 @@ import { AddLimia } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
+import moment from "moment";
 
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
@@ -68,14 +69,8 @@ function LmiaStatus(props) {
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // USER ADMIN PROFILE UPDATE FILTER SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
@@ -176,6 +171,7 @@ function LmiaStatus(props) {
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"
+                max={moment().format("YYY-MM-DD")}
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
               {errors.completion_time && (
@@ -338,6 +334,7 @@ function LmiaStatus(props) {
                 </button>
               ) : (
                 <button
+                  onClick={onAminProfileUpdateClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

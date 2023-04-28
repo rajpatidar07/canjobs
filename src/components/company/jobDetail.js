@@ -28,7 +28,7 @@ function JobDetail({ ids }) {
       // console.log(Response.data.data[0]);
     };
     GetJobData();
-  }, [ids, jobData]);
+  }, [ids]);
   return (
     <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
       <div className="tab-content" id="serachlist-tab">

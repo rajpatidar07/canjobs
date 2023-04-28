@@ -7,14 +7,18 @@ function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let skill = [];
   const user_type = localStorage.getItem("userType");
-
+  const jobId = localStorage.getItem("jobId");
   /*Function to get job details data*/
   const JobData = async () => {
-    let userData = await GetJobDetail(props.jobdata);
+    let userData = await GetJobDetail(
+      user_type === "admin" ? props.jobdata : jobId
+    );
     if (
-      props.jobdata === undefined ||
-      props.jobdata === "0" ||
-      userData.data.data.length === 0
+      user_type === "admin"
+        ? props.jobdata
+        : jobId === undefined || user_type === "admin"
+        ? props.jobdata
+        : jobId === "0" || userData.data.data.length === 0 || !jobId
     ) {
     } else {
       setJobDetailsData(userData.data.data[0]);
@@ -38,7 +42,11 @@ function JobDetailPage(props) {
               <Link className="text_box text-left" to="">
                 <img
                   className="company_logo"
-                  src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                  src={
+                    jobDetatilsData.logo
+                      ? jobDetatilsData.logo
+                      : "https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                  }
                   alt=""
                 />
               </Link>
@@ -57,7 +65,7 @@ function JobDetailPage(props) {
             {/* <!-- media end --> */}
           </div>
         </div>
-        {user_type === "admin" ? null : (
+        {user_type === "admin" || user_type === "company" ? null : (
           <div className="row pt-9">
             <div className="col-12">
               <div className="card-btn-group">

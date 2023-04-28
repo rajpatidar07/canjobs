@@ -35,6 +35,11 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
+/*To get the filter list APi */
+export const getJson = async () => {
+  const response = await axios.get(`${API_URL}filterList/filterList.json`);
+  return response.data;
+};
 // EMPLOYEE'S API
 /*Employee sign */
 export const EmployeeSignUp = async (props) => {
@@ -262,13 +267,14 @@ export const DeleteEmployeeCareer = async (props) => {
   return response.data;
 };
 /*Apply job Api */
-export const ApplyJob = async (apply_id, employee_id, job_id) => {
+export const ApplyJob = async (apply_id, employee_id, job_id, status) => {
   const response = await axios.post(
     `${API_URL}applyJob`,
     {
       apply_id: apply_id,
       job_id: job_id,
       employee_id: employee_id,
+      status: status,
     },
     {
       headers: {
@@ -297,7 +303,7 @@ export const GetJob = async (props) => {
 
 /*single job Detail api */
 export const GetJobDetail = async (props) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.post(
     `${API_URL}admin/jobDetail`,
     {
@@ -575,7 +581,7 @@ export const getInterview = async (
 ) => {
   // console.log(job_id, employee_id);
   const response = await axios.post(
-    `${API_URL}${user_type}/getInterview`,
+    `${API_URL}admin/getInterview`,
     {
       search: search,
       column_name: column,
@@ -599,7 +605,7 @@ export const getInterview = async (
 export const AddInterviewSheduale = async (props, employee_id, job_id) => {
   // console.log(props, employee_id, job_id);
   const response = await axios.post(
-    `${API_URL}${user_type}/addUpdateInterview`,
+    `${API_URL}admin/addUpdateInterview`,
     {
       job_id: job_id,
       employee_id: employee_id,
@@ -618,9 +624,8 @@ export const AddInterviewSheduale = async (props, employee_id, job_id) => {
 /*Add LIMA Api */
 export const AddLimia = async (props, employee_id, job_id) => {
   // console.log(job_id);
-
   const response = await axios.put(
-    `${API_URL}${user_type}/addUpdateLmia`,
+    `${API_URL}admin/addUpdateLmia`,
     {
       job_id: job_id,
       employee_id: employee_id,
@@ -913,7 +918,7 @@ export const DeleteAdmin = async (props) => {
 export const AddFollowup = async (props) => {
   // console.log(props);
   const response = await axios.post(
-    `${API_URL}${user_type}/addFollowup`,
+    `${API_URL}admin/addFollowup`,
     {
       admin_id: admin_id,
       job_id: props.jobId,
@@ -930,10 +935,11 @@ export const AddFollowup = async (props) => {
   );
   return response.data;
 };
-/*Add Followup single data Api */
+/*get Followup single data Api */
 export const getSingleFollowup = async (employee_id, job_id) => {
+  // console.log(employee_id, job_id);
   const response = await axios.post(
-    `${API_URL}${user_type}/getFollowup`,
+    `${API_URL}admin/getFollowup`,
     { job_id: job_id, employee_id: employee_id },
     {
       headers: {
@@ -942,6 +948,7 @@ export const getSingleFollowup = async (employee_id, job_id) => {
       },
     }
   );
+
   return response.data;
 };
 export const GetAdminToken = async (props) => {

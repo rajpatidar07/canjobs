@@ -35,14 +35,8 @@ function AddInterview(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   const InterviewData = async () => {
     const userData = await getInterview(jobId, employeeId);
@@ -154,6 +148,7 @@ function AddInterview(props) {
                 </button>
               ) : (
                 <button
+                  onClick={onAddFIlterClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

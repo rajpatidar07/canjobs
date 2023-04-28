@@ -152,14 +152,8 @@ function CompanyDetails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
@@ -597,7 +591,7 @@ function CompanyDetails(props) {
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Profile:
+                  Company Logo:
                 </label>
                 <div className="position-relative">
                   <input

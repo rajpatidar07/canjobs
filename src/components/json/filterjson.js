@@ -30,6 +30,7 @@ const FilterJson = {
     "Nurse",
     "Other",
     "IT",
+    "Medical",
   ],
   education: [
     "Metric",

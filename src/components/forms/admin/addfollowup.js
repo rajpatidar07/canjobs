@@ -220,6 +220,7 @@ function Addfollowup(props) {
                 </button>
               ) : (
                 <button
+                  onClick={onAminFollowClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

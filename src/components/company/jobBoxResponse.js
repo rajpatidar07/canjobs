@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { GetAllJobs, GetAllResponse } from "../../api/api";
+import { GetAllJobs } from "../../api/api";
 import moment from "moment";
-function JobBoxResponse({ handleIdClick }) {
+import Response from "../admin/response";
+function JobBoxResponse({
+  categoryFilterValue,
+  locationFilterValue,
+  SkillFilterValue,
+  jobSwapFilterValue,
+}) {
   const [showTable, setShowTable] = useState(false);
   let [jobData, setjobData] = useState([]);
-  let [resData, setResData] = useState([]);
   const [JobId, setJobId] = useState([]);
   let [noData, setNoData] = useState("");
   // const user_type = localStorage.getItem("userType");
   let Skill = [];
   /* Function to get Job data*/
   const JobData = async () => {
-    const userData = await GetAllJobs();
+    const userData = await GetAllJobs(
+      "",
+      locationFilterValue,
+      categoryFilterValue,
+      SkillFilterValue,
+      jobSwapFilterValue
+    );
     if (userData.data.data.length === 0) {
       setjobData([]);
     } else {
@@ -24,18 +35,17 @@ function JobBoxResponse({ handleIdClick }) {
   const OpenReposnseTable = async (e) => {
     setJobId(e);
     setShowTable(!showTable);
-    const userData = await GetAllResponse(e);
-    if (userData.data.length === 0) {
-      setResData([]);
-    } else {
-      setResData(userData.data.data);
-    }
-    // console.log(userData.data.data);
   };
 
   useEffect(() => {
     JobData();
-  }, [showTable]);
+  }, [
+    showTable,
+    locationFilterValue,
+    categoryFilterValue,
+    SkillFilterValue,
+    jobSwapFilterValue,
+  ]);
 
   return (
     <div
@@ -52,7 +62,8 @@ function JobBoxResponse({ handleIdClick }) {
       ) : (
         (jobData || []).map((job) => (
           <Link
-            onClick={() => handleIdClick(job.job_id)}
+            to={"/jobdetail"}
+            onClick={() => localStorage.setItem("jobId", job.job_id)}
             className="my-5 pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green"
             key={job.job_id}
           >
@@ -137,175 +148,7 @@ function JobBoxResponse({ handleIdClick }) {
                 </Link>
               </div>
             </div>
-            {JobId === job.job_id ? (
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8">
-                <div className="table-responsive main_table_div">
-                  <table className="table table-striped main_data_table">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          className="text-center border-0 font-size-4 font-weight-normal"
-                        >
-                          #
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          Name
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Applied for
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Skills
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Experience
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Salary
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          Contact
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(resData || []).map((data) => {
-                        return (
-                          <tr className="" key={data.employee_id}>
-                            <th scope="row" className="pl-5 py-5 pr-0   ">
-                              <div className="media  align-items-center">
-                                <div className="circle-36 mx-auto">
-                                  <img
-                                    src="https://cdn.vectorstock.com/i/preview-1x/32/12/default-avatar-profile-icon-vector-39013212.webp"
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                </div>
-                              </div>
-                            </th>
-                            <th className="border-0 py-5">
-                              <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.name}
-                              </h4>
-                            </th>
-                            <td className=" py-5 pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                Senior Project Manager
-                              </h3>
-                            </td>
-                            <td className=" py-5  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {data.skill}
-                              </h3>
-                            </td>
-                            <td className=" py-5  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {data.experience} years
-                              </h3>
-                            </td>
-                            <td className=" py-5  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                20,000
-                              </h3>
-                            </td>
-                            <td className=" py-5  pr-0">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                +9632587410
-                                <br />
-                                email@gmail.com
-                              </h3>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="pt-2">
-                  <nav aria-label="Page navigation example">
-                    <ul className="pagination pagination-hover-primary rounded-0 ml-n2">
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3active"
-                          aria-label="Previous"
-                        >
-                          <i className="fas fa-chevron-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          2
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item disabled">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          ...
-                        </Link>
-                      </li>
-                      <li className="page-item ">
-                        <Link
-                          to={""}
-                          className="page-link border-0 font-size-4 font-weight-semibold px-3"
-                        >
-                          7
-                        </Link>
-                      </li>
-                      <li className="page-item rounded-0 flex-all-center">
-                        <Link
-                          to={""}
-                          className="page-link rounded-0 border-0 px-3"
-                          aria-label="Next"
-                        >
-                          <i className="fas fa-chevron-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            ) : null}
+            {JobId === job.job_id ? <Response responseId={JobId} /> : null}
           </Link>
         ))
       )}
