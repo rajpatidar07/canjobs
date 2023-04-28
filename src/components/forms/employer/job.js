@@ -210,8 +210,14 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
@@ -426,7 +432,7 @@ function AddJobModal(props) {
                     placeholder="Job category"
                     id="job_category_id"
                   >
-                    <option value={""}>select Category</option>
+                    <option value={""}>Select Category</option>
                     {(CategoryType || []).map((cat) =>
                       cat.category_name === null ? null : (
                         <option
@@ -468,7 +474,7 @@ function AddJobModal(props) {
                     }
                     id="industry_type"
                   >
-                    <option value={""}>select industry</option>
+                    <option value={""}>Select industry</option>
                     {(FilterJson.industry || []).map((industry) => (
                       <option key={industry} value={industry}>
                         {industry}
@@ -506,7 +512,7 @@ function AddJobModal(props) {
                     placeholder="Experience"
                     id="experience_required"
                   >
-                    <option value={""}>select Experience</option>
+                    <option value={""}>Select Experience</option>
                     {(FilterJson.experience || []).map((exp) => (
                       <option key={exp} value={exp}>
                         {exp}
@@ -546,7 +552,7 @@ function AddJobModal(props) {
                   placeholder="Salary"
                   id="salary"
                 >
-                  <option value={""}>select salary</option>
+                  <option value={""}>Select salary</option>
                   {(FilterJson.salary || []).map((salary) => (
                     <option key={salary} value={salary}>
                       {salary}
@@ -583,7 +589,7 @@ function AddJobModal(props) {
                   placeholder="Location"
                   id="location"
                 >
-                  <option value={""}>select location</option>
+                  <option value={""}>Select location</option>
                   {(FilterJson.location || []).map((location) => (
                     <option key={location} value={location}>
                       {location}
@@ -843,7 +849,7 @@ function AddJobModal(props) {
                         : " form-control position-relative overflow-hidden"
                     }
                   >
-                    <option value={""}>select job type</option>
+                    <option value={""}>Select job type</option>
                     {(FilterJson.job_type || []).map((job_type) => (
                       <option key={job_type} value={job_type}>
                         {job_type}
@@ -914,7 +920,7 @@ function AddJobModal(props) {
                     placeholder="Apply education"
                     id="education"
                   >
-                    <option value={""}>select education</option>
+                    <option value={""}>Select education</option>
                     {(FilterJson.education || []).map((education) => (
                       <option key={education} value={education}>
                         {education}
@@ -954,7 +960,7 @@ function AddJobModal(props) {
                     placeholder="Language"
                     id="language"
                   >
-                    <option value={""}>select Language</option>
+                    <option value={""}>Select Language</option>
                     {(FilterJson.Language || []).map((Language) => (
                       <option key={Language} value={Language}>
                         {Language}
@@ -1025,7 +1031,7 @@ function AddJobModal(props) {
                     placeholder="Apply employement"
                     id="employement"
                   >
-                    <option value={""}>select employement</option>
+                    <option value={""}>Select employement</option>
                     {(FilterJson.employement || []).map((employement) => (
                       <option key={employement} value={employement}>
                         {employement}

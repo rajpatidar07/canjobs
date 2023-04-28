@@ -152,8 +152,14 @@ function CompanyDetails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.employerId]);
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
@@ -275,7 +281,7 @@ function CompanyDetails(props) {
                   }
                   id="industry"
                 >
-                  <option value={""}>select industry</option>
+                  <option value={""}>Select industry</option>
                   {(FilterJson.industry || []).map((industry) => (
                     <option key={industry} value={industry}>
                       {industry}

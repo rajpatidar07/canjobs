@@ -50,8 +50,14 @@ function AddCategory(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
@@ -160,7 +166,7 @@ function AddCategory(props) {
                 onChange={onInputChange}
                 id="category_type"
               >
-                <option value={""}>select category</option>
+                <option value={""}>Select category</option>
                 {(CategoryType || []).map((data) => {
                   return data.parent_id === "0" ? (
                     <option
