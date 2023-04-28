@@ -71,9 +71,9 @@ function ManageJobs() {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-lg-10 col-xl-12">
-                <h2 className="font-size-8 mb-6">
+                {/* <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
-                </h2>
+                </h2> */}
                 <form className="mb-8">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
@@ -149,12 +149,12 @@ function ManageJobs() {
                   </div>
                 </form>
                 <div>
-                  <div className="d-flex align-items-center justify-content-between mx-2">
+                  {/* <div className="d-flex align-items-center justify-content-between mx-2">
                     <h5 className="font-size-4 font-weight-normal text-gray">
                       Showing
                       <span className="text-black-2">120</span> matched jobs
                     </h5>
-                  </div>
+                  </div> */}
                   <div className=" mx-2 float-left pb-5">
                     <button
                       onClick={() => editJob("0")}
