@@ -236,7 +236,7 @@ function Interview(props) {
                     </thead>
                     <tbody>
                       {/* Map function to show the data in the list*/}
-                      {totalData === 0 ? (
+                      {totalData === 0 || interviewData.length === 0 ? (
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>

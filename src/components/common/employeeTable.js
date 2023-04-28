@@ -281,7 +281,28 @@ export default function EmployeeTable(props) {
             </thead>
             <tbody>
               {/* Map function to show the data in the list*/}
-              {totalData !== 0 ? (
+              {totalData === 0 || employeeData.length === 0 ? (
+                <tr>
+                  <th className="bg-white"></th>
+                  <th className="bg-white"></th>
+                  {props.heading === "Dashboard" ? (
+                    <th className="bg-white">No Data Found</th>
+                  ) : (
+                    <th className="bg-white"></th>
+                  )}{" "}
+                  <th className="bg-white"></th>
+                  {props.heading !== "Dashboard" ? (
+                    <>
+                      {" "}
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </tr>
+              ) : (
                 (employeeData || []).map((empdata) => (
                   <tr className="" key={empdata.employee_id}>
                     <td className="py-5 pr-0">
@@ -479,27 +500,6 @@ export default function EmployeeTable(props) {
                     )}
                   </tr>
                 ))
-              ) : (
-                <tr>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  {props.heading === "Dashboard" ? (
-                    <th className="bg-white">No Data Found</th>
-                  ) : (
-                    <th className="bg-white"></th>
-                  )}{" "}
-                  <th className="bg-white"></th>
-                  {props.heading !== "Dashboard" ? (
-                    <>
-                      {" "}
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </tr>
               )}
             </tbody>
           </table>

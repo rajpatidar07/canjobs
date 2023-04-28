@@ -58,6 +58,14 @@ function AddCategory(props) {
     setErrors,
     validate,
   } = useValidation(initialFormState, validators);
+  /*Onchange function to get the Value of parent id and category type */
+  const onSelectChange = (event) => {
+    const value = event.target.value;
+    const parent_id =
+      CategoryType.find((data) => data.category_type === value)
+        ?.job_category_id ?? "";
+    setState({ category_type: value, parent_id: parent_id });
+  };
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
@@ -76,11 +84,6 @@ function AddCategory(props) {
 
   // USER CATEGORY SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    // // console.log(state);
-    if (state.parent_id === "") {
-      setState({ ...state, category_name: "" });
-      setErrors({ ...errors, category_name: "" });
-    }
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -142,19 +145,6 @@ function AddCategory(props) {
               >
                 Add Category Type <span className="text-danger">*</span> :
               </label>
-              <input
-                type="text"
-                className={
-                  errors.category_type
-                    ? "form-control mx-5 border border-danger col"
-                    : "form-control col mx-5"
-                }
-                value={state.category_type}
-                onChange={onInputChange}
-                placeholder="Category Type"
-                id="category_type"
-                name="category_type"
-              />
               <select
                 name="category_type"
                 className={
@@ -163,7 +153,7 @@ function AddCategory(props) {
                     : "form-control col mx-5"
                 }
                 value={state.category_type}
-                onChange={onInputChange}
+                onChange={onSelectChange}
                 id="category_type"
               >
                 <option value={""}>Select category</option>

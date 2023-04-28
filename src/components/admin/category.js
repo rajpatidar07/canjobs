@@ -10,8 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
+import AddCategoryType from "../forms/admin/categoryType";
 function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
   /*delete states */
@@ -57,6 +59,7 @@ function Category() {
     search,
     currentPage,
     showAddCategoryModal,
+    showAddCategoryTypeModal,
     deleteAlert,
     columnName,
     sortOrder,
@@ -66,6 +69,12 @@ function Category() {
   const editJobCategory = (e) => {
     // e.preventDefault();
     setShowAddCategoryModal(true);
+    setCategoryId(e);
+  };
+  /* Function to show the single data to update job category*/
+  const addJobCategoryType = (e) => {
+    // e.preventDefault();
+    setShowAddCategoryTypeModal(true);
     setCategoryId(e);
   };
   /*To Show the delete alert box */
@@ -127,6 +136,11 @@ function Category() {
             jobCategoryData={CategoryId}
             close={() => setShowAddCategoryModal(false)}
           />
+          <AddCategoryType
+            show={showAddCategoryTypeModal}
+            jobCategoryData={CategoryId}
+            close={() => setShowAddCategoryTypeModal(false)}
+          />
         </div>
         <div className="dashboard-main-container mt-20" id="dashboard-body">
           <div className="container">
@@ -170,6 +184,15 @@ function Category() {
                     </div>
                   </div>
                   <div className="text-end px-6 col-xl-6">
+                    <div className="float-md-right px-5">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => addJobCategoryType("0")}
+                        title="Add Category"
+                      >
+                        Add category Type
+                      </CustomButton>
+                    </div>
                     <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -231,8 +254,7 @@ function Category() {
                         </tr>
                       ) : (
                         (categoryData || []).map((catdata) =>
-                          catdata.is_deleted === "1" ||
-                          catdata.category_name === null ? null : (
+                          catdata.parent_id === "0" ? null : (
                             <tr className="" key={catdata.job_category_id}>
                               <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">

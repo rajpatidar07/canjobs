@@ -139,18 +139,18 @@ function CompanyDetails(props) {
       userData === undefined ||
       props.employerId === "0" ||
       props.employerId === undefined ||
-      props.employerId.length === 0
+      props.employerId.length === 0 ||
+      userData.data.company_detail.length === 0
     ) {
       setState(initialFormState);
     } else {
       setState(userData.data.company_detail[0]);
     }
-    // console.log(userData);
   };
   useEffect(() => {
     EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.employerId]);
+  }, [props]);
   // CUSTOM VALIDATIONS IMPORT
   const {
     state,
