@@ -48,14 +48,8 @@ function AddCategory(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   /*Onchange function to get the Value of parent id and category type */
   const onSelectChange = (event) => {
     const value = event.target.value;
@@ -67,7 +61,6 @@ function AddCategory(props) {
       : "";
     setState({ category_type: category_type, parent_id: value });
   };
-  console.log(state);
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
