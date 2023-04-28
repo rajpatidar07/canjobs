@@ -28,9 +28,7 @@ function AddCategory(props) {
   const validators = {
     category_name: [
       (value) =>
-        state.parent_id === ""
-          ? ""
-          : value === "" || value.trim() === ""
+        value === "" || value.trim() === ""
           ? // || errors.category_type === "Category Type is required"
             "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
@@ -50,14 +48,8 @@ function AddCategory(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   /*Onchange function to get the Value of parent id and category type */
   const onSelectChange = (event) => {
     const value = event.target.value;
