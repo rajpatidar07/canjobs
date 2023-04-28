@@ -172,8 +172,14 @@ function PersonalDetails(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate, setErrors } =
-    useValidation(initialFormStateuser, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+    setErrors,
+  } = useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeeId);
@@ -675,7 +681,7 @@ function PersonalDetails(props) {
                   placeholder="Language"
                   id="language"
                 >
-                  <option value={""}>select Language</option>
+                  <option value={""}>Select Language</option>
                   {(FilterJson.Language || []).map((Language) => (
                     <option key={Language} value={Language}>
                       {Language}

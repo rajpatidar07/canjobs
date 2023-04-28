@@ -48,8 +48,14 @@ function AddCategory(props) {
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   /*Onchange function to get the Value of parent id and category type */
   const onSelectChange = (event) => {
     const value = event.target.value;
@@ -152,7 +158,7 @@ function AddCategory(props) {
                 onChange={onSelectChange}
                 id="category_type"
               >
-                <option value={""}>select category</option>
+                <option value={""}>Select category</option>
                 {(CategoryType || []).map((data) => {
                   return data.parent_id === "0" ? (
                     <option

@@ -76,8 +76,14 @@ function Education(props) {
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
@@ -322,7 +328,7 @@ function Education(props) {
                   value={state.course}
                   onChange={onInputChange}
                 >
-                  <option value={""}>select Course</option>
+                  <option value={""}>Select Course</option>
                   {(FilterJson.education || []).map((course) => (
                     <option value={course} key={course}>
                       {course}
@@ -354,7 +360,7 @@ function Education(props) {
                   value={state.specialization}
                   onChange={onInputChange}
                 >
-                  <option value={""}>select Specialization</option>
+                  <option value={""}>Select Specialization</option>
                   {(FilterJson.Specialization || []).map((Specialization) => (
                     <option value={Specialization} key={Specialization}>
                       {Specialization}
@@ -394,7 +400,7 @@ function Education(props) {
                     value={state.institute_location}
                     onChange={onInputChange}
                   >
-                    <option value={""}>select institute location</option>
+                    <option value={""}>Select institute location</option>
                     {(FilterJson.location || []).map((data, i) => {
                       return (
                         <option value={data} key={i}>

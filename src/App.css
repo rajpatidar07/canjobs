@@ -321,11 +321,14 @@ span.job_swap_label {
   background: transparent;
   top: -17px;
   left: 15px;
+  text-transform: capitalize!important;
 }
 input:-internal-autofill-selected {
   background-color: #fff !important;
 }
-
+input[type="file" i].form-control {
+  padding: 6px;
+}
 /* PROFILE PAGE */
 .personal_info_box {
   gap: 10px 5px;

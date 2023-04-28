@@ -68,8 +68,14 @@ function LmiaStatus(props) {
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // USER ADMIN PROFILE UPDATE FILTER SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
@@ -135,7 +141,7 @@ function LmiaStatus(props) {
                 name="lmia_status"
                 multiple={false}
               >
-                <option value={""}>select lmia status</option>
+                <option value={""}>Select lmia status</option>
                 {(FilterJson.lmia_status || []).map((status, i) => (
                   <option value={status} key={i}>
                     {status}
@@ -203,7 +209,7 @@ function LmiaStatus(props) {
                     name="posted"
                     multiple={false}
                   >
-                    <option value={""}>select lmia status</option>
+                    <option value={""}>Select lmia status</option>
                     <option value={"Yes"}>Yes</option>
                     <option value={"No"}>No</option>
                   </select>

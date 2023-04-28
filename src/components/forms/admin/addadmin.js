@@ -67,8 +67,14 @@ function Addadmin(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
     if (userData === undefined || userData.data.length === 0) {
@@ -244,7 +250,7 @@ function Addadmin(props) {
                 name="admin_type"
                 multiple={false}
               >
-                <option value={""}>select type</option>
+                <option value={""}>Select type</option>
                 <option value={"manager"}>Manager</option>
                 <option value={"sub-admin"}>Sub admin</option>
                 <option value={"admin"}>Admin</option>
