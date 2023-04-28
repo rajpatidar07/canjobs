@@ -52,18 +52,15 @@ const UserProfile = (props) => {
     <div className="site-wrapper overflow-hidden ">
       {user_type === "admin" ? "" : <EmployeeHeader />}
 
-      <div className="bg-default-2 pt-22 pt-lg-25 pb-13 pb-xxl-32 mt-5">
-        <div className="container mt-5 pt-5">
+      <div className="bg-default-2 mt-5">
+        <div className="container p-0">
           {user_type === "admin" ? (
             ""
           ) : (
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">
-                <div className="mb-9">
-                  <Link
-                    to={"/company"}
-                    className="d-flex align-items-center ml-4"
-                  >
+                <div className="mb-2">
+                  <Link to={"/company"} className="d-flex align-items-center">
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back
@@ -75,7 +72,7 @@ const UserProfile = (props) => {
           )}
           <div className="row text-left mt-5 pt-5">
             <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
-              <div className="pl-lg-5">
+              <div className="p-0">
                 {/*----Slide Employee profile-----*/}
                 <div className="bg-white shadow-9 rounded-4">
                   <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">

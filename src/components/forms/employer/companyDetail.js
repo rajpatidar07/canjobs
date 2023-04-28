@@ -227,7 +227,7 @@ function CompanyDetails(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
-            <h5 className="text-center pt-2 mb-7"> Company Details</h5>
+            <h5 className="text-center pt-2 mb-9"> Company Details</h5>
             <input type="hidden" value={state.company_id} />
             <div className="row">
               {" "}
@@ -540,6 +540,28 @@ function CompanyDetails(props) {
                   )}
                 </div>
               </div>
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="about"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Company Logo:
+                </label>
+                <div className="position-relative">
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept=" image/png,image/jpeg,image/jpg,image/gif"
+                    onChange={handleFileChange}
+                  />
+                </div>
+                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                {/* {errors.about && (
+                  <span key={errors.about} className="text-danger font-size-3">
+                    {errors.about}
+                  </span>
+                )} */}
+              </div>
             </div>
             <div className="row">
               {" "}
@@ -591,28 +613,6 @@ function CompanyDetails(props) {
                     </span>
                   )}
                 </div>
-              </div>
-              <div className="form-group col-md-12">
-                <label
-                  htmlFor="about"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Profile:
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="file"
-                    className="form-control"
-                    accept=" image/png,image/jpeg,image/jpg,image/gif"
-                    onChange={handleFileChange}
-                  />
-                </div>
-                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {/* {errors.about && (
-                  <span key={errors.about} className="text-danger font-size-3">
-                    {errors.about}
-                  </span>
-                )} */}
               </div>
             </div>
             <div className="form-group mb-8 text-center">
