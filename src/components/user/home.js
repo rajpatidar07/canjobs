@@ -5,6 +5,7 @@ import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
 import Filterbox from "../common/filterbox";
 import filterjson from "../json/filterjson";
+import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
 
 // eslint-disable-next-line no-use-before-define
@@ -18,12 +19,13 @@ function EmployeeHomePage() {
   useEffect(() => {
     // UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem("user_id")]);
+  }, [localStorage.getItem("employee_id")]);
 
   //// console.log(("JobDetail===" + JSON.stringify(JobDetail))
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
+      <ToastContainer />
       {/* <!-- Hero Area --> */}
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         <div className="container position-static hero_container">
@@ -64,11 +66,6 @@ function EmployeeHomePage() {
           </div>
           {/* <!-- Section Title End --> */}
           <div className="row justify-content-center">
-            <JobBox swap={true} />
-            <JobBox />
-            <JobBox swap={true} />
-            <JobBox swap={true} />
-            <JobBox />
             <JobBox />
           </div>
         </div>

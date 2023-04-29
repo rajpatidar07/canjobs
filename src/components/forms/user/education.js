@@ -392,6 +392,7 @@ function Education(props) {
                   id="specialization"
                   value={state.specialization}
                   onChange={onInputChange}
+                  placeholder="Specialization"
                 />
                 {/* <select
                   className={

@@ -154,7 +154,6 @@ function ResumeGrerator(props) {
       setEducation(userData.data.education);
     }
   };
-
   useEffect(() => {
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -227,16 +226,18 @@ function ResumeGrerator(props) {
                 </Text>
               </View>
             </View>
-            <View style={styles.contact}>
-              <Text style={styles.subHeading}>SKILLS</Text>
-              <View style={styles.skillDiv}>
-                {(Skills || []).map((skill) => (
-                  <Text key={skill.skill_id} style={styles.Skill}>
-                    {skill.skill}
-                  </Text>
-                ))}
+            {Skills.length === 0 ? null : (
+              <View style={styles.contact}>
+                <Text style={styles.subHeading}>SKILLS</Text>
+                <View style={styles.skillDiv}>
+                  {(Skills || []).map((skill) => (
+                    <Text key={skill.skill_id} style={styles.Skill}>
+                      {skill.skill}
+                    </Text>
+                  ))}
+                </View>
               </View>
-            </View>
+            )}
           </View>
           <View style={styles.section_right}>
             <View style={styles.userName}>
@@ -248,58 +249,61 @@ function ResumeGrerator(props) {
                 <Text style={styles.aboutText}>{User.description}</Text>
               </View>
             </View>
-            <View style={styles.divBox}>
-              <Text style={styles.subHeadingRight}>Education</Text>
-              <View style={styles.eduDiv}>
-                {(Education || []).map((edu) => (
-                  <View key={edu.education_id} style={styles.eduInner}>
-                    <View style={styles.eduLeft}>
-                      <View style={styles.quaUni}>
-                        <Text style={styles.qualification}>
-                          {edu.qualification}
-                        </Text>
-                        <Text style={styles.university}>
-                          ({edu.university_institute})
-                        </Text>
+            {Education.length === 0 ? null : (
+              <View style={styles.divBox}>
+                <Text style={styles.subHeadingRight}>Education</Text>
+                <View style={styles.eduDiv}>
+                  {(Education || []).map((edu) => (
+                    <View key={edu.education_id} style={styles.eduInner}>
+                      <View style={styles.eduLeft}>
+                        <View style={styles.quaUni}>
+                          <Text style={styles.qualification}>
+                            {edu.qualification}
+                          </Text>
+                          <Text style={styles.university}>
+                            ({edu.university_institute})
+                          </Text>
+                        </View>
+                        <View style={styles.couSpec}>
+                          <Text style={styles.course}>
+                            {edu.course} - {edu.specialization}
+                          </Text>
+                        </View>
                       </View>
-                      <View style={styles.couSpec}>
-                        <Text style={styles.course}>
-                          {edu.course} - {edu.specialization}
+                      <View style={styles.eduRight}>
+                        <Text style={styles.year}>{edu.passing_year}</Text>
+                        <Text style={styles.location}>
+                          {edu.institute_location}
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.eduRight}>
-                      <Text style={styles.year}>{edu.passing_year}</Text>
-                      <Text style={styles.location}>
-                        {edu.institute_location}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
+                  ))}
+                </View>
               </View>
-            </View>
-            <View style={styles.divBox}>
-              <Text style={styles.subHeadingRight}>Experience</Text>
-              <View style={styles.expDiv}>
-                {(userCareer || []).map((edu) => (
-                  <View key={edu.career_id} style={styles.eduInner}>
-                    <View style={styles.eduLeft}>
-                      <View style={styles.quaUni}>
-                        <Text style={styles.qualification}>
-                          {edu.designation}
-                        </Text>
-                        <Text style={styles.university}>
-                          ({edu.functional_area})
-                        </Text>
+            )}
+            {userCareer.length === 0 ? null : (
+              <View style={styles.divBox}>
+                <Text style={styles.subHeadingRight}>Experience</Text>
+                <View style={styles.expDiv}>
+                  {(userCareer || []).map((edu) => (
+                    <View key={edu.career_id} style={styles.eduInner}>
+                      <View style={styles.eduLeft}>
+                        <View style={styles.quaUni}>
+                          <Text style={styles.qualification}>
+                            {edu.designation}
+                          </Text>
+                          <Text style={styles.university}>
+                            ({edu.functional_area})
+                          </Text>
+                        </View>
+                        <View style={styles.couSpec}>
+                          <Text style={styles.course}>
+                            {edu.company} - ({edu.industry})
+                          </Text>
+                        </View>
                       </View>
-                      <View style={styles.couSpec}>
-                        <Text style={styles.course}>
-                          {edu.company} - ({edu.industry})
-                        </Text>
-                      </View>
-                    </View>
-                    <View style={styles.eduRight}>
-                      {/* {
+                      <View style={styles.eduRight}>
+                        {/* {
                         let a = moment([2015, 11, 29]);
                         let b = moment([2007, 06, 27]);
                         
@@ -308,39 +312,40 @@ function ResumeGrerator(props) {
                         let months = a.diff(b, 'months');
                         b.add(months, 'months');
                       } */}
-                      <Text style={styles.year}>
-                        {edu.currently_work_here != null
-                          ? moment(edu.end_date).diff(
-                              moment(edu.start_date),
-                              "year"
-                            ) !== 0
+                        <Text style={styles.year}>
+                          {edu.currently_work_here != null
                             ? moment(edu.end_date).diff(
                                 moment(edu.start_date),
                                 "year"
-                              ) + "Y, "
-                            : null +
-                                moment(edu.end_date).diff(
+                              ) !== 0
+                              ? moment(edu.end_date).diff(
+                                  moment(edu.start_date),
+                                  "year"
+                                ) + "Y, "
+                              : null +
+                                  moment(edu.end_date).diff(
+                                    moment(edu.start_date),
+                                    "month"
+                                  ) !==
+                                0
+                              ? moment(edu.end_date).diff(
                                   moment(edu.start_date),
                                   "month"
-                                ) !==
-                              0
-                            ? moment(edu.end_date).diff(
-                                moment(edu.start_date),
-                                "month"
-                              ) + "M"
-                            : null
-                          : edu.start_date + "- Now"}
-                        {/* {edu.start_date}-{" "}
+                                ) + "M"
+                              : null
+                            : edu.start_date + "- Now"}
+                          {/* {edu.start_date}-{" "}
                         {edu.end_date || edu.currently_work_here} */}
-                      </Text>
-                      <Text style={styles.location}>
-                        {edu.company_location}
-                      </Text>
+                        </Text>
+                        <Text style={styles.location}>
+                          {edu.company_location}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                ))}
+                  ))}
+                </View>
               </View>
-            </View>
+            )}
           </View>
         </Page>
       </Document>

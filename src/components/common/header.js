@@ -5,6 +5,7 @@ import CompanySignUp from "../company/signupModal";
 import ChangePassword from "./changepassword";
 import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
+import { toast } from "react-toastify";
 
 function EmployeeHeader() {
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
@@ -237,6 +238,13 @@ function EmployeeHeader() {
                 <Link
                   className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                   to="/"
+                  onClick={() => {
+                    localStorage.clear(); // clear the local storage
+                    toast.error("Log Out Successfully", {
+                      position: toast.POSITION.TOP_RIGHT,
+                      autoClose: 1000,
+                    });
+                  }}
                 >
                   Log Out
                 </Link>

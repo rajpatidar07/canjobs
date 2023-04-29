@@ -49,7 +49,7 @@ function ChangeJob(props) {
   const onChangeJobClick = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const responseData = await ApplyJob(applyId, employeeId, JobId);
+    const responseData = await ApplyJob(JobId, employeeId, "", applyId);
     if (responseData.message === "Job switched successfully") {
       toast.success("Job Changed successfully", {
         position: toast.POSITION.TOP_RIGHT,

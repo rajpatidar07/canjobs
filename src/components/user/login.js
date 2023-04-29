@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { EmployeeLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
+import { toast } from "react-toastify";
 
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -25,7 +26,7 @@ export default function EmployeeLoginModal(props) {
     password: [(value) => (value === "" ? "Password is required" : null)],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, onInputChange, setErrors, errors, validate } = useValidation(
     initialFormState,
     validators
   );
@@ -33,14 +34,22 @@ export default function EmployeeLoginModal(props) {
   /*----LOGIN SUBMIT FUNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
-
     if (validate()) {
       // handle form submission
-      const updatedTodo = await EmployeeLogin();
+      const updatedTodo = await EmployeeLogin(state);
+      console.log(errors.email);
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
         localStorage.setItem("userType", "user");
+        localStorage.setItem("employee_id", updatedTodo.employee_id);
+        toast.success("Logged In Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         props.close();
+      }
+      if (updatedTodo.message === "Invalid credentials !") {
+        setErrors({ ...errors, email: "Invalid credentials !" });
       }
     }
   };
@@ -225,6 +234,7 @@ export default function EmployeeLoginModal(props) {
                           data-show-pass="password"
                         ></a> */}
                       </div>
+                      <small className="text-danger">{errors.email}</small>
                     </div>
                     <div className="d-flex flex-wrap justify-content-between">
                       <label

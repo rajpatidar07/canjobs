@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
-const user_id = localStorage.getItem("user_id");
+const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
@@ -51,6 +51,7 @@ export const EmployeeSignUp = async (props) => {
 };
 /*Employee Login */
 export const EmployeeLogin = async (props) => {
+  // console.log(props);
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
@@ -266,8 +267,19 @@ export const DeleteEmployeeCareer = async (props) => {
   );
   return response.data;
 };
+/*Employee Profile completion Api*/
+export const getProfileCompletionPercent = async () => {
+  const response = await axios.get(`${API_URL}/getProfileCompletePercent`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data.data;
+};
 /*Apply job Api */
-export const ApplyJob = async (apply_id, employee_id, job_id, status) => {
+export const ApplyJob = async (job_id, employee_id, status, apply_id) => {
+  console.log(job_id, employee_id, status);
   const response = await axios.post(
     `${API_URL}applyJob`,
     {
@@ -666,7 +678,7 @@ export const getFollowupLastData = async (page, column, limit, sort, time) => {
 // ADMIN'S API
 /*Get Summary Count Api */
 export const getSummaryCount = async () => {
-  const response = await axios.get(`${API_URL}${user_type}/getSummaryCounts`, {
+  const response = await axios.get(`${API_URL}admin/getSummaryCounts`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,
@@ -765,7 +777,7 @@ export const getAllJobsCategory = async (
   sort_order
 ) => {
   const response = await axios.post(
-    `${API_URL}${user_type}/getAllJobsCategory`,
+    `${API_URL}admin/getAllJobsCategory`,
     {
       filter_category_type: type,
       search: search,

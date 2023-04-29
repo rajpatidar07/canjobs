@@ -18,8 +18,8 @@ const UserProfile = (props) => {
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const user_type = localStorage.getItem("userType");
-  let id = localStorage.getItem("employeeId");
-  const employeeId = user_type === "company" ? id : props.employeeId;
+  let id = localStorage.getItem("employee_id");
+  const employeeId = user_type === "user" ? id : props.employeeId;
   const UserData = async () => {
     const userData = await EmployeeDetails(employeeId);
     if (userData.data.length === 0 || userData.data.employee.length === 0) {
@@ -57,10 +57,10 @@ const UserProfile = (props) => {
           {user_type === "admin" ? (
             ""
           ) : (
-            <div className="row justify-content-center">
+            <div className="row justify-content-center mt-15">
               <div className="col-12 dark-mode-texts">
                 <div className="mb-2">
-                  <Link to={"/company"} className="d-flex align-items-center">
+                  <Link to={"/"} className="d-flex align-items-center">
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back

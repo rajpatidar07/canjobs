@@ -2,8 +2,9 @@ import moment from "moment";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { GetAllJobs } from "../../api/api";
+import { GetAllJobs, ApplyJob } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
+import { toast } from "react-toastify";
 function JobBox({
   showAddJobModal,
   categoryFilterValue,
@@ -22,6 +23,7 @@ function JobBox({
   const [JobId, setJobId] = useState([]);
   let [noData, setNoData] = useState("");
   const user_type = localStorage.getItem("userType");
+  const user_id = localStorage.getItem("employee_id");
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -39,6 +41,7 @@ function JobBox({
       setNoData(userData.data.total_rows);
     }
   };
+  /*Render Function */
   useEffect(() => {
     JobData();
   }, [
@@ -49,7 +52,23 @@ function JobBox({
     jobSwapFilterValue,
     locationFilterValue,
   ]);
-
+  /*FUnction to apply to the job */
+  const OnApplyClick = async (job_id) => {
+    console.log(job_id);
+    let Response = await ApplyJob(job_id, user_id, 0);
+    if (Response.message === "Job applied successfully") {
+      toast.success("Job Applied successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+    if (Response.message === "already applied on this job") {
+      toast.success("Already applied on this job", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  };
   return (
     <>
       <div
@@ -194,7 +213,7 @@ function JobBox({
                     <Link>
                       <Link
                         className="btn btn-secondary text-uppercase font-size-3"
-                        onClick={() => undefined}
+                        onClick={() => OnApplyClick(job.job_id)}
                       >
                         Apply
                       </Link>

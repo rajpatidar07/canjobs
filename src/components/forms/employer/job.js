@@ -210,14 +210,8 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);

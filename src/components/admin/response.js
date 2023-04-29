@@ -35,6 +35,7 @@ function JobResponse(props) {
   const [clicksort, setClicksort] = useState(0);
   const [jobId, setJobId] = useState(props.responseId);
   // console.log(props.responseId);
+  const user_type = localStorage.getItem("userType");
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
@@ -211,14 +212,16 @@ function JobResponse(props) {
   return (
     <div
       className={
-        props.heading === "Response"
+        props.heading === "Response" ||
+        (props.heading === undefined && user_type === "admin")
           ? "site-wrapper overflow-hidden bg-default-2  "
           : props.heading === "Dashboard"
           ? "site-wrapper overflow-hidden bg-default-2 bg-white"
           : "response_main_div"
       }
     >
-      {props.heading === "Response" ? (
+      {props.heading === "Response" ||
+      (props.heading === undefined && user_type === "admin") ? (
         <>
           {/* <!-- Header Area --> */}
           <AdminHeader heading={"Response"} />
@@ -264,7 +267,8 @@ function JobResponse(props) {
       />
       <div
         className={
-          props.heading === "Response"
+          props.heading === "Response" ||
+          (props.heading === undefined && user_type === "admin")
             ? "dashboard-main-container mt-20"
             : props.heading === "Dashboard"
             ? ""
@@ -273,7 +277,8 @@ function JobResponse(props) {
       >
         <div
           className={
-            props.heading === "Response"
+            props.heading === "Response" ||
+            (props.heading === undefined && user_type === "admin")
               ? "container"
               : props.heading === "Dashboard"
               ? ""
@@ -356,7 +361,8 @@ function JobResponse(props) {
           <div className="mb-8" /*"mb-18" */>
             <div
               className={
-                props.heading === "Response"
+                props.heading === "Response" ||
+                (props.heading === undefined && user_type === "admin")
                   ? ""
                   : props.heading === "Dashboard"
                   ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"

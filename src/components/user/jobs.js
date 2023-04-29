@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import JobBox from "../common/jobbox";
-import JobDetailPage from "../common/jobdetail";
+import FilterJson from "../json/filterjson";
+// import JobDetailPage from "../common/jobdetail";
 import SearchForm from "../common/search_form";
 
 function JobSearch() {
+  /*Filter states */
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   // eslint-disable-next-line no-use-before-define
   return (
     <>
@@ -34,57 +39,57 @@ function JobSearch() {
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
                       <select
-                        name="country"
-                        id="country"
+                        name="category"
+                        id="category"
+                        value={categoryFilterValue}
+                        /*Category Onchange function to filter the data */
+                        onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Job Type">Job Category</option>
-                        <option aria-selected={true} value="">
-                          United States of America
-                        </option>
-                        <option value="1">United Arab Emirates</option>
-                        <option value="2">Bangladesh</option>
-                        <option value="3">Pakistan</option>
+                        {(FilterJson.category || []).map((cat, i) => (
+                          <option key={i} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
                       <select
-                        name="jobswap"
-                        id="jobswap"
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option data-display="Job Type">Job swap</option>
-                        <option value="1">All</option>
-                        <option value="2">Only swap jobs</option>
-                        <option value="3">Without swap</option>
-                      </select>
-                    </div>
-                    <div className="mr-5 mb-5">
-                      <select
-                        name="country"
-                        id="country"
+                        name="skill"
+                        id="skill"
+                        value={SkillFilterValue}
+                        /*Skill Onchange function to filter the data */
+                        onChange={(e) => setSkillFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Salary Range">Job Skills</option>
-                        <option value="1">United States of America</option>
-                        <option value="2">United Arab Emirates</option>
-                        <option value="3">Bangladesh</option>
-                        <option value="4">Pakistan</option>
+                        <option value="">Select Skill</option>
+                        {(FilterJson.keyskill || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
                       <select
-                        name="country"
-                        id="country"
+                        name="job_type"
+                        id="job_type"
+                        value={jobSwapFilterValue}
+                        /*Job Onchange function to filter the data */
+                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Experience Level ">
-                          Job Location
+                          Job type
                         </option>
-                        <option value="1">United States of America</option>
-                        <option value="2">United Arab Emirates</option>
-                        <option value="3">Bangladesh</option>
-                        <option value="4">Pakistan</option>
+                        {(FilterJson.job_type || []).map((job_type) => (
+                          <option key={job_type} value={job_type}>
+                            {job_type}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -108,27 +113,11 @@ function JobSearch() {
                   >
                     <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
-                      <JobBox swap={true} />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox swap={true} />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox />
+                      <JobBox
+                        categoryFilterValue={categoryFilterValue}
+                        SkillFilterValue={SkillFilterValue}
+                        jobSwapFilterValue={jobSwapFilterValue}
+                      />
                       {/* <!-- End Single Featured Job --> */}
                     </div>
                   </div>
@@ -146,13 +135,13 @@ function JobSearch() {
               </div>
               {/* <!-- Right Section --> */}
 
-              <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
+              {/* <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
                 <div className="tab-content" id="serachlist-tab">
                   <div className="tab-pane fade show active">
                     <JobDetailPage />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

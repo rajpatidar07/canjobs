@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function ManageJobs() {
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
-  let [/*filter,*/ SetFilter] = useState([]);
+  let [filter, SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -20,9 +20,12 @@ function ManageJobs() {
   /* Function to get the JSON data*/
   const FilterData = async () => {
     const Json = await getJson();
-    SetFilter(Json);
+    if (filter.length === 0) {
+      SetFilter([]);
+    } else {
+      SetFilter(Json);
+    }
   };
-  // console.log(filter.Skill);
 
   const editJob = (e) => {
     // e.preventDefault();
@@ -99,7 +102,6 @@ function ManageJobs() {
                         })}
                       </select>
                     </div>
-
                     <div className="mr-5 mb-5">
                       <select
                         name="job_type"
