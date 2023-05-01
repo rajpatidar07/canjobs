@@ -608,28 +608,6 @@ function CompanyDetails(props) {
                   )}
                 </div>
               </div>
-              <div className="form-group col-md-12">
-                <label
-                  htmlFor="about"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Company Logo:
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="file"
-                    className="form-control"
-                    accept=" image/png,image/jpeg,image/jpg,image/gif"
-                    onChange={handleFileChange}
-                  />
-                </div>
-                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {/* {errors.about && (
-                  <span key={errors.about} className="text-danger font-size-3">
-                    {errors.about}
-                  </span>
-                )} */}
-              </div>
             </div>
             <div className="form-group mb-8 text-center">
               {loading === true ? (

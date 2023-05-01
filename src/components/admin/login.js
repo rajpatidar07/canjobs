@@ -3,7 +3,7 @@ import { AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-export default function AdminLoginFrom() {
+export default function AdminLoginFrom({ setAdminLoggedIn }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   /*----USER LOGIN VALIDATION----*/
@@ -50,6 +50,7 @@ export default function AdminLoginFrom() {
           autoClose: 1000,
         });
         setLoading(false);
+        // setAdminLoggedIn(true);
         return navigate("/dashboard");
       } else if (updatedTodo.message === "Invalid Credentials") {
         setLoading(false);

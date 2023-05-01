@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { GetJobDetail } from "../../api/api";
+import { GetJobDetail, ApplyJob } from "../../api/api";
 import moment from "moment";
+import { ToastContainer, toast } from "react-toastify";
 // eslint-disable-next-line
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let skill = [];
   const user_type = localStorage.getItem("userType");
   const jobId = localStorage.getItem("jobId");
+  const user_id = localStorage.getItem("employee_id");
+
   /*Function to get job details data*/
   const JobData = async () => {
     let userData = await GetJobDetail(
@@ -32,9 +35,26 @@ function JobDetailPage(props) {
   if (jobDetatilsData !== "") {
     skill = jobDetatilsData.keyskill.split(",");
   }
+  /*FUnction to apply to the job */
+  const OnApplyClick = async () => {
+    let Response = await ApplyJob(jobId, user_id, 0);
+    if (Response.message === "Job applied successfully") {
+      toast.success("Job Applied successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+    if (Response.message === "already applied on this job") {
+      toast.success("Already applied on this job", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  };
   return (
     <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
       <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
+        <ToastContainer />
         <div className="row">
           <div className="col-12">
             {/* <!-- media start --> */}
@@ -71,15 +91,14 @@ function JobDetailPage(props) {
               <div className="card-btn-group">
                 <Link
                   to={""}
+                  onClick={OnApplyClick}
                   className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
-                  href="#"
                 >
                   Apply to this job
                 </Link>
                 <Link
                   to={""}
                   className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
-                  href="#"
                 >
                   <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                   Save job

@@ -53,9 +53,8 @@ function JobBox({
     locationFilterValue,
   ]);
   /*FUnction to apply to the job */
-  const OnApplyClick = async (job_id) => {
-    console.log(job_id);
-    let Response = await ApplyJob(job_id, user_id, 0);
+  const OnApplyClick = async (status, job_id) => {
+    let Response = await ApplyJob(job_id, user_id, status);
     if (Response.message === "Job applied successfully") {
       toast.success("Job Applied successfully", {
         position: toast.POSITION.TOP_RIGHT,
@@ -87,7 +86,10 @@ function JobBox({
             <Link
               key={job.job_id}
               to={"/jobdetail"}
-              onClick={() => localStorage.setItem("jobId", job.job_id)}
+              onClick={() => {
+                localStorage.setItem("jobId", job.job_id);
+                OnApplyClick(1, job.job_id);
+              }}
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
             >
               {job.job_type === "swap" ? (
@@ -213,7 +215,7 @@ function JobBox({
                     <Link>
                       <Link
                         className="btn btn-secondary text-uppercase font-size-3"
-                        onClick={() => OnApplyClick(job.job_id)}
+                        onClick={() => OnApplyClick(0, job.job_id)}
                       >
                         Apply
                       </Link>

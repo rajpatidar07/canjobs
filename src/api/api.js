@@ -279,7 +279,6 @@ export const getProfileCompletionPercent = async () => {
 };
 /*Apply job Api */
 export const ApplyJob = async (job_id, employee_id, status, apply_id) => {
-  console.log(job_id, employee_id, status);
   const response = await axios.post(
     `${API_URL}applyJob`,
     {
