@@ -8,7 +8,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push(i);
   }
-
+  console.log("pageNumbers---" + pageNumbers);
   //Function to go to next page with pagination :-
   const nextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
@@ -21,7 +21,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
 
   return (
     <div>
-      {pageNumbers.length > 0 ? (
+      {pageNumbers.length > 1 ? (
         <nav aria-label="Page navigation example">
           <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
             {/* To change page perivous page :- */}{" "}
