@@ -18,7 +18,6 @@ function JobBox({
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const category = searchParams.get("category");
-  console.log(category, "category", "<==========>", "conuntry", country);
 
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [jobData, setjobData] = useState([]);

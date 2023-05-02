@@ -46,8 +46,9 @@ export default function EmployeeLoginModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        navigate("/");
         props.close();
+        navigate("/");
+        window.location.reload();
       }
       if (updatedTodo.message === "Invalid credentials !") {
         setErrors({ ...errors, email: "Invalid credentials !" });

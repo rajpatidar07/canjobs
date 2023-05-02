@@ -85,6 +85,7 @@ export default function CompanyLogin(props) {
         });
         close();
         Navigate("/company");
+        window.location.reload();
       } else if (Response.message === "Invalid Credentials !") {
         setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
         // handle form submission

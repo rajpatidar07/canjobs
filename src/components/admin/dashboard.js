@@ -143,9 +143,7 @@ const AdminDashboard = () => {
                 {/* <!-- Category Content --> */}
                 <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
-                    <span className="counter">
-                      {appliedRateFormatted || "N/A"}
-                    </span>
+                    <span className="counter">{appliedRateFormatted || 0}</span>
                     %
                   </h5>
                   <p className="font-size-4 font-weight-normal text-gray mb-0">
@@ -235,7 +233,7 @@ const AdminDashboard = () => {
                 <div>
                   <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                     <span className="counter">
-                      {countData.active_company ?? "N/A"}
+                      {countData.active_company || "N/A"}
                     </span>
                   </h5>
                   <p className="font-size-4 font-weight-normal text-gray mb-0">
