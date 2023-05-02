@@ -210,8 +210,14 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
@@ -338,7 +344,7 @@ function AddJobModal(props) {
                   htmlFor="job_title"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job Title <span className="text-danger"> *</span> :
+                  Job Title:<span className="text-danger"> *</span>
                 </label>
                 <input
                   maxLength={30}
@@ -370,7 +376,7 @@ function AddJobModal(props) {
                     htmlFor="job_category_id"
                     className="font-size-4 text-black-2  line-height-reset"
                   >
-                    Company <span className="text-danger"> *</span> :
+                    Company:<span className="text-danger"> *</span>
                   </label>
                   <div className="position-relative">
                     <select
@@ -411,7 +417,7 @@ function AddJobModal(props) {
                   htmlFor="job_category_id"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job Category <span className="text-danger"> *</span> :
+                  Job Category:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -454,7 +460,7 @@ function AddJobModal(props) {
                   htmlFor="industry_type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Industry Type <span className="text-danger"> *</span> :
+                  Industry Type:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -491,7 +497,7 @@ function AddJobModal(props) {
                   htmlFor="experience_required"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Experience required <span className="text-danger"> *</span> :
+                  Experience required:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -530,7 +536,7 @@ function AddJobModal(props) {
                   htmlFor="salary"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Salary <span className="text-danger"> *</span> :
+                  Salary:<span className="text-danger"> *</span>
                 </label>
                 <select
                   maxLength={9}
@@ -567,7 +573,7 @@ function AddJobModal(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Location <span className="text-danger"> *</span> :
+                  Location:<span className="text-danger"> *</span>
                 </label>
                 <select
                   maxLength={50}
@@ -605,7 +611,7 @@ function AddJobModal(props) {
                   htmlFor="apply_link"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Apply Link <span className="text-danger"> *</span> :
+                  Apply Link:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <input
@@ -795,7 +801,7 @@ function AddJobModal(props) {
                   htmlFor="department"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Department <span className="text-danger"> *</span> :
+                  Department:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <input
@@ -828,7 +834,7 @@ function AddJobModal(props) {
                   htmlFor="job_type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job Type <span className="text-danger"> *</span> :
+                  Job Type:<span className="text-danger"> *</span>
                 </label>
                 <div className={" position-relative"}>
                   <select
@@ -866,7 +872,7 @@ function AddJobModal(props) {
                   htmlFor="role_category"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Role Category <span className="text-danger"> *</span> :
+                  Role Category:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <input
@@ -899,7 +905,7 @@ function AddJobModal(props) {
                   htmlFor="education"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Education <span className="text-danger"> *</span> :
+                  Education:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -939,7 +945,7 @@ function AddJobModal(props) {
                   htmlFor="language"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Language <span className="text-danger"> *</span> :
+                  Language:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -977,7 +983,7 @@ function AddJobModal(props) {
                   htmlFor="keyskill"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Key Skill <span className="text-danger"> *</span> :
+                  Key Skill:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <input
@@ -1010,7 +1016,7 @@ function AddJobModal(props) {
                   htmlFor="employement"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Employement <span className="text-danger"> *</span> :
+                  Employement:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
