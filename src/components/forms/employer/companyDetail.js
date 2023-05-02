@@ -152,8 +152,14 @@ function CompanyDetails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setErrors,
+    setState,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
@@ -230,8 +236,8 @@ function CompanyDetails(props) {
                   htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Name (as per Kyc){" "}
-                  <span className="text-danger"> *</span> :
+                  Company Name (as per Kyc):
+                  <span className="text-danger"> *</span>
                 </label>
                 <input
                   type="text"
@@ -256,6 +262,39 @@ function CompanyDetails(props) {
                     {errors.company_name}
                   </span>
                 )}
+              </div>
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="franchise"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Franchise :
+                </label>
+                <div className="position-relative">
+                  <input
+                    maxLength={30}
+                    name="franchise"
+                    value={state.franchise}
+                    onChange={onInputChange}
+                    type="text"
+                    className={
+                      errors.franchise
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Franchise"
+                    id="franchise"
+                  />
+                  {/*----ERROR MESSAGE FOR franchise----*/}
+                  {errors.franchise && (
+                    <span
+                      key={errors.franchise}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.franchise}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="form-group col-md-6">
                 <label
@@ -292,8 +331,6 @@ function CompanyDetails(props) {
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="contactperson"
@@ -365,8 +402,6 @@ function CompanyDetails(props) {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="row">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="company_start_date"
@@ -432,9 +467,6 @@ function CompanyDetails(props) {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="row">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="website_url"
@@ -495,41 +527,6 @@ function CompanyDetails(props) {
                       className="text-danger font-size-3"
                     >
                       {errors.vacancy_for_post}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="franchise"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Franchise :
-                </label>
-                <div className="position-relative">
-                  <input
-                    maxLength={30}
-                    name="franchise"
-                    value={state.franchise}
-                    onChange={onInputChange}
-                    type="text"
-                    className={
-                      errors.franchise
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    placeholder="Franchise"
-                    id="franchise"
-                  />
-                  {/*----ERROR MESSAGE FOR franchise----*/}
-                  {errors.franchise && (
-                    <span
-                      key={errors.franchise}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.franchise}
                     </span>
                   )}
                 </div>
