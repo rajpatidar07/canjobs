@@ -43,8 +43,7 @@ function MainLayout() {
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
-        {userType === ("employee" || "") &&
-        token !== ("" || null || undefined) ? (
+        {userType === "employee" && token !== ("" || null || undefined) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="/jobs" element={<JobSearch />} />
@@ -61,8 +60,7 @@ function MainLayout() {
           </>
         )}
         {/* Employer */}
-        {userType === ("employer" || "") &&
-        token !== ("" || null || undefined) ? (
+        {userType === "employer" && token !== ("" || null || undefined) ? (
           <>
             <Route path="/company" element={<EmployerHome />} />
             <Route path="/companyprofile" element={<CompanyProfile />} />
