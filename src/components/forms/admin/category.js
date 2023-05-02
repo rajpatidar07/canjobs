@@ -59,9 +59,13 @@ function AddCategory(props) {
       ? CategoryType.find((data) => data.job_category_id === value)
           .category_type
       : "";
-    setState({ category_type: category_type, parent_id: value });
+    setState({
+      category_type: category_type,
+      parent_id: value,
+      category_name: state.category_name,
+      job_category_id: state.job_category_id,
+    });
   };
-  console.log("--------" + JSON.stringify(state));
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();

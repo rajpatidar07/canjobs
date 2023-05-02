@@ -17,6 +17,8 @@ function JobBox({
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get("search");
   const country = searchParams.get("country");
+  const category = searchParams.get("category");
+  console.log(category, "category", "<==========>", "conuntry", country);
 
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [jobData, setjobData] = useState([]);
@@ -30,7 +32,7 @@ function JobBox({
     const userData = await GetAllJobs(
       search,
       country,
-      categoryFilterValue,
+      category,
       SkillFilterValue,
       jobSwapFilterValue
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
@@ -12,7 +12,7 @@ import Pagination from "../common/pagination";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {
   let [apiCall, setApiCall] = useState(false);
-  const [filterData, setFilterData] = useState([]);
+  const [/*filterData,*/ setFilterData] = useState([]);
   /*delete states */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -32,7 +32,7 @@ function FilterList() {
       setFilterData(Data.data);
       setApiCall(false);
     }
-    // console.log(Data.data);
+    console.log(Data);
   };
 
   /*Render function to get the filter data*/
@@ -41,12 +41,12 @@ function FilterList() {
   }, [deleteAlert, apiCall]);
 
   /*To Show the delete alert box */
-  const ShowDeleteAlert = (e, f) => {
-    setDeleteID(f.id);
-    setDeleteChildID(e[0]);
-    setDeleteName(e[1]);
-    setDeleteAlert(true);
-  };
+  // const ShowDeleteAlert = (e, f) => {
+  //   setDeleteID(f.id);
+  //   setDeleteChildID(e[0]);
+  //   setDeleteName(e[1]);
+  //   setDeleteAlert(true);
+  // };
 
   /*To cancel the delete alert box */
   const CancelDelete = () => {
@@ -97,7 +97,7 @@ function FilterList() {
                           Skill
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={1} />
-                        <ul className="row m-0 p-0">
+                        {/* <ul className="row m-0 p-0">
                           {totalData === 0 ? (
                             <p> No Data Found</p>
                           ) : (
@@ -129,7 +129,7 @@ function FilterList() {
                                 : null
                             )
                           )}
-                        </ul>
+                        </ul> */}
                       </div>
                     </div>{" "}
                   </div>
@@ -140,7 +140,7 @@ function FilterList() {
                           Industry{" "}
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={4} />
-                        <ul className="row m-0 p-0">
+                        {/* <ul className="row m-0 p-0">
                           {totalData === 0 ? (
                             <p> No Data Found</p>
                           ) : (
@@ -172,7 +172,7 @@ function FilterList() {
                                 : null
                             )
                           )}
-                        </ul>
+                        </ul> */}
                       </div>
                     </div>
                   </div>
@@ -183,7 +183,7 @@ function FilterList() {
                           Education{" "}
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={5} />
-                        <ul className="row m-0 p-0">
+                        {/* <ul className="row m-0 p-0">
                           {totalData === 0 ? (
                             <p> No Data Found</p>
                           ) : (
@@ -215,7 +215,7 @@ function FilterList() {
                                 : null
                             )
                           )}
-                        </ul>
+                        </ul> */}
                       </div>
                     </div>
                   </div>
@@ -312,7 +312,7 @@ function FilterList() {
                           Corporation{" "}
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={6} />
-                        <ul className="row m-0 p-0">
+                        {/* <ul className="row m-0 p-0">
                           {totalData === 0 ? (
                             <p> No Data Found</p>
                           ) : (
@@ -344,7 +344,7 @@ function FilterList() {
                                 : null
                             )
                           )}
-                        </ul>
+                        </ul> */}
                       </div>
                     </div>
                   </div>{" "}
@@ -355,7 +355,7 @@ function FilterList() {
                           Language{" "}
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={7} />
-                        <ul className="row m-0 p-0">
+                        {/* <ul className="row m-0 p-0">
                           {totalData === 0 ? (
                             <p> No Data Found</p>
                           ) : (
@@ -387,7 +387,7 @@ function FilterList() {
                                 : null
                             )
                           )}
-                        </ul>
+                        </ul> */}
                       </div>
                     </div>
                   </div>

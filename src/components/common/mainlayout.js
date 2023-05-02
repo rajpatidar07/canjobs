@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
+import React from "react";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
 import ManageJobs from "../company/manageJob";
@@ -21,7 +21,7 @@ import FilterList from "../admin/filterList";
 import ResumeGrerator from "../admin/Resume";
 import ManageInterview from "../admin/interview";
 import JobResponse from "../admin/response";
-import PrivateRoute from "./privateRoute";
+import EmployerHomePage from "../company/home";
 function MainLayout() {
   // const [adminLoggedIn, setAdminLoggedIn] = useState("");
   // const isAuthenticated = true; // replace with your authentication logic
@@ -36,26 +36,26 @@ function MainLayout() {
   // const PrivateWrapper = ({ auth: { isAuthenticated } }) => {
   //   return isAuthenticated ? <Outlet /> : <AdminLoginFrom />;
   // };
-  const isAuthenticated = true; // replace with your authentication logic
+  // const isAuthenticated = true; // replace with your authentication logic
   return (
     <>
       <BrowserRouter>
         <Routes>
           {/* Employee */}
-          {/* <Route path="/" element={<EmployeeHomePage />} />
+          <Route path="/" element={<EmployeeHomePage />} />
           <Route path="/jobs" element={<JobSearch />} />
           <Route path="/jobdetail" element={<JobDetail />} />
-          <Route path="/profile" element={<UserProfile />} /> */}
+          <Route path="/profile" element={<UserProfile />} />
           {/* Employer */}
-          {/* <Route path="/company" element={<EmployerHome />} />
+          <Route path="/company" element={<EmployerHome />} />
           <Route path="/companyprofile" element={<CompanyProfile />} />
           <Route path="/managejobs" element={<ManageJobs />} />
           <Route path="/response" element={<Response />} />
-          <Route path="/empsearch" element={<EmployeeSearch />} /> */}
-          {/* <Route path="/employerhome" element={<EmployerHomePage/>} />
-        <Route path="/companyprofile" element={<CompanyProfile />} />
-        <Route path="/managejobs" element={<ManageJobs />} />
-        <Route path="/response" element={<Response />} /> */}
+          <Route path="/empsearch" element={<EmployeeSearch />} />
+          <Route path="/employerhome" element={<EmployerHomePage />} />
+          <Route path="/companyprofile" element={<CompanyProfile />} />
+          <Route path="/managejobs" element={<ManageJobs />} />
+          <Route path="/response" element={<Response />} />
           {/* Admin */}
           {/* <Route>
             <AdminLoginFrom setAdminLoggedIn={setAdminLoggedIn} />
@@ -170,7 +170,8 @@ function MainLayout() {
             element={<AdminDashboard />}
             isAuthenticated={isAuthenticated}
           /> */}
-          {/* <Route path="/adminlogin" element={<AdminLoginFrom />} />
+          <Route path="/adminlogin" element={<AdminLoginFrom />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/job" element={<Job />} />
           <Route path="/category" element={<Category />} />
           <Route path="/employee" element={<Employee />} />
@@ -181,7 +182,7 @@ function MainLayout() {
           <Route path="/adminlogin" element={<AdminLoginFrom />} />
           <Route path="/interview" element={<ManageInterview />} />
           <Route path="/responses" element={<JobResponse />} />
-          <Route path="/resume/:id" element={<ResumeGrerator />} /> */}
+          <Route path="/resume/:id" element={<ResumeGrerator />} />
         </Routes>
       </BrowserRouter>
     </>

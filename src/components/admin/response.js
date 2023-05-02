@@ -505,13 +505,27 @@ function JobResponse(props) {
                       <tr>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
+                        {props.heading === "Dashboard" ? (
+                          <th className="bg-white">No Data Found</th>
+                        ) : (
+                          <th className="bg-white"></th>
+                        )}
                         <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white">No Data Found</th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
+                        {props.heading === "Dashboard" ? (
+                          <th className="bg-white"></th>
+                        ) : (
+                          <th className="bg-white">No Data Found</th>
+                        )}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                          </>
+                        )}
                       </tr>
                     ) : (
                       (response || []).map((res) => (

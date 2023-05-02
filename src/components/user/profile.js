@@ -93,7 +93,11 @@ const UserProfile = (props) => {
                       </label>
                       <img
                         className="rounded-circle"
-                        src={PersonalDetail.profile_photo}
+                        src={
+                          PersonalDetail.profile_photo
+                            ? PersonalDetail.profile_photo
+                            : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                        }
                         alt=""
                         width={"100px"}
                         height={"100px"}
@@ -137,110 +141,118 @@ const UserProfile = (props) => {
                         close={() => setShowPersonalDetails(false)}
                       />
                     </h4>
-                    <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/envelope.svg"
-                            alt="Email"
-                          />
-                          {PersonalDetail.email}
-                        </span>
+                    {PersonalDetail.email === "" ||
+                    PersonalDetail.length === 0 ? (
+                      <div>
+                        {" "}
+                        <p className="text-center">No Data Found</p>
                       </div>
+                    ) : (
+                      <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            <img
+                              className="mr-1"
+                              height={"16px"}
+                              src="image/icons/envelope.svg"
+                              alt="Email"
+                            />
+                            {PersonalDetail.email}
+                          </span>
+                        </div>
 
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/mobile-button.svg"
-                            alt="Mobile Number"
-                          />
-                          {PersonalDetail.contact_no}
-                        </span>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            <img
+                              className="mr-1"
+                              height={"16px"}
+                              src="image/icons/mobile-button.svg"
+                              alt="Mobile Number"
+                            />
+                            {PersonalDetail.contact_no}
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            <img
+                              className="mr-1"
+                              height={"16px"}
+                              src="image/icons/marker.svg"
+                              alt="Location"
+                            />
+                            {PersonalDetail.current_location}
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            <img
+                              className="mr-1"
+                              height={"16px"}
+                              src="image/icons/language.svg"
+                              alt="language"
+                            />
+                            {PersonalDetail.language}
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            <img
+                              className="mr-1"
+                              height={"16px"}
+                              src="image/icons/address-book.svg"
+                              alt="Address"
+                            />
+                            {PersonalDetail.currently_located_country}
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            <img
+                              className="mr-1"
+                              height={"16px"}
+                              src="image/icons/envelope.svg"
+                              alt="Email"
+                            />
+                            {PersonalDetail.experience}
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            Religion: <b>{PersonalDetail.religion}</b>
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            Nationality: <b>{PersonalDetail.nationality}</b>
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            Work Permit of Canada:{" "}
+                            <b>{PersonalDetail.work_permit_canada}</b>
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            Work Permit of Other Country:{" "}
+                            <b>{PersonalDetail.work_permit_other_country}</b>
+                          </span>
+                        </div>
+                        <div className="info_box text-left">
+                          <span className="font-size-3 text-smoke  mr-7">
+                            Resume:{" "}
+                            <Link
+                              to={""}
+                              onClick={() =>
+                                ResumeClick(PersonalDetail.employee_id)
+                              }
+                            >
+                              View Resume
+                            </Link>
+                          </span>
+                        </div>
                       </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/marker.svg"
-                            alt="Location"
-                          />
-                          {PersonalDetail.current_location}
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/language.svg"
-                            alt="language"
-                          />
-                          {PersonalDetail.language}
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/address-book.svg"
-                            alt="Address"
-                          />
-                          {PersonalDetail.currently_located_country}
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/envelope.svg"
-                            alt="Email"
-                          />
-                          {PersonalDetail.experience}
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          Religion: <b>{PersonalDetail.religion}</b>
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          Nationality: <b>{PersonalDetail.nationality}</b>
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          Work Permit of Canada:{" "}
-                          <b>{PersonalDetail.work_permit_canada}</b>
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          Work Permit of Other Country:{" "}
-                          <b>{PersonalDetail.work_permit_other_country}</b>
-                        </span>
-                      </div>
-                      <div className="info_box text-left">
-                        <span className="font-size-3 text-smoke  mr-7">
-                          Resume:{" "}
-                          <Link
-                            to={""}
-                            onClick={() =>
-                              ResumeClick(PersonalDetail.employee_id)
-                            }
-                          >
-                            View Resume
-                          </Link>
-                        </span>
-                      </div>
-                    </div>
+                    )}
                   </div>
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
@@ -262,13 +274,17 @@ const UserProfile = (props) => {
                       />
 
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                        {(userDetail.skill || []).map((employeeSkills) => (
-                          <li key={employeeSkills.skill_id}>
-                            <span className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                              {employeeSkills.skill}
-                            </span>
-                          </li>
-                        ))}
+                        {userDetail.skill.length === 0 ? (
+                          <li>No Data Found</li>
+                        ) : (
+                          (userDetail.skill || []).map((employeeSkills) => (
+                            <li key={employeeSkills.skill_id}>
+                              <span className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                {employeeSkills.skill}
+                              </span>
+                            </li>
+                          ))
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -363,51 +379,57 @@ const UserProfile = (props) => {
                       {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                      {(userDetail.career || []).map((CareerDetails) => (
-                        <div className="w-100" key={CareerDetails.career_id}>
-                          <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                            <div className="media align-items-center company_box col-md-6 p-0">
-                              <div className="text_box text-left w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <span className="font-size-6 text-black-2 font-weight-semibold">
-                                    {CareerDetails.designation} -{" "}
-                                    <span className="font-size-4">
-                                      {CareerDetails.functional_area}
+                      {userDetail.career.length === 0 ? (
+                        <div>
+                          <p className="text-center">No Data Found</p>
+                        </div>
+                      ) : (
+                        (userDetail.career || []).map((CareerDetails) => (
+                          <div className="w-100" key={CareerDetails.career_id}>
+                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                              <div className="media align-items-center company_box col-md-6 p-0">
+                                <div className="text_box text-left w-100 mt-n2">
+                                  <h3 className="mb-0">
+                                    <span className="font-size-6 text-black-2 font-weight-semibold">
+                                      {CareerDetails.designation} -{" "}
+                                      <span className="font-size-4">
+                                        {CareerDetails.functional_area}
+                                      </span>
                                     </span>
+                                  </h3>
+                                  <span className="font-size-4 text-default-color line-height-2">
+                                    {CareerDetails.company} (
+                                    {CareerDetails.industry})
                                   </span>
-                                </h3>
-                                <span className="font-size-4 text-default-color line-height-2">
-                                  {CareerDetails.company} (
-                                  {CareerDetails.industry})
+                                </div>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                                <span className="font-size-4 text-gray w-100">
+                                  {moment(CareerDetails.start_date).format(
+                                    "YYYY-MM-DD"
+                                  )}{" "}
+                                  -{" "}
+                                  {moment(CareerDetails.end_date).format(
+                                    "YYYY-MM-DD"
+                                  )}
+                                </span>
+                                <span className="font-size-3 text-gray w-100">
+                                  <span
+                                    className="mr-4"
+                                    style={{ marginTop: "-2px" }}
+                                  >
+                                    <img
+                                      src="image/svg/icon-loaction-pin-black.svg"
+                                      alt=""
+                                    />
+                                  </span>
+                                  {CareerDetails.company_location}
                                 </span>
                               </div>
                             </div>
-                            <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                              <span className="font-size-4 text-gray w-100">
-                                {moment(CareerDetails.start_date).format(
-                                  "YYYY-MM-DD"
-                                )}{" "}
-                                -{" "}
-                                {moment(CareerDetails.end_date).format(
-                                  "YYYY-MM-DD"
-                                )}
-                              </span>
-                              <span className="font-size-3 text-gray w-100">
-                                <span
-                                  className="mr-4"
-                                  style={{ marginTop: "-2px" }}
-                                >
-                                  <img
-                                    src="image/svg/icon-loaction-pin-black.svg"
-                                    alt=""
-                                  />
-                                </span>
-                                {CareerDetails.company_location}
-                              </span>
-                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                     {/*----Employee's Education Profile----*/}
                     <div
@@ -429,49 +451,58 @@ const UserProfile = (props) => {
                           close={() => setShowEducation(false)}
                         />
                       </h4>
-                      {(userDetail.education || []).map(
-                        (EducationDetails, index) => (
-                          <div
-                            className="w-100"
-                            key={EducationDetails.education_id}
-                          >
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
-                              <div className="media align-items-center company_box p-0">
-                                <div className="text_box text-left w-100 mt-n2">
-                                  <h3 className="mb-0">
-                                    <span className="font-size-6 text-black-2 font-weight-semibold">
-                                      {EducationDetails.qualification}{" "}
-                                      <span className="font-size-4">
-                                        ({EducationDetails.university_institute}
-                                        )
+                      {userDetail.education.length === 0 ? (
+                        <div>
+                          <p className="text-center">No Data Found</p>
+                        </div>
+                      ) : (
+                        (userDetail.education || []).map(
+                          (EducationDetails, index) => (
+                            <div
+                              className="w-100"
+                              key={EducationDetails.education_id}
+                            >
+                              <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                                <div className="media align-items-center company_box p-0">
+                                  <div className="text_box text-left w-100 mt-n2">
+                                    <h3 className="mb-0">
+                                      <span className="font-size-6 text-black-2 font-weight-semibold">
+                                        {EducationDetails.qualification}{" "}
+                                        <span className="font-size-4">
+                                          (
+                                          {
+                                            EducationDetails.university_institute
+                                          }
+                                          )
+                                        </span>
                                       </span>
+                                    </h3>
+                                    <span className="font-size-4 text-default-color line-height-2">
+                                      {EducationDetails.course},{" "}
+                                      {EducationDetails.specialization}
                                     </span>
-                                  </h3>
-                                  <span className="font-size-4 text-default-color line-height-2">
-                                    {EducationDetails.course},{" "}
-                                    {EducationDetails.specialization}
+                                  </div>
+                                </div>
+                                <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                                  <span className="font-size-4 text-gray w-100">
+                                    {EducationDetails.passing_year}
+                                  </span>
+                                  <span className="font-size-3 text-gray w-100">
+                                    <span
+                                      className="mr-4"
+                                      style={{ marginTop: "-2px" }}
+                                    >
+                                      <img
+                                        src="image/svg/icon-loaction-pin-black.svg"
+                                        alt=""
+                                      />
+                                    </span>
+                                    {EducationDetails.institute_location}
                                   </span>
                                 </div>
                               </div>
-                              <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                                <span className="font-size-4 text-gray w-100">
-                                  {EducationDetails.passing_year}
-                                </span>
-                                <span className="font-size-3 text-gray w-100">
-                                  <span
-                                    className="mr-4"
-                                    style={{ marginTop: "-2px" }}
-                                  >
-                                    <img
-                                      src="image/svg/icon-loaction-pin-black.svg"
-                                      alt=""
-                                    />
-                                  </span>
-                                  {EducationDetails.institute_location}
-                                </span>
-                              </div>
                             </div>
-                          </div>
+                          )
                         )
                       )}
                     </div>

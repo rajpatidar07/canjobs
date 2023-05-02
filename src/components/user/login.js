@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EmployeeLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
-
+  let navigate = useNavigate();
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -46,6 +46,7 @@ export default function EmployeeLoginModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        navigate("/");
         props.close();
       }
       if (updatedTodo.message === "Invalid credentials !") {

@@ -289,11 +289,10 @@ export default function EmployeeTable(props) {
                     <th className="bg-white">No Data Found</th>
                   ) : (
                     <th className="bg-white"></th>
-                  )}{" "}
+                  )}
                   <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
                     <>
-                      {" "}
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
@@ -353,7 +352,7 @@ export default function EmployeeTable(props) {
                             <h4 className="font-size-3 mb-0 font-weight-normal text-black-2 text-capitalize">
                               <p className="m-0">{empdata.name}</p>
                               <p className="text-gray font-size-2 m-0">
-                                {empdata.marital_status} ({empdata.gender},{" "}
+                                {empdata.marital_status} ({empdata.gender},
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
                                 Y)
