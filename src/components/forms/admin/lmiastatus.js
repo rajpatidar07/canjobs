@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddLimia } from "../../../api//api";
@@ -12,23 +12,24 @@ function LmiaStatus(props) {
   // // console.log(props.resData);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
-  let lmia_status = props.resData.lmia_status;
+  let lmia_status = props.resData?.lmia_status || "";
   let jobId = props.resData.job_id;
   const [company] = useState([]);
   /* Functionality to close the modal */
-
   const close = () => {
-    setState(initialFormState);
+    setState({ ...state, lmia_status: "" });
     setErrors("");
     setLoading(false);
     props.close();
   };
-  // USER ADMIN PROFILE UPDATE VALIDATION
+  // USER LIMIA UPDATE VALIDATION
   // // console.log(lmia_status);
-
+  useEffect(() => {
+    setState({ ...state, lmia_status: lmia_status });
+  }, [lmia_status]);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    lmia_status: lmia_status ? lmia_status : "",
+    lmia_status: "",
     completion_time: "",
   };
   // VALIDATION CONDITIONS
@@ -71,7 +72,7 @@ function LmiaStatus(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
-  // USER ADMIN PROFILE UPDATE FILTER SUBMIT BUTTON
+  // USER LIMIA UPDATE FILTER SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
     if (validate()) {
@@ -96,7 +97,7 @@ function LmiaStatus(props) {
       setLoading(false);
     }
   };
-  // END USER ADMIN PROFILE UPDATE VALIDATION
+  // END LIMIA VALIDATION
   return (
     <>
       <Modal

@@ -138,7 +138,7 @@ function EmployeeBox() {
               </div>
               <div className="row pt-4">
                 <div className="col-md-12 text-left">
-                  <p>{empdata.description}</p>
+                  <p className="text-truncate-1">{empdata.description}</p>
                 </div>
                 <div className="col-md-12">
                   <ul className="d-flex list-unstyled mr-n3 flex-wrap">
@@ -146,12 +146,9 @@ function EmployeeBox() {
                       ? ((Skill = empdata.skill.split(",")),
                         (Skill || []).map((skill, i) => (
                           <li key={i}>
-                            <Link
-                              to={""}
-                              className="bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                            >
+                            <span className="bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                               {skill}
-                            </Link>
+                            </span>
                           </li>
                         )))
                       : null}

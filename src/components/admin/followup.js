@@ -454,7 +454,7 @@ function Followup() {
                           className=" border-0 font-size-4 font-weight-normal"
                         >
                           <Link to="" className="text-gray">
-                            Total Applicants
+                            Total Response
                           </Link>
                         </th>
                         <th

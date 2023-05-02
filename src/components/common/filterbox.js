@@ -12,10 +12,10 @@ function Filterbox(props) {
       } else if (props.filterheading === " Jobs by Category") {
         navigate(`/jobs?category=${data}`);
       }
-    } else {
-      if (props.filterheading === " Jobs by Location") {
+    } else if (user_type === "company") {
+      if (props.filterheading === "Jobs by Location") {
         navigate(`/managejobs?country=${data}`);
-      } else if (props.filterheading === " Jobs by Category") {
+      } else if (props.filterheading === "Jobs by Category") {
         navigate(`/managejobs?category=${data}`);
       }
     }

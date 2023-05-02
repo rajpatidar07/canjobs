@@ -26,11 +26,11 @@ function EmployerHome() {
           </div>
           <div className="row m-0 job_filter_block">
             <Filterbox
-              filterheading="Employee by Location"
+              filterheading="Jobs by Location"
               filterjson={filterjson.location}
             />
             <Filterbox
-              filterheading="Employee by Category"
+              filterheading="Jobs by Category"
               filterjson={filterjson.category}
             />
           </div>

@@ -8,13 +8,12 @@ import moment from "moment";
 function AddInterview(props) {
   // // console.log(props);
   let [loading, setLoading] = useState(false);
-  let [date, setDate] = useState("");
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
 
   /* Functionality to close the modal */
   const close = () => {
-    setState(initialFormState);
+    setState({ ...state, interview_date: "" });
     setErrors("");
     setLoading(false);
     props.close();
@@ -22,7 +21,7 @@ function AddInterview(props) {
   // USER ADMIN PROFILE UPDATE VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    interview_date: date ? date : "",
+    interview_date: "",
   };
   // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
@@ -49,9 +48,9 @@ function AddInterview(props) {
     // setTotalData(userData.total_rows);
     // console.log(userData.data[0].interview_date);
     if (userData.data.length === 0) {
-      setState(initialFormState);
+      setState({ state, interview_date: "" });
     } else {
-      setDate(userData.data[0].interview_date);
+      setState({ state, interview_date: userData.data[0].interview_date });
     }
   };
   // // console.log(state.interview_date, "lol");

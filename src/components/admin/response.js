@@ -40,7 +40,7 @@ function JobResponse(props) {
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(
-      jobId,
+      props.heading === "Manage Follow-ups" ? jobId : null,
       skillFilterValue,
       experienceTypeFilterValue,
       search,
@@ -236,7 +236,7 @@ function JobResponse(props) {
         resData={resData}
         close={() => {
           setFollowUp(false);
-          setJobId(undefined);
+          setResData("");
         }}
       />
       <AddInterview
@@ -245,7 +245,7 @@ function JobResponse(props) {
         resData={resData}
         close={() => {
           setInterview(false);
-          setJobId(undefined);
+          setResData("");
         }}
       />
       <LmiaStatus
@@ -253,14 +253,14 @@ function JobResponse(props) {
         resData={resData}
         close={() => {
           setLimia(false);
-          setJobId(undefined);
+          setResData("");
         }}
       />
       <ChangeJob
         resData={resData}
         close={() => {
           setShowChangeJobModal(false);
-          setJobId(undefined);
+          setResData("");
         }}
         job_id={jobId}
         show={showChangeJobModal}
@@ -577,8 +577,34 @@ function JobResponse(props) {
                             </h3>
                           </th>
                           <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.lmia_status}
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-center">
+                              {res.lmia_status === "Reject" ? (
+                                <span className="px-3 py-1 rounded-5 bg-danger text-white">
+                                  Reject
+                                </span>
+                              ) : res.lmia_status === "Approved" ? (
+                                <span className="px-3 py-1 rounded-5 bg-info-opacity-7 text-white">
+                                  Approved
+                                </span>
+                              ) : res.lmia_status === "Draft" ? (
+                                <span className="px-3 py-1 rounded-5 bg-gray text-white">
+                                  Draft
+                                </span>
+                              ) : res.lmia_status === "Complete" ? (
+                                <span className="px-3 py-1 rounded-5 bg-primary-opacity-9 text-white">
+                                  Complete
+                                </span>
+                              ) : res.lmia_status === "Pending" ? (
+                                <span className="px-3 py-1 rounded-5 bg-warning text-white">
+                                  Pending
+                                </span>
+                              ) : res.lmia_status === "Other" ? (
+                                <span className="px-3 py-1 rounded-5 bg-dark text-white">
+                                  Other
+                                </span>
+                              ) : (
+                                <spam>No Data</spam>
+                              )}
                             </h3>
                           </th>
                           {props.heading === "Dashboard" ? (
