@@ -19,7 +19,7 @@ function FilterList() {
   const [deleteChildId, setDeleteChildID] = useState();
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [totalData /*setTotalData*/] = useState("");
+  const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
 
@@ -29,6 +29,7 @@ function FilterList() {
     if (Data.data.length === 0) {
       setFilterData([]);
     } else {
+      setTotalData(Data.data);
       setFilterData(Data.data);
       setApiCall(false);
     }
@@ -98,7 +99,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={1} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
@@ -141,7 +142,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={4} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
@@ -184,7 +185,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={5} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
@@ -227,7 +228,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={2} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
@@ -270,7 +271,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={3} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
@@ -313,7 +314,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={6} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
@@ -356,7 +357,7 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={7} />
                         <ul className="row m-0 p-0">
-                          {totalData === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData || []).map((data) =>
