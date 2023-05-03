@@ -88,7 +88,7 @@ function EmployeeHeader() {
 
                   <li className="nav-item nav-item">
                     <Link className="nav-link" to="/company">
-                      Company Home
+                      Home
                     </Link>
                   </li>
                   <li className="nav-item">

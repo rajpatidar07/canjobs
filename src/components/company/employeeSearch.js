@@ -148,7 +148,7 @@ function EmployeeSearch() {
                             >
                               <img
                                 className="company_logo"
-                                src="https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                                src="https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                                 alt=""
                               />
                             </a>

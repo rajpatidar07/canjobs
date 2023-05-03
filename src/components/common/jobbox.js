@@ -104,7 +104,7 @@ function JobBox({
                       src={
                         job.logo
                           ? job.logo
-                          : "https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                          : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                       }
                       alt=""
                     />
