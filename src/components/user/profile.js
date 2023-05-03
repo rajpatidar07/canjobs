@@ -274,7 +274,8 @@ const UserProfile = (props) => {
                       />
 
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                        {userDetail.skill.length === 0 ? (
+                        {
+                        userDetail.skill === undefined ? (
                           <li>No Data Found</li>
                         ) : (
                           (userDetail.skill || []).map((employeeSkills) => (
@@ -379,7 +380,7 @@ const UserProfile = (props) => {
                       {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                      {userDetail.career.length === 0 ? (
+                      {userDetail.career === undefined || userDetail.career.length ===0 ? (
                         <div>
                           <p className="text-center">No Data Found</p>
                         </div>
@@ -451,7 +452,7 @@ const UserProfile = (props) => {
                           close={() => setShowEducation(false)}
                         />
                       </h4>
-                      {userDetail.education.length === 0 ? (
+                      {userDetail.education === undefined || userDetail.education.length === 0 ? (
                         <div>
                           <p className="text-center">No Data Found</p>
                         </div>

@@ -26,7 +26,6 @@ export default function EmployerTable(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("company_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get Employer data*/
   const EmployerData = async () => {
@@ -112,117 +111,10 @@ export default function EmployerTable(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("contact_person_name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("contact_person_name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Vacancies */
-  // let sortByVananciesClick = () => {
-  //   if (
-  //     clicksort === 0 ||
-  //     sortOrder === "DESC" ||
-  //     columnName === "company_id"
-  //   ) {
-  //     setcolumnName("job_type");
-  //     setSortOrder("ASC");
-  //     setClicksort(1);
-  //   } else {
-  //     setcolumnName("job_type");
-  //     setSortOrder("DESC");
-  //     setClicksort(0);
-  //   }
-  // };
-  /*Sorting Function by Location */
-  let sortByLocationClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("address");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("address");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Contact no */
-  let sortByContactClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("contact_no");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("contact_no");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Company name */
-  let sortByCompanyNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("company_name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("company_name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Industry */
-  let sortByIndustryClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("industry");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("industry");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by post available */
-  let sortByPostClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "company_id"
-    ) {
-      setcolumnName("vacancy_for_post");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("vacancy_for_post");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
+   /*Sorting Function */
+   const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
   };
   /* Function to show the Job detail data */
   const EmployerDetail = (e) => {
@@ -249,7 +141,7 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={sortByCompanyNameClick}
+                    onClick={() => handleSort("company_name")}
                     className="text-gray"
                     title="Sort by Company Name"
                   >
@@ -265,7 +157,7 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={sortByNameClick}
+                      onClick={() => handleSort("contact_person_name")}
                       className="text-gray"
                       title="Sort by Name"
                     >
@@ -279,7 +171,7 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    // onClick={sortByVananciesClick}
+                    onClick={() => handleSort("vacancies")}
                     className="text-gray"
                     title="Sort by Vacancies"
                   >
@@ -295,7 +187,7 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={sortByLocationClick}
+                      onClick={() => handleSort("address")}
                       className="text-gray"
                       title="Sort by Location"
                     >
@@ -312,7 +204,7 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={sortByContactClick}
+                      onClick={() => handleSort("contact_no")}
                       className="text-gray"
                       title="Sort by Contact"
                     >
@@ -326,7 +218,7 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={sortByIndustryClick}
+                    onClick={() => handleSort("industry")}
                     className="text-gray"
                     title="Sort by Industry"
                   >
@@ -340,7 +232,7 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={sortByPostClick}
+                      onClick={() => handleSort("vacancy_for_post")}
                     className="text-gray"
                     title="Sort by Skill"
                   >
