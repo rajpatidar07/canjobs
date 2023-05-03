@@ -81,7 +81,7 @@ const FilterJson = {
   keyskill: ["JAVA", "HTML", "CSS", "REACT", "PHP", "Python", "Other"],
   course: [
     "MA",
-    "BA",
+    "B A",
     "B.com",
     "M.com",
     "CA",

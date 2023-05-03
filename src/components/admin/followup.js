@@ -390,13 +390,12 @@ function Followup() {
                         </tr>
                       ) : (
                         (jobData || []).map((job) => (
-                          <>
+                          <React.Fragment key={job.job_id}>
                             <tr
                               className="aos-init aos-animate"
                               data-aos="fade-right"
                               data-aos-duration="800"
                               data-aos-once="true"
-                              key={job.job_id}
                             >
                               <td className="py-5 ">
                                 <div className="">
@@ -477,7 +476,7 @@ function Followup() {
                                 </td>
                               </tr>
                             ) : null}
-                          </>
+                          </React.Fragment>
                         ))
                       )}
                     </tbody>

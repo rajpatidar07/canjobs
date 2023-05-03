@@ -8,15 +8,15 @@ import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 
 function EmployeeHeader() {
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
-  const [addClass, setAddClass] = useState(false);
+  // const [addClass, setAddClass] = useState(false);
   //function :-
-  const addClassOnClick = () => {
-    setAddClass(!addClass);
-  };
+  // const addClassOnClick = () => {
+  //   setAddClass(!addClass);
+  // };
   // EMPLOYEEE LOGIN AND SIGNUP
   // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);

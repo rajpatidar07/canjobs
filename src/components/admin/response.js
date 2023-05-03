@@ -12,9 +12,7 @@ import LmiaStatus from "../forms/admin/lmiastatus";
 import { ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 
-function JobResponse(props) {
-  console.log(props)
-  
+function JobResponse(props) {  
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [followup, setFollowUp] = useState(false);
@@ -439,8 +437,8 @@ function JobResponse(props) {
                         )}
                       </tr>
                     ) : (
-                      (response || []).map((res) => (
-                        <tr className="" key={res.apply_id}>
+                      (response || []).map((res,i) => (
+                        <tr className="" key={i}>
                           <th className="pl-5 py-5 pr-0   ">
                             <div className="media  align-items-center">
                               <div className="circle-36 mx-auto">

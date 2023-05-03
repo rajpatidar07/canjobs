@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 // import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import AddCategory from "../forms/admin/category";
-import { /*DeleteFilter,*/ GetFilter } from "../../api/api";
+// import { DeleteFilter, GetFilter } from "../../api/api";
 import { ToastContainer, /*toast*/ } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {
-  let [apiCall, setApiCall] = useState(false);
-  const [/*filterData,*/ setFilterData] = useState([]);
+  let [/*apiCall,*/ setApiCall] = useState(false);
+  // const [filterData, setFilterData] = useState([]);
   /*delete states */
   // const [deleteAlert, setDeleteAlert] = useState(false);
   // const [deleteId, setDeleteID] = useState();
   // const [deleteChildId, setDeleteChildID] = useState();
   // const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [totalData, setTotalData] = useState("");
+  const [totalData/*, setTotalData*/] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
 
   /* Function to get the filter data*/
-  const FilterData = async () => {
-    let Data = await GetFilter();
-    if (Data.data.length === 0) {
-      setFilterData([]);
-    } else {
-      setTotalData(Data.data);
-      setFilterData(Data.data);
-      setApiCall(false);
-    }
-    console.log(Data);
-  };
+  // const FilterData = async () => {
+  //   let Data = await GetFilter();
+  //   if (Data.data.length === 0) {
+  //     setFilterData([]);
+  //   } else {
+  //     setTotalData(Data.data);
+  //     setFilterData(Data.data);
+  //     setApiCall(false);
+  //   }
+  //   console.log(Data);
+  // };
 
   /*Render function to get the filter data*/
-  useEffect(() => {
-    FilterData();
-  }, [/*deleteAlert,*/ apiCall]);
+  // useEffect(() => {
+  //   FilterData();
+  // }, [deleteAlert, apiCall]);
 
   /*To Show the delete alert box */
   // const ShowDeleteAlert = (e, f) => {
