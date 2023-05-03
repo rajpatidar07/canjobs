@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
 // import JobDetail from "./jobDetail";
-import { getJson } from "../../api/api";
+// import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 
 function Response() {
-  let [/*filter, */ SetFilter] = useState([]);
+  // let [filter,  SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
   /* Function to get the JSON data*/
-  const FilterData = async () => {
-    const Json = await getJson();
-    SetFilter(Json);
-  };
+  // const FilterData = async () => {
+  //   const Json = await getJson();
+  //   SetFilter(Json);
+  // };
   // console.log(filter);
 
-  useEffect(() => {
-    FilterData();
-  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue]);
+  // useEffect(() => {
+  //   FilterData();
+  // }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue]);
   return (
     <>
       <div>

@@ -30,7 +30,6 @@ function ManageAdmin() {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("admin_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
   /* Function to get the Amin data*/
   const AdminData = async () => {
     const userData = await getallAdminData(
@@ -101,41 +100,10 @@ function ManageAdmin() {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "admin_id") {
-      setcolumnName("name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Type no */
-  let sortByTypeClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "admin_id") {
-      setcolumnName("admin_type");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("admin_type");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by email  */
-  let sortByEmailClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "admin_id") {
-      setcolumnName("email");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("email");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
   };
   /*Admin type array to filter*/
   // const AdminType = adminData.filter(
@@ -225,7 +193,7 @@ function ManageAdmin() {
                           <Link
                             className="text-gray"
                             to={""}
-                            onClick={sortByNameClick}
+                            onClick={()=>handleSort("name")}
                             title="Sort by Name"
                           >
                             {" "}
@@ -239,7 +207,7 @@ function ManageAdmin() {
                           <Link
                             className="text-gray"
                             to={""}
-                            onClick={sortByTypeClick}
+                            onClick={()=>handleSort("admin_type")}
                             title="Sort by Type"
                           >
                             Admin Type
@@ -252,7 +220,7 @@ function ManageAdmin() {
                           <Link
                             className="text-gray"
                             to={""}
-                            onClick={sortByEmailClick}
+                            onClick={()=>handleSort("email")}
                             title="Sort by Email"
                           >
                             Email

@@ -32,9 +32,9 @@ function JobSearch() {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-lg-10 col-xl-12">
-                <h2 className="font-size-8 mb-6">
+                {/* <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
-                </h2>
+                </h2> */}
                 <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center flex-wrap">
                     <div className="mr-5 mb-5">
@@ -94,12 +94,12 @@ function JobSearch() {
                     </div>
                   </div>
                 </form>
-                <div className="d-flex align-items-center justify-content-between mb-6">
+                {/* <div className="d-flex align-items-center justify-content-between mb-6">
                   <h5 className="font-size-4 font-weight-normal text-gray">
                     Showing
                     <span className="text-black-2">120</span> matched jobs
                   </h5>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="row justify-content-center position-static">

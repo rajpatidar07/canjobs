@@ -17,11 +17,7 @@ function JobDetailPage(props) {
       user_type === "admin" ? props.jobdata : jobId
     );
     if (
-      user_type === "admin"
-        ? props.jobdata
-        : jobId === undefined || user_type === "admin"
-        ? props.jobdata
-        : jobId === "0" || userData.data.data.length === 0 || !jobId
+     jobId === undefined|| jobId === "0" || userData.data.data.length === 0
     ) {
     } else {
       setJobDetailsData(userData.data.data[0]);

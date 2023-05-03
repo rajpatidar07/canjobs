@@ -11,7 +11,6 @@ function FollowUpDashBoard(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get the FollowUp data*/
   const FollowUpData = async () => {
@@ -51,11 +50,11 @@ function FollowUpDashBoard(props) {
   //     index === self.findIndex((t) => t.category_type === thing.category_type)
   // );
   /*Sorting Function */
-  const handleSort = (columnName) => {
-    setClicksort(clicksort === 0 ? 1 : 0);
-    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
-    setcolumnName(columnName);
-  };
+/*Sorting Function */
+const handleSort = (columnName) => {
+  setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+  setcolumnName(columnName);
+};
 
   return (
     <>

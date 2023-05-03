@@ -32,7 +32,6 @@ function JobResponse(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
   const [jobId, setJobId] = useState(props.responseId);
   // console.log(props.responseId);
   const user_type = localStorage.getItem("userType");
@@ -107,101 +106,11 @@ function JobResponse(props) {
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Experience */
-  let sortByExperienceClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("experience");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("experience");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Job */
-  let sortByJobClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("job_title");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_title");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Company */
-  let sortByCompanyClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("company_name");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("company_name");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Contact */
-  let sortByContactClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("contact_no");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("contact_no");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Address */
-  let sortByAddressClick = () => {
-    if (
-      clicksort === 0 ||
-      sortOrder === "DESC" ||
-      columnName === "employee_id"
-    ) {
-      setcolumnName("current_location");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("current_location");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
+
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
   };
   /*Job array to filter*/
   // const Job = (response.filter || [])(
@@ -391,7 +300,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={sortByNameClick}
+                          onClick={()=>handleSort("name")}
                           className="text-gray"
                           title="Sort by Name"
                         >
@@ -407,7 +316,7 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={sortByExperienceClick}
+                            onClick={()=>handleSort("experience")}
                             className="text-gray"
                             title="Sort by Experience"
                           >
@@ -421,7 +330,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={sortByJobClick}
+                          onClick={()=>handleSort("job_title")}
                           className="text-gray"
                           title="Sort by Job"
                         >
@@ -434,7 +343,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={sortByCompanyClick}
+                          onClick={()=>handleSort("company_name")}
                           className="text-gray"
                           title="Sort by Company"
                         >
@@ -447,7 +356,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          // onClick={sortByLimiaClick}
+                          onClick={()=>handleSort("lmia_status")}
                           className="text-gray"
                           title="Sort by LIMIA Status"
                         >
@@ -463,7 +372,7 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={sortByContactClick}
+                            onClick={()=>handleSort("contact_no")}
                             className="text-gray"
                             title="Sort by Contact"
                           >
@@ -480,7 +389,7 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={sortByAddressClick}
+                            onClick={()=>handleSort("current_location")}
                             className="text-gray"
                             title="Sort by Address"
                           >
@@ -603,7 +512,7 @@ function JobResponse(props) {
                                   Other
                                 </span>
                               ) : (
-                                <spam>No Data</spam>
+                                <span>No Data</span>
                               )}
                             </h3>
                           </th>

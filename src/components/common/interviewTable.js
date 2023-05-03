@@ -22,7 +22,6 @@ function Interview(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
   //   /* Function to get the intervew data*/
   const InterviewData = async () => {
@@ -76,11 +75,9 @@ function Interview(props) {
   // );
   /*Sorting Function */
   const handleSort = (columnName) => {
-    setClicksort(clicksort === 0 ? 1 : 0);
-    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-
   return (
     <>
       <AddInterview

@@ -32,7 +32,6 @@ export default function EmployeeTable(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get Employee data*/
   const EmpData = async () => {
@@ -128,8 +127,7 @@ export default function EmployeeTable(props) {
 
   /*Sorting Function */
   const handleSort = (columnName) => {
-    setClicksort(clicksort === 0 ? 1 : 0);
-    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
   /*Function to generate resume */

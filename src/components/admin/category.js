@@ -30,7 +30,6 @@ function Category() {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_category_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -111,8 +110,7 @@ function Category() {
 
   /*Sorting Function */
   const handleSort = (columnName) => {
-    setClicksort(clicksort === 0 ? 1 : 0);
-    setSortOrder(clicksort === 0 ? "ASC" : "DESC");
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
 

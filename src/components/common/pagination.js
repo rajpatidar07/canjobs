@@ -8,7 +8,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push(i);
   }
-  console.log("pageNumbers---" + pageNumbers);
+  // console.log("pageNumbers---" + pageNumbers);
   //Function to go to next page with pagination :-
   const nextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);

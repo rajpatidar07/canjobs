@@ -24,7 +24,6 @@ function FollowupTable() {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
   const [responseId, setresponseId] = useState();
 
   /* Function to get Job data*/
@@ -91,102 +90,11 @@ function FollowupTable() {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("job_title");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_title");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Type */
-  let sortByTypeClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("job_type");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_type");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Location */
-  let sortByLocationClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("location");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("location");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Education */
-  let sortByEducationClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("education");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("education");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Skill */
-  let sortBySkillClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("keyskill");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("keyskill");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Language */
-  let sortByLanguageClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("language");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("language");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Salary */
-  let sortBySalaryClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("salary");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("salary");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Experience  */
-  let sortByExperienceClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("experience_required");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("experience_required");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
+    /*Sorting Function */
+    const handleSort = (columnName) => {
+      setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+      setcolumnName(columnName);
+    };
   /*Category type array to filter*/
   const CategoryType = (Categorylist || []).filter(
     (thing, index, self) =>
@@ -205,7 +113,7 @@ function FollowupTable() {
                   className=" border-0 font-size-4 font-weight-normal"
                 >
                   <Link
-                    onClick={sortByNameClick}
+                    onClick={()=>handleSort("job_title")}
                     title="Sort by Industry"
                     className="text-gray"
                   >
@@ -219,7 +127,7 @@ function FollowupTable() {
                   <Link
                     to=""
                     title="Sort by Job"
-                    onClick={sortByTypeClick}
+                    onClick={()=>handleSort("job_type")}
                     className="text-gray"
                   >
                     Job Type
@@ -231,7 +139,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={sortByLocationClick}
+                    onClick={()=>handleSort("location")}
                     className="text-gray"
                     title="Sort by Address"
                   >
@@ -244,7 +152,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={sortByEducationClick}
+                    onClick={()=>handleSort("education")}
                     className="text-gray"
                     title="Sort by Education"
                   >
@@ -257,7 +165,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={sortBySkillClick}
+                    onClick={()=>handleSort("keyskill")}
                     title="Sort by Skills"
                     className="text-gray"
                   >
@@ -270,7 +178,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={sortByLanguageClick}
+                    onClick={()=>handleSort("language")}
                     className="text-gray"
                     title="Sort by Language"
                   >
@@ -283,7 +191,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={sortBySalaryClick}
+                    onClick={()=>handleSort("salary")}
                     title="Sort by Salary"
                     className="text-gray"
                   >
@@ -296,7 +204,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={sortByExperienceClick}
+                    onClick={()=>handleSort("experience_required")}
                     className="text-gray"
                     title="Sort by Experience"
                   >

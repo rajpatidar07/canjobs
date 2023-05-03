@@ -24,7 +24,6 @@ export default function JobTable(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [clicksort, setClicksort] = useState(0);
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -104,103 +103,11 @@ export default function JobTable(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Sorting Function by name */
-  let sortByNameClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("job_title");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_title");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Type */
-  let sortByTypeClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("job_type");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("job_type");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Location */
-  let sortByLocationClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("location");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("location");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Education */
-  let sortByEducationClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("education");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("education");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Skill */
-  let sortBySkillClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("keyskill");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("keyskill");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Language */
-  let sortByLanguageClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("language");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("language");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Salary */
-  let sortBySalaryClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("salary");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("salary");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-  /*Sorting Function by Experience  */
-  let sortByExperienceClick = () => {
-    if (clicksort === 0 || sortOrder === "DESC" || columnName === "job_id") {
-      setcolumnName("experience_required");
-      setSortOrder("ASC");
-      setClicksort(1);
-    } else {
-      setcolumnName("experience_required");
-      setSortOrder("DESC");
-      setClicksort(0);
-    }
-  };
-
+ /*Sorting Function */
+ const handleSort = (columnName) => {
+  setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+  setcolumnName(columnName);
+};
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
@@ -213,7 +120,7 @@ export default function JobTable(props) {
                   className=" border-0 font-size-4 font-weight-normal"
                 >
                   <Link
-                    onClick={sortByNameClick}
+                    onClick={()=>handleSort("job_title")}
                     title="Sort by Industry"
                     className="text-gray"
                   >
@@ -227,7 +134,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={sortByTypeClick}
+                      onClick={()=>handleSort("job_type")}
                       title="Sort by Job"
                       className="text-gray"
                     >
@@ -242,7 +149,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={sortByLocationClick}
+                      onClick={()=>handleSort("location")}
                       className="text-gray"
                       title="Sort by Address"
                     >
@@ -257,7 +164,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={sortByEducationClick}
+                      onClick={()=>handleSort("education")}
                       className="text-gray"
                       title="Sort by Education"
                     >
@@ -272,7 +179,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={sortBySkillClick}
+                      onClick={()=>handleSort("keyskill")}
                       className="text-gray"
                       title="Sort by Skill"
                     >
@@ -287,7 +194,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={sortByLanguageClick}
+                      onClick={()=>handleSort("language")}
                       className="text-gray"
                       title="Sort by Language"
                     >
@@ -301,7 +208,7 @@ export default function JobTable(props) {
                 >
                   <Link
                     to=""
-                    onClick={sortBySalaryClick}
+                    onClick={()=>handleSort("salary")}
                     className="text-gray"
                     title="Sort by Salary"
                   >
@@ -314,7 +221,7 @@ export default function JobTable(props) {
                 >
                   <Link
                     to=""
-                    onClick={sortByExperienceClick}
+                    onClick={()=>handleSort("experience_required")}
                     className="text-gray"
                     title="Sort by Experience"
                   >

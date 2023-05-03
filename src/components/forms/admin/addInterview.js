@@ -62,7 +62,7 @@ function AddInterview(props) {
   }, [props]);
 
   // USER INTERVIEW UPDATE SUBMIT BUTTON
-  const onAddFIlterClick = async (event) => {
+  const onAddFilterClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -98,7 +98,7 @@ function AddInterview(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <h5 className="text-center pt-2">Shedual Interview</h5>
 
-          <form onSubmit={onAddFIlterClick}>
+          <form onSubmit={onAddFilterClick}>
             <div className="form-group ">
               <label
                 htmlFor="interview_date"
@@ -113,7 +113,7 @@ function AddInterview(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.interview_date}
+                value={moment(state.interview_date).format("YYYY-MM-DD")}
                 onChange={onInputChange}
                 id="interview_date"
                 name="interview_date"
@@ -147,7 +147,7 @@ function AddInterview(props) {
                 </button>
               ) : (
                 <button
-                  onClick={onAddFIlterClick}
+                  onClick={onAddFilterClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

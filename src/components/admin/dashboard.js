@@ -297,7 +297,7 @@ const AdminDashboard = () => {
                         {" "}
                         <Link
                           className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/employer"}
+                          to={"/job"}
                           title="View All Jobs"
                         >
                           View All
