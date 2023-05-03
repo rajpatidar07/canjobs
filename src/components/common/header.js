@@ -8,6 +8,8 @@ import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 
 function EmployeeHeader() {
+  const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("userType");
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
   const [addClass, setAddClass] = useState(false);
@@ -80,77 +82,74 @@ function EmployeeHeader() {
             id="mobile-menu"
           >
             <div className="navbar-nav-wrapper">
-              <ul className="navbar-nav main-menu">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link className="nav-link" to="/jobs">
-                    Jobs
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle gr-toggle-arrow"
-                    id="navbarDropdown"
-                    to=""
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    onClick={addClassOnClick}
-                  >
-                    Company <i className="icon icon-small-down"></i>
-                  </Link>
-                  <ul
-                    className={`gr-menu-dropdown dropdown-menu ${
-                      addClass ? "custom-opacity" : ""
-                    }`}
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <li className="nav-item drop-menu-item">
-                      <Link to="/company">Company Home</Link>
-                    </li>
-                    <li className="drop-menu-item">
-                      <Link to="/managejobs">Manage Jobs</Link>
-                    </li>
-                    <li className="drop-menu-item">
-                      <Link to="/response">Responses</Link>
-                    </li>
-                    <li className="drop-menu-item">
-                      <Link to="/companyprofile">Profile</Link>
-                    </li>
-                    <li className="drop-menu-item">
-                      <Link to={""} onClick={() => setShowCompanySignUp(true)}>
-                        Sign up
-                      </Link>
-                      <CompanySignUp
-                        show={showCompanySignUp}
-                        CompanyLoginClick={CompanyLoginClick}
-                        close={() => setShowCompanySignUp(false)}
-                      />
-                    </li>
-                    <li className="drop-menu-item">
-                      <Link to={""} onClick={() => setShowCompanyLogin(true)}>
-                        Login
-                      </Link>
-                      <CompanyLogin
-                        show={showCompanyLogin}
-                        CompanySignUpClick={CompanySignUpClick}
-                        close={() => setShowCompanyLogin(false)}
-                      />
-                    </li>
-                  </ul>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/adminlogin">
-                    Admin
-                  </Link>
-                </li>
-              </ul>
+              {userType === "company" ? (
+                <ul className="navbar-nav main-menu">
+                  {/* EMPLOYER MENU ITEMS */}
+
+                  <li className="nav-item nav-item">
+                    <Link className="nav-link" to="/company">
+                      Company Home
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/managejobs">
+                      Manage Jobs
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/response">
+                      Responses
+                    </Link>
+                  </li>
+                  {/* <li className="nav-item">
+                    <Link className="nav-link" to="/companyprofile">
+                      Profile
+                    </Link>
+                  </li> */}
+                </ul>
+              ) : null}
+
+              {/* EMPLOYEE MENU ITEMS */}
+              {userType === "company" ? null : (
+                <ul className="navbar-nav main-menu">
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="nav-link" to="/jobs">
+                      Jobs
+                    </Link>
+                  </li>
+                  <li className="drop-menu-item">
+                    <Link
+                      className="nav-link"
+                      to={""}
+                      onClick={() => setShowCompanyLogin(true)}
+                    >
+                      Employer Login
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/adminlogin">
+                      Admin
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </div>
+            <CompanyLogin
+              show={showCompanyLogin}
+              CompanySignUpClick={CompanySignUpClick}
+              close={() => setShowCompanyLogin(false)}
+            />
+            <CompanySignUp
+              show={showCompanySignUp}
+              CompanyLoginClick={CompanyLoginClick}
+              close={() => setShowCompanySignUp(false)}
+            />
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"
               type="button"
@@ -164,93 +163,104 @@ function EmployeeHeader() {
               <i className="gr-cross-icon"></i>
             </button>
           </div>
-          <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
-            {/* <!-- Modal for Login--> */}
-            <Link
-              className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-              to={""}
-              onClick={() => setShowLogin(true)}
-            >
-              Log in
-            </Link>
-            <EmployeeLoginModal
-              show={showLogin}
-              signUpClick={SignUpClick}
-              close={() => setShowLogin(false)}
-            />
-            {/* <!-- Modal for SingUp--> */}
-            <button
-              className="btn btn-primary"
-              to={""}
-              onClick={() => setShowSingUp(true)}
-            >
-              Sign up
-            </button>
-            <EmployeeSignupModal
-              show={showSingUp}
-              loginClick={LoginClick}
-              close={() => setShowSingUp(false)}
-            />
-          </div>
-          <div>
-            <div className="dropdown show-gr-dropdown py-5">
+          {userType === "company" || userType === "employee" ? null : (
+            <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+              {/* <!-- Modal for Login--> */}
               <Link
-                className="proile media ml-7 flex-y-center"
-                to="/"
-                role="button"
-                id="dropdownMenuLink"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+                className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+                to={""}
+                onClick={() => setShowLogin(true)}
               >
-                <div>
-                  <img
-                    className="rounded-circle"
-                    src="image/user1.jpg"
-                    width={50}
-                    height={50}
-                    alt={""}
-                  />
-                </div>
-                <i className="fas fa-chevron-down heading-default-color ml-6"></i>
+                Log in
               </Link>
-              <div
-                className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                aria-labelledby="dropdownMenuLink"
+              <EmployeeLoginModal
+                show={showLogin}
+                signUpClick={SignUpClick}
+                close={() => setShowLogin(false)}
+              />
+
+              {/* <!-- Modal for SingUp--> */}
+              <button
+                className="btn btn-primary"
+                to={""}
+                onClick={() => setShowSingUp(true)}
               >
+                Sign up
+              </button>
+              <EmployeeSignupModal
+                show={showSingUp}
+                loginClick={LoginClick}
+                close={() => setShowSingUp(false)}
+              />
+            </div>
+          )}
+          {userType === "company" || userType === "employee" ? (
+            <div>
+              <div className="dropdown show-gr-dropdown py-5">
                 <Link
-                  onClick={() => setShowChangePass(true)}
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to=""
-                >
-                  Settings{" "}
-                </Link>
-                <ChangePassword
-                  show={showChangePass}
-                  close={() => setShowChangePass(false)}
-                />
-                <Link
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  to="/profile"
-                >
-                  Profile
-                </Link>
-                <Link
-                  className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                  className="proile media ml-7 flex-y-center"
                   to="/"
-                  onClick={() => {
-                    localStorage.clear(); // clear the local storage
-                    toast.error("Log Out Successfully", {
-                      position: toast.POSITION.TOP_RIGHT,
-                      autoClose: 1000,
-                    });
-                  }}
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  Log Out
+                  <div>
+                    <img
+                      className="rounded-circle"
+                      src="image/user1.jpg"
+                      width={50}
+                      height={50}
+                      alt={""}
+                    />
+                  </div>
+                  <i className="fas fa-chevron-down heading-default-color ml-6"></i>
                 </Link>
+                <div
+                  className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <Link
+                    onClick={() => setShowChangePass(true)}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    to=""
+                  >
+                    Settings
+                  </Link>
+                  <ChangePassword
+                    show={showChangePass}
+                    close={() => setShowChangePass(false)}
+                  />
+                  <Link
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    to={
+                      userType === "employee"
+                        ? "/profile"
+                        : userType === "company"
+                        ? "/companyprofile"
+                        : null
+                    }
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    to="/"
+                    onClick={() => {
+                      localStorage.clear(); // clear the local storage
+                      toast.error("Log Out Successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                      });
+                    }}
+                  >
+                    Log Out
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
             className="navbar-toggler btn-close-off-canvas  hamburger-icon border-0"
