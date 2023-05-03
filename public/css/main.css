@@ -8299,6 +8299,7 @@ a.hover-text-hitgray:hover {
 
 .hover-border-green {
   border: 2px solid transparent;
+  /* height: 100%; */
 }
 
 .hover-border-green:hover {

@@ -54,8 +54,14 @@ export default function CompanySignUp(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    setErrors,
+    onInputChange,
+    errors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   // USER SIGNUP SUBMIT BUTTON
   const onCompanySignUpClick = async (event) => {
@@ -218,7 +224,7 @@ export default function CompanySignUp(props) {
                             ? "form-control border border-danger"
                             : "form-control"
                         }
-                        placeholder="Contact Person Name"
+                        placeholder="Contact Number"
                         id="contact_no"
                       />
                       {/* ERROR MSG FOR Company no */}

@@ -141,7 +141,7 @@ function Response() {
               </div>
             </div>
             <div className="row justify-content-center position-static">
-              <div className="col-12 col-xxl-8 col-xl-7 col-lg-10">
+              <div className="col-12 col-xxl-10 col-xl-10 col-lg-10">
                 {/* <!-- Left Section --> */}
                 <div className="Left">
                   <div
