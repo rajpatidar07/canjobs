@@ -9,7 +9,6 @@ function JobBoxResponse({
   SkillFilterValue,
   jobSwapFilterValue,
 }) {
-  const [showTable, setShowTable] = useState(false);
   let [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   let [noData, setNoData] = useState("");
@@ -34,13 +33,12 @@ function JobBoxResponse({
   /*---- Function to Open response Table on Click ----*/
   const OpenReposnseTable = async (e) => {
     setJobId(e);
-    setShowTable(!showTable);
   };
 
   useEffect(() => {
     JobData();
   }, [
-    showTable,
+    JobId,
     locationFilterValue,
     categoryFilterValue,
     SkillFilterValue,

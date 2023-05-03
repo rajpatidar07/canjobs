@@ -13,6 +13,8 @@ import { ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 
 function JobResponse(props) {
+  console.log(props)
+  
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [followup, setFollowUp] = useState(false);
@@ -39,7 +41,7 @@ function JobResponse(props) {
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(
-      props.heading === "Manage Follow-ups" ? jobId : null,
+      props.heading === "Manage Follow-ups" || user_type==="company" ? jobId : null,
       skillFilterValue,
       experienceTypeFilterValue,
       search,
@@ -397,7 +399,7 @@ function JobResponse(props) {
                           </Link>
                         </th>
                       )}
-                      {props.heading === "Dashboard" ? (
+                      {props.heading === "Dashboard" || user_type==="company" ? (
                         ""
                       ) : (
                         <th
@@ -460,10 +462,15 @@ function JobResponse(props) {
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.name}(
-                              {moment().diff(res.date_of_birth, "years")})
-                              <br />
-                              {res.gender}
+                              {res.name || res.gender || res.date_of_birth
+                               ? <>
+                               {res.name}(
+                                {moment().diff(res.date_of_birth, "years")})
+                                <br />
+                                {res.gender}
+                                </>
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              } 
                             </h3>
                           </th>
                           {props.heading === "Dashboard" ? (
@@ -471,18 +478,24 @@ function JobResponse(props) {
                           ) : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.experience} years <br />
+                                {res.experience ? res.experience 
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              }
                               </h3>
                             </th>
                           )}
                           <th className="py-5 ">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.job_title}
+                             {res.job_title ? res.job_title 
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              }
                             </div>
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.company_name}
+                              {res.company_name ? res.company_name 
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              }
                             </h3>
                           </th>
                           <th className=" py-5">
@@ -521,7 +534,12 @@ function JobResponse(props) {
                           ) : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                                +{res.contact_no} <br /> {res.email}
+                               {res.contact_no || res.email 
+                               ?<>{`+${res.contact_no}`} 
+                               <br /> {res.email}
+                               </>
+                               :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                               }
                               </h3>
                             </th>
                           )}
@@ -530,14 +548,19 @@ function JobResponse(props) {
                           ) : (
                             <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.current_location || res.currently_located_country ?
+                                <>
                                 <span>{res.current_location}</span>
                                 <span className="px-1">
                                   {res.currently_located_country}
                                 </span>
+                                </>
+                                : <span className="font-size-3 font-weight-normal text-black-2 mb-0"> No Data</span> 
+                                }
                               </h3>
                             </th>
                           )}
-                          {props.heading === "Dashboard" ? (
+                          {props.heading === "Dashboard" || user_type==="company" ? (
                             ""
                           ) : (
                             <th className="py-5  min-width-px-100">
