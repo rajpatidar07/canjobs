@@ -22,7 +22,7 @@ function ChangeJob(props) {
     setLoading(false);
     props.close();
   };
-  // USER ADMIN PROFILE UPDATE VALIDATION
+  // USER CHANGE JOB VALIDATION
   // INITIAL STATE ASSIGNMENT
 
   const JobData = async () => {
@@ -38,7 +38,7 @@ function ChangeJob(props) {
   useEffect(() => {
     JobData();
   }, [props]);
-  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  // USER CHANGE JOB SUBMIT BUTTON
   const onSelectChange = (option) => {
     // e.preventDefault();
     // // console.log("+++++++++++++" + JSON.stringify(option.value));
@@ -58,7 +58,7 @@ function ChangeJob(props) {
       return close();
     }
   };
-  // END USER ADMIN PROFILE UPDATE VALIDATION
+  // END USER CHANGE JOB VALIDATION
   /*FUnction to redender the data in the option of the select box*/
   useEffect(() => {
     const options = allJobData.map((option) => ({

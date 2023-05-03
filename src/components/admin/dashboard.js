@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
@@ -9,30 +9,31 @@ import JobResponse from "./response";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-import { getSummaryCount } from "../../api/api";
+// import { getSummaryCount } from "../../api/api";
 import FollowUpDashBoard from "../common/followUpTableDashboard";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
-  const [countData, setCountData] = useState("");
+  const [countData,/* setCountData*/] = useState("");
   let [job, setJob] = useState("");
   let [employee, setEmployee] = useState("");
   let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
   let [response, setResponse] = useState("");
   let [followup, setFollowUP] = useState("");
-  let AllCounts = async () => {
-    let Data = await getSummaryCount();
-    // console.log(Data);
-    if (Data.length === 0) {
-      setCountData("");
-    } else {
-      setCountData(Data);
-    }
-  };
-  useEffect(() => {
-    AllCounts();
-  }, [job, employee, employer, interview, response, followup]);
+  /*Function to get the summary count */
+  // let AllCounts = async () => {
+  //   let Data = await getSummaryCount();
+  //   // console.log(Data);
+  //   if (Data.length === 0) {
+  //     setCountData("");
+  //   } else {
+  //     setCountData(Data);
+  //   }
+  // };
+  // useEffect(() => {
+  //   AllCounts();
+  // }, [job, employee, employer, interview, response, followup]);
   /*Function to get the percentage in correct form  */
   const appliedRateFormatted = countData.applied_rate;
   // countData && countData.applied_rate
@@ -61,7 +62,7 @@ const AdminDashboard = () => {
       >
         <ToastContainer />
         <div className="container">
-          <div className="row mb-7">
+          <div className="row mb-7 d-none">
             <div className="col-xxl-3 col-xl-4 col-md-5 col-6 col-sm-6">
               {/* <!-- Single Category --> */}
               <a

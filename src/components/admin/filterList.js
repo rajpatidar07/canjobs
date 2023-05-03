@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import AddCategory from "../forms/admin/category";
-import { DeleteFilter, GetFilter } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import { /*DeleteFilter,*/ GetFilter } from "../../api/api";
+import { ToastContainer, /*toast*/ } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SAlert from "../common/sweetAlert";
+// import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {

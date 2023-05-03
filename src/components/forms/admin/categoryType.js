@@ -16,7 +16,7 @@ function AddCategoryType(props) {
     setLoading(false);
     props.close();
   };
-  // USER CATEGORY VALIDATION
+  // USER CATEGORY TYPE VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -38,7 +38,7 @@ function AddCategoryType(props) {
     useValidation(initialFormState, validators);
   // API CALL
 
-  // USER CATEGORY SUBMIT BUTTON
+  // USER CATEGORY TYPE SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
     // // console.log(state);
     // if (state.parent_id === "") {

@@ -18,7 +18,7 @@ function AddInterview(props) {
     setLoading(false);
     props.close();
   };
-  // USER ADMIN PROFILE UPDATE VALIDATION
+  // USER INTERVIEW UPDATE VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
@@ -61,7 +61,7 @@ function AddInterview(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
-  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  // USER INTERVIEW UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
     event.preventDefault();
     if (validate()) {

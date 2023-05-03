@@ -9,7 +9,7 @@ function AddFilter(props) {
   // // console.log(props);
   // let [adminDetails, setAdmindetails] = useState([]);
 
-  // USER ADMIN PROFILE UPDATE VALIDATION
+  // FILTER UPDATE VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -29,7 +29,7 @@ function AddFilter(props) {
     validators
   );
 
-  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  // FILTER UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
     // setState({ ...state, id: props.id });
     event.preventDefault();
@@ -50,7 +50,7 @@ function AddFilter(props) {
       setLoading(false);
     }
   };
-  // END USER ADMIN PROFILE UPDATE VALIDATION
+  // END FILTER UPDATE VALIDATION
   return (
     <div className="p-0 m-0">
       <form onSubmit={onAddFIlterClick}>

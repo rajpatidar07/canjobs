@@ -25,7 +25,7 @@ export default function GenerateToken(props) {
     AdminData();
   }, [props]);
 
-  // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
+  //GENERATE ADMIN TOKEN UPDATE SUBMIT BUTTON
   const onSelectChange = (option) => {
     setAdminId(option.value);
   };

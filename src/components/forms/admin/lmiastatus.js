@@ -12,7 +12,7 @@ function LmiaStatus(props) {
   // // console.log(props.resData);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
-  let lmia_status = props.resData?.lmia_status || "";
+  let lmia_status = props.resData.lmia_status 
   let jobId = props.resData.job_id;
   const [company] = useState([]);
   /* Functionality to close the modal */
