@@ -488,27 +488,27 @@ function JobResponse(props) {
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-center">
                               {res.lmia_status === "Reject" ? (
-                                <span className="px-3 py-1 rounded-5 bg-danger text-white">
+                                <span className="badge badge-pill badge-danger">
                                   Reject
                                 </span>
                               ) : res.lmia_status === "Approved" ? (
-                                <span className="px-3 py-1 rounded-5 bg-info-opacity-7 text-white">
+                                <span className="badge badge-pill bg-info-opacity-5 text-white">
                                   Approved
                                 </span>
                               ) : res.lmia_status === "Draft" ? (
-                                <span className="px-3 py-1 rounded-5 bg-gray text-white">
+                                <span className="badge badge-pill badge-gray">
                                   Draft
                                 </span>
                               ) : res.lmia_status === "Complete" ? (
-                                <span className="px-3 py-1 rounded-5 bg-primary-opacity-9 text-white">
+                                <span className="badge badge-pill bg-primary-opacity-9 text-white">
                                   Complete
                                 </span>
                               ) : res.lmia_status === "Pending" ? (
-                                <span className="px-3 py-1 rounded-5 bg-warning text-white">
+                                <span className="badge badge-pill badge-warning">
                                   Pending
                                 </span>
                               ) : res.lmia_status === "Other" ? (
-                                <span className="px-3 py-1 rounded-5 bg-dark text-white">
+                                <span className="badge badge-pill badge-dark">
                                   Other
                                 </span>
                               ) : (
