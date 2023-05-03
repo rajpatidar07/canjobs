@@ -71,6 +71,8 @@ function MainLayout() {
             <Route path="/managejobs" element={<ManageJobs />} />
             <Route path="/response" element={<Response />} />
             <Route path="/empsearch" element={<EmployeeSearch />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/resume/:id" element={<ResumeGrerator />} />
             <Route path="*" element={<NotFound />} />
           </>
         ) : (

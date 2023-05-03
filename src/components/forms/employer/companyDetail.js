@@ -228,7 +228,7 @@ function CompanyDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
             <h5 className="text-center pt-2 mb-9"> Company Details</h5>
-            <input type="hidden" value={state.company_id} />
+            <input type="hidden" value={state.company_id||""} />
             <div className="row">
               {" "}
               <div className="form-group col-md-6">
@@ -243,7 +243,7 @@ function CompanyDetails(props) {
                   type="text"
                   maxLength={30}
                   name="company_name"
-                  value={state.company_name}
+                  value={state.company_name||""}
                   onChange={onInputChange}
                   className={
                     errors.company_name
@@ -274,7 +274,7 @@ function CompanyDetails(props) {
                   <input
                     maxLength={30}
                     name="franchise"
-                    value={state.franchise}
+                    value={state.franchise||""}
                     onChange={onInputChange}
                     type="text"
                     className={
@@ -305,7 +305,7 @@ function CompanyDetails(props) {
                 </label>
                 <select
                   name="industry"
-                  value={state.industry}
+                  value={state.industry||""}
                   onChange={onInputChange}
                   className={
                     errors.industry
@@ -343,7 +343,7 @@ function CompanyDetails(props) {
                   placeholder="Contact Person "
                   maxLength={20}
                   name="corporation"
-                  value={state.corporation}
+                  value={state.corporation||""}
                   onChange={onInputChange}
                   className={
                     errors.corporation
@@ -382,7 +382,7 @@ function CompanyDetails(props) {
                     placeholder="Alias"
                     maxLength={20}
                     name="alias"
-                    value={state.alias}
+                    value={state.alias||""}
                     onChange={onInputChange}
                     className={
                       errors.alias
@@ -414,7 +414,7 @@ function CompanyDetails(props) {
                   max={moment().format("YYYY-MM-DD")}
                   type="date"
                   name="company_start_date"
-                  value={moment(state.company_start_date).format("YYYY-MM-DD")}
+                  value={moment(state.company_start_date).format("YYYY-MM-DD")||""}
                   onChange={onInputChange}
                   className={
                     errors.company_start_date
@@ -445,7 +445,7 @@ function CompanyDetails(props) {
                   <input
                     maxLength={30}
                     name="company_size"
-                    value={state.company_size}
+                    value={state.company_size||""}
                     onChange={onInputChange}
                     type="text"
                     className={
@@ -479,7 +479,7 @@ function CompanyDetails(props) {
                   placeholder="Website Url"
                   maxLength={40}
                   name="website_url"
-                  value={state.website_url}
+                  value={state.website_url||""}
                   onChange={onInputChange}
                   className={
                     errors.website_url
@@ -509,7 +509,7 @@ function CompanyDetails(props) {
                   <input
                     maxLength={30}
                     name="vacancy_for_post"
-                    value={state.vacancy_for_post}
+                    value={state.vacancy_for_post||""}
                     onChange={onInputChange}
                     type="text"
                     className={
@@ -583,7 +583,7 @@ function CompanyDetails(props) {
                     /> */}
                     <textarea
                       name="about"
-                      value={state.about}
+                      value={state.about||""}
                       onChange={onInputChange}
                       className={
                         errors.about

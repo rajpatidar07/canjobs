@@ -241,7 +241,7 @@ function EmployementDetails(props) {
                   type="text"
                   placeholder="Tell us your company name"
                   name="company"
-                  value={state.company}
+                  value={state.company ||""}
                   onChange={onInputChange}
                   className={
                     errors.company
@@ -272,7 +272,7 @@ function EmployementDetails(props) {
                   type="text"
                   placeholder="Tell us your designation / job role"
                   name="designation"
-                  value={state.designation}
+                  value={state.designation ||""}
                   onChange={onInputChange}
                   className={
                     errors.designation
@@ -305,7 +305,7 @@ function EmployementDetails(props) {
                   maxLength={30}
                   placeholder="Tell us your employer location"
                   name="company_location"
-                  value={state.company_location}
+                  value={state.company_location ||""}
                   onChange={onInputChange}
                   className={
                     errors.company_location
@@ -334,7 +334,7 @@ function EmployementDetails(props) {
                 <div className="position-relative">
                   <select
                     name="industry"
-                    value={state.industry}
+                    value={state.industry||""}
                     onChange={onInputChange}
                     className={
                       errors.industry
@@ -374,7 +374,7 @@ function EmployementDetails(props) {
                 <div className="position-relative">
                   <select
                     name="functional_area"
-                    value={state.functional_area}
+                    value={state.functional_area||""}
                     onChange={onInputChange}
                     className={
                       errors.functional_area
@@ -413,7 +413,7 @@ function EmployementDetails(props) {
                 </label>
                 <select
                   name="work_level"
-                  value={state.work_level}
+                  value={state.work_level ||""}
                   onChange={onInputChange}
                   className={
                     errors.work_level
@@ -467,7 +467,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Joining "
                   name="start_date"
-                  value={state.start_date}
+                  value={state.start_date ||""}
                   onChange={onInputChange}
                   className={
                     errors.start_date
@@ -498,7 +498,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
-                  value={state.end_date}
+                  value={state.end_date ||""}
                   onChange={onInputChange}
                   className={
                     errors.end_date

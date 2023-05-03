@@ -349,7 +349,7 @@ function AddJobModal(props) {
                 <input
                   maxLength={30}
                   name="job_title"
-                  value={state.job_title}
+                  value={state.job_title||""}
                   onChange={onInputChange}
                   type="text"
                   className={
@@ -363,7 +363,6 @@ function AddJobModal(props) {
                 {/*----ERROR MESSAGE FOR job_title----*/}
                 {errors.job_title && (
                   <span
-                    key={errors.job_title}
                     className="text-danger font-size-3"
                   >
                     {errors.job_title}
@@ -381,8 +380,8 @@ function AddJobModal(props) {
                   <div className="position-relative">
                     <select
                       name="company_id"
-                      value={state.company_id}
-                      onChange={onInputChange}
+                      value={state.company_id||""}
+                  onChange={onInputChange}
                       className={
                         errors.company_id
                           ? " form-control border border-danger position-relative overflow-hidden"
@@ -422,8 +421,8 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="job_category_id"
-                    value={state.job_category_id}
-                    onChange={onInputChange}
+                    value={state.job_category_id||""}
+             onChange={onInputChange}
                     className={
                       errors.job_category_id
                         ? " form-control border border-danger position-relative overflow-hidden"
@@ -448,7 +447,7 @@ function AddJobModal(props) {
                 {/*----ERROR MESSAGE FOR job_category_id----*/}
                 {errors.job_category_id && (
                   <span
-                    key={errors.job_category_id}
+                   
                     className="text-danger font-size-3"
                   >
                     {errors.job_category_id}
@@ -465,8 +464,8 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="industry_type"
-                    value={state.industry_type}
-                    onChange={onInputChange}
+                    value={state.industry_type||""}
+                   onChange={onInputChange}
                     className={
                       errors.industry_type
                         ? "form-control border border-danger"
@@ -475,8 +474,8 @@ function AddJobModal(props) {
                     id="industry_type"
                   >
                     <option value={""}>Select industry</option>
-                    {(FilterJson.industry || []).map((industry) => (
-                      <option key={industry} value={industry}>
+                    {(FilterJson.industry || []).map((industry,i) => (
+                      <option key={i} value={industry}>
                         {industry}
                       </option>
                     ))}
@@ -502,7 +501,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="experience_required"
-                    value={state.experience_required}
+                    value={state.experience_required||""}
                     onChange={onInputChange}
                     className={
                       errors.experience_required
@@ -513,8 +512,8 @@ function AddJobModal(props) {
                     id="experience_required"
                   >
                     <option value={""}>Select Experience</option>
-                    {(FilterJson.experience || []).map((exp) => (
-                      <option key={exp} value={exp}>
+                    {(FilterJson.experience || []).map((exp,i) => (
+                      <option key={i} value={exp}>
                         {exp}
                         {exp === "Fresher" || exp === "Other" ? "" : "Years"}
                       </option>
@@ -541,7 +540,7 @@ function AddJobModal(props) {
                 <select
                   maxLength={9}
                   name="salary"
-                  value={state.salary}
+                  value={state.salary||""}
                   onChange={onInputChange}
                   type="number"
                   className={
@@ -553,8 +552,8 @@ function AddJobModal(props) {
                   id="salary"
                 >
                   <option value={""}>Select salary</option>
-                  {(FilterJson.salary || []).map((salary) => (
-                    <option key={salary} value={salary}>
+                  {(FilterJson.salary || []).map((salary,i) => (
+                    <option key={i} value={salary}>
                       {salary}
                     </option>
                   ))}
@@ -576,7 +575,7 @@ function AddJobModal(props) {
                 <select
                   maxLength={50}
                   name="location"
-                  value={state.location}
+                  value={state.location||""}
                   onChange={onInputChange}
                   type="text"
                   className={
@@ -616,8 +615,8 @@ function AddJobModal(props) {
                     type="text"
                     maxLength={30}
                     name="apply_link"
-                    value={state.apply_link}
-                    onChange={onInputChange}
+                    value={state.apply_link||""}
+                   onChange={onInputChange}
                     className={
                       errors.apply_link
                         ? "form-control border border-danger"
@@ -662,15 +661,15 @@ function AddJobModal(props) {
                       id={"job_description"}
                       data={state.job_description}
                       value={state.job_description}
-                      onChange={onInputChange}
+  ||""                    onChange={onInputChange}
                       initData="Job Description"
                     /> */}
                     <textarea
                       maxLength={500}
                       placeholder="Job Description"
                       name="job_description"
-                      value={state.job_description}
-                      onChange={onInputChange}
+                      value={state.job_description||""}
+                  onChange={onInputChange}
                       className={
                         errors.job_description
                           ? "form-control border border-danger"
@@ -714,14 +713,14 @@ function AddJobModal(props) {
                       id={"your_duties"}
                       data={state.your_duties}
                       value={state.your_duties}
-                      onChange={onInputChange}
+                   onChange={onInputChange}
                       initData="your duties"
                     /> */}
                     <textarea
                       maxLength={100}
                       placeholder="Your Duties"
                       name="your_duties"
-                      value={state.your_duties}
+                      value={state.your_duties||""}
                       onChange={onInputChange}
                       className={
                         errors.your_duties
@@ -771,8 +770,8 @@ function AddJobModal(props) {
                       maxLength={30}
                       placeholder="Requirements"
                       name="requirement"
-                      value={state.requirement}
-                      onChange={onInputChange}
+                      value={state.requirement||""}
+                    onChange={onInputChange}
                       className={
                         errors.requirement
                           ? "form-control border border-danger"
@@ -806,8 +805,8 @@ function AddJobModal(props) {
                     type="text"
                     maxLength={30}
                     name="department"
-                    value={state.department}
-                    onChange={onInputChange}
+                    value={state.department||""}
+                  onChange={onInputChange}
                     className={
                       errors.department
                         ? "form-control border border-danger"
@@ -839,7 +838,7 @@ function AddJobModal(props) {
                     placeholder="Apply job_type"
                     id="job_type"
                     name="job_type"
-                    value={state.job_type}
+                    value={state.job_type||""}
                     onChange={onInputChange}
                     className={
                       errors.job_type
@@ -908,7 +907,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="education"
-                    value={state.education}
+                    value={state.education||""}
                     onChange={onInputChange}
                     className={
                       errors.education
@@ -919,8 +918,8 @@ function AddJobModal(props) {
                     id="education"
                   >
                     <option value={""}>Select education</option>
-                    {(FilterJson.education || []).map((education) => (
-                      <option key={education} value={education}>
+                    {(FilterJson.education || []).map((education,i) => (
+                      <option key={i} value={education}>
                         {education}
                       </option>
                     ))}
@@ -948,7 +947,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="language"
-                    value={state.language}
+                    value={state.language||""}
                     onChange={onInputChange}
                     className={
                       errors.language
@@ -959,8 +958,8 @@ function AddJobModal(props) {
                     id="language"
                   >
                     <option value={""}>Select Language</option>
-                    {(FilterJson.Language || []).map((Language) => (
-                      <option key={Language} value={Language}>
+                    {(FilterJson.Language || []).map((Language,i) => (
+                      <option key={i} value={Language}>
                         {Language}
                       </option>
                     ))}
@@ -988,8 +987,8 @@ function AddJobModal(props) {
                     type="text"
                     maxLength={30}
                     name="keyskill"
-                    value={state.keyskill}
-                    onChange={onInputChange}
+                    value={state.keyskill||""}
+                   onChange={onInputChange}
                     className={
                       errors.keyskill
                         ? "form-control border border-danger"
@@ -1019,8 +1018,8 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <select
                     name="employement"
-                    value={state.employement}
-                    onChange={onInputChange}
+                    value={state.employement||""}
+                   onChange={onInputChange}
                     className={
                       errors.employement
                         ? " form-control border border-danger position-relative overflow-hidden"
@@ -1030,8 +1029,8 @@ function AddJobModal(props) {
                     id="employement"
                   >
                     <option value={""}>Select employement</option>
-                    {(FilterJson.employement || []).map((employement) => (
-                      <option key={employement} value={employement}>
+                    {(FilterJson.employement || []).map((employement,i) => (
+                      <option key={i} value={employement}>
                         {employement}
                       </option>
                     ))}

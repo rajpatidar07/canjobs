@@ -21,7 +21,6 @@ function EmployeeBox() {
     EmpData();
   }, []);
 
-  console.log(employeeData);
 
   return (
     <>
@@ -63,7 +62,7 @@ function EmployeeBox() {
                     className="text_box text-left w-100"
                     to={"/profile"}
                     onClick={() =>
-                      localStorage.setItem("employeeId", empdata.employee_id)
+                      localStorage.setItem("employee_id", empdata.employee_id)
                     }
                   >
                     <p className="font-size-3 text-default-color line-height-2 m-0">
@@ -86,7 +85,7 @@ function EmployeeBox() {
                     data-target="#signup"
                     to={"/profile"}
                     onClick={() =>
-                      localStorage.setItem("employeeId", empdata.employee_id)
+                      localStorage.setItem("employee_id", empdata.employee_id)
                     }
                   >
                     View

@@ -12,7 +12,7 @@ import LmiaStatus from "../forms/admin/lmiastatus";
 import { ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 
-function JobResponse(props) {
+function JobResponse(props) {  
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [followup, setFollowUp] = useState(false);
@@ -39,7 +39,7 @@ function JobResponse(props) {
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(
-      props.heading === "Manage Follow-ups" ? jobId : null,
+      props.heading === "Manage Follow-ups" || user_type==="company" ? jobId : null,
       skillFilterValue,
       experienceTypeFilterValue,
       search,
@@ -397,7 +397,7 @@ function JobResponse(props) {
                           </Link>
                         </th>
                       )}
-                      {props.heading === "Dashboard" ? (
+                      {props.heading === "Dashboard" || user_type==="company" ? (
                         ""
                       ) : (
                         <th
@@ -437,8 +437,8 @@ function JobResponse(props) {
                         )}
                       </tr>
                     ) : (
-                      (response || []).map((res) => (
-                        <tr className="" key={res.apply_id}>
+                      (response || []).map((res,i) => (
+                        <tr className="" key={i}>
                           <th className="pl-5 py-5 pr-0   ">
                             <div className="media  align-items-center">
                               <div className="circle-36 mx-auto">
@@ -460,10 +460,15 @@ function JobResponse(props) {
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.name}(
-                              {moment().diff(res.date_of_birth, "years")})
-                              <br />
-                              {res.gender}
+                              {res.name || res.gender || res.date_of_birth
+                               ? <>
+                               {res.name}(
+                                {moment().diff(res.date_of_birth, "years")})
+                                <br />
+                                {res.gender}
+                                </>
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              } 
                             </h3>
                           </th>
                           {props.heading === "Dashboard" ? (
@@ -471,44 +476,50 @@ function JobResponse(props) {
                           ) : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.experience} years <br />
+                                {res.experience ? res.experience 
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              }
                               </h3>
                             </th>
                           )}
                           <th className="py-5 ">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.job_title}
+                             {res.job_title ? res.job_title 
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              }
                             </div>
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.company_name}
+                              {res.company_name ? res.company_name 
+                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                              }
                             </h3>
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-center">
                               {res.lmia_status === "Reject" ? (
-                                <span className="px-3 py-1 rounded-5 bg-danger text-white">
+                                <span className="badge badge-pill badge-danger">
                                   Reject
                                 </span>
                               ) : res.lmia_status === "Approved" ? (
-                                <span className="px-3 py-1 rounded-5 bg-info-opacity-7 text-white">
+                                <span className="badge badge-pill bg-info-opacity-5 text-white">
                                   Approved
                                 </span>
                               ) : res.lmia_status === "Draft" ? (
-                                <span className="px-3 py-1 rounded-5 bg-gray text-white">
+                                <span className="badge badge-pill badge-gray">
                                   Draft
                                 </span>
                               ) : res.lmia_status === "Complete" ? (
-                                <span className="px-3 py-1 rounded-5 bg-primary-opacity-9 text-white">
+                                <span className="badge badge-pill bg-primary-opacity-9 text-white">
                                   Complete
                                 </span>
                               ) : res.lmia_status === "Pending" ? (
-                                <span className="px-3 py-1 rounded-5 bg-warning text-white">
+                                <span className="badge badge-pill badge-warning">
                                   Pending
                                 </span>
                               ) : res.lmia_status === "Other" ? (
-                                <span className="px-3 py-1 rounded-5 bg-dark text-white">
+                                <span className="badge badge-pill badge-dark">
                                   Other
                                 </span>
                               ) : (
@@ -521,7 +532,12 @@ function JobResponse(props) {
                           ) : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                                +{res.contact_no} <br /> {res.email}
+                               {res.contact_no || res.email 
+                               ?<>{`+${res.contact_no}`} 
+                               <br /> {res.email}
+                               </>
+                               :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
+                               }
                               </h3>
                             </th>
                           )}
@@ -530,14 +546,19 @@ function JobResponse(props) {
                           ) : (
                             <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.current_location || res.currently_located_country ?
+                                <>
                                 <span>{res.current_location}</span>
                                 <span className="px-1">
                                   {res.currently_located_country}
                                 </span>
+                                </>
+                                : <span className="font-size-3 font-weight-normal text-black-2 mb-0"> No Data</span> 
+                                }
                               </h3>
                             </th>
                           )}
-                          {props.heading === "Dashboard" ? (
+                          {props.heading === "Dashboard" || user_type==="company" ? (
                             ""
                           ) : (
                             <th className="py-5  min-width-px-100">

@@ -337,7 +337,7 @@ function PersonalDetails(props) {
               <input
                 maxLength={20}
                 name="employee_id"
-                value={state.id}
+                value={state.id||""}
                 type="hidden"
                 id="employee_id"
               />
@@ -351,7 +351,7 @@ function PersonalDetails(props) {
                 <input
                   maxLength={20}
                   name="name"
-                  value={state.name}
+                  value={state.name||""}
                   onChange={onInputChange}
                   type="text"
                   className={
@@ -380,8 +380,8 @@ function PersonalDetails(props) {
                   maxLength={30}
                   type="email"
                   name="email"
-                  value={state.email}
-                  onChange={onInputChange}
+                  value={state.email||""}
+               onChange={onInputChange}
                   className={
                     errors.email
                       ? "form-control border border-danger"
@@ -409,8 +409,8 @@ function PersonalDetails(props) {
                   type="number"
                   placeholder="Mobile Number"
                   name="contact_no"
-                  value={state.contact_no}
-                  onChange={onInputChange}
+                  value={state.contact_no||""}
+                onChange={onInputChange}
                   className={
                     errors.contact_no
                       ? "form-control border border-danger"
@@ -441,8 +441,8 @@ function PersonalDetails(props) {
                 </label>
                 <textarea
                   name="description"
-                  value={state.description}
-                  onChange={onInputChange}
+                  value={state.description||""}
+                 onChange={onInputChange}
                   className={
                     errors.description
                       ? "form-control border border-danger"
@@ -478,8 +478,8 @@ function PersonalDetails(props) {
                   type="date"
                   placeholder="Date Of Birth "
                   name="date_of_birth"
-                  value={state.date_of_birth}
-                  onChange={onInputChange}
+                  value={state.date_of_birth||""}
+                 onChange={onInputChange}
                   className={
                     errors.date_of_birth
                       ? "form-control border border-danger"
@@ -506,8 +506,8 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="gender"
-                  value={state.gender}
-                  onChange={onInputChange}
+                  value={state.gender||""}
+                 onChange={onInputChange}
                   className={
                     errors.gender
                       ? "form-control border border-danger"
@@ -536,7 +536,7 @@ function PersonalDetails(props) {
                 </label>{" "}
                 <select
                   name="marital_status"
-                  value={state.marital_status}
+                  value={state.marital_status||""}
                   onChange={onInputChange}
                   className={
                     errors.marital_status
@@ -575,8 +575,8 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="nationality / Citizenship"
                   name="nationality"
-                  value={state.nationality}
-                  onChange={onInputChange}
+                  value={state.nationality||""}
+                 onChange={onInputChange}
                   className={
                     errors.nationality
                       ? "form-control border border-danger"
@@ -606,7 +606,7 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="Current Location"
                   name="current_location"
-                  value={state.current_location}
+                  value={state.current_location||""}
                   onChange={onInputChange}
                   className={
                     errors.current_location
@@ -644,7 +644,7 @@ function PersonalDetails(props) {
                   placeholder="Currently Located Country"
                   id="currently_located_country"
                   name="currently_located_country"
-                  value={state.currently_located_country}
+                  value={state.currently_located_country||""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR COUNTRY----*/}
@@ -671,7 +671,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="language"
-                  value={state.language}
+                  value={state.language||""}
                   onChange={onInputChange}
                   className={
                     errors.language
@@ -716,7 +716,7 @@ function PersonalDetails(props) {
                   placeholder="religion"
                   id="religion"
                   name="religion"
-                  value={state.religion}
+                  value={state.religion||""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR religion----*/}
@@ -741,8 +741,8 @@ function PersonalDetails(props) {
                   }
                   id="interested_in"
                   name="interested_in"
-                  value={state.interested_in}
-                  onChange={onInputChange}
+                  value={state.interested_in||""}
+                 onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
                   <option value={"swap"}>Swap</option>
@@ -771,7 +771,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="experience"
-                  value={state.experience}
+                  value={state.experience||""}
                   onChange={onInputChange}
                   className={
                     errors.experience
@@ -805,8 +805,8 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="work_permit_canada"
-                  value={state.work_permit_canada}
-                  onChange={onInputChange}
+                  value={state.work_permit_canada||""}
+                 onChange={onInputChange}
                   className={
                     errors.work_permit_canada
                       ? "form-control border border-danger"
@@ -847,7 +847,7 @@ function PersonalDetails(props) {
                   placeholder="Permit of Other Country"
                   id="work_permit_other_country"
                   name="work_permit_other_country"
-                  value={state.work_permit_other_country}
+                  value={state.work_permit_other_country||""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}

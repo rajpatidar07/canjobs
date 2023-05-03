@@ -251,7 +251,7 @@ function Education(props) {
                   }
                   name="qualification"
                   id="qualification"
-                  value={state.qualification}
+                  value={state.qualification||""}
                   onChange={onInputChange}
                 >
                   <option value={""}>Select Qualification</option>
@@ -288,12 +288,12 @@ function Education(props) {
                   }
                   name="course"
                   id="course"
-                  value={state.course}
+                  value={state.course||""}
                   onChange={onInputChange}
                 >
                   <option value={""}>Select Course</option>
-                  {(FilterJson.education || []).map((course) => (
-                    <option value={course} key={course}>
+                  {(FilterJson.education || []).map((course,i) => (
+                    <option value={course} key={i}>
                       {course}
                     </option>
                   ))}
@@ -323,7 +323,7 @@ function Education(props) {
                   }
                   name="university_institute"
                   id="university_institute"
-                  value={state.university_institute}
+                  value={state.university_institute||""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
@@ -352,7 +352,7 @@ function Education(props) {
                     }
                     name="institute_location"
                     id="institute_location"
-                    value={state.institute_location}
+                    value={state.institute_location||""}
                     onChange={onInputChange}
                   >
                     <option value={""}>Select institute location</option>
@@ -390,7 +390,7 @@ function Education(props) {
                   }
                   name="specialization"
                   id="specialization"
-                  value={state.specialization}
+                  value={state.specialization||""}
                   onChange={onInputChange}
                   placeholder="Specialization"
                 />
@@ -402,7 +402,7 @@ function Education(props) {
                   }
                   name="specialization"
                   id="specialization"
-                  value={state.specialization}
+                  value={state.specialization||""}
                   onChange={onInputChange}
                 >
                   <option value={""}>Select Specialization</option>

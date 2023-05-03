@@ -19,10 +19,10 @@ const UserProfile = (props) => {
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const user_type = localStorage.getItem("userType");
   let id = localStorage.getItem("employee_id");
-  const employeeId = user_type === "user" ? id : props.employeeId;
+  const employeeId = user_type === "admin"? props.employeeId:id;
   const UserData = async () => {
     const userData = await EmployeeDetails(employeeId);
-    if (userData.data.length === 0 || userData.data.employee.length === 0) {
+    if (userData.data===undefined||userData.data.length === 0 || userData.data.employee.length === 0) {
       setuserDetail([]);
       setPersonalDetail([]);
     } else {
@@ -60,7 +60,7 @@ const UserProfile = (props) => {
             <div className="row justify-content-center mt-15">
               <div className="col-12 dark-mode-texts">
                 <div className="mb-2">
-                  <Link to={"/"} className="d-flex align-items-center">
+                  <Link to={user_type === "company"?"/company":"/"} className="d-flex align-items-center">
                     <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                     <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                       Back
@@ -80,7 +80,7 @@ const UserProfile = (props) => {
                       className="mb-4 position-relative"
                       onClick={() => setShowPersonalDetails(true)}
                     >
-                      <input
+                    {user_type==="admin"?<>  <input
                         type="file"
                         id="ImgUploadInput"
                         className="d-none"
@@ -90,7 +90,7 @@ const UserProfile = (props) => {
                         htmlFor="ImgUploadInput"
                       >
                         <span className="fas fa-pen text-gray"> </span>
-                      </label>
+                      </label></>:""}
                       <img
                         className="rounded-circle"
                         src={
