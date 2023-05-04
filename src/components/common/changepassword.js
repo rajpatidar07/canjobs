@@ -66,9 +66,10 @@ const ChangePassword = (props) => {
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
-        <div className="bg-white rounded h-100 px-11 pt-15">
+        <div className="bg-white rounded h-100 px-11 pt-10">
           {/* CHANGE PASSWORD FORM */}
           <form onSubmit={onUserChangePassClick}>
+            <h5 className="text-center pb-8"> Change Password</h5>
             {/* FORM FIELDS */}
             <div className="form-group">
               <label

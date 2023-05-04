@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
 import ChangePassword from "./changepassword";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 function EmployeeHeader() {
   // const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
+  let navigate =useNavigate()
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
   // const [addClass, setAddClass] = useState(false);
@@ -163,7 +164,7 @@ function EmployeeHeader() {
               <i className="gr-cross-icon"></i>
             </button>
           </div>
-          {userType === "company" || userType === "employee" ? null : (
+          {userType === "company" || userType === "user" ? null : (
             <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
               {/* <!-- Modal for Login--> */}
               <Link
@@ -194,7 +195,7 @@ function EmployeeHeader() {
               />
             </div>
           )}
-          {userType === "company" || userType === "employee" ? (
+          {userType === "company" || userType === "user" ? (
             <div>
               <div className="dropdown show-gr-dropdown py-5">
                 <Link
@@ -235,7 +236,7 @@ function EmployeeHeader() {
                   <Link
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to={
-                      userType === "employee"
+                      userType === "user"
                         ? "/profile"
                         : userType === "company"
                         ? "/companyprofile"
@@ -246,13 +247,15 @@ function EmployeeHeader() {
                   </Link>
                   <Link
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    to="/"
+                    to=""
                     onClick={() => {
                       localStorage.clear(); // clear the local storage
                       toast.error("Log Out Successfully", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
+                      navigate("/")
+                      window.location.reload();
                     }}
                   >
                     Log Out

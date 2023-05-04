@@ -16,6 +16,7 @@ export default function EmployeeSignupModal(props) {
   const [isChecked, setIsChecked] = useState(false);
   const [termsErr, settermsErr] = useState("");
   const [SingUpSuccess, setSingUpSuccess] = useState("");
+  let [loading, setLoading] = useState(false);
   // VALIDATION CONDITIONS termsErr
   const validators = {
     useremail: [
@@ -47,15 +48,22 @@ export default function EmployeeSignupModal(props) {
   // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = async (event) => {
     event.preventDefault();
-
+    setLoading(false)
     if (validate()) {
       if (isChecked) {
         settermsErr("");
+        setLoading(true)
         const signUpData = await EmployeeSignUp(state);
-        if (signUpData.status) {
+        if (signUpData.message === "Employee has been registered") {
           setSingUpSuccess("success");
+          setLoading(false)
+        }
+       else if(signUpData.message === "Email already exists"){
+          setLoading(false)
+          settermsErr("Email already exist")
         }
       } else {
+        setLoading(false)
         settermsErr("Accept terms and conditions");
       }
     }
@@ -76,7 +84,11 @@ export default function EmployeeSignupModal(props) {
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10 z-index-supper"
             data-dismiss="modal"
-            onClick={props.close}
+            onClick={()=>{
+              settermsErr("")
+              setLoading(false);
+               props.close()
+              }}
           >
             <i className="fas fa-times"></i>
           </button>
@@ -305,13 +317,28 @@ export default function EmployeeSignupModal(props) {
                         </span>
                       </div>
                       <div className="form-group text-center">
-                        <button
-                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                          type="submit"
-                        >
-                          Sign Up
-                        </button>
-                      </div>
+          {loading === true ? (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                type="submit"
+              >
+                Sign Up
+              </button>
+              )}
+              </div>
                       <p className="font-size-4 text-center heading-default-color">
                         Already have an account?{" "}
                         <Link

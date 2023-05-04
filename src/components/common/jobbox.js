@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GetAllJobs, ApplyJob } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
+import EmployeeLoginModal from "../user/login";
 import { toast } from "react-toastify";
 function JobBox({
   showAddJobModal,
@@ -12,6 +13,9 @@ function JobBox({
   jobSwapFilterValue,
   locationFilterValue,
 }) {
+  const [showLogin, setShowLogin] = useState(false);
+  const token = localStorage.getItem("token");
+
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -213,14 +217,14 @@ function JobBox({
                       </Link>
                     </>
                   ) : (
-                    <Link>
                       <Link
-                        className="btn btn-secondary text-uppercase font-size-3"
-                        onClick={() => OnApplyClick(0, job.job_id)}
+                      className={job.is_applied === "0"?"btn btn-secondary text-uppercase font-size-3":"btn btn-info text-uppercase font-size-3"}
+                        onClick={() =>token === null ?setShowLogin(true) 
+                           : OnApplyClick(0, job.job_id)}
+                           disabled={job.is_applied === "0" ? true: false} 
                       >
-                        Apply
+                       {job.is_applied === "0"? "Apply" : "Applied" }
                       </Link>
-                    </Link>
                   )}
                 </div>
               </div>
@@ -229,6 +233,10 @@ function JobBox({
         )}
         {/* <!-- End Maped Job --> */}
       </div>{" "}
+      <EmployeeLoginModal
+                  show={showLogin}
+                  close={() => setShowLogin(false)}
+                />
       <AddJobModal
         show={showAddJobsModal}
         jobdata={JobId}

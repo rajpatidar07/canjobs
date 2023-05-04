@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { EmployeeLogin } from "../../api/api";
+import { EmployeeLogin , EmployeeForgotPassword} from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
+  let [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
     password: "",
+    forget_email: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -24,6 +26,16 @@ export default function EmployeeLoginModal(props) {
           : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
+    forget_email: [
+      (value) =>
+        state.email
+          ? ""
+          : value === null || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
+    ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
   const { state, onInputChange, setErrors, errors, validate } = useValidation(
@@ -36,8 +48,8 @@ export default function EmployeeLoginModal(props) {
     event.preventDefault();
     if (validate()) {
       // handle form submission
+      setLoading(true)
       const updatedTodo = await EmployeeLogin(state);
-      console.log(errors.email);
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
         localStorage.setItem("userType", "user");
@@ -46,17 +58,37 @@ export default function EmployeeLoginModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoading(false)
         props.close();
         navigate("/");
         window.location.reload();
       }
       if (updatedTodo.message === "Invalid credentials !") {
+        setLoading(false)
         setErrors({ ...errors, email: "Invalid credentials !" });
-      }
-    }
+      }}
   };
   // END USER LOGIN VALIDATION
-
+  const onForgoteClick = async (event) => {
+    event.preventDefault();
+    if (validate()) {
+      // setLoading(true)
+      setLoading(true) 
+      const Response = await EmployeeForgotPassword(state)
+        if (Response.status === 1 || Response.message === "Sent you a mail") {
+          toast.success("Email sent Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false)
+          props.close();
+        } else if (Response.message === "No user found") {
+          setLoading(false)
+          setErrors({ ...errors, Credentials: ["No user found"] });
+          //   handle form submission
+        }
+      }
+    }
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -274,47 +306,94 @@ export default function EmployeeLoginModal(props) {
                     </div>
 
                     <div className="form-group mb-8">
-                      <button
-                        className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
-                        type="submit"
-                      >
-                        Log in{" "}
-                      </button>
+             
+                      {loading === true ? (
+                        <button
+                          className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-border spinner-border-sm "
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          <span className="sr-only">Loading...</span>
+                        </button>
+                         ) : (
+                          <button
+                          className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                          type="submit"
+                        >
+                          Log in{" "}
+                        </button>
+                      )}      
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Don’t have an account?{" "}
                       <Link
                         className="text-primary"
                         to={""}
-                        onClick={props.singUpClick}
+                        onClick={props.signUpClick}
                       >
                         Create a free account
                       </Link>
                     </p>
                   </form>
 
-                  <form className={showForgotPassword === true ? "" : "d-none"}>
+                  <form className={showForgotPassword === true ? "" : "d-none"} onSubmit={onForgoteClick}>
                     <div className="form-group">
                       <label
-                        htmlFor="email2"
+                        htmlFor="forget_email"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         E-mail
                       </label>
                       <input
                         type="email"
+                        value={state.forget_email}
+                        onChange={onInputChange}
                         className="form-control"
                         placeholder="example@gmail.com"
-                        id="email2"
+                        id="forget_email"
+                        name="forget_email"
                       />
+                          {errors.forget_email && (
+                        <span>
+                          {errors.forget_email.map((error) => (
+                            <span
+                              key={error}
+                              className="text-danger font-size-3"
+                            >
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group text-center">
-                      <button
-                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                        type="submit"
-                      >
-                        send email
-                      </button>
+                      
+                      {loading === true ? (
+                        <button
+                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-border spinner-border-sm "
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          <span className="sr-only">Loading...</span>
+                        </button>
+                         ) : (
+                          <button
+                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                          type="submit"
+                        >
+                          send email
+                        </button>
+                      )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Already have an account?{" "}

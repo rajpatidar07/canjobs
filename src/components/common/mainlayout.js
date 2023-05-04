@@ -27,6 +27,7 @@ import ResumeGrerator from "../admin/Resume";
 import ManageInterview from "../admin/interview";
 import JobResponse from "../admin/response";
 import NotFound from "./notfound";
+import ResetPassword from "./resetPassword";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -47,6 +48,8 @@ function MainLayout() {
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        
         {userType === "user" && token !== ("" || null || undefined) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
@@ -54,6 +57,7 @@ function MainLayout() {
             <Route path="/jobdetail" element={<JobDetail />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
+            
           </>
         ) : (
           <>

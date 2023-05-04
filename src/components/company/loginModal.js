@@ -7,12 +7,14 @@ import { toast } from "react-toastify";
 export default function CompanyLogin(props) {
   let [showCompanyForgotPassword, setShowCompanyForgotPassword] =
     useState(false);
+    let [loading, setLoading] = useState(false);
   let Navigate = useNavigate();
   /* Functionality to close the modal */
 
   const close = () => {
     setErrors("");
     setState("");
+    setLoading(false)
     props.close();
   };
   /*----USER LOGIN VALIDATION----*/
@@ -68,6 +70,7 @@ export default function CompanyLogin(props) {
     // console.log(errors);
 
     if (validate()) {
+      setLoading(true)
       // console.log("555");
       let Response = await EmployerLogin(state);
       if (
@@ -87,6 +90,7 @@ export default function CompanyLogin(props) {
         Navigate("/company");
         window.location.reload();
       } else if (Response.message === "Invalid Credentials !") {
+        setLoading(false)
         setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
         // handle form submission
       }
@@ -97,6 +101,7 @@ export default function CompanyLogin(props) {
     event.preventDefault();
 
     if (validate()) {
+      setLoading(true)
       let Response = await EmployerForgotPassword(state);
       if (Response.status === 1 || Response.message === "Sent you a mail") {
         toast.success("Email sent Successfully", {
@@ -105,6 +110,7 @@ export default function CompanyLogin(props) {
         });
         close();
       } else if (Response.message === "No user found") {
+        setLoading(false)
         setErrors({ ...errors, Credentials: ["No user found"] });
         //   handle form submission
       }
@@ -340,9 +346,27 @@ export default function CompanyLogin(props) {
                     </div>
 
                     <div className="form-group mb-8">
-                      <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                        Log in{" "}
-                      </button>
+                    {loading === true ? (
+                        <button
+                          className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-border spinner-border-sm "
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          <span className="sr-only">Loading...</span>
+                        </button>
+                         ) : (
+                          <button
+                          className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                          type="submit"
+                        >
+                          Log in{" "}
+                        </button>
+                      )} 
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Don’t have an account?{" "}
@@ -429,12 +453,27 @@ export default function CompanyLogin(props) {
                       </label>
                     </div>
                     <div className="form-group text-center">
-                      <button
-                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                        type="submit"
-                      >
-                        Send
-                      </button>
+                    {loading === true ? (
+                        <button
+                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-border spinner-border-sm "
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          <span className="sr-only">Loading...</span>
+                        </button>
+                         ) : (
+                          <button
+                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                          type="submit"
+                        >
+                          send email
+                        </button>
+                        )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Already have an account?{" "}

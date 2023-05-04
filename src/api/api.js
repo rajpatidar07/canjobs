@@ -58,6 +58,16 @@ export const EmployeeLogin = async (props) => {
   const response = await axios.post(`${API_URL}employee_login`, formData);
   return response.data;
 };
+/*Employee Forgot passsword api */
+export const EmployeeForgotPassword = async (props) => {
+  const response = await axios.post(
+    `${API_URL}employee/forgetPassword`,
+    {
+      forget_email: props.forget_email,
+    }
+  );
+  return response.data;
+};
 /*Employee detail api */
 export const EmployeeDetails = async (props) => {
   // if (props !== undefined) {
@@ -357,12 +367,6 @@ export const EmployerForgotPassword = async (props) => {
     `${API_URL}company/forgetPassword`,
     {
       forget_email: props.forget_email,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
     }
   );
   return response.data;
