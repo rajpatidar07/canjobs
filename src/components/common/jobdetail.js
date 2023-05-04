@@ -17,7 +17,9 @@ function JobDetailPage(props) {
       user_type === "admin" ? props.jobdata : jobId
     );
     if (
-     jobId === undefined|| jobId === "0" || userData.data.data.length === 0
+      jobId === undefined ||
+      jobId === "0" ||
+      userData.data.data.length === 0
     ) {
     } else {
       setJobDetailsData(userData.data.data[0]);
@@ -61,7 +63,7 @@ function JobDetailPage(props) {
                   src={
                     jobDetatilsData.logo
                       ? jobDetatilsData.logo
-                      : "https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                      : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                   }
                   alt=""
                 />

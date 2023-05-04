@@ -14,8 +14,10 @@ function CompanyProfile(props) {
 
   /*Show modal and data state */
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
-  const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
-    useState(false);
+  const [
+    showKycComplainDetailsModal,
+    setShowKycComplainDetailsModal,
+  ] = useState(false);
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
   /*Function to get employer data */
@@ -80,7 +82,7 @@ function CompanyProfile(props) {
                     className="company_logo"
                     src={
                       employerData.logo === null
-                        ? "https://findlogovector.com/wp-content/uploads/2018/12/huggies-brand-logo-vector.png"
+                        ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                         : employerData.logo
                     }
                     alt=""

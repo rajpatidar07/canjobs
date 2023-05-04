@@ -566,8 +566,6 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="location"
