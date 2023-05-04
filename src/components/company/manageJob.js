@@ -20,7 +20,6 @@ function ManageJobs() {
   /* Function to get the JSON data*/
   const FilterData = async () => {
     const Json = await getJson();
-    console.log(Json);
     if (filter.length === 0) {
       SetFilter([]);
     } else {

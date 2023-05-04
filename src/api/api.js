@@ -420,8 +420,8 @@ export const GetAllJobs = async (
   time
 ) => {
   // console.log("time", time);
-  const response = await axios.post(
-    `${API_URL}getAllJobs`,
+  const response = await axios.post(Token ?
+    `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
     {
       // employee_id: id,
       filter_category_id: category,

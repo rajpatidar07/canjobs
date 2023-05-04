@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
 export default function ResetPassword() {
 //   let navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function ResetPassword() {
             :"" ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, onInputChange, errors, setErrors, validate } = useValidation(
+  const { state, onInputChange, errors, validate } = useValidation(
     initialFormState,
     validators
   );

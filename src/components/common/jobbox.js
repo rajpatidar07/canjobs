@@ -13,6 +13,7 @@ function JobBox({
   jobSwapFilterValue,
   locationFilterValue,
 }) {
+  let [apiCall , setApiSetCall] = useState(false)
   const [showLogin, setShowLogin] = useState(false);
   const token = localStorage.getItem("token");
 
@@ -56,6 +57,7 @@ function JobBox({
     SkillFilterValue,
     jobSwapFilterValue,
     locationFilterValue,
+    apiCall
   ]);
   /*FUnction to apply to the job */
   const OnApplyClick = async (status, job_id) => {
@@ -72,6 +74,7 @@ function JobBox({
         autoClose: 1000,
       });
     }
+    setApiSetCall(true)
   };
   return (
     <>
@@ -91,10 +94,12 @@ function JobBox({
             <Link
               key={job.job_id}
               to={"/jobdetail"}
-              onClick={() => {
+              onClick={job.is_applied === "0"?
+              () => {
                 localStorage.setItem("jobId", job.job_id);
                 OnApplyClick(1, job.job_id);
-              }}
+              }
+              :null}
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
             >
               {job.job_type === "swap" ? (

@@ -18,6 +18,7 @@ function AddJobModal(props) {
   const [loading, setLoading] = useState(false);
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
+  let token = localStorage.getItem("token");
 
   /* Functionality to close the modal */
   const close = () => {
@@ -258,7 +259,7 @@ function AddJobModal(props) {
     if (user_type === "admin") {
       CompnayData();
     }
-    CategoryData();
+   if(token){ CategoryData();}
     if (
       props.jobdata === "0" ||
       props.jobdata === undefined ||

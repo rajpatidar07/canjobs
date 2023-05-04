@@ -13,6 +13,7 @@ function LmiaStatus(props) {
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
   let lmia_status = props.resData.lmia_status 
+  let completion_time = props.resData.expected_time_of_completion
   let jobId = props.resData.job_id;
   const [company] = useState([]);
   /* Functionality to close the modal */
@@ -25,7 +26,7 @@ function LmiaStatus(props) {
   // USER LIMIA UPDATE VALIDATION
   // // console.log(lmia_status);
   useEffect(() => {
-    setState({ ...state, lmia_status: lmia_status });
+    setState({ ...state, lmia_status: lmia_status , completion_time : completion_time});
   }, [lmia_status]);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {

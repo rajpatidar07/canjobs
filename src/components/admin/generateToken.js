@@ -7,6 +7,7 @@ export default function GenerateToken(props) {
   let [allAdmin, setAllAdmin] = useState([]);
   let [AdminId, setAdminId] = useState("");
   const [state, setState] = useState([]);
+  let[ Unauthorized,setUnauthorized ]= useState("")
   const AdminData = async () => {
     const userData = await getallAdminData();
     if (userData.data.length === 0) {
@@ -19,6 +20,7 @@ export default function GenerateToken(props) {
   const close = () => {
     setState([]);
     setAdminId("");
+    setUnauthorized("")
     props.close();
   };
   useEffect(() => {
@@ -49,6 +51,9 @@ export default function GenerateToken(props) {
       });
       close();
       window.location.reload();
+    }
+    if (responseData.message === "Unauthorized admin"){
+      setUnauthorized("Unauthorized admin")
     }
   };
   const onRest = () => {
@@ -94,6 +99,7 @@ export default function GenerateToken(props) {
                 id="view_layout"
                 className="mx-1"
               />
+              <small className="text-danger">{Unauthorized}</small>
             </div>
             {/* END FORM FIELDS  */}
             <div className="form-group text-center">
