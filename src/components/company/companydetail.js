@@ -30,11 +30,11 @@ function CompanyDetailPage(props) {
           className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
           onClick={() => setContactDetails(true)}
         />
-        <ContactInfo
+        {ContactDetails ? <ContactInfo
           employerId={props.employerId}
           show={ContactDetails}
           close={() => setContactDetails(false)}
-        />
+        /> : null}
       </h4>
       <div className="pt-5 text-left row">
         <div className="col-md-12">

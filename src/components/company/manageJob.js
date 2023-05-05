@@ -154,11 +154,11 @@ function ManageJobs() {
                   </div> */}
                 </div>
                  {/*<-- Add job Modal -->*/}
-                <AddJobModal
+               {showAddJobModal ? <AddJobModal
                   show={showAddJobModal}
                   jobData={jobId}
                   close={() => setShowAddJobModal(false)}
-                />
+                /> : null}
               </div>
             </div>
             <div className="row justify-content-center position-static">

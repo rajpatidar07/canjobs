@@ -127,15 +127,15 @@ const AdminHeader = (props) => {
         </nav>
       </div>
       {/*<-- Change password Modal -->*/}
-      <ChangePassword
+     {showChangePass ? <ChangePassword
         show={showChangePass}
         close={() => setShowChangePass(false)}
-      />
+      /> : null}
       {/*<-- Generate Token Modal -->*/}
-      <GenerateToken
+      {showGeneratToken ? <GenerateToken
         show={showGeneratToken}
         close={() => setShowGenerateToken(false)}
-      />
+      /> : null}
     </header>
   );
 };
