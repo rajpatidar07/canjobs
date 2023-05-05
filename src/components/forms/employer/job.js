@@ -253,7 +253,6 @@ function AddJobModal(props) {
     } else {
       setCompany(userData.data);
     }
-    setCompany(userData.data);
   };
   useEffect(() => {
     if (user_type === "admin" && props.admin === "admin") {

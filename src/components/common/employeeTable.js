@@ -137,21 +137,21 @@ export default function EmployeeTable(props) {
   };
   return (
     <>
-      <PersonalDetails
+      {showAddEmployeeModal ? <PersonalDetails
         show={showAddEmployeeModal}
         employeeId={employeeId}
         close={() => setShowEmployeeMOdal(false)}
-      />
-      <Education
-        close={() => setShowEducationModal(false)}
-        employeeId={employeeId}
-        show={showEducationModal}
-      />
-      <Skills
+      /> : null}
+      {showEducationModal ?  <Education
+          close={() => setShowEducationModal(false)}
+          employeeId={employeeId}
+          show={showEducationModal}
+        /> : null}
+      {showSkillsModal ? <Skills
         show={showSkillsModal}
         employeeId={employeeId}
         close={() => setShowSkillsModal(false)}
-      />
+      /> : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">

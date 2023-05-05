@@ -53,12 +53,11 @@ function Employer() {
         <AdminSidebar heading={"Manage Companies"} />
         <ToastContainer />
         {/* <!-- Add Company Details Modal --> */}
-        <CompanyDetails
+        {showAddEmployerModal ? <CompanyDetails
           show={showAddEmployerModal}
           employerId={employerId}
           close={() => setShowEmployerMOdal(false)}
-        />
-
+        /> : null}
         <div
           className={
             showEmployerDetails === false

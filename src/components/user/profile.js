@@ -135,11 +135,11 @@ const UserProfile = (props) => {
                           onClick={() => setShowPersonalDetails(true)}
                         />
                       )}
-                      <PersonalDetails
+                   { showPersonalDetails ?  <PersonalDetails
                         show={showPersonalDetails}
                         employeeId={employeeId}
                         close={() => setShowPersonalDetails(false)}
-                      />
+                      /> : null }
                     </h4>
                     {PersonalDetail.email === "" ||
                     PersonalDetail.length === 0 ? (
@@ -267,11 +267,11 @@ const UserProfile = (props) => {
                     <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
                       {/*----Employee's Skills----*/}
 
-                      <ItSkills
+                     {showItSkills ? <ItSkills
                         show={showItSkills}
                         employeeId={employeeId}
                         close={() => setShowItSkills(false)}
-                      />
+                      /> : null}
 
                       <ul className="list-unstyled d-flex align-items-center flex-wrap">
                         {
@@ -371,11 +371,11 @@ const UserProfile = (props) => {
                             onClick={() => setShowEmplyomentDetails(true)}
                           />
                         )}
-                        <EmployementDetails
+                     { showEmplyomentDetails ?  <EmployementDetails
                           show={showEmplyomentDetails}
                           employeeId={employeeId}
                           close={() => setShowEmplyomentDetails(false)}
-                        />
+                        /> : null}
                       </h4>
                       {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
@@ -446,11 +446,11 @@ const UserProfile = (props) => {
                             onClick={() => setShowEducation(true)}
                           />
                         )}
-                        <EducationDetails
+                        {showEducation ? <EducationDetails
                           show={showEducation}
                           employeeId={employeeId}
                           close={() => setShowEducation(false)}
-                        />
+                        /> : null}
                       </h4>
                       {userDetail.education === undefined || userDetail.education.length === 0 ? (
                         <div>

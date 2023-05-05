@@ -217,12 +217,12 @@ function Job() {
                         Add Job
                       </CustomButton>
                       {/*<-- Add Job Modal -->*/}
-                      <AddJobModal
+                     {showAddJobsModal ?  <AddJobModal
                         show={showAddJobsModal}
                         jobdata={JobId}
                         admin={"admin"}
                         close={() => setShowAddJobsModal(false)}
-                      />
+                      /> : null}
                     </div>
                   </div>
                 </div>

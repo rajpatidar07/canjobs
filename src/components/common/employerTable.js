@@ -481,21 +481,21 @@ export default function EmployerTable(props) {
           />
         </div>
       </div>
-      <CompanyDetails
+      {showAddEmployerModal ?   <CompanyDetails
         show={showAddEmployerModal}
         employerId={employerId}
         close={() => setShowEmployerMOdal(false)}
-      />
-      <ContactInfo
+      /> : null}
+     {showContactModal ? <ContactInfo
         show={showContactModal}
         employerId={employerId}
         close={() => setShowContactMOdal(false)}
-      />
-      <KycComplianceDetails
+      /> : null}
+      {showKycModal ? <KycComplianceDetails
         show={showKycModal}
         employerId={employerId}
         close={() => setShowkycMOdal(false)}
-      />
+      /> : null }
       <SAlert
         show={deleteAlert}
         title={deleteName}

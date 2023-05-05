@@ -251,13 +251,20 @@ function JobBox({
           ))
         )}
         {/* <!-- End Maped Job --> */}
-      </div>{" "}
-      <EmployeeLoginModal show={showLogin} close={() => setShowLogin(false)} />
-      <AddJobModal
-        show={showAddJobsModal}
-        jobdata={JobId}
-        close={() => setShowAddJobsModal(false)}
-      />
+      </div>
+      {showLogin ? (
+        <EmployeeLoginModal
+          show={showLogin}
+          close={() => setShowLogin(false)}
+        />
+      ) : null}
+      {showAddJobsModal ? (
+        <AddJobModal
+          show={showAddJobsModal}
+          jobdata={JobId}
+          close={() => setShowAddJobsModal(false)}
+        />
+      ) : null}
     </>
   );
 }

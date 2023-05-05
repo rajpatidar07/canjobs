@@ -119,11 +119,11 @@ function ManageAdmin() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Admin"} />
         <ToastContainer />{" "}
-        <Addadmin
+        {showAddAdminModal ? <Addadmin
           show={showAddAdminModal}
           adminId={adminId}
           close={() => setShowAdminModal(false)}
-        />
+        /> : null}
         <div
           className={
             showAminDetails === false

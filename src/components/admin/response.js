@@ -142,7 +142,7 @@ function JobResponse(props) {
           <ToastContainer />
         </>
       ) : null}
-      <Addfollowup
+     {followup ? <Addfollowup
         show={followup}
         job_id={jobId}
         resData={resData}
@@ -150,8 +150,8 @@ function JobResponse(props) {
           setFollowUp(false);
           setResData("");
         }}
-      />
-      <AddInterview
+      /> : null}
+     {interview ?<AddInterview
         show={interview}
         job_id={jobId}
         resData={resData}
@@ -159,16 +159,16 @@ function JobResponse(props) {
           setInterview(false);
           setResData("");
         }}
-      />
-      <LmiaStatus
+      />:null}
+      {limia ? <LmiaStatus
         show={limia}
         resData={resData}
         close={() => {
           setLimia(false);
           setResData("");
         }}
-      />
-      <ChangeJob
+      /> : null}
+      {showChangeJobModal ? <ChangeJob
         resData={resData}
         close={() => {
           setShowChangeJobModal(false);
@@ -176,7 +176,7 @@ function JobResponse(props) {
         }}
         job_id={jobId}
         show={showChangeJobModal}
-      />
+      /> : null}
       <div
         className={
           props.heading === "Response" ||

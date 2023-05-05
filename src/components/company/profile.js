@@ -176,16 +176,16 @@ function CompanyProfile(props) {
         </div>
       </div>
       {user_type !== "admin" ? <EmployeeFooter /> : null}
-      <CompanyDetails
+      {showCompanyInfoModal ? <CompanyDetails
         employerId={user_type === "company" ? company_id : props.employerId}
         show={showCompanyInfoModal}
         close={() => setShowCompanyInfoModal(false)}
-      />
-      <KycComplianceDetails
+      /> : null}
+      {showKycComplainDetailsModal ? <KycComplianceDetails
         employerId={user_type === "company" ? company_id : props.employerId}
         show={showKycComplainDetailsModal}
         close={() => setShowKycComplainDetailsModal(false)}
-      />
+      /> : null}
     </div>
   );
 }

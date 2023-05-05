@@ -43,11 +43,11 @@ function Employee() {
         <AdminSidebar heading={"Manage Applicants"} />
         <ToastContainer />
         {/* <!--Add Employee Details Modal --> */}
-        <PersonalDetails
-          show={showAddEmployeeModal}
-          employeeId={employeeId}
-          close={() => setShowEmployeeMOdal(false)}
-        />
+        {showAddEmployeeModal ? <PersonalDetails
+            show={showAddEmployeeModal}
+            employeeId={employeeId}
+            close={() => setShowEmployeeMOdal(false)}
+          /> : null}
         <div
           className={
             showEmployeeProfile === false

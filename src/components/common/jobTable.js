@@ -379,12 +379,12 @@ export default function JobTable(props) {
           />
         </div>
       </div>
-      <AddJobModal
+      {showAddJobsModal ? <AddJobModal
         show={showAddJobsModal}
         jobdata={JobId}
         admin={"admin"}
         close={() => setShowAddJobsModal(false)}
-      />
+      /> : null}
       <SAlert
         show={deleteAlert}
         title={deleteName}
