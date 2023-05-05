@@ -127,19 +127,19 @@ function ManageAdmin() {
         <div
           className={
             showAminDetails === false
-              ? "dashboard-main-container mt-20"
+              ? "dashboard-main-container mt-16"
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Admin</h3>
                 </div>
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
                     <input
                       required
@@ -151,7 +151,7 @@ function ManageAdmin() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Type:</p>
                     <div className="select_div">
                       <select
@@ -193,7 +193,7 @@ function ManageAdmin() {
                           <Link
                             className="text-gray"
                             to={""}
-                            onClick={()=>handleSort("name")}
+                            onClick={() => handleSort("name")}
                             title="Sort by Name"
                           >
                             {" "}
@@ -207,7 +207,7 @@ function ManageAdmin() {
                           <Link
                             className="text-gray"
                             to={""}
-                            onClick={()=>handleSort("admin_type")}
+                            onClick={() => handleSort("admin_type")}
                             title="Sort by Type"
                           >
                             Admin Type
@@ -220,7 +220,7 @@ function ManageAdmin() {
                           <Link
                             className="text-gray"
                             to={""}
-                            onClick={()=>handleSort("email")}
+                            onClick={() => handleSort("email")}
                             title="Sort by Email"
                           >
                             Email
@@ -309,7 +309,7 @@ function ManageAdmin() {
           onCancel={CancelDelete}
         />
         {/* {showJobDetails === true ? (
-        <div className="dashboard-main-container mt-20 ">
+        <div className="dashboard-main-container mt-16 ">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">

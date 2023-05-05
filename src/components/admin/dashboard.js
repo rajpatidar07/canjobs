@@ -395,8 +395,8 @@ const AdminDashboard = () => {
                   <Interview heading={"Dashboard"} filter_by_time={interview} />
                 </div>
               </div>
-                {/* <!-- Recent Follow- --> */}
-                <div className="col-6">
+              {/* <!-- Recent Follow- --> */}
+              <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0">
@@ -482,8 +482,8 @@ const AdminDashboard = () => {
                   />
                 </div>
               </div>
-               {/* <!-- Recent Companies- --> */}
-               {/* <div className="col-6">
+              {/* <!-- Recent Companies- --> */}
+              {/* <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
@@ -529,7 +529,7 @@ const AdminDashboard = () => {
         </div>
       </div>
       {/* {showEmployeeProfile === true ? (
-        <div className="dashboard-main-container mt-20">
+        <div className="dashboard-main-container mt-16">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">

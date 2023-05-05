@@ -53,7 +53,7 @@ function JobDetail({ ids }) {
                           jobData.logo === undefined ||
                           jobData.logo === "" ||
                           jobData.logo === "undefined"
-                            ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                            ? "image/logo-main-black.png"
                             : jobData.logo
                         }
                         alt=""

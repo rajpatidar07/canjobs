@@ -159,12 +159,6 @@ export default function EmployeeTable(props) {
               <tr className="">
                 <th
                   scope="col"
-                  className="pl-0 text-center border-0 font-size-4 font-weight-normal"
-                >
-                  #
-                </th>
-                <th
-                  scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
                   <Link
@@ -302,63 +296,66 @@ export default function EmployeeTable(props) {
               ) : (
                 (employeeData || []).map((empdata) => (
                   <tr className="" key={empdata.employee_id}>
-                    <td className="py-5 pr-0">
-                      <div className="media  align-items-center">
-                        <div className="circle-36 mx-auto overflow-hidden">
-                          {empdata.profile_photo === null ? (
-                            <img
-                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                              alt=""
-                              className="w-100"
-                            />
-                          ) : (
-                            <img
-                              src={empdata.profile_photo}
-                              alt=""
-                              className="w-100"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </td>
                     <td className=" py-5">
-                      {props.heading === "Dashboard" ? (
-                        <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                          <p className="m-0">{empdata.name}</p>
-                          <p className="text-gray font-size-2 m-0 text-capitalize">
-                            {empdata.marital_status} ({empdata.gender}
-                            {/*Calculation of age from date of birth*/}
-                            {moment().diff(empdata.date_of_birth, "years")}
-                            Y)
-                          </p>
-                        </h4>
-                      ) : (
-                        <Link
-                          to={""}
-                          onClick={
-                            empdata.name !== null
-                              ? () => employeeDetails(empdata.employee_id)
-                              : null
-                          }
-                          title="Employee Details"
-                        >
-                          {empdata.name === null ? (
-                            <h4 className="font-size-3 mb-0 text-capitalize">
-                              Unavailable
-                            </h4>
-                          ) : (
-                            <h4 className="font-size-3 mb-0 font-weight-normal text-black-2 text-capitalize">
-                              <p className="m-0">{empdata.name}</p>
-                              <p className="text-gray font-size-2 m-0">
-                                {empdata.marital_status} ({empdata.gender},
-                                {/*Calculation of age from date of birth*/}
-                                {moment().diff(empdata.date_of_birth, "years")}
-                                Y)
-                              </p>
-                            </h4>
-                          )}
-                        </Link>
-                      )}
+                      <div className="d-flex profile_box gx-2">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto overflow-hidden">
+                            {empdata.profile_photo === null ? (
+                              <img
+                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                alt=""
+                                className="w-100"
+                              />
+                            ) : (
+                              <img
+                                src={empdata.profile_photo}
+                                alt=""
+                                className="w-100"
+                              />
+                            )}
+                          </div>
+                        </div>
+                        {props.heading === "Dashboard" ? (
+                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            <p className="m-0">{empdata.name}</p>
+                            <p className="text-gray font-size-2 m-0 text-capitalize">
+                              {empdata.marital_status} ({empdata.gender}
+                              {/*Calculation of age from date of birth*/}
+                              {moment().diff(empdata.date_of_birth, "years")}
+                              Y)
+                            </p>
+                          </h4>
+                        ) : (
+                          <Link
+                            to={""}
+                            onClick={
+                              empdata.name !== null
+                                ? () => employeeDetails(empdata.employee_id)
+                                : null
+                            }
+                            title="Employee Details"
+                          >
+                            {empdata.name === null ? (
+                              <h4 className="font-size-3 mb-0 text-capitalize">
+                                Unavailable
+                              </h4>
+                            ) : (
+                              <h4 className="font-size-3 mb-0 font-weight-normal text-black-2 text-capitalize">
+                                <p className="m-0">{empdata.name}</p>
+                                <p className="text-gray font-size-2 m-0">
+                                  {empdata.marital_status} ({empdata.gender},
+                                  {/*Calculation of age from date of birth*/}
+                                  {moment().diff(
+                                    empdata.date_of_birth,
+                                    "years"
+                                  )}
+                                  Y)
+                                </p>
+                              </h4>
+                            )}
+                          </Link>
+                        )}
+                      </div>
                     </td>
                     <td className="py-5 ">
                       {empdata.contact_no === null ? (

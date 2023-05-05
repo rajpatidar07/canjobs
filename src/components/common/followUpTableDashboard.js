@@ -50,11 +50,11 @@ function FollowUpDashBoard(props) {
   //     index === self.findIndex((t) => t.category_type === thing.category_type)
   // );
   /*Sorting Function */
-/*Sorting Function */
-const handleSort = (columnName) => {
-  setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-  setcolumnName(columnName);
-};
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
+  };
 
   return (
     <>
@@ -62,7 +62,7 @@ const handleSort = (columnName) => {
         <div className="mt-5" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>

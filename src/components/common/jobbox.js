@@ -118,11 +118,7 @@ function JobBox({
                     <div className="text_box text-left">
                       <img
                         className="company_logo"
-                        src={
-                          job.logo
-                            ? job.logo
-                            : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                        }
+                        src={job.logo ? job.logo : "image/logo-main-black.png"}
                         alt=""
                       />
                     </div>
@@ -260,7 +256,6 @@ function JobBox({
       <AddJobModal
         show={showAddJobsModal}
         jobdata={JobId}
-        admin={"user"}
         close={() => setShowAddJobsModal(false)}
       />
     </>

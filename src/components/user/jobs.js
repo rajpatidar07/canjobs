@@ -30,13 +30,10 @@ function JobSearch() {
         </div>
         <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
           <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12 col-lg-10 col-xl-12">
-                {/* <h2 className="font-size-8 mb-6">
-                  You’re searching "UI Designer"
-                </h2> */}
+            <div className="row ">
+              <div className="col-12 col-lg-10 col-xl-12 text-center">
                 <form className="mb-8" action="/">
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap">
+                  <div className="search-filter from-group d-flex align-items-center flex-wrap justify-content-center">
                     <div className="mr-5 mb-5">
                       <select
                         name="category"
@@ -94,16 +91,10 @@ function JobSearch() {
                     </div>
                   </div>
                 </form>
-                {/* <div className="d-flex align-items-center justify-content-between mb-6">
-                  <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                    <span className="text-black-2">120</span> matched jobs
-                  </h5>
-                </div> */}
               </div>
             </div>
             <div className="row justify-content-center position-static">
-              <div className="col-12 col-xxl-8 col-xl-7 col-lg-10">
+              <div className="col-12 col-xxl-10 col-xl-12 col-lg-12">
                 {/* <!-- Left Section --> */}
                 <div className="Left">
                   <div
@@ -120,15 +111,6 @@ function JobSearch() {
                       />
                       {/* <!-- End Single Featured Job --> */}
                     </div>
-                  </div>
-                  <div className="text-center pt-5 pt-lg-13">
-                    <Link
-                      className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                      to={""}
-                    >
-                      Load More{" "}
-                      <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </Link>
                   </div>
                 </div>
                 {/* <!-- form end --> */}

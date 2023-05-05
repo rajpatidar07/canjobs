@@ -12,7 +12,7 @@ import LmiaStatus from "../forms/admin/lmiastatus";
 import { ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 
-function JobResponse(props) {  
+function JobResponse(props) {
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [followup, setFollowUp] = useState(false);
@@ -22,8 +22,9 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
-    useState("");
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
+    ""
+  );
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -39,7 +40,9 @@ function JobResponse(props) {
   /* Function to get the Response data*/
   const ResponseData = async () => {
     const userData = await GetAllResponse(
-      props.heading === "Manage Follow-ups" || user_type==="company" ? jobId : null,
+      props.heading === "Manage Follow-ups" || user_type === "company"
+        ? jobId
+        : null,
       skillFilterValue,
       experienceTypeFilterValue,
       search,
@@ -178,7 +181,7 @@ function JobResponse(props) {
         className={
           props.heading === "Response" ||
           (props.heading === undefined && user_type === "admin")
-            ? "dashboard-main-container mt-20"
+            ? "dashboard-main-container mt-16"
             : props.heading === "Dashboard"
             ? ""
             : "response__container"
@@ -201,15 +204,15 @@ function JobResponse(props) {
               className={
                 props.heading === "Manage Follow-ups"
                   ? "response_filters mb-2 align-items-center"
-                  : "mb-8 align-items-center"
+                  : "align-items-center"
               }
             >
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
-              <div className="row align-items-center">
+              <div className="row m-0 align-items-center">
                 {props.heading === "" ? null : (
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Company:</p>
                     <input
                       required
@@ -222,7 +225,7 @@ function JobResponse(props) {
                     />
                   </div>
                 )}
-                <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                <div className="col p-1 form_group mb-5 mt-4">
                   <p className="input_label">Filter by Skill:</p>
                   <div className="select_div">
                     <select
@@ -241,7 +244,7 @@ function JobResponse(props) {
                     </select>
                   </div>
                 </div>
-                <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                <div className="col p-1 form_group mb-5 mt-4">
                   <p className="input_label">Filter by Experience:</p>
                   <div className="select_div">
                     <select
@@ -300,7 +303,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={()=>handleSort("name")}
+                          onClick={() => handleSort("name")}
                           className="text-gray"
                           title="Sort by Name"
                         >
@@ -316,7 +319,7 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={()=>handleSort("experience")}
+                            onClick={() => handleSort("experience")}
                             className="text-gray"
                             title="Sort by Experience"
                           >
@@ -330,7 +333,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={()=>handleSort("job_title")}
+                          onClick={() => handleSort("job_title")}
                           className="text-gray"
                           title="Sort by Job"
                         >
@@ -343,7 +346,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={()=>handleSort("company_name")}
+                          onClick={() => handleSort("company_name")}
                           className="text-gray"
                           title="Sort by Company"
                         >
@@ -356,7 +359,7 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={()=>handleSort("lmia_status")}
+                          onClick={() => handleSort("lmia_status")}
                           className="text-gray"
                           title="Sort by LIMIA Status"
                         >
@@ -372,7 +375,7 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={()=>handleSort("contact_no")}
+                            onClick={() => handleSort("contact_no")}
                             className="text-gray"
                             title="Sort by Contact"
                           >
@@ -389,7 +392,7 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={()=>handleSort("current_location")}
+                            onClick={() => handleSort("current_location")}
                             className="text-gray"
                             title="Sort by Address"
                           >
@@ -397,7 +400,8 @@ function JobResponse(props) {
                           </Link>
                         </th>
                       )}
-                      {props.heading === "Dashboard" || user_type==="company" ? (
+                      {props.heading === "Dashboard" ||
+                      user_type === "company" ? (
                         ""
                       ) : (
                         <th
@@ -437,11 +441,11 @@ function JobResponse(props) {
                         )}
                       </tr>
                     ) : (
-                      (response || []).map((res,i) => (
+                      (response || []).map((res, i) => (
                         <tr className="" key={i}>
                           <th className="pl-5 py-5 pr-0   ">
                             <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto">
+                              <div className="circle-36 mx-auto overflow-hidden">
                                 {/* {res.profile_photo === null ? ( */}
                                 <img
                                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
@@ -460,15 +464,18 @@ function JobResponse(props) {
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.name || res.gender || res.date_of_birth
-                               ? <>
-                               {res.name}(
-                                {moment().diff(res.date_of_birth, "years")})
-                                <br />
-                                {res.gender}
+                              {res.name || res.gender || res.date_of_birth ? (
+                                <>
+                                  {res.name}(
+                                  {moment().diff(res.date_of_birth, "years")})
+                                  <br />
+                                  {res.gender}
                                 </>
-                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
-                              } 
+                              ) : (
+                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  No Data
+                                </span>
+                              )}
                             </h3>
                           </th>
                           {props.heading === "Dashboard" ? (
@@ -476,24 +483,36 @@ function JobResponse(props) {
                           ) : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.experience ? res.experience 
-                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
-                              }
+                                {res.experience ? (
+                                  res.experience
+                                ) : (
+                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    No Data
+                                  </span>
+                                )}
                               </h3>
                             </th>
                           )}
                           <th className="py-5 ">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                             {res.job_title ? res.job_title 
-                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
-                              }
+                              {res.job_title ? (
+                                res.job_title
+                              ) : (
+                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  No Data
+                                </span>
+                              )}
                             </div>
                           </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.company_name ? res.company_name 
-                              :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
-                              }
+                              {res.company_name ? (
+                                res.company_name
+                              ) : (
+                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  No Data
+                                </span>
+                              )}
                             </h3>
                           </th>
                           <th className=" py-5">
@@ -532,12 +551,16 @@ function JobResponse(props) {
                           ) : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                               {res.contact_no || res.email 
-                               ?<>{`+${res.contact_no}`} 
-                               <br /> {res.email}
-                               </>
-                               :<span className="font-size-3 font-weight-normal text-black-2 mb-0">No Data</span>
-                               }
+                                {res.contact_no || res.email ? (
+                                  <>
+                                    {`+${res.contact_no}`}
+                                    <br /> {res.email}
+                                  </>
+                                ) : (
+                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    No Data
+                                  </span>
+                                )}
                               </h3>
                             </th>
                           )}
@@ -546,19 +569,25 @@ function JobResponse(props) {
                           ) : (
                             <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.current_location || res.currently_located_country ?
-                                <>
-                                <span>{res.current_location}</span>
-                                <span className="px-1">
-                                  {res.currently_located_country}
-                                </span>
-                                </>
-                                : <span className="font-size-3 font-weight-normal text-black-2 mb-0"> No Data</span> 
-                                }
+                                {res.current_location ||
+                                res.currently_located_country ? (
+                                  <>
+                                    <span>{res.current_location}</span>
+                                    <span className="px-1">
+                                      {res.currently_located_country}
+                                    </span>
+                                  </>
+                                ) : (
+                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {" "}
+                                    No Data
+                                  </span>
+                                )}
                               </h3>
                             </th>
                           )}
-                          {props.heading === "Dashboard" || user_type==="company" ? (
+                          {props.heading === "Dashboard" ||
+                          user_type === "company" ? (
                             ""
                           ) : (
                             <th className="py-5  min-width-px-100">

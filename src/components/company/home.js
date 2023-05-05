@@ -19,9 +19,9 @@ function EmployerHome() {
         <div className="container position-static hero_container">
           <div className="row position-relative align-items-center justify-content-center position-static w-80">
             {/* <!-- Hero Form --> */}
-           <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20"> 
+            <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
               {/* <SearchForm /> */}
-            </div> 
+            </div>
             {/* <!-- End Hero Form --> */}
           </div>
           {/* <div className="row m-0 job_filter_block">
@@ -75,7 +75,7 @@ function EmployerHome() {
               </div>
             </div>
             {/* <!-- Brand Logos --> */}
-            <div className="row align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
+            <div className="row m-0 align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
               {/* <!-- Single Brand --> */}
               <div
                 className="single-brand-logo mx-5 my-6"
@@ -136,7 +136,7 @@ function EmployerHome() {
                 <img src="image/l1/png/brand-light-logo-6.png" alt="" />
               </div>
             </div>
-            <div className="row align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
+            <div className="row m-0 align-items-center justify-content-center justify-content-lg-between gr-opacity-5">
               {/* <!-- Single Brand --> */}
               <div
                 className="single-brand-logo mx-5 my-6"
@@ -206,7 +206,7 @@ function EmployerHome() {
           <div className="container">
             <hr className="pt-13 pt-lg-20" />
             {/* <!-- Section Top --> */}
-            <div className="row align-items-center justify-content-center">
+            <div className="row m-0 align-items-center justify-content-center">
               {/* <!-- Section Title --> */}
               <div className="col-12 col-xl-6 col-lg-7 col-md-9">
                 <div className="text-center mb-12 mb-lg-17">

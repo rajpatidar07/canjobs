@@ -28,7 +28,7 @@ function Job() {
   // if (userData.message === "No data found") {
   // //// console.log((userData.status);
   // }
-  
+
   /*Render function to get the job */
   useEffect(() => {
     CategoryData();
@@ -83,20 +83,20 @@ function Job() {
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-20"
+              ? "dashboard-main-container mt-16"
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by Job:</p>
                     <input
                       required
@@ -108,7 +108,7 @@ function Job() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>{" "}
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by Company:</p>
                     <input
                       required
@@ -120,7 +120,7 @@ function Job() {
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Category:</p>
                     <div className="select_div">
                       <select
@@ -144,7 +144,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Job Swap:</p>
                     <div className="select_div">
                       <select
@@ -165,7 +165,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Key Skill:</p>
                     <div className="select_div">
                       <select
@@ -186,7 +186,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Location:</p>
                     <div className="select_div">
                       <select
@@ -243,7 +243,7 @@ function Job() {
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-20 ">
+          <div className="dashboard-main-container mt-16 ">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

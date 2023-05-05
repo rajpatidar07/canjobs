@@ -14,16 +14,16 @@ export default function ManageInterview() {
         <AdminSidebar heading={"Interview"} />
         {/* <ToastContainer />{" "} */}
 
-        <div className="dashboard-main-container mt-20" id="dashboard-body">
+        <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
                 {/*<-- Search interview -->*/}
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
                     <input
                       required
@@ -35,7 +35,7 @@ export default function ManageInterview() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  {/* <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  {/* <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Type:</p>
                     <div className="select_div">
                       <select

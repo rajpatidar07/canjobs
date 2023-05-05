@@ -93,11 +93,11 @@ function Interview(props) {
         <div className="mt-5" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
-                {/* <div className="row align-items-center"> */}
+                {/* <div className="row m-0 align-items-center"> */}
                 {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
                   <p className="input_label">Search by name:</p>
                   <input

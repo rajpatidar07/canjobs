@@ -71,9 +71,7 @@ function JobBoxResponse({
                   <img
                     className="company_logo"
                     src={
-                      job.logo === null
-                        ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                        : job.logo
+                      job.logo === null ? "image/logo-main-black.png" : job.logo
                     }
                     alt=""
                   />

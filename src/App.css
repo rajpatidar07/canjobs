@@ -1,3 +1,13 @@
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  overflow: auto;
+  height: 100%;
+  overscroll-behavior: none;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -70,7 +80,7 @@ button.btn.action_btn {
 }
 /* Admin Table */
 .bg-white.shadow-8.datatable_div.rounded {
-  padding: 20px!important;
+  padding: 0!important;
 }
 .table.main_data_table th, .table.main_data_table td{
   border: unset;
@@ -84,8 +94,8 @@ button.btn.action_btn {
 }
 
 .main_data_table{
-  border: 1px solid #eee;
-  border-radius: 10px;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
   border-collapse: collapse;
 }
@@ -98,7 +108,7 @@ button.btn.action_btn {
   font-weight: 600!important;
 }
 .main_data_table tr{
-  border: none!important;
+  /* border: none!important; */
 }
 .main_data_table br{
   display: none;
@@ -108,6 +118,61 @@ button.btn.action_btn {
 }
 .main_data_table_inn thead th, .main_data_table_inn thead a.text-gray{
   color: #333!important;
+}
+.main_data_table tbody tr {
+  background: #fff;
+  /* border-top: 4px solid #f4f5f8; */
+  border-bottom: 4px solid #f4f5f8;
+  margin: 0;
+  border-spacing: 0px;
+}
+.main_data_table {
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  color: #333;
+}
+button.btn.action_btn {
+  min-width: 30px;
+  line-height: normal;
+  height: auto;
+}
+.table.main_data_table th, .table.main_data_table td{
+  padding: 8px 8px!important;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+table.table.table-striped.main_data_table_inn tr {
+  background: #f1f1f1;
+  border-top: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+}
+.bg-white.shadow-8.datatable_div {
+  background: transparent!important;
+  box-shadow: none;
+  padding: 0!important;
+}
+.main_data_table .response_main_div .container table{
+  margin: 0;
+}
+.main_data_table .response_main_div .container {
+  padding: 0;
+  margin-top: 15px;
+}
+.dashboard-main-container .form-control{
+  height: 2.25rem;
+  padding: 5px 10px!important;
+  font-size: 14px;
+}
+
+.dashboard-main-container .form_group .input_label{
+  position: unset;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
 }
 /* header */
 .main-menu>li>.nav-link {
@@ -263,6 +328,7 @@ left: 0;
 .company_box .company_logo {
   max-height: 50px;
   margin-right: 10px;
+  max-width: 150px;
 }
 
 span.job_swap_label {
@@ -387,4 +453,10 @@ label.image_upload_btn {
 .dashboard_card .datatable_div {
   box-shadow: none;
   border-radius: 0!important;
+}
+
+/* EMPLOYEE TABLE */
+.d-flex.profile_box {
+  gap: 7px;
+  align-items: center;
 }
