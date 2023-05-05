@@ -244,11 +244,11 @@ function AddJobModal(props) {
       setCategory(userData.data);
     }
   };
-      console.log(props.admin);
+
   /* Function to get Employer data*/
   const CompnayData = async () => {
     const userData = await getAllEmployer();
-    if (userData.data.length === 0 || props.admin === undefined) {
+    if (userData.data.length === 0) {
       setCompany([]);
     } else {
       setCompany(userData.data);
@@ -259,7 +259,9 @@ function AddJobModal(props) {
     if (user_type === "admin") {
       CompnayData();
     }
-   if(token){ CategoryData();}
+    if(token || props.admin === "admin"){
+       CategoryData();
+    }
     if (
       props.jobdata === "0" ||
       props.jobdata === undefined ||
