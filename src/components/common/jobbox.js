@@ -260,6 +260,7 @@ function JobBox({
       <AddJobModal
         show={showAddJobsModal}
         jobdata={JobId}
+        admin={"user"}
         close={() => setShowAddJobsModal(false)}
       />
     </>

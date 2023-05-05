@@ -13,6 +13,7 @@ import {
 } from "../../../api/api";
 
 function AddJobModal(props) {
+  console.log(props);
   const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -256,7 +257,7 @@ function AddJobModal(props) {
     setCompany(userData.data);
   };
   useEffect(() => {
-    if (user_type === "admin" || props.admin === "admin") {
+    if (user_type === "admin" || props.admin === "admin" || props.admin !== "user") {
       CompnayData();
     }
     if(token){
