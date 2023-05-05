@@ -256,10 +256,10 @@ function AddJobModal(props) {
     setCompany(userData.data);
   };
   useEffect(() => {
-    if (user_type === "admin") {
+    if (user_type === "admin" || props.admin === "admin") {
       CompnayData();
     }
-    if(token || props.admin === "admin"){
+    if(token){
        CategoryData();
     }
     if (
