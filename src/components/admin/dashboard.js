@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   // eslint-disable-next-line
   /*States */
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
-  const [countData,/* setCountData*/] = useState("");
+  const [countData /* setCountData*/] = useState("");
   let [job, setJob] = useState("");
   let [employee, setEmployee] = useState("");
   let [employer, setEmployer] = useState("");

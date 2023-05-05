@@ -14,7 +14,7 @@ function JobBox({
   locationFilterValue,
 }) {
   /*States */
-  let [apiCall , setApiSetCall] = useState(false)
+  let [apiCall, setApiSetCall] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [jobData, setjobData] = useState([]);
@@ -32,7 +32,6 @@ function JobBox({
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const category = searchParams.get("category");
-
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -61,9 +60,9 @@ function JobBox({
     SkillFilterValue,
     jobSwapFilterValue,
     locationFilterValue,
-    apiCall
+    apiCall,
   ]);
-  
+
   /*FUnction to apply to the job */
   const OnApplyClick = async (status, job_id) => {
     let Response = await ApplyJob(job_id, user_id, status);
@@ -79,7 +78,7 @@ function JobBox({
         autoClose: 1000,
       });
     }
-    setApiSetCall(true)
+    setApiSetCall(true);
   };
   return (
     <>
@@ -96,106 +95,113 @@ function JobBox({
           </div>
         ) : (
           (jobData || []).map((job) => (
-            <Link
+            <div
               key={job.job_id}
-              to={"/jobdetail"}
-              onClick={job.is_applied === "0"?
-              () => {
-                localStorage.setItem("jobId", job.job_id);
-                OnApplyClick(1, job.job_id);
-              }
-              :null }
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
             >
-              {job.job_type === "swap" ? (
-                <span className="job_swap_label">SWAP</span>
-              ) : null }
-              <div className="row job_header m-0">
-                <div className="media align-items-center company_box col-md-6 p-0">
-                  <div className="text_box text-left">
-                    <img
-                      className="company_logo"
-                      src={
-                        job.logo
-                          ? job.logo
-                          : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+              <Link
+                to={"/jobdetail"}
+                onClick={
+                  job.is_applied === "0"
+                    ? () => {
+                        localStorage.setItem("jobId", job.job_id);
+                        OnApplyClick(1, job.job_id);
                       }
-                      alt=""
-                    />
+                    : null
+                }
+              >
+                {job.job_type === "swap" ? (
+                  <span className="job_swap_label">SWAP</span>
+                ) : null}
+                <div className="row job_header m-0">
+                  <div className="media align-items-center company_box col-md-6 p-0">
+                    <div className="text_box text-left">
+                      <img
+                        className="company_logo"
+                        src={
+                          job.logo
+                            ? job.logo
+                            : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                        }
+                        alt=""
+                      />
+                    </div>
+                    <div className="text_box text-left w-100">
+                      <p className="font-size-3 text-default-color line-height-2 m-0">
+                        {job.company_name}
+                      </p>
+                      <h3 className="mb-0 font-size-6 heading-dark-color">
+                        {job.job_title}
+                      </h3>
+                    </div>
                   </div>
-                  <div className="text_box text-left w-100">
-                    <p className="font-size-3 text-default-color line-height-2 m-0">
-                      {job.company_name}
-                    </p>
-                    <h3 className="mb-0 font-size-6 heading-dark-color">
-                      {job.job_title}
-                    </h3>
+                  <div className="col-md-6 p-0">
+                    <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
+                      <li
+                        className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                        title="Job Category"
+                      >
+                        <span className="mr-4">
+                          <img
+                            src="image/svg/icon-loaction-pin-black.svg"
+                            alt=""
+                          />
+                        </span>
+                        <span className="font-weight-semibold">
+                          {job.industry_type}
+                        </span>
+                      </li>
+                      <li
+                        className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                        title="Location"
+                      >
+                        <span className="mr-4">
+                          <img
+                            src="image/svg/icon-loaction-pin-black.svg"
+                            alt=""
+                          />
+                        </span>
+                        <span className="font-weight-semibold">
+                          {job.location}
+                        </span>
+                      </li>
+                      <li
+                        className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                        title="Job Type"
+                      >
+                        <span className="mr-4">
+                          <img src="image/svg/icon-suitecase.svg" alt="" />
+                        </span>
+                        <span className="font-weight-semibold">
+                          {job.employement}
+                        </span>
+                      </li>
+                      <li
+                        className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                        title="Posted Time"
+                      >
+                        <span className="mr-4">
+                          <img src="image/svg/icon-clock.svg" alt="" />
+                        </span>
+                        <span className="font-weight-semibold">
+                          {moment(job.created_at).format("YYYY-MM-DD")}
+                        </span>
+                      </li>
+                      <li
+                        className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                        title="Salary"
+                      >
+                        <span className="mr-4">
+                          <img src="image/svg/icon-clock.svg" alt="" />
+                        </span>
+                        <span className="font-weight-semibold">
+                          {job.salary}
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-                <div className="col-md-6 p-0">
-                  <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                    <li
-                      className="mt-2 mr-8 font-size-small text-black-2 d-flex"
-                      title="Job Category"
-                    >
-                      <span className="mr-4">
-                        <img
-                          src="image/svg/icon-loaction-pin-black.svg"
-                          alt=""
-                        />
-                      </span>
-                      <span className="font-weight-semibold">
-                        {job.industry_type}
-                      </span>
-                    </li>
-                    <li
-                      className="mt-2 mr-8 font-size-small text-black-2 d-flex"
-                      title="Location"
-                    >
-                      <span className="mr-4">
-                        <img
-                          src="image/svg/icon-loaction-pin-black.svg"
-                          alt=""
-                        />
-                      </span>
-                      <span className="font-weight-semibold">
-                        {job.location}
-                      </span>
-                    </li>
-                    <li
-                      className="mt-2 mr-8 font-size-small text-black-2 d-flex"
-                      title="Job Type"
-                    >
-                      <span className="mr-4">
-                        <img src="image/svg/icon-suitecase.svg" alt="" />
-                      </span>
-                      <span className="font-weight-semibold">
-                        {job.employement}
-                      </span>
-                    </li>
-                    <li
-                      className="mt-2 mr-8 font-size-small text-black-2 d-flex"
-                      title="Posted Time"
-                    >
-                      <span className="mr-4">
-                        <img src="image/svg/icon-clock.svg" alt="" />
-                      </span>
-                      <span className="font-weight-semibold">
-                        {moment(job.created_at).format("YYYY-MM-DD")}
-                      </span>
-                    </li>
-                    <li
-                      className="mt-2 mr-8 font-size-small text-black-2 d-flex"
-                      title="Salary"
-                    >
-                      <span className="mr-4">
-                        <img src="image/svg/icon-clock.svg" alt="" />
-                      </span>
-                      <span className="font-weight-semibold">{job.salary}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              </Link>
               <div className="row pt-4">
                 <div className="col-md-12 text-left">
                   <p>{job.job_description}</p>
@@ -227,26 +233,30 @@ function JobBox({
                       </button>
                     </>
                   ) : (
-                      <button
-                      className={job.is_applied === "0"?"btn btn-secondary text-uppercase font-size-3":"btn btn-info text-uppercase font-size-3"}
-                        onClick={() => token === null ?setShowLogin(true) 
-                           : OnApplyClick(0, job.job_id)}
-                           disabled={job.is_applied === "0" ? true : false} 
-                      >
-                       {job.is_applied === "0" ? "Apply" : "Applied" }
-                      </button>
+                    <button
+                      className={
+                        job.is_applied === "0"
+                          ? "btn btn-secondary text-uppercase font-size-3"
+                          : "btn btn-info text-uppercase font-size-3"
+                      }
+                      onClick={() =>
+                        token === null
+                          ? setShowLogin(true)
+                          : OnApplyClick(0, job.job_id)
+                      }
+                      disabled={job.is_applied === "0" ? false : true}
+                    >
+                      {job.is_applied === "0" ? "Apply" : "Applied"}
+                    </button>
                   )}
                 </div>
               </div>
-            </Link>
+            </div>
           ))
         )}
         {/* <!-- End Maped Job --> */}
       </div>{" "}
-      <EmployeeLoginModal
-                  show={showLogin}
-                  close={() => setShowLogin(false)}
-                />
+      <EmployeeLoginModal show={showLogin} close={() => setShowLogin(false)} />
       <AddJobModal
         show={showAddJobsModal}
         jobdata={JobId}
