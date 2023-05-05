@@ -382,6 +382,7 @@ export default function JobTable(props) {
       <AddJobModal
         show={showAddJobsModal}
         jobdata={JobId}
+        admin={"admin"}
         close={() => setShowAddJobsModal(false)}
       />
       <SAlert

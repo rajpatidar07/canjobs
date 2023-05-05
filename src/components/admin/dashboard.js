@@ -395,20 +395,20 @@ const AdminDashboard = () => {
                   <Interview heading={"Dashboard"} filter_by_time={interview} />
                 </div>
               </div>
-              {/* <!-- Recent Companies- --> */}
-              <div className="col-6">
+                {/* <!-- Recent Follow- --> */}
+                <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Added Companies
+                    <h3 className="font-size-5 px-3 m-0">
+                      Recently Added FollowUp
                     </h3>
                     <div className="d-flex justify-content-between p-0">
                       <div className="select_div mr-5">
                         <select
-                          name="employer"
-                          value={employer}
-                          id="employer"
-                          onChange={(e) => setEmployer(e.target.value)}
+                          name="followup"
+                          value={followup}
+                          id="followup"
+                          onChange={(e) => setFollowUP(e.target.value)}
                           className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
@@ -423,17 +423,17 @@ const AdminDashboard = () => {
                         {" "}
                         <Link
                           className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/employer"}
-                          title="View All Companies"
+                          to={"/followup"}
+                          title="View All Followup"
                         >
                           View All
                         </Link>
                       </div>
                     </div>
                   </div>
-                  <EmployerTable
-                    heading="Dashboard"
-                    filter_by_time={employer}
+                  <FollowUpDashBoard
+                    heading={"Dashboard"}
+                    filter_by_time={followup}
                   />
                 </div>
               </div>
@@ -482,20 +482,20 @@ const AdminDashboard = () => {
                   />
                 </div>
               </div>
-              {/* <!-- Recent Follow- --> */}
-              <div className="col-6">
+               {/* <!-- Recent Companies- --> */}
+               {/* <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0">
-                      Recently Added FollowUp
+                    <h3 className="font-size-5 px-3 m-0  ">
+                      Recently Added Companies
                     </h3>
                     <div className="d-flex justify-content-between p-0">
                       <div className="select_div mr-5">
                         <select
-                          name="followup"
-                          value={followup}
-                          id="followup"
-                          onChange={(e) => setFollowUP(e.target.value)}
+                          name="employer"
+                          value={employer}
+                          id="employer"
+                          onChange={(e) => setEmployer(e.target.value)}
                           className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
@@ -510,20 +510,20 @@ const AdminDashboard = () => {
                         {" "}
                         <Link
                           className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/followup"}
-                          title="View All Followup"
+                          to={"/employer"}
+                          title="View All Companies"
                         >
                           View All
                         </Link>
                       </div>
                     </div>
                   </div>
-                  <FollowUpDashBoard
-                    heading={"Dashboard"}
-                    filter_by_time={followup}
+                  <EmployerTable
+                    heading="Dashboard"
+                    filter_by_time={employer}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

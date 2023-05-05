@@ -15,6 +15,7 @@ function Followup() {
   /*show Modal and props state */
   let [showAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
@@ -74,6 +75,7 @@ function Followup() {
     currentPage,
     columnName,
     sortOrder,
+    apiCall
   ]);
 
   /* Function to show the Job detail data */
@@ -436,7 +438,8 @@ function Followup() {
                                   >
                                     <button
                                       className="btn btn-outline-info action_btn"
-                                      onClick={() => setresponseId(job.job_id)}
+                                      onClick={() => {setresponseId(job.job_id);
+                                                  setApiCall(true)}}
                                       title="Job Response"
                                     >
                                       Responses

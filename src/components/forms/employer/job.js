@@ -16,9 +16,9 @@ function AddJobModal(props) {
   const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
-  const user_type = localStorage.getItem("userType");
-  const company_id = localStorage.getItem("company_id");
   let token = localStorage.getItem("token");
+  const company_id = localStorage.getItem("company_id");
+  const user_type = localStorage.getItem("userType");
 
   /* Functionality to close the modal */
   const close = () => {
@@ -244,11 +244,11 @@ function AddJobModal(props) {
       setCategory(userData.data);
     }
   };
-
+      console.log(props.admin);
   /* Function to get Employer data*/
   const CompnayData = async () => {
     const userData = await getAllEmployer();
-    if (userData.data.length === 0) {
+    if (userData.data.length === 0 || props.admin === undefined) {
       setCompany([]);
     } else {
       setCompany(userData.data);

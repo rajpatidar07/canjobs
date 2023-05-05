@@ -28,10 +28,10 @@ function Job() {
   // if (userData.message === "No data found") {
   // //// console.log((userData.status);
   // }
+  
   /*Render function to get the job */
   useEffect(() => {
     CategoryData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
@@ -49,6 +49,7 @@ function Job() {
     setShowJobDetails(true);
     setJobId(e);
   };
+
   /* Function to show the single data to update job */
   const editJob = (e) => {
     // e.preventDefault();
@@ -93,6 +94,7 @@ function Job() {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
+                {/*<-- Job Search and Filter -->*/}
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
                     <p className="input_label">Search by Job:</p>
@@ -214,9 +216,11 @@ function Job() {
                       >
                         Add Job
                       </CustomButton>
+                      {/*<-- Add Job Modal -->*/}
                       <AddJobModal
                         show={showAddJobsModal}
                         jobdata={JobId}
+                        admin={"admin"}
                         close={() => setShowAddJobsModal(false)}
                       />
                     </div>
