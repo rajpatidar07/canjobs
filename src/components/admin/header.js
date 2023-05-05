@@ -7,60 +7,10 @@ import GenerateToken from "./generateToken";
 // import Select from "react-select";
 
 const AdminHeader = (props) => {
+  /*States */
   const [showChangePass, setShowChangePass] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
-  // let [allAdmin, setAllAdmin] = useState([]);
-  // let [AdminId, setAdminId] = useState("");
-  // const [state, setState] = useState([]);
   const [dropDown, setDropDown] = useState(false);
-  // let [loading, setLoading] = useState(false);
-  // let navigate = useNavigate("");
-  // const AdminData = async () => {
-  //   const userData = await getallAdminData();
-  //   setAllAdmin(userData.data);
-  // };
-
-  // useEffect(() => {
-  //   AdminData();
-  // }, [props]);
-
-  // // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
-  // const onSelectChange = (option) => {
-  //   setAdminId(option.value);
-  // };
-  // useEffect(() => {
-  //   const options = allAdmin.map((option) => ({
-  //     value: option.admin_id,
-  //     label: option.name + " - " + option.admin_type,
-  //   }));
-  //   setState(options);
-  // }, [allAdmin]);
-
-  // const onTokenGenerateClick = async (event) => {
-  //   event.preventDefault();
-  //   // setLoading(true);
-  //   const responseData = await GetAdminToken(AdminId);
-  //   if (responseData.message === "successful") {
-  //     localStorage.setItem("view_as_token", responseData.token);
-  //     toast.success("Token Generated successfully", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //       autoClose: 1000,
-  //     });
-  //     setState([]);
-  //     setAdminId("");
-  //     navigate("/dashboard");
-  //   }
-  // };
-  // const onRest = () => {
-  //   localStorage.setItem("view_as_token", "");
-  //   toast.success("Token Reset successfully", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: 1000,
-  //   });
-  //   setState([]);
-  //   setAdminId("");
-  //   navigate("/dashboard");
-  // };
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
@@ -156,6 +106,7 @@ const AdminHeader = (props) => {
                   >
                     Edit Profile
                   </Link>
+                  {/*<--Logout Functionality-->*/}
                   <Link
                     to={"/adminlogin"}
                     onClick={() => {
@@ -174,11 +125,13 @@ const AdminHeader = (props) => {
             </div>
           </div>
         </nav>
-      </div>{" "}
+      </div>
+      {/*<-- Change password Modal -->*/}
       <ChangePassword
         show={showChangePass}
         close={() => setShowChangePass(false)}
       />
+      {/*<-- Generate Token Modal -->*/}
       <GenerateToken
         show={showGeneratToken}
         close={() => setShowGenerateToken(false)}

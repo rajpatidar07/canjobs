@@ -13,9 +13,18 @@ function JobBox({
   jobSwapFilterValue,
   locationFilterValue,
 }) {
+  /*States */
   let [apiCall , setApiSetCall] = useState(false)
   const [showLogin, setShowLogin] = useState(false);
+  let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [jobData, setjobData] = useState([]);
+  const [JobId, setJobId] = useState([]);
+  let [noData, setNoData] = useState("");
+
+  /*Data from local storage */
   const token = localStorage.getItem("token");
+  const user_type = localStorage.getItem("userType");
+  const user_id = localStorage.getItem("employee_id");
 
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
@@ -24,12 +33,6 @@ function JobBox({
   const country = searchParams.get("country");
   const category = searchParams.get("category");
 
-  let [showAddJobsModal, setShowAddJobsModal] = useState(false);
-  let [jobData, setjobData] = useState([]);
-  const [JobId, setJobId] = useState([]);
-  let [noData, setNoData] = useState("");
-  const user_type = localStorage.getItem("userType");
-  const user_id = localStorage.getItem("employee_id");
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -47,6 +50,7 @@ function JobBox({
       setNoData(userData.data.total_rows);
     }
   };
+
   /*Render Function */
   useEffect(() => {
     JobData();
@@ -59,6 +63,7 @@ function JobBox({
     locationFilterValue,
     apiCall
   ]);
+  
   /*FUnction to apply to the job */
   const OnApplyClick = async (status, job_id) => {
     let Response = await ApplyJob(job_id, user_id, status);
@@ -99,12 +104,12 @@ function JobBox({
                 localStorage.setItem("jobId", job.job_id);
                 OnApplyClick(1, job.job_id);
               }
-              :null}
+              :null }
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
             >
               {job.job_type === "swap" ? (
                 <span className="job_swap_label">SWAP</span>
-              ) : null}
+              ) : null }
               <div className="row job_header m-0">
                 <div className="media align-items-center company_box col-md-6 p-0">
                   <div className="text_box text-left">
@@ -211,7 +216,7 @@ function JobBox({
                 <div className="media justify-content-md-end col-md-4">
                   {user_type === "company" ? (
                     <>
-                      <Link
+                      <button
                         className="btn btn-secondary text-uppercase font-size-3"
                         onClick={() => {
                           setJobId(job.job_id);
@@ -219,17 +224,17 @@ function JobBox({
                         }}
                       >
                         Edit
-                      </Link>
+                      </button>
                     </>
                   ) : (
-                      <Link
+                      <button
                       className={job.is_applied === "0"?"btn btn-secondary text-uppercase font-size-3":"btn btn-info text-uppercase font-size-3"}
-                        onClick={() =>token === null ?setShowLogin(true) 
+                        onClick={() => token === null ?setShowLogin(true) 
                            : OnApplyClick(0, job.job_id)}
-                           disabled={job.is_applied === "0" ? true: false} 
+                           disabled={job.is_applied === "0" ? true : false} 
                       >
-                       {job.is_applied === "0"? "Apply" : "Applied" }
-                      </Link>
+                       {job.is_applied === "0" ? "Apply" : "Applied" }
+                      </button>
                   )}
                 </div>
               </div>

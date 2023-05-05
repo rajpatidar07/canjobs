@@ -63,7 +63,6 @@ function Followup() {
   useEffect(() => {
     JobData();
     CategoryData();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
@@ -83,10 +82,6 @@ function Followup() {
     setShowJobDetails(true);
     setJobId(e);
   };
-  /*Category Onchange function to filter the data */
-  let onCategoryFilterChange = (e) => {
-    setCategoryFilterValue(e.target.value);
-  };
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory();
@@ -97,22 +92,6 @@ function Followup() {
     }
   };
 
-  /*Skill Onchange function to filter the data */
-  let onSkillFilterChange = (e) => {
-    setSkillFilterValue(e.target.value);
-  };
-  /*Location Onchange function to filter the data */
-  let onLocationFilterChange = (e) => {
-    setLocationFilterValue(e.target.value);
-  };
-  /*JobSwap Onchange function to filter the data */
-  let onJobSwapFilterChange = (e) => {
-    setJobSwapFilterValue(e.target.value);
-  };
-  /*Searcg Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -149,6 +128,7 @@ function Followup() {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
+                {/* <!-- Follow up search and filter --> */}
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
@@ -159,7 +139,7 @@ function Followup() {
                       placeholder={"Search Job"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) => onSearch(e)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
@@ -169,7 +149,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={onCategoryFilterChange}
+                        onChange={(e)=>setCategoryFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>
@@ -193,7 +173,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={onJobSwapFilterChange}
+                        onChange={(e)=>setJobSwapFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Job Type</option>
@@ -212,7 +192,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={onSkillFilterChange}
+                        onChange={(e)=>setSkillFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
@@ -233,7 +213,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={onLocationFilterChange}
+                        onChange={(e)=>setLocationFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Location</option>
@@ -469,6 +449,7 @@ function Followup() {
                             job.total_applicants > 0 ? (
                               <tr>
                                 <td colSpan={10}>
+                                  {/* <!-- Job Responses --> */}
                                   <JobResponse
                                     responseId={responseId}
                                     heading={"Manage Follow-ups"}
@@ -482,6 +463,7 @@ function Followup() {
                     </tbody>
                   </table>
                 </div>
+                {/* <!-- Follow up Pagination --> */}
                 <div className="pt-2">
                   <Pagination
                     nPages={nPages}
@@ -493,6 +475,7 @@ function Followup() {
             </div>
           </div>
         </div>
+        {/* <!-- Job Details --> */}
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-20 ">
             <div className="container">

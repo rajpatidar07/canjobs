@@ -13,6 +13,7 @@ import EmployerTable from "../common/employerTable";
 import FollowUpDashBoard from "../common/followUpTableDashboard";
 const AdminDashboard = () => {
   // eslint-disable-next-line
+  /*States */
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   const [countData,/* setCountData*/] = useState("");
   let [job, setJob] = useState("");
@@ -62,6 +63,7 @@ const AdminDashboard = () => {
       >
         <ToastContainer />
         <div className="container">
+          {/* <!-- Summary count --> */}
           <div className="row mb-7 d-none">
             <div className="col-xxl-3 col-xl-4 col-md-5 col-6 col-sm-6">
               {/* <!-- Single Category --> */}
@@ -270,6 +272,7 @@ const AdminDashboard = () => {
           </div>
           <div className="mb-14">
             <div className="row mb-11 ">
+              {/* <!-- Recent Jobs- --> */}
               <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
@@ -308,6 +311,7 @@ const AdminDashboard = () => {
                   <JobTable heading={"Dashboard"} filter_by_time={job} />
                 </div>
               </div>
+              {/* <!-- Recent Employees- --> */}
               <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
@@ -353,6 +357,7 @@ const AdminDashboard = () => {
           </div>
           <div className="mb-14">
             <div className="row">
+              {/* <!-- Recent Interviews- --> */}
               <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
@@ -390,6 +395,7 @@ const AdminDashboard = () => {
                   <Interview heading={"Dashboard"} filter_by_time={interview} />
                 </div>
               </div>
+              {/* <!-- Recent Companies- --> */}
               <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
@@ -435,6 +441,7 @@ const AdminDashboard = () => {
           </div>
           <div className="mb-14">
             <div className="row mb-11 ">
+              {/* <!-- Recent Job Response- --> */}
               <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
@@ -475,6 +482,7 @@ const AdminDashboard = () => {
                   />
                 </div>
               </div>
+              {/* <!-- Recent Follow- --> */}
               <div className="col-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">

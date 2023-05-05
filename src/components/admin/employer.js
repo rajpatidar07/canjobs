@@ -15,7 +15,6 @@ function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
   const [employerId, setEmployerID] = useState();
-
   /*Filter and search state */
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
@@ -38,6 +37,7 @@ function Employer() {
   //   (thing, index, self) =>
   //     index === self.findIndex((t) => t.corporation === thing.corporation)
   // );
+
   /* Function to show the Job detail data */
   const EmployerDetail = (e) => {
     // e.preventDefault();
@@ -52,6 +52,7 @@ function Employer() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Companies"} />
         <ToastContainer />
+        {/* <!-- Add Company Details Modal --> */}
         <CompanyDetails
           show={showAddEmployerModal}
           employerId={employerId}
@@ -72,6 +73,7 @@ function Employer() {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Employer</h3>
                 </div>
+                {/* <!-- Employer Search and Filter --> */}
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
@@ -137,6 +139,7 @@ function Employer() {
                   </div>
                 </div>
               </div>
+              {/* <!-- Employer List Table --> */}
               <EmployerTable
                 showAddEmployerModal={showAddEmployerModal}
                 EmployerDetail={EmployerDetail}
@@ -148,6 +151,7 @@ function Employer() {
             </div>
           </div>
         </div>
+        {/* <!-- Employer Details- --> */}
         {showEmployerDetails === true ? (
           <div className="dashboard-main-container mt-30">
             <div className="container">

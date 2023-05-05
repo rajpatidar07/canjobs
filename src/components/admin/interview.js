@@ -3,6 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import Interview from "../common/interviewTable";
 export default function ManageInterview() {
+  /*Search state */
   let [search, setSearch] = useState("");
   return (
     <>
@@ -20,6 +21,7 @@ export default function ManageInterview() {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Interview</h3>
                 </div>
+                {/*<-- Search interview -->*/}
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
@@ -62,45 +64,11 @@ export default function ManageInterview() {
                   </div> */}
                 </div>
               </div>
+              {/*<-- Interview list Table -->*/}
               <Interview search={search} heading={"Interview"} />
             </div>
           </div>
         </div>
-        {/* <SAlert
-          show={deleteAlert}
-          title={deleteName}
-          text="Are you Sure you want to delete !"
-          onConfirm={() => deleteAdmin(deleteId)}
-          showCancelButton={true}
-          onCancel={CancelDelete}
-        /> */}
-        {/* {showJobDetails === true ? (
-      <div className="dashboard-main-container mt-20 ">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 dark-mode-texts">
-              <div className="mb-9">
-                <Link
-                  to={""}
-                  onClick={() => setShowJobDetails(false)}
-                  className="d-flex align-items-center ml-4"
-                >
-                  
-                  <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                  <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                    Back
-                  </span>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="mb-18">
-            
-            <JobDetailsBox />
-          </div>
-        </div>
-      </div>
-    ) : null} */}
       </div>
     </>
   );

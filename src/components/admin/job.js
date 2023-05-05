@@ -223,6 +223,7 @@ function Job() {
                   </div>
                 </div>
               </div>
+              {/*<-- Job List Table -->*/}
               <JobTable
                 search={search}
                 jobSwapFilterValue={jobSwapFilterValue}
@@ -236,6 +237,7 @@ function Job() {
             </div>
           </div>
         </div>
+        {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-20 ">
             <div className="container">

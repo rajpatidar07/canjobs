@@ -9,6 +9,7 @@ import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
 function ManageJobs() {
+  /*Data and modal states */
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [jobId, setJobId] = useState();
   let [filter, SetFilter] = useState([]);
@@ -20,18 +21,21 @@ function ManageJobs() {
   /* Function to get the JSON data*/
   const FilterData = async () => {
     const Json = await getJson();
-    if (filter.length === 0) {
+    if (Json.length === 0) {
       SetFilter([]);
     } else {
       SetFilter(Json);
     }
   };
 
+  /*Function to open edit job modal */
   const editJob = (e) => {
     // e.preventDefault();
     setShowAddJobModal(true);
     setJobId(e);
   };
+
+  /*Render function to get filter list */
   useEffect(() => {
     FilterData();
   }, [showAddJobModal, jobId]);
@@ -39,7 +43,7 @@ function ManageJobs() {
   // const Skill = Object.keys(filter.Skill).map((key) => {
   //   return { id: key, name: filter.Skill[key] };
   // });
-  // console.log(filter);
+  console.log(filter);
 
   return (
     <>
@@ -51,7 +55,7 @@ function ManageJobs() {
           <div className="container">
             <div className="row">
               <div className="col-lg-12 col-12 translateY-25  pb-10">
-                {/* <!-- form --> */}
+                {/* <!-- Search form --> */}
                 <SearchForm />
               </div>
             </div>
@@ -64,6 +68,7 @@ function ManageJobs() {
                 {/* <h2 className="font-size-8 mb-6">
                   You’re searching "UI Designer"
                 </h2> */}
+                {/*<-- Job filter -->*/}
                 <form className="mb-8">
                   <div className="d-flex align-items-center justify-content-space-between">
                     <div className="search-filter from-group d-flex align-items-center flex-wrap">
@@ -148,7 +153,7 @@ function ManageJobs() {
                     </h5>
                   </div> */}
                 </div>
-
+                 {/*<-- Add job Modal -->*/}
                 <AddJobModal
                   show={showAddJobModal}
                   jobData={jobId}
@@ -191,6 +196,7 @@ function ManageJobs() {
           </div>
         </div>
         {/* <!-- Main Content end --> */}
+        {/*<-- Footer -->*/}
         <EmployeeFooter />
       </div>
     </>

@@ -12,11 +12,12 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddCategoryType from "../forms/admin/categoryType";
 function Category() {
+  /*Modal and Data states */
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
-  /*delete states */
+  /*Delete Category states */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -70,22 +71,26 @@ function Category() {
     setShowAddCategoryModal(true);
     setCategoryId(e);
   };
+
   /* Function to show the single data to update job category*/
   const addJobCategoryType = (e) => {
     // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
   };
+
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_category_id);
     setDeleteName(e.category_name);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+  
   /*To call Api to delete category */
   async function deleteCategory(e) {
     const responseData = await DeleteJobCategory(e);
@@ -97,6 +102,7 @@ function Category() {
       setDeleteAlert(false);
     }
   }
+
   /*Category Type Onchange function to filter the data */
   let onCategoryTypeFilterChange = (e) => {
     setCategoryTypeFilterValue(e.target.value);
@@ -129,6 +135,7 @@ function Category() {
         <AdminSidebar heading={"Manage Category"} />
         <div>
           <ToastContainer />
+          {/* <!-- Modal- --> */}
           <AddCategory
             show={showAddCategoryModal}
             jobCategoryData={CategoryId}
@@ -294,6 +301,7 @@ function Category() {
                     </tbody>
                   </table>
                 </div>
+                {/* <!-- Pagination- --> */}
                 <div className="pt-2">
                   <Pagination
                     nPages={nPages}
@@ -304,6 +312,7 @@ function Category() {
               </div>
             </div>
           </div>
+          {/* <!-- Delete Sweet Alert- --> */}
           <SAlert
             show={deleteAlert}
             title={deleteName}

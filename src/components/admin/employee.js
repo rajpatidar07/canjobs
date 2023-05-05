@@ -42,6 +42,7 @@ function Employee() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Applicants"} />
         <ToastContainer />
+        {/* <!--Add Employee Details Modal --> */}
         <PersonalDetails
           show={showAddEmployeeModal}
           employeeId={employeeId}
@@ -61,6 +62,7 @@ function Employee() {
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
+                {/* <!-- Employee Search and Filter- --> */}
                 <div className="row align-items-center">
                   <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
                     <p className="input_label">Search Employee:</p>
@@ -155,6 +157,7 @@ function Employee() {
                   </div>
                 </div>
               </div>
+              {/* <!-- Employee List Table- --> */}
               <EmployeeTable
                 showEmployeeProfile={showEmployeeProfile}
                 showAddEmployeeModal={showAddEmployeeModal}
@@ -167,6 +170,7 @@ function Employee() {
             </div>
           </div>
         </div>
+        {/* <!-- Employee Details- --> */}
         {showEmployeeProfile === true ? (
           <div className="dashboard-main-container mt-20">
             <div className="container">

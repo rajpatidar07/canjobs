@@ -4,10 +4,13 @@ import Select from "react-select";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 export default function GenerateToken(props) {
+  /*States */
   let [allAdmin, setAllAdmin] = useState([]);
   let [AdminId, setAdminId] = useState("");
   const [state, setState] = useState([]);
   let[ Unauthorized,setUnauthorized ]= useState("")
+
+  /*Function to get admin list */
   const AdminData = async () => {
     const userData = await getallAdminData();
     if (userData.data.length === 0) {
@@ -23,6 +26,7 @@ export default function GenerateToken(props) {
     setUnauthorized("")
     props.close();
   };
+  /*Render function to get admin list */
   useEffect(() => {
     AdminData();
   }, [props]);
@@ -31,6 +35,7 @@ export default function GenerateToken(props) {
   const onSelectChange = (option) => {
     setAdminId(option.value);
   };
+  /*Render function to set data in search select box */
   useEffect(() => {
     const options = allAdmin.map((option) => ({
       value: option.admin_id,
@@ -39,6 +44,7 @@ export default function GenerateToken(props) {
     setState(options);
   }, [allAdmin]);
 
+  /*Function to generate Token of other admin to view as him */
   const onTokenGenerateClick = async (event) => {
     event.preventDefault();
     // setLoading(true);
@@ -56,6 +62,7 @@ export default function GenerateToken(props) {
       setUnauthorized("Unauthorized admin")
     }
   };
+  /*Function to reset the token */
   const onRest = () => {
     localStorage.setItem("view_as_token", "");
     toast.success("Token Reset successfully", {
