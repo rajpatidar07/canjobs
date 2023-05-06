@@ -53,11 +53,13 @@ function Employer() {
         <AdminSidebar heading={"Manage Companies"} />
         <ToastContainer />
         {/* <!-- Add Company Details Modal --> */}
-        {showAddEmployerModal ? <CompanyDetails
-          show={showAddEmployerModal}
-          employerId={employerId}
-          close={() => setShowEmployerMOdal(false)}
-        /> : null}
+        {showAddEmployerModal ? (
+          <CompanyDetails
+            show={showAddEmployerModal}
+            employerId={employerId}
+            close={() => setShowEmployerMOdal(false)}
+          />
+        ) : null}
         <div
           className={
             showEmployerDetails === false
@@ -128,7 +130,7 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="text-right col-md-6 col-xl-3">
+                  <div className="col px-1 form_group mt-4 text-right">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editEmployer("0")}

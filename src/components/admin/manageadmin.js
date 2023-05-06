@@ -119,11 +119,13 @@ function ManageAdmin() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Admin"} />
         <ToastContainer />{" "}
-        {showAddAdminModal ? <Addadmin
-          show={showAddAdminModal}
-          adminId={adminId}
-          close={() => setShowAdminModal(false)}
-        /> : null}
+        {showAddAdminModal ? (
+          <Addadmin
+            show={showAddAdminModal}
+            adminId={adminId}
+            close={() => setShowAdminModal(false)}
+          />
+        ) : null}
         <div
           className={
             showAminDetails === false
@@ -170,7 +172,7 @@ function ManageAdmin() {
                       </select>
                     </div>
                   </div>
-                  <div className="text-right col-xl-6 mt-6 mt-xl-12">
+                  <div className="col px-1 form_group mt-4 text-right">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editAdmin("0")}

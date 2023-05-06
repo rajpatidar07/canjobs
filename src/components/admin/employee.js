@@ -43,11 +43,13 @@ function Employee() {
         <AdminSidebar heading={"Manage Applicants"} />
         <ToastContainer />
         {/* <!--Add Employee Details Modal --> */}
-        {showAddEmployeeModal ? <PersonalDetails
+        {showAddEmployeeModal ? (
+          <PersonalDetails
             show={showAddEmployeeModal}
             employeeId={employeeId}
             close={() => setShowEmployeeMOdal(false)}
-          /> : null}
+          />
+        ) : null}
         <div
           className={
             showEmployeeProfile === false
@@ -144,16 +146,14 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="text-end px-6 w-100">
-                    <div className="float-md-right mt-6">
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => editEmployee("0")}
-                        title="Add Employee"
-                      >
-                        Add Employee
-                      </CustomButton>
-                    </div>
+                  <div className="col px-1 form_group mt-4 text-right">
+                    <CustomButton
+                      className="font-size-3 rounded-3 btn btn-primary border-0"
+                      onClick={() => editEmployee("0")}
+                      title="Add Employee"
+                    >
+                      Add Employee
+                    </CustomButton>
                   </div>
                 </div>
               </div>

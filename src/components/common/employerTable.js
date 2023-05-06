@@ -111,8 +111,8 @@ export default function EmployerTable(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-   /*Sorting Function */
-   const handleSort = (columnName) => {
+  /*Sorting Function */
+  const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
@@ -129,12 +129,6 @@ export default function EmployerTable(props) {
           <table className="table table-striped main_data_table">
             <thead>
               <tr>
-                <th
-                  scope="col"
-                  className=" border-0 text-center font-size-4 font-weight-normal"
-                >
-                  #
-                </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
@@ -165,19 +159,6 @@ export default function EmployerTable(props) {
                     </Link>
                   </th>
                 )}
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                    onClick={() => handleSort("vacancies")}
-                    className="text-gray"
-                    title="Sort by Vacancies"
-                  >
-                    Vacancies
-                  </Link>
-                </th>
                 {props.heading === "Dashboard" ? (
                   ""
                 ) : (
@@ -218,25 +199,11 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={() => handleSort("industry")}
-                    className="text-gray"
-                    title="Sort by Industry"
-                  >
-                    Industry
-                  </Link>
-                </th>
-
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                      onClick={() => handleSort("vacancy_for_post")}
+                    onClick={() => handleSort("vacancy_for_post")}
                     className="text-gray"
                     title="Sort by Skill"
                   >
-                    Posts Available
+                    Vacancies
                   </Link>
                 </th>
                 {props.heading === "Dashboard" ? (
@@ -246,7 +213,7 @@ export default function EmployerTable(props) {
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    Status
+                    Profile
                   </th>
                 )}
                 {props.heading === "Dashboard" ? (
@@ -290,30 +257,39 @@ export default function EmployerTable(props) {
                 (employerData || []).map((empdata) => (
                   <tr className="" key={empdata.company_id}>
                     <th scope="row" className="pl-5 py-5 pr-0   ">
-                      <div className="media  align-items-center">
-                        <div className="circle-36 mx-auto">
-                          {empdata.logo === null ? (
-                            <img
-                              src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
-                              alt=""
-                              className="w-100"
-                            />
-                          ) : (
-                            <img src={empdata.logo} alt="" className="w-100" />
-                          )}
+                      <div className="d-flex profile_box gx-2">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto">
+                            {empdata.logo === null ? (
+                              <img
+                                src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
+                                alt=""
+                                className="w-100"
+                              />
+                            ) : (
+                              <img
+                                src={empdata.logo}
+                                alt=""
+                                className="w-100"
+                              />
+                            )}
+                          </div>
                         </div>
+                        {empdata.company_name === null ? (
+                          <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                            Unavailable
+                          </p>
+                        ) : (
+                          <div className="company_profile">
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                              {empdata.company_name}
+                            </p>
+                            <p className="font-size-3 font-weight-normal mb-0">
+                              {empdata.industry}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                    </th>
-                    <th className=" py-5  pr-0">
-                      {empdata.company_name === null ? (
-                        <h4 className="font-size-3 font-weight-bold  mb-0">
-                          Unavailable
-                        </h4>
-                      ) : (
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {empdata.company_name}
-                        </h3>
-                      )}
                     </th>
                     {props.heading === "Dashboard" ? (
                       ""
@@ -324,36 +300,27 @@ export default function EmployerTable(props) {
                           title="Company Details"
                           onClick={() => EmployerDetail(empdata.company_id)}
                         >
-                          {empdata.contact_person_name === null ? (
-                            <h4 className="font-size-3 font-weight-bold  mb-0">
-                              Unavailable
-                            </h4>
-                          ) : (
-                            <h4 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.contact_person_name}
-                            </h4>
-                          )}
+                          <p className="m-0 font-weight-normal text-capitalize">
+                            {empdata.contact_person_name === null
+                              ? "Unavailable"
+                              : empdata.contact_person_name}
+                          </p>
                         </Link>
                       </th>
                     )}
-                    <th className=" py-5  pr-0">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        {empdata.vacancies}
-                      </h3>
-                    </th>
                     {props.heading === "Dashboard" ? (
                       ""
                     ) : (
                       <th className=" py-5  pr-0">
                         {empdata.address === null ? (
-                          <h4 className="font-size-3 font-weight-bold  mb-0">
+                          <p className="font-size-3 font-weight-bold  mb-0">
                             Unavailable
-                          </h4>
+                          </p>
                         ) : (
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                          <p className="font-size-3 font-weight-normal mb-0">
                             {empdata.address} {empdata.city} ({empdata.pin_code}
                             ) {empdata.state} {empdata.country}
-                          </h3>
+                          </p>
                         )}
                       </th>
                     )}
@@ -362,54 +329,44 @@ export default function EmployerTable(props) {
                     ) : (
                       <th className=" py-5  pr-0">
                         {empdata.contact_no === null ? (
-                          <h4 className="font-size-3 font-weight-bold  mb-0">
+                          <p className="font-size-3 font-weight-bold  mb-0">
                             Unavailable
-                          </h4>
+                          </p>
                         ) : (
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            +{empdata.contact_no}
-                            {empdata.contact_no_other === null ||
-                            empdata.contact_no_other === undefined ||
-                            empdata.contact_no_other === ""
-                              ? " "
-                              : " +" + empdata.contact_no_other}
-                            <br />
-                            <span className="text-gray font-size-2 text-truncate">
+                          <>
+                            <div className="font-size-3 font-weight-normal mb-0">
+                              {"+" + empdata.contact_no}
+                            </div>
+                            <div className="font-size-3 font-weight-normal mb-0">
+                              {empdata.contact_no_other === null ||
+                              empdata.contact_no_other === undefined ||
+                              empdata.contact_no_other === ""
+                                ? ""
+                                : "+" + empdata.contact_no_other}
+                            </div>
+                            <p className="text-gray font-size-2 font-weight-normal m-0">
                               {empdata.email}
-                            </span>
-                          </h3>
+                            </p>
+                          </>
                         )}
                       </th>
                     )}
-
-                    <th className="py-5 ">
-                      {empdata.industry === null ? (
-                        <h4 className="font-size-3 font-weight-bold  mb-0">
-                          Unavailable
-                        </h4>
-                      ) : (
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {empdata.industry}
-                        </h3>
-                      )}
-                    </th>
-
                     <th className="py-5 ">
                       {empdata.vacancy_for_post === null ? (
-                        <h4 className="font-size-3 font-weight-bold  mb-0">
+                        <p className="font-size-3 font-weight-bold  mb-0">
                           Unavailable
-                        </h4>
+                        </p>
                       ) : (
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {empdata.vacancy_for_post}
-                        </h3>
+                        <p className="font-size-3 font-weight-normal mb-0">
+                          {empdata.vacancy_for_post} ({empdata.vacancies})
+                        </p>
                       )}
                     </th>
                     {props.heading === "Dashboard" ? (
                       ""
                     ) : (
                       <th className="  py-5 ">
-                        <h3 className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                           {empdata.contact_person_name === null ||
                           empdata.contact_no === null ||
                           empdata.address === null ||
@@ -418,7 +375,7 @@ export default function EmployerTable(props) {
                           empdata.vacancy_for_post === null ? (
                             <>
                               <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                Incompelete Profile
+                                Incompelete
                               </span>
                             </>
                           ) : (
@@ -426,13 +383,13 @@ export default function EmployerTable(props) {
                               Complete
                             </span>
                           )}
-                        </h3>
+                        </p>
                       </th>
                     )}
                     {props.heading === "Dashboard" ? (
                       ""
                     ) : (
-                      <th className="py-5 d-flex min-width-px-100">
+                      <th className="py-5 min-width-px-100">
                         <div className="btn-group button_group" role="group">
                           <button
                             className="btn btn-outline-info action_btn"
@@ -481,21 +438,27 @@ export default function EmployerTable(props) {
           />
         </div>
       </div>
-      {showAddEmployerModal ?   <CompanyDetails
-        show={showAddEmployerModal}
-        employerId={employerId}
-        close={() => setShowEmployerMOdal(false)}
-      /> : null}
-     {showContactModal ? <ContactInfo
-        show={showContactModal}
-        employerId={employerId}
-        close={() => setShowContactMOdal(false)}
-      /> : null}
-      {showKycModal ? <KycComplianceDetails
-        show={showKycModal}
-        employerId={employerId}
-        close={() => setShowkycMOdal(false)}
-      /> : null }
+      {showAddEmployerModal ? (
+        <CompanyDetails
+          show={showAddEmployerModal}
+          employerId={employerId}
+          close={() => setShowEmployerMOdal(false)}
+        />
+      ) : null}
+      {showContactModal ? (
+        <ContactInfo
+          show={showContactModal}
+          employerId={employerId}
+          close={() => setShowContactMOdal(false)}
+        />
+      ) : null}
+      {showKycModal ? (
+        <KycComplianceDetails
+          show={showKycModal}
+          employerId={employerId}
+          close={() => setShowkycMOdal(false)}
+        />
+      ) : null}
       <SAlert
         show={deleteAlert}
         title={deleteName}

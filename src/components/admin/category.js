@@ -188,7 +188,7 @@ function Category() {
                       </select>
                     </div>
                   </div>
-                  <div className="text-end px-6 col-xl-6">
+                  <div className="col px-1 form_group mt-4 text-right">
                     <div className="float-md-right px-5">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"

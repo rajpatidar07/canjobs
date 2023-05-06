@@ -137,21 +137,27 @@ export default function EmployeeTable(props) {
   };
   return (
     <>
-      {showAddEmployeeModal ? <PersonalDetails
-        show={showAddEmployeeModal}
-        employeeId={employeeId}
-        close={() => setShowEmployeeMOdal(false)}
-      /> : null}
-      {showEducationModal ?  <Education
+      {showAddEmployeeModal ? (
+        <PersonalDetails
+          show={showAddEmployeeModal}
+          employeeId={employeeId}
+          close={() => setShowEmployeeMOdal(false)}
+        />
+      ) : null}
+      {showEducationModal ? (
+        <Education
           close={() => setShowEducationModal(false)}
           employeeId={employeeId}
           show={showEducationModal}
-        /> : null}
-      {showSkillsModal ? <Skills
-        show={showSkillsModal}
-        employeeId={employeeId}
-        close={() => setShowSkillsModal(false)}
-      /> : null}
+        />
+      ) : null}
+      {showSkillsModal ? (
+        <Skills
+          show={showSkillsModal}
+          employeeId={employeeId}
+          close={() => setShowSkillsModal(false)}
+        />
+      ) : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
@@ -316,15 +322,17 @@ export default function EmployeeTable(props) {
                           </div>
                         </div>
                         {props.heading === "Dashboard" ? (
-                          <h4 className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            <p className="m-0">{empdata.name}</p>
+                          <div className=" mb-0">
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                              {empdata.name}
+                            </p>
                             <p className="text-gray font-size-2 m-0 text-capitalize">
-                              {empdata.marital_status} ({empdata.gender}
+                              {empdata.gender} ({empdata.marital_status + ", "}
                               {/*Calculation of age from date of birth*/}
                               {moment().diff(empdata.date_of_birth, "years")}
                               Y)
                             </p>
-                          </h4>
+                          </div>
                         ) : (
                           <Link
                             to={""}
@@ -336,14 +344,17 @@ export default function EmployeeTable(props) {
                             title="Employee Details"
                           >
                             {empdata.name === null ? (
-                              <h4 className="font-size-3 mb-0 text-capitalize">
+                              <div className="font-size-3 mb-0 text-capitalize">
                                 Unavailable
-                              </h4>
+                              </div>
                             ) : (
-                              <h4 className="font-size-3 mb-0 font-weight-normal text-black-2 text-capitalize">
-                                <p className="m-0">{empdata.name}</p>
-                                <p className="text-gray font-size-2 m-0">
-                                  {empdata.marital_status} ({empdata.gender},
+                              <div className=" mb-0">
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  {empdata.name}
+                                </p>
+                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                  {empdata.gender} (
+                                  {empdata.marital_status + ", "}
                                   {/*Calculation of age from date of birth*/}
                                   {moment().diff(
                                     empdata.date_of_birth,
@@ -351,7 +362,7 @@ export default function EmployeeTable(props) {
                                   )}
                                   Y)
                                 </p>
-                              </h4>
+                              </div>
                             )}
                           </Link>
                         )}
@@ -403,7 +414,7 @@ export default function EmployeeTable(props) {
                         {empdata.skill === null ? (
                           <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {empdata.skill}
                           </h3>
                         )}

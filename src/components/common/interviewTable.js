@@ -80,18 +80,20 @@ function Interview(props) {
   };
   return (
     <>
-      {showAddInterviewModal ? <AddInterview
-        resData={resData}
-        close={() => {
-          setShowAddInterviewModal(false);
-        }}
-        job_id={jobId}
-        show={showAddInterviewModal}
-      /> : null}
+      {showAddInterviewModal ? (
+        <AddInterview
+          resData={resData}
+          close={() => {
+            setShowAddInterviewModal(false);
+          }}
+          job_id={jobId}
+          show={showAddInterviewModal}
+        />
+      ) : null}
 
       <div className="bg-white site-wrapper overflow-hidden bg-default-2">
         <div className="mt-5" id="dashboard-body">
-          <div className="container">
+          <div className="container p-0">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
