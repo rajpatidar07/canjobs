@@ -61,20 +61,20 @@ function Employer() {
         <div
           className={
             showEmployerDetails === false
-              ? "dashboard-main-container mt-20"
+              ? "dashboard-main-container mt-16"
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Employer</h3>
                 </div>
                 {/* <!-- Employer Search and Filter --> */}
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
                     <input
                       required
@@ -86,7 +86,7 @@ function Employer() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Corporation:</p>
                     <div className="select_div">
                       <select
@@ -109,7 +109,7 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Industry:</p>
                     <div className="select_div">
                       <select

@@ -51,20 +51,20 @@ function Employee() {
         <div
           className={
             showEmployeeProfile === false
-              ? "dashboard-main-container mt-20"
+              ? "dashboard-main-container mt-16"
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search Employee:</p>
                     <input
                       required
@@ -76,7 +76,7 @@ function Employee() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Experience:</p>
                     <div className="select_div">
                       <select
@@ -98,7 +98,7 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Skill:</p>
                     <div className="select_div">
                       <select
@@ -119,7 +119,7 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Education:</p>
                     <div className="select_div">
                       <select
@@ -172,7 +172,7 @@ function Employee() {
         </div>
         {/* <!-- Employee Details- --> */}
         {showEmployeeProfile === true ? (
-          <div className="dashboard-main-container mt-20">
+          <div className="dashboard-main-container mt-16">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

@@ -63,7 +63,7 @@ function JobDetailPage(props) {
                   src={
                     jobDetatilsData.logo
                       ? jobDetatilsData.logo
-                      : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                      : "image/logo-main-black.png"
                   }
                   alt=""
                 />

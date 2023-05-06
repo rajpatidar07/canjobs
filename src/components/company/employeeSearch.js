@@ -148,7 +148,7 @@ function EmployeeSearch() {
                             >
                               <img
                                 className="company_logo"
-                                src="https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                                src="image/logo-main-black.png"
                                 alt=""
                               />
                             </a>

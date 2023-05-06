@@ -90,7 +90,7 @@ function Category() {
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
-  
+
   /*To call Api to delete category */
   async function deleteCategory(e) {
     const responseData = await DeleteJobCategory(e);
@@ -147,15 +147,15 @@ function Category() {
             close={() => setShowAddCategoryTypeModal(false)}
           />
         </div>
-        <div className="dashboard-main-container mt-20" id="dashboard-body">
+        <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Category</h3>
                 </div>
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by name:</p>
                     <input
                       required
@@ -167,7 +167,7 @@ function Category() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Type:</p>
                     <div className="select_div">
                       <select

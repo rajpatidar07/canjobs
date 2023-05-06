@@ -118,11 +118,7 @@ function JobBox({
                     <div className="text_box text-left">
                       <img
                         className="company_logo"
-                        src={
-                          job.logo
-                            ? job.logo
-                            : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                        }
+                        src={job.logo ? job.logo : "image/logo-main-black.png"}
                         alt=""
                       />
                     </div>
@@ -256,15 +252,19 @@ function JobBox({
         )}
         {/* <!-- End Maped Job --> */}
       </div>
-           {showLogin
-           ?
-           <EmployeeLoginModal show={showLogin} close={() => setShowLogin(false)} />
-           : null}
-          {showAddJobsModal ?  <AddJobModal
-              show={showAddJobsModal}
-              jobdata={JobId}
-              close={() => setShowAddJobsModal(false)}
-            /> :null }
+      {showLogin ? (
+        <EmployeeLoginModal
+          show={showLogin}
+          close={() => setShowLogin(false)}
+        />
+      ) : null}
+      {showAddJobsModal ? (
+        <AddJobModal
+          show={showAddJobsModal}
+          jobdata={JobId}
+          close={() => setShowAddJobsModal(false)}
+        />
+      ) : null}
     </>
   );
 }

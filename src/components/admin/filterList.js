@@ -5,7 +5,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import AddCategory from "../forms/admin/category";
 // import { DeleteFilter, GetFilter } from "../../api/api";
-import { ToastContainer, /*toast*/ } from "react-toastify";
+import { ToastContainer /*toast*/ } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import SAlert from "../common/sweetAlert";
 import AddFilter from "../forms/admin/FilterForm";
@@ -64,7 +64,6 @@ function FilterList() {
   //   }
   // }
 
-
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -76,10 +75,10 @@ function FilterList() {
         <div>
           <ToastContainer />
         </div>
-        <div className="dashboard-main-container mt-20" id="dashboard-body">
+        <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Filter</h3>
                 </div>

@@ -75,7 +75,7 @@ function Followup() {
     currentPage,
     columnName,
     sortOrder,
-    apiCall
+    apiCall,
   ]);
 
   /* Function to show the Job detail data */
@@ -119,20 +119,20 @@ function Followup() {
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-20"
+              ? "dashboard-main-container mt-16"
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container">
             <div className="mb-18">
-              <div className="mb-8 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Posted Jobs </h3>
                 </div>
                 {/* <!-- Follow up search and filter --> */}
-                <div className="row align-items-center">
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search by Name:</p>
                     <input
                       required
@@ -144,14 +144,14 @@ function Followup() {
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Category:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={(e)=>setCategoryFilterValue(e.target.value)}
+                        onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>
@@ -168,14 +168,14 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Job Swap:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={(e)=>setJobSwapFilterValue(e.target.value)}
+                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Job Type</option>
@@ -187,14 +187,14 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6  form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Key Skill:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={(e)=>setSkillFilterValue(e.target.value)}
+                        onChange={(e) => setSkillFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
@@ -208,14 +208,14 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
+                  <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Location:</p>
                     <div className="select_div">
                       <select
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={(e)=>setLocationFilterValue(e.target.value)}
+                        onChange={(e) => setLocationFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Location</option>
@@ -241,7 +241,7 @@ function Followup() {
                           className=" border-0 font-size-4 font-weight-normal"
                         >
                           <Link
-                            onClick={()=>handleSort("job_title")}
+                            onClick={() => handleSort("job_title")}
                             className="text-gray"
                             title="Sort by Industry"
                           >
@@ -254,7 +254,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("job_type")}
+                            onClick={() => handleSort("job_type")}
                             className="text-gray"
                             title="Sort by Job"
                           >
@@ -267,7 +267,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("location")}
+                            onClick={() => handleSort("location")}
                             className="text-gray"
                             title="Sort by Address"
                           >
@@ -280,7 +280,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("education")}
+                            onClick={() => handleSort("education")}
                             className="text-gray"
                             title="Sort by Education"
                           >
@@ -293,7 +293,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("keyskill")}
+                            onClick={() => handleSort("keyskill")}
                             className="text-gray"
                             title="Sort by Skills"
                           >
@@ -306,7 +306,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("language")}
+                            onClick={() => handleSort("language")}
                             className="text-gray"
                             title="Sort by Language"
                           >
@@ -319,7 +319,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("salary")}
+                            onClick={() => handleSort("salary")}
                             className="text-gray"
                             title="Sort by Salary"
                           >
@@ -332,7 +332,7 @@ function Followup() {
                         >
                           <Link
                             to=""
-                            onClick={()=>handleSort("experience_required")}
+                            onClick={() => handleSort("experience_required")}
                             className="text-gray"
                             title="Sort by Experience"
                           >
@@ -438,8 +438,10 @@ function Followup() {
                                   >
                                     <button
                                       className="btn btn-outline-info action_btn"
-                                      onClick={() => {setresponseId(job.job_id);
-                                                  setApiCall(true)}}
+                                      onClick={() => {
+                                        setresponseId(job.job_id);
+                                        setApiCall(true);
+                                      }}
                                       title="Job Response"
                                     >
                                       Responses
@@ -480,7 +482,7 @@ function Followup() {
         </div>
         {/* <!-- Job Details --> */}
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-20 ">
+          <div className="dashboard-main-container mt-16 ">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
