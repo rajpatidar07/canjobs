@@ -13,6 +13,7 @@ import FilterJson from "../json/filterjson";
 import AddCategoryType from "../forms/admin/categoryType";
 function Category() {
   /*Modal and Data states */
+  let [apiCall, setApiCall] = useState(false);
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
@@ -53,14 +54,15 @@ function Category() {
   /*Render function to get the job category*/
   useEffect(() => {
     CategoryData();
+    if(apiCall === true){
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryTypeFilterValue,
     search,
     currentPage,
-    showAddCategoryModal,
-    showAddCategoryTypeModal,
-    deleteAlert,
+    apiCall,
     columnName,
     sortOrder,
   ]);
@@ -100,6 +102,7 @@ function Category() {
         autoClose: 1000,
       });
       setDeleteAlert(false);
+      setApiCall(true)
     }
   }
 
@@ -139,11 +142,15 @@ function Category() {
           <AddCategory
             show={showAddCategoryModal}
             jobCategoryData={CategoryId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
             close={() => setShowAddCategoryModal(false)}
           />
           <AddCategoryType
             show={showAddCategoryTypeModal}
             jobCategoryData={CategoryId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
             close={() => setShowAddCategoryTypeModal(false)}
           />
         </div>

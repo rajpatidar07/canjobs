@@ -10,7 +10,6 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 import Select from "react-select";
 function ChangeJob(props) {
   let [loading, setLoading] = useState(false);
-  // let [apiCall, setApiCall] = useState(false);
   const [state, setState] = useState([]);
   // console.log(props);
   let employeeId = props.resData.employee_id;

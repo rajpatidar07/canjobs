@@ -13,6 +13,7 @@ import SAlert from "../../common/sweetAlert";
 
 function EmployementDetails(props) {
   /*Data state */
+  let [apiCall , setApiCall] = useState(false)
   let [employementData, setEmployementData] = useState("");
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -115,7 +116,7 @@ function EmployementDetails(props) {
       EmployeementData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, deleteAlert]);
+  }, [props, apiCall]);
 
   // USER CARRER PROFILE SUBMIT BUTTON
   const onCarrerProfileClick = async (event) => {
@@ -128,6 +129,7 @@ function EmployementDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "Employee data updated successfully") {
@@ -135,6 +137,7 @@ function EmployementDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {
@@ -160,6 +163,8 @@ function EmployementDetails(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      props.setApiCall(true)
+      setApiCall(true)
       setDeleteAlert(false);
     }
   }

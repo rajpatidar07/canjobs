@@ -12,6 +12,7 @@ import FilterJson from "../json/filterjson";
 function ManageAdmin() {
   // eslint-disable-next-line
   /*data and id state */
+  let [apiCall, setApiCall] = useState(false);
   let [showAminDetails /*, setShowAminDetails*/] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
   let [adminData, setAdminData] = useState([]);
@@ -58,8 +59,7 @@ function ManageAdmin() {
     recordsPerPage,
     columnName,
     sortOrder,
-    showAddAdminModal,
-    deleteAlert,
+    apiCall ,
   ]);
 
   /* Function to show the single data to update Admin*/
@@ -86,6 +86,7 @@ function ManageAdmin() {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setApiCall(true)
       setDeleteAlert(false);
     }
   }
@@ -122,6 +123,8 @@ function ManageAdmin() {
         {showAddAdminModal ? <Addadmin
           show={showAddAdminModal}
           adminId={adminId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
           close={() => setShowAdminModal(false)}
         /> : null}
         <div

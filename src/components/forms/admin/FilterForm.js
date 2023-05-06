@@ -42,7 +42,7 @@ function AddFilter(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall();
+        props.setApiCall(true);
         setState(initialFormState);
         setLoading(false);
       }

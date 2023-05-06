@@ -94,6 +94,7 @@ function AddCategory(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "Category updated successfully") {
@@ -101,6 +102,7 @@ function AddCategory(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

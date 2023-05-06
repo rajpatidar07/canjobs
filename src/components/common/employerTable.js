@@ -10,6 +10,7 @@ import Pagination from "../common/pagination";
 export default function EmployerTable(props) {
   // eslint-disable-next-line
   /*show modal and data, id state */
+  let [apiCall, setApiCall] = useState(false);
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showKycModal, setShowkycMOdal] = useState(false);
   let [showContactModal, setShowContactMOdal] = useState(false);
@@ -50,13 +51,12 @@ export default function EmployerTable(props) {
   /*Render function to get the employer*/
   useEffect(() => {
     EmployerData();
+    if(apiCall === true || props.apiCall === true){
+      props.setApiCall(false)
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    props.showEmployerDetails,
-    props.showAddEmployerModal,
-    showAddEmployerModal,
-    showKycModal,
-    showContactModal,
     props.industryFilterValue,
     props.corporationFilterValue,
     props.search,
@@ -66,6 +66,9 @@ export default function EmployerTable(props) {
     columnName,
     sortOrder,
     props.filter_by_time,
+    apiCall, 
+    props.apiCall,
+    props.showEmployerDetails
   ]);
 
   /* Function to show the single data to update Employer */
@@ -106,6 +109,7 @@ export default function EmployerTable(props) {
         autoClose: 1000,
       });
       setDeleteAlert(false);
+      setApiCall(true)
     }
   }
   /*Pagination Calculation */
@@ -484,16 +488,22 @@ export default function EmployerTable(props) {
       {showAddEmployerModal ?   <CompanyDetails
         show={showAddEmployerModal}
         employerId={employerId}
+        setApiCall={setApiCall}
+        apiCall={apiCall}
         close={() => setShowEmployerMOdal(false)}
       /> : null}
      {showContactModal ? <ContactInfo
         show={showContactModal}
         employerId={employerId}
+        setApiCall={setApiCall}
+        apiCall={apiCall}
         close={() => setShowContactMOdal(false)}
       /> : null}
       {showKycModal ? <KycComplianceDetails
         show={showKycModal}
         employerId={employerId}
+        setApiCall={setApiCall}
+        apiCall={apiCall}
         close={() => setShowkycMOdal(false)}
       /> : null }
       <SAlert

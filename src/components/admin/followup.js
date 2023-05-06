@@ -13,9 +13,9 @@ import JobResponse from "./response";
 
 function Followup() {
   /*show Modal and props state */
-  let [showAddJobsModal] = useState(false);
-  let [showJobDetails, setShowJobDetails] = useState(false);
   let [apiCall, setApiCall] = useState(false);
+  let [catapiCall, setCatApiCall] = useState(false);
+  let [showJobDetails, setShowJobDetails] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
@@ -59,13 +59,13 @@ function Followup() {
     // //// console.log((userData.status);
     // }
   };
-  console.log("Api   :- ",apiCall);
 
   /*Render function to get the job */
   useEffect(() => {
     JobData();
     CategoryData();
-    if(apiCall === true){
+    if(apiCall === true || catapiCall === true){
+      setCatApiCall(false)
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,12 +74,13 @@ function Followup() {
     SkillFilterValue,
     locationFilterValue,
     jobSwapFilterValue,
-    showAddJobsModal,
     search,
     currentPage,
     columnName,
     sortOrder,
     apiCall,
+    showJobDetails,
+    catapiCall
   ]);
 
   /* Function to show the Job detail data */
@@ -155,7 +156,9 @@ function Followup() {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setCategoryFilterValue(e.target.value);
+                          setCatApiCall(true)}}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>

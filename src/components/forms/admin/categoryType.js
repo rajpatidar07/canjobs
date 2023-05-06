@@ -6,10 +6,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddCategoryType(props) {
-  //   const [catType, setCatType] = useState([]);
   let [loading, setLoading] = useState(false);
+  
   /* Functionality to close the modal */
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -55,6 +54,7 @@ function AddCategoryType(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

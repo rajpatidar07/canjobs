@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {
   /*States */
-  let [/*apiCall,*/ setApiCall] = useState(false);
+  let [apiCall,setApiCall] = useState(false);
   // const [filterData, setFilterData] = useState([]);
   /*delete states */
   // const [deleteAlert, setDeleteAlert] = useState(false);
@@ -35,7 +35,7 @@ function FilterList() {
   /*Render function to get the filter data*/
   // useEffect(() => {
   //   FilterData();
-  // }, [deleteAlert, apiCall]);
+  // }, [apiCall]);
 
   /*To Show the delete alert box */
   // const ShowDeleteAlert = (e, f) => {
@@ -60,6 +60,7 @@ function FilterList() {
   //       position: toast.POSITION.TOP_RIGHT,
   //       autoClose: 1000,
   //     });
+  //     setApiCall(true)
   //     setDeleteAlert(false);
   //   }
   // }
@@ -92,7 +93,7 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Skill
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={1} />
+                        <AddFilter apiCall={apiCall} setApiCall={setApiCall} id={1} />
                         {/*  <ul className="row m-0 p-0">
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>

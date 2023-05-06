@@ -211,6 +211,7 @@ function PersonalDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "Employee data updated successfully") {
@@ -218,6 +219,7 @@ function PersonalDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

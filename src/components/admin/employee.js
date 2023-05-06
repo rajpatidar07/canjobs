@@ -11,6 +11,7 @@ import FilterJson from "../json/filterjson";
 import EmployeeTable from "../common/employeeTable";
 function Employee() {
   /*Show modal states */
+  let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
   /*data and id states */
@@ -46,6 +47,8 @@ function Employee() {
         {showAddEmployeeModal ? <PersonalDetails
             show={showAddEmployeeModal}
             employeeId={employeeId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
             close={() => setShowEmployeeMOdal(false)}
           /> : null}
         <div
@@ -160,12 +163,13 @@ function Employee() {
               {/* <!-- Employee List Table- --> */}
               <EmployeeTable
                 showEmployeeProfile={showEmployeeProfile}
-                showAddEmployeeModal={showAddEmployeeModal}
                 employeeDetails={employeeDetails}
                 search={search}
                 experienceFilterValue={experienceFilterValue}
                 educationFilterValue={educationFilterValue}
                 skillFilterValue={skillFilterValue}
+                apiCall={apiCall}
+                setApiCall={setApiCall} 
               />
             </div>
           </div>

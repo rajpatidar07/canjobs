@@ -149,6 +149,7 @@ function ContactInfo(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

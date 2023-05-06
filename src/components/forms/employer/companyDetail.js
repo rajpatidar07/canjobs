@@ -17,6 +17,7 @@ function CompanyDetails(props) {
   const close = () => {
     setState(initialFormState);
     setErrors("");
+    setImgError("")
     setLoading(false);
     props.close();
   };
@@ -149,7 +150,9 @@ function CompanyDetails(props) {
     }
   };
   useEffect(() => {
-    EmployerData();
+    if( props.employerId !== "0"){
+      EmployerData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
@@ -186,6 +189,7 @@ function CompanyDetails(props) {
         if (file.size > 1024 * 100) {
           setImgError("Image size can't be more then 100 kb");
         } else {
+          setImgError("")
           setState({ ...state, logo: (event.target.result) });
         }
       };
@@ -210,6 +214,7 @@ function CompanyDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
 
@@ -218,6 +223,7 @@ function CompanyDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

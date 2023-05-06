@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { EmployeeDetails , EmployeeAppliedJob} from "../../api/api";
 import moment from "moment";
 const UserProfile = (props) => {
+  const [apiCall, setApiCall] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -47,16 +48,15 @@ const UserProfile = (props) => {
   };
   /*Render function to get user Data */
   useEffect(() => {
-    AppliedJob()
+   if(appliedJob){
+     AppliedJob()
+    }
     UserData();
+    if(apiCall=== true){
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    showPersonalDetails,
-    showEmplyomentDetails,
-    showEducation,
-    showAppliedJobs,
-    showItSkills,
-  ]);
+  }, [apiCall]);
   /*Function to generate resume */
   const ResumeClick = (employee_id) => {
     const id = employee_id;
@@ -154,6 +154,8 @@ const UserProfile = (props) => {
                    { showPersonalDetails ?  <PersonalDetails
                         show={showPersonalDetails}
                         employeeId={employeeId}
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}   
                         close={() => setShowPersonalDetails(false)}
                       /> : null }
                     </h4>
@@ -286,6 +288,8 @@ const UserProfile = (props) => {
                      {showItSkills ? <ItSkills
                         show={showItSkills}
                         employeeId={employeeId}
+                        apiCall={apiCall}
+                         setApiCall={setApiCall}
                         close={() => setShowItSkills(false)}
                       /> : null}
 
@@ -390,6 +394,8 @@ const UserProfile = (props) => {
                      { showEmplyomentDetails ?  <EmployementDetails
                           show={showEmplyomentDetails}
                           employeeId={employeeId}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
                           close={() => setShowEmplyomentDetails(false)}
                         /> : null}
                       </h4>
@@ -465,6 +471,8 @@ const UserProfile = (props) => {
                         {showEducation ? <EducationDetails
                           show={showEducation}
                           employeeId={employeeId}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
                           close={() => setShowEducation(false)}
                         /> : null}
                       </h4>

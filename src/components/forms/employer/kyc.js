@@ -157,6 +157,7 @@ function KycComplianceDetails(props) {
       : EmployerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
+
   // COMPANY KYC DETAIL SUBMIT BUTTON
   const onKycInfoClick = async (event) => {
     event.preventDefault();
@@ -168,6 +169,7 @@ function KycComplianceDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "Employee data updated successfully") {
@@ -175,6 +177,7 @@ function KycComplianceDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

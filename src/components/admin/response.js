@@ -75,12 +75,6 @@ function JobResponse(props) {
     recordsPerPage,
     columnName,
     sortOrder,
-    followup,
-    // jobId,
-    limia,
-    interview,
-    followup,
-    showChangeJobModal,
     props.filter_by_time,
     apiCall
   ]);
@@ -112,8 +106,7 @@ function JobResponse(props) {
     setShowChangeJobModal(true);
     setResData(e);
     setJobId(e.job_id);
-    
-    
+ 
   };
 
   /*Pagination Calculation */
@@ -155,6 +148,8 @@ function JobResponse(props) {
         show={followup}
         job_id={jobId}
         resData={resData}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => {
           setFollowUp(false);
           setResData("");
@@ -164,6 +159,8 @@ function JobResponse(props) {
         show={interview}
         job_id={jobId}
         resData={resData}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => {
           setInterview(false);
           setResData("");
@@ -172,6 +169,8 @@ function JobResponse(props) {
       {limia ? <LmiaStatus
         show={limia}
         resData={resData}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => {
           setLimia(false);
           setResData("");

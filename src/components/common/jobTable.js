@@ -11,6 +11,7 @@ export default function JobTable(props) {
 
   /*show Modal and props state */
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Delete state */
@@ -52,24 +53,24 @@ export default function JobTable(props) {
   /*Render function to get the job */
   useEffect(() => {
     JobData();
-
+    if(apiCall === true ||props.apiCall === true ){
+      props.setApiCall(false)
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.categoryFilterValue,
     props.SkillFilterValue,
     props.locationFilterValue,
     props.jobSwapFilterValue,
-    props.showAddJobsModal,
-    showAddJobsModal,
     props.search,
-    deleteAlert,
     currentPage,
-    columnName,
     sortOrder,
     props.company,
     props.filter_by_time,
+    apiCall,
+    props.apiCall
   ]);
-
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
     // e.preventDefault();
@@ -96,6 +97,7 @@ export default function JobTable(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setApiCall(true)
       setDeleteAlert(false);
     }
   }
@@ -107,6 +109,7 @@ export default function JobTable(props) {
  const handleSort = (columnName) => {
   setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
   setcolumnName(columnName);
+  setApiCall(true)
 };
   return (
     <>
@@ -383,6 +386,8 @@ export default function JobTable(props) {
         show={showAddJobsModal}
         jobdata={JobId}
         admin={"admin"}
+        setApiCall={setApiCall}
+        apiCall={apiCall}
         close={() => setShowAddJobsModal(false)}
       /> : null}
       <SAlert

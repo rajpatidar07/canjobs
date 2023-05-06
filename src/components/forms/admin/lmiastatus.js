@@ -84,7 +84,7 @@ function LmiaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoading(false);
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "Data updated successfully") {
@@ -92,6 +92,7 @@ function LmiaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {
@@ -132,7 +133,7 @@ function LmiaStatus(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.lmia_status}
+                value={state.lmia_status || ""}
                 onChange={onInputChange}
                 id="lmia_status"
                 name="lmia_status"
@@ -169,7 +170,7 @@ function LmiaStatus(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.completion_time}
+                value={state.completion_time || ""}
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"

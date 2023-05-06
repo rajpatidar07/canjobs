@@ -39,14 +39,6 @@ function AddInterview(props) {
 
   const InterviewData = async () => {
     const userData = await getInterview(jobId, employeeId);
-    // search,
-    // currentPage,
-    // columnName,
-    // recordsPerPage,
-    // sortOrder
-    // setInterviewData(userData.data);
-    // setTotalData(userData.total_rows);
-    // console.log(userData.data[0].interview_date);
     if (userData.data.length === 0) {
       setState({ state, interview_date: "" });
     } else {
@@ -72,6 +64,7 @@ function AddInterview(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

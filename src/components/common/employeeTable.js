@@ -12,13 +12,11 @@ import Pagination from "../common/pagination";
 
 export default function EmployeeTable(props) {
   /*Show modal states */
+  let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
-  let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
-  // let [showResume, setShowResume] = useState(false);
   /*data and id states */
-  // let [resumeid, setResumeId] = useState(false);
   const [employeeData, setemployeeData] = useState([]);
   let [employeeId, setemployeeId] = useState();
   /*delete state */
@@ -57,15 +55,13 @@ export default function EmployeeTable(props) {
   /*Render function to get the employer*/
   useEffect(() => {
     EmpData();
+    if(props.apiCall=== true ||
+      apiCall === true){
+        props.setApiCall(false)
+        setApiCall(true)
+      }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    props.showAddEmployeeModal,
-    deleteAlert,
-    showAddEmployeeModal,
-    props.showAddEmployeeModal,
-    showEducationModal,
-    showSkillsModal,
-    showEmployeeProfile,
     props.experienceFilterValue,
     props.skillFilterValue,
     props.educationFilterValue,
@@ -75,12 +71,14 @@ export default function EmployeeTable(props) {
     columnName,
     sortOrder,
     props.filter_by_time,
+    props.apiCall,
+    apiCall,
+    props.showEmployeeProfile
   ]);
 
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
     // e.preventDefault();
-    setShowEmployeeProfile(true);
     props.employeeDetails(e);
   };
   /* Function to show the single data to update Employee Education*/
@@ -140,16 +138,22 @@ export default function EmployeeTable(props) {
       {showAddEmployeeModal ? <PersonalDetails
         show={showAddEmployeeModal}
         employeeId={employeeId}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => setShowEmployeeMOdal(false)}
       /> : null}
       {showEducationModal ?  <Education
           close={() => setShowEducationModal(false)}
           employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
           show={showEducationModal}
         /> : null}
       {showSkillsModal ? <Skills
         show={showSkillsModal}
         employeeId={employeeId}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => setShowSkillsModal(false)}
       /> : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -192,7 +196,7 @@ export default function EmployeeTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("languages")}
+                      onClick={() => handleSort("language")}
                       className="text-gray"
                       title="Sort by Languages"
                     >

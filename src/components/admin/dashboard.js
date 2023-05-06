@@ -273,7 +273,7 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row mb-11 ">
               {/* <!-- Recent Jobs- --> */}
-              <div className="col-6">
+              <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0 ">
@@ -312,7 +312,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               {/* <!-- Recent Employees- --> */}
-              <div className="col-6">
+              <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
@@ -358,7 +358,7 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row">
               {/* <!-- Recent Interviews- --> */}
-              <div className="col-6">
+              <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
@@ -396,7 +396,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               {/* <!-- Recent Follow- --> */}
-              <div className="col-6">
+              <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0">
@@ -442,7 +442,7 @@ const AdminDashboard = () => {
           <div className="mb-14">
             <div className="row mb-11 ">
               {/* <!-- Recent Job Response- --> */}
-              <div className="col-6">
+              <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
@@ -483,7 +483,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               {/* <!-- Recent Companies- --> */}
-              {/* <div className="col-6">
+              {/* <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">

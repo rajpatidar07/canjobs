@@ -12,6 +12,7 @@ import EmployerTable from "../common/employerTable";
 function Employer() {
   // eslint-disable-next-line
   /*show modal and data, id state */
+  let [apiCall, setApiCall] = useState(false);
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
   const [employerId, setEmployerID] = useState();
@@ -26,7 +27,6 @@ function Employer() {
     setShowEmployerMOdal(true);
     setEmployerID(e);
   };
-
   /*Industry array to filter*/
   // const Industry = employerData.filter(
   //   (thing, index, self) =>
@@ -56,6 +56,8 @@ function Employer() {
         {showAddEmployerModal ? <CompanyDetails
           show={showAddEmployerModal}
           employerId={employerId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
           close={() => setShowEmployerMOdal(false)}
         /> : null}
         <div
@@ -146,6 +148,8 @@ function Employer() {
                 industryFilterValue={industryFilterValue}
                 corporationFilterValue={corporationFilterValue}
                 showEmployerDetails={showEmployerDetails}
+                apiCall={apiCall}
+                setApiCall={setApiCall}
               />
             </div>
           </div>

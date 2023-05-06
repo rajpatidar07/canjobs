@@ -14,6 +14,7 @@ import SAlert from "../../common/sweetAlert";
 function Skills(props) {
   let [skillData, SetSkillData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [apiCall, setApiCall] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -71,7 +72,7 @@ function Skills(props) {
       SkillData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, deleteAlert, state]);
+  }, [props, apiCall]);
 
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
@@ -87,6 +88,7 @@ function Skills(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
+        props.setApiCall(true)
       }
     } else {
       setLoading(false);
@@ -111,6 +113,8 @@ function Skills(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      props.setApiCall(true);
+      setApiCall(true)
       setDeleteAlert(false);
     }
   }

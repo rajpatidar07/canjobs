@@ -11,8 +11,8 @@ import { ToastContainer } from "react-toastify";
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
-
   /*Show modal and data state */
+  let [apiCall, setApiCall] = useState(false);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [
     showKycComplainDetailsModal,
@@ -47,7 +47,7 @@ function CompanyProfile(props) {
     // if (props.employerId !== "0" || props.employerId !== undefined) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }
-  }, [showKycComplainDetailsModal, showCompanyInfoModal]);
+  }, [apiCall]);
 
   return (
     <div>
@@ -155,6 +155,7 @@ function CompanyProfile(props) {
                 employerId={
                   user_type === "company" ? company_id : props.employerId
                 }
+
               />
 
               <div className="col-md-8 col-xl-9 col-lg-8 col-12 ">
@@ -179,11 +180,15 @@ function CompanyProfile(props) {
       {showCompanyInfoModal ? <CompanyDetails
         employerId={user_type === "company" ? company_id : props.employerId}
         show={showCompanyInfoModal}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => setShowCompanyInfoModal(false)}
       /> : null}
       {showKycComplainDetailsModal ? <KycComplianceDetails
         employerId={user_type === "company" ? company_id : props.employerId}
         show={showKycComplainDetailsModal}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         close={() => setShowKycComplainDetailsModal(false)}
       /> : null}
     </div>

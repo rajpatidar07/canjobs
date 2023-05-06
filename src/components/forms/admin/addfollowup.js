@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Addfollowup(props) {
   // console.log(props);
-
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   let employId = props.resData.employee_id;
@@ -40,9 +39,8 @@ function Addfollowup(props) {
     } else {
       setResponseData(userData.data.followup);
     }
-    // console.log(userData.data.followup.length !== 0);
   };
-  // console.log(props.resData.employee_id, props.job_id);
+
   /*Render function to get the Response*/
   useEffect(() => {
     if (props.resData.employee_id === undefined || props.job_id === undefined) {
@@ -83,6 +81,7 @@ function Addfollowup(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
     } else {

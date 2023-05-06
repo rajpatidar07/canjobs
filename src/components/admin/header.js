@@ -58,6 +58,7 @@ const AdminHeader = (props) => {
                 </span>
               </Link>
             </div>
+            
             <div>
               <div className="dropdown show-gr-dropdown py-5">
                 <Link
@@ -70,10 +71,8 @@ const AdminHeader = (props) => {
                   aria-expanded="false"
                   onMouseOut={() => setDropDown(false)}
                 >
-                  {/* <div className="circle-40">
-                    <img src="image/header-profile.png" alt="" />
-                  </div> */}
-                  <i className="fas fa-chevron-down heading-default-color ml-15"></i>
+                  <div> <h6>Hii ! Admin</h6></div>
+                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
                 </Link>
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"

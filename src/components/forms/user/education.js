@@ -15,6 +15,7 @@ import FilterJson from "../../json/filterjson";
 
 function Education(props) {
   let [educationData, setEducationData] = useState([]);
+  const [apiCall, setApiCall] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -103,7 +104,7 @@ function Education(props) {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, deleteAlert, props.employeeId]);
+  }, [ apiCall, props.employeeId]);
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
@@ -118,6 +119,7 @@ function Education(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
+        props.setApiCall(true)
       }
       if (responseData.message === "Employee data inserted successfully") {
         toast.success("Education Added successfully", {
@@ -127,6 +129,7 @@ function Education(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
+        props.setApiCall(true)
       } //"
       // handle form submission
     } else {
@@ -154,6 +157,8 @@ function Education(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      props.setApiCall(true)
+      setApiCall(true)
       setDeleteAlert(false);
     }
   }

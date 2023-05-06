@@ -5,6 +5,7 @@ import { EmployerDetails } from "../../api/api";
 
 function CompanyDetailPage(props) {
   /*Show modal and data state */
+  const [apiCall, setApiCall] = useState(false);
   const [ContactDetails, setContactDetails] = useState(false);
   const [employerData, setEmployerData] = useState("");
 
@@ -21,7 +22,7 @@ function CompanyDetailPage(props) {
     if (props.employerId !== "0" || props.employerId !== undefined) {
       EmployerData();
     }
-  }, [props.employerId, ContactDetails]);
+  }, [props.employerId, apiCall]);
   return (
     <div className="col-md-12 col-xl-3 col-lg-4 col-12 col-sm-12 border-right">
       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
@@ -33,6 +34,8 @@ function CompanyDetailPage(props) {
         {ContactDetails ? <ContactInfo
           employerId={props.employerId}
           show={ContactDetails}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
           close={() => setContactDetails(false)}
         /> : null}
       </h4>

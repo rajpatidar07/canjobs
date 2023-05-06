@@ -12,10 +12,12 @@ import JobTable from "../common/jobTable";
 
 function Job() {
   /*show Modal and props state */
+  let [apiCall, setApiCall] = useState(false);
+  let [catApiCall, setCatApiCall] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
-
+  
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -38,7 +40,8 @@ function Job() {
     SkillFilterValue,
     locationFilterValue,
     jobSwapFilterValue,
-    showAddJobsModal,
+    apiCall,
+    catApiCall,
     search,
     company,
   ]);
@@ -127,7 +130,9 @@ function Job() {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
+                        onChange={(e) =>{ 
+                          setCategoryFilterValue(e.target.value);
+                          setCatApiCall(true)}}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>
@@ -221,6 +226,8 @@ function Job() {
                         show={showAddJobsModal}
                         jobdata={JobId}
                         admin={"admin"}
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
                         close={() => setShowAddJobsModal(false)}
                       /> : null}
                     </div>
@@ -236,7 +243,8 @@ function Job() {
                 categoryFilterValue={categoryFilterValue}
                 company={company}
                 JobDetail={JobDetail}
-                showAddJobsModal={showAddJobsModal}
+                apiCall={apiCall}
+                setApiCall={setApiCall}
               />
             </div>
           </div>

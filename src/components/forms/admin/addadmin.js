@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Addadmin(props) {
-  // let [adminDetails, setAdmindetails] = useState([]);
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
   /* Functionality to close the modal */
@@ -104,6 +103,7 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "admin updated successfully") {
@@ -111,6 +111,7 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        props.setApiCall(true)
         return close();
       }
       if (responseData.message === "Admin already exists") {

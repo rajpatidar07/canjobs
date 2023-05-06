@@ -285,7 +285,7 @@ function AddJobModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-
+        props.setApiCall(true);
         return close();
       }
       if (responseData.message === "job data updated successfully") {
@@ -293,7 +293,7 @@ function AddJobModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-
+        props.setApiCall(true);
         return close();
       }
     } else {
