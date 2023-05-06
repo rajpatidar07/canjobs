@@ -59,11 +59,15 @@ function Followup() {
     // //// console.log((userData.status);
     // }
   };
+  console.log("Api   :- ",apiCall);
 
   /*Render function to get the job */
   useEffect(() => {
     JobData();
     CategoryData();
+    if(apiCall === true){
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
@@ -439,8 +443,7 @@ function Followup() {
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() => {
-                                        setresponseId(job.job_id);
-                                        setApiCall(true);
+                                        setresponseId(job.job_id)
                                       }}
                                       title="Job Response"
                                     >
@@ -457,11 +460,14 @@ function Followup() {
                                   {/* <!-- Job Responses --> */}
                                   <JobResponse
                                     responseId={responseId}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
                                     heading={"Manage Follow-ups"}
                                   />
                                 </td>
                               </tr>
-                            ) : null}
+                            ) : null
+                            }
                           </React.Fragment>
                         ))
                       )}

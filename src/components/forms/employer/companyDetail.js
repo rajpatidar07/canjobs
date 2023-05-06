@@ -198,12 +198,6 @@ function CompanyDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, logo: base64Name });
   };
-  // const handleFileChange = async (e) => {
-  //   encoded = await convertToBase64(e.target.files[0]);
-  //   let base64Name = encoded.base64;
-  //   setState({ ...state, logo: base64Name });
-  // };
-  // console.log(state.logo);
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
     // console.log(state);

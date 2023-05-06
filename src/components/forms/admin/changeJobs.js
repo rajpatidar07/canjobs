@@ -10,6 +10,7 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 import Select from "react-select";
 function ChangeJob(props) {
   let [loading, setLoading] = useState(false);
+  // let [apiCall, setApiCall] = useState(false);
   const [state, setState] = useState([]);
   // console.log(props);
   let employeeId = props.resData.employee_id;
@@ -55,6 +56,7 @@ function ChangeJob(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      props.setApiCall(true)
       return close();
     }
   };
@@ -94,7 +96,7 @@ function ChangeJob(props) {
               >
                 Jobs <span className="text-danger">*</span> :
               </label>
-              <Select options={state} onChange={onSelectChange} id="job_id" />
+              <Select options={state || ""} onChange={onSelectChange} id="job_id" />
             </div>
             <div className="form-group text-center">
               {loading === true ? (

@@ -15,6 +15,7 @@ import ChangeJob from "../forms/admin/changeJobs";
 function JobResponse(props) {
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
+  let [apiCall, setApiCall] = useState(props.apiCall);
   let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
   let [limia, setLimia] = useState(false);
@@ -34,7 +35,6 @@ function JobResponse(props) {
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [jobId, setJobId] = useState(props.responseId);
-  // console.log(props.responseId);
   const user_type = localStorage.getItem("userType");
 
   /* Function to get the Response data*/
@@ -59,10 +59,13 @@ function JobResponse(props) {
       setTotalData(userData.data.total_rows);
     }
   };
-
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
+   if (apiCall === true){
+    let CallApi = true
+    props.setApiCall(CallApi)
+   }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     skillFilterValue,
@@ -79,6 +82,7 @@ function JobResponse(props) {
     followup,
     showChangeJobModal,
     props.filter_by_time,
+    apiCall
   ]);
 
   /*Function to open add follow up modal */
@@ -86,18 +90,21 @@ function JobResponse(props) {
     setFollowUp(true);
     setResData(e);
     setJobId(e.job_id);
+      
   };
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
     setInterview(true);
     setResData(e);
     setJobId(e.job_id);
+    
   };
   /*Function to open add Limia up modal */
   const addLimia = (e) => {
     setLimia(true);
     setResData(e);
     setJobId(e.job_id);
+    
   };
   /* Function to show the single data to update job */
   const editJob = (e) => {
@@ -105,6 +112,8 @@ function JobResponse(props) {
     setShowChangeJobModal(true);
     setResData(e);
     setJobId(e.job_id);
+    
+    
   };
 
   /*Pagination Calculation */
@@ -174,6 +183,8 @@ function JobResponse(props) {
           setShowChangeJobModal(false);
           setResData("");
         }}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
         job_id={jobId}
         show={showChangeJobModal}
       /> : null}

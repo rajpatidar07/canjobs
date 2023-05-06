@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 // eslint-disable-next-line
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
+  let [apiCall, setApiCall] = useState(false);
   let skill = [];
   const user_type = localStorage.getItem("userType");
   const jobId = localStorage.getItem("jobId");
@@ -28,25 +29,27 @@ function JobDetailPage(props) {
   /*Render method to get job detail data */
   useEffect(() => {
     JobData();
-  }, [props.jobdata]);
+  }, [props.jobdata,apiCall]);
   /*Set skill variable to array frm string */
   if (jobDetatilsData !== "") {
     skill = jobDetatilsData.keyskill.split(",");
   }
   /*FUnction to apply to the job */
-  const OnApplyClick = async () => {
-    let Response = await ApplyJob(jobId, user_id, 0);
+  const OnApplyClick = async (status) => {
+    let Response = await ApplyJob(jobId, user_id, status);
     if (Response.message === "Job applied successfully") {
       toast.success("Job Applied successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setApiCall(true)
     }
     if (Response.message === "already applied on this job") {
       toast.success("Already applied on this job", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setApiCall(true)
     }
   };
   return (
@@ -87,20 +90,22 @@ function JobDetailPage(props) {
           <div className="row pt-9">
             <div className="col-12">
               <div className="card-btn-group">
-                <Link
+              <button
                   to={""}
-                  onClick={OnApplyClick}
-                  className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
+                  onClick={() => OnApplyClick(0)}
+                  disabled={jobDetatilsData.is_applied === "0" ? false : true}
+                  className={jobDetatilsData.is_applied === "0" ? "btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5":"btn btn-info text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"}
                 >
-                  Apply to this job
-                </Link>
-                <Link
+                  {jobDetatilsData.is_applied === "0" ? "Apply to this job" : "Already Applied"}
+                </button> 
+                <button
                   to={""}
+                  onClick={() => OnApplyClick(3)}
                   className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                 >
                   <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                   Save job
-                </Link>
+                </button>
               </div>
             </div>
           </div>

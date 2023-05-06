@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { GetAllJobs, DeleteJob, getAllJobsCategory } from "../../api/api";
-import { toast } from "react-toastify";
+import { GetAllJobs, getAllJobsCategory } from "../../api/api";
 import JobResponse from "./response";
 
 function FollowupTable() {
   /*show Modal and props state */
-  let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   /*Delete state */
   /*Filter and search state */
-  const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("");
-  const [locationFilterValue, setLocationFilterValue] = useState("");
-  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [search, setSearch] = useState("");
   const [Categorylist, setCategoryList] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -29,11 +22,11 @@ function FollowupTable() {
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
-      search,
-      locationFilterValue,
-      categoryFilterValue,
-      SkillFilterValue,
-      jobSwapFilterValue,
+      props.search,
+      props.locationFilterValue,
+      props.categoryFilterValue,
+      props.SkillFilterValue,
+      props.jobSwapFilterValue,
       currentPage,
       recordsPerPage,
       columnName,
@@ -47,9 +40,7 @@ function FollowupTable() {
       setTotalData(userData.data.total_rows);
       setresponseId(userData.data.data[0].job_id);
     }
-    // if (userData.message === "No data found") {
-    // //// console.log((userData.status);
-    // }
+  
   };
 
   /*Render function to get the job */
@@ -59,13 +50,11 @@ function FollowupTable() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    categoryFilterValue,
-    SkillFilterValue,
-    locationFilterValue,
-    jobSwapFilterValue,
-    showAddJobsModal,
-    search,
-    deleteAlert,
+    props.categoryFilterValue,
+    props.SkillFilterValue,
+    props.locationFilterValue,
+    props.jobSwapFilterValue,
+    props.search,
     currentPage,
     columnName,
     sortOrder,
@@ -326,7 +315,7 @@ function FollowupTable() {
                         ) : null}
                       </td>
                     </tr>
-                    {job.job_id === responseId && job.total_applicants > 0 ? (
+                    {JobId || job.job_id === responseId && job.total_applicants > 0 ? (
                       <tr>
                         <td colSpan={10}>
                           <JobResponse responseId={responseId} />
