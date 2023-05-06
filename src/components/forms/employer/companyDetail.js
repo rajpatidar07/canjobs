@@ -10,6 +10,7 @@ import FilterJson from "../../json/filterjson";
 
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
+  const [imgError, setImgError] = useState(false);
   let encoded;
   /* Functionality to close the modal */
 
@@ -174,12 +175,34 @@ function CompanyDetails(props) {
       };
     });
   };
-  /*Onchange function of profile */
-  const handleFileChange = async (e) => {
-    encoded = await convertToBase64(e.target.files[0]);
+  /*Onchange function of Logo */
+   const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        if (file.size > 1024 * 100) {
+          setImgError("Image size can't be more then 100 kb");
+        } else {
+          setState({ ...state, logo: (event.target.result) });
+        }
+      };
+      img.src = event.target.result;
+    };
+  
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+    encoded = await convertToBase64(file);
     let base64Name = encoded.base64;
     setState({ ...state, logo: base64Name });
   };
+  // const handleFileChange = async (e) => {
+  //   encoded = await convertToBase64(e.target.files[0]);
+  //   let base64Name = encoded.base64;
+  //   setState({ ...state, logo: base64Name });
+  // };
   // console.log(state.logo);
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
@@ -552,6 +575,7 @@ function CompanyDetails(props) {
                     {errors.about}
                   </span>
                 )} */}
+                <small className="text-danger">{imgError}</small>
               </div>
             </div>
             <div className="row">
@@ -583,7 +607,7 @@ function CompanyDetails(props) {
                     /> */}
                     <textarea
                       name="about"
-                      value={state.about||""}
+                      value={state.about || ""}
                       onChange={onInputChange}
                       className={
                         errors.about

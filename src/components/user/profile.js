@@ -7,7 +7,7 @@ import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-import { EmployeeDetails } from "../../api/api";
+import { EmployeeDetails , EmployeeAppliedJob} from "../../api/api";
 import moment from "moment";
 const UserProfile = (props) => {
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
@@ -17,12 +17,16 @@ const UserProfile = (props) => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
+  const [appliedJob, setAppliedJob] = useState([]);
   const user_type = localStorage.getItem("userType");
   let id = localStorage.getItem("employee_id");
-  const employeeId = user_type === "admin"? props.employeeId:id;
+  const employeeId = user_type === "admin" ? props.employeeId : id;
+ /*Function to get user Data */
   const UserData = async () => {
     const userData = await EmployeeDetails(employeeId);
-    if (userData.data===undefined||userData.data.length === 0 || userData.data.employee.length === 0) {
+    if (userData.data === undefined ||
+        userData.data.length === 0 || 
+        userData.data.employee.length === 0) {
       setuserDetail([]);
       setPersonalDetail([]);
     } else {
@@ -30,7 +34,20 @@ const UserProfile = (props) => {
       setPersonalDetail(userData.data.employee[0]);
     }
   };
+   /*Function to Geyt applied job data */
+  const AppliedJob = async () => {
+    const applied = await EmployeeAppliedJob(employeeId);
+    if (applied.data === undefined ||
+        applied.data.length === 0 
+       ) {
+           setAppliedJob([])
+    } else {
+           setAppliedJob(applied.data);
+    }
+  };
+  /*Render function to get user Data */
   useEffect(() => {
+    AppliedJob()
     UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -45,7 +62,6 @@ const UserProfile = (props) => {
     const id = employee_id;
     window.open(`/resume/${id}`, "_blank");
   };
-  // //// console.log((("userData--" + JSON.stringify(userDetail)))
 
   return (
     /*---- Employee Profile Details Page ----*/
@@ -111,8 +127,8 @@ const UserProfile = (props) => {
                       {PersonalDetail.name}
                       <br />
                       <span className="age_gender font-size-3 text-smoke">
-                        ({PersonalDetail.gender},{" "}
-                        {PersonalDetail.marital_status},{" "}
+                        ({PersonalDetail.gender},
+                        {PersonalDetail.marital_status},
                         {moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)
                       </span>
@@ -144,7 +160,7 @@ const UserProfile = (props) => {
                     {PersonalDetail.email === "" ||
                     PersonalDetail.length === 0 ? (
                       <div>
-                        {" "}
+                        
                         <p className="text-center">No Data Found</p>
                       </div>
                     ) : (
@@ -228,19 +244,19 @@ const UserProfile = (props) => {
                         </div>
                         <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
-                            Work Permit of Canada:{" "}
+                            Work Permit of Canada:
                             <b>{PersonalDetail.work_permit_canada}</b>
                           </span>
                         </div>
                         <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
-                            Work Permit of Other Country:{" "}
+                            Work Permit of Other Country:
                             <b>{PersonalDetail.work_permit_other_country}</b>
                           </span>
                         </div>
                         <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
-                            Resume:{" "}
+                            Resume:
                             <Link
                               to={""}
                               onClick={() =>
@@ -392,7 +408,7 @@ const UserProfile = (props) => {
                                 <div className="text_box text-left w-100 mt-n2">
                                   <h3 className="mb-0">
                                     <span className="font-size-6 text-black-2 font-weight-semibold">
-                                      {CareerDetails.designation} -{" "}
+                                      {CareerDetails.designation} -
                                       <span className="font-size-4">
                                         {CareerDetails.functional_area}
                                       </span>
@@ -408,8 +424,8 @@ const UserProfile = (props) => {
                                 <span className="font-size-4 text-gray w-100">
                                   {moment(CareerDetails.start_date).format(
                                     "YYYY-MM-DD"
-                                  )}{" "}
-                                  -{" "}
+                                  )}
+                                  -
                                   {moment(CareerDetails.end_date).format(
                                     "YYYY-MM-DD"
                                   )}
@@ -468,7 +484,7 @@ const UserProfile = (props) => {
                                   <div className="text_box text-left w-100 mt-n2">
                                     <h3 className="mb-0">
                                       <span className="font-size-6 text-black-2 font-weight-semibold">
-                                        {EducationDetails.qualification}{" "}
+                                        {EducationDetails.qualification}
                                         <span className="font-size-4">
                                           (
                                           {
@@ -479,7 +495,7 @@ const UserProfile = (props) => {
                                       </span>
                                     </h3>
                                     <span className="font-size-4 text-default-color line-height-2">
-                                      {EducationDetails.course},{" "}
+                                      {EducationDetails.course},
                                       {EducationDetails.specialization}
                                     </span>
                                   </div>
@@ -588,7 +604,7 @@ const UserProfile = (props) => {
               <div
                 className={
                   showAppliedJobs === true
-                    ? "row justify-content-center p-8"
+                    ? "justify-content-center"
                     : "d-none"
                 }
                 id="appliedJobs"
@@ -599,226 +615,64 @@ const UserProfile = (props) => {
                 <div className="mb-5">
                   <h4 className="font-size-7 mb-9">Applied Jobs</h4>
                   <div className="row justify-content-center">
-                    <div className="col-lg-6 col-sm-11 mb-9">
+                    {appliedJob === undefined || appliedJob.length === 0 ? 
+                     <div className="text-center text-dark" >No Data Found</div>
+                    : (appliedJob || []).map((data,i)=>{
+                    return (  
+                    <div className="col-lg-6 col-sm-11 mb-9" key={i}>
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
-                          <div className="square-52 bg-indigo mr-8 rounded">
-                            <Link to="">
-                              <img src="image/l3/png/fimize.png" alt="" />
-                            </Link>
+                          <div className="square-52 mr-8 rounded">
+                              <img src={data.logo ? data.data : "image/l3/png/fimize.png"} alt="" />
                           </div>
                           <div>
-                            <Link
+                            <span
                               to=""
                               className="font-size-3 text-default-color line-height-2"
                             >
-                              Fimize
-                            </Link>
+                             {data.company_name}
+                            </span>
                             <h3 className="font-size-5 mb-0">
-                              <Link
+                              <span
                                 className="heading-default-color font-weight-semibold"
                                 to=""
                               >
-                                Senior Marketing Expert
-                              </Link>
+                                {data.job_title}
+                              </span>
                             </h3>
                           </div>
                         </div>
                         <div className="d-flex pt-17">
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
-                              <Link
+                              <span
                                 to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                London
-                              </Link>
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
+                                {data.location}
+                              </span>
                             </li>
                             <li>
-                              <Link
+                              <span
                                 to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                Full-time
-                              </Link>
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
+                                {data.job_type}
+                              </span>
                             </li>
                           </ul>
-                          <Link
+                          {/* <Link
                             to=""
-                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
-                          ></Link>
+                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color clicked  "
+                          ></Link> */}
                         </div>
                       </div>
                       {/* <!-- End Single Featured Job --> */}
                     </div>
-                    <div className="col-lg-6 col-sm-11 mb-9">
-                      {/* <!-- Single Featured Job --> */}
-                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
-                        <div className="media align-items-center">
-                          <div className="square-52 bg-regent mr-8 rounded">
-                            <Link to="">
-                              <img src="image/svg/icon-shark-2.svg" alt="" />
-                            </Link>
-                          </div>
-                          <div>
-                            <Link
-                              to=""
-                              className="font-size-3 text-default-color line-height-2"
-                            >
-                              Shark
-                            </Link>
-                            <h3 className="font-size-5 mb-0">
-                              <Link
-                                className="heading-default-color font-weight-semibold"
-                                to=""
-                              >
-                                3D ui / ux frontend developer
-                              </Link>
-                            </h3>
-                          </div>
-                        </div>
-                        <div className="d-flex pt-17">
-                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                California
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                Remote
-                              </Link>
-                            </li>
-                          </ul>
-                          <Link
-                            to=""
-                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                          ></Link>
-                        </div>
-                      </div>
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="col-lg-6 col-sm-11 mb-9">
-                      {/* <!-- Single Featured Job --> */}
-                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
-                        <div className="media align-items-center">
-                          <div className="square-52 bg-orange-2 mr-8 rounded">
-                            <Link to="">
-                              <img src="image/svg/icon-thunder.svg" alt="" />
-                            </Link>
-                          </div>
-                          <div>
-                            <Link
-                              to=""
-                              className="font-size-3 text-default-color line-height-2"
-                            >
-                              Thunder
-                            </Link>
-                            <h3 className="font-size-5 mb-0">
-                              <Link
-                                className="heading-default-color font-weight-semibold"
-                                to=""
-                              >
-                                Product Manager
-                              </Link>
-                            </h3>
-                          </div>
-                        </div>
-                        <div className="d-flex pt-17">
-                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                London
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                Full-time
-                              </Link>
-                            </li>
-                          </ul>
-                          <Link
-                            to=""
-                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                          ></Link>
-                        </div>
-                      </div>
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="col-lg-6 col-sm-11 mb-9">
-                      {/* <!-- Single Featured Job --> */}
-                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
-                        <div className="media align-items-center">
-                          <div className="square-52 bg-helio mr-8 rounded">
-                            <Link to="">
-                              <img src="image/l3/png/asios.png" alt="" />
-                            </Link>
-                          </div>
-                          <div>
-                            <Link
-                              to=""
-                              className="font-size-3 text-default-color line-height-2"
-                            >
-                              Shark
-                            </Link>
-                            <h3 className="font-size-5 mb-0">
-                              <Link
-                                className="heading-default-color font-weight-semibold"
-                                to=""
-                              >
-                                Front-end Developer
-                              </Link>
-                            </h3>
-                          </div>
-                        </div>
-                        <div className="d-flex pt-17">
-                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                Alabama
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                Full-time
-                              </Link>
-                            </li>
-                          </ul>
-                          <Link
-                            to=""
-                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  clicked  "
-                          ></Link>
-                        </div>
-                      </div>
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>
+                   ) })}
                   </div>
                 </div>
                 {/* <!-- Top End --> */}
@@ -859,7 +713,7 @@ const UserProfile = (props) => {
                                 to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                                 New York
                               </Link>
                             </li>
@@ -868,7 +722,7 @@ const UserProfile = (props) => {
                                 to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                                 Part-time
                               </Link>
                             </li>
@@ -914,7 +768,7 @@ const UserProfile = (props) => {
                                 to=""
                                 className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                                 Alabama
                               </Link>
                             </li>
@@ -923,7 +777,7 @@ const UserProfile = (props) => {
                                 to=""
                                 className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                               >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                                 Full-time
                               </Link>
                             </li>

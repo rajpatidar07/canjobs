@@ -8,7 +8,7 @@ import Interview from "../common/interviewTable";
 import JobResponse from "./response";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
-import EmployerTable from "../common/employerTable";
+// import EmployerTable from "../common/employerTable";
 // import { getSummaryCount } from "../../api/api";
 import FollowUpDashBoard from "../common/followUpTableDashboard";
 const AdminDashboard = () => {
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
   const [countData /* setCountData*/] = useState("");
   let [job, setJob] = useState("");
   let [employee, setEmployee] = useState("");
-  let [employer, setEmployer] = useState("");
+  // let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
   let [response, setResponse] = useState("");
   let [followup, setFollowUP] = useState("");

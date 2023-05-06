@@ -10,6 +10,7 @@ import FilterJson from "../../json/filterjson";
 function PersonalDetails(props) {
   let encoded;
   const [loading, setLoading] = useState(false);
+  const [imgError ,setImgError] = useState("")
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -244,8 +245,25 @@ function PersonalDetails(props) {
     setState({ ...state, resume: base64Name });
   };
   /*Onchange function of profile */
-  const handleFileChange = async (e) => {
-    encoded = await convertToBase64(e.target.files[0]);
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        if (file.size > 1024 * 100) {
+          setImgError("Image size can't be more then 100 kb");
+        } else {
+          setState({ ...state, profile_photo: (event.target.result) });
+        }
+      };
+      img.src = event.target.result;
+    };
+  
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+    encoded = await convertToBase64(file);
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
@@ -280,29 +298,6 @@ function PersonalDetails(props) {
             )}
             {/* FIRST LINE */}
             <div className="form-group mx-auto text-center">
-              {/* <div className="mb-4 position-relative">
-                <input
-                  type="file"
-                  id="fileInput"
-                  className="d-none"
-                  accept="image/png,image/jpeg,image/jpg,image/gif"
-                  onChange={handleFileChange}
-                />
-                <label htmlFor="fileInput">
-                  <span className="fas fa-pen text-gray"> </span>
-                  <img
-                    className="rounded-circle"
-                    src={
-                      state.profile_photo
-                        ? state.profile_photo
-                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                    }
-                    alt=""
-                    width={"100px"}
-                    height={"100px"}
-                  />
-                </label>
-              </div> */}
               <div className="mb-4 position-relative">
                 <input
                   type={"file"}
@@ -331,6 +326,7 @@ function PersonalDetails(props) {
                   </span>
                 </label>
               </div>
+              <small className="text-danger">{imgError}</small>
             </div>
             <div className="row pt-5">
               {" "}

@@ -86,6 +86,22 @@ export const EmployeeDetails = async (props) => {
   return response.data;
   // }
 };
+/*Employee detail api */
+export const EmployeeAppliedJob = async (props) => {
+  // console.log(props);
+  const response = await axios.post(
+    `${API_URL}getJobsByEmployee`,
+    { employee_id: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 /*Add Employee detail api */
 export const AddEmployeeDetails = async (props) => {
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
