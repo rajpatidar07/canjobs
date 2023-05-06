@@ -5,8 +5,12 @@ html {
 
 body {
   overflow: auto;
-  height: 100%;
+  /* height: 100%; */
   overscroll-behavior: none;
+}
+*{
+  font-family: 'Nunito Sans', sans-serif;
+/* font-family: 'Oswald', sans-serif; */
 }
 .App-logo {
   height: 40vmin;
@@ -73,7 +77,9 @@ button.btn.action_btn {
   min-width: 30px;
 }
 /* pagination */
-
+.pagination{
+  justify-content: center;
+}
 .pagination  a.page-link.active {
   background: #aaa;
   color: #fff;
@@ -162,6 +168,7 @@ table.table.table-striped.main_data_table_inn tr {
   padding: 0;
   margin-top: 15px;
 }
+
 .dashboard-main-container .form-control{
   height: 2.25rem;
   padding: 5px 10px!important;
