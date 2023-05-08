@@ -32,7 +32,6 @@ function JobBox({
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const category = searchParams.get("category");
-
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
