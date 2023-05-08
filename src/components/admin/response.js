@@ -62,10 +62,10 @@ function JobResponse(props) {
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
-   if (apiCall === true){
-    let CallApi = true
-    props.setApiCall(CallApi)
-   }
+    if (apiCall === true) {
+      let CallApi = true;
+      props.setApiCall(CallApi);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     skillFilterValue,
@@ -76,7 +76,7 @@ function JobResponse(props) {
     columnName,
     sortOrder,
     props.filter_by_time,
-    apiCall
+    apiCall,
   ]);
 
   /*Function to open add follow up modal */
@@ -84,21 +84,18 @@ function JobResponse(props) {
     setFollowUp(true);
     setResData(e);
     setJobId(e.job_id);
-      
   };
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
     setInterview(true);
     setResData(e);
     setJobId(e.job_id);
-    
   };
   /*Function to open add Limia up modal */
   const addLimia = (e) => {
     setLimia(true);
     setResData(e);
     setJobId(e.job_id);
-    
   };
   /* Function to show the single data to update job */
   const editJob = (e) => {
@@ -106,7 +103,6 @@ function JobResponse(props) {
     setShowChangeJobModal(true);
     setResData(e);
     setJobId(e.job_id);
- 
   };
 
   /*Pagination Calculation */
@@ -144,49 +140,57 @@ function JobResponse(props) {
           <ToastContainer />
         </>
       ) : null}
-     {followup ? <Addfollowup
-        show={followup}
-        job_id={jobId}
-        resData={resData}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        close={() => {
-          setFollowUp(false);
-          setResData("");
-        }}
-      /> : null}
-     {interview ?<AddInterview
-        show={interview}
-        job_id={jobId}
-        resData={resData}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        close={() => {
-          setInterview(false);
-          setResData("");
-        }}
-      />:null}
-      {limia ? <LmiaStatus
-        show={limia}
-        resData={resData}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        close={() => {
-          setLimia(false);
-          setResData("");
-        }}
-      /> : null}
-      {showChangeJobModal ? <ChangeJob
-        resData={resData}
-        close={() => {
-          setShowChangeJobModal(false);
-          setResData("");
-        }}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        job_id={jobId}
-        show={showChangeJobModal}
-      /> : null}
+      {followup ? (
+        <Addfollowup
+          show={followup}
+          job_id={jobId}
+          resData={resData}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => {
+            setFollowUp(false);
+            setResData("");
+          }}
+        />
+      ) : null}
+      {interview ? (
+        <AddInterview
+          show={interview}
+          job_id={jobId}
+          resData={resData}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => {
+            setInterview(false);
+            setResData("");
+          }}
+        />
+      ) : null}
+      {limia ? (
+        <LmiaStatus
+          show={limia}
+          resData={resData}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => {
+            setLimia(false);
+            setResData("");
+          }}
+        />
+      ) : null}
+      {showChangeJobModal ? (
+        <ChangeJob
+          resData={resData}
+          close={() => {
+            setShowChangeJobModal(false);
+            setResData("");
+          }}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          job_id={jobId}
+          show={showChangeJobModal}
+        />
+      ) : null}
       <div
         className={
           props.heading === "Response" ||
@@ -301,12 +305,6 @@ function JobResponse(props) {
                 >
                   <thead>
                     <tr>
-                      <th
-                        scope="col"
-                        className="pl-0 border-0 font-size-4 font-weight-normal text-center"
-                      >
-                        #
-                      </th>
                       <th
                         scope="col"
                         className="pl-0 border-0 font-size-4 font-weight-normal"
@@ -437,7 +435,7 @@ function JobResponse(props) {
                         {props.heading === "Dashboard" ? (
                           <th className="bg-white"></th>
                         ) : (
-                          <th className="bg-white">No Data Found</th>
+                          <th className="bg-white">NA Found</th>
                         )}
                         {props.heading === "Dashboard" ? (
                           ""
@@ -453,37 +451,46 @@ function JobResponse(props) {
                     ) : (
                       (response || []).map((res, i) => (
                         <tr className="" key={i}>
-                          <th className="pl-5 py-5 pr-0   ">
-                            <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto overflow-hidden">
-                                {/* {res.profile_photo === null ? ( */}
-                                <img
-                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                  alt=""
-                                  className="w-100"
-                                />
-                                {/* ) : (
-                              <img
-                                src={empdata.profile_photo}
-                                alt=""
-                                className="w-100"
-                              />
-                            )} */}
-                              </div>
-                            </div>
-                          </th>
                           <th className=" py-5">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {res.name || res.gender || res.date_of_birth ? (
-                                <>
-                                  {res.name}(
-                                  {moment().diff(res.date_of_birth, "years")})
-                                  <br />
-                                  {res.gender}
-                                </>
+                                <div className="d-flex profile_box gx-2">
+                                  <div className="media  align-items-center">
+                                    <div className="circle-36 mx-auto overflow-hidden">
+                                      {res.profile_photo === null ? (
+                                        <img
+                                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                          alt=""
+                                          className="w-100"
+                                        />
+                                      ) : (
+                                        <img
+                                          src={res.profile_photo}
+                                          alt=""
+                                          className="w-100"
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  <div className=" mb-0">
+                                    <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                      {res.name}
+                                    </p>
+                                    <p className="text-gray font-size-2 m-0 text-capitalize">
+                                      {res.gender} ({res.marital_status + ", "}
+                                      {/*Calculation of age from date of birth*/}
+                                      {moment().diff(
+                                        res.date_of_birth,
+                                        "years"
+                                      )}
+                                      Y)
+                                    </p>
+                                  </div>
+                                </div>
                               ) : (
                                 <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  No Data
+                                  NA
                                 </span>
                               )}
                             </h3>
@@ -497,7 +504,7 @@ function JobResponse(props) {
                                   res.experience
                                 ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    No Data
+                                    NA
                                   </span>
                                 )}
                               </h3>
@@ -509,7 +516,7 @@ function JobResponse(props) {
                                 res.job_title
                               ) : (
                                 <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  No Data
+                                  NA
                                 </span>
                               )}
                             </div>
@@ -520,13 +527,13 @@ function JobResponse(props) {
                                 res.company_name
                               ) : (
                                 <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  No Data
+                                  NA
                                 </span>
                               )}
                             </h3>
                           </th>
                           <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-center">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {res.lmia_status === "Reject" ? (
                                 <span className="badge badge-pill badge-danger">
                                   Reject
@@ -552,7 +559,7 @@ function JobResponse(props) {
                                   Other
                                 </span>
                               ) : (
-                                <span>No Data</span>
+                                <span>NA</span>
                               )}
                             </h3>
                           </th>
@@ -568,7 +575,7 @@ function JobResponse(props) {
                                   </>
                                 ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    No Data
+                                    NA
                                   </span>
                                 )}
                               </h3>
@@ -590,7 +597,7 @@ function JobResponse(props) {
                                 ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                     {" "}
-                                    No Data
+                                    NA
                                   </span>
                                 )}
                               </h3>

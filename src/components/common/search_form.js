@@ -51,32 +51,33 @@ function SearchForm() {
       data-aos-duration="800"
       data-aos-once="true"
     >
-      <div className="filter-search-form-2 bg-white job_search_main_form rounded-70 shadow-7 pr-15 py-7 pl-12">
-        <div className="filter-inputs">
-          <div className="form-group position-relative">
-            <input
-              className="form-control focus-reset pl-13"
-              type="text"
-              id="keyword"
-              name="search"
-              value={state.search}
-              onChange={(e) => setState({ ...state, search: e.target.value })}
-              placeholder="Type Job title, keywords"
-            />
-            <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
-              <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
-            </span>
-          </div>
-          {/* <!-- .select-city starts --> */}
-          <div className="form-group position-relative">
-            <Select
-              options={"" || state.country}
-              name="country"
-              id="country"
-              onChange={onSelectChange}
-              className="bg-white pl-13"
-            />
-            {/* <select
+      <div className=" bg-white job_search_main_form rounded-70 shadow-7 pr-15 py-7 pl-12">
+        <div className="filter-search-form-2">
+          <div className="filter-inputs">
+            <div className="form-group position-relative">
+              <input
+                className="form-control focus-reset pl-13"
+                type="text"
+                id="keyword"
+                name="search"
+                value={state.search}
+                onChange={(e) => setState({ ...state, search: e.target.value })}
+                placeholder="Type Job title, keywords"
+              />
+              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
+                <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
+              </span>
+            </div>
+            {/* <!-- .select-city starts --> */}
+            <div className="form-group position-relative">
+              <Select
+                options={"" || state.country}
+                name="country"
+                id="country"
+                onChange={onSelectChange}
+                className="bg-white pl-13"
+              />
+              {/* <select
               name="country"
               id="country"
               className="nice-select bg-white pl-13 h-100 arrow-3 font-size-4"
@@ -95,33 +96,33 @@ function SearchForm() {
                 );
               })}
             </select> */}
-            <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
-              <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
-            </span>
+              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
+                <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
+              </span>
+            </div>
+            {/* <!-- ./select-city ends --> */}
           </div>
           {/* <!-- ./select-city ends --> */}
+          <button
+            onClick={path === "/jobs" ? null : Onsearch}
+            className="btn btn-primary line-height-reset text-uppercase"
+          >
+            Search
+          </button>
         </div>
-        {/* <!-- ./select-city ends --> */}
-      </div>
-      <div className="button-block">
-        <button
-          onClick={path === "/jobs" ? null : Onsearch}
-          className="btn btn-primary line-height-reset h-100 btn-submit w-100 text-uppercase"
-        >
-          Search
-        </button>
-      </div>
-      <div className="row m-0 job_filter_block mt-5">
-        <Filterbox
-          name="country"
-          filterheading=" Jobs by Location"
-          filterjson={filterjson.location}
-        />
-        <Filterbox
-          name="category"
-          filterheading=" Jobs by Category"
-          filterjson={filterjson.category}
-        />
+
+        <div className="row m-0 job_filter_block mt-5">
+          <Filterbox
+            name="country"
+            filterheading=" Jobs by Location"
+            filterjson={filterjson.location}
+          />
+          <Filterbox
+            name="category"
+            filterheading=" Jobs by Category"
+            filterjson={filterjson.category}
+          />
+        </div>
       </div>
     </form>
   );
