@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { GetAllJobs, ApplyJob } from "../../../api/api";
 // import SelectBox from "../../common/select";
 // import { Select, Button } from "antd"; // "3.26.7" worked
-// import Select from "react-select";
 import Select from "react-select";
 function ChangeJob(props) {
   let [loading, setLoading] = useState(false);

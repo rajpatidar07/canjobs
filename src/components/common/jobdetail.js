@@ -51,6 +51,13 @@ function JobDetailPage(props) {
       });
       setApiCall(true)
     }
+    if (Response.message === "Job saved successfully") {
+      toast.success("Job saved successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true)
+    }
   };
   return (
     <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">

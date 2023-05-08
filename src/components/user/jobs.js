@@ -43,6 +43,7 @@ function JobSearch() {
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
+                        <option value="">Select Category</option>
                         {(FilterJson.category || []).map((cat, i) => (
                           <option key={i} value={cat}>
                             {cat}
@@ -59,7 +60,6 @@ function JobSearch() {
                         onChange={(e) => setSkillFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Salary Range">Job Skills</option>
                         <option value="">Select Skill</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
                           return (
@@ -80,7 +80,7 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Experience Level ">
-                          Job type
+                       Select Job type
                         </option>
                         {(FilterJson.job_type || []).map((job_type) => (
                           <option key={job_type} value={job_type}>
