@@ -265,25 +265,31 @@ left: 0;
 
 .job_filter_block .btn.job_filter_btn {
   min-width: auto;
-  font-weight: 400;
-  height: 36px;
-  color: var(--text-main-color);
-  border-color: var(--text-main-color);
-  padding: 10px;
+    font-weight: 400;
+    height: 22px;
+    color: var(--text-main-color);
+    border-color: var(--text-main-color);
+    padding: 3px 5px;
+    font-size: 12px;
 }
-
+.filter-search-form-2  .css-13cymwt-control{
+  min-height: 40px;
+  border: none;
+  background: transparent;
+}
 .job_filter_block {
   display: flex;
   max-width: 1024px;
   justify-content: space-between;
-  margin: 0 auto !important;
+  flex-wrap: nowrap;
+  /* margin: 0 auto !important;
   gap: 2%;
   position: absolute;
   left: 0;
   right: 0;
   bottom: -14%;
   max-width: 1024px;
-  z-index: -1;
+  z-index: -1; */
 }
 
 .job_filter_block .card.job_filter_card {

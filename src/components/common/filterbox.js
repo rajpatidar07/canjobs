@@ -11,20 +11,21 @@ function Filterbox(props) {
         navigate(`/managejobs?country=${data}`);
       } else if (props.filterheading === "Jobs by Category") {
         navigate(`/managejobs?category=${data}`);
-      }}else {
-        if (props.filterheading === " Jobs by Location") {
-          navigate(`/jobs?country=${data}`);
-        } else if (props.filterheading === " Jobs by Category") {
-          navigate(`/jobs?category=${data}`);
-        }
       }
+    } else {
+      if (props.filterheading === " Jobs by Location") {
+        navigate(`/jobs?country=${data}`);
+      } else if (props.filterheading === " Jobs by Category") {
+        navigate(`/jobs?category=${data}`);
+      }
+    }
   };
   return (
-    <div className="card job_filter_card">
-      <div className="card-body row m-0">
-        <h4 className="card-title text-dark text-left mb-7 w-100">
+    <div className="job_filter_card">
+      <div className="card-body row m-0 p-2">
+        <h6 className="card-title text-dark text-left mb-4 w-100">
           {props.filterheading}
-        </h4>
+        </h6>
         {(props.filterjson || []).map((data, i) => {
           return (
             <button
