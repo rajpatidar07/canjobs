@@ -1,19 +1,26 @@
 import React,{useEffect, useState} from "react";
 import FilterJson from "../json/filterjson";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation } from "react-router-dom";
 // eslint-disable-next-line no-use-before-define
 function SearchForm() {
+  const location = useLocation();
+  const path = location.pathname;
+  const searchParams = new URLSearchParams(location.search);
+  const search = searchParams.get("search");
+  const country = searchParams.get("country");
   const user_type = localStorage.getItem("userType");
   let [state , setState]= useState({
-    search:"",
-    country:""
+    search:search,
+    country:"",
+    country_value: country
   })
   let navigate = useNavigate()
   /*Function to set data to the search job by country */
     const onSelectChange = (option) => {
-      setState({...state, country : option.value})
+      setState({...state, country_value : option.value})
   };
+
     /*Function to redender the data in the option of the select box*/
     useEffect(() => {
       const options = (FilterJson.location || []).map((option) => ({
@@ -26,10 +33,11 @@ function SearchForm() {
     /*Onclick Function to search */
     const Onsearch = () => {
       if(user_type === "company"){
-        navigate(`/managejobs?search=${state.search}&country=${state.country}`);}
-      else{
-      navigate(`/jobs?search=${state.search}&country=${state.country}`);}
-    }
+          navigate(`/managejobs?search=${state.search}&country=${state.country_value}`);
+        }
+        else{
+          navigate(`/jobs?search=${state.search}&country=${state.country_value}`);}
+        }
   return (
     <form
       action={user_type === "company" ? "/managejobs" : "/jobs"}
@@ -37,7 +45,7 @@ function SearchForm() {
       data-aos="fade-up"
       data-aos-duration="800"
       data-aos-once="true"
-      onSubmit={Onsearch}
+    
     >
       <div className="filter-search-form-2 bg-white job_search_main_form rounded-70 shadow-7 pr-15 py-7 pl-12">
         <div className="filter-inputs">
@@ -57,7 +65,8 @@ function SearchForm() {
           </div>
           {/* <!-- .select-city starts --> */}
           <div className="form-group position-relative">
-          <Select options={state.country || ""} onChange={onSelectChange} id="country" className="bg-white pl-13"/>
+          <Select options={ "" || state.country}  name="country" 
+              id="country" onChange={onSelectChange} className="bg-white pl-13"/>
             {/* <select
               name="country"
               id="country"
@@ -84,7 +93,7 @@ function SearchForm() {
           {/* <!-- ./select-city ends --> */}
         </div>
         <div className="button-block">
-          <button className="btn btn-primary line-height-reset h-100 btn-submit w-100 text-uppercase">
+          <button onClick={path === "/jobs" ? null : Onsearch} className="btn btn-primary line-height-reset h-100 btn-submit w-100 text-uppercase">
             Search
           </button>
         </div>

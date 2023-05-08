@@ -238,18 +238,7 @@ export default function EmployeeTable(props) {
                     </Link>
                   </th>
                 )}
-                {/* <th
-            scope="col"
-            className="border-0 font-size-4 font-weight-normal"
-          >
-            <Link
-              to={""}
-              onClick={()=>handleSort("name")}
-              className="text-gray"
-            >
-              Specialization
-            </Link>
-          </th> */}
+            
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
@@ -263,6 +252,17 @@ export default function EmployeeTable(props) {
                     Experience
                   </Link>
                 </th>
+                <th
+                  scope="col"
+                  className="border-0 font-size-4 font-weight-normal"
+                >
+                  <Link
+                    to={""}
+                    className="text-gray"
+                  >
+                    Profile
+                </Link>
+              </th>
                 {props.heading === "Dashboard" ? (
                   ""
                 ) : (
@@ -286,6 +286,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th className="bg-white"></th>
                   )}
+                  <th className="bg-white"></th>
                   <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
                     <>
@@ -418,17 +419,6 @@ export default function EmployeeTable(props) {
                         )}
                       </td>
                     )}
-                    {/* <td className=" py-5">
-                {empdata.specialization === null ? (
-                  <h3 className="font-size-3  mb-0">
-                    Unavailable
-                  </h3>
-                ) : (
-                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                    {empdata.specialization}
-                  </h3>
-                )}
-              </td> */}
                     <td className=" py-5">
                       {empdata.experience === null ? (
                         <p className="font-size-3 mb-0">Unavailable</p>
@@ -438,6 +428,19 @@ export default function EmployeeTable(props) {
                         </h3>
                       )}
                     </td>
+                      <td className=" py-5">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        {empdata.profile_complete === "100.00" ? (
+                          <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                              Complete
+                          </span>
+                                      
+                        ) : (
+                          <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Incompelete
+                          </span>
+                        )}</p>
+                      </td>
                     {props.heading === "Dashboard" ? (
                       ""
                     ) : (
