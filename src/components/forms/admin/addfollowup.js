@@ -67,8 +67,14 @@ function Addfollowup(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState,
+    onInputChange,
+    errors,
+    setErrors,
+    validate,
+  } = useValidation(initialFormState, validators);
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
@@ -81,7 +87,7 @@ function Addfollowup(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
     } else {
@@ -107,20 +113,22 @@ function Addfollowup(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Add Follow Up</h5>
+          <h5 className="text-center pt-2">Follow Ups</h5>
           <form onSubmit={onAminFollowClick} className="pt-5">
             <div className=" col px-0 pr-3 pb-5 mb-5">
               {(response || []).map((res) => (
                 <div className="card mt-5 mb-5" key={res.id}>
-                  <div className="card-header">
-                    <span className="text-dark"> Posted date:</span>
-                    {moment(res.created_at).format("YYYY-MM-DD")}
+                  <div className="card-header d-flex justify-content-space-between">
+                    <div className="card-head font-size-3 text-dark card_left">
+                      <span className="text-dark"> Posted date:</span>
+                      {moment(res.created_at).format("YYYY-MM-DD")}
+                    </div>
+                    <div className="card-head font-size-3 text-dark card_right">
+                      <span className="text-dark"> Next date:</span>
+                      {moment(res.next_followup_date).format("YYYY-MM-DD")}
+                    </div>
                   </div>
-                  <div className="card-body">{res.remark}</div>
-                  <div className="card-footer">
-                    <span className="text-dark"> Next date:</span>
-                    {moment(res.next_followup_date).format("YYYY-MM-DD")}
-                  </div>
+                  <div className="card-body p-6">{res.remark}</div>
                 </div>
               ))}
             </div>
@@ -140,15 +148,6 @@ function Addfollowup(props) {
                       : "border rounded overflow-hidden"
                   }
                 >
-                  {/* <CKEditor
-                    type={"classic"}
-                    name={"remark"}
-                    id={"remark"}
-                    data={state.remark}
-                    value={state.remark}
-                    onChange={onInputChange}
-                    initData="Add Discription"
-                  /> */}
                   <textarea
                     name="remark"
                     value={state.remark}

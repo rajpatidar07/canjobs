@@ -36,18 +36,6 @@ function EmployeeHomePage() {
             </div>
             {/* <!-- End Hero Form --> */}
           </div>
-          <div className="row m-0 job_filter_block">
-            <Filterbox
-              name="country"
-              filterheading=" Jobs by Location"
-              filterjson={filterjson.location}
-            />
-            <Filterbox
-              name="category"
-              filterheading=" Jobs by Category"
-              filterjson={filterjson.category}
-            />
-          </div>
         </div>
       </div>
       {/* <!-- Hero Area --> */}

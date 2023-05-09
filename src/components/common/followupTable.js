@@ -40,7 +40,6 @@ function FollowupTable() {
       setTotalData(userData.data.total_rows);
       setresponseId(userData.data.data[0].job_id);
     }
-  
   };
 
   /*Render function to get the job */
@@ -79,11 +78,11 @@ function FollowupTable() {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-    /*Sorting Function */
-    const handleSort = (columnName) => {
-      setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
-      setcolumnName(columnName);
-    };
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
+  };
   /*Category type array to filter*/
   const CategoryType = (Categorylist || []).filter(
     (thing, index, self) =>
@@ -102,7 +101,7 @@ function FollowupTable() {
                   className=" border-0 font-size-4 font-weight-normal"
                 >
                   <Link
-                    onClick={()=>handleSort("job_title")}
+                    onClick={() => handleSort("job_title")}
                     title="Sort by Industry"
                     className="text-gray"
                   >
@@ -116,7 +115,7 @@ function FollowupTable() {
                   <Link
                     to=""
                     title="Sort by Job"
-                    onClick={()=>handleSort("job_type")}
+                    onClick={() => handleSort("job_type")}
                     className="text-gray"
                   >
                     Job Type
@@ -128,7 +127,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={()=>handleSort("location")}
+                    onClick={() => handleSort("location")}
                     className="text-gray"
                     title="Sort by Address"
                   >
@@ -141,7 +140,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={()=>handleSort("education")}
+                    onClick={() => handleSort("education")}
                     className="text-gray"
                     title="Sort by Education"
                   >
@@ -154,7 +153,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={()=>handleSort("keyskill")}
+                    onClick={() => handleSort("keyskill")}
                     title="Sort by Skills"
                     className="text-gray"
                   >
@@ -167,7 +166,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={()=>handleSort("language")}
+                    onClick={() => handleSort("language")}
                     className="text-gray"
                     title="Sort by Language"
                   >
@@ -180,7 +179,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={()=>handleSort("salary")}
+                    onClick={() => handleSort("salary")}
                     title="Sort by Salary"
                     className="text-gray"
                   >
@@ -193,7 +192,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={()=>handleSort("experience_required")}
+                    onClick={() => handleSort("experience_required")}
                     className="text-gray"
                     title="Sort by Experience"
                   >
@@ -257,7 +256,12 @@ function FollowupTable() {
                             onClick={() => JobDetail(job.job_id)}
                             className="font-size-3 mb-0 font-weight-semibold text-black-2"
                           >
-                            {job.job_title} ({job.industry_type})
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                              {job.job_title}
+                            </p>
+                            <p className="text-gray font-size-2 m-0 text-capitalize">
+                              {job.company_name} - {job.industry_type}
+                            </p>
                           </Link>
                         </div>
                       </td>
@@ -315,7 +319,8 @@ function FollowupTable() {
                         ) : null}
                       </td>
                     </tr>
-                    {JobId || job.job_id === responseId && job.total_applicants > 0 ? (
+                    {JobId ||
+                    (job.job_id === responseId && job.total_applicants > 0) ? (
                       <tr>
                         <td colSpan={10}>
                           <JobResponse responseId={responseId} />

@@ -64,9 +64,9 @@ function Followup() {
   useEffect(() => {
     JobData();
     CategoryData();
-    if(apiCall === true || catapiCall === true){
-      setCatApiCall(false)
-      setApiCall(false)
+    if (apiCall === true || catapiCall === true) {
+      setCatApiCall(false);
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -80,7 +80,7 @@ function Followup() {
     sortOrder,
     apiCall,
     showJobDetails,
-    catapiCall
+    catapiCall,
   ]);
 
   /* Function to show the Job detail data */
@@ -158,7 +158,8 @@ function Followup() {
                         value={categoryFilterValue}
                         onChange={(e) => {
                           setCategoryFilterValue(e.target.value);
-                          setCatApiCall(true)}}
+                          setCatApiCall(true);
+                        }}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>
@@ -393,7 +394,12 @@ function Followup() {
                                     onClick={() => JobDetail(job.job_id)}
                                     className="font-size-3 mb-0 font-weight-semibold text-black-2"
                                   >
-                                    {job.job_title} ({job.industry_type})
+                                    <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                      {job.job_title}
+                                    </p>
+                                    <p className="text-gray font-size-2 m-0 text-capitalize">
+                                      {job.company_name} - {job.industry_type}
+                                    </p>
                                   </Link>
                                 </div>
                               </td>
@@ -446,7 +452,7 @@ function Followup() {
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() => {
-                                        setresponseId(job.job_id)
+                                        setresponseId(job.job_id);
                                       }}
                                       title="Job Response"
                                     >
@@ -469,8 +475,7 @@ function Followup() {
                                   />
                                 </td>
                               </tr>
-                            ) : null
-                            }
+                            ) : null}
                           </React.Fragment>
                         ))
                       )}
