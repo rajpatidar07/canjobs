@@ -412,7 +412,7 @@ function JobResponse(props) {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                            Schedule
+                            Interview
                         </th>
                       {props.heading === "Dashboard" ||
                       user_type === "company" ? (
@@ -618,7 +618,7 @@ function JobResponse(props) {
                                 </span>    
                               ) : (
                                 <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                  Scheduled
+                                  Schedule
                                 </span>
                               )}</p>
                            </th>

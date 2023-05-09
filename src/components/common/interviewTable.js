@@ -294,7 +294,7 @@ function Interview(props) {
                                 </span>    
                               ) : (
                                 <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                  Scheduled
+                                  Schedule
                                 </span>
                               )}</p>
                            </th>
