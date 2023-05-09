@@ -54,7 +54,7 @@ function AddFilter(props) {
   return (
     <div className="p-0 m-0">
       <form onSubmit={onAddFIlterClick}>
-        <div className="form-group p-0">
+        <div className="form  p-0">
           <div className="input-group mb-3">
             <input
               className={
@@ -85,10 +85,10 @@ function AddFilter(props) {
               </button>
             ) : (
               <button
-                className="btn btn-primary "
+                className="btn  action_btn btn-primary "
                 type="submit"
                 id="button-addon2"
-                style={{ height: "3rem", minWidth: "40px" }}
+                // style={{ height: "3rem", minWidth: "40px" }}
                 title="Add Filter"
               >
                 +{" "}

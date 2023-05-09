@@ -59,11 +59,10 @@ export default function EmployeeTable(props) {
   /*Render function to get the employer*/
   useEffect(() => {
     EmpData();
-    if(props.apiCall=== true ||
-      apiCall === true){
-        props.setApiCall(false)
-        setApiCall(true)
-      }
+    if (props.apiCall === true || apiCall === true) {
+      props.setApiCall(false);
+      setApiCall(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.experienceFilterValue,
@@ -77,7 +76,7 @@ export default function EmployeeTable(props) {
     props.filter_by_time,
     props.apiCall,
     apiCall,
-    props.showEmployeeProfile
+    props.showEmployeeProfile,
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -103,18 +102,18 @@ export default function EmployeeTable(props) {
     setShowSkillsModal(true);
     setemployeeId(e);
   };
-    /* Function to show the single data to update Employee Career*/
-    const editEmployeeCareer = (e) => {
-      // e.preventDefault();
-      setShowEmplyomentDetails(true);
-      setemployeeId(e);
-    };
-      /* Function to show the single data to apply job */
-     const editJob = (e) => {
-        // e.preventDefault();
-        setShowChangeJobModal(true);
-        setemployeeId(e);    
-      };
+  /* Function to show the single data to update Employee Career*/
+  const editEmployeeCareer = (e) => {
+    // e.preventDefault();
+    setShowEmplyomentDetails(true);
+    setemployeeId(e);
+  };
+  /* Function to show the single data to apply job */
+  const editJob = (e) => {
+    // e.preventDefault();
+    setShowChangeJobModal(true);
+    setemployeeId(e);
+  };
 
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -152,45 +151,55 @@ export default function EmployeeTable(props) {
   };
   return (
     <>
-      {showAddEmployeeModal ? <PersonalDetails
-        show={showAddEmployeeModal}
-        employeeId={employeeId}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        close={() => setShowEmployeeMOdal(false)}
-      /> : null}
-      {showEducationModal ?  <Education
+      {showAddEmployeeModal ? (
+        <PersonalDetails
+          show={showAddEmployeeModal}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowEmployeeMOdal(false)}
+        />
+      ) : null}
+      {showEducationModal ? (
+        <Education
           close={() => setShowEducationModal(false)}
           employeeId={employeeId}
           apiCall={apiCall}
           setApiCall={setApiCall}
           show={showEducationModal}
-        /> : null}
-      {showSkillsModal ? <Skills
-        show={showSkillsModal}
-        employeeId={employeeId}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        close={() => setShowSkillsModal(false)}
-      /> : null}
-       { showEmplyomentDetails ?  <EmployementDetails
-        show={showEmplyomentDetails}
-        employeeId={employeeId}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        close={() => setShowEmplyomentDetails(false)}
-      /> : null}
-      {showChangeJobModal ? <ChangeJob
-        resData={employeeId}
-        close={() => {
-          setShowChangeJobModal(false);
-        }}
-        apiCall={apiCall}
-        setApiCall={setApiCall}
-        status={0}
-        show={showChangeJobModal}
-      /> : null}
-  <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+        />
+      ) : null}
+      {showSkillsModal ? (
+        <Skills
+          show={showSkillsModal}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowSkillsModal(false)}
+        />
+      ) : null}
+      {showEmplyomentDetails ? (
+        <EmployementDetails
+          show={showEmplyomentDetails}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowEmplyomentDetails(false)}
+        />
+      ) : null}
+      {showChangeJobModal ? (
+        <ChangeJob
+          resData={employeeId}
+          close={() => {
+            setShowChangeJobModal(false);
+          }}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          status={0}
+          show={showChangeJobModal}
+        />
+      ) : null}
+      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
             <thead>
@@ -272,7 +281,7 @@ export default function EmployeeTable(props) {
                     </Link>
                   </th>
                 )}
-            
+
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
@@ -290,8 +299,8 @@ export default function EmployeeTable(props) {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                    Profile
-              </th>
+                  Profile
+                </th>
                 {props.heading === "Dashboard" ? (
                   ""
                 ) : (
@@ -416,9 +425,9 @@ export default function EmployeeTable(props) {
                         {empdata.language === null ? (
                           <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {empdata.language}
-                          </h3>
+                          </p>
                         )}
                       </td>
                     )}
@@ -429,9 +438,9 @@ export default function EmployeeTable(props) {
                         {empdata.education === null ? (
                           <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                             {empdata.education}
-                          </h3>
+                          </p>
                         )}
                       </td>
                     )}
@@ -442,9 +451,9 @@ export default function EmployeeTable(props) {
                         {empdata.skill === null ? (
                           <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {empdata.skill}
-                          </h3>
+                          </p>
                         )}
                       </td>
                     )}
@@ -452,24 +461,24 @@ export default function EmployeeTable(props) {
                       {empdata.experience === null ? (
                         <p className="font-size-3 mb-0">Unavailable</p>
                       ) : (
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {empdata.experience} Years
-                        </h3>
+                        </p>
                       )}
                     </td>
-                      <td className=" py-5">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                    <td className=" py-5">
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                         {empdata.profile_complete === "100.00" ? (
                           <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                              Complete
+                            Complete
                           </span>
-                                      
                         ) : (
                           <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                              Incompelete
+                            Incompelete
                           </span>
-                        )}</p>
-                      </td>
+                        )}
+                      </p>
+                    </td>
                     {props.heading === "Dashboard" ? (
                       ""
                     ) : (
@@ -479,6 +488,13 @@ export default function EmployeeTable(props) {
                           role="group"
                           aria-label="Basic example"
                         >
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => editEmployee(empdata.employee_id)}
+                            title="Edit Employee"
+                          >
+                            <span className=" fas fa-edit text-gray px-2"></span>
+                          </button>
                           <button
                             className="btn btn-outline-info action_btn"
                             onClick={() =>
@@ -499,21 +515,9 @@ export default function EmployeeTable(props) {
                           </button>
                           <button
                             className="btn btn-outline-info action_btn"
-                            onClick={() => editEmployee(empdata.employee_id)}
-                            title="Edit Employee"
-                          >
-                            <span className=" fas fa-edit text-gray px-2"></span>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn text-center"
-                            onClick={() => ResumeClick(empdata.employee_id)}
-                            title="Resume"
-                          >
-                            <span className="fas fa-file text-gray"></span>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => editEmployeeCareer(empdata.employee_id)}
+                            onClick={() =>
+                              editEmployeeCareer(empdata.employee_id)
+                            }
                             title="Edit Career"
                           >
                             <span className="text-gray">
@@ -521,12 +525,20 @@ export default function EmployeeTable(props) {
                             </span>
                           </button>
                           <button
+                            className="btn btn-outline-info action_btn text-center"
+                            onClick={() => ResumeClick(empdata.employee_id)}
+                            title="View Resume"
+                          >
+                            <span className="fas fa-file text-gray"></span>
+                          </button>
+
+                          <button
                             className="btn btn-outline-info action_btn text-gray"
                             onClick={() => editJob(empdata.employee_id)}
-                            title="Apply job"
+                            title="Apply for job"
                           >
                             <i className="fas fa-briefcase"></i>
-                            </button>
+                          </button>
                           <button
                             className="btn btn-outline-info action_btn"
                             onClick={() => ShowDeleteAlert(empdata)}
