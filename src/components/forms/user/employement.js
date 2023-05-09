@@ -6,6 +6,7 @@ import {
   EmployeeDetails,
   AddEmployeement,
   DeleteEmployeeCareer,
+  getJson
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -19,9 +20,15 @@ function EmployementDetails(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   const [loading, setLoading] = useState(false);
+  let [IndustryList , setIndustryList] = useState([])
+
+  /*Function to get the jSon */
+ const JsonData=async()=>{
+  let Json = await getJson()
+  setIndustryList(Json.Industry)
+}
 
   /* Functionality to close the modal */
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -115,6 +122,7 @@ function EmployementDetails(props) {
     } else {
       EmployeementData();
     }
+    JsonData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
@@ -351,10 +359,11 @@ function EmployementDetails(props) {
                     <option value={""}>
                       Select the industry your company belongs to
                     </option>
-                    <option value={"accounting"}>Accounting & Auditing</option>
-                    <option value={"call"}>Call center / BPO</option>
-                    <option value={"bank"}>Banking finance</option>
-                    <option value={"It"}>It</option>
+                    {(IndustryList || []).map((course) => (
+                    <option value={course.value} key={course.id}>
+                      {course.value}
+                    </option>
+                  ))}
                   </select>
                   {/*----ERROR MESSAGE FOR INDUSTRY----*/}
                   {errors.industry && (
@@ -377,7 +386,7 @@ function EmployementDetails(props) {
                   Functional Area <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
-                  <select
+                  <input
                     name="functional_area"
                     value={state.functional_area||""}
                     onChange={onInputChange}
@@ -387,17 +396,8 @@ function EmployementDetails(props) {
                         : "form-control"
                     }
                     id="functional_area"
-                  >
-                    <option value={""}>
-                      Select the department you work in
-                    </option>
-                    <option value={"fresh graduate"}>
-                      Fresh graduates / Management Traninee
-                    </option>
-                    <option value={"intern"}>Intern</option>
-                    <option value={"engineering"}>Engineering </option>
-                    <option value={"adminstration"}>Adminstration</option>
-                  </select>
+                    placeholder="Area"
+                  />
                   {/*----ERROR MESSAGE FOR AREA----*/}
                   {errors.functional_area && (
                     <span
@@ -416,7 +416,7 @@ function EmployementDetails(props) {
                 >
                   Work level<span className="text-danger">*</span> :
                 </label>
-                <select
+                <input
                   name="work_level"
                   value={state.work_level ||""}
                   onChange={onInputChange}
@@ -425,28 +425,9 @@ function EmployementDetails(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="work_level"
-                >
-                  <option value={""}>Select the department you work in</option>
-                  <option value={"fresh graduate"}>
-                    Fresh graduates / Management Traninee
-                  </option>
-                  <option value={"intern"}>Intern</option>
-                  <option value={"entry level"}> Entry level </option>
-                  <option value={" nonmanagerial level"}>
-                    {" "}
-                    Non Managerial level
-                  </option>
-                  <option value={" managerial level"}> Managerial level</option>
-                  <option value={"senior management"}>
-                    {" "}
-                    Senior Mangement(AVP ,VP , GM)
-                  </option>
-                  <option value={"top management"}>
-                    {" "}
-                    Top Management (CEO , CFO , Director)
-                  </option>
-                </select>
+                  id="work_level" placeholder="Work Level"
+               />
+                 
                 {/*----ERROR MESSAGE FOR LEVEL----*/}
                 {errors.work_level && (
                   <span

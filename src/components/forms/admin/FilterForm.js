@@ -20,7 +20,14 @@ function AddFilter(props) {
   const validators = {
     json_item: [
       (value) =>
-        value === "" || value.trim() === "" ? "Filter type is required" : null,
+        value === "" || value.trim() === "" ? "Filter type is required" 
+        : /[-]?\d+(\.\d+)?/.test(value)
+        ? "Filter type can not have a number."
+        : value.length < 2
+        ? "Filter type should have 2 or more letters"
+        : /[^a-zA-Z0-9]/g.test(value)
+        ? "Cannot use special character "
+        : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -71,17 +78,13 @@ function AddFilter(props) {
             />
             {loading === true ? (
               <button
-                className="btn btn-primary"
+                className="btn action_btn btn-primaryy"
                 type="button"
                 disabled
-                style={{ height: "3rem", minWidth: "40px" }}
+                // style={{ height: "3rem", minWidth: "40px" }}
               >
-                <span
-                  className="spinner-border spinner-border-sm "
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                <span className="sr-only">Loading...</span>
+                <div class="spinner-border spinner-border-sm" role="status">
+                </div>
               </button>
             ) : (
               <button
@@ -91,7 +94,7 @@ function AddFilter(props) {
                 // style={{ height: "3rem", minWidth: "40px" }}
                 title="Add Filter"
               >
-                +{" "}
+                +
               </button>
             )}
           </div>

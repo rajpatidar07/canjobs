@@ -6,6 +6,7 @@ import {
   EmployeeEducationDetails,
   AddEmployeeEducation,
   DeleteEmployeeEducation,
+  getJson
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,8 +15,11 @@ import moment from "moment";
 import FilterJson from "../../json/filterjson";
 
 function Education(props) {
+  /*Data states */
   let [educationData, setEducationData] = useState([]);
+  let [EducationList , setEducationList] = useState([])
   const [apiCall, setApiCall] = useState(false);
+  /*Delete Api */
   const [loading, setLoading] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -30,13 +34,21 @@ function Education(props) {
     passing_year: "",
   };
   /* Functionality to close the modal */
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
     setLoading(false);
     props.close();
   };
+   /*Function to get the jSon */
+ const JsonData=async()=>{
+  let Json = await getJson()
+  setEducationList(Json.Education)
+}
+ /*Render method to get the json*/
+ useEffect(()=>{
+   JsonData()
+ },[apiCall])
   /*----VALIDATION CONTENT----*/
   const validators = {
     qualification: [
@@ -297,9 +309,9 @@ function Education(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>Select Course</option>
-                  {(FilterJson.education || []).map((course,i) => (
-                    <option value={course} key={i}>
-                      {course}
+                  {(EducationList || []).map((course) => (
+                    <option value={course.value} key={course.id}>
+                      {course.value}
                     </option>
                   ))}
                 </select>

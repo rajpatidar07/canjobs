@@ -5,7 +5,7 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { getAllJobsCategory } from "../../api/api";
+import { getJson} from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
@@ -13,11 +13,9 @@ import JobTable from "../common/jobTable";
 function Job() {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
-  let [catApiCall, setCatApiCall] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
-  
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -25,15 +23,16 @@ function Job() {
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState("");
-  const [Categorylist, setCategoryList] = useState([]);
-
-  // if (userData.message === "No data found") {
-  // //// console.log((userData.status);
-  // }
+  let [Json , setJson] = useState([])
+  /*Function to get the jSon */
+ const JsonData=async()=>{
+   let Json = await getJson()
+   setJson(Json)
+ }
 
   /*Render function to get the job */
   useEffect(() => {
-    CategoryData();
+    JsonData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
@@ -41,7 +40,6 @@ function Job() {
     locationFilterValue,
     jobSwapFilterValue,
     apiCall,
-    catApiCall,
     search,
     company,
   ]);
@@ -60,21 +58,6 @@ function Job() {
     setJobId(e);
   };
 
-  /* Function to get the job category data*/
-  const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    if (userData.data.length === 0) {
-      setCategoryList([]);
-    } else {
-      setCategoryList(userData.data);
-    }
-  };
-
-  /*Category type array to filter*/
-  const CategoryType = Categorylist.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.category_type === thing.category_type)
-  );
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -130,19 +113,18 @@ function Job() {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={(e) =>{ 
-                          setCategoryFilterValue(e.target.value);
-                          setCatApiCall(true)}}
+                        onChange={(e) =>
+                          setCategoryFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Category</option>
-                        {(CategoryType || []).map((data) => {
+                        {(Json.Category || []).map((data) => {
                           return (
                             <option
-                              value={data.job_category_id}
-                              key={data.category_type}
+                              value={data.value}
+                              key={data.id}
                             >
-                              {data.category_type}
+                              {data.value}
                             </option>
                           );
                         })}
@@ -181,10 +163,10 @@ function Job() {
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
-                        {(FilterJson.keyskill || []).map((data, i) => {
+                        {(Json.Skill || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}

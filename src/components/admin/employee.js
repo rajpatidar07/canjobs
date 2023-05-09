@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
@@ -7,8 +7,9 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import FilterJson from "../json/filterjson";
+import {getJson} from "../../api/api"
 import EmployeeTable from "../common/employeeTable";
+import FilterJson from "../json/filterjson";
 function Employee() {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -20,8 +21,19 @@ function Employee() {
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
-  const [search, setSearch] = useState("");
-
+  const [search , setSearch] = useState("");
+  let [SkillList , setSkillList] = useState([])
+  let [EducationList , setEducationList] = useState([])
+  /*Function to get thejSon */
+ const JsonData=async()=>{
+   let Json = await getJson()
+   setSkillList(Json.Skill)
+   setEducationList(Json.Education)
+ }
+  /*Render method to get the json*/
+  useEffect(()=>{
+    JsonData()
+  },[skillFilterValue , educationFilterValue])
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
     // e.preventDefault();
@@ -114,10 +126,10 @@ function Employee() {
                         className=" form-control"
                       >
                         <option value={""}>Select Skill</option>
-                        {(FilterJson.keyskill || []).map((data, i) => {
+                        {(SkillList || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}
@@ -139,10 +151,10 @@ function Employee() {
                         <option value="" data-display="Product Designer">
                           Select Education
                         </option>
-                        {(FilterJson.education || []).map((data, i) => {
+                        {(EducationList|| []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}

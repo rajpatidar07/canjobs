@@ -38,12 +38,15 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
       setLoading(true);
       // handle form submission
       const updatedTodo = await AdminLogin(state);
+      console.log(updatedTodo)
+      
       if (
         updatedTodo.status === true ||
         updatedTodo.message === "Successfully Logged "
       ) {
         localStorage.setItem("token", updatedTodo.token);
         localStorage.setItem("userType", "admin");
+        localStorage.setItem("admin", updatedTodo.name);
         localStorage.setItem("admin_id", updatedTodo.admin_id);
         toast.success("Logged In Successfully", {
           position: toast.POSITION.TOP_RIGHT,

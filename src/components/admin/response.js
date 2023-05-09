@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { GetAllResponse } from "../../api/api";
+import { GetAllResponse , getJson } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -25,7 +25,8 @@ function JobResponse(props) {
   const [skillFilterValue, setSkillFilter] = useState("");
   const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
     ""
-  );
+    );
+    let [Json , setJson] = useState([])
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -36,6 +37,11 @@ function JobResponse(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
+  /*Function to get the jSon */
+ const JsonData=async()=>{
+   let Json = await getJson()
+   setJson(Json)
+ }
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
@@ -63,6 +69,7 @@ function JobResponse(props) {
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
+    JsonData()
     if (apiCall === true) {
       let CallApi = false;
       props.setApiCall(CallApi);
@@ -250,9 +257,9 @@ function JobResponse(props) {
                       className=" form-control"
                     >
                       <option value="">Select Skil</option>
-                      {(FilterJson.keyskill || []).map((skill, i) => (
-                        <option value={skill} key={i}>
-                          {skill}
+                      {(Json.Skill || []).map((skill) => (
+                        <option value={skill.value} key={skill.id}>
+                          {skill.value}
                         </option>
                       ))}
                     </select>

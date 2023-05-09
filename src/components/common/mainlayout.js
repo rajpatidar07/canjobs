@@ -48,7 +48,7 @@ function MainLayout() {
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/resetpassword/:id" element={<ResetPassword />} />
 
         {userType === "user" && token !== ("" || null || undefined) ? (
           <>

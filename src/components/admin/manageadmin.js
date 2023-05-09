@@ -24,6 +24,7 @@ function ManageAdmin() {
   /*Filter and search state */
   const [typeFilterValue, setTypeFilterValue] = useState("");
   const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -97,6 +98,13 @@ function ManageAdmin() {
   /*Search Onchange function to filter the data */
   let onSearch = (e) => {
     setSearch(e.target.value);
+    if(/[-]?\d+(\.\d+)?/.test(search) ){
+      setSearchError("Admin Name can not have a number.")
+    }else if(/[^a-zA-Z0-9]/g.test(search)){
+      setSearchError("Cannot use special character")
+    }else if(search === ""){
+      setSearchError("")
+    }
   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -146,6 +154,7 @@ function ManageAdmin() {
                     <p className="input_label">Search by Name:</p>
                     <input
                       required
+                      maxLength={30}
                       type="text"
                       className="form-control "
                       placeholder={"Search Admin"}
@@ -153,6 +162,7 @@ function ManageAdmin() {
                       name={"Admin_name"}
                       onChange={(e) => onSearch(e)}
                     />
+                    <small className="text-danger">{searcherror}</small>
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Type:</p>

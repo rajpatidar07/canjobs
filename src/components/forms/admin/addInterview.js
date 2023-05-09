@@ -96,7 +96,7 @@ function AddInterview(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Shedual Interview</h5>
+          <h5 className="text-center pt-2">Schedule Interview</h5>
 
           <form onSubmit={onAddInterviewClick}>
           <div className="form-group row mb-0">
@@ -118,7 +118,7 @@ function AddInterview(props) {
                 id="interview_status"
               >
                 <option value={""}>Select Status</option>
-                <option value={"pending"}>Shedual / reshedual</option>
+                <option value={"pending"}>Schedule / Reschedule</option>
                 <option value={"complete"}>Complete</option>
               </select>
                {/*----ERROR MESSAGE FOR EMAIL----*/}

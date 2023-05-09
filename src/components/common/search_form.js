@@ -4,7 +4,7 @@ import Select from "react-select";
 import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
 import filterjson from "../json/filterjson";
-
+import { getJson } from "../../api/api";
 // eslint-disable-next-line no-use-before-define
 function SearchForm() {
   const location = useLocation();
@@ -18,6 +18,12 @@ function SearchForm() {
     country: "",
     country_value: country ? country : "",
   });
+ let [Json , setJson] = useState([])
+  /*Function to get thejSon */
+ const JsonData = async () =>{
+   let Json = await getJson()
+   setJson(Json)
+ }
   let navigate = useNavigate();
   /*Function to set data to the search job by country */
   const onSelectChange = (option) => {
@@ -26,6 +32,7 @@ function SearchForm() {
 
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
+    JsonData()
     const options = (FilterJson.location || []).map((option) => ({
       value: option,
       label: option,
@@ -102,7 +109,7 @@ function SearchForm() {
           <Filterbox
             name="category"
             filterheading=" Jobs by Category"
-            filterjson={filterjson.category}
+            filterjson={Json.Category}
           />
         </div>
       </div>

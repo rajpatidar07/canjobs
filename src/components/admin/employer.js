@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { ToastContainer } from "react-toastify";
-import FilterJson from "../json/filterjson";
 import EmployerTable from "../common/employerTable";
-
+import { getJson } from "../../api/api";
 function Employer() {
   // eslint-disable-next-line
   /*show modal and data, id state */
@@ -20,24 +19,22 @@ function Employer() {
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
-
+  let [Json , setJson] = useState([])
+  /*Function to get thejSon */
+ const JsonData=async()=>{
+   let Json = await getJson()
+   setJson(Json)
+ }
+  /*Render method to get the json*/
+  useEffect(()=>{
+    JsonData()
+  },[industryFilterValue,corporationFilterValue])
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
     // e.preventDefault();
     setShowEmployerMOdal(true);
     setEmployerID(e);
   };
-  /*Industry array to filter*/
-  // const Industry = employerData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.industry === thing.industry)
-  // );
-  /*Corporation array to filter*/
-  // const Corporation = employerData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.corporation === thing.corporation)
-  // );
-
   /* Function to show the Job detail data */
   const EmployerDetail = (e) => {
     // e.preventDefault();
@@ -101,10 +98,10 @@ function Employer() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Select Corporation</option>
-                        {(FilterJson.corporation || []).map(
-                          (corporation, i) => (
-                            <option key={i} value={corporation}>
-                              {corporation}
+                        {(Json.Corporation || []).map(
+                          (corporation) => (
+                            <option key={corporation.id} value={corporation.value}>
+                              {corporation.value}
                             </option>
                           )
                         )}
@@ -122,9 +119,9 @@ function Employer() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Select Industry</option>
-                        {(FilterJson.industry || []).map((industry, i) => (
-                          <option key={i} value={industry}>
-                            {industry}
+                        {(Json.Industry || []).map((industry) => (
+                          <option key={industry.id} value={industry.value}>
+                            {industry.value}
                           </option>
                         ))}
                       </select>

@@ -20,11 +20,11 @@ function FilterList() {
   /* Function to get the filter data*/
   const FilterData = async () => {
     let Data = await GetFilter();
-    if (Data.data.length === 0) {
+    if (Data.data.data.length === 0) {
       setFilterData([]);
     } else {
       // setTotalData(Data.data);
-      setFilterData(Data.data[0]);
+      setFilterData(Data.data.data);
       setApiCall(false);
     }
   };

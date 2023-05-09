@@ -4,12 +4,13 @@ import useValidation from "../../common/useValidation";
 import {
   EmployeeSkillDetails,
   AddEmployeeSkill,
-  DeleteEmployeeSkill,
+  DeleteEmployeeSkill, getJson
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
+import Select from "react-select";
 
 function Skills(props) {
   let [skillData, SetSkillData] = useState([]);
@@ -18,7 +19,8 @@ function Skills(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-
+  let [SkillList , setSkillList] = useState([])
+  let [SkillOption , setSkillOption] = useState([])
   /* Functionality to close the modal */
 
   const close = () => {
@@ -53,7 +55,6 @@ function Skills(props) {
   const {
     state,
     setState,
-    onInputChange,
     errors,
     setErrors,
     validate,
@@ -61,11 +62,14 @@ function Skills(props) {
   // API CALL
   const SkillData = async () => {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);
+    let SkillList = await getJson()
+    setSkillList(SkillList.Skill)
+    
     if (SkillDetails.data.skill.length === 0) {
       SetSkillData([]);
     } else {
       SetSkillData(SkillDetails.data.skill);
-    }
+    }    
   };
   useEffect(() => {
     if (props.employeeId !== undefined) {
@@ -74,8 +78,23 @@ function Skills(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
+    /*Function to set data to the search job by country */
+    const onSelectChange = (option) => {      
+      setState({ ...state, skill: option.value });
+    };
+
+     /*Function to redender the data in the option of the select box*/
+    useEffect(() => {
+      const options = (SkillList || []).map((option) => ({
+        value: option.value,
+        label: option.value,
+      }));
+      
+      setSkillOption({ ...state, skill: options });
+    }, [SkillList]);
+
   // USER SKILLS SUBMIT BUTTON
-  const onUserSkillsClick = async (event) => {
+  const onUserSkillsClick = async (event) => {    
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -145,7 +164,7 @@ function Skills(props) {
               >
                 Skill / Software Name <span className="text-danger">*</span> :
               </label>
-              <input
+              {/* <input
                 maxLength={30}
                 type="text"
                 placeholder="Skill / Software Name"
@@ -158,7 +177,15 @@ function Skills(props) {
                 name="skill"
                 value={state.skill}
                 onChange={onInputChange}
-              />{" "}
+              />{" "} */}
+              <Select
+                options={"" || SkillOption}
+                name="skill"
+                id="skill"
+                onChange={onSelectChange}
+                className={
+                  errors.skill ? "border border-danger w-100" : "w-100"}
+              />
               {loading === true ? (
                 <button
                   className=" btn-primary btn-small mx-2 rounded-5 text-uppercase"

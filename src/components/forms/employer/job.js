@@ -8,17 +8,22 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   GetJob,
   AddJob,
-  getAllJobsCategory,
   getAllEmployer,
+  getJson
 } from "../../../api/api";
 
 function AddJobModal(props) {
-  const [category, setCategory] = useState([]);
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
   let token = localStorage.getItem("token");
   const company_id = localStorage.getItem("company_id");
   const user_type = localStorage.getItem("userType");
+  let [Json , setJson] = useState([])
+  /*Function to get the jSon */
+ const JsonData = async()=>{
+   let Json = await getJson()
+   setJson(Json)
+ }
 
   /* Functionality to close the modal */
   const close = () => {
@@ -235,16 +240,7 @@ function AddJobModal(props) {
     }
     // console.log(userData.data.data[0]);
   };
-  /* Function to get the job category data*/
-  const CategoryData = async () => {
-    const userData = await getAllJobsCategory();
-    if (userData.data.length === 0) {
-      setCategory([]);
-    } else {
-      setCategory(userData.data);
-    }
-  };
-
+ 
   /* Function to get Employer data*/
   const CompnayData = async () => {
     const userData = await getAllEmployer();
@@ -259,7 +255,7 @@ function AddJobModal(props) {
       CompnayData();
     }
     if (token) {
-      CategoryData();
+      JsonData();
     }
     if (
       props.jobdata === "0" ||
@@ -304,12 +300,7 @@ function AddJobModal(props) {
   // //// console.log(("JSON" + JSON.stringify(FilterJson.location))
 
   // END ADD JOBS VALIDATION
-  /*Category type array to filter*/
-  const CategoryType = category.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.category_name === thing.category_name)
-  );
-  /*Category type array to filter*/
+  /*Company type array to filter*/
   const Company = company.filter(
     (thing, index, self) =>
       index === self.findIndex((t) => t.company_name === thing.company_name)
@@ -432,13 +423,13 @@ function AddJobModal(props) {
                     id="job_category_id"
                   >
                     <option value={""}>Select Category</option>
-                    {(CategoryType || []).map((cat) =>
-                      cat.category_name === null ? null : (
+                    {(Json.Category || []).map((cat) =>
+                      cat.value === null ? null : (
                         <option
-                          key={cat.job_category_id}
-                          value={cat.job_category_id}
+                          key={cat.id}
+                          value={cat.value}
                         >
-                          {cat.category_name}
+                          {cat.value}
                         </option>
                       )
                     )}
@@ -471,9 +462,9 @@ function AddJobModal(props) {
                     id="industry_type"
                   >
                     <option value={""}>Select industry</option>
-                    {(FilterJson.industry || []).map((industry, i) => (
-                      <option key={i} value={industry}>
-                        {industry}
+                    {(Json.Industry || []).map((industry ) => (
+                      <option key={industry.id} value={industry.value}>
+                        {industry.value}
                       </option>
                     ))}
                   </select>
@@ -658,7 +649,7 @@ function AddJobModal(props) {
                       id={"job_description"}
                       data={state.job_description}
                       value={state.job_description}
-  ||""                    onChange={onInputChange}
+                   onChange={onInputChange}
                       initData="Job Description"
                     /> */}
                     <textarea
@@ -915,9 +906,9 @@ function AddJobModal(props) {
                     id="education"
                   >
                     <option value={""}>Select education</option>
-                    {(FilterJson.education || []).map((education, i) => (
-                      <option key={i} value={education}>
-                        {education}
+                    {(Json.Education || []).map((education) => (
+                      <option key={education.id} value={education.value}>
+                        {education.value}
                       </option>
                     ))}
                   </select>
@@ -955,9 +946,9 @@ function AddJobModal(props) {
                     id="language"
                   >
                     <option value={""}>Select Language</option>
-                    {(FilterJson.Language || []).map((Language, i) => (
-                      <option key={i} value={Language}>
-                        {Language}
+                    {(Json.Language || []).map((Language) => (
+                      <option key={Language.id} value={Language.value}>
+                        {Language.value}
                       </option>
                     ))}
                   </select>
@@ -980,9 +971,7 @@ function AddJobModal(props) {
                   Key Skill:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
-                  <input
-                    type="text"
-                    maxLength={30}
+                  <select
                     name="keyskill"
                     value={state.keyskill || ""}
                     onChange={onInputChange}
@@ -991,9 +980,15 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Skill"
-                    id="keyskill"
-                  />
+                      id="keyskill"
+                  >
+                   <option value={""}>Select Skill</option>
+                    {(Json.Skill || []).map((data) => (
+                      <option key={data.id} value={data.value}>
+                        {data.value}
+                      </option>
+                    ))}
+                    </select>
                   {/*----ERROR MESSAGE FOR keyskill----*/}
                   {errors.keyskill && (
                     <span

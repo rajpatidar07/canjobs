@@ -6,12 +6,23 @@ import JobBox from "../common/jobbox";
 import FilterJson from "../json/filterjson";
 // import JobDetailPage from "../common/jobdetail";
 import SearchForm from "../common/search_form";
-
+import { getJson } from "../../api/api";
+import { useEffect } from "react";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  let [Json , setJson] = useState([])
+  /*Function to get thejSon */
+ const JsonData = async () =>{
+   let Json = await getJson()
+   setJson(Json)
+ }
+ /*Render Method */
+ useEffect(()=>{
+  JsonData()
+ },[categoryFilterValue , SkillFilterValue])
   // eslint-disable-next-line no-use-before-define
   return (
     <>
@@ -44,11 +55,12 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option value="">Select Category</option>
-                        {(FilterJson.category || []).map((cat, i) => (
-                          <option key={i} value={cat}>
-                            {cat}
+                        {(Json.Category || []).map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.value}
                           </option>
                         ))}
+                        
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
@@ -61,10 +73,10 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option value="">Select Skill</option>
-                        {(FilterJson.keyskill || []).map((data, i) => {
+                        {(Json.Skill || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}

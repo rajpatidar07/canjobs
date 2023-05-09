@@ -7,6 +7,7 @@ const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
+
 function GetToken() {
   // useEffect(() => {
   //   Token = localStorage.getItem("token");
@@ -38,6 +39,36 @@ export const GetCountry = async () => {
  /*Chanage password Api */
  export const ChangePasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}${user_type}/changePassword`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+ /*Employee Reset password Api */
+ export const EmployeeResetPasswordApi = async (props) => {
+  const response = await axios.put(`${API_URL}user/resetPassword`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+ /*Admin Reset password Api */
+ export const AdminResetPasswordApi = async (props) => {
+  const response = await axios.put(`${API_URL}admin/resetPassword`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+ /*Employer Reset password Api */
+ export const EmployerResetPasswordApi = async (props) => {
+  const response = await axios.put(`${API_URL}company/resetPassword`, props, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,
@@ -909,7 +940,7 @@ export const GetFilter = async (props) => {
       },
     }
   );
-  return response.data;
+  return response;
 };
 /*Add Filters Api */
 export const AddFIlter = async (props, id) => {

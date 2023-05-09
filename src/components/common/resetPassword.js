@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-// import { AdminLogin } from "../../api/api";
+import { EmployeeResetPasswordApi , AdminResetPasswordApi ,EmployerResetPasswordApi } from "../../api/api";
 import useValidation from "../common/useValidation";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+import { useNavigate ,useLocation } from "react-router-dom";
+import { toast ,ToastContainer } from "react-toastify";
+
 export default function ResetPassword() {
-//   let navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
+  let Token = path.split("/")[2].split(":")[1]
+  let userType = path.split("/")[2].split(":")[0]
+  let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     password: "",
-    conf_password:"",
-    token:""  };
+    conf_password: "",
+    token :Token  };
   /*----VALIDATION CONTENT----*/
   const validators = {
     password: [(value) => (value === "" ? "Password is required" : null)],
@@ -22,11 +27,10 @@ export default function ResetPassword() {
             :"" ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, onInputChange, setState, errors, validate } = useValidation(
     initialFormState,
     validators
   );
-console.log(state);
   /*----LOGIN SUBMIT FUNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
@@ -34,23 +38,57 @@ console.log(state);
     if (validate()) {
       setLoading(true);
       // handle form submission
-    //   const updatedTodo = await AdminLogin(state);
-    //   if (
-    //     updatedTodo.status === true ||
-    //     updatedTodo.message === "Successfully Logged "
-    //   ) {
-    //     localStorage.setItem("token", updatedTodo.token);
-    //     localStorage.setItem("userType", "admin");
-    //     localStorage.setItem("admin_id", updatedTodo.admin_id);
-    //     toast.success("Logged In Successfully", {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //       autoClose: 1000,
-    //     });
-    //     setLoading(false);
-    //     navigate("/dashboard");
-    //     window.location.reload();
-    //   } else if (updatedTodo.message === "Invalid Credentials") {
-    //     setLoading(false);
+      if(userType === "user"){
+       let updatedTodo = await EmployeeResetPasswordApi(state);
+        if (
+          updatedTodo.status === true ||
+          updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState)
+            navigate("/");
+            window.location.reload();
+          } 
+      }
+      if(userType === "company"){
+       let updatedTodo = await EmployerResetPasswordApi(state);
+        if (
+          updatedTodo.status === true ||
+          updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState)
+            navigate("/");
+            window.location.reload();
+          } 
+      }
+      if(userType=== "admin"){
+       let updatedTodo = await AdminResetPasswordApi(state);
+        if (
+          updatedTodo.status === true ||
+          updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState)
+            navigate("/");
+            window.location.reload();
+          } 
+      }
+      
+        // else if (updatedTodo.message === "Invalid Credentials") {
+          //     setLoading(false);
     //     setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
     //   }
     // }
@@ -61,13 +99,17 @@ console.log(state);
   return (
     <>
       {/* <!-- Login --> */}
-
+      <link rel="stylesheet" href="http://localhost:3000/css/bootstrap.css"/>
+      <link rel="stylesheet" href="http://localhost:3000/fonts/icon-font/css/style.css"/>
+      <link rel="stylesheet" href="http://localhost:3000/fonts/fontawesome-5/css/all.css"/>
+      <link rel="stylesheet" href="http://localhost:3000/fonts/fontawesome-5/css/main.css"/>
       <div className="d-flex justify-content-center pt-21">
+        <ToastContainer/>
         <div className="bg-white rounded-8 overflow-hidden pt-21">
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 border">
+          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 ">
             <div className="pb-5 mb-5 text-center">
               <img
-                src="image/logo-main-black.png"
+                src="http://localhost:3000/image/logo-main-black.png"
                 className="img-fluid "
                 height={200}
                 width={200}

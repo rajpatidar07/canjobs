@@ -17,6 +17,7 @@ function Category() {
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
+  const [categoryTypeData, setCategoryTypeData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
   /*Delete Category states */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -51,6 +52,17 @@ function Category() {
     }
   };
 
+  /* Function to get the job category Type data*/
+  const CategoryTypeData = async () => {
+    const userData = await getAllJobsCategory(0);
+    if (userData.data.length === 0) {
+      setCategoryTypeData([]);
+    } else {
+      setCategoryTypeData(userData.data);
+      setTotalData(userData.total_rows);
+    }
+  };
+
   /*Render function to get the job category*/
   useEffect(() => {
     CategoryData();
@@ -66,7 +78,20 @@ function Category() {
     columnName,
     sortOrder,
   ]);
-
+  /*Render function to get the job category Type*/
+  useEffect(() => {
+    CategoryTypeData();
+    if (apiCall === true) {
+      setApiCall(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    currentPage,
+    apiCall,
+    columnName,
+    sortOrder,
+  ]);
+  
   /* Function to show the single data to update job category*/
   const editJobCategory = (e) => {
     // e.preventDefault();
@@ -334,16 +359,17 @@ function Category() {
                         <tr>
                           <th
                             scope="col"
-                            className=" border-0 font-size-4 font-weight-normal"
+                            className=" border-0 font-size-4 font-weight-normal text-gray"
+                            title="Sort by Type"
                           >
-                            <Link
+                            {/* <Link
                               to={""}
                               onClick={() => handleSort("category_type")}
                               className="text-gray"
                               title="Sort by Type"
-                            >
+                            > */}
                               Category Type
-                            </Link>
+                            {/* </Link> */}
                           </th>
                           <th
                             scope="col"
@@ -361,7 +387,7 @@ function Category() {
                             <th className="bg-white"></th>
                           </tr>
                         ) : (
-                          (categoryData || []).map((catdata) =>
+                          (categoryTypeData || []).map((catdata) =>
                             catdata.parent_id !== "0" ? null : (
                               <tr className="" key={catdata.job_category_id}>
                                 <th className=" py-5">

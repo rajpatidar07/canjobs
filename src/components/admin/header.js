@@ -11,6 +11,7 @@ const AdminHeader = (props) => {
   const [showChangePass, setShowChangePass] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  let Admin = localStorage.getItem("admin")
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
@@ -71,7 +72,7 @@ const AdminHeader = (props) => {
                   aria-expanded="false"
                   onMouseOut={() => setDropDown(false)}
                 >
-                  <div> <h6>Hii ! Admin</h6></div>
+                  <div> <h6>Hii ! {Admin}</h6></div>
                   <i className="fas fa-chevron-down heading-default-color px-3"></i>
                 </Link>
                 <div

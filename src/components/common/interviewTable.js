@@ -307,9 +307,9 @@ function Interview(props) {
                                   className="btn btn-outline-info action_btn "
                                   style={{ fontSize: "10px" }}
                                   onClick={() => editInterview(data)}
-                                  title=" Reshedule Interview"
+                                  title=" Reschedule Interview"
                                 >
-                                  Reshedule
+                                  Reschedule
                                 </button>
                               </div>
                             </th>

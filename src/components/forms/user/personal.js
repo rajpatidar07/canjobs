@@ -778,11 +778,13 @@ function PersonalDetails(props) {
                   }
                   id="experience"
                 >
-                  <option value={""}>Select experience</option>
-                  <option value={"0-1"}>0-1 year</option>
-                  <option value={"1-3"}>1-3 year</option>
-                  <option value={"3-5"}>3-5 year</option>
-                  <option value={"5+"}>5+ year</option>
+                   <option value={""}>Select Experience</option>
+                        {(FilterJson.experience || []).map((ex, i) => (
+                          <option value={ex} key={i}>
+                            {ex}
+                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
+                          </option>
+                        ))}
                 </select>
                 {/*----ERROR MESSAGE FOR experience----*/}
                 {errors.experience && (

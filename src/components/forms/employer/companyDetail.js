@@ -3,17 +3,22 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddCompany, EmployerDetails } from "../../../api/api";
+import { AddCompany, EmployerDetails , getJson} from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FilterJson from "../../json/filterjson";
 
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
   const [imgError, setImgError] = useState(false);
+  let [Json , setJson] = useState([])
   let encoded;
+  /*Function to get thejSon */
+ const JsonData=async()=>{
+   let Json = await getJson()
+   setJson(Json)
+ 
+ }
   /* Functionality to close the modal */
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -150,6 +155,7 @@ function CompanyDetails(props) {
     }
   };
   useEffect(() => {
+    JsonData()
     if( props.employerId !== "0"){
       EmployerData();
     }
@@ -338,9 +344,9 @@ function CompanyDetails(props) {
                   id="industry"
                 >
                   <option value={""}>Select industry</option>
-                  {(FilterJson.industry || []).map((industry) => (
-                    <option key={industry} value={industry}>
-                      {industry}
+                  {(Json.Industry || []).map((industry) => (
+                    <option key={industry.id} value={industry.value}>
+                      {industry.value}
                     </option>
                   ))}
                 </select>
@@ -376,9 +382,9 @@ function CompanyDetails(props) {
                   id="corporation"
                 >
                   <option value={""}>Select corporation</option>
-                  {(FilterJson.corporation || []).map((job_type) => (
-                    <option key={job_type} value={job_type}>
-                      {job_type}
+                  {(Json.Corporation || []).map((data) => (
+                    <option key={data.id} value={data.value}>
+                      {data.value}
                     </option>
                   ))}
                 </select>
