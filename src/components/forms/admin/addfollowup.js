@@ -115,10 +115,10 @@ function Addfollowup(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <h5 className="text-center pt-2">Follow Ups</h5>
           <form onSubmit={onAminFollowClick} className="pt-5">
-            <div className=" col px-0 pr-3 pb-5 mb-5">
+            <div className=" col pb-5 mb-5">
               {(response || []).map((res) => (
                 <div className="card mt-5 mb-5" key={res.id}>
-                  <div className="card-header d-flex justify-content-space-between">
+                  <div className="card-header d-flex justify-content-space-between px-3 py-1">
                     <div className="card-head font-size-3 text-dark card_left">
                       <span className="text-dark"> Posted date:</span>
                       {moment(res.created_at).format("YYYY-MM-DD")}
@@ -128,7 +128,7 @@ function Addfollowup(props) {
                       {moment(res.next_followup_date).format("YYYY-MM-DD")}
                     </div>
                   </div>
-                  <div className="card-body p-6">{res.remark}</div>
+                  <div className="card-body p-3">{res.remark}</div>
                 </div>
               ))}
             </div>

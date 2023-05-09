@@ -54,7 +54,7 @@ function JobResponse(props) {
     );
     if (userData.data.data.length === 0) {
       setResData([]);
-      setResponseData([])
+      setResponseData([]);
     } else {
       setResponseData(userData.data.data);
       setTotalData(userData.data.total_rows);
@@ -63,10 +63,10 @@ function JobResponse(props) {
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
-   if (apiCall === true){
-    let CallApi = false
-    props.setApiCall(CallApi)
-   }
+    if (apiCall === true) {
+      let CallApi = false;
+      props.setApiCall(CallApi);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     skillFilterValue,
@@ -284,7 +284,7 @@ function JobResponse(props) {
               </div>
             </div>
           )}
-          <div className="mb-8" >
+          <div className="mb-8">
             <div
               className={
                 props.heading === "Response" ||
@@ -345,35 +345,10 @@ function JobResponse(props) {
                           className="text-gray"
                           title="Sort by Job"
                         >
-                          Job Type
+                          Job / Company
                         </Link>
                       </th>
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={() => handleSort("company_name")}
-                          className="text-gray"
-                          title="Sort by Company"
-                        >
-                          Company
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
-                        className="pl-4 border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          onClick={() => handleSort("lmia_status")}
-                          className="text-gray"
-                          title="Sort by LIMIA Status"
-                        >
-                          LMIA
-                        </Link>
-                      </th>
+
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -409,11 +384,24 @@ function JobResponse(props) {
                         </th>
                       )}
                       <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={() => handleSort("lmia_status")}
+                          className="text-gray"
+                          title="Sort by LIMIA Status"
                         >
-                            Interview
-                        </th>
+                          LMIA
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-4 border-0 font-size-4 font-weight-normal"
+                      >
+                        Interview
+                      </th>
                       {props.heading === "Dashboard" ||
                       user_type === "company" ? (
                         ""
@@ -518,67 +506,27 @@ function JobResponse(props) {
                             </th>
                           )}
                           <th className="py-5 ">
-                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.job_title ? (
-                                res.job_title
-                              ) : (
-                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  NA
-                                </span>
-                              )}
-                            </div>
+                            <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
+                              {res.job_title}
+                            </p>
+                            <p className="font-size-3 font-weight-normal m-0 text-capitalize">
+                              {res.company_name}
+                            </p>
                           </th>
-                          <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.company_name ? (
-                                res.company_name
-                              ) : (
-                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  NA
-                                </span>
-                              )}
-                            </h3>
-                          </th>
-                          <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {res.lmia_status === "Reject" ? (
-                                <span className="badge badge-pill badge-danger">
-                                  Reject
-                                </span>
-                              ) : res.lmia_status === "Approved" ? (
-                                <span className="badge badge-pill bg-info-opacity-5 text-white">
-                                  Approved
-                                </span>
-                              ) : res.lmia_status === "Draft" ? (
-                                <span className="badge badge-pill badge-gray">
-                                  Draft
-                                </span>
-                              ) : res.lmia_status === "Complete" ? (
-                                <span className="badge badge-pill bg-primary-opacity-9 text-white">
-                                  Complete
-                                </span>
-                              ) : res.lmia_status === "Pending" ? (
-                                <span className="badge badge-pill badge-warning">
-                                  Pending
-                                </span>
-                              ) : res.lmia_status === "Other" ? (
-                                <span className="badge badge-pill badge-dark">
-                                  Other
-                                </span>
-                              ) : (
-                                <span>NA</span>
-                              )}
-                            </h3>
-                          </th>
+
                           {props.heading === "Dashboard" ? (
                             ""
                           ) : (
                             <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.contact_no || res.email ? (
                                   <>
-                                    {`+${res.contact_no}`}
-                                    <br /> {res.email}
+                                    <p className="font-size-3 font-weight-normal m-0">
+                                      {`+${res.contact_no}`}
+                                    </p>
+                                    <p className="font-size-3 font-weight-normal m-0">
+                                      {res.email}
+                                    </p>
                                   </>
                                 ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -610,18 +558,48 @@ function JobResponse(props) {
                               </h3>
                             </th>
                           )}
-                          <th className="  py-5 ">
-                              <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                              {res.interview_date === null ? (
-                                <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Not Schedule
-                                </span>    
-                              ) : (
-                                <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                  Schedule
+                          <th className=" py-5">
+                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {res.lmia_status === "Reject" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-danger">
+                                  Reject
                                 </span>
-                              )}</p>
-                           </th>
+                              ) : res.lmia_status === "Approved" ? (
+                                <span className="px-3 py-2 badge badge-pill bg-info-opacity-5 text-white">
+                                  Approved
+                                </span>
+                              ) : res.lmia_status === "Draft" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-gray">
+                                  Draft
+                                </span>
+                              ) : res.lmia_status === "Complete" ? (
+                                <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                  Complete
+                                </span>
+                              ) : res.lmia_status === "Pending" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-warning">
+                                  Pending
+                                </span>
+                              ) : res.lmia_status === "Other" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-dark">
+                                  Other
+                                </span>
+                              ) : (
+                                <span>NA</span>
+                              )}
+                            </div>
+                          </th>
+                          <th className="  py-5 ">
+                            <p className="font-size-3 font-weight-normal mb-0">
+                              {res.interview_date === null ? (
+                                <span>NA</span>
+                              ) : (
+                                <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                  Scheduled
+                                </span>
+                              )}
+                            </p>
+                          </th>
                           {props.heading === "Dashboard" ||
                           user_type === "company" ? (
                             ""
