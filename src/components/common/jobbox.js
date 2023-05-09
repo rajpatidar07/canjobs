@@ -88,7 +88,7 @@ function JobBox({
         data-aos-once="true"
       >
         {/* <!-- Maped Job --> */}
-        {noData === 0 ? (
+        {noData === 0 || noData === ""? (
           <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
             <h4>No Data Found</h4>
           </div>
@@ -235,9 +235,9 @@ function JobBox({
                           : "btn btn-info text-uppercase font-size-3"
                       }
                       onClick={() =>
-                        token === null
-                          ? setShowLogin(true)
-                          : OnApplyClick(0, job.job_id)
+                        token  && user_type === "user"
+                        ? OnApplyClick(0, job.job_id)
+                         :  setShowLogin(true)
                       }
                       disabled={job.is_applied === "0" ? false : true}
                     >

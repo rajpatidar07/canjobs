@@ -55,7 +55,7 @@ function SearchForm() {
               type="text"
               id="keyword"
               name="search"
-              value={state.search}
+              value={state.search || ""}
               onChange={(e)=>setState({...state , search: e.target.value})}
               placeholder="Type Job title, keywords"
             />

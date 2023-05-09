@@ -54,6 +54,7 @@ function JobResponse(props) {
     );
     if (userData.data.data.length === 0) {
       setResData([]);
+      setResponseData([])
     } else {
       setResponseData(userData.data.data);
       setTotalData(userData.data.total_rows);
@@ -63,7 +64,7 @@ function JobResponse(props) {
   useEffect(() => {
     ResponseData();
    if (apiCall === true){
-    let CallApi = true
+    let CallApi = false
     props.setApiCall(CallApi)
    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +79,6 @@ function JobResponse(props) {
     props.filter_by_time,
     apiCall
   ]);
-
   /*Function to open add follow up modal */
   const addFollow = (e) => {
     setFollowUp(true);
@@ -280,7 +280,7 @@ function JobResponse(props) {
               </div>
             </div>
           )}
-          <div className="mb-8" /*"mb-18" */>
+          <div className="mb-8" >
             <div
               className={
                 props.heading === "Response" ||
@@ -410,6 +410,12 @@ function JobResponse(props) {
                           </Link>
                         </th>
                       )}
+                      <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                            Shedudule
+                        </th>
                       {props.heading === "Dashboard" ||
                       user_type === "company" ? (
                         ""
@@ -443,6 +449,7 @@ function JobResponse(props) {
                           ""
                         ) : (
                           <>
+                            <th className="bg-white"></th>
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
@@ -596,6 +603,18 @@ function JobResponse(props) {
                               </h3>
                             </th>
                           )}
+                          <th className="  py-5 ">
+                              <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                              {res.interview_date === null ? (
+                                <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                    Not Shedudule
+                                </span>    
+                              ) : (
+                                <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                  Sheduduled
+                                </span>
+                              )}</p>
+                           </th>
                           {props.heading === "Dashboard" ||
                           user_type === "company" ? (
                             ""

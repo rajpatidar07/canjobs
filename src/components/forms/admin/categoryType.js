@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddJobCategory } from "../../../api/api";
@@ -10,7 +10,11 @@ function AddCategoryType(props) {
   
   /* Functionality to close the modal */
   const close = () => {
-    setState(initialFormState);
+    setState( {...state,
+      category_type: "",
+      parent_id: "",
+      job_category_id :""
+  });
     setErrors("");
     setLoading(false);
     props.close();
@@ -21,7 +25,12 @@ function AddCategoryType(props) {
   const initialFormState = {
     category_type: "",
     parent_id: "",
+    job_category_id :""
   };
+  /*Function to get the selected Catgeory type which you want to edit*/
+  useEffect(() => {
+    setState({ ...state, category_type: (props.jobCategoryData.category_type) , job_category_id : (props.jobCategoryData.job_category_id) });
+  }, [props]);
   // VALIDATION CONDITIONS
   const validators = {
     category_type: [
@@ -57,6 +66,14 @@ function AddCategoryType(props) {
         props.setApiCall(true)
         return close();
       }
+      if (responseData.message === "Category updated successfully") {
+        toast.success("Category Type updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true)
+        return close();
+      }
     } else {
       setLoading(false);
     }
@@ -85,9 +102,9 @@ function AddCategoryType(props) {
             {props.jobCategoryData === "0" ? (
               <h5 className="text-center pt-2">Add Category Type</h5>
             ) : (
-              <h5 className="text-center pt-2">Update Category</h5>
+              <h5 className="text-center pt-2">Update Category Type</h5>
             )}
-            <div className="form-group row mb-0">
+            <div className="form-group row mb-0 pt-5">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -101,7 +118,7 @@ function AddCategoryType(props) {
                     ? "form-control mx-5 border border-danger col"
                     : "form-control col mx-5"
                 }
-                value={state.category_type}
+                value={state.category_type || ""}
                 onChange={onInputChange}
                 placeholder="Category Type"
                 id="category_type"

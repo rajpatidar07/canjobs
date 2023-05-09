@@ -14,6 +14,7 @@ function Interview(props) {
   const [interviewData, setInterviewData] = useState([]);
   const [jobId, setJobId] = useState();
   let [resData, setResData] = useState("");
+  let [apiCall, setApiCall] = useState(props.apiCall);
 
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -86,6 +87,8 @@ function Interview(props) {
           close={() => {
             setShowAddInterviewModal(false);
           }}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
           job_id={jobId}
           show={showAddInterviewModal}
         />
@@ -229,6 +232,12 @@ function Interview(props) {
                           scope="col"
                           className=" border-0 font-size-4 font-weight-normal"
                         >
+                          Shedudule
+                        </th>
+                        <th
+                          scope="col"
+                          className=" border-0 font-size-4 font-weight-normal"
+                        >
                           Action
                         </th>
                       </tr>
@@ -239,7 +248,10 @@ function Interview(props) {
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                           <th className="bg-white">No Data Found</th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                           <th className="bg-white"></th>
                         </tr>
                       ) : (
@@ -274,6 +286,18 @@ function Interview(props) {
                                 {data.interview_date}
                               </h3>
                             </th>
+                            <th className="  py-5 ">
+                              <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                              {data.interview_date === null ? (
+                                <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                    Not Shedudule
+                                </span>    
+                              ) : (
+                                <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                  Sheduduled
+                                </span>
+                              )}</p>
+                           </th>
                             <th className="py-5 ">
                               <div
                                 className="btn-group button_group"

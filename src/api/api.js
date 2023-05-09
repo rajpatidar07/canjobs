@@ -642,6 +642,7 @@ export const AddInterviewSheduale = async (props, employee_id, job_id) => {
       employee_id: employee_id,
       interview_date: props.interview_date,
       created_by_admin: admin_id,
+      interview_status : props.interview_status 
     },
     {
       headers: {

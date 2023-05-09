@@ -9,11 +9,15 @@ import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
+import EmployementDetails from "../forms/user/employement";
+import ChangeJob from "../forms/admin/changeJobs";
 
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
+  const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
+  let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   /*data and id states */
@@ -99,6 +103,19 @@ export default function EmployeeTable(props) {
     setShowSkillsModal(true);
     setemployeeId(e);
   };
+    /* Function to show the single data to update Employee Career*/
+    const editEmployeeCareer = (e) => {
+      // e.preventDefault();
+      setShowEmplyomentDetails(true);
+      setemployeeId(e);
+    };
+      /* Function to show the single data to apply job */
+     const editJob = (e) => {
+        // e.preventDefault();
+        setShowChangeJobModal(true);
+        setemployeeId(e);    
+      };
+
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.employee_id);
@@ -156,7 +173,24 @@ export default function EmployeeTable(props) {
         setApiCall={setApiCall}
         close={() => setShowSkillsModal(false)}
       /> : null}
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+       { showEmplyomentDetails ?  <EmployementDetails
+        show={showEmplyomentDetails}
+        employeeId={employeeId}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
+        close={() => setShowEmplyomentDetails(false)}
+      /> : null}
+      {showChangeJobModal ? <ChangeJob
+        resData={employeeId}
+        close={() => {
+          setShowChangeJobModal(false);
+        }}
+        apiCall={apiCall}
+        setApiCall={setApiCall}
+        status={0}
+        show={showChangeJobModal}
+      /> : null}
+  <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           <table className="table table-striped main_data_table">
             <thead>
@@ -256,12 +290,7 @@ export default function EmployeeTable(props) {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  <Link
-                    to={""}
-                    className="text-gray"
-                  >
                     Profile
-                </Link>
               </th>
                 {props.heading === "Dashboard" ? (
                   ""
@@ -444,7 +473,7 @@ export default function EmployeeTable(props) {
                     {props.heading === "Dashboard" ? (
                       ""
                     ) : (
-                      <td className="d-flex py-5 min-width-px-100">
+                      <td className=" py-5 min-width-px-100">
                         <div
                           className="btn-group button_group"
                           role="group"
@@ -482,6 +511,22 @@ export default function EmployeeTable(props) {
                           >
                             <span className="fas fa-file text-gray"></span>
                           </button>
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => editEmployeeCareer(empdata.employee_id)}
+                            title="Edit Career"
+                          >
+                            <span className="text-gray">
+                              <i className="fas fa-user-tie"></i>
+                            </span>
+                          </button>
+                          <button
+                            className="btn btn-outline-info action_btn text-gray"
+                            onClick={() => editJob(empdata.employee_id)}
+                            title="Apply job"
+                          >
+                            <i className="fas fa-briefcase"></i>
+                            </button>
                           <button
                             className="btn btn-outline-info action_btn"
                             onClick={() => ShowDeleteAlert(empdata)}

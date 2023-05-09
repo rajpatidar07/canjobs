@@ -1,70 +1,69 @@
-import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import CustomButton from "../common/button";
+import React, { useState ,useEffect} from "react";
+import { Link } from "react-router-dom";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-// import AddCategory from "../forms/admin/category";
-// import { DeleteFilter, GetFilter } from "../../api/api";
-import { ToastContainer /*toast*/ } from "react-toastify";
+import { DeleteFilter, GetFilter } from "../../api/api";
+import { ToastContainer ,toast  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import SAlert from "../common/sweetAlert";
+import SAlert from "../common/sweetAlert";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {
   /*States */
   let [apiCall,setApiCall] = useState(false);
-  // const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   /*delete states */
-  // const [deleteAlert, setDeleteAlert] = useState(false);
-  // const [deleteId, setDeleteID] = useState();
-  // const [deleteChildId, setDeleteChildID] = useState();
-  // const [deleteName, setDeleteName] = useState("");
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteChildId, setDeleteChildID] = useState();
+  const [deleteName, setDeleteName] = useState("");
 
   /* Function to get the filter data*/
-  // const FilterData = async () => {
-  //   let Data = await GetFilter();
-  //   if (Data.data.length === 0) {
-  //     setFilterData([]);
-  //   } else {
-  //     setTotalData(Data.data);
-  //     setFilterData(Data.data);
-  //     setApiCall(false);
-  //   }
-  //   console.log(Data);
-  // };
+  const FilterData = async () => {
+    let Data = await GetFilter();
+    if (Data.data.length === 0) {
+      setFilterData([]);
+    } else {
+      // setTotalData(Data.data);
+      setFilterData(Data.data[0]);
+      setApiCall(false);
+    }
+    console.log(Data);
+  };
 
   /*Render function to get the filter data*/
-  // useEffect(() => {
-  //   FilterData();
-  // }, [apiCall]);
+  useEffect(() => {
+    FilterData();
+  }, [apiCall]);
 
   /*To Show the delete alert box */
-  // const ShowDeleteAlert = (e, f) => {
-  //   setDeleteID(f.id);
-  //   setDeleteChildID(e[0]);
-  //   setDeleteName(e[1]);
-  //   setDeleteAlert(true);
-  // };
+  const ShowDeleteAlert = (e, f) => {
+    setDeleteID(f.id);
+    setDeleteChildID(e[0]);
+    setDeleteName(e[1]);
+    setDeleteAlert(true);
+  };
 
   /*To cancel the delete alert box */
-  // const CancelDelete = () => {
-  //   setDeleteAlert(false);
-  // };
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
   /*To call Api to delete category */
-  // async function deleteFilter(e, f) {
-  //   // console.log(e, f);
+  async function deleteFilter(e, f) {
+    // console.log(e, f);
 
-  //   /*Function to delete the filter */
-  //   const responseData = await DeleteFilter(e, f);
-  //   if (responseData.message === "List item has been deleted") {
-  //     toast.error("Filter deleted Successfully", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //       autoClose: 1000,
-  //     });
-  //     setApiCall(true)
-  //     setDeleteAlert(false);
-  //   }
-  // }
-
+    /*Function to delete the filter */
+    const responseData = await DeleteFilter(e, f);
+    if (responseData.message === "List item has been deleted") {
+      toast.error("Filter deleted Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true)
+      setDeleteAlert(false);
+    }
+  }
+  console.log(filterData.Skill)
+  console.log(filterData,"Full Data")
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -93,25 +92,24 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Skill
                         </h4>
+                        
                         <AddFilter apiCall={apiCall} setApiCall={setApiCall} id={1} />
-                        {/*  <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                         <ul className="row m-0 p-0">
+                         {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Skill"
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value, index) => (
-                                      <>
-                                        <li
+                            (filterData.Skill || []).map((data ,i) =>
+                            (
+                               <>
+                                   <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
+                                          key={i}
                                         >
-                                          {value[1]}
+                                         {data.value}
                                           <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
+                                            // onClick={() =>
+                                            //   ShowDeleteAlert(value, data)
+                                            // }
                                             title="Delete"
                                           >
                                             <i
@@ -122,11 +120,9 @@ function FilterList() {
                                         </li>
                                       </>
                                     )
-                                  )
-                                : null
                             )
                           )}
-                        </ul> */}
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -138,24 +134,22 @@ function FilterList() {
                           Industry
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={4} />
-                        {/* <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <ul className="row m-0 p-0">
+                        {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Industry"
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value, index) => (
-                                      <>
-                                        <li
+                            (filterData.Industry || []).map((data ,i) =>
+                            (
+                               <>
+                                   <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
+                                          key={i}
                                         >
-                                          {value[1]}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
+                                         {data.value}
+                                         <Link
+                                            // onClick={() =>
+                                            //   ShowDeleteAlert(value, data)
+                                            // }
                                             title="Delete"
                                           >
                                             <i
@@ -163,14 +157,12 @@ function FilterList() {
                                               aria-hidden="true"
                                             ></i>
                                           </Link>
+                                          
                                         </li>
                                       </>
                                     )
-                                  )
-                                : null
                             )
-                          )}
-                        </ul> */}
+                          )}</ul>
                       </div>
                     </div>
                   </div>
@@ -182,24 +174,22 @@ function FilterList() {
                           Education
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={5} />
-                        {/*<ul className="row m-0 p-0">
+                        <ul className="row m-0 p-0">
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Education"
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value, index) => (
-                                      <>
-                                        <li
+                            (filterData.Education || []).map((data ,i) =>
+                            (
+                               <>
+                                   <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
+                                          key={i}
                                         >
-                                          {value[1]}
+                                         {data.value}
                                           <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
+                                            // onClick={() =>
+                                            //   ShowDeleteAlert(value, data)
+                                            // }
                                             title="Delete"
                                           >
                                             <i
@@ -210,11 +200,9 @@ function FilterList() {
                                         </li>
                                       </>
                                     )
-                                  )
-                                : null
                             )
                           )}
-                        </ul> */}
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -229,16 +217,14 @@ function FilterList() {
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Category"
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value,index) => (
+                            (filterData.Category || []).map((data,i) =>
+                               (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
+                                          key={i}
                                         >
-                                          {value[1]}
+                                          {data}
                                           <Link
                                             onClick={() =>
                                               ShowDeleteAlert(value, data)
@@ -253,8 +239,7 @@ function FilterList() {
                                         </li>
                                       </>
                                     )
-                                  )
-                                : null
+                              
                             )
                           )}
                         </ul>
@@ -312,24 +297,22 @@ function FilterList() {
                           Corporation
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={6} />
-                        {/* <ul className="row m-0 p-0">
+                        <ul className="row m-0 p-0">
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Corporation "
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value, index) => (
+                            (filterData.Corporation || []).map((data ,i) =>
+                               (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
+                                          key={i}
                                         >
-                                          {value[1]}
+                                          {data.value}
                                           <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
+                                            // onClick={() =>
+                                            //   ShowDeleteAlert(value, data)
+                                            // }
                                             title="Delete"
                                           >
                                             <i
@@ -340,11 +323,10 @@ function FilterList() {
                                         </li>
                                       </>
                                     )
-                                  )
-                                : null
+                               
                             )
                           )}
-                        </ul> */}
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -356,24 +338,22 @@ function FilterList() {
                           Language
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={7} />
-                        {/*<ul className="row m-0 p-0">
+                        <ul className="row m-0 p-0">
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Language"
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value, index) => (
+                            (filterData.Language || []).map((data ,i) =>
+                               (
                                       <>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
+                                          key={i}
                                         >
-                                          {value[1]}
+                                          {data.value}
                                           <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
+                                            // onClick={() =>
+                                            //   ShowDeleteAlert(value, data)
+                                            // }
                                             title="Delete"
                                           >
                                             <i
@@ -384,11 +364,11 @@ function FilterList() {
                                         </li>
                                       </>
                                     )
-                                  )
-                                : null
+                               
                             )
                           )}
-                        </ul> */}
+                        </ul>
+                       
                       </div>
                     </div>
                   </div>
@@ -397,14 +377,14 @@ function FilterList() {
             </div>
           </div>
           {/* <!-- Delete filter sweet alert- --> */}
-          {/* <SAlert
+          <SAlert
             show={deleteAlert}
             title={deleteName}
             text="Are you Sure you want to delete !"
             onConfirm={() => deleteFilter(deleteId, deleteChildId)}
             showCancelButton={true}
             onCancel={CancelDelete}
-          /> */}
+          />
         </div>
       </div>
       ;

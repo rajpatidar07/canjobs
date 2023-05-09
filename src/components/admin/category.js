@@ -81,6 +81,13 @@ function Category() {
     setCategoryId(e);
   };
 
+   /* Function to show the single data to update job category Type*/
+   const  editJobCategoryType  = (e) => {
+    // e.preventDefault();
+    setShowAddCategoryTypeModal(true);
+    setCategoryId(e);
+  };
+
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_category_id);
@@ -139,24 +146,25 @@ function Category() {
         <div>
           <ToastContainer />
           {/* <!-- Modal- --> */}
-          <AddCategory
+          {showAddCategoryModal ? <AddCategory
             show={showAddCategoryModal}
             jobCategoryData={CategoryId}
             apiCall={apiCall}
             setApiCall={setApiCall}
             close={() => setShowAddCategoryModal(false)}
-          />
-          <AddCategoryType
+          /> : null}
+        {showAddCategoryTypeModal? <AddCategoryType
             show={showAddCategoryTypeModal}
             jobCategoryData={CategoryId}
             apiCall={apiCall}
             setApiCall={setApiCall}
             close={() => setShowAddCategoryTypeModal(false)}
-          />
+          />:null}
         </div>
         <div className="dashboard-main-container mt-16" id="dashboard-body">
-          <div className="container">
-            <div className="mb-18">
+          <div className="container ">
+            <div className="row">
+            <div className="col-6 mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Category</h3>
@@ -174,37 +182,7 @@ function Category() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Type:</p>
-                    <div className="select_div">
-                      <select
-                        name="category"
-                        value={categoryTypeFilterValue}
-                        id="category"
-                        onChange={onCategoryTypeFilterChange}
-                        className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
-                      >
-                        <option value={""}>Select category type</option>
-                        {(FilterJson.category || []).map((data, i) => {
-                          return (
-                            <option value={data} key={i}>
-                              {data}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
                   <div className="col px-1 form_group mt-4 text-right">
-                    <div className="float-md-right px-5">
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => addJobCategoryType("0")}
-                        title="Add Category"
-                      >
-                        Add category Type
-                      </CustomButton>
-                    </div>
                     <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -217,7 +195,7 @@ function Category() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
                 <div className="table-responsive ">
                   <table className="table table-striped main_data_table">
                     <thead>
@@ -308,6 +286,8 @@ function Category() {
                     </tbody>
                   </table>
                 </div>
+               
+                </div>
                 {/* <!-- Pagination- --> */}
                 <div className="pt-2">
                   <Pagination
@@ -315,8 +295,130 @@ function Category() {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                   />
-                </div>
               </div>
+            </div>
+            <div className="col-6 mb-18">
+            <div className="mb-4 align-items-center">
+                <div className="page___heading">
+                  <h3 className="font-size-6 mb-0">Category</h3>
+                </div>
+                <div className="row m-0 align-items-center">
+                  <div className="col p-1 form_group mb-5 mt-4">
+                    <p className="input_label">Filter by Type:</p>
+                    <div className="select_div">
+                      <select
+                        name="category"
+                        value={categoryTypeFilterValue}
+                        id="category"
+                        onChange={onCategoryTypeFilterChange}
+                        className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                      >
+                        <option value={""}>Select category type</option>
+                        {(FilterJson.category || []).map((data, i) => {
+                          return (
+                            <option value={data} key={i}>
+                              {data}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                    <div className="col px-1 form_group mt-4 text-right">
+                      <div className="float-md-right">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => addJobCategoryType("0")}
+                        title="Add Category"
+                      >
+                        Add category Type
+                      </CustomButton>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+                  <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 d-flex  justify-content-between ">
+                      <div className="table-responsive ">
+                        <table className="table table-striped main_data_table">
+                          <thead>
+                            <tr>
+                              <th
+                                scope="col"
+                                className=" border-0 font-size-4 font-weight-normal"
+                              >
+                                <Link
+                                  to={""}
+                                  onClick={() => handleSort("category_type")}
+                                  className="text-gray"
+                                  title="Sort by Type"
+                                >
+                                  Category Type
+                                </Link>
+                              </th>
+                              <th
+                                scope="col"
+                                className=" border-0 font-size-4 font-weight-normal"
+                              >
+                                Action
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* Map function to show the data in the list*/}
+                            {totalData === 0 ? (
+                              <tr>
+                                <th className="bg-white">No Data Found</th>
+                                <th className="bg-white"></th>
+                              </tr>
+                            ) : (
+                              (categoryData || []).map((catdata) =>
+                                catdata.parent_id !== "0" ? null : (
+                                  <tr className="" key={catdata.job_category_id}>
+                                    <th className=" py-5">
+                                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        {catdata.category_type}
+                                      </h3>
+                                    </th>
+                                    <th className="py-5 min-width-px-100">
+                                      <div
+                                        className="btn-group button_group"
+                                        role="group"
+                                      >
+                                        <button
+                                          className="btn btn-outline-info action_btn"
+                                          onClick={() => editJobCategoryType(catdata)}
+                                          title="Edit Category"
+                                        >
+                                          <span className=" fas fa-edit text-gray"></span>
+                                        </button>
+                                        {/* <button
+                                          className="btn btn-outline-info action_btn"
+                                          onClick={() => ShowDeleteAlert(catdata)}
+                                          title="Delete"
+                                        >
+                                          <span className=" text-danger">
+                                            <i className="fa fa-trash"></i>
+                                          </span>
+                                        </button> */}
+                                      </div>
+                                    </th>
+                                  </tr>
+                                )
+                              )
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+             {/* <!-- Pagination- --> */}
+             <div className="pt-2">
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
+              </div>
+            </div>
             </div>
           </div>
           {/* <!-- Delete Sweet Alert- --> */}

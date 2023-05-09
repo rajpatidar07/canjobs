@@ -10,8 +10,7 @@ import Select from "react-select";
 function ChangeJob(props) {
   let [loading, setLoading] = useState(false);
   const [state, setState] = useState([]);
-  // console.log(props);
-  let employeeId = props.resData.employee_id;
+  let employeeId = props.status === 0 ? props.resData  : props.resData.employee_id;
   let applyId = props.resData.apply_id;
   let [allJobData, setAllJobData] = useState([]);
   let [JobId, setJobId] = useState("");
@@ -48,7 +47,7 @@ function ChangeJob(props) {
   const onChangeJobClick = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const responseData = await ApplyJob(JobId, employeeId, "", applyId);
+    const responseData = await ApplyJob(JobId, employeeId , props.status , applyId);
     if (responseData.message === "Job switched successfully") {
       toast.success("Job Changed successfully", {
         position: toast.POSITION.TOP_RIGHT,
@@ -57,6 +56,15 @@ function ChangeJob(props) {
       props.setApiCall(true)
       return close();
     }
+    if (responseData.message === "Job applied successfully") {
+      toast.success("Applied successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      props.setApiCall(true)
+      return close();
+    }
+    
   };
   // END USER CHANGE JOB VALIDATION
   /*FUnction to redender the data in the option of the select box*/

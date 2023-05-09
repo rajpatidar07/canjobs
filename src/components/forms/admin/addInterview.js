@@ -22,6 +22,7 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
+    interview_status: ""
   };
   // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
@@ -30,6 +31,12 @@ function AddInterview(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Interview date is required"
+          : null,
+    ],
+    interview_status : [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Interview status is required"
           : null,
     ],
   };
@@ -54,11 +61,11 @@ function AddInterview(props) {
   }, [props]);
 
   // USER INTERVIEW UPDATE SUBMIT BUTTON
-  const onAddFilterClick = async (event) => {
+  const onAddInterviewClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddInterviewSheduale(state, employeeId, jobId);
+      const responseData = await AddInterviewSheduale(state, employeeId, jobId );
       if (responseData.message === "data inserted successfully") {
         toast.success("Interview shedualed successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -91,8 +98,40 @@ function AddInterview(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <h5 className="text-center pt-2">Shedual Interview</h5>
 
-          <form onSubmit={onAddFilterClick}>
-            <div className="form-group ">
+          <form onSubmit={onAddInterviewClick}>
+          <div className="form-group row mb-0">
+              <label
+                htmlFor="interview_status"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Interview Status <span className="text-danger">*</span> :
+              </label>
+              <select
+                name="interview_status"
+                className={
+                  errors.interview_status
+                    ? "form-control mx-5 col border border-danger"
+                    : "form-control col mx-5"
+                }
+                value={state.interview_status}
+                onChange={onInputChange}
+                id="interview_status"
+              >
+                <option value={""}>Select Status</option>
+                <option value={"pending"}>Shedual / reshedual</option>
+                <option value={"complete"}>Complete</option>
+              </select>
+               {/*----ERROR MESSAGE FOR EMAIL----*/}
+               {errors.interview_status && (
+                <span
+                  key={errors.interview_status}
+                  className="text-danger font-size-3"
+                >
+                  {errors.interview_status}
+                </span>
+              )}
+            </div>
+            <div className="form-group mt-5">
               <label
                 htmlFor="interview_date"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -140,7 +179,7 @@ function AddInterview(props) {
                 </button>
               ) : (
                 <button
-                  onClick={onAddFilterClick}
+                  onClick={onAddInterviewClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

@@ -243,13 +243,10 @@ export default function EmployerTable(props) {
                   ) : (
                     <th className="bg-white"></th>
                   )}
-                  <th className="bg-white"></th>
+                      <th className="bg-white">No Data Found</th>
                   <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
                     <>
-                      <th className="bg-white">No Data Found</th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                     </>
@@ -371,23 +368,16 @@ export default function EmployerTable(props) {
                     ) : (
                       <th className="  py-5 ">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                          {empdata.contact_person_name === null ||
-                          empdata.contact_no === null ||
-                          empdata.address === null ||
-                          empdata.industry === null ||
-                          empdata.company_name === null ||
-                          empdata.vacancy_for_post === null ? (
-                            <>
-                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                Incompelete
-                              </span>
-                            </>
-                          ) : (
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                        {empdata.profile_complete >= "99.00" ? (
+                          <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                               Complete
-                            </span>
-                          )}
-                        </p>
+                          </span>
+                                      
+                        ) : (
+                          <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Incompelete
+                          </span>
+                        )}</p>
                       </th>
                     )}
                     {props.heading === "Dashboard" ? (
