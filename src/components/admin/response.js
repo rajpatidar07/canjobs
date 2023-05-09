@@ -412,7 +412,7 @@ function JobResponse(props) {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                            Shedudule
+                            Schedule
                         </th>
                       {props.heading === "Dashboard" ||
                       user_type === "company" ? (
@@ -614,11 +614,11 @@ function JobResponse(props) {
                               <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                               {res.interview_date === null ? (
                                 <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Not Shedudule
+                                    Not Schedule
                                 </span>    
                               ) : (
                                 <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                  Sheduduled
+                                  Scheduled
                                 </span>
                               )}</p>
                            </th>

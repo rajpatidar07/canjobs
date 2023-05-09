@@ -35,6 +35,16 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
+ /*Chanage password Api */
+ export const ChangePasswordApi = async (props) => {
+  const response = await axios.put(`${API_URL}${user_type}/changePassword`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
 /*To get the filter list APi */
 export const getJson = async () => {
   const response = await axios.get(`${API_URL}filterList/filterList.json`);

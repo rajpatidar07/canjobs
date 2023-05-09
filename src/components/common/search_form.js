@@ -14,9 +14,9 @@ function SearchForm() {
   const country = searchParams.get("country");
   const user_type = localStorage.getItem("userType");
   let [state, setState] = useState({
-    search: search,
+    search: search ? search : "",
     country: "",
-    country_value: country,
+    country_value: country ? country : "",
   });
   let navigate = useNavigate();
   /*Function to set data to the search job by country */

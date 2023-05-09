@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import useValidation from "./useValidation";
 import { Modal } from "react-bootstrap";
-
+import {ChangePasswordApi} from "../../api/api"
+import { toast } from "react-toastify";
 const ChangePassword = (props) => {
+  let [loading , setLoading] = useState(false)
   // USER CHANGE PASSWORD VALIDATION
 
+   /* Functionality to close the modal */
+   const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    setLoading(false);
+    props.close();
+  };
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    oldpassword: "",
-    newpassword: "",
-    confirmpassword: "",
+    password: "",
+    new_password: "",
+    conf_password: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
-    oldpassword: [
+    password: [
       (value) =>
         value === "" || value.trim() === "" ? "Old password is required" : null,
     ],
-    newpassword: [
+    new_password: [
       (value) =>
         value === ""
           ? "Password is required"
@@ -27,24 +36,37 @@ const ChangePassword = (props) => {
           ? null
           : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    confirmpassword: [
+    conf_password: [
       (value) => (value ? null : "Confirm Password is required"),
       (value) =>
-        value === state.newpassword
+        value === state.new_password
           ? null
           : "Confirm Password must be Same as Password",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, onInputChange, setState, setErrors, errors, validate } = useValidation(
     initialFormState,
     validators
   );
 
   // USER CHANGE PASSWORD SUBMIT BUTTON
-  const onUserChangePassClick = (event) => {
+  const onUserChangePassClick = async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true)
+    let Response = await ChangePasswordApi(state)
+    if (Response.message === "Wrong password") {
+      setErrors({...errors,password : "Wrong current Password"})
+      setLoading(false)
+    }
+    if (Response.message === "Password updated successfully") {
+      toast.success("Password updated successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      close()
+    }
     }
   };
   // END USER CHANGE PASSWORD VALIDATION
@@ -61,74 +83,74 @@ const ChangePassword = (props) => {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-10">
           {/* CHANGE PASSWORD FORM */}
-          <form onSubmit={onUserChangePassClick}>
+          <form onSubmit={(e)=>onUserChangePassClick(e)}>
             <h5 className="text-center pb-8"> Change Password</h5>
             {/* FORM FIELDS */}
             <div className="form-group">
               <label
-                htmlFor="oldpassword"
+                htmlFor="password"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Old Password
               </label>
               <input
-                name="oldpassword"
-                value={state.oldpassword}
+                name="password"
+                value={state.password}
                 onChange={onInputChange}
                 type="password"
                 className={
-                  errors.oldpassword
+                  errors.password
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                id="oldpassword"
+                id="password"
                 placeholder="Enter old password"
               />
               {/* ERROR MSG FOR OLD PASSWORD */}
-              {errors.oldpassword && (
+              {errors.password && (
                 <span
-                  key={errors.oldpassword}
+                  key={errors.password}
                   className="text-danger font-size-3"
                 >
-                  {errors.oldpassword}
+                  {errors.password}
                 </span>
               )}
             </div>
             <div className="form-group">
               <label
-                htmlFor="newpassword"
+                htmlFor="new_password"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Password
               </label>
               <div className="position-relative">
                 <input
-                  name="newpassword"
-                  value={state.newpassword}
+                  name="new_password"
+                  value={state.new_password}
                   onChange={onInputChange}
                   type="password"
                   className={
-                    errors.newpassword
+                    errors.new_password
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="newpassword"
+                  id="new_password"
                   placeholder="Enter password"
                 />
                 {/* ERROR MSG FOR PASSWORD */}
-                {errors.newpassword && (
+                {errors.new_password && (
                   <span
-                    key={errors.newpassword}
+                    key={errors.new_password}
                     className="text-danger font-size-3"
                   >
-                    {errors.newpassword}
+                    {errors.new_password}
                   </span>
                 )}
                 {/* <Link
@@ -140,31 +162,31 @@ const ChangePassword = (props) => {
             </div>
             <div className="form-group">
               <label
-                htmlFor="confirmpassword"
+                htmlFor="conf_password"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Confirm Password
               </label>
               <div className="position-relative">
                 <input
-                  name="confirmpassword"
-                  value={state.confirmpassword}
+                  name="conf_password"
+                  value={state.conf_password}
                   onChange={onInputChange}
                   type="password"
                   className={
-                    errors.confirmpassword
+                    errors.conf_password
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="confirmpassword"
+                  id="conf_password"
                   placeholder="Enter new password"
                 />
-                {errors.confirmpassword && (
+                {errors.conf_password && (
                   <span
-                    key={errors.confirmpassword}
+                    key={errors.conf_password}
                     className="text-danger font-size-3"
                   >
-                    {errors.confirmpassword}
+                    {errors.conf_password}
                   </span>
                 )}
                 {/* <Link
@@ -176,12 +198,28 @@ const ChangePassword = (props) => {
             </div>
             {/* END FORM FIELDS  */}
             <div className="form-group text-center">
-              <button
+            {loading === true ? (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                 type="submit"
               >
                 Submit
               </button>
+              )}
+              
             </div>
           </form>
         </div>

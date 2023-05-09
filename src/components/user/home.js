@@ -3,8 +3,6 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
-import Filterbox from "../common/filterbox";
-import filterjson from "../json/filterjson";
 import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
 

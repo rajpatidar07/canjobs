@@ -27,7 +27,6 @@ function FilterList() {
       setFilterData(Data.data[0]);
       setApiCall(false);
     }
-    console.log(Data);
   };
 
   /*Render function to get the filter data*/
@@ -37,9 +36,9 @@ function FilterList() {
 
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e, f) => {
-    setDeleteID(f.id);
-    setDeleteChildID(e[0]);
-    setDeleteName(e[1]);
+    setDeleteID(f);
+    setDeleteChildID(e.id);
+    setDeleteName(e.value);
     setDeleteAlert(true);
   };
 
@@ -49,7 +48,6 @@ function FilterList() {
   };
   /*To call Api to delete category */
   async function deleteFilter(e, f) {
-    // console.log(e, f);
 
     /*Function to delete the filter */
     const responseData = await DeleteFilter(e, f);
@@ -62,8 +60,6 @@ function FilterList() {
       setDeleteAlert(false);
     }
   }
-  console.log(filterData.Skill)
-  console.log(filterData,"Full Data")
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -100,16 +96,16 @@ function FilterList() {
                           ) : (
                             (filterData.Skill || []).map((data ,i) =>
                             (
-                               <>
+                               <React.Fragment key={data.id}>
                                    <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={i}
+                                          key={data.id}
                                         >
                                          {data.value}
                                           <Link
-                                            // onClick={() =>
-                                            //   ShowDeleteAlert(value, data)
-                                            // }
+                                            onClick={() =>
+                                              ShowDeleteAlert(data, 1)
+                                            }
                                             title="Delete"
                                           >
                                             <i
@@ -118,7 +114,7 @@ function FilterList() {
                                             ></i>
                                           </Link>
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                             )
                           )}
@@ -140,16 +136,15 @@ function FilterList() {
                           ) : (
                             (filterData.Industry || []).map((data ,i) =>
                             (
-                               <>
+                               <React.Fragment key={data.id}>
                                    <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={i}
                                         >
                                          {data.value}
                                          <Link
-                                            // onClick={() =>
-                                            //   ShowDeleteAlert(value, data)
-                                            // }
+                                            onClick={() =>
+                                              ShowDeleteAlert(data, 4)
+                                            }
                                             title="Delete"
                                           >
                                             <i
@@ -159,7 +154,7 @@ function FilterList() {
                                           </Link>
                                           
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                             )
                           )}</ul>
@@ -180,16 +175,16 @@ function FilterList() {
                           ) : (
                             (filterData.Education || []).map((data ,i) =>
                             (
-                               <>
+                               <React.Fragment key={data.id}>
                                    <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={i}
+                                          key={data.id}
                                         >
                                          {data.value}
                                           <Link
-                                            // onClick={() =>
-                                            //   ShowDeleteAlert(value, data)
-                                            // }
+                                            onClick={() =>
+                                              ShowDeleteAlert(data, 5)
+                                            }
                                             title="Delete"
                                           >
                                             <i
@@ -198,7 +193,7 @@ function FilterList() {
                                             ></i>
                                           </Link>
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                             )
                           )}
@@ -219,10 +214,10 @@ function FilterList() {
                           ) : (
                             (filterData.Category || []).map((data,i) =>
                                (
-                                      <>
+                                      <React.Fragment key={data.id}>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={i}
+                                          key={data.id}
                                         >
                                           {data}
                                           <Link
@@ -237,7 +232,7 @@ function FilterList() {
                                             ></i>
                                           </Link>
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                               
                             )
@@ -261,7 +256,7 @@ function FilterList() {
                               data.item_name === "Location"
                                 ? Object.entries(JSON.parse(data.json)).map(
                                     (value,index) => (
-                                      <>
+                                      <React.Fragment key={data.id}>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                           key={index}
@@ -279,7 +274,7 @@ function FilterList() {
                                             ></i>
                                           </Link>
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                                   )
                                 : null
@@ -303,16 +298,16 @@ function FilterList() {
                           ) : (
                             (filterData.Corporation || []).map((data ,i) =>
                                (
-                                      <>
+                                      <React.Fragment key={data.id}>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={i}
+                                          key={data.id}
                                         >
                                           {data.value}
                                           <Link
-                                            // onClick={() =>
-                                            //   ShowDeleteAlert(value, data)
-                                            // }
+                                            onClick={() =>
+                                              ShowDeleteAlert(data, 6)
+                                            }
                                             title="Delete"
                                           >
                                             <i
@@ -321,7 +316,7 @@ function FilterList() {
                                             ></i>
                                           </Link>
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                                
                             )
@@ -344,16 +339,16 @@ function FilterList() {
                           ) : (
                             (filterData.Language || []).map((data ,i) =>
                                (
-                                      <>
+                                      <React.Fragment key={data.id}>
                                         <li
                                           className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={i}
+                                          key={data.id}
                                         >
                                           {data.value}
                                           <Link
-                                            // onClick={() =>
-                                            //   ShowDeleteAlert(value, data)
-                                            // }
+                                            onClick={() =>
+                                              ShowDeleteAlert(data, 7)
+                                            }
                                             title="Delete"
                                           >
                                             <i
@@ -362,7 +357,7 @@ function FilterList() {
                                             ></i>
                                           </Link>
                                         </li>
-                                      </>
+                                      </React.Fragment>
                                     )
                                
                             )
