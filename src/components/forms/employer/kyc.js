@@ -239,7 +239,7 @@ function KycComplianceDetails(props) {
                   placeholder="PAN Number"
                   id="pan_no"
                   name="pan_no"
-                  value={state.pan_no ||""}
+                  value={state.pan_no  || ""}
                   onChange={onInputChange}
                   className={
                     errors.pan_no
@@ -266,7 +266,7 @@ function KycComplianceDetails(props) {
                   placeholder="Name on PAN Card"
                   id="name"
                   name="name"
-                  value={state.name||""}
+                  value={state.name || ""}
                   onChange={onInputChange}
                   className={
                     errors.name
@@ -298,7 +298,7 @@ function KycComplianceDetails(props) {
                     id="pan_date"
                     name="pan_date"
                     max={moment().format("YYYY-MM-DD")}
-                    value={state.pan_date||""}
+                    value={state.pan_date || ""}
                     onChange={onInputChange}
                     className={
                       errors.pan_date
@@ -329,7 +329,7 @@ function KycComplianceDetails(props) {
                   placeholder="Address"
                   id="address"
                   name="address"
-                  value={state.address ||""}
+                  value={state.address  || ""}
                   onChange={onInputChange}
                   className={
                     errors.address
@@ -363,7 +363,7 @@ function KycComplianceDetails(props) {
                   placeholder="Pincode"
                   id="pincode"
                   name="pincode"
-                  value={state.pincode ||""}
+                  value={state.pincode  || ""}
                   onChange={onInputChange}
                   className={
                     errors.pincode
@@ -393,7 +393,7 @@ function KycComplianceDetails(props) {
                   placeholder="City"
                   id="city"
                   name="city"
-                  value={state.city||""}
+                  value={state.city || ""}
                  onChange={onInputChange}
                   className={
                     errors.city
@@ -422,7 +422,7 @@ function KycComplianceDetails(props) {
                   placeholder="State"
                   id="state"
                   name="state"
-                  value={state.state||""} 
+                  value={state.state || ""} 
                   onChange={onInputChange}
                   className={
                     errors.state
@@ -449,7 +449,7 @@ function KycComplianceDetails(props) {
                   placeholder="State"
                   id="country"
                   name="country"
-                  value={state.country ||""}
+                  value={state.country  || ""}
                   onChange={onInputChange}
                   className={
                     errors.country
@@ -482,7 +482,7 @@ function KycComplianceDetails(props) {
                   placeholder="GSTIN"
                   id="gstin"
                   name="gstin"
-                  value={state.gstin||""} 
+                  value={state.gstin || ""} 
                   onChange={onInputChange}
                   className={
                     errors.gstin
@@ -509,7 +509,7 @@ function KycComplianceDetails(props) {
                   placeholder="Fax Number"
                   id="fax_number"
                   name="fax_number"
-                  value={state.fax_number||""}
+                  value={state.fax_number || ""}
                   onChange={onInputChange}
                   className={
                     errors.fax_number
@@ -541,7 +541,7 @@ function KycComplianceDetails(props) {
                   placeholder="TAN Number"
                   id="tan_number"
                   name="tan_number"
-                  value={state.tan_number||""}
+                  value={state.tan_number || ""}
                   onChange={onInputChange}
                   className={
                     errors.tan_number
@@ -570,7 +570,7 @@ function KycComplianceDetails(props) {
                   type="file"
                   id="document"
                   name="document"
-                  // value={state.docume ||""nt}
+                  // value={state.docume  || ""nt}
                   accept=".pdf,application/pdf"
                   onChange={handleUploadFile}
                   className={

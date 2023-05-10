@@ -29,7 +29,10 @@ function Category() {
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(1000);
+  const [recordsPerPage] = useState(10);
+  const [TypetotalData, setTypeTotalData] = useState("");
+  const [TypecurrentPage, setTypeCurrentPage] = useState(1);
+  const [TyperecordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_category_id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -48,21 +51,24 @@ function Category() {
       setCategoryData([]);
     } else {
       setCategoryData(userData.data);
-      setTotalData(userData.total_rows);
-    }
-  };
+      const filteredData = userData.data.filter((data) => data.parent_id !== "0");
+      if (filteredData.length === 0) {
+        setTotalData(userData.total_rows);
+      } else{
+        setTotalData();
+      }
+    }  };
 
   /* Function to get the job category Type data*/
   const CategoryTypeData = async () => {
-    const userData = await getAllJobsCategory(0);
+    const userData = await getAllJobsCategory(0 , "" , TypecurrentPage , TyperecordsPerPage);
     if (userData.data.length === 0) {
       setCategoryTypeData([]);
     } else {
       setCategoryTypeData(userData.data);
-      setTotalData(userData.total_rows);
+      setTypeTotalData(userData.total_rows);
     }
   };
-
   /*Render function to get the job category*/
   useEffect(() => {
     CategoryData();
@@ -86,7 +92,7 @@ function Category() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    currentPage,
+    TypecurrentPage,
     apiCall,
     columnName,
     sortOrder,
@@ -98,28 +104,28 @@ function Category() {
     setShowAddCategoryModal(true);
     setCategoryId(e);
   };
-
+  
   /* Function to show the single data to update job category*/
   const addJobCategoryType = (e) => {
     // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
   };
-
+  
   /* Function to show the single data to update job category Type*/
   const editJobCategoryType = (e) => {
     // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
   };
-
+  
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_category_id);
     setDeleteName(e.category_name);
     setDeleteAlert(true);
   };
-
+  
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
@@ -137,7 +143,7 @@ function Category() {
       setApiCall(true);
     }
   }
-
+  
   /*Category Type Onchange function to filter the data */
   let onCategoryTypeFilterChange = (e) => {
     setCategoryTypeFilterValue(e.target.value);
@@ -148,21 +154,16 @@ function Category() {
   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
-
+  const TypenPages = Math.ceil(TypetotalData / recordsPerPage);
+  
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-
-  /*Category type array to filter*/
-  // const CategoryType = categoryData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.category_type === thing.category_type)
-  // );
-
-  return (
-    <>
+  
+    return (
+      <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
         <AdminHeader heading={"Manage Category"} />
@@ -381,7 +382,7 @@ function Category() {
                       </thead>
                       <tbody>
                         {/* Map function to show the data in the list*/}
-                        {totalData === 0 ? (
+                        {TypetotalData === 0 ? (
                           <tr>
                             <th className="bg-white">No Data Found</th>
                             <th className="bg-white"></th>
@@ -431,9 +432,9 @@ function Category() {
                 {/* <!-- Pagination- --> */}
                 <div className="pt-2">
                   <Pagination
-                    nPages={nPages}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
+                    nPages={TypenPages}
+                    currentPage={TypecurrentPage}
+                    setCurrentPage={setTypeCurrentPage}
                   />
                 </div>
               </div>

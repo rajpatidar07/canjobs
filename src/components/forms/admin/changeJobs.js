@@ -92,7 +92,7 @@ function ChangeJob(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Change Jobs</h5>
+          <h5 className="text-center pt-2">{props.apply==="apply" ? "Apply for Job" : "Change Jobs"}</h5>
 
           <form onSubmit={onChangeJobClick}>
             <div className="form-group ">

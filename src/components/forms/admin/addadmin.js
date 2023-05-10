@@ -8,8 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 function Addadmin(props) {
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
-  /* Functionality to close the modal */
+  const [showPassword, setShowPassword] = useState(false);
 
+  /*Function to show hide password */
+  const toggleShowPassword = () => setShowPassword(prev => !prev);
+
+  const renderIcon = () => {
+    if (state.password.length > 0) {
+      return showPassword ? <i className="fa fa-eye-slash"></i>
+                          : <i className="fa fa-eye"></i>;
+    }
+    return null;
+  };
+
+  /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -36,7 +48,7 @@ function Addadmin(props) {
           ? "Admin name can not have a number."
           : value.length < 2
           ? "Admin name should have 2 or more letters"
-          : /[^a-zA-Z0-9]/g.test(value)
+          :/[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : "",
     ],
@@ -208,8 +220,9 @@ function Addadmin(props) {
                 >
                   Password <span className="text-danger">*</span> :
                 </label>
+                <div className="position-relative">
                 <input
-                  type={"password"}
+                   type={showPassword ? 'text' : 'password'}
                   className={
                     errors.password
                       ? "form-control border border-danger"
@@ -220,6 +233,10 @@ function Addadmin(props) {
                   id="password"
                   name="password"
                 />
+                <span className="password-icon" onClick={toggleShowPassword}>
+                {renderIcon()}
+                </span>
+                </div>
                 {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
                 {errors.password && (
                   <span
@@ -251,7 +268,7 @@ function Addadmin(props) {
                 name="admin_type"
                 multiple={false}
               >
-                <option value={""}>Select type</option>
+                <option value={""}>Admin type</option>
                 <option value={"manager"}>Manager</option>
                 <option value={"sub-admin"}>Sub admin</option>
                 <option value={"admin"}>Admin</option>

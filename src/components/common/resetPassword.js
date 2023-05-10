@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { EmployeeResetPasswordApi , AdminResetPasswordApi ,EmployerResetPasswordApi } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate ,useLocation } from "react-router-dom";
-import { toast ,ToastContainer } from "react-toastify";
+import { toast , ToastContainer } from "react-toastify";
 
 export default function ResetPassword() {
   const location = useLocation();

@@ -215,10 +215,10 @@ function Followup() {
                         className=" form-control"
                       >
                         <option value="">Select Location</option>
-                        {(FilterJson.location || []).map((data, i) => {
+                        {(FilterJson.location || []).map((data) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}

@@ -1,13 +1,19 @@
-import React from "react";
+import React ,{useState} from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../common/useValidation";
-import { EmployerSignUp } from "../../api/api";
+import { EmployerSignUp , SendOtp} from "../../api/api";
 import { toast } from "react-toastify";
 export default function CompanySignUp(props) {
+  let [loading, setLoading] = useState(false);
+  let [otpBox, setOtpBox] = useState(false);
+  const [SingUpSuccess, setSingUpSuccess] = useState("");
+  const [otpErr, setotperr] = useState("");
+/*Function to close he modal */
   const close = () => {
     setErrors("");
-    setState("");
+    setState(initialFormState);
+    setOtpBox(false)
     props.close();
   }; // USER SIGNUP VALIDATION
 
@@ -17,6 +23,7 @@ export default function CompanySignUp(props) {
     password: "",
     contact_no: "",
     term_and_condition: "",
+    otp:"",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -40,18 +47,27 @@ export default function CompanySignUp(props) {
     ],
     contact_no: [
       (value) =>
+        otpBox === false ? "" :
         value === "" || value === null
           ? "Contact no is required"
           : value.length < 10 || value.length > 11
           ? "Contact no should be of 10 digits"
-          : "",
+          : ""
     ],
     term_and_condition: [
       (value) =>
-        value === null || value === ""
+          otpBox === false ? "" : value === null || value === "" || value === false
           ? "Please accept terms and conditions continue"
           : "",
     ],
+    otp: [
+      (value) =>
+          otpBox ? value === null || value === "" 
+          ? "Otp is requried"
+          : otpErr === "Invalid Otp"
+          ? "Invalid Otp"
+          : "" :""
+    ]
   };
   // CUSTOM VALIDATIONS IMPORT
   const {
@@ -66,24 +82,48 @@ export default function CompanySignUp(props) {
   // USER SIGNUP SUBMIT BUTTON
   const onCompanySignUpClick = async (event) => {
     // // console.log(state);
-
+    // if(state.term_and_condition ? setErrors({...errors , term_and_condition : ""}) : errors.term_and_condition)
     event.preventDefault();
-    if (validate()) {
+    if (validate()  && state.otp && state.term_and_condition){/*Api to signup */
+
       let Response = await EmployerSignUp(state);
       if (Response.message === "Employer has been registered") {
         toast.success("Registered Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        close();
+        setErrors("");
+        setState(initialFormState);
+        setOtpBox(false)
+        setSingUpSuccess("success");
       }
-
-      if (Response.message === "Email already exists") {
+      else if(Response.message === " incorrect otp "){
+        setLoading(false)
+        setotperr("Invalid Otp")
+        setErrors({...errors , term_and_condition: ""})
+        setErrors({...errors , contact_no: ""})
+      }
+      else if (Response.message === "Email already exists") {
         setErrors({ ...errors, email: ["Email already exists"] });
+        setState(initialFormState)
+        setOtpBox(false)
       }
+  }else if(otpBox === false){
+    /*Api to get otp */
+    setLoading(true)
+    const updatedTodo = await SendOtp(state); 
+    if(updatedTodo.message === "successful"){
+      toast.success("Otp sent Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setOtpBox(true)
+      setLoading(false)
     }
-  };
+  }
+};
   // END USER SIGNUP VALIDATION
+  console.log(loading);
   return (
     <>
       {/* <!-- Sign Up Modal --> */}
@@ -92,14 +132,14 @@ export default function CompanySignUp(props) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-      >
+        >
         <div className="modal-dialog max-width-px-840 position-relative">
           <button
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10  z-index-supper"
             data-dismiss="modal"
             onClick={close}
-          >
+            >
             <i className="fas fa-times"></i>
           </button>
           <div className="login-modal-main bg-white rounded-8 overflow-hidden">
@@ -133,7 +173,20 @@ export default function CompanySignUp(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+              {SingUpSuccess === "success" ? <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                    Congratulations! <br />
+                    You have successfully registered your account. Please login
+                    to continue
+                    <br />
+                    <Link
+                      to=""
+                      className="btn btn-primary mt-12"
+                      onClick={props.loginClick}
+                    >
+                      Login
+                    </Link>
+                  </div>
+                : <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
                   {/* SOCIAL MEDIA LINK BUTTONS */}
                   <div className="row">
                     <div className="col-4 col-xs-12">
@@ -187,7 +240,7 @@ export default function CompanySignUp(props) {
                       <input
                         type="email"
                         name="email"
-                        value={state.email}
+                        value={"" || state.email}
                         onChange={onInputChange}
                         className={
                           errors.email
@@ -217,7 +270,7 @@ export default function CompanySignUp(props) {
                       <input
                         type="number"
                         name="contact_no"
-                        value={state.contact_no}
+                        value={"" || state.contact_no}
                         onChange={onInputChange}
                         className={
                           errors.contact_no
@@ -247,7 +300,7 @@ export default function CompanySignUp(props) {
                       <div className="position-relative">
                         <input
                           name="password"
-                          value={state.password}
+                          value={"" || state.password}
                           onChange={onInputChange}
                           type="password"
                           className={
@@ -269,7 +322,40 @@ export default function CompanySignUp(props) {
                         )}
                       </div>
                     </div>
-
+                    {otpBox ? 
+                     <div className="form-group">
+                        
+                        <label
+                          htmlFor="otp"
+                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                          Enter Otp
+                        </label>
+                        <div className="position-relative">
+                        <input
+                          type="number"
+                          value={"" || state.otp}
+                          onChange={onInputChange}
+                          maxLength={6}
+                          name="otp"
+                          id="otp"
+                          className={
+                            errors.otp
+                              ? "form-control border border-danger"
+                              : "form-control"
+                          } placeholder="Otp"
+                        />
+                         {errors.otp && (
+                            <span
+                              key={errors.otp}
+                              className="text-danger font-size-3"
+                            >
+                              {errors.otp}
+                            </span>
+                          )}
+                        </div>
+                       
+                      </div> : null}
                     {/* END FORM FIELDS  */}
                     <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
                       <label
@@ -306,12 +392,33 @@ export default function CompanySignUp(props) {
                       )}
                     </div>
                     <div className="form-group text-center">
-                      <button
-                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                        type="submit"
-                      >
-                        Sign Up
-                      </button>
+                    {loading === true ? (
+                          <button
+                            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                            type="button"
+                            disabled
+                          >
+                            <span
+                              className="spinner-border spinner-border-sm "
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            <span className="sr-only">Loading...</span>
+                          </button>
+                        ) : otpBox ? (
+                          <button
+                          className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                          type="submit"
+                        >
+                          Sign Up
+                          </button>
+                        ) :  <button
+                              className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                              type="submit"
+                            >
+                            Send otp
+                            </button>
+                        }
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Already have an account?{" "}
@@ -325,7 +432,7 @@ export default function CompanySignUp(props) {
                     </p>
                   </form>
                   {/* END SIGNUP FORM */}
-                </div>
+                </div>}
               </div>
             </div>
           </div>

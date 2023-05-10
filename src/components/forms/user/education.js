@@ -271,7 +271,7 @@ function Education(props) {
                   value={state.qualification||""}
                   onChange={onInputChange}
                 >
-                  <option value={""}>Select Qualification</option>
+                  <option value={""}>User Qualification</option>
                   {(FilterJson.qualification || []).map((data, i) => {
                     return (
                       <option value={data} key={i}>
@@ -308,7 +308,7 @@ function Education(props) {
                   value={state.course||""}
                   onChange={onInputChange}
                 >
-                  <option value={""}>Select Course</option>
+                  <option value={""}>Course</option>
                   {(EducationList || []).map((course) => (
                     <option value={course.value} key={course.id}>
                       {course.value}
@@ -372,11 +372,11 @@ function Education(props) {
                     value={state.institute_location||""}
                     onChange={onInputChange}
                   >
-                    <option value={""}>Select institute location</option>
-                    {(FilterJson.location || []).map((data, i) => {
+                    <option value={""}>Institute location</option>
+                    {(FilterJson.location || []).map((data) => {
                       return (
-                        <option value={data} key={i}>
-                          {data}
+                        <option value={data.value} key={data.id}>
+                          {data.value}
                         </option>
                       );
                     })}

@@ -74,7 +74,7 @@ function AddFilter(props) {
               id="json_item"
               name="json_item"
               type={"text"}
-              placeholder="Type"
+              placeholder={props.id === 1 ? "Skill Type" : props.id === 4 ? "Industry Type" : props.id === 5 ? "Education Type" : props.id === 6 ? "Corporation Type" : props.id === 7 ? "Language Type" : ""}
             />
             {loading === true ? (
               <button

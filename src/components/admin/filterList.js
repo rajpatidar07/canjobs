@@ -173,7 +173,7 @@ function FilterList() {
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Education || []).map((data ,i) =>
+                            (filterData.Education || []).map((data ) =>
                             (
                                <React.Fragment key={data.id}>
                                    <li
@@ -337,7 +337,7 @@ function FilterList() {
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Language || []).map((data ,i) =>
+                            (filterData.Language || []).map((data ) =>
                                (
                                       <React.Fragment key={data.id}>
                                         <li

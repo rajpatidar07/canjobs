@@ -197,6 +197,7 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
           status={0}
           show={showChangeJobModal}
+          apply={"apply"}
         />
       ) : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">

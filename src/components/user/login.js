@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { EmployeeLogin , EmployeeForgotPassword} from "../../api/api";
+import { EmployeeLogin , EmployeeForgotPassword } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 

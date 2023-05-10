@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { EmployeeSignUp } from "../../api/api";
+import { EmployeeSignUp , SendOtp} from "../../api/api";
 import useValidation from "../common/useValidation";
-
+import { toast } from "react-toastify";
 export default function EmployeeSignupModal(props) {
   // USER SIGNUP VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    useremail: "",
-    userpassword: "",
+    email: "",
+    password: "",
     resume: "",
+    otp:"",
   };
   const [isChecked, setIsChecked] = useState(false);
   const [termsErr, settermsErr] = useState("");
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   let [loading, setLoading] = useState(false);
+  let [otpBox, setOtpBox] = useState(false);
   // VALIDATION CONDITIONS termsErr
   const validators = {
-    useremail: [
+    email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
@@ -27,7 +29,7 @@ export default function EmployeeSignupModal(props) {
           ? null
           : "Email is invalid",
     ],
-    userpassword: [
+    password: [
       (value) =>
         value === ""
           ? "Password is required"
@@ -40,7 +42,7 @@ export default function EmployeeSignupModal(props) {
     resume: [],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, onInputChange, errors, validate } = useValidation(
+  const { state, setState , onInputChange, setErrors , errors, validate } = useValidation(
     initialFormState,
     validators
   );
@@ -48,8 +50,8 @@ export default function EmployeeSignupModal(props) {
   // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = async (event) => {
     event.preventDefault();
-    setLoading(false)
-    if (validate()) {
+    setLoading(false)  
+    if (validate() && state.otp) {/*Api to signup */
       if (isChecked) {
         settermsErr("");
         setLoading(true)
@@ -58,13 +60,28 @@ export default function EmployeeSignupModal(props) {
           setSingUpSuccess("success");
           setLoading(false)
         }
-       else if(signUpData.message === "Email already exists"){
+        else if(signUpData.message === "Email already exists"){
+            setLoading(false)
+            settermsErr("Email already exist")
+        } else if(signUpData.message === " incorrect otp "){
           setLoading(false)
-          settermsErr("Email already exist")
+          setErrors({...errors,otp:"Invalid Otp"})
         }
       } else {
         setLoading(false)
         settermsErr("Accept terms and conditions");
+      }
+    }else if(otpBox === false){
+      /*Api to get otp */
+      setLoading(true)
+      const updatedTodo = await SendOtp(state); 
+      if(updatedTodo.message === "successful"){
+        toast.success("Otp sent Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setOtpBox(true)
+        setLoading(false)
       }
     }
   };
@@ -87,6 +104,8 @@ export default function EmployeeSignupModal(props) {
             onClick={()=>{
               settermsErr("")
               setLoading(false);
+              setState(initialFormState)
+              setErrors("")
                props.close()
               }}
           >
@@ -185,62 +204,62 @@ export default function EmployeeSignupModal(props) {
                       {/* FORM FIELDS */}
                       <div className="form-group">
                         <label
-                          htmlFor="useremail"
+                          htmlFor="email"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
                           E-mail<span className="text-danger"> *</span> :
                         </label>
                         <input
-                          name="useremail"
-                          value={state.useremail}
+                          name="email"
+                          value={state.email}
                           onChange={onInputChange}
                           type="email"
                           className={
-                            errors.useremail
+                            errors.email
                               ? "form-control border border-danger"
                               : "form-control"
                           }
                           placeholder="example@gmail.com"
-                          id="useremail"
+                          id="email"
                         />
-                        {/* ERROR MSG FOR USEREMAIL */}
-                        {errors.useremail && (
+                        {/* ERROR MSG FOR email */}
+                        {errors.email && (
                           <span
-                            key={errors.useremail}
+                            key={errors.email}
                             className="text-danger font-size-3"
                           >
-                            {errors.useremail}
+                            {errors.email}
                           </span>
                         )}
                       </div>
                       <div className="form-group">
                         <label
-                          htmlFor="userpassword"
+                          htmlFor="password"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
                           Password<span className="text-danger"> *</span> :
                         </label>
                         <div className="position-relative">
                           <input
-                            name="userpassword"
-                            value={state.userpassword}
+                            name="password"
+                            value={state.password}
                             onChange={onInputChange}
                             type="password"
                             className={
-                              errors.userpassword
+                              errors.password
                                 ? "form-control border border-danger"
                                 : "form-control"
                             }
-                            id="userpassword"
+                            id="password"
                             placeholder="Enter password"
                           />
                           {/* ERROR MSG FOR PASSWORD */}
-                          {errors.userpassword && (
+                          {errors.password && (
                             <span
-                              key={errors.userpassword}
+                              key={errors.password}
                               className="text-danger font-size-3"
                             >
-                              {errors.userpassword}
+                              {errors.password}
                             </span>
                           )}
                           {/* <Link
@@ -252,7 +271,7 @@ export default function EmployeeSignupModal(props) {
                       </div>
                       <div className="form-group">
                         <label
-                          htmlFor="confirmpassword"
+                          htmlFor="resume"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
                           Upload Resume
@@ -285,7 +304,41 @@ export default function EmployeeSignupModal(props) {
                           data-show-pass="password23"
                         ></Link> */}
                         </div>
-                      </div>
+                      </div> 
+                     {otpBox ? 
+                     <div className="form-group">
+                        
+                        <label
+                          htmlFor="otp"
+                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                          Enter Otp
+                        </label>
+                        <div className="position-relative">
+                        <input
+                          type="number"
+                          value={state.otp}
+                          onChange={onInputChange}
+                          maxLength={6}
+                          name="otp"
+                          id="otp"
+                          className={
+                            errors.otp
+                              ? "form-control border border-danger"
+                              : "form-control"
+                          } placeholder="Otp"
+                        />
+                     {errors.otp && (
+                            <span
+                              key={errors.otp}
+                              className="text-danger font-size-3"
+                            >
+                              {errors.otp}
+                            </span>
+                          )}
+                        </div>
+                       
+                      </div> : null}
                       {/* END FORM FIELDS  */}
                       <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
                         <label
@@ -317,27 +370,33 @@ export default function EmployeeSignupModal(props) {
                         </span>
                       </div>
                       <div className="form-group text-center">
-          {loading === true ? (
-                <button
+               {loading === true ? (
+                  <button
+                    className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                    type="button"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm "
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="sr-only">Loading...</span>
+                  </button>
+                ) : otpBox ?(
+                  <button
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                  type="button"
-                  disabled
+                  type="submit"
                 >
-                  <span
-                    className="spinner-border spinner-border-sm "
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="sr-only">Loading...</span>
-                </button>
-              ) : (
-                <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Sign Up
-              </button>
-              )}
+                  Sign Up
+                  </button>
+                ) :  <button
+                      className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                      type="submit"
+                    >
+                    Send otp
+                    </button>
+              }
               </div>
                       <p className="font-size-4 text-center heading-default-color">
                         Already have an account?{" "}

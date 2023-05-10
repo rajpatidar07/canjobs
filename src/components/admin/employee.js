@@ -22,6 +22,7 @@ function Employee() {
   const [skillFilterValue, setSkillFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search , setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
   let [SkillList , setSkillList] = useState([])
   let [EducationList , setEducationList] = useState([])
   /*Function to get thejSon */
@@ -40,13 +41,21 @@ function Employee() {
     setShowEmployeeProfile(true);
     setemployeeId(e);
   };
-
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
     // e.preventDefault();
     setShowEmployeeMOdal(true);
     setemployeeId(e);
   };
+  /*Function to search the employee */
+ const onSearch = (e) => { setSearch(e.target.value);
+    if(/[-]?\d+(\.\d+)?/.test(search) ){
+      setSearchError("Admin Name can not have a number.")
+    }else if(/[^a-zA-Z0-9]/g.test(search)){
+      setSearchError("Cannot use special character")
+    }else if(search === ""){
+      setSearchError("")
+    }}
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -90,8 +99,9 @@ function Employee() {
                       placeholder={"Search Employee"}
                       value={search}
                       name={"Employee_name"}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) =>onSearch(e)}
                     />
+        
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Experience:</p>
@@ -171,6 +181,7 @@ function Employee() {
                     </CustomButton>
                   </div>
                 </div>
+                <small className="text-danger">{searcherror}</small>
               </div>
               {/* <!-- Employee List Table- --> */}
               <EmployeeTable

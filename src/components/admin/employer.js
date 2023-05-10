@@ -19,12 +19,21 @@ function Employer() {
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
   let [Json , setJson] = useState([])
-  /*Function to get thejSon */
+  /*Function to get the jSon */
  const JsonData=async()=>{
    let Json = await getJson()
    setJson(Json)
- }
+ } /*Function to Search employer */
+ const onSearch = (e) => { setSearch(e.target.value);
+  if(/[-]?\d+(\.\d+)?/.test(search) ){
+    setSearchError("Admin Name can not have a number.")
+  }else if(/[^a-zA-Z0-9]/g.test(search)){
+    setSearchError("Cannot use special character")
+  }else if(search === ""){
+    setSearchError("")
+  }}
   /*Render method to get the json*/
   useEffect(()=>{
     JsonData()
@@ -74,7 +83,7 @@ function Employer() {
                 {/* <!-- Employer Search and Filter --> */}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Name:</p>
+                    <p className="input_label">Search Employer:</p>
                     <input
                       required
                       type="text"
@@ -82,7 +91,7 @@ function Employer() {
                       placeholder={"Search Employer"}
                       value={search}
                       name={"Employer_name"}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => onSearch(e)}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
@@ -97,7 +106,7 @@ function Employer() {
                         }
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
-                        <option value={""}>Select Corporation</option>
+                        <option value={""}>Company Corporation</option>
                         {(Json.Corporation || []).map(
                           (corporation) => (
                             <option key={corporation.id} value={corporation.value}>
@@ -118,7 +127,7 @@ function Employer() {
                         onChange={(e) => setIndutryFilterValue(e.target.value)}
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
-                        <option value={""}>Select Industry</option>
+                        <option value={""}>Company Industry</option>
                         {(Json.Industry || []).map((industry) => (
                           <option key={industry.id} value={industry.value}>
                             {industry.value}
@@ -136,6 +145,7 @@ function Employer() {
                     </CustomButton>
                   </div>
                 </div>
+                <small className="text-danger">{searcherror}</small>
               </div>
               {/* <!-- Employer List Table --> */}
               <EmployerTable

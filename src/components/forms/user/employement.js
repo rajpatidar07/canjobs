@@ -357,7 +357,7 @@ function EmployementDetails(props) {
                     id="industry"
                   >
                     <option value={""}>
-                      Select the industry your company belongs to
+                     Industry user company belongs to
                     </option>
                     {(IndustryList || []).map((course) => (
                     <option value={course.value} key={course.id}>

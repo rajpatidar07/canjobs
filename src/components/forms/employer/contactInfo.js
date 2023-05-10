@@ -189,7 +189,7 @@ function ContactInfo(props) {
                 <input
                   maxLength={20}
                   name="contact_person_name"
-                  value={state.contact_person_name||""}
+                  value={state.contact_person_name || ""}
                   onChange={onInputChange}
                   type="text"
                   className={
@@ -220,7 +220,7 @@ function ContactInfo(props) {
                 <input
                   maxLength={30}
                   name="email"
-                  value={state.email||""}
+                  value={state.email || ""}
                   onChange={onInputChange}
                   type="email"
                   className={
@@ -251,7 +251,7 @@ function ContactInfo(props) {
                 <input
                   maxLength={30}
                   name="contact_no"
-                  value={state.contact_no||""}
+                  value={state.contact_no || ""}
                   onChange={onInputChange}
                   type="number"
                   className={
@@ -282,7 +282,7 @@ function ContactInfo(props) {
                 <input
                   maxLength={30}
                   name="contact_no_other"
-                  value={state.contact_no_other||""}
+                  value={state.contact_no_other || ""}
                   onChange={onInputChange}
                   type="number"
                   className={"form-control"}
@@ -303,7 +303,7 @@ function ContactInfo(props) {
                   maxLength={60}
                   type="text"
                   name="address"
-                  value={state.address||""}
+                  value={state.address || ""}
                   onChange={onInputChange}
                   className={
                     errors.address
@@ -332,7 +332,7 @@ function ContactInfo(props) {
                 </label>
                 <input
                   name="pin_code"
-                  value={state.pin_code||""}
+                  value={state.pin_code || ""}
                   onChange={onInputChange}
                   type="number"
                   className={
@@ -368,7 +368,7 @@ function ContactInfo(props) {
                   placeholder="City"
                   id="city"
                   name="city"
-                  value={state.city||""}
+                  value={state.city || ""}
                   onChange={onInputChange}
                   className={
                     errors.city
@@ -395,7 +395,7 @@ function ContactInfo(props) {
                   placeholder="State"
                   id="state"
                   name="state"
-                  value={state.state||""}
+                  value={state.state || ""}
                   onChange={onInputChange}
                   className={
                     errors.state
@@ -425,7 +425,7 @@ function ContactInfo(props) {
                   placeholder="Country"
                   id="country"
                   name="country"
-                  value={state.country||""}
+                  value={state.country || ""}
                   onChange={onInputChange}
                   className={
                     errors.country
@@ -454,7 +454,7 @@ function ContactInfo(props) {
                   <input
                     maxLength={30}
                     name="designation"
-                    value={state.designation||""}
+                    value={state.designation || ""}
                     onChange={onInputChange}
                     type="text"
                     className={

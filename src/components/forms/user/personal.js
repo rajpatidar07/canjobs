@@ -294,7 +294,7 @@ function PersonalDetails(props) {
               <h5 className="text-center pt-2 mb-7"> Add Employee Details</h5>
             ) : (
               <h5 className="text-center pt-2 mb-7">
-                {" "}
+                
                 Update Employee Details
               </h5>
             )}
@@ -324,18 +324,18 @@ function PersonalDetails(props) {
                   htmlFor="profile_photo"
                 >
                   <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-14 mt-lg-3 ">
-                    {" "}
+                    
                   </span>
                 </label>
               </div>
               <small className="text-danger">{imgError}</small>
             </div>
             <div className="row pt-5">
-              {" "}
+              
               <input
                 maxLength={20}
                 name="employee_id"
-                value={state.id||""}
+                value={state.id || ""}
                 type="hidden"
                 id="employee_id"
               />
@@ -349,7 +349,7 @@ function PersonalDetails(props) {
                 <input
                   maxLength={20}
                   name="name"
-                  value={state.name||""}
+                  value={state.name || ""}
                   onChange={onInputChange}
                   type="text"
                   className={
@@ -378,7 +378,7 @@ function PersonalDetails(props) {
                   maxLength={30}
                   type="email"
                   name="email"
-                  value={state.email||""}
+                  value={state.email || ""}
                onChange={onInputChange}
                   className={
                     errors.email
@@ -407,7 +407,7 @@ function PersonalDetails(props) {
                   type="number"
                   placeholder="Mobile Number"
                   name="contact_no"
-                  value={state.contact_no||""}
+                  value={state.contact_no || ""}
                 onChange={onInputChange}
                   className={
                     errors.contact_no
@@ -429,7 +429,7 @@ function PersonalDetails(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-12">
                 <label
                   htmlFor="description"
@@ -439,7 +439,7 @@ function PersonalDetails(props) {
                 </label>
                 <textarea
                   name="description"
-                  value={state.description||""}
+                  value={state.description || ""}
                  onChange={onInputChange}
                   className={
                     errors.description
@@ -463,7 +463,7 @@ function PersonalDetails(props) {
 
             {/* SECOND LINE */}
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-4">
                 <label
                   htmlFor="date_of_birth"
@@ -476,7 +476,7 @@ function PersonalDetails(props) {
                   type="date"
                   placeholder="Date Of Birth "
                   name="date_of_birth"
-                  value={state.date_of_birth||""}
+                  value={state.date_of_birth || ""}
                  onChange={onInputChange}
                   className={
                     errors.date_of_birth
@@ -504,7 +504,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="gender"
-                  value={state.gender||""}
+                  value={state.gender || ""}
                  onChange={onInputChange}
                   className={
                     errors.gender
@@ -513,7 +513,7 @@ function PersonalDetails(props) {
                   }
                   id="gender"
                 >
-                  <option value={""}>Select Gender</option>
+                  <option value={""}>User Gender</option>
                   <option value={"male"}>Male</option>
                   <option value={"female"}>Female</option>
                   <option value={"other"}>Other</option>
@@ -531,10 +531,10 @@ function PersonalDetails(props) {
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Maritial status: <span className="text-danger">*</span>
-                </label>{" "}
+                </label>
                 <select
                   name="marital_status"
-                  value={state.marital_status||""}
+                  value={state.marital_status || ""}
                   onChange={onInputChange}
                   className={
                     errors.marital_status
@@ -543,7 +543,7 @@ function PersonalDetails(props) {
                   }
                   id="marital_status"
                 >
-                  <option value={""}>Select Status</option>
+                  <option value={""}>Maritial Status</option>
                   <option value={"single"}>Single</option>
                   <option value={"married"}>Married</option>
                 </select>
@@ -573,7 +573,7 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="nationality / Citizenship"
                   name="nationality"
-                  value={state.nationality||""}
+                  value={state.nationality || ""}
                  onChange={onInputChange}
                   className={
                     errors.nationality
@@ -604,7 +604,7 @@ function PersonalDetails(props) {
                   type="text"
                   placeholder="Current Location"
                   name="current_location"
-                  value={state.current_location||""}
+                  value={state.current_location || ""}
                   onChange={onInputChange}
                   className={
                     errors.current_location
@@ -628,7 +628,7 @@ function PersonalDetails(props) {
                   htmlFor="currently_located_country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Currently Located Country:{" "}
+                  Currently Located Country:
                   <span className="text-danger">*</span>
                 </label>
                 <input
@@ -642,7 +642,7 @@ function PersonalDetails(props) {
                   placeholder="Currently Located Country"
                   id="currently_located_country"
                   name="currently_located_country"
-                  value={state.currently_located_country||""}
+                  value={state.currently_located_country || ""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR COUNTRY----*/}
@@ -664,12 +664,12 @@ function PersonalDetails(props) {
                   htmlFor="language"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Languages Known (Max 3):{" "}
+                  Languages Known (Max 3):
                   <span className="text-danger">*</span>
                 </label>
                 <select
                   name="language"
-                  value={state.language||""}
+                  value={state.language || ""}
                   onChange={onInputChange}
                   className={
                     errors.language
@@ -679,7 +679,7 @@ function PersonalDetails(props) {
                   placeholder="Language"
                   id="language"
                 >
-                  <option value={""}>Select Language</option>
+                  <option value={""}>Known Language</option>
                   {(FilterJson.Language || []).map((Language) => (
                     <option key={Language} value={Language}>
                       {Language}
@@ -714,7 +714,7 @@ function PersonalDetails(props) {
                   placeholder="religion"
                   id="religion"
                   name="religion"
-                  value={state.religion||""}
+                  value={state.religion || ""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR religion----*/}
@@ -739,7 +739,7 @@ function PersonalDetails(props) {
                   }
                   id="interested_in"
                   name="interested_in"
-                  value={state.interested_in||""}
+                  value={state.interested_in || ""}
                  onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
@@ -769,7 +769,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="experience"
-                  value={state.experience||""}
+                  value={state.experience || ""}
                   onChange={onInputChange}
                   className={
                     errors.experience
@@ -778,7 +778,7 @@ function PersonalDetails(props) {
                   }
                   id="experience"
                 >
-                   <option value={""}>Select Experience</option>
+                   <option value={""}>User Experience</option>
                         {(FilterJson.experience || []).map((ex, i) => (
                           <option value={ex} key={i}>
                             {ex}
@@ -805,7 +805,7 @@ function PersonalDetails(props) {
                 </label>
                 <select
                   name="work_permit_canada"
-                  value={state.work_permit_canada||""}
+                  value={state.work_permit_canada || ""}
                  onChange={onInputChange}
                   className={
                     errors.work_permit_canada
@@ -814,7 +814,7 @@ function PersonalDetails(props) {
                   }
                   id="work_permit_canada"
                 >
-                  <option value={""}>Select </option>
+                  <option value={""}>Permit </option>
                   <option value={"no"}>No</option>
                   <option value={"yes"}>Yes</option>
                 </select>
@@ -833,7 +833,7 @@ function PersonalDetails(props) {
                   htmlFor="otherpermit"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Work Permit of Other Country:{" "}
+                  Work Permit of Other Country:
                   <span className="text-danger">*</span>
                 </label>
                 <input
@@ -847,7 +847,7 @@ function PersonalDetails(props) {
                   placeholder="Permit of Other Country"
                   id="work_permit_other_country"
                   name="work_permit_other_country"
-                  value={state.work_permit_other_country||""}
+                  value={state.work_permit_other_country || ""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}

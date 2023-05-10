@@ -37602,7 +37602,6 @@ button.bg-conch:focus {
 .text-lowercase {
   text-transform: lowercase !important;
 }
-
 .text-uppercase {
   text-transform: uppercase !important;
 }
@@ -38215,4 +38214,11 @@ a.text-conch:focus {
   }
 }
 
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
 /*# sourceMappingURL=maps/bootstrap.css.map */

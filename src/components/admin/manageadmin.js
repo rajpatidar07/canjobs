@@ -44,14 +44,24 @@ function ManageAdmin() {
     );
     if (userData.data.length === 0) {
       setAdminData([]);
+      
     } else {
       setAdminData(userData.data);
       setTotalData(userData.total_rows);
+     if(apiCall === true){ 
+      let  Admin_name = userData.data.filter((data) => 
+      data.admin_id === localStorage.getItem("admin_id"))
+      if( Admin_name[0].admin_id === localStorage.getItem("admin_id")){
+        localStorage.setItem("admin",Admin_name[0].name)
+      }}
     }
   };
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
+    if(apiCall === true){
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     typeFilterValue,
@@ -98,12 +108,12 @@ function ManageAdmin() {
   /*Search Onchange function to filter the data */
   let onSearch = (e) => {
     setSearch(e.target.value);
-    if(/[-]?\d+(\.\d+)?/.test(search) ){
+     if(search === ""){
+      setSearchError("")
+    }else if(/[-]?\d+(\.\d+)?/.test(search) ){
       setSearchError("Admin Name can not have a number.")
     }else if(/[^a-zA-Z0-9]/g.test(search)){
       setSearchError("Cannot use special character")
-    }else if(search === ""){
-      setSearchError("")
     }
   };
   /*Pagination Calculation */
@@ -114,12 +124,6 @@ function ManageAdmin() {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-  /*Admin type array to filter*/
-  // const AdminType = adminData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.admin_type === thing.admin_type)
-  // );
-
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -127,7 +131,7 @@ function ManageAdmin() {
         <AdminHeader heading={"Manage Admin"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Admin"} />
-        <ToastContainer />{" "}
+        <ToastContainer />
         {showAddAdminModal ? <Addadmin
           show={showAddAdminModal}
           adminId={adminId}
@@ -151,21 +155,21 @@ function ManageAdmin() {
                 </div>
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Name:</p>
+                    <p className="input_label">Search:</p>
                     <input
                       required
                       maxLength={30}
                       type="text"
                       className="form-control "
-                      placeholder={"Search Admin"}
+                      placeholder={"Admin Name"}
                       value={search}
                       name={"Admin_name"}
                       onChange={(e) => onSearch(e)}
                     />
-                    <small className="text-danger">{searcherror}</small>
+                   
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Type:</p>
+                    <p className="input_label">Filter by Admin:</p>
                     <div className="select_div">
                       <select
                         name="type"
@@ -174,7 +178,7 @@ function ManageAdmin() {
                         onChange={onTypeFilterChange}
                         className=" form-control"
                       >
-                        <option value="">Select type</option>
+                        <option value="">Admin type</option>
                         {(FilterJson.AdminType || []).map((type, i) => (
                           <option value={type} key={i}>
                             {type}
@@ -193,6 +197,7 @@ function ManageAdmin() {
                     </CustomButton>
                   </div>
                 </div>
+                  <small className="text-danger">{searcherror}</small>
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
@@ -209,8 +214,8 @@ function ManageAdmin() {
                             onClick={() => handleSort("name")}
                             title="Sort by Name"
                           >
-                            {" "}
-                            Name
+                            
+                            Admin Name
                           </Link>
                         </th>
                         <th
@@ -259,17 +264,17 @@ function ManageAdmin() {
                         (adminData || []).map((admin) => (
                           <tr className="" key={admin.admin_id}>
                             <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                                 {admin.name}
                               </h3>
                             </th>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <th className="py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                                 {admin.admin_type}
                               </h3>
                             </th>
                             <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-lowercase">
                                 {admin.email}
                               </h3>
                             </th>

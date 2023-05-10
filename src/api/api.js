@@ -8,22 +8,11 @@ const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
 
-function GetToken() {
-  // useEffect(() => {
-  //   Token = localStorage.getItem("token");
-  // }, []);
-}
-GetToken();
 if (
   view_as_token
-  // view_as_token !== null ||
-  // view_as_token !== undefined ||
-  // view_as_token !== ""
 ) {
   Token = view_as_token;
 }
-
-// console.log("new Token", view_as_token);
 
 // Location Api
 /*Country*/
@@ -46,6 +35,16 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
+/*Sen Otp to email api */
+export const SendOtp = async (props) => {
+  const response = await axios.post(
+    `${API_URL}common/generateOtp`,
+    {
+      email: props.email,
+    }
+  );
+  return response.data;
+};
  /*Employee Reset password Api */
  export const EmployeeResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}user/resetPassword`, props, {
@@ -56,26 +55,7 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
- /*Admin Reset password Api */
- export const AdminResetPasswordApi = async (props) => {
-  const response = await axios.put(`${API_URL}admin/resetPassword`, props, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
-  return response.data;
-};
- /*Employer Reset password Api */
- export const EmployerResetPasswordApi = async (props) => {
-  const response = await axios.put(`${API_URL}company/resetPassword`, props, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
-  return response.data;
-};
+
 /*To get the filter list APi */
 export const getJson = async () => {
   const response = await axios.get(`${API_URL}filterList/filterList.json`);
@@ -85,8 +65,9 @@ export const getJson = async () => {
 /*Employee sign */
 export const EmployeeSignUp = async (props) => {
   const formData = new FormData();
-  formData.append("email", props.useremail);
-  formData.append("password", props.userpassword);
+  formData.append("email", props.email);
+  formData.append("password", props.password);
+  formData.append("otp", props.otp);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -405,6 +386,7 @@ export const EmployerSignUp = async (props) => {
   formData.append("password", props.password);
   formData.append("contact_no", props.contact_no);
   formData.append("term_and_condition", props.term_and_condition);
+  formData.append("otp", props.otp);
   const response = await axios.post(`${API_URL}employer_signup`, formData);
   return response.data;
 };
@@ -416,6 +398,17 @@ export const EmployerLogin = async (props) => {
   formData.append("password", props.password);
   formData.append("remember", props.remember);
   const response = await axios.post(`${API_URL}employer_login`, formData);
+  return response.data;
+};
+
+ /*Employer Reset password Api */
+ export const EmployerResetPasswordApi = async (props) => {
+  const response = await axios.put(`${API_URL}company/resetPassword`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
 /*Employer Forgot passsword api */
@@ -755,6 +748,16 @@ export const AdminLogin = async (props) => {
   const response = await axios.post(`${API_URL}admin_login`, formData);
   return response.data;
 };
+ /*Admin Reset password Api */
+ export const AdminResetPasswordApi = async (props) => {
+  const response = await axios.put(`${API_URL}admin/resetPassword`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
 /*Job List Api */
 // export const getAllJobs = async () => {
 //   const response = await axios.get(`${API_URL}${user_type}/getAllJobs`, {
@@ -1040,40 +1043,3 @@ export const GetAdminToken = async (props) => {
   );
   return response.data;
 };
-// useEffect(() => {
-//   GetCountry();
-//   EmployeeDetails();
-//   AddEmployeeDetails();
-//   getallEmployeeData();
-//   EmployeeEducationDetails();
-//   AddEmployeeEducation();
-//   EmployeeSkillDetails();
-//   AddEmployeement();
-//   AddEmployeeSkill();
-//   ApplyJob();
-//   GetJob();
-//   GetJobDetail();
-//   GetAllResponse();
-//   GetAllJobs();
-//   AddJob();
-//   getAllEmployer();
-//   EmployerDetails();
-//   AddCompany();
-//   AddContact();
-//   AddKyc();
-//   getInterview();
-//   AddInterviewSheduale();
-//   AddLimia();
-//   getAllJobs();
-//   getallAdminData();
-//   getAllFollowUpData();
-//   getAllJobsCategory();
-//   AddJobCategory();
-//   AdminDetails();
-//   AddAdmin();
-//   GetFilter();
-//   AddFIlter();
-//   AddFollowup();
-//   getSingleFollowup();
-//   GetAdminToken();
-// }, [Token]);
