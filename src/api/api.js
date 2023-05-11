@@ -832,7 +832,7 @@ export const getAllFollowUpData = async (
   return response.data;
 };
 /*Job Category List Api */
-export const getAllJobsCategory = async (
+export const getAllJobsCategory = async (level,
   type,
   search,
   page,
@@ -843,6 +843,7 @@ export const getAllJobsCategory = async (
   const response = await axios.post(
     `${API_URL}admin/getAllJobsCategory`,
     {
+      parent_id : level,
       filter_category_type: type,
       search: search,
       page: page,

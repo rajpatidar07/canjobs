@@ -39,7 +39,7 @@ function Category() {
 
   /* Function to get the job category data*/
   const CategoryData = async () => {
-    const userData = await getAllJobsCategory(
+    const userData = await getAllJobsCategory(1,
       categoryTypeFilterValue,
       search,
       currentPage,
@@ -57,17 +57,19 @@ function Category() {
       } else{
         setTotalData();
       }
+      console.log('lll',userData.data);
     }  };
 
   /* Function to get the job category Type data*/
   const CategoryTypeData = async () => {
-    const userData = await getAllJobsCategory(0 , "" , TypecurrentPage , TyperecordsPerPage);
+    const userData = await getAllJobsCategory(0 , "" ,"", TypecurrentPage , TyperecordsPerPage);
     if (userData.data.length === 0) {
       setCategoryTypeData([]);
     } else {
       setCategoryTypeData(userData.data);
       setTypeTotalData(userData.total_rows);
     }
+    console.log('2222',userData.data);
   };
   /*Render function to get the job category*/
   useEffect(() => {
@@ -299,7 +301,7 @@ function Category() {
                           </tr>
                         ) : (
                           (categoryData || []).map((catdata) =>
-                            catdata.parent_id === "0" ? null : (
+                            (
                               <tr className="" key={catdata.job_category_id}>
                                 <th scope="row" className="py-5 ">
                                   <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
@@ -389,7 +391,7 @@ function Category() {
                           </tr>
                         ) : (
                           (categoryTypeData || []).map((catdata) =>
-                            catdata.parent_id !== "0" ? null : (
+                             (
                               <tr className="" key={catdata.job_category_id}>
                                 <th className=" py-5">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">

@@ -79,18 +79,18 @@ const AdminHeader = (props) => {
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <Link
-                    to={""}
-                    onClick={() => setShowChangePass(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                  >
-                    Setting
-                  </Link>
+                <Link
+                  to={"/adminprofile"}
+                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                >
+                  Edit Profile
+                </Link>
+                 
 
                   <Link
                     to={""}
                     onClick={() => setShowGenerateToken(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >
                     View as
                   </Link>
@@ -99,12 +99,12 @@ const AdminHeader = (props) => {
                       <li></li>
                     </ul>
                   ) : null}
-
                   <Link
-                    to={"/adminprofile"}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    to={""}
+                    onClick={() => setShowChangePass(true)}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >
-                    Edit Profile
+                    Setting
                   </Link>
                   {/*<--Logout Functionality-->*/}
                   <Link
@@ -116,7 +116,7 @@ const AdminHeader = (props) => {
                         autoClose: 1000,
                       });
                     }}
-                    className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                    className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >
                     Log Out
                   </Link>
