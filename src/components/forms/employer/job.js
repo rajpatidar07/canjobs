@@ -5,12 +5,7 @@ import useValidation from "../../common/useValidation";
 import FilterJson from "./../../json/filterjson";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  GetJob,
-  AddJob,
-  getAllEmployer,
-  getJson
-} from "../../../api/api";
+import { GetJob, AddJob, getAllEmployer, getJson } from "../../../api/api";
 
 function AddJobModal(props) {
   const [company, setCompany] = useState([]);
@@ -18,12 +13,12 @@ function AddJobModal(props) {
   let token = localStorage.getItem("token");
   const company_id = localStorage.getItem("company_id");
   const user_type = localStorage.getItem("userType");
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Function to get the jSon */
- const JsonData = async()=>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
 
   /* Functionality to close the modal */
   const close = () => {
@@ -240,7 +235,7 @@ function AddJobModal(props) {
     }
     // console.log(userData.data.data[0]);
   };
- 
+
   /* Function to get Employer data*/
   const CompnayData = async () => {
     const userData = await getAllEmployer();
@@ -425,10 +420,7 @@ function AddJobModal(props) {
                     <option value={""}>Select Category</option>
                     {(Json.Category || []).map((cat) =>
                       cat.value === null ? null : (
-                        <option
-                          key={cat.id}
-                          value={cat.value}
-                        >
+                        <option key={cat.id} value={cat.value}>
                           {cat.value}
                         </option>
                       )
@@ -462,7 +454,7 @@ function AddJobModal(props) {
                     id="industry_type"
                   >
                     <option value={""}>Select industry</option>
-                    {(Json.Industry || []).map((industry ) => (
+                    {(Json.Industry || []).map((industry) => (
                       <option key={industry.id} value={industry.value}>
                         {industry.value}
                       </option>
@@ -576,8 +568,8 @@ function AddJobModal(props) {
                 >
                   <option value={""}>Select location</option>
                   {(FilterJson.location || []).map((location) => (
-                    <option key={location} value={location}>
-                      {location}
+                    <option key={location.id} value={location.value}>
+                      {location.value}
                     </option>
                   ))}
                 </select>
@@ -980,15 +972,15 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                      id="keyskill"
+                    id="keyskill"
                   >
-                   <option value={""}>Select Skill</option>
+                    <option value={""}>Select Skill</option>
                     {(Json.Skill || []).map((data) => (
                       <option key={data.id} value={data.value}>
                         {data.value}
                       </option>
                     ))}
-                    </select>
+                  </select>
                   {/*----ERROR MESSAGE FOR keyskill----*/}
                   {errors.keyskill && (
                     <span
