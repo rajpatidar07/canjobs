@@ -64,7 +64,7 @@ const AdminHeader = (props) => {
               <div className="dropdown show-gr-dropdown py-5">
                 <Link
                   to={""}
-                  className="proile media ml-7 flex-y-center"
+                  className="proile media ml-7 flex-y-center pt-3"
                   role="button"
                   id="dropdownMenuLink"
                   data-toggle="dropdown"
@@ -73,7 +73,7 @@ const AdminHeader = (props) => {
                   onMouseOut={() => setDropDown(false)}
                 >
                   <div> <h6>Hii ! {Admin}</h6></div>
-                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
+                  <i className="fas fa-chevron-down heading-default-color px-3 mb-2"></i>
                 </Link>
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"

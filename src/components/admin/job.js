@@ -21,7 +21,8 @@ function Job() {
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); 
+ const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json , setJson] = useState([])
   /*Function to get the jSon */
@@ -58,6 +59,15 @@ function Job() {
     setJobId(e);
   };
 
+   /*Function to search the Job */
+  const onSearch = (e) => { setSearch(e.target.value);
+    if(/[-]?\d+(\.\d+)?/.test(search) ){
+      setSearchError("Job can not have a number.")
+    }else if(/[^a-zA-Z0-9]/g.test(search)){
+      setSearchError("Cannot use special character")
+    }else if(search === ""){
+      setSearchError("")
+    }}
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -83,7 +93,7 @@ function Job() {
                 {/*<-- Job Search and Filter -->*/}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Job:</p>
+                    <p className="input_label">Search:</p>
                     <input
                       required
                       type="text"
@@ -91,23 +101,23 @@ function Job() {
                       placeholder={"Search Job"}
                       value={search}
                       name={"name"}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => onSearch(e)}
                     />
                   </div>{" "}
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Company:</p>
+                    <p className="input_label">Company Name:</p>
                     <input
                       required
                       type="text"
                       className="form-control w-100"
-                      placeholder={"Search Job by company"}
+                      placeholder={"Company name"}
                       value={company}
                       name={"compnay_name"}
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Category:</p>
+                    <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -117,7 +127,7 @@ function Job() {
                           setCategoryFilterValue(e.target.value)}
                         className=" form-control"
                       >
-                        <option value="">Select Category</option>
+                        <option value="">Job Category</option>
                         {(Json.Category || []).map((data) => {
                           return (
                             <option
@@ -132,7 +142,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Swap:</p>
+                    <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -143,7 +153,7 @@ function Job() {
                         }}
                         className=" form-control"
                       >
-                        <option value="">Select Job Type</option>
+                        <option value="">Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
                           <option key={i} value={job}>
                             {job}
@@ -153,7 +163,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Key Skill:</p>
+                    <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -162,7 +172,7 @@ function Job() {
                         onChange={(e) => setSkillFilterValue(e.target.value)}
                         className=" form-control"
                       >
-                        <option value="">Select Skill</option>
+                        <option value="">Job Skill</option>
                         {(Json.Skill || []).map((data) => {
                           return (
                             <option value={data.value} key={data.id}>
@@ -174,7 +184,7 @@ function Job() {
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Location:</p>
+                    <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select
                         name="country"
@@ -183,7 +193,7 @@ function Job() {
                         onChange={(e) => setLocationFilterValue(e.target.value)}
                         className=" form-control"
                       >
-                        <option value="">Select Location</option>
+                        <option value="">Job Location</option>
                         {(FilterJson.location || []).map((data) => {
                           return (
                             <option value={data.value} key={data.id}>
@@ -213,6 +223,7 @@ function Job() {
                         close={() => setShowAddJobsModal(false)}
                       /> : null}
                     </div>
+                <small className="text-danger">{searcherror}</small>
                   </div>
                 </div>
               </div>

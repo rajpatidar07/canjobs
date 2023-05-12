@@ -57,7 +57,6 @@ function Category() {
       } else{
         setTotalData();
       }
-      console.log('lll',userData.data);
     }  };
 
   /* Function to get the job category Type data*/

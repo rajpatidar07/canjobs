@@ -384,13 +384,13 @@ export default function JobTable(props) {
             </tbody>
           </table>
         </div>
-        <div className="pt-2">
+        {totalData === 0  || totalData === "0" ? null : <div className="pt-2">
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
-        </div>
+        </div>}
       </div>
       {showAddJobsModal ? (
         <AddJobModal
