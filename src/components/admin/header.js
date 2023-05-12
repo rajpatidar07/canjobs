@@ -1,10 +1,9 @@
-import React, { useState /*useEffect*/ } from "react";
+import React, { useEffect, useState /*useEffect*/ } from "react";
 import { Link /*useNavigate*/ } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
-// import { getallAdminData, GetAdminToken } from "../../api/api";
-// import Select from "react-select";
+import { getAllAdminNotification } from "../../api/api";
 
 const AdminHeader = (props) => {
   /*States */
@@ -12,6 +11,17 @@ const AdminHeader = (props) => {
   const [showGeneratToken, setShowGenerateToken] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   let Admin = localStorage.getItem("admin")
+
+  /*Function to Call Notification Api */
+  const Notiication = async () =>{
+   let Response = getAllAdminNotification()
+   console.log(Response)
+   
+  }
+  /*Render Mewthod to get Notification */
+  useEffect(() =>{
+    Notiication()
+  },[])
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">

@@ -758,16 +758,19 @@ export const AdminLogin = async (props) => {
   });
   return response.data;
 };
-/*Job List Api */
-// export const getAllJobs = async () => {
-//   const response = await axios.get(`${API_URL}${user_type}/getAllJobs`, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: Token,
-//     },
-//   });
-//   return response.data.data;
-// };
+/*Admin Notification List Api */
+export const getAllAdminNotification = async () => {
+  console.log(Token)
+  
+  const response = await axios.get(`${API_URL}common/getNotifications`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+
 /*Admin List Api */
 export const getallAdminData = async (
   type,
