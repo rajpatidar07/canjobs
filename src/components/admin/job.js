@@ -5,7 +5,7 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { getJson} from "../../api/api";
+import { getJson } from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
@@ -24,16 +24,16 @@ function Job() {
   const [search, setSearch] = useState(""); 
  const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Function to get the jSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
 
   /*Render function to get the job */
   useEffect(() => {
-    JsonData()
+    JsonData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
@@ -123,17 +123,13 @@ function Job() {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={(e) =>
-                          setCategoryFilterValue(e.target.value)}
+                        onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Job Category</option>
                         {(Json.Category || []).map((data) => {
                           return (
-                            <option
-                              value={data.value}
-                              key={data.id}
-                            >
+                            <option value={data.value} key={data.id}>
                               {data.value}
                             </option>
                           );
@@ -214,14 +210,6 @@ function Job() {
                         Add Job
                       </CustomButton>
                       {/*<-- Add Job Modal -->*/}
-                     {showAddJobsModal ?  <AddJobModal
-                        show={showAddJobsModal}
-                        jobdata={JobId}
-                        admin={"admin"}
-                        apiCall={apiCall}
-                        setApiCall={setApiCall}
-                        close={() => setShowAddJobsModal(false)}
-                      /> : null}
                     </div>
                 <small className="text-danger">{searcherror}</small>
                   </div>
@@ -269,6 +257,16 @@ function Job() {
           </div>
         ) : null}
       </div>
+      {showAddJobsModal ? (
+        <AddJobModal
+          show={showAddJobsModal}
+          jobdata={JobId}
+          admin={"admin"}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowAddJobsModal(false)}
+        />
+      ) : null}
     </>
   );
 }
