@@ -2,9 +2,27 @@ import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import Interview from "../common/interviewTable";
+import { useEffect } from "react";
 export default function ManageInterview() {
   /*Search state */
   let [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+
+  useEffect(()=>{
+    if((search === "") === true){
+    setSearchError("")
+  }},[search])
+
+  /*Search Onchange function to Search Interview data */
+  const onSearch = (e) => { setSearch(e.target.value);
+    if(/[-]?\d+(\.\d+)?/.test(search) ){
+      setSearchError("Admin Name can not have a number.")
+    }else if(/[^a-zA-Z0-9]/g.test(search)){
+      setSearchError("Cannot use special character")
+    }if((search === "") === true){
+        setSearchError("")
+      
+    }}
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -24,16 +42,17 @@ export default function ManageInterview() {
                 {/*<-- Search interview -->*/}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Name:</p>
+                    <p className="input_label">Employee Name:</p>
                     <input
                       required
                       type="text"
                       className="form-control "
-                      placeholder={"Search Interview"}
+                      placeholder={"Search Employer"}
                       value={search}
                       name={"Interview"}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => onSearch(e)}
                     />
+                    <small className="text-danger">{searcherror}</small>
                   </div>
                   {/* <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Type:</p>

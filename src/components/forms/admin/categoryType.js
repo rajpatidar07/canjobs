@@ -36,8 +36,14 @@ function AddCategoryType(props) {
     category_type: [
       (value) =>
         value === "" || value.trim() === ""
-          ? "Category Type is required"
-          : null,
+          ? "Category Type  is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Category Type can not have a number."
+          : value.length < 2
+          ? "Category Type should have 2 or more letters"
+          : "",
     ],
   };
 
@@ -104,7 +110,7 @@ function AddCategoryType(props) {
             ) : (
               <h5 className="text-center pt-2">Update Category Type</h5>
             )}
-            <div className="form-group row mb-0 pt-5">
+            <div className="form-group row mb-0 pt-5 mt-5">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"

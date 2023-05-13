@@ -140,7 +140,7 @@ function AddCategory(props) {
             ) : (
               <h5 className="text-center pt-2">Update Category</h5>
             )}
-            <div className="form-group row mb-0">
+            <div className="form-group row mb-0 mt-5">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -151,8 +151,8 @@ function AddCategory(props) {
                 name="category_type"
                 className={
                   errors.category_type
-                    ? "form-control mx-5 col border border-danger"
-                    : "form-control col mx-5"
+                    ? "form-control mx-5 border border-danger"
+                    : "form-control mx-5"
                 }
                 value={state.job_category_id}
                 onChange={onSelectChange}
@@ -185,7 +185,7 @@ function AddCategory(props) {
                 htmlFor="category_name"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Category Name <span className="text-danger">*</span>
+                Category Name <span className="text-danger">*</span>:
               </label>
               <input
                 type="text"

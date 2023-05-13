@@ -10,12 +10,13 @@ const AdminHeader = (props) => {
   const [showChangePass, setShowChangePass] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [notification, setNotiication] = useState("");
   let Admin = localStorage.getItem("admin")
 
   /*Function to Call Notification Api */
   const Notiication = async () =>{
-   let Response = getAllAdminNotification()
-   console.log(Response)
+   let Response = await getAllAdminNotification()
+   setNotiication(Response.Data.data)
    
   }
   /*Render Mewthod to get Notification */
@@ -57,18 +58,35 @@ const AdminHeader = (props) => {
               Reset
             </button>
           </div> */}
-          <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
-            <div>
+          <div  className="dropdown show-gr-dropdown py-5">
               <Link
                 to={""}
+                role="button"
+                id="dropdownMenuNotification"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
                 className="px-3 ml-7 font-size-7 notification-block flex-y-center position-relative"
               >
                 <i className="fas fa-bell heading-default-color"></i>
                 <span className="font-size-3 count font-weight-semibold text-white bg-primary circle-24 border border-width-3 border border-white">
-                  3
+                  {notification.length}
                 </span>
               </Link>
+                    <ul className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+                  aria-labelledby="dropdownMenuNotification">
+                      {(notification || []).map((data,i) =>
+                      i >= 10 ? null :
+                      <li
+                        key={data.id}
+                        to={""}
+                        className="dropdown-item py-2 font-size-3 text-wrap font-weight-semibold line-height-1p2 text-capitalize"
+                      >
+                      {i + 1}. {data.message}
+                      </li>)}
+                    </ul>
             </div>
+          <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
             
             <div>
               <div className="dropdown show-gr-dropdown py-5">

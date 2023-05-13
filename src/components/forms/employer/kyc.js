@@ -232,7 +232,7 @@ function KycComplianceDetails(props) {
                   htmlFor="pan_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  PAN Number:<span className="text-danger"> *</span> :
+                  PAN Number<span className="text-danger"> *</span> :
                 </label>
                 <input
                   type="text"
@@ -259,7 +259,7 @@ function KycComplianceDetails(props) {
                   htmlFor="name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Name on PAN Card:<span className="text-danger"> *</span> :
+                  Name on PAN Card<span className="text-danger"> *</span> :
                 </label>
                 <input
                   type="text"
@@ -289,7 +289,7 @@ function KycComplianceDetails(props) {
                   htmlFor="pan_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Date on PAN Card:<span className="text-danger"> *</span> :
+                  Date on PAN Card<span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input

@@ -26,6 +26,7 @@ function Category() {
   /*Filter and search state */
   const [categoryTypeFilterValue, setCategoryTypeFilterValue] = useState("");
   const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,20 +62,22 @@ function Category() {
 
   /* Function to get the job category Type data*/
   const CategoryTypeData = async () => {
-    const userData = await getAllJobsCategory(0 , "" ,"", TypecurrentPage , TyperecordsPerPage);
+    const userData = await getAllJobsCategory(0 , "" ,"", TypecurrentPage , TyperecordsPerPage,"job_category_id","DESC");
     if (userData.data.length === 0) {
       setCategoryTypeData([]);
     } else {
       setCategoryTypeData(userData.data);
       setTypeTotalData(userData.total_rows);
     }
-    console.log('2222',userData.data);
   };
   /*Render function to get the job category*/
   useEffect(() => {
     CategoryData();
     if (apiCall === true) {
       setApiCall(false);
+    }
+    if((search === "") === true){
+      setSearchError("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -91,6 +94,9 @@ function Category() {
     if (apiCall === true) {
       setApiCall(false);
     }
+    if((search === "") === true){
+      setSearchError("")
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     TypecurrentPage,
@@ -104,6 +110,7 @@ function Category() {
     // e.preventDefault();
     setShowAddCategoryModal(true);
     setCategoryId(e);
+    
   };
   
   /* Function to show the single data to update job category*/
@@ -111,6 +118,7 @@ function Category() {
     // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
+    
   };
   
   /* Function to show the single data to update job category Type*/
@@ -118,20 +126,19 @@ function Category() {
     // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
+    
   };
-  
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_category_id);
     setDeleteName(e.category_name);
     setDeleteAlert(true);
+    setSearch("")
   };
-  
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
-
   /*To call Api to delete category */
   async function deleteCategory(e) {
     const responseData = await DeleteJobCategory(e);
@@ -144,15 +151,21 @@ function Category() {
       setApiCall(true);
     }
   }
-  
   /*Category Type Onchange function to filter the data */
   let onCategoryTypeFilterChange = (e) => {
     setCategoryTypeFilterValue(e.target.value);
+    
   };
-  /*Search Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  /*Search Onchange function to Search Category data */
+   const onSearch = (e) => { setSearch(e.target.value);
+    if(/[-]?\d+(\.\d+)?/.test(search) ){
+      setSearchError("Admin Name can not have a number.")
+    }else if(/[^a-zA-Z0-9]/g.test(search)){
+      setSearchError("Cannot use special character")
+    }if((search === "") === true){
+        setSearchError("")
+      
+    }}
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   const TypenPages = Math.ceil(TypetotalData / recordsPerPage);
@@ -161,15 +174,16 @@ function Category() {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
+    
   };
   
     return (
       <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Category"} />
+        <AdminHeader heading={"Manage Job Category"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Category"} />
+        <AdminSidebar heading={"Manage Job Category"} />
         <div>
           <ToastContainer />
           {/* <!-- Modal- --> */}
@@ -209,7 +223,7 @@ function Category() {
               </div>
 
               <div className="col p-1 form_group mb-5 mt-4">
-                <p className="input_label">Filter by Type:</p>
+                <p className="input_label">Category Type:</p>
                 <div className="select_div">
                   <select
                     name="category"
@@ -236,18 +250,19 @@ function Category() {
                     onClick={() => editJobCategory("0")}
                     title="Add Category"
                   >
-                    Add category
+                    Add Category
                   </CustomButton>
                   <CustomButton
                     className="font-size-3 rounded-3 btn btn-primary border-0"
                     onClick={() => addJobCategoryType("0")}
                     title="Add Category"
                   >
-                    Add category Type
+                    Add Category Type
                   </CustomButton>
                 </div>
               </div>
             </div>
+              <small className="text-danger">{searcherror}</small>
             <div className="row">
               <div className="col-6 mb-18">
                 <h3 className="font-size-5 mb-0">Category</h3>

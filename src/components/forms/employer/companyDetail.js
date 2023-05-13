@@ -53,7 +53,8 @@ function CompanyDetails(props) {
           ? "Company name is required"
           : value.length < 2
           ? "Company Name should have 2 or more letters"
-          : "",
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character " : "",
     ],
     industry: [
       (value) =>
@@ -132,6 +133,10 @@ function CompanyDetails(props) {
           ? ""
           : value.length < 2
           ? "Franchise have 2 or more letters"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Franchise can not have a number."
           : "",
     ],
     // companylogo: [
@@ -237,6 +242,14 @@ function CompanyDetails(props) {
     }
   };
   // END COMPANY DETAIL VALIDATION
+   /*Industry Json for not having same data */
+   const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
+   index === self.findIndex((t) => t.value === thing.value)
+   ) : [];
+     /*Corporation Json for not having same data */
+     const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
+     index === self.findIndex((t) => t.value === thing.value)
+     ) : [];
   return (
     <>
       <Modal
@@ -265,8 +278,8 @@ function CompanyDetails(props) {
                   htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Name (as per Kyc):
-                  <span className="text-danger"> *</span>
+                  Company Name (as per Kyc)
+                  <span className="text-danger"> *</span>:
                 </label>
                 <input
                   type="text"
@@ -344,7 +357,7 @@ function CompanyDetails(props) {
                   id="industry"
                 >
                   <option value={""}>Industry company belongs to</option>
-                  {(Json.Industry || []).map((industry) => (
+                  {(Industry || []).map((industry) => (
                     <option key={industry.id} value={industry.value}>
                       {industry.value}
                     </option>
@@ -382,7 +395,7 @@ function CompanyDetails(props) {
                   id="corporation"
                 >
                   <option value={""}>Company corporation</option>
-                  {(Json.Corporation || []).map((data) => (
+                  {(Corporation || []).map((data) => (
                     <option key={data.id} value={data.value}>
                       {data.value}
                     </option>
@@ -591,7 +604,7 @@ function CompanyDetails(props) {
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  About: <span className="text-danger">*</span>
+                  About <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
                   <div

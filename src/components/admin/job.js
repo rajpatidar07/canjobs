@@ -34,6 +34,9 @@ function Job() {
   /*Render function to get the job */
   useEffect(() => {
     JsonData();
+    if((search === "") === true){
+      setSearchError("")
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
@@ -58,16 +61,20 @@ function Job() {
     setShowAddJobsModal(true);
     setJobId(e);
   };
-
-   /*Function to search the Job */
-  const onSearch = (e) => { setSearch(e.target.value);
-    if(/[-]?\d+(\.\d+)?/.test(search) ){
-      setSearchError("Job can not have a number.")
-    }else if(/[^a-zA-Z0-9]/g.test(search)){
-      setSearchError("Cannot use special character")
-    }else if(search === ""){
-      setSearchError("")
-    }}
+    /*Function to search the Job */
+    const onSearch = (e) => { setSearch(e.target.value);
+      if(/[-]?\d+(\.\d+)?/.test(search) ){
+        setSearchError("Job can not have a number.")
+      }else if(/[^a-zA-Z0-9]/g.test(search)){
+        setSearchError("Cannot use special character")
+      }else if((search === "") === true){
+        setSearchError("")
+      }}
+    /*Skill Json for not having same data */
+    const Skill = Json.Skill ? Json.Skill.filter((thing, index, self) =>
+    index === self.findIndex((t) => t.value === thing.value)
+    ) : [];
+      
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -169,7 +176,7 @@ function Job() {
                         className=" form-control"
                       >
                         <option value="">Job Skill</option>
-                        {(Json.Skill || []).map((data) => {
+                        {(Skill || []).map((data) => {
                           return (
                             <option value={data.value} key={data.id}>
                               {data.value}

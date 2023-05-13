@@ -25,7 +25,8 @@ function Employer() {
  const JsonData=async()=>{
    let Json = await getJson()
    setJson(Json)
- } /*Function to Search employer */
+ }
+ /*Function to Search employer */
  const onSearch = (e) => { setSearch(e.target.value);
   if(/[-]?\d+(\.\d+)?/.test(search) ){
     setSearchError("Admin Name can not have a number.")
@@ -33,10 +34,13 @@ function Employer() {
     setSearchError("Cannot use special character")
   }else if(search === ""){
     setSearchError("")
-  }}
+  }} 
   /*Render method to get the json*/
   useEffect(()=>{
     JsonData()
+    if((search === "") === true){
+      setSearchError("")
+    }
   },[industryFilterValue,corporationFilterValue])
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
@@ -50,6 +54,15 @@ function Employer() {
     setShowEmployerDetails(true);
     setEmployerID(e);
   };
+    /*Corporation Json for not having same data */
+    const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
+    index === self.findIndex((t) => t.value === thing.value)
+    ) : [];
+    /*Industry Json for not having same data */
+    const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
+    index === self.findIndex((t) => t.value === thing.value)
+    ) : [];
+    
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -107,7 +120,7 @@ function Employer() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Corporation</option>
-                        {(Json.Corporation || []).map(
+                        {(Corporation || []).map(
                           (corporation) => (
                             <option key={corporation.id} value={corporation.value}>
                               {corporation.value}
@@ -128,7 +141,7 @@ function Employer() {
                         className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Industry</option>
-                        {(Json.Industry || []).map((industry) => (
+                        {(Industry || []).map((industry) => (
                           <option key={industry.id} value={industry.value}>
                             {industry.value}
                           </option>

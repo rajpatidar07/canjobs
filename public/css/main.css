@@ -1796,6 +1796,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 .nice-select {
   display: flex;
   align-items: center;
+  height: 2.25rem !important
 }
 
 .nice-select .current {
@@ -8869,7 +8870,7 @@ a.hover-text-hitgray:hover {
 @media (min-width: 768px) {
   .dashboard-main-container {
     padding-left: 290px;
-    height: calc(100vh - 52px);
+    height: calc(100vh - 52px) !important;
   overflow: auto;
   }
 }

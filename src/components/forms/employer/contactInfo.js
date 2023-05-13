@@ -184,7 +184,7 @@ function ContactInfo(props) {
                   htmlFor="contact_person_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact Person Name: <span className="text-danger"> *</span>
+                  Contact Person Name <span className="text-danger"> *</span>:
                 </label>
                 <input
                   maxLength={20}
@@ -215,7 +215,7 @@ function ContactInfo(props) {
                   htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Email: <span className="text-danger"> *</span>
+                  Email <span className="text-danger"> *</span>:
                 </label>
                 <input
                   maxLength={30}
@@ -246,7 +246,7 @@ function ContactInfo(props) {
                   htmlFor="contact_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact No: <span className="text-danger"> *</span>
+                  Contact No<span className="text-danger"> *</span>:
                 </label>
                 <input
                   maxLength={30}
@@ -297,7 +297,7 @@ function ContactInfo(props) {
                   htmlFor="address"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Address: <span className="text-danger"> *</span>
+                  Address <span className="text-danger"> *</span>:
                 </label>
                 <input
                   maxLength={60}
@@ -328,7 +328,7 @@ function ContactInfo(props) {
                   htmlFor="pin_code"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pincode: <span className="text-danger"> *</span>
+                  Pincode <span className="text-danger"> *</span>:
                 </label>
                 <input
                   name="pin_code"
@@ -361,7 +361,7 @@ function ContactInfo(props) {
                   htmlFor="city"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  City: <span className="text-danger"> *</span>
+                  City <span className="text-danger"> *</span>:
                 </label>
                 <input
                   type="text"
@@ -388,7 +388,7 @@ function ContactInfo(props) {
                   htmlFor="state"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  State: <span className="text-danger"> *</span>
+                  State <span className="text-danger"> *</span>:
                 </label>
                 <input
                   type="text"
@@ -418,7 +418,7 @@ function ContactInfo(props) {
                   htmlFor="country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Country: <span className="text-danger"> *</span>
+                  Country <span className="text-danger"> *</span>:
                 </label>
                 <input
                   type="text"

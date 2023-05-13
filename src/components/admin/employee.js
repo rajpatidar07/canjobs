@@ -34,6 +34,9 @@ function Employee() {
   /*Render method to get the json*/
   useEffect(()=>{
     JsonData()
+    if((search === "") === true){
+      setSearchError("")
+    }
   },[skillFilterValue , educationFilterValue])
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
