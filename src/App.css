@@ -181,6 +181,13 @@ table.table.table-striped.main_data_table_inn tr {
   font-size: 12px;
   font-weight: 600;
 }
+/* SIDEBAR */
+
+ul.list-unstyled.dashboard-layout-sidebar {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 /* header */
 .main-menu>li>.nav-link {
   padding-top: 24px !important;

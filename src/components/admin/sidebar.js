@@ -43,7 +43,7 @@ const AdminSidebar = (props) => {
               to="/employee"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-users mr-5"></i>Manage Applicants{" "}
+              <i class="far fa-user mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
