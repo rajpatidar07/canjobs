@@ -35,7 +35,7 @@ const AdminSidebar = (props) => {
               to="/dashboard"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="icon icon-layout-11 mr-5"></i>Dashboard
+              <i class="fab fa-blackberry mr-5"></i>Dashboard
             </Link>
           </li>
           <li className={props.heading === "Manage Applicants" ? "active" : ""}>
@@ -51,7 +51,7 @@ const AdminSidebar = (props) => {
               to="/employer"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-users mr-5"></i>Manage Companies
+              <i class="far fa-building mr-5"></i>Manage Companies
             </Link>
           </li>
           <li className={props.heading === "Manage Jobs" ? "active" : ""}>

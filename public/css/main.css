@@ -2121,6 +2121,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   transition: .4s;
   color: #333;
   min-width: 20px;
+  text-align: center;
 }
 
 [data-theme='dark'] .dashboard-layout-sidebar li a i,
