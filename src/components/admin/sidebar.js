@@ -1,22 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import AddJobModal from "../forms/employer/job";
 
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // let [showAddJobsModal, setShowAddJobsModal] = useState(false);
-  // let [jobId, setJobId] = useState();
-
-  /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
   }
-  /* Function to show the single data to update job */
-  // const editJob = (e) => {
-  //   // e.preventDefault();
-  //   setShowAddJobsModal(true);
-  //   setJobId(e);
-  // };
   return (
     <>
       <Link
@@ -39,20 +28,7 @@ const AdminSidebar = (props) => {
             <img src="image/logo-main-black.png" alt="" />
           </Link>
         </div>
-        <div className="my-15 px-11">
-          {/* <Link
-            to=""
-            onClick={() => editJob("0")}
-            className="btn btn-primary btn-xl w-100 text-uppercase"
-          >
-            <span className="mr-5 d-inline-block">+</span>Post a new job
-          </Link>
-          <AddJobModal
-            show={showAddJobsModal}
-            jobdata={jobId}
-            close={() => setShowAddJobsModal(false)}
-          /> */}
-        </div>
+        <div className="my-9 px-11"></div>
         <ul className="list-unstyled dashboard-layout-sidebar">
           <li className={props.heading === "Dashboard" ? "active" : ""}>
             <Link

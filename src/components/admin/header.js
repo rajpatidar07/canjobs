@@ -11,24 +11,22 @@ const AdminHeader = (props) => {
   const [showGeneratToken, setShowGenerateToken] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [notification, setNotiication] = useState("");
-  let Admin = localStorage.getItem("admin")
+  let Admin = localStorage.getItem("admin");
 
   /*Function to Call Notification Api */
-  const Notiication = async () =>{
-   let Response = await getAllAdminNotification()
-   setNotiication(Response.Data.data)
-   
-  }
+  const Notiication = async () => {
+    let Response = await getAllAdminNotification();
+    setNotiication(Response.Data.data);
+  };
   /*Render Mewthod to get Notification */
-  useEffect(() =>{
-    Notiication()
-  },[])
+  useEffect(() => {
+    Notiication();
+  }, []);
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Page Heading--> */}
-
           <h3 className="font-size-6 mb-0">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           {/* <div className="form-group w-50 d-flex">
@@ -58,41 +56,48 @@ const AdminHeader = (props) => {
               Reset
             </button>
           </div> */}
-          <div  className="dropdown show-gr-dropdown py-5">
-              <Link
-                to={""}
-                role="button"
-                id="dropdownMenuNotification"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                className="px-3 ml-7 font-size-7 notification-block flex-y-center position-relative"
-              >
-                <i className="fas fa-bell heading-default-color"></i>
-                <span className="font-size-3 count font-weight-semibold text-white bg-primary circle-24 border border-width-3 border border-white">
+          {/* {notification.length < 0 ? ( */}
+          <div className="dropdown show-gr-dropdown py-5">
+            <Link
+              to={""}
+              role="button"
+              id="dropdownMenuNotification"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              className="px-3 ml-7 font-size-4 notification-block flex-y-center position-relative"
+            >
+              <i className="fas fa-bell heading-default-color"></i>
+              {notification.length > 0 ? (
+                <span className="font-size-1 count text-white bg-primary circle-18 border border-width-1 border border-white">
                   {notification.length}
                 </span>
-              </Link>
-                    <ul className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                  aria-labelledby="dropdownMenuNotification">
-                      {(notification || []).map((data,i) =>
-                      i >= 10 ? null :
-                      <li
-                        key={data.id}
-                        to={""}
-                        className="dropdown-item py-2 font-size-3 text-wrap font-weight-semibold line-height-1p2 text-capitalize"
-                      >
-                      {i + 1}. {data.message}
-                      </li>)}
-                    </ul>
-            </div>
+              ) : null}
+            </Link>
+            <ul
+              className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+              aria-labelledby="dropdownMenuNotification"
+            >
+              {(notification || []).map((data, i) =>
+                i >= 10 ? null : (
+                  <li
+                    key={data.id}
+                    to={""}
+                    className="dropdown-item py-2 font-size-3 text-wrap font-weight-semibold line-height-1p2 text-capitalize"
+                  >
+                    {i + 1}. {data.message}
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
+          {/* ) : null} */}
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
-            
             <div>
               <div className="dropdown show-gr-dropdown py-5">
                 <Link
                   to={""}
-                  className="proile media ml-7 flex-y-center pt-3"
+                  className="proile media ml-7 flex-y-center"
                   role="button"
                   id="dropdownMenuLink"
                   data-toggle="dropdown"
@@ -100,20 +105,22 @@ const AdminHeader = (props) => {
                   aria-expanded="false"
                   onMouseOut={() => setDropDown(false)}
                 >
-                  <div> <h6>Hii ! {Admin}</h6></div>
-                  <i className="fas fa-chevron-down heading-default-color px-3 mb-2"></i>
+                  <div>
+                    {" "}
+                    <h6 className="m-0">Hii ! {Admin}</h6>
+                  </div>
+                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
                 </Link>
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                   aria-labelledby="dropdownMenuLink"
                 >
-                <Link
-                  to={"/adminprofile"}
-                  className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                >
-                  Edit Profile
-                </Link>
-                 
+                  <Link
+                    to={"/adminprofile"}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                  >
+                    Edit Profile
+                  </Link>
 
                   <Link
                     to={""}
@@ -155,15 +162,19 @@ const AdminHeader = (props) => {
         </nav>
       </div>
       {/*<-- Change password Modal -->*/}
-     {showChangePass ? <ChangePassword
-        show={showChangePass}
-        close={() => setShowChangePass(false)}
-      /> : null}
+      {showChangePass ? (
+        <ChangePassword
+          show={showChangePass}
+          close={() => setShowChangePass(false)}
+        />
+      ) : null}
       {/*<-- Generate Token Modal -->*/}
-      {showGeneratToken ? <GenerateToken
-        show={showGeneratToken}
-        close={() => setShowGenerateToken(false)}
-      /> : null}
+      {showGeneratToken ? (
+        <GenerateToken
+          show={showGeneratToken}
+          close={() => setShowGenerateToken(false)}
+        />
+      ) : null}
     </header>
   );
 };
