@@ -2120,6 +2120,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 .dashboard-layout-sidebar li a i {
   transition: .4s;
   color: #333;
+  min-width: 20px;
 }
 
 [data-theme='dark'] .dashboard-layout-sidebar li a i,

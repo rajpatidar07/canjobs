@@ -35,7 +35,7 @@ const AdminSidebar = (props) => {
               to="/dashboard"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="icon icon-layout-11 mr-7"></i>Dashboard
+              <i className="icon icon-layout-11 mr-5"></i>Dashboard
             </Link>
           </li>
           <li className={props.heading === "Manage Applicants" ? "active" : ""}>
@@ -43,7 +43,7 @@ const AdminSidebar = (props) => {
               to="/employee"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-users mr-7"></i>Manage Applicants{" "}
+              <i className="fas fa-users mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
@@ -51,7 +51,7 @@ const AdminSidebar = (props) => {
               to="/employer"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-users mr-7"></i>Manage Companies
+              <i className="fas fa-users mr-5"></i>Manage Companies
             </Link>
           </li>
           <li className={props.heading === "Manage Jobs" ? "active" : ""}>
@@ -59,7 +59,7 @@ const AdminSidebar = (props) => {
               to="/job"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-briefcase mr-7"></i>Manage Jobs
+              <i className="fas fa-briefcase mr-5"></i>Manage Jobs
             </Link>
           </li>{" "}
           <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
@@ -67,7 +67,7 @@ const AdminSidebar = (props) => {
               to="/followup"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-7"></i>Manage Follow-ups
+              <i className="fas fa-user mr-5"></i>Manage Follow-ups
             </Link>
           </li>
           <li className={props.heading === "Interview" ? "active" : ""}>
@@ -75,7 +75,7 @@ const AdminSidebar = (props) => {
               to="/interview"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-podcast mr-7"></i>Manage Interview
+              <i className="fas fa-podcast mr-5"></i>Manage Interview
             </Link>
           </li>
           <li className={props.heading === "Response" ? "active" : ""}>
@@ -83,7 +83,7 @@ const AdminSidebar = (props) => {
               to="/responses"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-reply mr-7"></i>Manage Response
+              <i className="fas fa-reply mr-5"></i>Manage Response
             </Link>
           </li>
           <li className={props.heading === "Manage Category" ? "active" : ""}>
@@ -91,7 +91,7 @@ const AdminSidebar = (props) => {
               to="/category"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-qrcode mr-7"></i>Manage Job Category
+              <i className="fas fa-qrcode mr-5"></i>Manage Job Category
             </Link>
           </li>
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
@@ -99,7 +99,7 @@ const AdminSidebar = (props) => {
               to="/adminprofile"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-7"></i>Manage Admin
+              <i className="fas fa-user mr-5"></i>Manage Admin
             </Link>
           </li>
           <li className={props.heading === "Filter List" ? "active" : ""}>
@@ -107,7 +107,7 @@ const AdminSidebar = (props) => {
               to="/filter"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-filter mr-7"></i>Manage Filter List
+              <i className="fas fa-filter mr-5"></i>Manage Filter List
             </Link>
           </li>
         </ul>
