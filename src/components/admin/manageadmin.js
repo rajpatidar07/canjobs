@@ -44,23 +44,24 @@ function ManageAdmin() {
     );
     if (userData.data.length === 0) {
       setAdminData([]);
-      
     } else {
       setAdminData(userData.data);
       setTotalData(userData.total_rows);
-     if(apiCall === true){ 
-      let  Admin_name = userData.data.filter((data) => 
-      data.admin_id === localStorage.getItem("admin_id"))
-      if( Admin_name[0].admin_id === localStorage.getItem("admin_id")){
-        localStorage.setItem("admin",Admin_name[0].name)
-      }}
+      if (apiCall === true) {
+        let Admin_name = userData.data.filter(
+          (data) => data.admin_id === localStorage.getItem("admin_id")
+        );
+        if (Admin_name[0].admin_id === localStorage.getItem("admin_id")) {
+          localStorage.setItem("admin", Admin_name[0].name);
+        }
+      }
     }
   };
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
-    if(apiCall === true){
-      setApiCall(false)
+    if (apiCall === true) {
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -70,7 +71,7 @@ function ManageAdmin() {
     recordsPerPage,
     columnName,
     sortOrder,
-    apiCall ,
+    apiCall,
   ]);
 
   /* Function to show the single data to update Admin*/
@@ -97,7 +98,7 @@ function ManageAdmin() {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true)
+      setApiCall(true);
       setDeleteAlert(false);
     }
   }
@@ -108,12 +109,12 @@ function ManageAdmin() {
   /*Search Onchange function to filter the data */
   let onSearch = (e) => {
     setSearch(e.target.value);
-     if(search === ""){
-      setSearchError("")
-    }else if(/[-]?\d+(\.\d+)?/.test(search) ){
-      setSearchError("Admin Name can not have a number.")
-    }else if(/[^a-zA-Z0-9]/g.test(search)){
-      setSearchError("Cannot use special character")
+    if (search === "") {
+      setSearchError("");
+    } else if (/[-]?\d+(\.\d+)?/.test(search)) {
+      setSearchError("Admin Name can not have a number.");
+    } else if (/[^a-zA-Z0-9]/g.test(search)) {
+      setSearchError("Cannot use special character");
     }
   };
   /*Pagination Calculation */
@@ -132,13 +133,15 @@ function ManageAdmin() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Admin"} />
         <ToastContainer />
-        {showAddAdminModal ? <Addadmin
-          show={showAddAdminModal}
-          adminId={adminId}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => setShowAdminModal(false)}
-        /> : null}
+        {showAddAdminModal ? (
+          <Addadmin
+            show={showAddAdminModal}
+            adminId={adminId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => setShowAdminModal(false)}
+          />
+        ) : null}
         <div
           className={
             showAminDetails === false
@@ -166,7 +169,6 @@ function ManageAdmin() {
                       name={"Admin_name"}
                       onChange={(e) => onSearch(e)}
                     />
-                   
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Admin:</p>
@@ -197,7 +199,7 @@ function ManageAdmin() {
                     </CustomButton>
                   </div>
                 </div>
-                  <small className="text-danger">{searcherror}</small>
+                <small className="text-danger">{searcherror}</small>
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive ">
@@ -214,7 +216,6 @@ function ManageAdmin() {
                             onClick={() => handleSort("name")}
                             title="Sort by Name"
                           >
-                            
                             Admin Name
                           </Link>
                         </th>
@@ -326,33 +327,6 @@ function ManageAdmin() {
           showCancelButton={true}
           onCancel={CancelDelete}
         />
-        {/* {showJobDetails === true ? (
-        <div className="dashboard-main-container mt-16 ">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12 dark-mode-texts">
-                <div className="mb-9">
-                  <Link
-                    to={""}
-                    onClick={() => setShowJobDetails(false)}
-                    className="d-flex align-items-center ml-4"
-                  >
-                    
-                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                      Back
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="mb-18">
-              
-              <JobDetailsBox />
-            </div>
-          </div>
-        </div>
-      ) : null} */}
       </div>
     </>
   );

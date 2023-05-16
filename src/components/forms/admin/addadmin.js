@@ -11,12 +11,15 @@ function Addadmin(props) {
   const [showPassword, setShowPassword] = useState(false);
 
   /*Function to show hide password */
-  const toggleShowPassword = () => setShowPassword(prev => !prev);
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   const renderIcon = () => {
     if (state.password.length > 0) {
-      return showPassword ? <i className="fa fa-eye-slash"></i>
-                          : <i className="fa fa-eye"></i>;
+      return showPassword ? (
+        <i className="fa fa-eye-slash"></i>
+      ) : (
+        <i className="fa fa-eye"></i>
+      );
     }
     return null;
   };
@@ -48,7 +51,7 @@ function Addadmin(props) {
           ? "Admin name can not have a number."
           : value.length < 2
           ? "Admin name should have 2 or more letters"
-          :/[^A-Za-z 0-9]/g.test(value)
+          : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : "",
     ],
@@ -78,14 +81,8 @@ function Addadmin(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    setErrors,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
     if (userData === undefined || userData.data.length === 0) {
@@ -115,7 +112,7 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
       if (responseData.message === "admin updated successfully") {
@@ -123,7 +120,7 @@ function Addadmin(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
       if (responseData.message === "Admin already exists") {
@@ -221,21 +218,21 @@ function Addadmin(props) {
                   Password <span className="text-danger">*</span> :
                 </label>
                 <div className="position-relative">
-                <input
-                   type={showPassword ? 'text' : 'password'}
-                  className={
-                    errors.password
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  value={state.password}
-                  onChange={onInputChange}
-                  id="password"
-                  name="password"
-                />
-                <span className="password-icon" onClick={toggleShowPassword}>
-                {renderIcon()}
-                </span>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className={
+                      errors.password
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    value={state.password}
+                    onChange={onInputChange}
+                    id="password"
+                    name="password"
+                  />
+                  <span className="password-icon" onClick={toggleShowPassword}>
+                    {renderIcon()}
+                  </span>
                 </div>
                 {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
                 {errors.password && (
@@ -268,11 +265,10 @@ function Addadmin(props) {
                 name="admin_type"
                 multiple={false}
               >
-                <option value={""}>Admin type</option>
-                <option value={"manager"}>Manager</option>
-                <option value={"sub-admin"}>Sub admin</option>
+                <option value={""}>Select</option>
+                <option value={"super-admin"}>Superadmin</option>
                 <option value={"admin"}>Admin</option>
-                <option value={"super-admin"}>Super admin</option>
+                <option value={"manager"}>Manager</option>
               </select>
               {/*----ERROR MESSAGE FOR ADMIN TYPE----*/}
               {errors.admin_type && (

@@ -35,7 +35,7 @@ const AdminSidebar = (props) => {
               to="/dashboard"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i class="fab fa-blackberry mr-5"></i>Dashboard
+              <i className="fab fa-blackberry mr-5"></i>Dashboard
             </Link>
           </li>
           <li className={props.heading === "Manage Applicants" ? "active" : ""}>
@@ -43,7 +43,7 @@ const AdminSidebar = (props) => {
               to="/employee"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i class="far fa-user mr-5"></i>Manage Applicants{" "}
+              <i className="far fa-user mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
@@ -51,7 +51,7 @@ const AdminSidebar = (props) => {
               to="/employer"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i class="far fa-building mr-5"></i>Manage Companies
+              <i className="far fa-building mr-5"></i>Manage Companies
             </Link>
           </li>
           <li className={props.heading === "Manage Jobs" ? "active" : ""}>
@@ -59,7 +59,7 @@ const AdminSidebar = (props) => {
               to="/job"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-briefcase mr-5"></i>Manage Jobs
+              <i className="far fa-address-card mr-5"></i>Manage Jobs
             </Link>
           </li>{" "}
           <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
@@ -67,7 +67,7 @@ const AdminSidebar = (props) => {
               to="/followup"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-5"></i>Manage Follow-ups
+              <i className="far fa-comments mr-5"></i>Manage Follow-ups
             </Link>
           </li>
           <li className={props.heading === "Interview" ? "active" : ""}>

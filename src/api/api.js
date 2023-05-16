@@ -8,9 +8,7 @@ const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const user_type = localStorage.getItem("userType");
 
-if (
-  view_as_token
-) {
+if (view_as_token) {
   Token = view_as_token;
 }
 
@@ -25,28 +23,29 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
- /*Chanage password Api */
- export const ChangePasswordApi = async (props) => {
-  const response = await axios.put(`${API_URL}${user_type}/changePassword`, props, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
-  return response.data;
-};
-/*Sen Otp to email api */
-export const SendOtp = async (props) => {
-  const response = await axios.post(
-    `${API_URL}common/generateOtp`,
+/*Chanage password Api */
+export const ChangePasswordApi = async (props) => {
+  const response = await axios.put(
+    `${API_URL}${user_type}/changePassword`,
+    props,
     {
-      email: props.email,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
     }
   );
   return response.data;
 };
- /*Employee Reset password Api */
- export const EmployeeResetPasswordApi = async (props) => {
+/*Sen Otp to email api */
+export const SendOtp = async (props) => {
+  const response = await axios.post(`${API_URL}common/generateOtp`, {
+    email: props.email,
+  });
+  return response.data;
+};
+/*Employee Reset password Api */
+export const EmployeeResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}user/resetPassword`, props, {
     headers: {
       "Content-Type": "application/json",
@@ -82,12 +81,9 @@ export const EmployeeLogin = async (props) => {
 };
 /*Employee Forgot passsword api */
 export const EmployeeForgotPassword = async (props) => {
-  const response = await axios.post(
-    `${API_URL}employee/forgetPassword`,
-    {
-      forget_email: props.forget_email,
-    }
-  );
+  const response = await axios.post(`${API_URL}employee/forgetPassword`, {
+    forget_email: props.forget_email,
+  });
   return response.data;
 };
 /*Employee detail api */
@@ -401,8 +397,8 @@ export const EmployerLogin = async (props) => {
   return response.data;
 };
 
- /*Employer Reset password Api */
- export const EmployerResetPasswordApi = async (props) => {
+/*Employer Reset password Api */
+export const EmployerResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}company/resetPassword`, props, {
     headers: {
       "Content-Type": "application/json",
@@ -413,12 +409,9 @@ export const EmployerLogin = async (props) => {
 };
 /*Employer Forgot passsword api */
 export const EmployerForgotPassword = async (props) => {
-  const response = await axios.post(
-    `${API_URL}company/forgetPassword`,
-    {
-      forget_email: props.forget_email,
-    }
-  );
+  const response = await axios.post(`${API_URL}company/forgetPassword`, {
+    forget_email: props.forget_email,
+  });
   return response.data;
 };
 /*Response List Api */
@@ -470,8 +463,8 @@ export const GetAllJobs = async (
   time
 ) => {
   // console.log("time", time);
-  const response = await axios.post(Token ?
-    `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
+  const response = await axios.post(
+    Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
     {
       // employee_id: id,
       filter_category_id: category,
@@ -676,7 +669,7 @@ export const AddInterviewSheduale = async (props, employee_id, job_id) => {
       employee_id: employee_id,
       interview_date: props.interview_date,
       created_by_admin: admin_id,
-      interview_status : props.interview_status 
+      interview_status: props.interview_status,
     },
     {
       headers: {
@@ -748,8 +741,8 @@ export const AdminLogin = async (props) => {
   const response = await axios.post(`${API_URL}admin_login`, formData);
   return response.data;
 };
- /*Admin Reset password Api */
- export const AdminResetPasswordApi = async (props) => {
+/*Admin Reset password Api */
+export const AdminResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}admin/resetPassword`, props, {
     headers: {
       "Content-Type": "application/json",
@@ -760,8 +753,6 @@ export const AdminLogin = async (props) => {
 };
 /*Admin Notification List Api */
 export const getAllAdminNotification = async () => {
-  console.log(Token)
-  
   const response = await axios.get(`${API_URL}common/getNotifications`, {
     headers: {
       "Content-Type": "application/json",
@@ -835,7 +826,8 @@ export const getAllFollowUpData = async (
   return response.data;
 };
 /*Job Category List Api */
-export const getAllJobsCategory = async (level,
+export const getAllJobsCategory = async (
+  level,
   type,
   search,
   page,
@@ -846,7 +838,7 @@ export const getAllJobsCategory = async (level,
   const response = await axios.post(
     `${API_URL}admin/getAllJobsCategory`,
     {
-      parent_id : level,
+      parent_id: level,
       filter_category_type: type,
       search: search,
       page: page,
@@ -1037,6 +1029,35 @@ export const GetAdminToken = async (props) => {
     `${API_URL}${user_type}/getToken`,
     {
       admin_id: props,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+export const GetAllEmailTemplate = async (props) => {
+  // console.log(props);
+  const response = await axios.post(`${API_URL}/common/getEmailTemplate`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+export const AddUpdateEmailTemplate = async (props) => {
+  // console.log(props);
+  const response = await axios.put(
+    `${API_URL}/common/addUpdateEmailTemplate`,
+    {
+      id: props.id,
+      email_type: props.email_type,
+      subject: props.subject,
+      message: props.message,
     },
     {
       headers: {

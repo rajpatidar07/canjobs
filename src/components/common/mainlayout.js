@@ -28,6 +28,7 @@ import ManageInterview from "../admin/interview";
 import JobResponse from "../admin/response";
 import NotFound from "./notfound";
 import ResetPassword from "./resetPassword";
+import EmailTemplate from "../admin/email";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -98,6 +99,7 @@ function MainLayout() {
             <Route path="/filter" element={<FilterList />} />
             <Route path="/interview" element={<ManageInterview />} />
             <Route path="/responses" element={<JobResponse />} />
+            <Route path="/emailtemplate" element={<EmailTemplate />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             <Route path="*" element={<NotFound />} />
           </>

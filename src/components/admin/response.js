@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { GetAllResponse , getJson } from "../../api/api";
+import { GetAllResponse, getJson } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -23,10 +23,9 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
-  const [experienceTypeFilterValue, setExperienceTypeFilterValue] = useState(
-    ""
-    );
-    let [Json , setJson] = useState([])
+  const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    useState("");
+  let [Json, setJson] = useState([]);
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
@@ -38,10 +37,10 @@ function JobResponse(props) {
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
   /*Function to get the jSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
@@ -69,7 +68,7 @@ function JobResponse(props) {
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
-    JsonData()
+    JsonData();
     if (apiCall === true) {
       let CallApi = false;
       props.setApiCall(CallApi);
@@ -572,7 +571,7 @@ function JobResponse(props) {
                                   Reject
                                 </span>
                               ) : res.lmia_status === "Approved" ? (
-                                <span className="px-3 py-2 badge badge-pill bg-info-opacity-5 text-white">
+                                <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                   Approved
                                 </span>
                               ) : res.lmia_status === "Draft" ? (

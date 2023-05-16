@@ -20,14 +20,15 @@ function AddFilter(props) {
   const validators = {
     json_item: [
       (value) =>
-        value === "" || value.trim() === "" ? "Filter type is required" 
-        : /[-]?\d+(\.\d+)?/.test(value)
-        ? "Filter type can not have a number."
-        : value.length < 2
-        ? "Filter type should have 2 or more letters"
-        : /[^a-zA-Z0-9]/g.test(value)
-        ? "Cannot use special character "
-        : "",
+        value === "" || value.trim() === ""
+          ? "Filter type is required"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Filter type can not have a number."
+          : value.length < 2
+          ? "Filter type should have 2 or more letters"
+          : /[^a-zA-Z0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -74,7 +75,19 @@ function AddFilter(props) {
               id="json_item"
               name="json_item"
               type={"text"}
-              placeholder={props.id === 1 ? "Skill Type" : props.id === 4 ? "Industry Type" : props.id === 5 ? "Education Type" : props.id === 6 ? "Corporation Type" : props.id === 7 ? "Language Type" : ""}
+              placeholder={
+                props.id === 1
+                  ? "Skill Type"
+                  : props.id === 4
+                  ? "Industry Type"
+                  : props.id === 5
+                  ? "Education Type"
+                  : props.id === 6
+                  ? "Corporation Type"
+                  : props.id === 7
+                  ? "Language Type"
+                  : ""
+              }
             />
             {loading === true ? (
               <button
@@ -83,8 +96,10 @@ function AddFilter(props) {
                 disabled
                 // style={{ height: "3rem", minWidth: "40px" }}
               >
-                <div class="spinner-border spinner-border-sm" role="status">
-                </div>
+                <div
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                ></div>
               </button>
             ) : (
               <button
