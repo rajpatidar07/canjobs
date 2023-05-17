@@ -106,12 +106,24 @@ button.btn.action_btn {
   border-collapse: collapse;
 }
 .main_data_table thead {
-  background-color: #aaa;
+  background-color: #fcb6b6;
 }
 .main_data_table thead th, .main_data_table thead a.text-gray{
-  color: #fff!important;
-  font-size: 12px;
-  font-weight: 600!important;
+  color: #333!important;
+    font-size: 12px;
+    font-weight: 700!important;
+    line-height: 1.25;
+}
+.dashboard-main-container .container {
+  margin: 0 15px;
+  width: calc(100% - 30px);
+  border-radius: 10px;
+  background: #fff;
+  padding-bottom: 10px;
+}
+.table-responsive{
+  padding-left: 0;
+  padding-right: 0;
 }
 .main_data_table tr{
   /* border: none!important; */
