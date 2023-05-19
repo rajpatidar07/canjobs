@@ -113,14 +113,6 @@ function EmailTemplate() {
                       </tr>
                     </thead>
                     <tbody>
-                      {/* {emailData.length === 0 ? (
-                        <tr>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white">No Data Found</th>
-                          <th className="bg-white"></th>
-                        </tr>
-                      ) : ( */}
                       {(emailData || []).map((email) => (
                         <tr className="" key={email.id}>
                           <td className=" py-5">

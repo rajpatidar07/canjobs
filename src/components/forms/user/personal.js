@@ -10,7 +10,7 @@ import FilterJson from "../../json/filterjson";
 function PersonalDetails(props) {
   let encoded;
   const [loading, setLoading] = useState(false);
-  const [imgError ,setImgError] = useState("")
+  const [imgError, setImgError] = useState("");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -75,14 +75,14 @@ function PersonalDetails(props) {
           ? "Mobile number should not be more than 11 digits"
           : "",
     ],
-    description: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Description is required"
-          : value.length < 5
-          ? "Description should have 5 or more letter"
-          : null,
-    ],
+    // description: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Description is required"
+    //       : value.length < 5
+    //       ? "Description should have 5 or more letter"
+    //       : null,
+    // ],
     date_of_birth: [
       (value) => (value === "" || value === null ? "Dob is required" : ""),
     ],
@@ -116,36 +116,36 @@ function PersonalDetails(props) {
           ? "Location can not have a number."
           : "",
     ],
-    currently_located_country: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Country is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Country should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Country can not have a number."
-          : "",
-    ],
+    // currently_located_country: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Country is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : value.length < 3
+    //       ? "Country should have 3 or more letter"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Country can not have a number."
+    //       : "",
+    // ],
     language: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Language is required"
           : "",
     ],
-    religion: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Religion is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Religion should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Religion can not have a number."
-          : "",
-    ],
+    // religion: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Religion is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : value.length < 3
+    //       ? "Religion should have 3 or more letter"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Religion can not have a number."
+    //       : "",
+    // ],
     interested_in: [
       (value) => (value === "" ? "Interested in is required" : null),
     ],
@@ -160,27 +160,21 @@ function PersonalDetails(props) {
       (value) =>
         value === "" || value === null ? "Work Permit is required" : null,
     ],
-    work_permit_other_country: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Other Permit is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Other permit sholud have 2 or more letters"
-          : "",
-    ],
+    // work_permit_other_country: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Other Permit is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : value.length < 2
+    //       ? "Other permit sholud have 2 or more letters"
+    //       : "",
+    // ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-    setErrors,
-  } = useValidation(initialFormStateuser, validators);
+  const { state, setState, onInputChange, errors, validate, setErrors } =
+    useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
     const userData = await EmployeeDetails(props.employeeId);
@@ -211,7 +205,7 @@ function PersonalDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
       if (responseData.message === "Employee data updated successfully") {
@@ -219,7 +213,7 @@ function PersonalDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
     } else {
@@ -250,19 +244,19 @@ function PersonalDetails(props) {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    
+
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
         if (file.size > 1024 * 100) {
           setImgError("Image size can't be more then 100 kb");
         } else {
-          setState({ ...state, profile_photo: (event.target.result) });
+          setState({ ...state, profile_photo: event.target.result });
         }
       };
       img.src = event.target.result;
     };
-  
+
     // Read the file as a data URL
     reader.readAsDataURL(file);
     encoded = await convertToBase64(file);
@@ -293,10 +287,7 @@ function PersonalDetails(props) {
             {props.employeeId === "0" ? (
               <h5 className="text-center pt-2 mb-7"> Add Employee Details</h5>
             ) : (
-              <h5 className="text-center pt-2 mb-7">
-                
-                Update Employee Details
-              </h5>
+              <h5 className="text-center pt-2 mb-7">Update Employee Details</h5>
             )}
             {/* FIRST LINE */}
             <div className="form-group mx-auto text-center">
@@ -323,15 +314,12 @@ function PersonalDetails(props) {
                   className="mt-lg-20 mx-lg-35 bg-transparent"
                   htmlFor="profile_photo"
                 >
-                  <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-14 mt-lg-3 ">
-                    
-                  </span>
+                  <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-14 mt-lg-3 "></span>
                 </label>
               </div>
               <small className="text-danger">{imgError}</small>
             </div>
             <div className="row pt-5">
-              
               <input
                 maxLength={20}
                 name="employee_id"
@@ -379,7 +367,7 @@ function PersonalDetails(props) {
                   type="email"
                   name="email"
                   value={state.email || ""}
-               onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.email
                       ? "form-control border border-danger"
@@ -408,7 +396,7 @@ function PersonalDetails(props) {
                   placeholder="Mobile Number"
                   name="contact_no"
                   value={state.contact_no || ""}
-                onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.contact_no
                       ? "form-control border border-danger"
@@ -429,18 +417,17 @@ function PersonalDetails(props) {
               </div>
             </div>
             <div className="row">
-              
               <div className="form-group col-md-12">
                 <label
                   htmlFor="description"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Description: <span className="text-danger">*</span>
+                  About:
                 </label>
                 <textarea
                   name="description"
                   value={state.description || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.description
                       ? "form-control border border-danger"
@@ -463,7 +450,6 @@ function PersonalDetails(props) {
 
             {/* SECOND LINE */}
             <div className="row">
-              
               <div className="form-group col-md-4">
                 <label
                   htmlFor="date_of_birth"
@@ -477,7 +463,7 @@ function PersonalDetails(props) {
                   placeholder="Date Of Birth "
                   name="date_of_birth"
                   value={state.date_of_birth || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.date_of_birth
                       ? "form-control border border-danger"
@@ -505,7 +491,7 @@ function PersonalDetails(props) {
                 <select
                   name="gender"
                   value={state.gender || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.gender
                       ? "form-control border border-danger"
@@ -574,7 +560,7 @@ function PersonalDetails(props) {
                   placeholder="nationality / Citizenship"
                   name="nationality"
                   value={state.nationality || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.nationality
                       ? "form-control border border-danger"
@@ -629,7 +615,6 @@ function PersonalDetails(props) {
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Currently Located Country:
-                  <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -696,7 +681,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-4">
+              {/* <div className="form-group col-md-4">
                 <label
                   htmlFor="religion"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -717,7 +702,6 @@ function PersonalDetails(props) {
                   value={state.religion || ""}
                   onChange={onInputChange}
                 />
-                {/*----ERROR MESSAGE FOR religion----*/}
                 {errors.religion && (
                   <span
                     key={errors.religion}
@@ -726,7 +710,7 @@ function PersonalDetails(props) {
                     {errors.religion}
                   </span>
                 )}
-              </div>
+              </div> */}
               <div className="form-group col-md-4">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                   Interested In: <span className="text-danger">*</span>
@@ -740,7 +724,7 @@ function PersonalDetails(props) {
                   id="interested_in"
                   name="interested_in"
                   value={state.interested_in || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
                   <option value={"swap"}>Swap</option>
@@ -757,9 +741,6 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-            </div>
-            {/* WORDK PERMIT LINE */}
-            <div className="row">
               <div className="form-group col-md-4">
                 <label
                   htmlFor="experience"
@@ -778,13 +759,13 @@ function PersonalDetails(props) {
                   }
                   id="experience"
                 >
-                   <option value={""}>User Experience</option>
-                        {(FilterJson.experience || []).map((ex, i) => (
-                          <option value={ex} key={i}>
-                            {ex}
-                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
-                          </option>
-                        ))}
+                  <option value={""}>User Experience</option>
+                  {(FilterJson.experience || []).map((ex, i) => (
+                    <option value={ex} key={i}>
+                      {ex}
+                      {ex === "Fresher" || ex === "Other" ? "" : "Years"}
+                    </option>
+                  ))}
                 </select>
                 {/*----ERROR MESSAGE FOR experience----*/}
                 {errors.experience && (
@@ -806,7 +787,7 @@ function PersonalDetails(props) {
                 <select
                   name="work_permit_canada"
                   value={state.work_permit_canada || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.work_permit_canada
                       ? "form-control border border-danger"
@@ -834,7 +815,6 @@ function PersonalDetails(props) {
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Work Permit of Other Country:
-                  <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={20}
@@ -860,10 +840,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-            </div>
-            {/* RESUME UPLOAD */}
-            <div className="row">
-              <div className="form-group col-md-12">
+              <div className="form-group col-md-4">
                 <label
                   htmlFor="resume"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

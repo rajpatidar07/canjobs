@@ -73,7 +73,7 @@ function AddJobsModal(props) {
                   htmlFor="Location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Location :
+                  Location:
                 </label>
                 <input
                   type="text"

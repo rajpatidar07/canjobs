@@ -59,64 +59,58 @@ function ContactInfo(props) {
           : "",
     ],
     // contact_no_other: [],
-    address: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Address is required"
-          : value.length < 2
-          ? "Address should have 2 or more letter"
-          : "",
-    ],
-    pin_code: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "pinCode is required"
-          : value.length < 6
-          ? "PinCode no should be of 6 digits"
-          : "",
-    ],
-    city: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "City Name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
-    ],
-    state: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "State Name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
-    ],
-    country: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Country Name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
-    ],
+    // address: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Address is required"
+    //       : value.length < 2
+    //       ? "Address should have 2 or more letter"
+    //       : "",
+    // ],
+    // pin_code: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "pinCode is required"
+    //       : value.length < 6
+    //       ? "PinCode no should be of 6 digits"
+    //       : "",
+    // ],
+    // city: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "City Name is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : "",
+    // ],
+    // state: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "State Name is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : "",
+    // ],
+    // country: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Country Name is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : "",
+    // ],
     designation: [
       (value) =>
         value === "" || value === null
-          ? ""
+          ? "Designation is required"
           : value.length < 2
           ? "Designation should have 2 or more letter"
           : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    onInputChange,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
@@ -149,7 +143,7 @@ function ContactInfo(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
     } else {
@@ -184,7 +178,7 @@ function ContactInfo(props) {
                   htmlFor="contact_person_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact Person Name <span className="text-danger"> *</span>:
+                  Contact Person Name: <span className="text-danger"> *</span>
                 </label>
                 <input
                   maxLength={20}
@@ -215,7 +209,7 @@ function ContactInfo(props) {
                   htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Email <span className="text-danger"> *</span>:
+                  Email: <span className="text-danger"> *</span>
                 </label>
                 <input
                   maxLength={30}
@@ -246,7 +240,7 @@ function ContactInfo(props) {
                   htmlFor="contact_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact No<span className="text-danger"> *</span>:
+                  Contact No: <span className="text-danger"> *</span>
                 </label>
                 <input
                   maxLength={30}
@@ -277,7 +271,7 @@ function ContactInfo(props) {
                   htmlFor="contact_no_other"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Other Contact No :
+                  Other Contact No:
                 </label>
                 <input
                   maxLength={30}
@@ -297,7 +291,7 @@ function ContactInfo(props) {
                   htmlFor="address"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Address <span className="text-danger"> *</span>:
+                  Address:
                 </label>
                 <input
                   maxLength={60}
@@ -328,7 +322,7 @@ function ContactInfo(props) {
                   htmlFor="pin_code"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Pincode <span className="text-danger"> *</span>:
+                  Pincode:
                 </label>
                 <input
                   name="pin_code"
@@ -361,7 +355,7 @@ function ContactInfo(props) {
                   htmlFor="city"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  City <span className="text-danger"> *</span>:
+                  City:
                 </label>
                 <input
                   type="text"
@@ -388,7 +382,7 @@ function ContactInfo(props) {
                   htmlFor="state"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  State <span className="text-danger"> *</span>:
+                  State:
                 </label>
                 <input
                   type="text"
@@ -418,7 +412,7 @@ function ContactInfo(props) {
                   htmlFor="country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Country <span className="text-danger"> *</span>:
+                  Country:
                 </label>
                 <input
                   type="text"
@@ -448,7 +442,7 @@ function ContactInfo(props) {
                   htmlFor="designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Your Designation :
+                  Your Designation: <span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <input

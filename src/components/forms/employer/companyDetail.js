@@ -3,26 +3,25 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddCompany, EmployerDetails , getJson} from "../../../api/api";
+import { AddCompany, EmployerDetails, getJson } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
   const [imgError, setImgError] = useState(false);
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   let encoded;
   /*Function to get thejSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- 
- }
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
     setErrors("");
-    setImgError("")
+    setImgError("");
     setLoading(false);
     props.close();
   };
@@ -54,7 +53,8 @@ function CompanyDetails(props) {
           : value.length < 2
           ? "Company Name should have 2 or more letters"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character " : "",
+          ? "Cannot use special character "
+          : "",
     ],
     industry: [
       (value) =>
@@ -62,24 +62,24 @@ function CompanyDetails(props) {
           ? "Industry is required"
           : "",
     ],
-    corporation: [
-      (value) =>
-        value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
-          ? "Corporation type is required"
-          : null,
-    ],
-    company_start_date: [
-      (value) =>
-        value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
-          ? "Start Date is required"
-          : null,
-    ],
+    // corporation: [
+    //   (value) =>
+    //     value === "" ||
+    //     value === null ||
+    //     value === undefined ||
+    //     value.trim() === ""
+    //       ? "Corporation type is required"
+    //       : null,
+    // ],
+    // company_start_date: [
+    //   (value) =>
+    //     value === "" ||
+    //     value === null ||
+    //     value === undefined ||
+    //     value.trim() === ""
+    //       ? "Start Date is required"
+    //       : null,
+    // ],
     company_size: [
       (value) =>
         value === "" ||
@@ -108,37 +108,37 @@ function CompanyDetails(props) {
           ? "Vacancy should have 2 or more letters."
           : "",
     ],
-    about: [
-      (value) =>
-        value === ""
-          ? "Company Description is required"
-          : value.length < 2
-          ? "Company Description should have 2 or more letters."
-          : "",
-    ],
+    // about: [
+    //   (value) =>
+    //     value === ""
+    //       ? "Company Description is required"
+    //       : value.length < 2
+    //       ? "Company Description should have 2 or more letters."
+    //       : "",
+    // ],
 
-    website_url: [
-      (value) =>
-        value === "" || value === null
-          ? ""
-          : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-              value
-            )
-          ? "Write the correct URL"
-          : "",
-    ],
-    franchise: [
-      (value) =>
-        value === ""
-          ? ""
-          : value.length < 2
-          ? "Franchise have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Franchise can not have a number."
-          : "",
-    ],
+    // website_url: [
+    //   (value) =>
+    //     value === "" || value === null
+    //       ? ""
+    //       : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
+    //           value
+    //         )
+    //       ? "Write the correct URL"
+    //       : "",
+    // ],
+    // franchise: [
+    //   (value) =>
+    //     value === ""
+    //       ? ""
+    //       : value.length < 2
+    //       ? "Franchise have 2 or more letters"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Franchise can not have a number."
+    //       : "",
+    // ],
     // companylogo: [
     //   (value) =>
     //     value === "" || value === null||value===undefined|| value.trim() === "" ? "Company logo is required" : null,
@@ -160,21 +160,15 @@ function CompanyDetails(props) {
     }
   };
   useEffect(() => {
-    JsonData()
-    if( props.employerId !== "0"){
+    JsonData();
+    if (props.employerId !== "0") {
       EmployerData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
 
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
@@ -190,23 +184,23 @@ function CompanyDetails(props) {
     });
   };
   /*Onchange function of Logo */
-   const handleFileChange = async (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    
+
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
         if (file.size > 1024 * 100) {
           setImgError("Image size can't be more then 100 kb");
         } else {
-          setImgError("")
-          setState({ ...state, logo: (event.target.result) });
+          setImgError("");
+          setState({ ...state, logo: event.target.result });
         }
       };
       img.src = event.target.result;
     };
-  
+
     // Read the file as a data URL
     reader.readAsDataURL(file);
     encoded = await convertToBase64(file);
@@ -225,7 +219,7 @@ function CompanyDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
 
@@ -234,7 +228,7 @@ function CompanyDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
     } else {
@@ -242,14 +236,20 @@ function CompanyDetails(props) {
     }
   };
   // END COMPANY DETAIL VALIDATION
-   /*Industry Json for not having same data */
-   const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
-   index === self.findIndex((t) => t.value === thing.value)
-   ) : [];
-     /*Corporation Json for not having same data */
-     const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
-     index === self.findIndex((t) => t.value === thing.value)
-     ) : [];
+  /*Industry Json for not having same data */
+  const Industry = Json.Industry
+    ? Json.Industry.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
+    : [];
+  /*Corporation Json for not having same data */
+  const Corporation = Json.Corporation
+    ? Json.Corporation.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
+    : [];
   return (
     <>
       <Modal
@@ -378,7 +378,7 @@ function CompanyDetails(props) {
                   htmlFor="contactperson"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Corporation<span className="text-danger"> *</span> :
+                  Corporation:
                 </label>
                 <select
                   type="text"
@@ -449,14 +449,16 @@ function CompanyDetails(props) {
                   htmlFor="company_start_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Start Date <span className="text-danger"> *</span> :
+                  Company Start Date:
                 </label>
 
                 <input
                   max={moment().format("YYYY-MM-DD")}
                   type="date"
                   name="company_start_date"
-                  value={moment(state.company_start_date).format("YYYY-MM-DD") || ""}
+                  value={
+                    moment(state.company_start_date).format("YYYY-MM-DD") || ""
+                  }
                   onChange={onInputChange}
                   className={
                     errors.company_start_date
@@ -604,7 +606,7 @@ function CompanyDetails(props) {
                   htmlFor="about"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  About <span className="text-danger">*</span>:
+                  About:
                 </label>
                 <div className="position-relative">
                   <div

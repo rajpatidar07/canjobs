@@ -41,11 +41,11 @@ function KycComplianceDetails(props) {
     name: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Pan card name is required"
+          ? "PAN card name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length < 2
-          ? "Pan name  be of 2  or more letters"
+          ? "PAN name  be of 2  or more letters"
           : "",
     ],
 
@@ -60,19 +60,19 @@ function KycComplianceDetails(props) {
     pan_no: [
       (value) =>
         value === "" || value === null
-          ? "Pan no is required"
+          ? "PAN no is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : value.length < 10 || value.length > 10
-          ? "Pan no should be of 10 digits"
+          ? "PAN no should be of 10 digits"
           : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
-          ? "Pan no should be of 6 alphabte and 4 digits"
+          ? "PAN no should be of 6 alphabte and 4 digits"
           : "",
     ],
     pan_date: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Pan card date is required"
+          ? "PAN card date is required"
           : "",
     ],
     address: [
@@ -101,36 +101,36 @@ function KycComplianceDetails(props) {
           ? "Cannot use special character "
           : "",
     ],
-    gstin: [
-      (value) =>
-        value === "" || value === null
-          ? ""
-          : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
-          ? "Invalid GSTIN"
-          : "",
-    ],
-    tan_number: [
-      (value) =>
-        value === "" || value === null
-          ? ""
-          : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
-          ? "Invalid TAN"
-          : "",
-    ],
+    // gstin: [
+    //   (value) =>
+    //     value === "" || value === null
+    //       ? ""
+    //       : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
+    //       ? "Invalid GSTIN"
+    //       : "",
+    // ],
+    // tan_number: [
+    //   (value) =>
+    //     value === "" || value === null
+    //       ? ""
+    //       : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
+    //       ? "Invalid TAN"
+    //       : "",
+    // ],
     country: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Country is required"
           : "",
     ],
-    fax_number: [
-      (value) =>
-        value === "" || value === null
-          ? ""
-          : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
-          ? "Invalid Fax"
-          : "",
-    ],
+    // fax_number: [
+    //   (value) =>
+    //     value === "" || value === null
+    //       ? ""
+    //       : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
+    //       ? "Invalid Fax"
+    //       : "",
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
@@ -169,7 +169,7 @@ function KycComplianceDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
       if (responseData.message === "Employee data updated successfully") {
@@ -177,7 +177,7 @@ function KycComplianceDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
     } else {
@@ -239,7 +239,7 @@ function KycComplianceDetails(props) {
                   placeholder="PAN Number"
                   id="pan_no"
                   name="pan_no"
-                  value={state.pan_no  || ""}
+                  value={state.pan_no || ""}
                   onChange={onInputChange}
                   className={
                     errors.pan_no
@@ -329,7 +329,7 @@ function KycComplianceDetails(props) {
                   placeholder="Address"
                   id="address"
                   name="address"
-                  value={state.address  || ""}
+                  value={state.address || ""}
                   onChange={onInputChange}
                   className={
                     errors.address
@@ -363,7 +363,7 @@ function KycComplianceDetails(props) {
                   placeholder="Pincode"
                   id="pincode"
                   name="pincode"
-                  value={state.pincode  || ""}
+                  value={state.pincode || ""}
                   onChange={onInputChange}
                   className={
                     errors.pincode
@@ -394,7 +394,7 @@ function KycComplianceDetails(props) {
                   id="city"
                   name="city"
                   value={state.city || ""}
-                 onChange={onInputChange}
+                  onChange={onInputChange}
                   className={
                     errors.city
                       ? "form-control border border-danger"
@@ -422,7 +422,7 @@ function KycComplianceDetails(props) {
                   placeholder="State"
                   id="state"
                   name="state"
-                  value={state.state || ""} 
+                  value={state.state || ""}
                   onChange={onInputChange}
                   className={
                     errors.state
@@ -442,14 +442,14 @@ function KycComplianceDetails(props) {
                   htmlFor="country"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Country<span className="text-danger"> *</span> :
+                  Country:<span className="text-danger"> *</span>
                 </label>
                 <input
                   type="text"
                   placeholder="State"
                   id="country"
                   name="country"
-                  value={state.country  || ""}
+                  value={state.country || ""}
                   onChange={onInputChange}
                   className={
                     errors.country
@@ -482,7 +482,7 @@ function KycComplianceDetails(props) {
                   placeholder="GSTIN"
                   id="gstin"
                   name="gstin"
-                  value={state.gstin || ""} 
+                  value={state.gstin || ""}
                   onChange={onInputChange}
                   className={
                     errors.gstin
@@ -502,7 +502,7 @@ function KycComplianceDetails(props) {
                   htmlFor="fax_number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Fax Number :
+                  Fax Number:
                 </label>
                 <input
                   type="text"
@@ -534,7 +534,7 @@ function KycComplianceDetails(props) {
                   htmlFor="tan_number"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  TAN Number :
+                  TAN Number:
                 </label>
                 <input
                   type="text"
@@ -564,7 +564,7 @@ function KycComplianceDetails(props) {
                   htmlFor="document"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Document Upload :
+                  Document Upload: <span className="text-danger"> *</span>
                 </label>
                 <input
                   type="file"

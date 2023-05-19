@@ -21,8 +21,8 @@ function Job() {
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [search, setSearch] = useState(""); 
- const [searcherror, setSearchError] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
   /*Function to get the jSon */
@@ -34,8 +34,8 @@ function Job() {
   /*Render function to get the job */
   useEffect(() => {
     JsonData();
-    if((search === "") === true){
-      setSearchError("")
+    if ((search === "") === true) {
+      setSearchError("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -61,20 +61,25 @@ function Job() {
     setShowAddJobsModal(true);
     setJobId(e);
   };
-    /*Function to search the Job */
-    const onSearch = (e) => { setSearch(e.target.value);
-      if(/[-]?\d+(\.\d+)?/.test(search) ){
-        setSearchError("Job can not have a number.")
-      }else if(/[^a-zA-Z0-9]/g.test(search)){
-        setSearchError("Cannot use special character")
-      }else if((search === "") === true){
-        setSearchError("")
-      }}
-    /*Skill Json for not having same data */
-    const Skill = Json.Skill ? Json.Skill.filter((thing, index, self) =>
-    index === self.findIndex((t) => t.value === thing.value)
-    ) : [];
-      
+  /*Function to search the Job */
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+    if (/[-]?\d+(\.\d+)?/.test(search)) {
+      setSearchError("Job can not have a number.");
+    } else if (/[^a-zA-Z0-9]/g.test(search)) {
+      setSearchError("Cannot use special character");
+    } else if ((search === "") === true) {
+      setSearchError("");
+    }
+  };
+  /*Skill Json for not having same data */
+  const Skill = Json.Skill
+    ? Json.Skill.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
+    : [];
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -199,8 +204,8 @@ function Job() {
                         <option value="">Job Location</option>
                         {(FilterJson.location || []).map((data) => {
                           return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
+                            <option value={data} key={data}>
+                              {data}
                             </option>
                           );
                         })}
@@ -218,7 +223,7 @@ function Job() {
                       </CustomButton>
                       {/*<-- Add Job Modal -->*/}
                     </div>
-                <small className="text-danger">{searcherror}</small>
+                    <small className="text-danger">{searcherror}</small>
                   </div>
                 </div>
               </div>

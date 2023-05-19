@@ -22,8 +22,6 @@ function AddFilter(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Filter type is required"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Filter type can not have a number."
           : value.length < 2
           ? "Filter type should have 2 or more letters"
           : /[^a-zA-Z0-9]/g.test(value)

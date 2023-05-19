@@ -6,7 +6,7 @@ import {
   EmployeeEducationDetails,
   AddEmployeeEducation,
   DeleteEmployeeEducation,
-  getJson
+  getJson,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,7 @@ import FilterJson from "../../json/filterjson";
 function Education(props) {
   /*Data states */
   let [educationData, setEducationData] = useState([]);
-  let [EducationList , setEducationList] = useState([])
+  let [EducationList, setEducationList] = useState([]);
   const [apiCall, setApiCall] = useState(false);
   /*Delete Api */
   const [loading, setLoading] = useState(false);
@@ -40,15 +40,15 @@ function Education(props) {
     setLoading(false);
     props.close();
   };
-   /*Function to get the jSon */
- const JsonData=async()=>{
-  let Json = await getJson()
-  setEducationList(Json.Education)
-}
- /*Render method to get the json*/
- useEffect(()=>{
-   JsonData()
- },[apiCall])
+  /*Function to get the jSon */
+  const JsonData = async () => {
+    let Json = await getJson();
+    setEducationList(Json.Education);
+  };
+  /*Render method to get the json*/
+  useEffect(() => {
+    JsonData();
+  }, [apiCall]);
   /*----VALIDATION CONTENT----*/
   const validators = {
     qualification: [
@@ -71,18 +71,18 @@ function Education(props) {
       (value) =>
         value === null || value.trim() === "" ? "Course is required" : null,
     ],
-    specialization: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "Specialization is required"
-          : null,
-    ],
-    institute_location: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "Institute location is required"
-          : null,
-    ],
+    // specialization: [
+    //   (value) =>
+    //     value === null || value.trim() === ""
+    //       ? "Specialization is required"
+    //       : null,
+    // ],
+    // institute_location: [
+    //   (value) =>
+    //     value === null || value.trim() === ""
+    //       ? "Institute location is required"
+    //       : null,
+    // ],
     passing_year: [
       (value) =>
         value === "" || value === null ? "Passing Year is required" : null,
@@ -116,7 +116,7 @@ function Education(props) {
       EducationData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ apiCall, props.employeeId]);
+  }, [apiCall, props.employeeId]);
   /*----LOGIN SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
@@ -131,7 +131,7 @@ function Education(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
-        props.setApiCall(true)
+        props.setApiCall(true);
       }
       if (responseData.message === "Employee data inserted successfully") {
         toast.success("Education Added successfully", {
@@ -141,7 +141,7 @@ function Education(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
-        props.setApiCall(true)
+        props.setApiCall(true);
       } //"
       // handle form submission
     } else {
@@ -169,8 +169,8 @@ function Education(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true)
-      setApiCall(true)
+      props.setApiCall(true);
+      setApiCall(true);
       setDeleteAlert(false);
     }
   }
@@ -268,10 +268,10 @@ function Education(props) {
                   }
                   name="qualification"
                   id="qualification"
-                  value={state.qualification||""}
+                  value={state.qualification || ""}
                   onChange={onInputChange}
                 >
-                  <option value={""}>User Qualification</option>
+                  <option value={""}>Select</option>
                   {(FilterJson.qualification || []).map((data, i) => {
                     return (
                       <option value={data} key={i}>
@@ -305,10 +305,10 @@ function Education(props) {
                   }
                   name="course"
                   id="course"
-                  value={state.course||""}
+                  value={state.course || ""}
                   onChange={onInputChange}
                 >
-                  <option value={""}>Course</option>
+                  <option value={""}>Select</option>
                   {(EducationList || []).map((course) => (
                     <option value={course.value} key={course.id}>
                       {course.value}
@@ -340,7 +340,7 @@ function Education(props) {
                   }
                   name="university_institute"
                   id="university_institute"
-                  value={state.university_institute||""}
+                  value={state.university_institute || ""}
                   onChange={onInputChange}
                 />
                 {/*----ERROR MESSAGE FOR UNIVERSITY----*/}
@@ -358,7 +358,7 @@ function Education(props) {
                   htmlFor="institute_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Institute Location: <span className="text-danger">*</span>
+                  Institute Location:
                 </label>
                 <div className="position-relative">
                   <select
@@ -369,14 +369,14 @@ function Education(props) {
                     }
                     name="institute_location"
                     id="institute_location"
-                    value={state.institute_location||""}
+                    value={state.institute_location || ""}
                     onChange={onInputChange}
                   >
                     <option value={""}>Institute location</option>
-                    {(FilterJson.location || []).map((data) => {
+                    {(FilterJson.location || []).map((data, i) => {
                       return (
-                        <option value={data.value} key={data.id}>
-                          {data.value}
+                        <option value={data} key={i}>
+                          {data}
                         </option>
                       );
                     })}
@@ -397,7 +397,7 @@ function Education(props) {
                   htmlFor="specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialization: <span className="text-danger">*</span>
+                  Specialization:
                 </label>
                 <input
                   className={
@@ -407,7 +407,7 @@ function Education(props) {
                   }
                   name="specialization"
                   id="specialization"
-                  value={state.specialization||""}
+                  value={state.specialization || ""}
                   onChange={onInputChange}
                   placeholder="Specialization"
                 />

@@ -114,7 +114,7 @@ button.btn.action_btn {
     font-weight: 700!important;
     line-height: 1.25;
 }
-.dashboard-main-container .container {
+.dashboard-main-container>.container {
   margin: 0 15px;
   width: calc(100% - 30px);
   border-radius: 10px;
@@ -125,9 +125,7 @@ button.btn.action_btn {
   padding-left: 0;
   padding-right: 0;
 }
-.main_data_table tr{
-  /* border: none!important; */
-}
+
 .main_data_table br{
   display: none;
 }

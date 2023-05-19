@@ -6,7 +6,7 @@ import {
   EmployeeDetails,
   AddEmployeement,
   DeleteEmployeeCareer,
-  getJson
+  getJson,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -14,19 +14,19 @@ import SAlert from "../../common/sweetAlert";
 
 function EmployementDetails(props) {
   /*Data state */
-  let [apiCall , setApiCall] = useState(false)
+  let [apiCall, setApiCall] = useState(false);
   let [employementData, setEmployementData] = useState("");
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   const [loading, setLoading] = useState(false);
-  let [IndustryList , setIndustryList] = useState([])
+  let [IndustryList, setIndustryList] = useState([]);
 
   /*Function to get the jSon */
- const JsonData=async()=>{
-  let Json = await getJson()
-  setIndustryList(Json.Industry)
-}
+  const JsonData = async () => {
+    let Json = await getJson();
+    setIndustryList(Json.Industry);
+  };
 
   /* Functionality to close the modal */
   const close = () => {
@@ -76,29 +76,29 @@ function EmployementDetails(props) {
           ? "Designation should have 2 or more letters"
           : "",
     ],
-    company_location: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "location is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "location can not have a number."
-          : value.length < 2
-          ? "location should have 2 or more letters"
-          : "",
-    ],
-    industry: [(value) => (value ? null : "Industry is required")],
-    functional_area: [(value) => (value ? null : "Area is required")],
+    // company_location: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "location is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "location can not have a number."
+    //       : value.length < 2
+    //       ? "location should have 2 or more letters"
+    //       : "",
+    // ],
+    // industry: [(value) => (value ? null : "Industry is required")],
+    // functional_area: [(value) => (value ? null : "Area is required")],
     start_date: [
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
     ],
     end_date: [(value) => (value === "" ? "End Date is required" : null)],
-    work_level: [
-      (value) =>
-        value === "" || value.trim() === "" ? "Work Level is required" : null,
-    ],
+    // work_level: [
+    //   (value) =>
+    //     value === "" || value.trim() === "" ? "Work Level is required" : null,
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
@@ -122,7 +122,7 @@ function EmployementDetails(props) {
     } else {
       EmployeementData();
     }
-    JsonData()
+    JsonData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
@@ -137,7 +137,7 @@ function EmployementDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
       if (responseData.message === "Employee data updated successfully") {
@@ -145,7 +145,7 @@ function EmployementDetails(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
+        props.setApiCall(true);
         return close();
       }
     } else {
@@ -171,8 +171,8 @@ function EmployementDetails(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true)
-      setApiCall(true)
+      props.setApiCall(true);
+      setApiCall(true);
       setDeleteAlert(false);
     }
   }
@@ -247,14 +247,14 @@ function EmployementDetails(props) {
                   htmlFor="Company"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company<span className="text-danger">*</span>:
+                  Company: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={30}
                   type="text"
                   placeholder="Tell us your company name"
                   name="company"
-                  value={state.company ||""}
+                  value={state.company || ""}
                   onChange={onInputChange}
                   className={
                     errors.company
@@ -278,14 +278,14 @@ function EmployementDetails(props) {
                   htmlFor="designation"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Designation<span className="text-danger">*</span>:
+                  Designation: <span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={30}
                   type="text"
                   placeholder="Tell us your designation / job role"
                   name="designation"
-                  value={state.designation ||""}
+                  value={state.designation || ""}
                   onChange={onInputChange}
                   className={
                     errors.designation
@@ -311,14 +311,14 @@ function EmployementDetails(props) {
                   htmlFor="company_location"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company location <span className="text-danger">*</span>:
+                  Company location:
                 </label>
                 <input
                   type="text"
                   maxLength={30}
                   placeholder="Tell us your employer location"
                   name="company_location"
-                  value={state.company_location ||""}
+                  value={state.company_location || ""}
                   onChange={onInputChange}
                   className={
                     errors.company_location
@@ -342,12 +342,12 @@ function EmployementDetails(props) {
                   htmlFor="industry"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Industry <span className="text-danger">*</span> :
+                  Industry:
                 </label>
                 <div className="position-relative">
                   <select
                     name="industry"
-                    value={state.industry||""}
+                    value={state.industry || ""}
                     onChange={onInputChange}
                     className={
                       errors.industry
@@ -356,14 +356,12 @@ function EmployementDetails(props) {
                     }
                     id="industry"
                   >
-                    <option value={""}>
-                     Industry user company belongs to
-                    </option>
+                    <option value={""}>Industry user company belongs to</option>
                     {(IndustryList || []).map((course) => (
-                    <option value={course.value} key={course.id}>
-                      {course.value}
-                    </option>
-                  ))}
+                      <option value={course.value} key={course.id}>
+                        {course.value}
+                      </option>
+                    ))}
                   </select>
                   {/*----ERROR MESSAGE FOR INDUSTRY----*/}
                   {errors.industry && (
@@ -383,12 +381,12 @@ function EmployementDetails(props) {
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   htmlFor="functional_area"
                 >
-                  Functional Area <span className="text-danger">*</span>:
+                  Functional Area:
                 </label>
                 <div className="position-relative">
                   <input
                     name="functional_area"
-                    value={state.functional_area||""}
+                    value={state.functional_area || ""}
                     onChange={onInputChange}
                     className={
                       errors.functional_area
@@ -414,20 +412,21 @@ function EmployementDetails(props) {
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   htmlFor="work_level"
                 >
-                  Work level<span className="text-danger">*</span> :
+                  Work level:
                 </label>
                 <input
                   name="work_level"
-                  value={state.work_level ||""}
+                  value={state.work_level || ""}
                   onChange={onInputChange}
                   className={
                     errors.work_level
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="work_level" placeholder="Work Level"
-               />
-                 
+                  id="work_level"
+                  placeholder="Work Level"
+                />
+
                 {/*----ERROR MESSAGE FOR LEVEL----*/}
                 {errors.work_level && (
                   <span
@@ -453,7 +452,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Joining "
                   name="start_date"
-                  value={state.start_date ||""}
+                  value={state.start_date || ""}
                   onChange={onInputChange}
                   className={
                     errors.start_date
@@ -484,7 +483,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
-                  value={state.end_date ||""}
+                  value={state.end_date || ""}
                   onChange={onInputChange}
                   className={
                     errors.end_date

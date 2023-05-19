@@ -94,249 +94,188 @@ function Interview(props) {
         />
       ) : null}
 
-      <div className="bg-white site-wrapper overflow-hidden bg-default-2">
-        <div className="mt-5" id="dashboard-body">
-          <div className="container p-0">
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
-                <div className="page___heading">
-                  <h3 className="font-size-6 mb-0">Interview</h3>
-                </div>
-                {/* <div className="row m-0 align-items-center"> */}
-                {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                  <p className="input_label">Search by name:</p>
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder={"Search Category"}
-                    value={search}
-                    name={"category_name"}
-                    onChange={(e) => onSearch(e)}
-                  />
-                </div> */}
-                {/* <div className="col-xl-3 col-md-6 form_control mb-5 mt-4">
-                    <p className="input_label">Filter by Duration:</p>
-                    <div className="select_div">
-                      <select
-                        name="category"
-                        //   value={categoryTypeFilterValue}
-                        id="category"
-                        //   onChange={onCategoryTypeFilterChange}
-                        className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
-                      >
-                        <option value={""}>Select Duration</option>
-                        {(FilterJson.Duration || []).map((data, i) => {
-                          return (
-                            <option value={data} key={i}>
-                              {data}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div> */}
-                {/* <div className="text-end px-6 col-xl-6">
-                  <div className="float-md-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      //   onClick={() => editInterview("0")}
-                    >
-                      Add category
-                    </CustomButton>
-                  </div>
-                </div> */}
-                {/* </div> */}
-              </div>
-              <div
-                className={
-                  props.heading === "Dashboard"
-                    ? ""
-                    : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
-                }
-              >
-                <div className="table-responsive ">
-                  <table className="table table-striped main_data_table">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("name")}
-                            className="text-gray"
-                            title="Sort by Name"
-                          >
-                            Name
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("job_title")}
-                            className="text-gray"
-                            title="Sort by Job"
-                          >
-                            Applied Job
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("company_name")}
-                            className="text-gray"
-                            title="Sort by Company"
-                          >
-                            Company Name
-                          </Link>
-                        </th>
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
-                          <th
-                            scope="col"
-                            className="border-0 font-size-4 font-weight-normal"
-                          >
-                            <Link
-                              to={""}
-                              onClick={() => handleSort("skill")}
-                              className="text-gray"
-                              title="Sort by Skill"
-                            >
-                              Skill
-                            </Link>
-                          </th>
-                        )}
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => handleSort("interview_date")}
-                            className="text-gray"
-                            title="Sort by Date"
-                          >
-                            Interview date
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          Interview
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Map function to show the data in the list*/}
-                      {totalData === 0 || interviewData.length === 0 ? (
-                        <tr>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white">No Data Found</th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                        </tr>
-                      ) : (
-                        (interviewData || []).map((data) => (
-                          <tr className="" key={data.id}>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.name}
-                              </div>
-                            </th>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.job_title}
-                              </div>
-                            </th>
-                            <th scope="row" className="py-5 ">
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                {data.company_name}
-                              </div>
-                            </th>
-                            {props.heading === "Dashboard" ? (
-                              ""
-                            ) : (
-                              <th scope="row" className="py-5 ">
-                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {data.skill}
-                                </div>
-                              </th>
-                            )}
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {data.interview_date}
-                              </h3>
-                            </th>
-                            <th className="  py-5 ">
-                              <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                              {data.interview_date === null ? (
-                                <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Not Schedule
-                                </span>    
-                              ) : (
-                                <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                  Schedule
-                                </span>
-                              )}</p>
-                           </th>
-                            <th className="py-5 ">
-                              <div
-                                className="btn-group button_group"
-                                role="group"
-                              >
-                                <button
-                                  className="btn btn-outline-info action_btn "
-                                  style={{ fontSize: "10px" }}
-                                  onClick={() => editInterview(data)}
-                                  title=" Reschedule Interview"
-                                >
-                                  Reschedule
-                                </button>
-                              </div>
-                            </th>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="pt-2">
-                  <Pagination
-                    nPages={nPages}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                  />
-                </div>
-              </div>
-            </div>
+      <div className="mb-18">
+        <div className="mb-4 align-items-center">
+          <div className="page___heading">
+            <h3 className="font-size-6 mb-0">Interview</h3>
           </div>
-          {/* <SAlert
-          show={deleteAlert}
-          title={deleteName}
-          text="Are you Sure you want to delete !"
-          onConfirm={() => deleteCategory(deleteId)}
-          showCancelButton={true}
-          onCancel={CancelDelete}
-        /> */}
+        </div>
+        <div
+          className={
+            props.heading === "Dashboard"
+              ? ""
+              : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
+          }
+        >
+          <div className="table-responsive ">
+            <table className="table table-striped main_data_table">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => handleSort("name")}
+                      className="text-gray"
+                      title="Sort by Name"
+                    >
+                      Name
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => handleSort("job_title")}
+                      className="text-gray"
+                      title="Sort by Job"
+                    >
+                      Applied Job
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => handleSort("company_name")}
+                      className="text-gray"
+                      title="Sort by Company"
+                    >
+                      Company Name
+                    </Link>
+                  </th>
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => handleSort("skill")}
+                        className="text-gray"
+                        title="Sort by Skill"
+                      >
+                        Skill
+                      </Link>
+                    </th>
+                  )}
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => handleSort("interview_date")}
+                      className="text-gray"
+                      title="Sort by Date"
+                    >
+                      Interview date
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    Interview
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Map function to show the data in the list*/}
+                {totalData === 0 || interviewData.length === 0 ? (
+                  <tr>
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
+                    <th className="bg-white">No Data Found</th>
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
+                  </tr>
+                ) : (
+                  (interviewData || []).map((data) => (
+                    <tr className="" key={data.id}>
+                      <th scope="row" className="py-5 ">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {data.name}
+                        </div>
+                      </th>
+                      <th scope="row" className="py-5 ">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {data.job_title}
+                        </div>
+                      </th>
+                      <th scope="row" className="py-5 ">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {data.company_name}
+                        </div>
+                      </th>
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th scope="row" className="py-5 ">
+                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            {data.skill}
+                          </div>
+                        </th>
+                      )}
+                      <th className=" py-5">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {data.interview_date}
+                        </h3>
+                      </th>
+                      <th className="  py-5 ">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                          {data.interview_date === null ? (
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Not Schedule
+                            </span>
+                          ) : (
+                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                              Schedule
+                            </span>
+                          )}
+                        </p>
+                      </th>
+                      <th className="py-5 ">
+                        <div className="btn-group button_group" role="group">
+                          <button
+                            className="btn btn-outline-info action_btn "
+                            style={{ fontSize: "10px" }}
+                            onClick={() => editInterview(data)}
+                            title=" Reschedule Interview"
+                          >
+                            Reschedule
+                          </button>
+                        </div>
+                      </th>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="pt-2">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
         </div>
       </div>
     </>

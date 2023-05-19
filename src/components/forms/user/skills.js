@@ -4,7 +4,8 @@ import useValidation from "../../common/useValidation";
 import {
   EmployeeSkillDetails,
   AddEmployeeSkill,
-  DeleteEmployeeSkill, getJson
+  DeleteEmployeeSkill,
+  getJson,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,8 +20,8 @@ function Skills(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  let [SkillList , setSkillList] = useState([])
-  let [SkillOption , setSkillOption] = useState([])
+  let [SkillList, setSkillList] = useState([]);
+  let [SkillOption, setSkillOption] = useState([]);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -42,8 +43,6 @@ function Skills(props) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Skills / Software Name is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 3
           ? "Skills / Software Name should have 3 or more letter"
           : /[-]?\d+(\.\d+)?/.test(value)
@@ -52,24 +51,21 @@ function Skills(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state,
-    setState,
-    errors,
-    setErrors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, errors, setErrors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
   // API CALL
   const SkillData = async () => {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);
-    let SkillList = await getJson()
-    setSkillList(SkillList.Skill)
-    
+    let SkillList = await getJson();
+    setSkillList(SkillList.Skill);
+
     if (SkillDetails.data.skill.length === 0) {
       SetSkillData([]);
     } else {
       SetSkillData(SkillDetails.data.skill);
-    }    
+    }
   };
   useEffect(() => {
     if (props.employeeId !== undefined) {
@@ -78,23 +74,23 @@ function Skills(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
-    /*Function to set data to the search job by country */
-    const onSelectChange = (option) => {      
-      setState({ ...state, skill: option.value });
-    };
+  /*Function to set data to the search job by country */
+  const onSelectChange = (option) => {
+    setState({ ...state, skill: option.value });
+  };
 
-     /*Function to redender the data in the option of the select box*/
-    useEffect(() => {
-      const options = (SkillList || []).map((option) => ({
-        value: option.value,
-        label: option.value,
-      }));
-      
-      setSkillOption({ ...state, skill: options });
-    }, [SkillList]);
+  /*Function to redender the data in the option of the select box*/
+  useEffect(() => {
+    const options = (SkillList || []).map((option) => ({
+      value: option.value,
+      label: option.value,
+    }));
+
+    setSkillOption({ ...state, skill: options });
+  }, [SkillList]);
 
   // USER SKILLS SUBMIT BUTTON
-  const onUserSkillsClick = async (event) => {    
+  const onUserSkillsClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -107,7 +103,7 @@ function Skills(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
-        props.setApiCall(true)
+        props.setApiCall(true);
       }
     } else {
       setLoading(false);
@@ -133,7 +129,7 @@ function Skills(props) {
         autoClose: 1000,
       });
       props.setApiCall(true);
-      setApiCall(true)
+      setApiCall(true);
       setDeleteAlert(false);
     }
   }
@@ -179,12 +175,13 @@ function Skills(props) {
                 onChange={onInputChange}
               />{" "} */}
               <Select
-                options={"" || SkillOption}
+                options={"" || SkillOption.skill}
                 name="skill"
                 id="skill"
                 onChange={onSelectChange}
                 className={
-                  errors.skill ? "border border-danger w-100" : "w-100"}
+                  errors.skill ? "border border-danger w-100" : "w-100"
+                }
               />
               {loading === true ? (
                 <button

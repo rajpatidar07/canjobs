@@ -88,22 +88,22 @@ function AddJobModal(props) {
     experience_required: [
       (value) => (value === "" ? "Experienceis required" : null),
     ],
-    salary: [
-      (value) =>
-        value === "" || value.trim() === "" ? "Salary is required" : null,
-    ],
+    // salary: [
+    //   (value) =>
+    //     value === "" || value.trim() === "" ? "Salary is required" : null,
+    // ],
     location: [
       (value) =>
         value === "" || value.trim() === "" ? "Location is required" : null,
     ],
-    industry_type: [
-      (value) =>
-        value === ""
-          ? "Industry type Type is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : null,
-    ],
+    // industry_type: [
+    //   (value) =>
+    //     value === ""
+    //       ? "Industry type Type is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : null,
+    // ],
 
     apply_link: [
       (value) =>
@@ -117,46 +117,46 @@ function AddJobModal(props) {
           ? "Apply link  should have 3 or more letters"
           : null,
     ],
-    job_description: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Job Description is required"
-          : value.length < 3
-          ? "Job Description  should have 3 or more letters"
-          : null,
-    ],
-    your_duties: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Your duties is required"
-          : value.length < 2
-          ? "Duties  should have 2 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Duties can not have a number."
-          : "",
-    ],
-    requirement: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Job requirement is required"
-          : value.length < 2
-          ? "Requirement  should have 2 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Requirement can not have a number."
-          : "",
-    ],
-    department: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Department is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Department  should have 2 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Department can not have a number."
-          : "",
-    ],
+    // job_description: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Job Description is required"
+    //       : value.length < 3
+    //       ? "Job Description  should have 3 or more letters"
+    //       : null,
+    // ],
+    // your_duties: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Your duties is required"
+    //       : value.length < 2
+    //       ? "Duties  should have 2 or more letters"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Duties can not have a number."
+    //       : "",
+    // ],
+    // requirement: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Job requirement is required"
+    //       : value.length < 2
+    //       ? "Requirement  should have 2 or more letters"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Requirement can not have a number."
+    //       : "",
+    // ],
+    // department: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Department is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : value.length < 2
+    //       ? "Department  should have 2 or more letters"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Department can not have a number."
+    //       : "",
+    // ],
     job_type: [
       (value) =>
         value === "" || value.trim() === "" ? "Job Type is required" : null,
@@ -167,39 +167,39 @@ function AddJobModal(props) {
     //       ? "role_category/Category is required"
     //       : null,
     // ],
-    education: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Education is required"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Education can not have a number."
-          : "",
-    ],
-    language: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Language is required"
-          : value.length < 3
-          ? "Language  should have 3 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Language can not have a number."
-          : "",
-    ],
-    keyskill: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Skill is required"
-          : value.length < 3
-          ? "Skill  should have 3 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Skill can not have a number."
-          : "",
-    ],
+    // education: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Education is required"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Education can not have a number."
+    //       : "",
+    // ],
+    // language: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Language is required"
+    //       : value.length < 3
+    //       ? "Language  should have 3 or more letters"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Language can not have a number."
+    //       : "",
+    // ],
+    // keyskill: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Skill is required"
+    //       : value.length < 3
+    //       ? "Skill  should have 3 or more letters"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Skill can not have a number."
+    //       : "",
+    // ],
 
-    employement: [
-      (value) =>
-        value === "" || value.trim() === "" ? "employement is required" : null,
-    ],
+    // employement: [
+    //   (value) =>
+    //     value === "" || value.trim() === "" ? "employement is required" : null,
+    // ],
     job_category_id: [
       (value) =>
         value === "" || value.trim() === "" ? "Job category is required" : null,
@@ -211,14 +211,8 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   // eslint-disable-next-line no-unused-vars
-  const {
-    state,
-    setErrors,
-    setState,
-    onInputChange,
-    errors,
-    validate,
-  } = useValidation(initialFormState, validators);
+  const { state, setErrors, setState, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
@@ -439,7 +433,7 @@ function AddJobModal(props) {
                   htmlFor="industry_type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Industry Type:<span className="text-danger"> *</span>
+                  Industry Type:
                 </label>
                 <div className="position-relative">
                   <select
@@ -515,7 +509,7 @@ function AddJobModal(props) {
                   htmlFor="salary"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Salary:<span className="text-danger"> *</span>
+                  Salary:
                 </label>
                 <select
                   maxLength={9}
@@ -567,9 +561,9 @@ function AddJobModal(props) {
                   id="location"
                 >
                   <option value={""}>Select location</option>
-                  {(FilterJson.location || []).map((location) => (
-                    <option key={location.id} value={location.value}>
-                      {location.value}
+                  {(FilterJson.location || []).map((location, i) => (
+                    <option key={i} value={location}>
+                      {location}
                     </option>
                   ))}
                 </select>
@@ -623,7 +617,7 @@ function AddJobModal(props) {
                   htmlFor="job_description"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Job Description: <span className="text-danger">*</span>
+                  Job Description:
                 </label>
                 <div className="position-relative">
                   <div
@@ -676,7 +670,7 @@ function AddJobModal(props) {
                   htmlFor="your_duties"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Your Duties: <span className="text-danger">*</span>
+                  Your Duties:
                 </label>
                 <div className="position-relative">
                   <div
@@ -726,7 +720,7 @@ function AddJobModal(props) {
                   htmlFor="requirement"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  Requirement: <span className="text-danger">*</span>
+                  Requirement:
                 </label>
                 <div className="position-relative">
                   <div
@@ -778,7 +772,7 @@ function AddJobModal(props) {
                   htmlFor="department"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Department:<span className="text-danger"> *</span>
+                  Department:
                 </label>
                 <div className="position-relative">
                   <input
@@ -882,7 +876,7 @@ function AddJobModal(props) {
                   htmlFor="education"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Education:<span className="text-danger"> *</span>
+                  Education:
                 </label>
                 <div className="position-relative">
                   <select
@@ -906,12 +900,12 @@ function AddJobModal(props) {
                   </select>
                 </div>
                 {/*----ERROR MESSAGE FOR job_type----*/}
-                {errors.job_type && (
+                {errors.Education && (
                   <span
-                    key={errors.job_type}
+                    key={errors.Education}
                     className="text-danger font-size-3"
                   >
-                    {errors.job_type}
+                    {errors.Education}
                   </span>
                 )}
               </div>
@@ -922,7 +916,7 @@ function AddJobModal(props) {
                   htmlFor="language"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Language:<span className="text-danger"> *</span>
+                  Language:
                 </label>
                 <div className="position-relative">
                   <select
@@ -960,7 +954,7 @@ function AddJobModal(props) {
                   htmlFor="keyskill"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Key Skill:<span className="text-danger"> *</span>
+                  Key Skill:
                 </label>
                 <div className="position-relative">
                   <select
@@ -997,7 +991,7 @@ function AddJobModal(props) {
                   htmlFor="employement"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Employement:<span className="text-danger"> *</span>
+                  Employement:
                 </label>
                 <div className="position-relative">
                   <select

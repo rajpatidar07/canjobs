@@ -1,15 +1,15 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { DeleteFilter, GetFilter } from "../../api/api";
-import { ToastContainer ,toast  } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import AddFilter from "../forms/admin/FilterForm";
 function FilterList() {
   /*States */
-  let [apiCall,setApiCall] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
   const [filterData, setFilterData] = useState([]);
   /*delete states */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -48,7 +48,6 @@ function FilterList() {
   };
   /*To call Api to delete category */
   async function deleteFilter(e, f) {
-
     /*Function to delete the filter */
     const responseData = await DeleteFilter(e, f);
     if (responseData.message === "List item has been deleted") {
@@ -56,7 +55,7 @@ function FilterList() {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true)
+      setApiCall(true);
       setDeleteAlert(false);
     }
   }
@@ -82,48 +81,48 @@ function FilterList() {
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
                 <div className="row">
                   {/* <!-- Skill Filter List --> */}
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Skill
                         </h4>
-                        
-                        <AddFilter apiCall={apiCall} setApiCall={setApiCall} id={1} />
-                         <ul className="row m-0 p-0">
-                         {filterData.length === 0 ? (
+
+                        <AddFilter
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
+                          id={1}
+                        />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Skill || []).map((data ,i) =>
-                            (
-                               <React.Fragment key={data.id}>
-                                   <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={data.id}
-                                        >
-                                         {data.value}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(data, 1)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                            )
+                            (filterData.Skill || []).map((data, i) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 1)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
                           )}
                         </ul>
                       </div>
                     </div>
                   </div>
                   {/* <!-- Industry Filter List --> */}
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -131,38 +130,32 @@ function FilterList() {
                         </h4>
                         <AddFilter setApiCall={() => setApiCall(true)} id={4} />
                         <ul className="row m-0 p-0">
-                        {filterData.length === 0 ? (
+                          {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Industry || []).map((data ,i) =>
-                            (
-                               <React.Fragment key={data.id}>
-                                   <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                        >
-                                         {data.value}
-                                         <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(data, 4)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                          
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                            )
-                          )}</ul>
+                            (filterData.Industry || []).map((data, i) => (
+                              <React.Fragment key={data.id}>
+                                <li className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 4)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
                       </div>
                     </div>
                   </div>
                   {/* <!-- Education Filter List --> */}
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -173,35 +166,31 @@ function FilterList() {
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Education || []).map((data ) =>
-                            (
-                               <React.Fragment key={data.id}>
-                                   <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={data.id}
-                                        >
-                                         {data.value}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(data, 5)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                            )
+                            (filterData.Education || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 5)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
                           )}
                         </ul>
                       </div>
                     </div>
                   </div>
-                  {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -241,7 +230,7 @@ function FilterList() {
                       </div>
                     </div>
                   </div> */}
-                  {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -285,7 +274,7 @@ function FilterList() {
                     </div>
                   </div> */}
                   {/* <!-- Corporation Filter List --> */}
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -296,37 +285,32 @@ function FilterList() {
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Corporation || []).map((data ,i) =>
-                               (
-                                      <React.Fragment key={data.id}>
-                                        <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={data.id}
-                                        >
-                                          {data.value}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(data, 6)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                               
-                            )
+                            (filterData.Corporation || []).map((data, i) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 6)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
                           )}
                         </ul>
                       </div>
                     </div>
                   </div>
                   {/* <!-- Language Filter List --> */}
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -337,33 +321,27 @@ function FilterList() {
                           {filterData.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Language || []).map((data ) =>
-                               (
-                                      <React.Fragment key={data.id}>
-                                        <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={data.id}
-                                        >
-                                          {data.value}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(data, 7)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                               
-                            )
+                            (filterData.Language || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 7)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
                           )}
                         </ul>
-                       
                       </div>
                     </div>
                   </div>

@@ -25,7 +25,7 @@ function Followup() {
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,10 +35,10 @@ function Followup() {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [responseId, setresponseId] = useState();
   /*Function to get the jSon */
- const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
 
   /* Function to get Job data*/
   const JobData = async () => {
@@ -69,12 +69,13 @@ function Followup() {
   /*Render function to get the job */
   useEffect(() => {
     JobData();
-    JsonData()
+    JsonData();
     if (apiCall === true || catapiCall === true) {
       setCatApiCall(false);
       setApiCall(false);
-    }if((search === "") === true){
-      setSearchError("")
+    }
+    if ((search === "") === true) {
+      setSearchError("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -105,14 +106,16 @@ function Followup() {
     setcolumnName(columnName);
   };
   /*Function to Search Follow up */
- const onSearch = (e) => { setSearch(e.target.value);
-  if(/[-]?\d+(\.\d+)?/.test(search) ){
-    setSearchError("Admin Name can not have a number.")
-  }else if(/[^a-zA-Z0-9]/g.test(search)){
-    setSearchError("Cannot use special character")
-  }else if(search === ""){
-    setSearchError("")
-  }}
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+    if (/[-]?\d+(\.\d+)?/.test(search)) {
+      setSearchError("Admin Name can not have a number.");
+    } else if (/[^a-zA-Z0-9]/g.test(search)) {
+      setSearchError("Cannot use special character");
+    } else if (search === "") {
+      setSearchError("");
+    }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -165,10 +168,7 @@ function Followup() {
                         <option value="">Select Category</option>
                         {(Json.Category || []).map((data) => {
                           return (
-                            <option
-                              value={data.id}
-                              key={data.value}
-                            >
+                            <option value={data.id} key={data.value}>
                               {data.value}
                             </option>
                           );
@@ -227,10 +227,10 @@ function Followup() {
                         className=" form-control"
                       >
                         <option value="">Select Location</option>
-                        {(FilterJson.location || []).map((data) => {
+                        {(FilterJson.location || []).map((data, i) => {
                           return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
+                            <option value={data} key={i}>
+                              {data}
                             </option>
                           );
                         })}
