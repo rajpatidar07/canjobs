@@ -279,6 +279,10 @@ left: 0;
 }
 
 /* JOB FILTER BOX */
+.job_filter_card_home{
+  max-width: 60%;
+  min-width: 100px
+}
 .job_filter_card_home .card-body {
   display: -webkit-box;
   -webkit-line-clamp: 3;

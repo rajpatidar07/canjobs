@@ -26,18 +26,31 @@ function Filterbox(props) {
         <h6 className="card-title text-dark text-left mb-4 w-100">
           {props.filterheading}
         </h6>
-        {(props.filterjson || []).map((data, i) => {
-          return (
-            <button
-              key={i}
-              type="button"
-              className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-              onClick={() => OnFIlterClick(data)}
-            >
-              {data}
-            </button>
-          );
-        })}
+        {props.type === "category"
+          ? (props.filterjson || []).map((data, i) => {
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
+                  onClick={() => OnFIlterClick(data.id)}
+                >
+                  {data.value}
+                </button>
+              );
+            })
+          : (props.filterjson || []).map((data, i) => {
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
+                  onClick={() => OnFIlterClick(data)}
+                >
+                  {data}
+                </button>
+              );
+            })}
       </div>
     </div>
   );

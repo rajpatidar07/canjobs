@@ -105,11 +105,13 @@ function SearchForm() {
             name="country"
             filterheading=" Jobs by Location"
             filterjson={filterjson.location}
+            type={"location"}
           />
           <Filterbox
             name="category"
             filterheading=" Jobs by Category"
             filterjson={Json.Category}
+            type={"category"}
           />
         </div>
       </div>
