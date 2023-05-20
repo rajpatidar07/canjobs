@@ -30,13 +30,14 @@ const AdminSidebar = (props) => {
             <img src="image/logo-main-black.png" alt="" />
           </Link>
         </div>
-        <ul className="list-unstyled dashboard-layout-sidebar mt-10">
+        <div className="my-9 px-11"></div>
+        <ul className="list-unstyled dashboard-layout-sidebar">
           <li className={props.heading === "Dashboard" ? "active" : ""}>
             <Link
               to="/dashboard"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="icon icon-layout-11 mr-7"></i><span className="px-2">Dashboard</span>
+              <i className="fab fa-blackberry mr-5"></i>Dashboard
             </Link>
           </li>
           <li className={props.heading === "Manage Applicants" ? "active" : ""}>
@@ -44,8 +45,7 @@ const AdminSidebar = (props) => {
               to="/employee"
               className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-users mr-7"></i>
-              <span className="px-2">Manage Applicants</span>
+              <i className="far fa-user mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
@@ -53,8 +53,7 @@ const AdminSidebar = (props) => {
               to="/employer"
               className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-users mr-7"></i>
-              <span className="px-2">Manage Companies</span>
+              <i className="far fa-building mr-5"></i>Manage Companies
             </Link>
           </li>
           <li className={props.heading === "Manage Jobs" ? "active" : ""}>
@@ -62,8 +61,7 @@ const AdminSidebar = (props) => {
               to="/job"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-briefcase mr-7">
-                </i><span className="px-2">Manage Jobs</span>
+              <i className="far fa-address-card mr-5"></i>Manage Jobs
             </Link>
           </li>
           <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
@@ -71,8 +69,7 @@ const AdminSidebar = (props) => {
               to="/followup"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-7"></i>
-              <span className="px-2">Manage Follow-ups</span>
+              <i className="far fa-comments mr-5"></i>Manage Follow-ups
             </Link>
           </li>
           <li className={props.heading === "Interview" ? "active" : ""}>
@@ -80,8 +77,7 @@ const AdminSidebar = (props) => {
               to="/interview"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-podcast mr-7"></i>
-              <span className="px-2">Manage Interview</span>
+              <i className="fas fa-podcast mr-5"></i>Manage Interview
             </Link>
           </li>
           <li className={props.heading === "Response" ? "active" : ""}>
@@ -89,8 +85,7 @@ const AdminSidebar = (props) => {
               to="/responses"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-reply mr-7"></i>
-              <span className="px-2">Manage Response</span>
+              <i className="fas fa-reply mr-5"></i>Manage Response
             </Link>
           </li>
           <li className={props.heading === "Manage Category" ? "active" : ""}>
@@ -98,8 +93,7 @@ const AdminSidebar = (props) => {
               to="/category"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-qrcode mr-7"></i>
-              <span className="px-2">Manage Job Category</span>
+              <i className="fas fa-qrcode mr-5"></i>Manage Job Category
             </Link>
           </li>
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
@@ -107,8 +101,7 @@ const AdminSidebar = (props) => {
               to="/adminprofile"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-user mr-7"></i> 
-              <span className="px-2">Manage Admin</span>
+              <i className="fas fa-user mr-5"></i>Manage Admin
             </Link>
           </li>
           <li className={props.heading === "Filter List" ? "active" : ""}>
@@ -116,8 +109,7 @@ const AdminSidebar = (props) => {
               to="/filter"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-filter mr-7"></i>
-              <span className="px-2">Manage Filter List</span>
+              <i className="fas fa-filter mr-5"></i>Manage Filter List
             </Link>
           </li>
         </ul>
