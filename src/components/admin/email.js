@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { ToastContainer } from "react-toastify";
 import { GetAllEmailTemplate } from "../../api/api";
-import { Pagination } from "react-bootstrap";
+// import { Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ManageEmail from "../forms/admin/manageemail";
 

@@ -143,16 +143,16 @@ function AddCategory(props) {
             <div className="form-group row mb-0 mt-5">
               <label
                 htmlFor="category_type"
-                className="font-size-4 text-black-2  line-height-reset"
+                className="font-size-4 text-black-2 mx-6 line-height-reset"
               >
-                Add Category Type <span className="text-danger">*</span> :
+                Category Type <span className="text-danger">*</span> :
               </label>
               <select
                 name="category_type"
                 className={
                   errors.category_type
-                    ? "form-control mx-5 border border-danger"
-                    : "form-control mx-5"
+                    ? "form-control mx-6 border border-danger"
+                    : "form-control mx-6"
                 }
                 value={state.job_category_id}
                 onChange={onSelectChange}

@@ -351,8 +351,8 @@ function CompanyDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.industry
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control px-5 border border-danger"
+                      : "form-control px-5"
                   }
                   id="industry"
                 >

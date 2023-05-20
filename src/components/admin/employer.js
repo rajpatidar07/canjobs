@@ -96,12 +96,12 @@ function Employer() {
                 {/* <!-- Employer Search and Filter --> */}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search Employer:</p>
+                    <p className="input_label">Search:</p>
                     <input
                       required
                       type="text"
                       className="form-control"
-                      placeholder={"Search Employer"}
+                      placeholder={"Company name"}
                       value={search}
                       name={"Employer_name"}
                       onChange={(e) => onSearch(e)}

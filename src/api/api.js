@@ -489,7 +489,7 @@ export const GetAllJobs = async (
 };
 /*Add Job  Api */
 export const AddJob = async (props) => {
-  console.log(props);
+  // console.log(props);
 
   const response = await axios.put(`${API_URL}addJobs`, props, {
     headers: {

@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import {
-  AdminDetails,
-  AddAdmin,
+  // AdminDetails,
+  // AddAdmin,
   AddUpdateEmailTemplate,
 } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ManageEmail(props) {
-  let [already, setAlready] = useState("");
+  // let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
   /*Function to show hide password */
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  // const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   /* Functionality to close the modal */
   const close = () => {
@@ -23,7 +23,7 @@ function ManageEmail(props) {
     setErrors("");
     props.close();
     setLoading(false);
-    setAlready("");
+    // setAlready("");
   };
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -80,10 +80,10 @@ function ManageEmail(props) {
         // props.setApiCall(true);
         return close();
       }
-      if (responseData.message === "Admin already exists") {
-        setAlready("Admin already exists");
-        setLoading(false);
-      }
+      // if (responseData.message === "Admin already exists") {
+      //   setAlready("Admin already exists");
+      //   setLoading(false);
+      // }
     } else {
       setLoading(false);
     }
