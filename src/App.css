@@ -244,8 +244,9 @@ header.site-header.admin_header {
   border-top: 3px solid #00b074;
 }
 .show-gr-dropdown .gr-menu-dropdown.dropdown-right {
-right: 0;
-left: 0;
+  right: -12px;
+  left: unset;
+  top: 100%;
 }
 /* Border Radius css */
 
