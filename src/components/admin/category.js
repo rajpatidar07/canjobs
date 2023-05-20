@@ -4,12 +4,12 @@ import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
-import { DeleteJobCategory, getAllJobsCategory } from "../../api/api";
+import { DeleteJobCategory, getAllJobsCategory , getJson } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-import FilterJson from "../json/filterjson";
+// import FilterJson from "../json/filterjson";
 import AddCategoryType from "../forms/admin/categoryType";
 function Category() {
   /*Modal and Data states */
@@ -19,6 +19,7 @@ function Category() {
   const [categoryData, setCategoryData] = useState([]);
   const [categoryTypeData, setCategoryTypeData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
+  const [CateType, setCateType] = useState([]);
   /*Delete Category states */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -38,6 +39,11 @@ function Category() {
   const [columnName, setcolumnName] = useState("job_category_id");
   const [sortOrder, setSortOrder] = useState("DESC");
 
+  /*Function to get thejSon */
+ const JsonData = async()=>{
+  let Json = await getJson()
+  setCateType(Json.Category_type)
+}
   /* Function to get the job category data*/
   const CategoryData = async () => {
     const userData = await getAllJobsCategory(
@@ -63,7 +69,6 @@ function Category() {
       }
     }
   };
-
   /* Function to get the job category Type data*/
   const CategoryTypeData = async () => {
     const userData = await getAllJobsCategory(
@@ -85,6 +90,7 @@ function Category() {
   /*Render function to get the job category*/
   useEffect(() => {
     CategoryData();
+    JsonData()
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -181,6 +187,12 @@ function Category() {
     setcolumnName(columnName);
   };
 
+  /*Category type function to filter data for not having same data */
+  // const FilterByType = CateType ? CateType.filter((thing, index, self) =>
+  // index === self.findIndex((t) => t.value === thing.value)
+  // ) : [];
+  // console.log(Type)
+  
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -237,10 +249,10 @@ function Category() {
                     className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
                   >
                     <option value={""}>Select category type</option>
-                    {(FilterJson.category || []).map((data, i) => {
+                    {(CateType || []).map((data, i) => {
                       return (
-                        <option value={data} key={i}>
-                          {data}
+                        <option value={data.value} key={data.id}>
+                          {data.value}
                         </option>
                       );
                     })}

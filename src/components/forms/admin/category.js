@@ -23,6 +23,7 @@ function AddCategory(props) {
     category_name: "",
     category_type: "",
     parent_id: "",
+    job_category_id : ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -66,6 +67,8 @@ function AddCategory(props) {
       job_category_id: state.job_category_id,
     });
   };
+  console.log(state)
+  
   // API CALL
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
@@ -115,7 +118,8 @@ function AddCategory(props) {
   const CategoryType = catType.filter(
     (thing, index, self) =>
       index === self.findIndex((t) => t.category_type === thing.category_type)
-  );
+  );console.log(CategoryType)
+  
   return (
     <>
       <Modal
@@ -154,12 +158,12 @@ function AddCategory(props) {
                     ? "form-control mx-6 border border-danger"
                     : "form-control mx-6"
                 }
-                value={state.job_category_id}
+                value={state.parent_id}
                 onChange={onSelectChange}
                 id="category_type"
               >
-                <option value={""}>Select category</option>
-                {(CategoryType || []).map((data) => {
+                <option >Select category</option>
+                {(catType || []).map((data) => {
                   return data.parent_id === "0" ? (
                     <option
                       value={data.job_category_id}
