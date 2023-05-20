@@ -79,8 +79,6 @@ function KycComplianceDetails(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Address is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
           : value.length < 5
           ? "Address should be of 5  or more letters"
           : "",
