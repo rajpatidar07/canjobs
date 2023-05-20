@@ -6,7 +6,6 @@ import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
 
-// eslint-disable-next-line no-use-before-define
 function EmployeeHomePage() {
   //   const [JobDetail, setJobDetail] = useState([]);
 
