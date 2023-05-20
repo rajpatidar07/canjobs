@@ -18,12 +18,12 @@ function SearchForm() {
     country: "",
     country_value: country ? country : "",
   });
- let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Function to get thejSon */
- const JsonData = async () =>{
-   let Json = await getJson()
-   setJson(Json)
- }
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
   let navigate = useNavigate();
   /*Function to set data to the search job by country */
   const onSelectChange = (option) => {
@@ -32,7 +32,7 @@ function SearchForm() {
 
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
-    JsonData()
+    JsonData();
     const options = (FilterJson.location || []).map((option) => ({
       value: option,
       label: option,
@@ -84,7 +84,7 @@ function SearchForm() {
                 onChange={onSelectChange}
                 className="bg-white pl-13"
               />
-             
+
               <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                 <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
               </span>

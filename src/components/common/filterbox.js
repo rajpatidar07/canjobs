@@ -21,20 +21,20 @@ function Filterbox(props) {
     }
   };
   return (
-    <div className="job_filter_card">
+    <div className="job_filter_card job_filter_card_home">
       <div className="card-body row m-0 p-2">
         <h6 className="card-title text-dark text-left mb-4 w-100">
           {props.filterheading}
         </h6>
-        {(props.filterjson || []).map((data , i) => {
+        {(props.filterjson || []).map((data, i) => {
           return (
             <button
               key={i}
               type="button"
               className="btn btn-outline-light btn-sm job_filter_btn mb-4 mr-4"
-              onClick={() => OnFIlterClick(data.id)}
+              onClick={() => OnFIlterClick(data)}
             >
-              {data.value}
+              {data}
             </button>
           );
         })}

@@ -279,7 +279,14 @@ left: 0;
 }
 
 /* JOB FILTER BOX */
-
+.job_filter_card_home .card-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1;
+  height: 95px;
+}
 .job_filter_block .btn.job_filter_btn {
   min-width: auto;
     font-weight: 400;
