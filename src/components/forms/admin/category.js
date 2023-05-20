@@ -67,7 +67,6 @@ function AddCategory(props) {
       job_category_id: state.job_category_id,
     });
   };
-  console.log(state)
   
   // API CALL
   const CatData = async () => {
