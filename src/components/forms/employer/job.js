@@ -414,7 +414,7 @@ function AddJobModal(props) {
                     <option value={""}>Select Category</option>
                     {(Json.Category || []).map((cat) =>
                       cat.value === null ? null : (
-                        <option key={cat.id} value={cat.value}>
+                        <option key={cat.id} value={cat.id}>
                           {cat.value}
                         </option>
                       )
