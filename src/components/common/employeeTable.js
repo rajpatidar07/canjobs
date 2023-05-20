@@ -61,7 +61,7 @@ export default function EmployeeTable(props) {
     EmpData();
     if (props.apiCall === true || apiCall === true) {
       props.setApiCall(false);
-      setApiCall(true);
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -134,6 +134,7 @@ export default function EmployeeTable(props) {
         autoClose: 1000,
       });
       setDeleteAlert(false);
+      setApiCall(true)
     }
   }
   /*Pagination Calculation */

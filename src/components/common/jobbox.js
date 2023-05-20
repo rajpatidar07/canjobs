@@ -12,9 +12,10 @@ function JobBox({
   SkillFilterValue,
   jobSwapFilterValue,
   locationFilterValue,
+  apiCall
 }) {
   /*States */
-  let [apiCall, setApiSetCall] = useState(false);
+  let [ApiCall, setApiSetCall] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [jobData, setjobData] = useState([]);
@@ -60,6 +61,7 @@ function JobBox({
     jobSwapFilterValue,
     locationFilterValue,
     apiCall,
+    ApiCall
   ]);
 
   /*FUnction to apply to the job */

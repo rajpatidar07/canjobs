@@ -123,6 +123,9 @@ function EmployementDetails(props) {
       EmployeementData();
     }
     JsonData();
+    if(apiCall === true){
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
@@ -138,7 +141,10 @@ function EmployementDetails(props) {
           autoClose: 1000,
         });
         props.setApiCall(true);
-        return close();
+        setApiCall(true);
+        setState(initialFormState);
+        setErrors("");
+        setLoading(false);
       }
       if (responseData.message === "Employee data updated successfully") {
         toast.success("Career Updated successfully", {
@@ -146,7 +152,10 @@ function EmployementDetails(props) {
           autoClose: 1000,
         });
         props.setApiCall(true);
-        return close();
+        setApiCall(true);
+        setState(initialFormState);
+        setErrors("");
+        setLoading(false);
       }
     } else {
       setLoading(false);

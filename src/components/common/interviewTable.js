@@ -91,6 +91,7 @@ function Interview(props) {
           setApiCall={setApiCall}
           job_id={jobId}
           show={showAddInterviewModal}
+          Interview={"interview"}
         />
       ) : null}
 

@@ -20,7 +20,8 @@ function JobResponse(props) {
   let [interview, setInterview] = useState(false);
   let [limia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
-  let [resData, setResData] = useState("");
+  let [resData, setResData] = useState("");  console.log(props.apiCall);
+
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
   const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
@@ -69,9 +70,8 @@ function JobResponse(props) {
   useEffect(() => {
     ResponseData();
     JsonData();
-    if (apiCall === true) {
-      let CallApi = false;
-      props.setApiCall(CallApi);
+     if (apiCall === true) {
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -195,6 +195,7 @@ function JobResponse(props) {
           setApiCall={setApiCall}
           job_id={jobId}
           show={showChangeJobModal}
+          status={0}
         />
       ) : null}
       <div

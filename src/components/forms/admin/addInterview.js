@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 function AddInterview(props) {
-  // // console.log(props);
+  console.log(props);
   let [loading, setLoading] = useState(false);
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
 
   /* Functionality to close the modal */
   const close = () => {
-    setState({ ...state, interview_date: "" });
+    setState({ ...state, interview_date: "" ,interview_status : "" });
     setErrors("");
     setLoading(false);
     props.close();
@@ -49,7 +49,11 @@ function AddInterview(props) {
     if (userData.data.length === 0) {
       setState({ state, interview_date: "" });
     } else {
-      setState({ state, interview_date: userData.data[0].interview_date });
+      if(props.Interview ==="interview"){
+       setState({ state, interview_date: props.resData.interview_date });
+      }else{
+        setState({ state, interview_date: userData.data[(userData.data.length - 1)].interview_date ,interview_status :  userData.data[(userData.data.length - 1)].status });
+      }
     }
   };
   // // console.log(state.interview_date, "lol");

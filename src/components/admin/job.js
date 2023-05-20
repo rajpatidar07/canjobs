@@ -141,7 +141,7 @@ function Job() {
                         <option value="">Job Category</option>
                         {(Json.Category || []).map((data) => {
                           return (
-                            <option value={data.value} key={data.id}>
+                            <option value={data.id} key={data.id}>
                               {data.value}
                             </option>
                           );

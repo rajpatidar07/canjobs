@@ -8,6 +8,7 @@ import FilterJson from "../../json/filterjson";
 import moment from "moment";
 
 function LmiaStatus(props) {
+  console.log(props);
   let [loading, setLoading] = useState(false);
   // // console.log(props.resData);
   let employeeId =

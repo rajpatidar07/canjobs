@@ -71,6 +71,9 @@ function Skills(props) {
     if (props.employeeId !== undefined) {
       SkillData();
     }
+    if(apiCall === true){
+      setApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
 
@@ -104,6 +107,7 @@ function Skills(props) {
         setErrors("");
         setLoading(false);
         props.setApiCall(true);
+        setApiCall(true)
       }
     } else {
       setLoading(false);

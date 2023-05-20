@@ -106,6 +106,9 @@ function Education(props) {
     }
   };
   useEffect(() => {
+    if(apiCall === true) {
+      setApiCall(false)
+    }
     if (
       props.employeeId === undefined ||
       educationData === [] ||
@@ -131,6 +134,7 @@ function Education(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
+        setApiCall(true)
         props.setApiCall(true);
       }
       if (responseData.message === "Employee data inserted successfully") {
@@ -141,6 +145,7 @@ function Education(props) {
         setState(initialFormState);
         setErrors("");
         setLoading(false);
+        setApiCall(true)
         props.setApiCall(true);
       } //"
       // handle form submission
@@ -169,8 +174,8 @@ function Education(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true);
       setApiCall(true);
+      props.setApiCall(true);
       setDeleteAlert(false);
     }
   }

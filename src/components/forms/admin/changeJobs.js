@@ -8,19 +8,21 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 // import { Select, Button } from "antd"; // "3.26.7" worked
 import Select from "react-select";
 function ChangeJob(props) {
+  let [apiCall , setApiCall] = useState(props.apiCall)
   let [loading, setLoading] = useState(false);
   const [state, setState] = useState([]);
-  let employeeId = props.status === 0 ? props.resData  : props.resData.employee_id;
+  let employeeId =  props.resData.employee_id;
   let applyId = props.resData.apply_id;
   let [allJobData, setAllJobData] = useState([]);
   let [JobId, setJobId] = useState("");
+  let [alredyApplied, setAlredyApplied] = useState("");
   /* Functionality to close the modal */
   const close = () => {
     // setErrors("");
     setLoading(false);
     props.close();
   };
-  // USER CHANGE JOB VALIDATION
+console.log(props);  // USER CHANGE JOB VALIDATION
   // INITIAL STATE ASSIGNMENT
 
   const JobData = async () => {
@@ -35,7 +37,7 @@ function ChangeJob(props) {
 
   useEffect(() => {
     JobData();
-  }, [props]);
+  }, [props, apiCall]);
   // USER CHANGE JOB SUBMIT BUTTON
   const onSelectChange = (option) => {
     // e.preventDefault();
@@ -53,8 +55,13 @@ function ChangeJob(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true)
+     setApiCall(true)
       return close();
+    }
+    if (responseData.message === "already applied on this job") {
+      setAlredyApplied("Already applied on this job")
+      setLoading(false)
+     setApiCall(true)
     }
     if (responseData.message === "Job applied successfully") {
       toast.success("Applied successfully", {
@@ -103,6 +110,7 @@ function ChangeJob(props) {
                 Jobs <span className="text-danger">*</span> :
               </label>
               <Select options={state || ""} onChange={onSelectChange} id="job_id" />
+             <small className="text-danger">{alredyApplied}</small> 
             </div>
             <div className="form-group text-center">
               {loading === true ? (

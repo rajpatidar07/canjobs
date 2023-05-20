@@ -43,6 +43,8 @@ function Category() {
  const JsonData = async()=>{
   let Json = await getJson()
   setCateType(Json.Category_type)
+  console.log(Json)
+  
 }
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -89,8 +91,8 @@ function Category() {
   };
   /*Render function to get the job category*/
   useEffect(() => {
-    CategoryData();
     JsonData()
+    CategoryData();
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -339,7 +341,7 @@ function Category() {
                               </th>
                               <th className=" py-5">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {catdata.category_type}
+                                  {catdata.parent_type}
                                 </h3>
                               </th>
                               <th className="py-5 min-width-px-100">

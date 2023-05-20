@@ -368,7 +368,7 @@ export default function EmployerTable(props) {
                     ) : (
                       <th className="  py-5 ">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        {empdata.profile_complete >= "99.00" ? (
+                        {empdata.profile_complete >= 99.00 ? (
                           <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                               Complete
                           </span>

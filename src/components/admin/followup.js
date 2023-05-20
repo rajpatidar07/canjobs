@@ -91,6 +91,7 @@ function Followup() {
     showJobDetails,
     catapiCall,
   ]);
+console.log(apiCall)
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {

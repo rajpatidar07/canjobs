@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 function ManageJobs() {
   /*Data and modal states */
   let [showAddJobModal, setShowAddJobModal] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
   let [jobId, setJobId] = useState();
   let [filter, SetFilter] = useState([]);
   /*Filter states */
@@ -158,6 +159,8 @@ function ManageJobs() {
                   show={showAddJobModal}
                   jobData={jobId}
                   close={() => setShowAddJobModal(false)}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
                 /> : null}
               </div>
             </div>
@@ -177,6 +180,7 @@ function ManageJobs() {
                         SkillFilterValue={SkillFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
                         showAddJobModal={showAddJobModal}
+                        apiCall={apiCall}
                       />
                       {/* <!-- End Single Featured Job --> */}
                     </div>
