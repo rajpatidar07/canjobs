@@ -123,7 +123,7 @@ export default function CompanySignUp(props) {
   }
 };
   // END USER SIGNUP VALIDATION
-  console.log(loading);
+  // console.log(loading);
   return (
     <>
       {/* <!-- Sign Up Modal --> */}

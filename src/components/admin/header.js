@@ -74,7 +74,7 @@ const AdminHeader = (props) => {
               <i className="fas fa-bell heading-default-color"></i>
               {notification.length > 0 ? (
                 <span className="font-size-1 count text-white bg-primary circle-18 border border-width-1 border border-white">
-                  {notification.length}
+                  {notification.length >= 10 ? "9+": notification.length >= 100 ? "99+" : notification.length}
                 </span>
               ) : null}
             </Link>

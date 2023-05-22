@@ -58,8 +58,8 @@ function EmployementDetails(props) {
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Company name can not have a number."
+          // : /[-]?\d+(\.\d+)?/.test(value)
+          // ? "Company name can not have a number."
           : value.length < 2
           ? "Company name should have 2 or more letters"
           : "",

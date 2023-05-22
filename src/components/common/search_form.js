@@ -8,7 +8,7 @@ import { getJson } from "../../api/api";
 // eslint-disable-next-line no-use-before-define
 function SearchForm() {
   const location = useLocation();
-  const path = location.pathname;
+  // const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get("search");
   const country = searchParams.get("country");
@@ -52,7 +52,7 @@ function SearchForm() {
   };
   return (
     <form
-      action={user_type === "company" ? "/managejobs" : "/jobs"}
+      // action={user_type === "company" ? "/managejobs" : "/jobs"}
       className="search-form"
       data-aos="fade-up"
       data-aos-duration="800"
@@ -93,8 +93,9 @@ function SearchForm() {
           </div>
           {/* <!-- ./select-city ends --> */}
           <button
-            onClick={path === "/jobs" ? null : Onsearch}
+            onClick={/*path === "/jobs" ? null :*/ Onsearch}
             className="btn btn-primary line-height-reset text-uppercase"
+            type="button"
           >
             Search
           </button>

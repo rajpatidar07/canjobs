@@ -65,7 +65,7 @@ function AddJobModal(props) {
     requirement: "",
     department: "",
     job_type: "",
-    vacancies:  "",
+    role_category:  "",
     education: "",
     language: "",
     keyskill: "",
@@ -610,6 +610,39 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="role_category"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  No. of vacancies:<span className="text-danger">*</span>
+                </label>
+
+                <div className="position-relative">
+                  <input
+                    type="number"
+                    name="role_category"
+                    value={state.role_category || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.role_category
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Vacancies"
+                    id="role_category"
+                  />
+                  {/*----ERROR MESSAGE FOR role_category----*/}
+                     {errors.role_category && (
+                    <span
+                      key={errors.role_category}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.role_category}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="row">
               <div className="form-group col-md-12 px-0 pr-3">
@@ -840,40 +873,6 @@ function AddJobModal(props) {
               </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="vacancies"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  No. of vacancies:<span className="text-danger">*</span>
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="number"
-                    name="vacancies"
-                    value={state.vacancies || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.vacancies
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    placeholder="Vacancies"
-                    id="vacancies"
-                  />
-                  {/*----ERROR MESSAGE FOR vacancies----*/}
-                     {errors.vacancies && (
-                    <span
-                      key={errors.vacancies}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.vacancies}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
                   htmlFor="education"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
@@ -910,6 +909,9 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
+
+            </div>
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="language"
@@ -985,8 +987,6 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="employement"
@@ -1026,6 +1026,7 @@ function AddJobModal(props) {
                 )}
               </div>
             </div>
+
 
             <div className="form-group text-center">
               {loading === true ? (

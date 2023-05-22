@@ -462,7 +462,7 @@ export const GetAllJobs = async (
   company,
   time
 ) => {
-  // console.log("time", time);
+  // console.log("search", search);
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
     {
@@ -489,7 +489,7 @@ export const GetAllJobs = async (
 };
 /*Add Job  Api */
 export const AddJob = async (props) => {
-  console.log(props);
+  // console.log(props);
 
   const response = await axios.put(`${API_URL}addJobs`, props, {
     headers: {
