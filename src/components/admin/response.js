@@ -20,7 +20,7 @@ function JobResponse(props) {
   let [interview, setInterview] = useState(false);
   let [limia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
-  let [resData, setResData] = useState("");  console.log(props.apiCall);
+  let [resData, setResData] = useState("");
 
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");

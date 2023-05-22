@@ -13,12 +13,17 @@ export default function GenerateToken(props) {
   /*Function to get admin list */
   const AdminData = async () => {
     const userData = await getallAdminData();
+    console.log(userData)
+    
     if (userData.data.length === 0) {
       setAllAdmin([]);
     } else {
-      setAllAdmin(userData.data);
+      const filteredData = userData.data.filter(item => item.admin_type === "manager");
+      setAllAdmin(filteredData);
     }
   };
+  console.log(allAdmin)
+  
   /* Functionality to close the modal */
   const close = () => {
     setState([]);

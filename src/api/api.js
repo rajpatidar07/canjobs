@@ -661,7 +661,7 @@ export const getInterview = async (
 };
 /*Add interview Shedual Api */
 export const AddInterviewSheduale = async (props, employee_id, job_id) => {
-  // console.log(props, employee_id, job_id);
+  console.log(props, employee_id, job_id);
   const response = await axios.post(
     `${API_URL}admin/addUpdateInterview`,
     {

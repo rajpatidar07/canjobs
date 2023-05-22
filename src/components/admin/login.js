@@ -48,6 +48,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
         localStorage.setItem("userType", "admin");
         localStorage.setItem("admin", updatedTodo.name);
         localStorage.setItem("admin_id", updatedTodo.admin_id);
+        localStorage.setItem("admin_type", updatedTodo.user_type);
         toast.success("Logged In Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,

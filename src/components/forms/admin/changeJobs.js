@@ -22,7 +22,7 @@ function ChangeJob(props) {
     setLoading(false);
     props.close();
   };
-console.log(props);  // USER CHANGE JOB VALIDATION
+ // USER CHANGE JOB VALIDATION
   // INITIAL STATE ASSIGNMENT
 
   const JobData = async () => {

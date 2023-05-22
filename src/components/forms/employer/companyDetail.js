@@ -191,7 +191,7 @@ function CompanyDetails(props) {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (file.size > 1024 * 100) {
+        if ((file.size > 1024 * 100) === true) {
           setImgError("Image size can't be more then 100 kb");
         } else {
           setImgError("");
@@ -211,7 +211,7 @@ function CompanyDetails(props) {
   const onCompanyDetailClick = async (event) => {
     // console.log(state);
     event.preventDefault();
-    if (validate()) {
+    if (validate() && imgError === "") {
       setLoading(true);
       let responseData = await AddCompany(state);
       if (responseData.message === "Employer data inserted successfully") {

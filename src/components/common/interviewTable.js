@@ -239,29 +239,36 @@ function Interview(props) {
                           {data.interview_date}
                         </h3>
                       </th>
-                      <th className="  py-5 ">
+                      <th className="py-5 ">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                          {data.interview_date === null ? (
+                          {data.status === "pending" ? (
                             <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                              Not Schedule
-                            </span>
-                          ) : (
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                               Schedule
                             </span>
-                          )}
+                          ):
+                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                            Complete
+                            </span>}
                         </p>
                       </th>
                       <th className="py-5 ">
                         <div className="btn-group button_group" role="group">
-                          <button
+                         {data.status === "complete" ? 
+                         <button
+                         className="btn btn-outline-info action_btn "
+                         style={{ fontSize: "10px" }}
+                         title="Interview Completed"
+                         disabled
+                       >
+                          Complete
+                       </button> : <button
                             className="btn btn-outline-info action_btn "
                             style={{ fontSize: "10px" }}
                             onClick={() => editInterview(data)}
                             title=" Reschedule Interview"
                           >
                             Reschedule
-                          </button>
+                          </button>}
                         </div>
                       </th>
                     </tr>

@@ -9,9 +9,9 @@ const AdminHeader = (props) => {
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
-  const [dropDown, setDropDown] = useState(false);
   const [notification, setNotiication] = useState("");
   let Admin = localStorage.getItem("admin");
+  let AdminType = localStorage.getItem("admin_type");
 
   /*Function to Call Notification Api */
   const Notiication = async () => {
@@ -83,9 +83,10 @@ const AdminHeader = (props) => {
                   <li
                     key={data.id}
                     to={""}
+                    title={data.message}
                     className="dropdown-item py-2 font-size-3 text-wrap font-weight-semibold line-height-1p2 text-capitalize"
                   >
-                    {i + 1}. {data.message}
+                    <span className="text-truncate-2"> {data.message}</span>
                   </li>
                 )
               )}
@@ -103,7 +104,6 @@ const AdminHeader = (props) => {
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  onMouseOut={() => setDropDown(false)}
                 >
                   <div>
                     {" "}
@@ -121,19 +121,14 @@ const AdminHeader = (props) => {
                   >
                     Edit Profile
                   </Link>
-
+                  {AdminType === "super-admin" || AdminType === "admin" ?
                   <Link
                     to={""}
                     onClick={() => setShowGenerateToken(true)}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >
                     View as
-                  </Link>
-                  {dropDown ? (
-                    <ul className="list-unstyled">
-                      <li></li>
-                    </ul>
-                  ) : null}
+                  </Link> : null}
                   <Link
                     to={""}
                     onClick={() => setShowChangePass(true)}

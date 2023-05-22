@@ -536,7 +536,7 @@ export default function EmployeeTable(props) {
 
                           <button
                             className="btn btn-outline-info action_btn text-gray"
-                            onClick={() => editJob(empdata.employee_id)}
+                            onClick={() => editJob(empdata)}
                             title="Apply for job"
                           >
                             <i className="fas fa-briefcase"></i>

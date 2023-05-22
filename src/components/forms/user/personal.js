@@ -195,9 +195,8 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    // console.log(state);
     event.preventDefault();
-    if (validate()) {
+    if (validate() && imgError === "") {
       setLoading(true);
       const responseData = await AddEmployeeDetails(state);
       if (responseData.message === "Employee data inserted successfully") {
@@ -248,9 +247,10 @@ function PersonalDetails(props) {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (file.size > 1024 * 100) {
+        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {
           setImgError("Image size can't be more then 100 kb");
         } else {
+          setImgError("")
           setState({ ...state, profile_photo: event.target.result });
         }
       };
