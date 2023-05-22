@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 function EmployeeHeader() {
   // const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
-  let navigate =useNavigate()
+  let navigate = useNavigate();
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
   // const [addClass, setAddClass] = useState(false);
@@ -66,16 +66,12 @@ function EmployeeHeader() {
             <Link to="/">
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
-                src="image/logo-main-black.png"
+                src="image/logo.png"
                 alt=""
                 className="light-version-logo default-logo"
               />
               {/* <!-- Dark version logo (logo must be White)--> */}
-              <img
-                src="image/logo-main-white.png"
-                alt=""
-                className="dark-version-logo"
-              />
+              <img src="image/logo.png" alt="" className="dark-version-logo" />
             </Link>
           </div>
           <div
@@ -254,7 +250,7 @@ function EmployeeHeader() {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
-                      navigate("/")
+                      navigate("/");
                       window.location.reload();
                     }}
                   >

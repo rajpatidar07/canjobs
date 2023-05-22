@@ -281,8 +281,8 @@ header.site-header.admin_header {
 
 /* JOB FILTER BOX */
 .job_filter_card_home{
-  max-width: 60%;
-  min-width: 100px
+  min-width: 50%;
+  max-width: 100%;
 }
 .job_filter_card_home .card-body {
   display: -webkit-box;
