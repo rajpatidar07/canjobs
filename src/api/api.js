@@ -489,7 +489,7 @@ export const GetAllJobs = async (
 };
 /*Add Job  Api */
 export const AddJob = async (props) => {
-  // console.log(props);
+  console.log(props);
 
   const response = await axios.put(`${API_URL}addJobs`, props, {
     headers: {
@@ -761,7 +761,21 @@ export const getAllAdminNotification = async () => {
   });
   return response.data;
 };
-
+/*Read Admin Notification Api */
+export const ReadNotification = async (props) => {
+  // console.log(props)
+  const response = await axios.put(
+    `${API_URL}common/isReadNotification`,
+   { id : props},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
 /*Admin List Api */
 export const getallAdminData = async (
   type,

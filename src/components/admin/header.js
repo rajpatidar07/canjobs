@@ -3,13 +3,14 @@ import { Link /*useNavigate*/ } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
-import { getAllAdminNotification } from "../../api/api";
+import { getAllAdminNotification , ReadNotification} from "../../api/api";
 
 const AdminHeader = (props) => {
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
   const [notification, setNotiication] = useState("");
+  const [apicall, setApicall] = useState(false);
   let Admin = localStorage.getItem("admin");
   let AdminType = localStorage.getItem("admin_type");
 
@@ -21,7 +22,10 @@ const AdminHeader = (props) => {
   /*Render Mewthod to get Notification */
   useEffect(() => {
     Notiication();
-  }, []);
+    if(apicall === true){
+      setApicall(false)
+    }
+  }, [apicall]);
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
       <div className="container-fluid-fluid px-7">
@@ -80,14 +84,19 @@ const AdminHeader = (props) => {
             >
               {(notification || []).map((data, i) =>
                 i >= 10 ? null : (
+                  <React.Fragment key={data.id}>
                   <li
-                    key={data.id}
-                    to={""}
                     title={data.message}
-                    className="dropdown-item py-2 font-size-3 text-wrap font-weight-semibold line-height-1p2 text-capitalize"
+                    className={data.is_read === "1" ? "bg-mercury dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize" : "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"}
                   >
-                    <span className="text-truncate-2"> {data.message}</span>
+                      <Link to={data.subject === "added_new_job"  ? "/job" : data.subject === "applied_on_job" ? "/responses" : data.subject === "interview_scheduled" ? "/interview" : ""}
+                      onClick={() => {ReadNotification(data.id);
+                                      setApicall(true)}} 
+                      className="text-truncate-2 text-dark">
+                        {data.message}
+                      </Link>
                   </li>
+                  </React.Fragment>
                 )
               )}
             </ul>

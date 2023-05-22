@@ -65,7 +65,7 @@ function AddJobModal(props) {
     requirement: "",
     department: "",
     job_type: "",
-    // role_category:  "",
+    vacancies:  "",
     education: "",
     language: "",
     keyskill: "",
@@ -161,12 +161,12 @@ function AddJobModal(props) {
       (value) =>
         value === "" || value.trim() === "" ? "Job Type is required" : null,
     ],
-    // role_category: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "role_category/Category is required"
-    //       : null,
-    // ],
+    vacancies: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "No of vacancies is required"
+          : null,
+    ],
     // education: [
     //   (value) =>
     //     value === "" || value.trim() === ""
@@ -838,39 +838,40 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-              {/* <div className="form-group col-md-4 px-0 pr-3">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
-                  htmlFor="role_category"
+                  htmlFor="vacancies"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Role Category:<span className="text-danger"> *</span>
+                  No. of vacancies:<span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
                   <input
-                    type="text"
-                    maxLength={30}
-                    name="role_category"
-                    value={state.role_category}
+                    type="number"
+                    name="vacancies"
+                    value={state.vacancies || ""}
                     onChange={onInputChange}
                     className={
-                      errors.role_category
+                      errors.vacancies
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Apply role_category"
-                    id="role_category"
+                    placeholder="Vacancies"
+                    id="vacancies"
                   />
-                  {/*----ERROR MESSAGE FOR role_category----*/}
-              {/* {errors.role_category && (
+                  {/*----ERROR MESSAGE FOR vacancies----*/}
+                     {errors.vacancies && (
                     <span
-                      key={errors.role_category}
+                      key={errors.vacancies}
                       className="text-danger font-size-3"
                     >
-                      {errors.role_category}
+                      {errors.vacancies}
                     </span>
                   )}
                 </div>
-              </div> */}
+              </div>
+            </div>
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="education"
@@ -909,8 +910,6 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-            </div>
-            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="language"
@@ -986,6 +985,8 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
+            </div>
+            <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="employement"
