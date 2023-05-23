@@ -296,7 +296,7 @@ function KycComplianceDetails(props) {
                     id="pan_date"
                     name="pan_date"
                     max={moment().format("YYYY-MM-DD")}
-                    value={state.pan_date || ""}
+                    value={moment(state.pan_date).format("YYYY-MM-DD") || ""}
                     onChange={onInputChange}
                     className={
                       errors.pan_date

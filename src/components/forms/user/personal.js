@@ -463,7 +463,7 @@ function PersonalDetails(props) {
                   type="date"
                   placeholder="Date Of Birth "
                   name="date_of_birth"
-                  value={state.date_of_birth || ""}
+                  value={moment(state.date_of_birth).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
                   className={
                     errors.date_of_birth

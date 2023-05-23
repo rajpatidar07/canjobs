@@ -15,7 +15,8 @@ export default function CompanySignUp(props) {
     setState(initialFormState);
     setOtpBox(false);
     props.close();
-  }; // USER SIGNUP VALIDATION
+  }; 
+  // USER SIGNUP VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -194,7 +195,7 @@ export default function CompanySignUp(props) {
                           to="/"
                           className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                         >
-                          <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from LinkedIn
                           </span>
@@ -205,7 +206,7 @@ export default function CompanySignUp(props) {
                           to="/"
                           className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                         >
-                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from Google
                           </span>
@@ -216,7 +217,7 @@ export default function CompanySignUp(props) {
                           to="/"
                           className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                         >
-                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from Facebook
                           </span>
@@ -240,7 +241,7 @@ export default function CompanySignUp(props) {
                         <input
                           type="email"
                           name="email"
-                          value={"" || state.email}
+                          value={ "" || state.email}
                           onChange={onInputChange}
                           className={
                             errors.email
@@ -270,7 +271,7 @@ export default function CompanySignUp(props) {
                         <input
                           type="number"
                           name="contact_no"
-                          value={"" || state.contact_no}
+                          value={ "" || state.contact_no}
                           onChange={onInputChange}
                           className={
                             errors.contact_no
@@ -300,7 +301,7 @@ export default function CompanySignUp(props) {
                         <div className="position-relative">
                           <input
                             name="password"
-                            value={"" || state.password}
+                            value={ "" || state.password}
                             onChange={onInputChange}
                             type="password"
                             className={
@@ -333,7 +334,7 @@ export default function CompanySignUp(props) {
                           <div className="position-relative">
                             <input
                               type="number"
-                              value={"" || state.otp}
+                              value={ "" || state.otp}
                               onChange={onInputChange}
                               maxLength={6}
                               name="otp"
@@ -375,7 +376,7 @@ export default function CompanySignUp(props) {
                             className="text-black-2 pt-5 mr-5"
                           />
                           <span className="font-size-3 mb-0 line-height-reset d-block">
-                            Agree to the{" "}
+                            Agree to the
                             <Link to="" className="text-primary">
                               Terms & Conditions
                             </Link>
@@ -422,7 +423,7 @@ export default function CompanySignUp(props) {
                         )}
                       </div>
                       <p className="font-size-4 text-center heading-default-color">
-                        Already have an account?{" "}
+                        Already have an account?
                         <Link
                           to=""
                           className="text-primary"

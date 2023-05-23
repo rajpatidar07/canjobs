@@ -172,11 +172,11 @@ function LmiaStatus(props) {
                     ? "form-control border border-danger"
                     : "form-control"
                 }
-                value={state.completion_time || ""}
+                value={moment(state.completion_time).format("YYYY-MM-DD") || ""}
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"
-                max={moment().format("YYY-MM-DD")}
+                max={moment().format("YYYY-MM-DD")}
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
               {errors.completion_time && (

@@ -151,7 +151,7 @@ const AdminHeader = (props) => {
                   <React.Fragment key={data.id}>
                   <li
                     title={data.message}
-                    className={data.is_read === "1" ? "bg-mercury dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize" : "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"}
+                    className={data.is_read === "1" ? "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize" : "font-weight-bold dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"}
                   >
                       <Link to={data.subject === "added_new_job"  ? "/job" : data.subject === "applied_on_job" ? "/responses" : data.subject === "interview_scheduled" ? "/interview" : ""}
                       onClick={() => {ReadNotification(data.id);

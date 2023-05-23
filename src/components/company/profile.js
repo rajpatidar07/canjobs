@@ -108,44 +108,44 @@ function CompanyProfile(props) {
               </div>
             </div>
             <div className="company_detail_box w-100 row m-0 pl-12 pt-5 pb-7 pr-12 pr-xxl-12">
-              <div className="font-size-3 mb-4 mr-10" title="Industry">
+          {employerData.industry ? <div className="font-size-3 mb-4 mr-10" title="Industry">
                 <i className="far fa-building mr-2"></i>
                 {employerData.industry}
-              </div>
-              <div className="font-size-3 mb-4 mr-10" title="Business Type">
+              </div> : null}
+             {employerData.corporation ? <div className="font-size-3 mb-4 mr-10" title="Business Type">
                 <i className="fas fa-briefcase mr-2"></i>
                 {employerData.corporation}
-              </div>
-              <div className="font-size-3 mb-4 mr-10" title="Company size">
+              </div> : null}
+              {employerData.company_size ? <div className="font-size-3 mb-4 mr-10" title="Company size">
                 <i className="fas fa-user-friends mr-2"></i>
                 {employerData.company_size}
-              </div>
-              <div className="font-size-3 mb-4 mr-10" title="Est. Since">
+              </div> : null }
+              {employerData.company_start_date ? <div className="font-size-3 mb-4 mr-10" title="Est. Since">
                 <i className="fas fa-business-time mr-2"></i>
                 {moment(employerData.company_start_date).format("YYYY")}
-              </div>
-              <div className="font-size-3 mb-4 mr-10" title="Website URL">
+              </div> : null}
+             {employerData.email ? <div className="font-size-3 mb-4 mr-10" title="Website URL">
                 <i className="fas fa-globe mr-2"></i>
                 {employerData.email}
-              </div>
-              <div className="font-size-3 mb-4 mr-10" title="Hiring for">
+              </div> : null}
+              {employerData.vacancy_for_post ? <div className="font-size-3 mb-4 mr-10" title="Hiring for">
                 <i className="fas fa-bullhorn mr-2"></i>
                 {employerData.vacancy_for_post}
-              </div>
+              </div> : null}
               {employerKycData === "" ? null : (
                 <>
-                  <div className="font-size-3 mb-4 mr-10" title="PAN">
+                  {employerKycData.pan_no ? <div className="font-size-3 mb-4 mr-10" title="PAN">
                     <span className="mr-2 font-weight-bold">PAN</span>
                     {employerKycData.pan_no}
-                  </div>
-                  <div className="font-size-3 mb-4 mr-10" title="TAN">
+                  </div> : null }
+                 {employerKycData.tan_number ? <div className="font-size-3 mb-4 mr-10" title="TAN">
                     <span className="mr-2 font-weight-bold">TAN</span>
                     {employerKycData.tan_number}
-                  </div>
-                  <div className="font-size-3 mb-4 mr-10" title="GSTIN">
+                  </div> : null}
+                  {employerKycData.gstin ? <div className="font-size-3 mb-4 mr-10" title="GSTIN">
                     <span className="mr-2 font-weight-bold">GSTIN</span>
                     {employerKycData.gstin}
-                  </div>
+                  </div> : null}
                 </>
               )}
             </div>

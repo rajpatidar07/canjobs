@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 function AddFilter(props) {
   let [loading, setLoading] = useState(false);
   // // console.log(props);
-  // let [adminDetails, setAdmindetails] = useState([]);
 
   // FILTER UPDATE VALIDATION
 
@@ -30,7 +29,7 @@ function AddFilter(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, validate } = useValidation(
+  const { state, setState, onInputChange, setErrors , errors, validate } = useValidation(
     initialFormState,
     validators
   );
@@ -43,6 +42,12 @@ function AddFilter(props) {
       setLoading(true);
       // setState({ ...state, id: props.id });
       const responseData = await AddFIlter(state, props.id);
+      if(responseData.message === "item already exist !"){
+        setErrors({...errors, json_item: ["Filter already exist !"]})
+        props.setApiCall(true);
+        setState(initialFormState);
+        setLoading(false);
+      }
       if (responseData.message === "filter item added successfully") {
         toast.success("Filter added successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -51,6 +56,7 @@ function AddFilter(props) {
         props.setApiCall(true);
         setState(initialFormState);
         setLoading(false);
+        setErrors("")
       }
     } else {
       setLoading(false);

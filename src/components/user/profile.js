@@ -9,6 +9,7 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import { EmployeeDetails , EmployeeAppliedJob} from "../../api/api";
 import moment from "moment";
+import { ToastContainer } from "react-toastify";
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
@@ -35,7 +36,7 @@ const UserProfile = (props) => {
       setPersonalDetail(userData.data.employee[0]);
     }
   };
-  console.log(userDetail)
+  // console.log(userDetail)
   
    /*Function to Geyt applied job data */
   const AppliedJob = async () => {
@@ -70,7 +71,9 @@ const UserProfile = (props) => {
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
-      {user_type === "admin" ? "" : <EmployeeHeader />}
+      {user_type === "admin" ? "" : <> <EmployeeHeader />
+      <ToastContainer/>
+      </>}
 
       <div className="bg-default-2 mt-5">
         <div className="container p-0">

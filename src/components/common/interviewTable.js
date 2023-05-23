@@ -202,7 +202,7 @@ function Interview(props) {
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
-                    <th className="bg-white">No Data Found</th>
+                    <th className="bg-white text-center">No Data Found</th>
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
@@ -240,15 +240,15 @@ function Interview(props) {
                         </h3>
                       </th>
                       <th className="py-5 ">
+                      
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                          {data.status === "pending" ? (
-                            <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                              Schedule
-                            </span>
-                          ):
+                          {data.status === "complete" ?
                             <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                             Complete
-                            </span>}
+                            </span> : 
+                            <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                            Schedule
+                          </span>}
                         </p>
                       </th>
                       <th className="py-5 ">

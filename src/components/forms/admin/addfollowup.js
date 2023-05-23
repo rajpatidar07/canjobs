@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import { getSingleFollowup, AddFollowup } from "../../../api/api";
-import moment from "moment";
+// import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -95,6 +95,7 @@ function Addfollowup(props) {
     }
   };
   // END USER FOLLOW UP PROFILE UPDATE VALIDATION
+  const moment = require('moment');
   return (
     <>
       <ToastContainer />
@@ -120,12 +121,14 @@ function Addfollowup(props) {
                 <div className="card mt-5 mb-5" key={res.id}>
                   <div className="card-header d-flex justify-content-space-between px-3 py-1">
                     <div className="card-head font-size-3 text-dark card_left">
-                      <span className="text-dark"> Posted date:</span>
+                      <span className="text-dark"> Posted date: </span>
                       {moment(res.created_at).format("YYYY-MM-DD")}
+                      {/* {moment(res.created_at).format("DD-MM-YYYY")} */}
                     </div>
                     <div className="card-head font-size-3 text-dark card_right">
-                      <span className="text-dark"> Next date:</span>
-                      {moment(res.next_followup_date).format("YYYY-MM-DD")}
+                      <span className="text-dark"> Next date: </span>
+                      {moment(res.created_at).format("YYYY-MM-DD")}
+                      {/* {moment(res.next_followup_date).format("DD-MM-YYYY")} */}
                     </div>
                   </div>
                   <div className="card-body p-3">{res.remark}</div>
@@ -183,7 +186,7 @@ function Addfollowup(props) {
                   id="next_followup_date"
                   name="next_followup_date"
                   min={moment().format("YYYY-MM-DD")}
-                  value={state.next_followup_date}
+                  value={moment(state.next_followup_date).format("YYYY-MM-DD")}
                   onChange={onInputChange}
                   className={
                     errors.next_followup_date

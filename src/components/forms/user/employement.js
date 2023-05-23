@@ -461,7 +461,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Joining "
                   name="start_date"
-                  value={state.start_date || ""}
+                  value={moment(state.start_date).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
                   className={
                     errors.start_date
@@ -492,7 +492,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
-                  value={state.end_date || ""}
+                  value={moment(state.end_date).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
                   className={
                     errors.end_date

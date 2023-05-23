@@ -18,7 +18,8 @@ function ManageJobs() {
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-
+  const [jobLocation, setJobLocation] = useState("");
+  
   /* Function to get the JSON data*/
   const FilterData = async () => {
     const Json = await getJson();
@@ -44,7 +45,7 @@ function ManageJobs() {
   // const Skill = Object.keys(filter.Skill).map((key) => {
   //   return { id: key, name: filter.Skill[key] };
   // });
-  console.log(filter);
+  // console.log(filter);
 
   return (
     <>
@@ -72,8 +73,8 @@ function ManageJobs() {
                 {/*<-- Job filter -->*/}
                 <form className="mb-8">
                   <div className="d-flex align-items-center justify-content-space-between">
-                    <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                      <div className="mr-5 mb-5 filter_input_div">
+                    <div className="search-filter from-group d-flex align-items-center ">
+                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
                         <select
                           name="category"
                           id="category"
@@ -84,14 +85,15 @@ function ManageJobs() {
                           }
                           className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
-                          {(FilterJson.category || []).map((cat, i) => (
-                            <option key={i} value={cat}>
-                              {cat}
+                           <option value="">Select Job Category</option>
+                          {(filter.Category || []).map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                              {cat.value}
                             </option>
                           ))}
                         </select>
                       </div>
-                      <div className="mr-5 mb-5 filter_input_div">
+                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
                         <select
                           name="skill"
                           id="skill"
@@ -100,10 +102,9 @@ function ManageJobs() {
                           onChange={(e) => setSkillFilterValue(e.target.value)}
                           className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
-                          <option data-display="Salary Range">
-                            Job Skills
+                          <option data-display="Salary Range" value={""}>
+                           Select Job Skills
                           </option>
-                          <option value="">Select Skill</option>
                           {(FilterJson.keyskill || []).map((data, i) => {
                             return (
                               <option value={data} key={i}>
@@ -113,7 +114,7 @@ function ManageJobs() {
                           })}
                         </select>
                       </div>
-                      <div className="mr-5 mb-5 filter_input_div">
+                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
                         <select
                           name="job_type"
                           id="job_type"
@@ -124,12 +125,33 @@ function ManageJobs() {
                           }
                           className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
-                          <option data-display="Experience Level ">
-                            Job type
+                          <option data-display="Experience Level " value={""}>
+                           Select Job type
                           </option>
                           {(FilterJson.job_type || []).map((job_type) => (
                             <option key={job_type} value={job_type}>
                               {job_type}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
+                        <select
+                          name="job_location"
+                          id="job_location"
+                          value={jobLocation}
+                          /*Job Onchange function to filter the data */
+                          onChange={(e) =>
+                            setJobLocation(e.target.value)
+                          }
+                          className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        >
+                          <option data-display="Experience Level " value={""}>
+                            Select job Location
+                          </option>
+                          {(FilterJson.location || []).map((job) => (
+                            <option key={job} value={job}>
+                              {job}
                             </option>
                           ))}
                         </select>
@@ -180,6 +202,7 @@ function ManageJobs() {
                         SkillFilterValue={SkillFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
                         showAddJobModal={showAddJobModal}
+                        jobLocation={jobLocation}
                         apiCall={apiCall}
                       />
                       {/* <!-- End Single Featured Job --> */}

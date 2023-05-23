@@ -8,7 +8,7 @@ import { getJson } from "../../api/api";
 // eslint-disable-next-line no-use-before-define
 function SearchForm() {
   const location = useLocation();
-  // const path = location.pathname;
+  const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get("search");
   const country = searchParams.get("country");
@@ -100,8 +100,7 @@ function SearchForm() {
             Search
           </button>
         </div>
-
-        <div className="row m-0 job_filter_block mt-5">
+      {path === "/jobs"  || path === "/managejobs" || path === "/response" ? null :  <div className="row m-0 job_filter_block mt-5">
           <Filterbox
             name="country"
             filterheading=" Jobs by Location"
@@ -114,7 +113,7 @@ function SearchForm() {
             filterjson={Json.Category}
             type={"category"}
           />
-        </div>
+        </div>}
       </div>
     </form>
   );

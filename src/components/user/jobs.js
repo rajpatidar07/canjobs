@@ -13,6 +13,7 @@ function JobSearch() {
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
   let [Json, setJson] = useState([]);
   /*Function to get thejSon */
   const JsonData = async () => {
@@ -44,8 +45,8 @@ function JobSearch() {
             <div className="row ">
               <div className="col-12 col-lg-10 col-xl-12 text-center">
                 <form className="mb-8" action="/">
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap justify-content-center job_search_filter">
-                    <div className="mr-5 mb-5">
+                  <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="category"
                         id="category"
@@ -62,7 +63,7 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="skill"
                         id="skill"
@@ -81,7 +82,26 @@ function JobSearch() {
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
+                      <select
+                        name="job_location"
+                        id="job_location"
+                        value={jobLocation}
+                        /*Job Onchange function to filter the data */
+                        onChange={(e) => setJobLocation(e.target.value)}
+                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      >
+                        <option data-display="Experience Level ">
+                          Select Job Location
+                        </option>
+                        {(FilterJson.location || []).map((job) => (
+                          <option key={job} value={job}>
+                            {job}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="job_type"
                         id="job_type"
@@ -119,6 +139,7 @@ function JobSearch() {
                         categoryFilterValue={categoryFilterValue}
                         SkillFilterValue={SkillFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
+                        jobLocation={jobLocation}
                       />
                       {/* <!-- End Single Featured Job --> */}
                     </div>

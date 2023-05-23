@@ -48,8 +48,8 @@ function Response() {
                   You’re searching "UI Designer"
                 </h2> */}
                 <form className="mb-8" action="/">
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap">
-                    <div className="mr-5 mb-5">
+                  <div className="search-filter from-group d-flex align-items-center ">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="category"
                         id="category"
@@ -58,6 +58,7 @@ function Response() {
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
+                        <option  value="">Select Job Category</option>
                         {(FilterJson.category || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -67,7 +68,7 @@ function Response() {
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="skill"
                         id="skill"
@@ -76,8 +77,7 @@ function Response() {
                         onChange={(e) => setSkillFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Salary Range">Job Skills</option>
-                        <option value="">Select Skill</option>
+                        <option  value={''}>Select Job Skills</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -87,7 +87,7 @@ function Response() {
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="skill"
                         id="skill"
@@ -96,8 +96,7 @@ function Response() {
                         onChange={(e) => setLocationFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Salary Range">Job Skills</option>
-                        <option value="">Select Skill</option>
+                        <option  value="">Select Job Location</option>
                         {(FilterJson.location || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -107,7 +106,7 @@ function Response() {
                         })}
                       </select>
                     </div>
-                    <div className="mr-5 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                       <select
                         name="job_type"
                         id="job_type"
@@ -116,6 +115,7 @@ function Response() {
                         onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
+                        <option  value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>

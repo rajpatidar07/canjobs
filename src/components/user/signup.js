@@ -209,7 +209,7 @@ export default function EmployeeSignupModal(props) {
                         </label>
                         <input
                           name="email"
-                          value={state.email}
+                          value={state.email || ""}
                           onChange={onInputChange}
                           type="email"
                           className={
@@ -240,7 +240,7 @@ export default function EmployeeSignupModal(props) {
                         <div className="position-relative">
                           <input
                             name="password"
-                            value={state.password}
+                            value={state.password || ""}
                             onChange={onInputChange}
                             type="password"
                             className={
@@ -277,7 +277,7 @@ export default function EmployeeSignupModal(props) {
                         <div className="position-relative">
                           <input
                             name="resume"
-                            value={state.resume}
+                            value={state.resume || ""}
                             onChange={onInputChange}
                             type="file"
                             className={
@@ -314,7 +314,7 @@ export default function EmployeeSignupModal(props) {
                           <div className="position-relative">
                             <input
                               type="number"
-                              value={state.otp}
+                              value={state.otp || ""}
                               onChange={onInputChange}
                               maxLength={6}
                               name="otp"

@@ -235,9 +235,7 @@ export default function JobTable(props) {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                  <Link to="" className="text-gray">
                     Total Applicants
-                  </Link>
                 </th>
                 {props.heading === "Dashboard" ? null : (
                   <th
@@ -255,7 +253,7 @@ export default function JobTable(props) {
                 <tr>
                   <th className="bg-white"></th>
                   {props.heading === "Dashboard" ? (
-                    <th className="bg-white">No Data Found</th>
+                    <th className="bg-white text-center">No Data Found</th>
                   ) : (
                     <th className="bg-white"></th>
                   )}
@@ -263,7 +261,7 @@ export default function JobTable(props) {
                   <th className="bg-white"></th>
                   {props.heading !== "Dashboard" ? (
                     <>
-                      <th className="bg-white">No Data Found</th>
+                      <th className="bg-white text-center">No Data Found</th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>

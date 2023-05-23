@@ -12,10 +12,11 @@ function JobBox({
   SkillFilterValue,
   jobSwapFilterValue,
   locationFilterValue,
+  jobLocation,
   apiCall,
 }) {
   /*States */
-  let [ApiCall, setApiSetCall] = useState(false);
+  let [ApiCall, setApiCall] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [jobData, setjobData] = useState([]);
@@ -33,14 +34,16 @@ function JobBox({
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const category = searchParams.get("category");
+  const path = location.pathname;
   // console.log("search =>",search,"country =>",country,"category =>",category)
-
-  /* Function to get Job data*/
+  // {console.log("categoryFilterValue =>",categoryFilterValue , "SkillFilterValue =>", SkillFilterValue ,
+  // "jobSwapFilterValue =>",jobSwapFilterValue)}
+  // /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
       search,
-      country,
-      category,
+      path === "/jobs" || path === "/managejobs" || path === "/response"  ? jobLocation : country,
+      path === "/jobs" || path === "/managejobs" || path === "/response"  ? categoryFilterValue : category  ,
       SkillFilterValue,
       jobSwapFilterValue
     );
@@ -67,6 +70,7 @@ function JobBox({
     search,
     country,
     category,
+    jobLocation
   ]);
 
   /*FUnction to apply to the job */
@@ -84,7 +88,7 @@ function JobBox({
         autoClose: 1000,
       });
     }
-    setApiSetCall(true);
+    setApiCall(true);
   };
   return (
     <>
@@ -271,6 +275,8 @@ function JobBox({
           show={showAddJobsModal}
           jobdata={JobId}
           close={() => setShowAddJobsModal(false)}
+          setApiCall={setApiCall}
+          apiCall={ApiCall}
         />
       ) : null}
     </>

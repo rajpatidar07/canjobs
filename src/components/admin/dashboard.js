@@ -22,6 +22,7 @@ const AdminDashboard = () => {
   let [interview, setInterview] = useState("");
   let [response, setResponse] = useState("");
   let [followup, setFollowUP] = useState("");
+  let [apiCall, setApiCall] = useState("");
   /*Function to get the summary count */
   // let AllCounts = async () => {
   //   let Data = await getSummaryCount();
@@ -308,7 +309,7 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <JobTable heading={"Dashboard"} filter_by_time={job} />
+                  <JobTable heading={"Dashboard"} filter_by_time={job} apiCall={apiCall} setApiCall={setApiCall}/>
                 </div>
               </div>
               {/* <!-- Recent Employees- --> */}
@@ -357,44 +358,47 @@ const AdminDashboard = () => {
           </div>
           <div className="mb-14">
             <div className="row">
-              {/* <!-- Recent Interviews- --> */}
-              <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Added Interview
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="interview"
-                          value={interview}
-                          id="interview"
-                          onChange={(e) => setInterview(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        <Link
-                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/interview"}
-                          title="View All Interview"
-                        >
-                          View All
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <Interview heading={"Dashboard"} filter_by_time={interview} />
+            {/* <!-- Recent Job Response- --> */}
+            <div className="col-lg-6">
+          <div className="bg-white rounded dashboard_card">
+            <div className="d-flex justify-content-between p-5 align-items-center">
+              <h3 className="font-size-5 px-3 m-0  ">
+                Recently Job Response
+              </h3>
+              <div className="d-flex justify-content-between p-0">
+                <div className="select_div mr-5">
+                  <select
+                    name="response"
+                    value={response}
+                    id="response"
+                    onChange={(e) => setResponse(e.target.value)}
+                    className="form-control-sm bg-white dashboard_select rounded-3"
+                  >
+                    <option value={""}>Select</option>
+                    <option value={"today"}>Today </option>
+                    <option value={"this_week"}>This Week </option>
+                    <option value={"last_week"}>Last Week</option>
+                    <option value={"last_month"}>Last Month</option>
+                    <option value={"current_month"}>Current Month</option>
+                  </select>
+                </div>
+                <div className="">
+                  <Link
+                    className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                    to={"/responses"}
+                    title="View All Responses"
+                  >
+                    View All
+                  </Link>
                 </div>
               </div>
+            </div>
+            <JobResponse
+              heading={"Dashboard"}
+              filter_by_time={response}
+            />
+          </div>
+            </div>
               {/* <!-- Recent Follow- --> */}
               <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
@@ -441,20 +445,20 @@ const AdminDashboard = () => {
           </div>
           <div className="mb-14">
             <div className="row mb-11 ">
-              {/* <!-- Recent Job Response- --> */}
+           {/* <!-- Recent Interviews- --> */}
               <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Job Response
+                      Recently Added Interview
                     </h3>
                     <div className="d-flex justify-content-between p-0">
                       <div className="select_div mr-5">
                         <select
-                          name="response"
-                          value={response}
-                          id="response"
-                          onChange={(e) => setResponse(e.target.value)}
+                          name="interview"
+                          value={interview}
+                          id="interview"
+                          onChange={(e) => setInterview(e.target.value)}
                           className="form-control-sm bg-white dashboard_select rounded-3"
                         >
                           <option value={""}>Select</option>
@@ -468,18 +472,15 @@ const AdminDashboard = () => {
                       <div className="">
                         <Link
                           className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/responses"}
-                          title="View All Responses"
+                          to={"/interview"}
+                          title="View All Interview"
                         >
                           View All
                         </Link>
                       </div>
                     </div>
                   </div>
-                  <JobResponse
-                    heading={"Dashboard"}
-                    filter_by_time={response}
-                  />
+                  <Interview heading={"Dashboard"} filter_by_time={interview} />
                 </div>
               </div>
               {/* <!-- Recent Companies- --> */}

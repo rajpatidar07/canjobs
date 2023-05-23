@@ -240,7 +240,7 @@ export default function CompanyLogin(props) {
                       <input
                         type="email"
                         name="email"
-                        value={state.email}
+                        value={state.email || ""}
                         onChange={onInputChange}
                         className={
                           errors.email
@@ -275,7 +275,7 @@ export default function CompanyLogin(props) {
                         <input
                           name="password"
                           type="password"
-                          value={state.password}
+                          value={state.password || ""}
                           onChange={onInputChange}
                           className={
                             errors.password
@@ -404,7 +404,7 @@ export default function CompanyLogin(props) {
                         }
                         placeholder="example@gmail.com"
                         id="forget_email"
-                        value={state.forget_email}
+                        value={state.forget_email || ""}
                         onChange={onInputChange}
                         name="forget_email"
                       />

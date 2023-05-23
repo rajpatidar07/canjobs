@@ -41,29 +41,29 @@ function CompanyDetailPage(props) {
       </h4>
       <div className="pt-5 text-left row">
         <div className="col-md-12">
-          <p className="font-size-4 mb-8" title="Contact Person Name">
+         { employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
             <i className="fas fa-user mr-2"></i>
             {employerData.contact_person_name}
-          </p>
-          <p className="font-size-4 mb-8" title="Designation">
+          </p> : null}
+         { employerData.designation ? <p className="font-size-4 mb-8" title="Designation">
             <i className="fas fa-portrait mr-2"></i> {employerData.designation}
-          </p>
-          <p className="font-size-4 mb-8" title="Email">
+          </p> : null}
+          { employerData.email ? <p className="font-size-4 mb-8" title="Email">
             <i className="fas fa-envelope mr-2"></i> {employerData.email}
-          </p>
-          <p className="font-size-4 mb-8" title="Contact No">
+          </p> : null}
+         { employerData.contact_no ? <p className="font-size-4 mb-8" title="Contact No">
             <i className="fas fa-phone-alt mr-2"></i> {employerData.contact_no}
-          </p>
-          {employerData.contact_no_other !== null ? (
+          </p> : null}
+          {employerData.contact_no_other ? (
             <p className="font-size-4 mb-8" title="Contact No">
               <i className="fas fa-phone-alt mr-2"></i>
               {employerData.contact_no_other}
             </p>
           ) : null}
-          <p className="font-size-4 mb-8" title="Address">
+          {employerData.address ? <p className="font-size-4 mb-8" title="Address">
             <i className="fas fa-map-marker-alt mr-2"></i>
             {employerData.address}
-          </p>
+          </p> : null}
         </div>
       </div>
     </div>

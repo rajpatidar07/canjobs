@@ -65,7 +65,7 @@ function Category() {
         (data) => data.parent_id !== "0"
       );
       if (filteredData.length === 0) {
-        setTotalData(userData.total_rows);
+        // setTotalData(userData.total_rows);
       } else {
         setTotalData();
       }
@@ -325,10 +325,10 @@ function Category() {
                       </thead>
                       <tbody>
                         {/* Map function to show the data in the list*/}
-                        {totalData === 0 ? (
+                        {totalData === 0 || categoryData.length === 0 ? (
                           <tr>
                             <th className="bg-white"></th>
-                            <th className="bg-white">No Data Found</th>
+                            <th className="bg-white text-center">No Data Found</th>
                             <th className="bg-white"></th>
                           </tr>
                         ) : (
@@ -393,7 +393,6 @@ function Category() {
                           <th
                             scope="col"
                             className=" border-0 font-size-4 font-weight-normal text-gray"
-                            title="Sort by Type"
                           >
                             {/* <Link
                               to={""}
@@ -414,9 +413,9 @@ function Category() {
                       </thead>
                       <tbody>
                         {/* Map function to show the data in the list*/}
-                        {TypetotalData === 0 ? (
+                        {TypetotalData === 0  || categoryTypeData.length === 0 ? (
                           <tr>
-                            <th className="bg-white">No Data Found</th>
+                            <th className="bg-white text-center">No Data Found</th>
                             <th className="bg-white"></th>
                           </tr>
                         ) : (

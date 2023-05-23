@@ -254,11 +254,11 @@ function ManageAdmin() {
                       </tr>
                     </thead>
                     <tbody>
-                      {totalData === 0 ? (
+                      {totalData === 0 || adminData.length === 0 ? (
                         <tr>
                           <th className="bg-white"></th>
+                          <th className="bg-white text-center">No Data Found</th>
                           <th className="bg-white"></th>
-                          <th className="bg-white">No Data Found</th>
                           <th className="bg-white"></th>
                         </tr>
                       ) : (
