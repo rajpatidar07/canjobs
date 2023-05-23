@@ -37,7 +37,7 @@ function EmployeeHomePage() {
       </div>
       {/* <!-- Hero Area --> */}
       {/* <!-- featuredJobOne Area --> */}
-      <section className="bg-athens pt-12 pt-lg-32 pb-7 pb-lg-25">
+      <section className="bg-athens pt-12 pt-lg-25 pb-7 pb-lg-25">
         <div className="container">
           {/* <!-- Section Title --> */}
           <div className="row justify-content-center mb-lg-16 mb-11">

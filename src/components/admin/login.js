@@ -38,8 +38,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
       setLoading(true);
       // handle form submission
       const updatedTodo = await AdminLogin(state);
-      console.log(updatedTodo)
-      
+      console.log(updatedTodo);
+
       if (
         updatedTodo.status === true ||
         updatedTodo.message === "Successfully Logged "
@@ -71,7 +71,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
 
       <div className="d-flex justify-content-center pt-21">
         <div className="bg-white rounded-8 overflow-hidden pt-21">
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 border">
+          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
             <div className="pb-5 mb-5 text-center">
               <img
                 src="image/logo-main-black.png"

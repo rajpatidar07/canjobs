@@ -210,17 +210,7 @@ header.site-header.admin_header {
   left: auto;
   margin: 5px 15px;
 }
-@media (max-width: 767px) {
-  header.site-header {
-    max-width: 100%;
-    left: 0;
-    margin: 0;
-    padding: 15px 0!important;
-  }
-  nav.navbar.site-navbar.offcanvas-active.navbar-expand-lg{
-    justify-content: center;
-  }
-}
+
 /* Drop-down css */
 .gr-menu-dropdown {
   position: absolute;
@@ -502,4 +492,57 @@ label.image_upload_btn {
 .d-flex.profile_box {
   gap: 7px;
   align-items: center;
+}
+
+@media (max-width: 767px) {
+  header.site-header {
+    max-width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 15px 0!important;
+  }
+  nav.navbar.site-navbar.offcanvas-active.navbar-expand-lg{
+    justify-content: space-between;
+    align-items: center;
+  }
+  button.main_search_button_home {
+    width: 100%;
+  } 
+  .media.align-items-center.company_box{
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .main_job_box_ button.btn.btn-secondary {
+    width: 100%;
+  }
+  .job_search_box_page.translateY-25 {
+    transform: none;
+  } 
+  .search-filter.job_search_filter{
+    display: block!important;
+  }
+  .search-filter.job_search_filter select{
+    width: 100%;
+  }
+  .px-11.pt-11.pb-7.login_Modal_box {
+    padding-left: 15px!important;
+    padding-right: 15px!important;
+  }
+  .container, .container-xs, .container-sm{
+    max-width: 100%;
+  }
+  .col.p-1.form_group.mb-5.mt-4 {
+    min-width: 50%;
+    margin-bottom: 0!important;
+  }
+  header.site-header.admin_header{
+    max-width: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+  }
+  .dashboard-main-container>.container{
+    margin: 0;
+    width: 100%;
+  }
 }

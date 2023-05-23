@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { EmployeeLogin , EmployeeForgotPassword } from "../../api/api";
+import { EmployeeLogin, EmployeeForgotPassword } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 
@@ -48,7 +48,7 @@ export default function EmployeeLoginModal(props) {
     event.preventDefault();
     if (validate()) {
       // handle form submission
-      setLoading(true)
+      setLoading(true);
       const updatedTodo = await EmployeeLogin(state);
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
@@ -58,37 +58,38 @@ export default function EmployeeLoginModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoading(false)
+        setLoading(false);
         props.close();
         navigate("/");
         window.location.reload();
       }
       if (updatedTodo.message === "Invalid credentials !") {
-        setLoading(false)
+        setLoading(false);
         setErrors({ ...errors, email: "Invalid credentials !" });
-      }}
+      }
+    }
   };
   // END USER LOGIN VALIDATION
   const onForgoteClick = async (event) => {
     event.preventDefault();
     if (validate()) {
       // setLoading(true)
-      setLoading(true) 
-      const Response = await EmployeeForgotPassword(state)
-        if (Response.status === 1 || Response.message === "Sent you a mail") {
-          toast.success("Email sent Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setLoading(false)
-          props.close();
-        } else if (Response.message === "No user found") {
-          setLoading(false)
-          setErrors({ ...errors, Credentials: ["No user found"] });
-          //   handle form submission
-        }
+      setLoading(true);
+      const Response = await EmployeeForgotPassword(state);
+      if (Response.status === 1 || Response.message === "Sent you a mail") {
+        toast.success("Email sent Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setLoading(false);
+        props.close();
+      } else if (Response.message === "No user found") {
+        setLoading(false);
+        setErrors({ ...errors, Credentials: ["No user found"] });
+        //   handle form submission
       }
     }
+  };
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -144,7 +145,7 @@ export default function EmployeeLoginModal(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                <div className="bg-white-2 h-100 px-11 pt-11  pb-7 login_Modal_box">
                   <div
                     className={showForgotPassword === false ? "row" : "d-none"}
                   >
@@ -194,7 +195,7 @@ export default function EmployeeLoginModal(props) {
                     onSubmit={onUserLoginClick}
                     className={showForgotPassword === false ? "" : "d-none"}
                   >
-                    <div className="form-group">
+                    <div className="form-group p-0">
                       <label
                         htmlFor="useremail"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -306,7 +307,6 @@ export default function EmployeeLoginModal(props) {
                     </div>
 
                     <div className="form-group mb-8">
-             
                       {loading === true ? (
                         <button
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
@@ -320,14 +320,14 @@ export default function EmployeeLoginModal(props) {
                           ></span>
                           <span className="sr-only">Loading...</span>
                         </button>
-                         ) : (
-                          <button
+                      ) : (
+                        <button
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
                           type="submit"
                         >
                           Log in{" "}
                         </button>
-                      )}      
+                      )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
                       Don’t have an account?{" "}
@@ -341,7 +341,10 @@ export default function EmployeeLoginModal(props) {
                     </p>
                   </form>
 
-                  <form className={showForgotPassword === true ? "" : "d-none"} onSubmit={onForgoteClick}>
+                  <form
+                    className={showForgotPassword === true ? "" : "d-none"}
+                    onSubmit={onForgoteClick}
+                  >
                     <div className="form-group">
                       <label
                         htmlFor="forget_email"
@@ -358,7 +361,7 @@ export default function EmployeeLoginModal(props) {
                         id="forget_email"
                         name="forget_email"
                       />
-                          {errors.forget_email && (
+                      {errors.forget_email && (
                         <span>
                           {errors.forget_email.map((error) => (
                             <span
@@ -372,7 +375,6 @@ export default function EmployeeLoginModal(props) {
                       )}
                     </div>
                     <div className="form-group text-center">
-                      
                       {loading === true ? (
                         <button
                           className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -386,8 +388,8 @@ export default function EmployeeLoginModal(props) {
                           ></span>
                           <span className="sr-only">Loading...</span>
                         </button>
-                         ) : (
-                          <button
+                      ) : (
+                        <button
                           className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                           type="submit"
                         >

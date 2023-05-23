@@ -94,7 +94,7 @@ function SearchForm() {
           {/* <!-- ./select-city ends --> */}
           <button
             onClick={path === "/jobs" ? null : Onsearch}
-            className="btn btn-primary line-height-reset text-uppercase"
+            className="btn btn-primary line-height-reset text-uppercase main_search_button_home"
           >
             Search
           </button>

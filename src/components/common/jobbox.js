@@ -12,7 +12,7 @@ function JobBox({
   SkillFilterValue,
   jobSwapFilterValue,
   locationFilterValue,
-  apiCall
+  apiCall,
 }) {
   /*States */
   let [ApiCall, setApiSetCall] = useState(false);
@@ -61,7 +61,7 @@ function JobBox({
     jobSwapFilterValue,
     locationFilterValue,
     apiCall,
-    ApiCall
+    ApiCall,
   ]);
 
   /*FUnction to apply to the job */
@@ -84,7 +84,7 @@ function JobBox({
   return (
     <>
       <div
-        className="col-xxl-12 col-xl-12 col-lg-12 mb-8 pb-5 job_box p-0"
+        className="col-xxl-12 col-xl-12 col-lg-12 mb-8 pb-5 job_box"
         data-aos="fade-right"
         data-aos-duration="800"
         data-aos-once="true"
@@ -98,7 +98,7 @@ function JobBox({
           (jobData || []).map((job, i) => (
             <div
               key={i}
-              className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green"
+              className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green main_job_box_"
             >
               <Link
                 to={"/jobdetail"}

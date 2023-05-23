@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { EmployeeSignUp , SendOtp} from "../../api/api";
+import { EmployeeSignUp, SendOtp } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 export default function EmployeeSignupModal(props) {
@@ -12,7 +12,7 @@ export default function EmployeeSignupModal(props) {
     email: "",
     password: "",
     resume: "",
-    otp:"",
+    otp: "",
   };
   const [isChecked, setIsChecked] = useState(false);
   const [termsErr, settermsErr] = useState("");
@@ -42,46 +42,44 @@ export default function EmployeeSignupModal(props) {
     resume: [],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState , onInputChange, setErrors , errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+  const { state, setState, onInputChange, setErrors, errors, validate } =
+    useValidation(initialFormState, validators);
 
   // USER SIGNUP SUBMIT BUTTON
   const onUserSignUpClick = async (event) => {
     event.preventDefault();
-    setLoading(false)  
-    if (validate() && state.otp) {/*Api to signup */
+    setLoading(false);
+    if (validate() && state.otp) {
+      /*Api to signup */
       if (isChecked) {
         settermsErr("");
-        setLoading(true)
+        setLoading(true);
         const signUpData = await EmployeeSignUp(state);
         if (signUpData.message === "Employee has been registered") {
           setSingUpSuccess("success");
-          setLoading(false)
-        }
-        else if(signUpData.message === "Email already exists"){
-            setLoading(false)
-            settermsErr("Email already exist")
-        } else if(signUpData.message === " incorrect otp "){
-          setLoading(false)
-          setErrors({...errors,otp:"Invalid Otp"})
+          setLoading(false);
+        } else if (signUpData.message === "Email already exists") {
+          setLoading(false);
+          settermsErr("Email already exist");
+        } else if (signUpData.message === " incorrect otp ") {
+          setLoading(false);
+          setErrors({ ...errors, otp: "Invalid Otp" });
         }
       } else {
-        setLoading(false)
+        setLoading(false);
         settermsErr("Accept terms and conditions");
       }
-    }else if(otpBox === false){
+    } else if (otpBox === false) {
       /*Api to get otp */
-      setLoading(true)
-      const updatedTodo = await SendOtp(state); 
-      if(updatedTodo.message === "successful"){
+      setLoading(true);
+      const updatedTodo = await SendOtp(state);
+      if (updatedTodo.message === "successful") {
         toast.success("Otp sent Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setOtpBox(true)
-        setLoading(false)
+        setOtpBox(true);
+        setLoading(false);
       }
     }
   };
@@ -101,13 +99,13 @@ export default function EmployeeSignupModal(props) {
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10 z-index-supper"
             data-dismiss="modal"
-            onClick={()=>{
-              settermsErr("")
+            onClick={() => {
+              settermsErr("");
               setLoading(false);
-              setState(initialFormState)
-              setErrors("")
-               props.close()
-              }}
+              setState(initialFormState);
+              setErrors("");
+              props.close();
+            }}
           >
             <i className="fas fa-times"></i>
           </button>
@@ -143,7 +141,7 @@ export default function EmployeeSignupModal(props) {
               </div>
               <div className="col-lg-7 col-md-6">
                 {SingUpSuccess === "success" ? (
-                  <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                  <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
                     Congratulations! <br />
                     You have successfully registered your account. Please login
                     to continue
@@ -157,7 +155,7 @@ export default function EmployeeSignupModal(props) {
                     </Link>
                   </div>
                 ) : (
-                  <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
+                  <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
                     {/* SOCIAL MEDIA LINK BUTTONS */}
                     <div className="row">
                       <div className="col-4 col-xs-12">
@@ -304,41 +302,41 @@ export default function EmployeeSignupModal(props) {
                           data-show-pass="password23"
                         ></Link> */}
                         </div>
-                      </div> 
-                     {otpBox ? 
-                     <div className="form-group">
-                        
-                        <label
-                          htmlFor="otp"
-                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                        >
-                          Enter Otp
-                        </label>
-                        <div className="position-relative">
-                        <input
-                          type="number"
-                          value={state.otp}
-                          onChange={onInputChange}
-                          maxLength={6}
-                          name="otp"
-                          id="otp"
-                          className={
-                            errors.otp
-                              ? "form-control border border-danger"
-                              : "form-control"
-                          } placeholder="Otp"
-                        />
-                     {errors.otp && (
-                            <span
-                              key={errors.otp}
-                              className="text-danger font-size-3"
-                            >
-                              {errors.otp}
-                            </span>
-                          )}
+                      </div>
+                      {otpBox ? (
+                        <div className="form-group">
+                          <label
+                            htmlFor="otp"
+                            className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                          >
+                            Enter Otp
+                          </label>
+                          <div className="position-relative">
+                            <input
+                              type="number"
+                              value={state.otp}
+                              onChange={onInputChange}
+                              maxLength={6}
+                              name="otp"
+                              id="otp"
+                              className={
+                                errors.otp
+                                  ? "form-control border border-danger"
+                                  : "form-control"
+                              }
+                              placeholder="Otp"
+                            />
+                            {errors.otp && (
+                              <span
+                                key={errors.otp}
+                                className="text-danger font-size-3"
+                              >
+                                {errors.otp}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                       
-                      </div> : null}
+                      ) : null}
                       {/* END FORM FIELDS  */}
                       <div className=" d-flex flex-wrap justify-content-between mb-1 col-md-12 ">
                         <label
@@ -370,34 +368,35 @@ export default function EmployeeSignupModal(props) {
                         </span>
                       </div>
                       <div className="form-group text-center">
-               {loading === true ? (
-                  <button
-                    className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                    type="button"
-                    disabled
-                  >
-                    <span
-                      className="spinner-border spinner-border-sm "
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="sr-only">Loading...</span>
-                  </button>
-                ) : otpBox ?(
-                  <button
-                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                  type="submit"
-                >
-                  Sign Up
-                  </button>
-                ) :  <button
-                      className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                      type="submit"
-                    >
-                    Send otp
-                    </button>
-              }
-              </div>
+                        {loading === true ? (
+                          <button
+                            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                            type="button"
+                            disabled
+                          >
+                            <span
+                              className="spinner-border spinner-border-sm "
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            <span className="sr-only">Loading...</span>
+                          </button>
+                        ) : otpBox ? (
+                          <button
+                            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                            type="submit"
+                          >
+                            Sign Up
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                            type="submit"
+                          >
+                            Send otp
+                          </button>
+                        )}
+                      </div>
                       <p className="font-size-4 text-center heading-default-color">
                         Already have an account?{" "}
                         <Link

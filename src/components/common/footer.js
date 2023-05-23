@@ -72,7 +72,11 @@ function EmployeeFooter() {
         <div className="row text-left">
           <div className="col-lg-4 col-sm-6 mb-lg-0 mb-9">
             {/* <!-- footer logo start --> */}
-            <img src="image/logo.png" alt="" className="footer-logo mb-14" />
+            <img
+              src="image/logo-main-white.png"
+              alt=""
+              className="footer-logo mb-14"
+            />
             {/* <!-- footer logo End --> */}
             {/* <!-- media start --> */}
             <div className="media mb-11">

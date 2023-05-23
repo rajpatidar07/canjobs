@@ -66,12 +66,16 @@ function EmployeeHeader() {
             <Link to="/">
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
-                src="image/logo.png"
+                src="image/logo-main-black.png"
                 alt=""
                 className="light-version-logo default-logo"
               />
               {/* <!-- Dark version logo (logo must be White)--> */}
-              <img src="image/logo.png" alt="" className="dark-version-logo" />
+              <img
+                src="image/logo-main-white.png"
+                alt=""
+                className="dark-version-logo"
+              />
             </Link>
           </div>
           <div

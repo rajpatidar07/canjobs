@@ -2191,7 +2191,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .sidebar-mobile-button:after {
-  content: "Sidebar Open";
+  content: "Menu";
   margin-left: 10px;
 }
 

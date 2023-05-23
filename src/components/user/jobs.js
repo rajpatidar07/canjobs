@@ -13,16 +13,16 @@ function JobSearch() {
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Function to get thejSon */
- const JsonData = async () =>{
-   let Json = await getJson()
-   setJson(Json)
- }
- /*Render Method */
- useEffect(()=>{
-  JsonData()
- },[categoryFilterValue , SkillFilterValue])
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
+  /*Render Method */
+  useEffect(() => {
+    JsonData();
+  }, [categoryFilterValue, SkillFilterValue]);
   // eslint-disable-next-line no-use-before-define
   return (
     <>
@@ -33,7 +33,7 @@ function JobSearch() {
           <div className="container">
             <div className="row ">
               {/* <!-- Hero Form --> */}
-              <div className="col-lg-12 col-12 translateY-25  pb-10">
+              <div className="col-lg-12 col-12 translateY-25  pb-10 job_search_box_page">
                 <SearchForm />
               </div>
             </div>
@@ -44,7 +44,7 @@ function JobSearch() {
             <div className="row ">
               <div className="col-12 col-lg-10 col-xl-12 text-center">
                 <form className="mb-8" action="/">
-                  <div className="search-filter from-group d-flex align-items-center flex-wrap justify-content-center">
+                  <div className="search-filter from-group d-flex align-items-center flex-wrap justify-content-center job_search_filter">
                     <div className="mr-5 mb-5">
                       <select
                         name="category"
@@ -60,7 +60,6 @@ function JobSearch() {
                             {cat.value}
                           </option>
                         ))}
-                        
                       </select>
                     </div>
                     <div className="mr-5 mb-5">
@@ -92,7 +91,7 @@ function JobSearch() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option data-display="Experience Level ">
-                       Select Job type
+                          Select Job type
                         </option>
                         {(FilterJson.job_type || []).map((job_type) => (
                           <option key={job_type} value={job_type}>
@@ -106,7 +105,7 @@ function JobSearch() {
               </div>
             </div>
             <div className="row justify-content-center position-static">
-              <div className="col-12 col-xxl-10 col-xl-12 col-lg-12">
+              <div className="col-12 col-xxl-10 col-xl-12 col-lg-12 p-0">
                 {/* <!-- Left Section --> */}
                 <div className="Left">
                   <div
@@ -114,7 +113,7 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link active">
+                    <div className="mb-8 p-0 w-100 active active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox
                         categoryFilterValue={categoryFilterValue}

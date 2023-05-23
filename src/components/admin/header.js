@@ -57,6 +57,70 @@ const AdminHeader = (props) => {
             </button>
           </div> */}
           {/* {notification.length < 0 ? ( */}
+
+          {/* ) : null} */}
+          <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
+            <div>
+              <div className="dropdown show-gr-dropdown py-5">
+                <Link
+                  to={""}
+                  className="proile media ml-7 flex-y-center"
+                  role="button"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <div>
+                    {" "}
+                    <h6 className="m-0">Hii ! {Admin}</h6>
+                  </div>
+                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
+                </Link>
+                <div
+                  className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <Link
+                    to={"/adminprofile"}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                  >
+                    Edit Profile
+                  </Link>
+                  {AdminType === "super-admin" || AdminType === "admin" ? (
+                    <Link
+                      to={""}
+                      onClick={() => setShowGenerateToken(true)}
+                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                    >
+                      View as
+                    </Link>
+                  ) : null}
+                  <Link
+                    to={""}
+                    onClick={() => setShowChangePass(true)}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                  >
+                    Setting
+                  </Link>
+                  {/*<--Logout Functionality-->*/}
+                  <Link
+                    to={"/adminlogin"}
+                    onClick={() => {
+                      localStorage.clear(); // clear the local storage
+                      toast.error("Log Out Successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                      });
+                    }}
+                    className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                  >
+                    Log Out
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="dropdown show-gr-dropdown py-5">
             <Link
               to={""}
@@ -91,68 +155,6 @@ const AdminHeader = (props) => {
                 )
               )}
             </ul>
-          </div>
-          {/* ) : null} */}
-          <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
-            <div>
-              <div className="dropdown show-gr-dropdown py-5">
-                <Link
-                  to={""}
-                  className="proile media ml-7 flex-y-center"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <div>
-                    {" "}
-                    <h6 className="m-0">Hii ! {Admin}</h6>
-                  </div>
-                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
-                </Link>
-                <div
-                  className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                  aria-labelledby="dropdownMenuLink"
-                >
-                  <Link
-                    to={"/adminprofile"}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    Edit Profile
-                  </Link>
-                  {AdminType === "super-admin" || AdminType === "admin" ?
-                  <Link
-                    to={""}
-                    onClick={() => setShowGenerateToken(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    View as
-                  </Link> : null}
-                  <Link
-                    to={""}
-                    onClick={() => setShowChangePass(true)}
-                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    Setting
-                  </Link>
-                  {/*<--Logout Functionality-->*/}
-                  <Link
-                    to={"/adminlogin"}
-                    onClick={() => {
-                      localStorage.clear(); // clear the local storage
-                      toast.error("Log Out Successfully", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 1000,
-                      });
-                    }}
-                    className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    Log Out
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         </nav>
       </div>

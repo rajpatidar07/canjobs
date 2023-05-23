@@ -1,30 +1,37 @@
 import React, { useState } from "react";
-import { EmployeeResetPasswordApi , AdminResetPasswordApi ,EmployerResetPasswordApi } from "../../api/api";
+import {
+  EmployeeResetPasswordApi,
+  AdminResetPasswordApi,
+  EmployerResetPasswordApi,
+} from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate ,useLocation } from "react-router-dom";
-import { toast , ToastContainer } from "react-toastify";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function ResetPassword() {
   const location = useLocation();
   const path = location.pathname;
-  let Token = path.split("/")[2].split(":")[1]
-  let userType = path.split("/")[2].split(":")[0]
+  let Token = path.split("/")[2].split(":")[1];
+  let userType = path.split("/")[2].split(":")[0];
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     password: "",
     conf_password: "",
-    token :Token  };
+    token: Token,
+  };
   /*----VALIDATION CONTENT----*/
   const validators = {
     password: [(value) => (value === "" ? "Password is required" : null)],
     conf_password: [
-        (value) => value === "" 
-            ? "Confirm Password is required"
-            : value !== state.password
-            ? "Confirm Password must be Same as Password"
-            :"" ],
+      (value) =>
+        value === ""
+          ? "Confirm Password is required"
+          : value !== state.password
+          ? "Confirm Password must be Same as Password"
+          : "",
+    ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
   const { state, onInputChange, setState, errors, validate } = useValidation(
@@ -38,75 +45,85 @@ export default function ResetPassword() {
     if (validate()) {
       setLoading(true);
       // handle form submission
-      if(userType === "user"){
-       let updatedTodo = await EmployeeResetPasswordApi(state);
+      if (userType === "user") {
+        let updatedTodo = await EmployeeResetPasswordApi(state);
         if (
           updatedTodo.status === true ||
           updatedTodo.message === "Password updated successfully"
-          ) {
-            toast.success("Password updated successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            setLoading(false);
-            setState(initialFormState)
-            navigate("/");
-            window.location.reload();
-          } 
+        ) {
+          toast.success("Password updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          navigate("/");
+          window.location.reload();
+        }
       }
-      if(userType === "company"){
-       let updatedTodo = await EmployerResetPasswordApi(state);
+      if (userType === "company") {
+        let updatedTodo = await EmployerResetPasswordApi(state);
         if (
           updatedTodo.status === true ||
           updatedTodo.message === "Password updated successfully"
-          ) {
-            toast.success("Password updated successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            setLoading(false);
-            setState(initialFormState)
-            navigate("/");
-            window.location.reload();
-          } 
+        ) {
+          toast.success("Password updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          navigate("/");
+          window.location.reload();
+        }
       }
-      if(userType=== "admin"){
-       let updatedTodo = await AdminResetPasswordApi(state);
+      if (userType === "admin") {
+        let updatedTodo = await AdminResetPasswordApi(state);
         if (
           updatedTodo.status === true ||
           updatedTodo.message === "Password updated successfully"
-          ) {
-            toast.success("Password updated successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            setLoading(false);
-            setState(initialFormState)
-            navigate("/");
-            window.location.reload();
-          } 
+        ) {
+          toast.success("Password updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          navigate("/");
+          window.location.reload();
+        }
       }
-      
-        // else if (updatedTodo.message === "Invalid Credentials") {
-          //     setLoading(false);
-    //     setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-    //   }
-    // }
-  };}
+
+      // else if (updatedTodo.message === "Invalid Credentials") {
+      //     setLoading(false);
+      //     setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+      //   }
+      // }
+    }
+  };
 
   // END USER LOGIN VALIDATION
 
   return (
     <>
       {/* <!-- Login --> */}
-      <link rel="stylesheet" href="http://localhost:3000/css/bootstrap.css"/>
-      <link rel="stylesheet" href="http://localhost:3000/fonts/icon-font/css/style.css"/>
-      <link rel="stylesheet" href="http://localhost:3000/fonts/fontawesome-5/css/all.css"/>
-      <link rel="stylesheet" href="http://localhost:3000/fonts/fontawesome-5/css/main.css"/>
+      <link rel="stylesheet" href="http://localhost:3000/css/bootstrap.css" />
+      <link
+        rel="stylesheet"
+        href="http://localhost:3000/fonts/icon-font/css/style.css"
+      />
+      <link
+        rel="stylesheet"
+        href="http://localhost:3000/fonts/fontawesome-5/css/all.css"
+      />
+      <link
+        rel="stylesheet"
+        href="http://localhost:3000/fonts/fontawesome-5/css/main.css"
+      />
       <div className="d-flex justify-content-center pt-21">
-        <ToastContainer/>
+        <ToastContainer />
         <div className="bg-white rounded-8 overflow-hidden pt-21">
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 ">
+          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box ">
             <div className="pb-5 mb-5 text-center">
               <img
                 src="http://localhost:3000/image/logo-main-black.png"
@@ -118,13 +135,13 @@ export default function ResetPassword() {
             </div>
             {/* user login form */}
             <form onSubmit={onUserLoginClick}>
-            <h5 className="text-center pb-8"> Reset Password</h5>
+              <h5 className="text-center pb-8"> Reset Password</h5>
               <div className="form-group">
                 <label
                   htmlFor="password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                Password
+                  Password
                 </label>
                 <input
                   type="password"
@@ -155,7 +172,7 @@ export default function ResetPassword() {
                   htmlFor="conf_password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                 Confirm Password
+                  Confirm Password
                 </label>
                 <div className="position-relative">
                   <input
@@ -182,7 +199,6 @@ export default function ResetPassword() {
                     </span>
                   )}
                 </div>
-                
               </div>
               <div className="form-group mb-8">
                 {loading === true ? (

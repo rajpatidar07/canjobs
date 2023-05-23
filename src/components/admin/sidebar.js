@@ -27,7 +27,7 @@ const AdminSidebar = (props) => {
       >
         <div className="brand-logo px-11">
           <Link to="">
-            <img src="image/logo.png" alt="" />
+            <img src="image/logo-main-black.png" alt="" />
           </Link>
         </div>
         <div className="my-9 px-11"></div>
