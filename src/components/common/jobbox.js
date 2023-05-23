@@ -33,6 +33,8 @@ function JobBox({
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const category = searchParams.get("category");
+  // console.log("search =>",search,"country =>",country,"category =>",category)
+
   /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
@@ -62,6 +64,9 @@ function JobBox({
     locationFilterValue,
     apiCall,
     ApiCall,
+    search,
+    country,
+    category,
   ]);
 
   /*FUnction to apply to the job */
@@ -101,14 +106,16 @@ function JobBox({
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green main_job_box_"
             >
               <Link
-                to={"/jobdetail"}
+                to={token && user_type === "user" ? "/jobdetail" : ""}
                 onClick={
-                  job.is_applied === "0"
-                    ? () => {
-                        localStorage.setItem("jobId", job.job_id);
-                        OnApplyClick(1, job.job_id);
-                      }
-                    : null
+                  token && user_type === "user"
+                    ? job.is_applied === "0"
+                      ? () => {
+                          localStorage.setItem("jobId", job.job_id);
+                          OnApplyClick(1, job.job_id);
+                        }
+                      : null
+                    : () => setShowLogin(true)
                 }
               >
                 {job.job_type === "swap" ? (

@@ -35,6 +35,8 @@ const UserProfile = (props) => {
       setPersonalDetail(userData.data.employee[0]);
     }
   };
+  console.log(userDetail)
+  
    /*Function to Geyt applied job data */
   const AppliedJob = async () => {
     const applied = await EmployeeAppliedJob(employeeId);
@@ -58,11 +60,13 @@ const UserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
   /*Function to generate resume */
-  const ResumeClick = (employee_id) => {
-    const id = employee_id;
-    window.open(`/resume/${id}`, "_blank");
+  // const ResumeClick = (employee_id) => {
+  //   const id = employee_id;
+  //   window.open(`/resume/${id}`, "_blank");
+  // };
+  const handleViewResume = (pdfUrl) => {
+    window.open(pdfUrl, '_blank');
   };
-
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
@@ -231,42 +235,37 @@ const UserProfile = (props) => {
                               src="image/icons/envelope.svg"
                               alt="Email"
                             />
-                            {PersonalDetail.experience}
-                          </span>
+                            {PersonalDetail.experience} Years
+                          </span> 
                         </div>
-                        <div className="info_box text-left">
+                        {/* <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
                             Religion: <b>{PersonalDetail.religion}</b>
                           </span>
-                        </div>
-                        <div className="info_box text-left">
+                        </div> */}
+                       {PersonalDetail.nationality ? <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
-                            Nationality: <b>{PersonalDetail.nationality}</b>
+                            Nationality: <b> {PersonalDetail.nationality}</b>
                           </span>
-                        </div>
-                        <div className="info_box text-left">
+                        </div> : null}
+                        {PersonalDetail.work_permit_canada ? <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
                             Work Permit of Canada:
-                            <b>{PersonalDetail.work_permit_canada}</b>
+                            <b> {PersonalDetail.work_permit_canada}</b>
                           </span>
-                        </div>
-                        <div className="info_box text-left">
+                        </div> : null}
+                        {PersonalDetail.work_permit_other_country ? <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
                             Work Permit of Other Country:
-                            <b>{PersonalDetail.work_permit_other_country}</b>
+                            <b> {PersonalDetail.work_permit_other_country}</b>
                           </span>
-                        </div>
+                        </div> : null}
                         <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
                             Resume:
-                            <Link
-                              to={""}
-                              onClick={() =>
-                                ResumeClick(PersonalDetail.employee_id)
-                              }
-                            >
-                              View Resume
-                            </Link>
+
+                          <Link to={""} onClick={()=> handleViewResume(PersonalDetail.resume)}>View Resume</Link>
+                      
                           </span>
                         </div>
                       </div>
