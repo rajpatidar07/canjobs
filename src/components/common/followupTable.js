@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetAllJobs, getAllJobsCategory } from "../../api/api";
 import JobResponse from "./response";
+import Loader  from '../common/loader';
 
 function FollowupTable() {
   /*show Modal and props state */
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
-  /*Delete state */
+  let [isLoading, setIsLoading] = useState(true);
   /*Filter and search state */
   const [Categorylist, setCategoryList] = useState([]);
   /*Pagination states */
@@ -21,6 +22,7 @@ function FollowupTable() {
 
   /* Function to get Job data*/
   const JobData = async () => {
+    setIsLoading(true)
     const userData = await GetAllJobs(
       props.search,
       props.locationFilterValue,
@@ -35,10 +37,12 @@ function FollowupTable() {
     if (userData.data.length === 0) {
       setjobData([]);
       setresponseId();
+      setIsLoading(false)
     } else {
       setjobData(userData.data.data);
       setTotalData(userData.data.total_rows);
       setresponseId(userData.data.data[0].job_id);
+      setIsLoading(false)
     }
   };
 
@@ -91,10 +95,12 @@ function FollowupTable() {
 
   return (
     <>
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+      
+        <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
-          <table className="table table-striped main_data_table">
-            <thead>
+        {isLoading ? 
+              <Loader/>  : <table className="table table-striped main_data_table">
+           <thead>
               <tr>
                 <th
                   scope="col"
@@ -331,7 +337,7 @@ function FollowupTable() {
                 ))
               )}
             </tbody>
-          </table>
+          </table>}
         </div>
         <div className="pt-2">
           <Pagination

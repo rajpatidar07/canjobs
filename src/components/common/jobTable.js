@@ -5,11 +5,13 @@ import { GetAllJobs, DeleteJob } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
+import Loader  from '../common/loader';
 
 export default function JobTable(props) {
   // console.log(props.filter_by_time);
 
   /*show Modal and props state */
+  let [isLoading, setIsLoading] = useState(true);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
@@ -28,6 +30,7 @@ export default function JobTable(props) {
 
   /* Function to get Job data*/
   const JobData = async () => {
+    setIsLoading(true)
     const userData = await GetAllJobs(
       props.search,
       props.locationFilterValue,
@@ -43,9 +46,11 @@ export default function JobTable(props) {
     );
     if (userData.data.data.length === 0) {
       setjobData([]);
+      setIsLoading(false)
     } else {
       setjobData(userData.data.data);
       setTotalData(userData.data.total_rows);
+      setIsLoading(false)
     }
     // // console.log(userData.data.data);
   };
@@ -113,9 +118,13 @@ export default function JobTable(props) {
   };
   return (
     <>
+  
+     
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
-          <table className="table table-striped main_data_table">
+        { isLoading ? 
+           <Loader load={"yes"}/>  :  
+           <table className="table table-striped main_data_table">
             <thead>
               <tr>
                 <th
@@ -380,7 +389,7 @@ export default function JobTable(props) {
                 ))
               )}
             </tbody>
-          </table>
+          </table>}
         </div>
         {totalData === 0  || totalData === "0" ? null : <div className="pt-2">
           <Pagination

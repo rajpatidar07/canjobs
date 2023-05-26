@@ -11,10 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import EmployementDetails from "../forms/user/employement";
 import ChangeJob from "../forms/admin/changeJobs";
+import Loader  from '../common/loader';
 
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
+  let [isLoading, setIsLoading] = useState(true);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
@@ -37,6 +39,7 @@ export default function EmployeeTable(props) {
 
   /* Function to get Employee data*/
   const EmpData = async () => {
+    setIsLoading(true)
     const userData = await getallEmployeeData(
       props.search,
       props.experienceFilterValue,
@@ -50,9 +53,11 @@ export default function EmployeeTable(props) {
     );
     if (userData.data.length === 0) {
       setemployeeData([]);
+      setIsLoading(false)
     } else {
       setemployeeData(userData.data);
       setTotalData(userData.total_rows);
+      setIsLoading(false)
     }
   };
 
@@ -201,8 +206,12 @@ export default function EmployeeTable(props) {
           apply={"apply"}
         />
       ) : null}
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+      
+        <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
+        {isLoading ? 
+       <Loader/>
+        :
           <table className="table table-striped main_data_table">
             <thead>
               <tr className="">
@@ -558,7 +567,7 @@ export default function EmployeeTable(props) {
                 ))
               )}
             </tbody>
-          </table>
+          </table>}
         </div>
         <div className="pt-2">
           <Pagination

@@ -1,5 +1,5 @@
 import React from "react";
-import EmployeeBox from "./employeeBox";
+import EmployeeBox from "../company/employeeBox";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import SearchForm from "../common/search_form";

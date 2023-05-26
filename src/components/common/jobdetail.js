@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { GetJobDetail, ApplyJob } from "../../api/api";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
+import Loader  from '../common/loader';
+
 // eslint-disable-next-line
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let [apiCall, setApiCall] = useState(false);
+  let [isLoading, setIsLoading] = useState(true);
   let skill = [];
   const user_type = localStorage.getItem("userType");
   const jobId = localStorage.getItem("jobId");
@@ -22,8 +25,10 @@ function JobDetailPage(props) {
       jobId === "0" ||
       userData.data.data.length === 0
     ) {
+      setIsLoading(false)
     } else {
       setJobDetailsData(userData.data.data[0]);
+      setIsLoading(false)
     }
   };
   /*Render method to get job detail data */
@@ -60,6 +65,10 @@ function JobDetailPage(props) {
     }
   };
   return (
+    <>
+    <div className="table-responsive main_table_div">
+    {isLoading ? 
+    <Loader />  :
     <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
       <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
         <ToastContainer />
@@ -244,7 +253,9 @@ function JobDetailPage(props) {
           </div>
         </div>
       </div>
+    </div>}
     </div>
+    </>
   );
 }
 

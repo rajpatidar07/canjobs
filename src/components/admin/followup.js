@@ -10,9 +10,11 @@ import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
+import Loader  from '../common/loader';
 
 function Followup() {
   /*show Modal and props state */
+  let [isLoading, setIsLoading] = useState(true);
   let [apiCall, setApiCall] = useState(false);
   let [catapiCall, setCatApiCall] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
@@ -42,6 +44,7 @@ function Followup() {
 
   /* Function to get Job data*/
   const JobData = async () => {
+    setIsLoading(true)
     const userData = await GetAllJobs(
       search,
       locationFilterValue,
@@ -56,10 +59,12 @@ function Followup() {
     if (userData.data.data.length === 0) {
       setJobId([]);
       setresponseId();
+      setIsLoading(false)
     } else {
       setjobData(userData.data.data);
       setTotalData(userData.data.total_rows);
       setresponseId(userData.data.data[0].job_id);
+      setIsLoading(false)
     }
     // if (userData.message === "No data found") {
     // //// console.log((userData.status);
@@ -240,258 +245,262 @@ function Followup() {
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                <div className="table-responsive main_table_div">
-                  <table className="table table-striped main_data_table">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            onClick={() => handleSort("job_title")}
-                            className="text-gray"
-                            title="Sort by Industry"
-                          >
-                            Job title / Industry
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("job_type")}
-                            className="text-gray"
-                            title="Sort by Job"
-                          >
-                            Job Type
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("location")}
-                            className="text-gray"
-                            title="Sort by Address"
-                          >
-                            Address
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("education")}
-                            className="text-gray"
-                            title="Sort by Education"
-                          >
-                            Education
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("keyskill")}
-                            className="text-gray"
-                            title="Sort by Skills"
-                          >
-                            Skills
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("language")}
-                            className="text-gray"
-                            title="Sort by Language"
-                          >
-                            Language
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("salary")}
-                            className="text-gray"
-                            title="Sort by Salary"
-                          >
-                            Salary
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to=""
-                            onClick={() => handleSort("experience_required")}
-                            className="text-gray"
-                            title="Sort by Experience"
-                          >
-                            Experience
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link to="" className="text-gray">
-                            Total Response
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className=" border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Map function to show the data in the list*/}
-                      {totalData === 0 || jobData.length === 0 ? (
+            
+              
+                <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+                  <div className="table-responsive main_table_div">
+                    {isLoading ? 
+                      <Loader />
+                      :<table className="table table-striped main_data_table">
+                      <thead>
                         <tr>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white text-center">No Data Found</th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                        </tr>
-                      ) : (
-                        (jobData || []).map((job) => (
-                          <React.Fragment key={job.job_id}>
-                            <tr
-                              className="aos-init aos-animate"
-                              data-aos="fade-right"
-                              data-aos-duration="800"
-                              data-aos-once="true"
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              onClick={() => handleSort("job_title")}
+                              className="text-gray"
+                              title="Sort by Industry"
                             >
-                              <td className="py-5 ">
-                                <div className="">
-                                  <Link
-                                    to={""}
-                                    onClick={() => JobDetail(job.job_id)}
-                                    className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                                  >
-                                    <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                      {job.job_title}
-                                    </p>
-                                    <p className="text-gray font-size-2 m-0 text-capitalize">
-                                      {job.company_name} - {job.industry_type}
-                                    </p>
-                                  </Link>
-                                </div>
-                              </td>
-                              <td className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.employement} - {job.job_type}
-                                </h3>
-                              </td>
-                              <td className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.location}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.education}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.keyskill}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.language}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.salary}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {job.experience_required}
-                                </h3>
-                              </td>
-                              <td className="py-5 ">
-                                <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                                  {job.total_applicants}
-                                </h3>
-                              </td>
-                              <td className="py-5 min-width-px-100">
-                                {job.total_applicants > 0 ? (
-                                  <div
-                                    className="btn-group button_group"
-                                    role="group"
-                                  >
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => {
-                                        setresponseId(job.job_id);
-                                      }}
-                                      title="Job Response"
+                              Job title / Industry
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("job_type")}
+                              className="text-gray"
+                              title="Sort by Job"
+                            >
+                              Job Type
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("location")}
+                              className="text-gray"
+                              title="Sort by Address"
+                            >
+                              Address
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("education")}
+                              className="text-gray"
+                              title="Sort by Education"
+                            >
+                              Education
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("keyskill")}
+                              className="text-gray"
+                              title="Sort by Skills"
+                            >
+                              Skills
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("language")}
+                              className="text-gray"
+                              title="Sort by Language"
+                            >
+                              Language
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("salary")}
+                              className="text-gray"
+                              title="Sort by Salary"
+                            >
+                              Salary
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to=""
+                              onClick={() => handleSort("experience_required")}
+                              className="text-gray"
+                              title="Sort by Experience"
+                            >
+                              Experience
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link to="" className="text-gray">
+                              Total Response
+                            </Link>
+                          </th>
+                          <th
+                            scope="col"
+                            className=" border-0 font-size-4 font-weight-normal"
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* Map function to show the data in the list*/}
+                        {totalData === 0 || jobData.length === 0 ? (
+                          <tr>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white text-center">No Data Found</th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                            <th className="bg-white"></th>
+                          </tr>
+                        ) : (
+                          (jobData || []).map((job) => (
+                            <React.Fragment key={job.job_id}>
+                              <tr
+                                className="aos-init aos-animate"
+                                data-aos="fade-right"
+                                data-aos-duration="800"
+                                data-aos-once="true"
+                              >
+                                <td className="py-5 ">
+                                  <div className="">
+                                    <Link
+                                      to={""}
+                                      onClick={() => JobDetail(job.job_id)}
+                                      className="font-size-3 mb-0 font-weight-semibold text-black-2"
                                     >
-                                      Responses
-                                    </button>
+                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                        {job.job_title}
+                                      </p>
+                                      <p className="text-gray font-size-2 m-0 text-capitalize">
+                                        {job.company_name} - {job.industry_type}
+                                      </p>
+                                    </Link>
                                   </div>
-                                ) : null}
-                              </td>
-                            </tr>
-                            {job.job_id === responseId &&
-                            job.total_applicants > 0 ? (
-                              <tr>
-                                <td colSpan={10}>
-                                  {/* <!-- Job Responses --> */}
-                                  <JobResponse
-                                    responseId={responseId}
-                                    apiCall={apiCall}
-                                    setApiCall={setApiCall}
-                                    heading={"Manage Follow-ups"}
-                                  />
+                                </td>
+                                <td className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.employement} - {job.job_type}
+                                  </h3>
+                                </td>
+                                <td className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.location}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.education}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.keyskill}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.language}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.salary}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {job.experience_required}
+                                  </h3>
+                                </td>
+                                <td className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                                    {job.total_applicants}
+                                  </h3>
+                                </td>
+                                <td className="py-5 min-width-px-100">
+                                  {job.total_applicants > 0 ? (
+                                    <div
+                                      className="btn-group button_group"
+                                      role="group"
+                                    >
+                                      <button
+                                        className="btn btn-outline-info action_btn"
+                                        onClick={() => {
+                                          setresponseId(job.job_id);
+                                        }}
+                                        title="Job Response"
+                                      >
+                                        Responses
+                                      </button>
+                                    </div>
+                                  ) : null}
                                 </td>
                               </tr>
-                            ) : null}
-                          </React.Fragment>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                              {job.job_id === responseId &&
+                              job.total_applicants > 0 ? (
+                                <tr>
+                                  <td colSpan={10}>
+                                    {/* <!-- Job Responses --> */}
+                                    <JobResponse
+                                      responseId={responseId}
+                                      apiCall={apiCall}
+                                      setApiCall={setApiCall}
+                                      heading={"Manage Follow-ups"}
+                                    />
+                                  </td>
+                                </tr>
+                              ) : null}
+                            </React.Fragment>
+                          ))
+                        )}
+                      </tbody>
+                    </table>}
+                  </div>
+                  {/* <!-- Follow up Pagination --> */}
+                  <div className="pt-2">
+                    <Pagination
+                      nPages={nPages}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage}
+                    />
+                  </div>
                 </div>
-                {/* <!-- Follow up Pagination --> */}
-                <div className="pt-2">
-                  <Pagination
-                    nPages={nPages}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>

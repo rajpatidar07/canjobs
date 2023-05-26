@@ -493,7 +493,52 @@ label.image_upload_btn {
   gap: 7px;
   align-items: center;
 }
-
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.table-responsive.main_table_div{
+  position: relative;
+  min-height: 150px;
+}
+.custom_loader {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  ALIGN-ITEMS: center !important;
+  background: #fff;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+.custom_loader-01 {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  ALIGN-ITEMS: center !important;
+  background: #fff;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+.coustam_datepicker{
+  position: relative;
+  overflow: hidden;
+}
+input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
+  
+  /* //-webkit-appearance: none; */
+  width: 100%;
+  opacity: 0;
+  height:100px;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 10px;
+position:absolute;
+}
 @media (max-width: 767px) {
   header.site-header {
     max-width: 100%;

@@ -8,11 +8,14 @@ import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
+import Loader  from '../common/loader';
+
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   /*Show modal and data state */
   let [apiCall, setApiCall] = useState(false);
+  let [isLoading, setIsLoading] = useState(true);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [
     showKycComplainDetailsModal,
@@ -36,9 +39,11 @@ function CompanyProfile(props) {
     ) {
       setEmployerKycData("");
       setEmployerData(userData.data.company_detail[0]);
+      setIsLoading(false)
     } else {
       setEmployerData(userData.data.company_detail[0]);
       setEmployerKycData(userData.data.kyc_detail[0]);
+      setIsLoading(false)
     }
   };
   /*Render method to get employer data */
@@ -73,7 +78,9 @@ function CompanyProfile(props) {
             </div>
           </div> */}
           {/* <!-- back Button End --> */}
-          <div className="row bg-white rounded-4 pt-11 shadow-9">
+          {isLoading ? 
+            <div className="table-responsive main_table_div"><Loader/> </div>  :
+            <div className="row bg-white rounded-4 pt-11 shadow-9">
             {/* <!-- Company Profile --> */}
             <div className="w-100 row m-0 align-items-center px-12 mb-8 text-center text-xs-left">
               <div className="media align-items-center company_box col-10 p-0">
@@ -173,7 +180,7 @@ function CompanyProfile(props) {
                 </div>
               </div>
             </div>
-          </div>
+          </div>}
         </div>
       </div>
       {user_type !== "admin" ? <EmployeeFooter /> : null}

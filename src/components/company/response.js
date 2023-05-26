@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
 // import JobDetail from "./jobDetail";
-// import { getJson } from "../../api/api";
+import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
+import Loader  from '../common/loader';
 
 function Response() {
-  // let [filter,  SetFilter] = useState([]);
+  let [filter,  SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
+
   /* Function to get the JSON data*/
-  // const FilterData = async () => {
-  //   const Json = await getJson();
-  //   SetFilter(Json);
-  // };
+  const FilterData = async () => {
+    const Json = await getJson();
+    if(Json.length === 0){
+      SetFilter([]);
+    }else{
+        SetFilter(Json);}    
+  };
   // console.log(filter);
 
-  // useEffect(() => {
-  //   FilterData();
-  // }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue]);
+  useEffect(() => {
+    FilterData();
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue , locationFilterValue]);
   return (
     <>
       <div>
@@ -59,10 +64,10 @@ function Response() {
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option  value="">Select Job Category</option>
-                        {(FilterJson.category || []).map((data, i) => {
+                        {(filter.Category || []).map((data, i) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.value} key={data.id}>
+                              {data.value}
                             </option>
                           );
                         })}
@@ -149,7 +154,7 @@ function Response() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link active">
+                   {<JobBoxResponse/> ? <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse
                         categoryFilterValue={categoryFilterValue}
@@ -158,7 +163,7 @@ function Response() {
                         locationFilterValue={locationFilterValue}
                       />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    </div> : <div className="table-responsive main_table_div"><Loader/> </div>}
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link

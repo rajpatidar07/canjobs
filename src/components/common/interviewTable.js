@@ -5,11 +5,16 @@ import { getInterview } from "../../api/api";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import SAlert from "../common/sweetAlert";
+import moment from "moment";
 import Pagination from "./pagination";
 // import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview";
+import Loader  from '../common/loader';
+import { ToastContainer } from "react-toastify";
+
 function Interview(props) {
   let search = props.search;
+  let [isLoading, setIsLoading] = useState(true);
   let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);
   const [interviewData, setInterviewData] = useState([]);
   const [jobId, setJobId] = useState();
@@ -21,8 +26,8 @@ function Interview(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("id");
-  const [sortOrder, setSortOrder] = useState("DESC");
+  const [columnName, setcolumnName] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
   //   /* Function to get the intervew data*/
   const InterviewData = async () => {
@@ -41,6 +46,7 @@ function Interview(props) {
     } else {
       setInterviewData(userData.data);
       setTotalData(userData.total_rows);
+      setIsLoading(false)
     }
   };
 
@@ -81,6 +87,7 @@ function Interview(props) {
   };
   return (
     <>
+    <ToastContainer/>
       {showAddInterviewModal ? (
         <AddInterview
           resData={resData}
@@ -94,7 +101,6 @@ function Interview(props) {
           Interview={"interview"}
         />
       ) : null}
-
       <div className="mb-18">
         <div className="mb-4 align-items-center">
           <div className="page___heading">
@@ -108,7 +114,9 @@ function Interview(props) {
               : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
           }
         >
-          <div className="table-responsive ">
+          <div className="table-responsive main_table_div">
+           {isLoading ? 
+            <Loader/>  :  
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
@@ -236,7 +244,7 @@ function Interview(props) {
                       )}
                       <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {data.interview_date}
+                          {moment(data.interview_date).format("DD MMMM, YYYY")}
                         </h3>
                       </th>
                       <th className="py-5 ">
@@ -253,36 +261,28 @@ function Interview(props) {
                       </th>
                       <th className="py-5 ">
                         <div className="btn-group button_group" role="group">
-                         {data.status === "complete" ? 
-                         <button
-                         className="btn btn-outline-info action_btn "
-                         style={{ fontSize: "10px" }}
-                         title="Interview Completed"
-                         disabled
-                       >
-                          Complete
-                       </button> : <button
+                           <button
                             className="btn btn-outline-info action_btn "
                             style={{ fontSize: "10px" }}
                             onClick={() => editInterview(data)}
                             title=" Reschedule Interview"
                           >
-                            Reschedule
-                          </button>}
+                        {  data.status === "complete" ? "Complete" :  "Reschedule"}
+                          </button>
                         </div>
                       </th>
                     </tr>
                   ))
                 )}
               </tbody>
-            </table>
+            </table>}
           </div>
           <div className="pt-2">
             <Pagination
               nPages={nPages}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-            />
+            />{console.log(nPages,currentPage)}
           </div>
         </div>
       </div>

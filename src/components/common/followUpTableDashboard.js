@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getFollowupLastData } from "../../api/api";
 import Pagination from "./pagination";
+import moment from "moment"; 
+import Loader from "./loader";
 function FollowUpDashBoard(props) {
   const [followUpData, setFollowUpData] = useState([]);
   /*Pagination states */
@@ -11,6 +13,7 @@ function FollowUpDashBoard(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
+  const [isLoading, setIsloading] = useState(true);
 
   /* Function to get the FollowUp data*/
   const FollowUpData = async () => {
@@ -23,9 +26,11 @@ function FollowUpDashBoard(props) {
     );
     if (userData.data.length === 0) {
       setFollowUpData([]);
+      setIsloading(false)
     } else {
       setFollowUpData(userData.data);
       setTotalData(userData.total_rows);
+      setIsloading(false)
     }
   };
 
@@ -74,8 +79,9 @@ function FollowUpDashBoard(props) {
                     : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
                 }
               >
-                <div className="table-responsive ">
-                  <table className="table table-striped main_data_table">
+                <div className="table-responsive main_table_div">
+                  {isLoading ? 
+              <Loader/>  :<table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -128,7 +134,7 @@ function FollowUpDashBoard(props) {
                             className="text-gray"
                             title="Sort by Date"
                           >
-                            Next_Followup date{" "}
+                            Next Followup date
                           </Link>
                         </th>
                       </tr>
@@ -164,14 +170,14 @@ function FollowUpDashBoard(props) {
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {data.next_followup_date === "0000-00-00"
                                   ? "N/A"
-                                  : data.next_followup_date}
+                                  : moment( data.next_followup_date).format("DD MMMM, YYYY")}
                               </h3>
                             </th>
                           </tr>
                         ))
                       )}
                     </tbody>
-                  </table>
+                  </table>}
                 </div>
                 <div className="pt-2">
                   <Pagination

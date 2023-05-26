@@ -8,6 +8,7 @@ import FilterJson from "../json/filterjson";
 import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import { useEffect } from "react";
+import Loader  from '../common/loader';
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -133,16 +134,19 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active active">
+                    {
+                      <JobBox/> ? <div className="mb-8 p-0 w-100 active active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox
                         categoryFilterValue={categoryFilterValue}
                         SkillFilterValue={SkillFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
                         jobLocation={jobLocation}
-                      />
+                      /> 
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    </div> :
+                    <div className="table-responsive main_table_div">
+                    <Loader/></div> }
                   </div>
                 </div>
                 {/* <!-- form end --> */}

@@ -24,7 +24,7 @@ function CompanyDetailPage(props) {
     }
   }, [props.employerId, apiCall]);
   return (
-    <div className="col-md-12 col-xl-3 col-lg-4 col-12 col-sm-12 border-right">
+    <div className="col-md-12 col-xl-3 col-lg-4 col-12 col-sm-12 border-right ">
       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
         <span>Contact Info</span>
         <CustomButton
@@ -39,33 +39,34 @@ function CompanyDetailPage(props) {
           close={() => setContactDetails(false)}
         /> : null}
       </h4>
-      <div className="pt-5 text-left row">
-        <div className="col-md-12">
-         { employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
-            <i className="fas fa-user mr-2"></i>
-            {employerData.contact_person_name}
-          </p> : null}
-         { employerData.designation ? <p className="font-size-4 mb-8" title="Designation">
-            <i className="fas fa-portrait mr-2"></i> {employerData.designation}
-          </p> : null}
-          { employerData.email ? <p className="font-size-4 mb-8" title="Email">
-            <i className="fas fa-envelope mr-2"></i> {employerData.email}
-          </p> : null}
-         { employerData.contact_no ? <p className="font-size-4 mb-8" title="Contact No">
-            <i className="fas fa-phone-alt mr-2"></i> {employerData.contact_no}
-          </p> : null}
-          {employerData.contact_no_other ? (
-            <p className="font-size-4 mb-8" title="Contact No">
-              <i className="fas fa-phone-alt mr-2"></i>
-              {employerData.contact_no_other}
-            </p>
-          ) : null}
-          {employerData.address ? <p className="font-size-4 mb-8" title="Address">
-            <i className="fas fa-map-marker-alt mr-2"></i>
-            {employerData.address}
-          </p> : null}
-        </div>
-      </div>
+
+          <div className="pt-5 text-left row">
+            <div className="col-md-12">
+            { employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
+                <i className="fas fa-user mr-2"></i>
+                {employerData.contact_person_name}
+              </p> : null}
+            { employerData.designation ? <p className="font-size-4 mb-8" title="Designation">
+                <i className="fas fa-portrait mr-2"></i> {employerData.designation}
+              </p> : null}
+              { employerData.email ? <p className="font-size-4 mb-8" title="Email">
+                <i className="fas fa-envelope mr-2"></i> {employerData.email}
+              </p> : null}
+            { employerData.contact_no ? <p className="font-size-4 mb-8" title="Contact No">
+                <i className="fas fa-phone-alt mr-2"></i> {employerData.contact_no}
+              </p> : null}
+              {employerData.contact_no_other ? (
+                <p className="font-size-4 mb-8" title="Contact No">
+                  <i className="fas fa-phone-alt mr-2"></i>
+                  {employerData.contact_no_other}
+                </p>
+              ) : null}
+              {employerData.address ? <p className="font-size-4 mb-8" title="Address">
+                <i className="fas fa-map-marker-alt mr-2"></i>
+                {employerData.address}
+              </p> : null}
+            </div>
+          </div>
     </div>
   );
 }

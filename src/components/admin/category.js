@@ -11,8 +11,11 @@ import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 // import FilterJson from "../json/filterjson";
 import AddCategoryType from "../forms/admin/categoryType";
+import Loader  from '../common/loader';
 function Category() {
   /*Modal and Data states */
+  let [isLoading, setIsLoading] = useState(true);
+  let [isLoading2, setIsLoading2] = useState(true);
   let [apiCall, setApiCall] = useState(false);
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
@@ -48,6 +51,7 @@ function Category() {
 }
   /* Function to get the job category data*/
   const CategoryData = async () => {
+    setIsLoading(true)
     const userData = await getAllJobsCategory(
       1,
       categoryTypeFilterValue,
@@ -59,16 +63,18 @@ function Category() {
     );
     if (userData.data.length === 0) {
       setCategoryData([]);
+      setIsLoading(false)
     } else {
       setCategoryData(userData.data);
       const filteredData = userData.data.filter(
         (data) => data.parent_id !== "0"
       );
       if (filteredData.length === 0) {
-        // setTotalData(userData.total_rows);
+        setTotalData(userData.total_rows);
       } else {
         setTotalData();
       }
+      setIsLoading(false)
     }
   };
   /* Function to get the job category Type data*/
@@ -84,9 +90,11 @@ function Category() {
     );
     if (userData.data.length === 0) {
       setCategoryTypeData([]);
+      setIsLoading2(false)
     } else {
       setCategoryTypeData(userData.data);
       setTypeTotalData(userData.total_rows);
+      setIsLoading2(false)
     }
   };
   /*Render function to get the job category*/
@@ -281,12 +289,14 @@ function Category() {
               </div>
             </div>
             <small className="text-danger">{searcherror}</small>
-            <div className="row">
+            
+              <div className="row">
               <div className="col-6 mb-18">
                 <h3 className="font-size-5 mb-0">Category</h3>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
-                  <div className="table-responsive ">
-                    <table className="table table-striped main_data_table">
+                  <div className="table-responsive main_table_div">
+                   {isLoading ? 
+                     <Loader/>  :  <table className="table table-striped main_data_table">
                       <thead>
                         <tr>
                           <th
@@ -325,7 +335,8 @@ function Category() {
                       </thead>
                       <tbody>
                         {/* Map function to show the data in the list*/}
-                        {totalData === 0 || categoryData.length === 0 ? (
+                        {
+                        totalData === 0 || categoryData.length === 0 ? (
                           <tr>
                             <th className="bg-white"></th>
                             <th className="bg-white text-center">No Data Found</th>
@@ -371,7 +382,7 @@ function Category() {
                           ))
                         )}
                       </tbody>
-                    </table>
+                    </table>}
                   </div>
                 </div>
                 {/* <!-- Pagination- --> */}
@@ -386,8 +397,9 @@ function Category() {
               <div className="col-6 mb-18">
                 <h3 className="font-size-5 mb-0">Category type</h3>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 d-flex  justify-content-between ">
-                  <div className="table-responsive ">
-                    <table className="table table-striped main_data_table">
+                  <div className="table-responsive main_table_div">
+                    {isLoading2 ? 
+                    <Loader/>  : <table className="table table-striped main_data_table">
                       <thead>
                         <tr>
                           <th
@@ -453,7 +465,7 @@ function Category() {
                           ))
                         )}
                       </tbody>
-                    </table>
+                    </table>}
                   </div>
                 </div>
                 {/* <!-- Pagination- --> */}

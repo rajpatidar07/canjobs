@@ -4,7 +4,6 @@ import {
   BrowserRouter,
   Routes /*, useLocation */,
 } from "react-router-dom";
-
 import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
 import ManageJobs from "../company/manageJob";
@@ -29,6 +28,7 @@ import JobResponse from "../admin/response";
 import NotFound from "./notfound";
 import ResetPassword from "./resetPassword";
 import EmailTemplate from "../admin/email";
+import Loader  from '../common/loader';
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -36,6 +36,7 @@ import EmailTemplate from "../admin/email";
 //   // Use the path variable in your component
 //   return path;
 // }
+
 function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
@@ -50,7 +51,6 @@ function MainLayout() {
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
-
         {userType === "user" && token !== ("" || null || undefined) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
@@ -87,28 +87,30 @@ function MainLayout() {
         )}
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        {userType === "admin" && token !== ("" || null || undefined) ? (
-          <>
-            <Route path="/dashboard" element={<AdminDashboard />} />
-            <Route path="/job" element={<Job />} />
-            <Route path="/category" element={<Category />} />
-            <Route path="/employee" element={<Employee />} />
-            <Route path="/employer" element={<Employer />} />
-            <Route path="/adminprofile" element={<ManageAdmin />} />
-            <Route path="/followup" element={<Followup />} />
-            <Route path="/filter" element={<FilterList />} />
-            <Route path="/interview" element={<ManageInterview />} />
-            <Route path="/responses" element={<JobResponse />} />
-            <Route path="/emailtemplate" element={<EmailTemplate />} />
-            <Route path="/resume/:id" element={<ResumeGrerator />} />
-            <Route path="*" element={<NotFound />} />
-          </>
-        ) : (
+        {userType === ( "company" || "user" || "" ) && token === ( "" || null || undefined) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="*" element={<NotFound />} />
           </>
-        )}
+        ):(
+        <>
+        <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/job" element={<Job />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/employee" element={<Employee />} />
+        <Route path="/employer" element={<Employer />} />
+        <Route path="/adminprofile" element={<ManageAdmin />} />
+        <Route path="/followup" element={<Followup />} />
+        <Route path="/filter" element={<FilterList />} />
+        <Route path="/interview" element={<ManageInterview />} />
+        <Route path="/responses" element={<JobResponse />} />
+        <Route path="/emailtemplate" element={<EmailTemplate />} />
+        <Route path="/resume/:id" element={<ResumeGrerator />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<Loader load={"yes"}/>} />
+
+      </> 
+      )}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

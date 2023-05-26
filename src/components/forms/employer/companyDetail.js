@@ -456,14 +456,15 @@ function CompanyDetails(props) {
                   max={moment().format("YYYY-MM-DD")}
                   type="date"
                   name="company_start_date"
+                  onKeyDownCapture={(e) => e.preventDefault()}
                   value={
                     moment(state.company_start_date).format("YYYY-MM-DD") || ""
                   }
                   onChange={onInputChange}
                   className={
                     errors.company_start_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control  border border-danger coustam_datepicker"
+                      : "form-control coustam_datepicker"
                   }
                   placeholder="company_start_date"
                   id="company_start_date"
@@ -483,7 +484,7 @@ function CompanyDetails(props) {
                   htmlFor="company_size"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Size <span className="text-danger"> *</span> :
+                  No. of working official's <span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
                   <input
@@ -491,7 +492,7 @@ function CompanyDetails(props) {
                     name="company_size"
                     value={state.company_size || ""}
                     onChange={onInputChange}
-                    type="text"
+                    type="number"
                     className={
                       errors.company_size
                         ? "form-control border border-danger"

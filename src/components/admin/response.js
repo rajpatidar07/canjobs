@@ -11,7 +11,7 @@ import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
 import { ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
-
+import Loader  from '../common/loader';
 function JobResponse(props) {
   /*show modal and data states */
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
@@ -21,6 +21,7 @@ function JobResponse(props) {
   let [limia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
+  let [isLoading, setIsLoading] = useState(true);
 
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
@@ -45,6 +46,7 @@ function JobResponse(props) {
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
+    setIsLoading(true)
     const userData = await GetAllResponse(
       props.heading === "Manage Follow-ups" || user_type === "company"
         ? jobId
@@ -61,9 +63,11 @@ function JobResponse(props) {
     if (userData.data.data.length === 0) {
       setResData([]);
       setResponseData([]);
+      setIsLoading(false)
     } else {
       setResponseData(userData.data.data);
       setTotalData(userData.data.total_rows);
+      setIsLoading(false)
     }
   };
   /*Render function to get the Response*/
@@ -291,7 +295,9 @@ function JobResponse(props) {
               </div>
             </div>
           )}
-          <div className="mb-8">
+            {
+            
+                  <div className="mb-8">
             <div
               className={
                 props.heading === "Response" ||
@@ -302,8 +308,9 @@ function JobResponse(props) {
                   : ""
               }
             >
-              <div className="table-responsive ">
-                <table
+              <div className="table-responsive main_table_div">
+               { isLoading ? 
+                <Loader/>  : <table
                   className={
                     props.heading === "Manage Follow-ups"
                       ? "table table-striped main_data_table_inn"
@@ -652,7 +659,7 @@ function JobResponse(props) {
                       ))
                     )}
                   </tbody>
-                </table>
+                </table>}
               </div>
               <div className="pt-2">
                 <Pagination
@@ -662,7 +669,7 @@ function JobResponse(props) {
                 />
               </div>
             </div>
-          </div>
+          </div>}
         </div>
       </div>
     </div>

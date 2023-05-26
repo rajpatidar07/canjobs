@@ -3,9 +3,13 @@ import { AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader  from '../common/loader';
 export default function AdminLoginFrom({ setAdminLoggedIn }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
+  let [isLoading , setIsLoading] = useState(false);
+
+  
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -44,6 +48,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
         updatedTodo.status === true ||
         updatedTodo.message === "Successfully Logged "
       ) {
+        setIsLoading(true)
         localStorage.setItem("token", updatedTodo.token);
         localStorage.setItem("userType", "admin");
         localStorage.setItem("admin", updatedTodo.name);
@@ -54,6 +59,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           autoClose: 1000,
         });
         setLoading(false);
+        setIsLoading(false)
         navigate("/dashboard");
         window.location.reload();
       } else if (updatedTodo.message === "Invalid Credentials") {
@@ -71,7 +77,10 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
 
       <div className="d-flex justify-content-center pt-21">
         <div className="bg-white rounded-8 overflow-hidden pt-21">
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
+          {
+            isLoading ? 
+            <Loader/> :
+            <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
             <div className="pb-5 mb-5 text-center">
               <img
                 src="image/logo-main-black.png"
@@ -214,7 +223,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                 )}
               </div>
             </form>
-          </div>
+          </div>}
         </div>
       </div>
     </>

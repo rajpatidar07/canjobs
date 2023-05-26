@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { EmployeeDetails , EmployeeAppliedJob} from "../../api/api";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
+import Loader  from '../common/loader';
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
@@ -20,6 +21,7 @@ const UserProfile = (props) => {
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
   const user_type = localStorage.getItem("userType");
   let id = localStorage.getItem("employee_id");
   const employeeId = user_type === "admin" ? props.employeeId : id;
@@ -30,10 +32,12 @@ const UserProfile = (props) => {
         userData.data.length === 0 || 
         userData.data.employee.length === 0) {
       setuserDetail([]);
-      setPersonalDetail([]);
+      setPersonalDetail([]); 
+      setIsLoading(false)
     } else {
       setuserDetail(userData.data);
       setPersonalDetail(userData.data.employee[0]);
+      setIsLoading(false)
     }
   };
   // console.log(userDetail)
@@ -76,7 +80,7 @@ const UserProfile = (props) => {
       </>}
 
       <div className="bg-default-2 mt-5">
-        <div className="container p-0">
+        <div className="container p-0 pb-10">
           {user_type === "admin" ? (
             ""
           ) : (
@@ -93,7 +97,9 @@ const UserProfile = (props) => {
               </div>
             </div>
           )}
-          <div className="row text-left mt-5 pt-5">
+          {isLoading ?  
+          <div className="table-responsive main_table_div">
+          <Loader/> </div> : <div className="row text-left mt-5 pt-5">
             <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
               <div className="p-0">
                 {/*----Slide Employee profile-----*/}
@@ -805,7 +811,7 @@ const UserProfile = (props) => {
                 {/* <!-- Bottom End --> */}
               </div>
             </div>
-          </div>
+          </div>}
         </div>
       </div>
       {user_type === "admin" ? "" : <EmployeeFooter />}

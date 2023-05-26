@@ -7,6 +7,8 @@ import { getAllEmployer, DeleteEmployer } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
+import Loader  from '../common/loader';
+
 export default function EmployerTable(props) {
   // eslint-disable-next-line
   /*show modal and data, id state */
@@ -16,6 +18,8 @@ export default function EmployerTable(props) {
   let [showContactModal, setShowContactMOdal] = useState(false);
   const [employerData, setemployerData] = useState([]);
   const [employerId, setEmployerID] = useState();
+  let [isLoading, setIsLoading] = useState(true);
+
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -30,6 +34,7 @@ export default function EmployerTable(props) {
 
   /* Function to get Employer data*/
   const EmployerData = async () => {
+    setIsLoading(true)
     const userData = await getAllEmployer(
       props.industryFilterValue,
       props.corporationFilterValue,
@@ -42,9 +47,11 @@ export default function EmployerTable(props) {
     );
     if (userData.data.length === 0) {
       setemployerData([]);
+      setIsLoading(false)
     } else {
       setemployerData(userData.data);
       setTotalData(userData.total_rows);
+      setIsLoading(false)
     }
   };
 
@@ -128,9 +135,11 @@ export default function EmployerTable(props) {
 
   return (
     <>
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
+      
+        <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
         <div className="table-responsive main_table_div">
-          <table className="table table-striped main_data_table">
+        {isLoading ? 
+        <Loader /> :<table className="table table-striped main_data_table">
             <thead>
               <tr>
                 <th
@@ -422,7 +431,7 @@ export default function EmployerTable(props) {
                 ))
               )}
             </tbody>
-          </table>
+          </table>}
         </div>
         <div className="pt-2">
           <Pagination

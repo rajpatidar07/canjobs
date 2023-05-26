@@ -8,12 +8,15 @@ import { ToastContainer } from "react-toastify";
 import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
+import Loader  from '../common/loader';
+
 function ManageJobs() {
   /*Data and modal states */
   let [showAddJobModal, setShowAddJobModal] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   let [jobId, setJobId] = useState();
   let [filter, SetFilter] = useState([]);
+
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -195,7 +198,8 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    <div className="mb-8 p-0 w-100 active nav-link">
+                    { <JobBox/> ?
+                      <div className="mb-8 p-0 w-100 active nav-link">
                       {/* <!-- Single Featured Job --> */}
                       <JobBox
                         categoryFilterValue={categoryFilterValue}
@@ -206,7 +210,7 @@ function ManageJobs() {
                         apiCall={apiCall}
                       />
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    </div>: <div className="table-responsive main_table_div"><Loader/></div>}
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">

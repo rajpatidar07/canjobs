@@ -9,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
+import Loader  from '../common/loader';
+
 function ManageAdmin() {
   // eslint-disable-next-line
   /*data and id state */
@@ -17,6 +19,7 @@ function ManageAdmin() {
   let [showAddAdminModal, setShowAdminModal] = useState(false);
   let [adminData, setAdminData] = useState([]);
   let [adminId, setAdminID] = useState();
+  let [isLoading, setIsLoading] = useState(true);
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -34,6 +37,7 @@ function ManageAdmin() {
   const [sortOrder, setSortOrder] = useState("DESC");
   /* Function to get the Amin data*/
   const AdminData = async () => {
+    setIsLoading(true)
     const userData = await getallAdminData(
       typeFilterValue,
       search,
@@ -44,6 +48,8 @@ function ManageAdmin() {
     );
     if (userData.data.length === 0) {
       setAdminData([]);
+      setIsLoading(false)
+
     } else {
       setAdminData(userData.data);
       setTotalData(userData.total_rows);
@@ -55,6 +61,7 @@ function ManageAdmin() {
           localStorage.setItem("admin", Admin_name[0].name);
         }
       }
+      setIsLoading(false)
     }
   };
   /*Render function to get the Admin*/
@@ -201,9 +208,12 @@ function ManageAdmin() {
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
+              {
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                <div className="table-responsive ">
-                  <table className="table table-striped main_data_table">
+                <div className="table-responsive main_table_div">
+                 {isLoading ? 
+                  <Loader />
+                  : <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -306,7 +316,7 @@ function ManageAdmin() {
                         ))
                       )}
                     </tbody>
-                  </table>
+                  </table>}
                 </div>
                 <div className="pt-2">
                   <Pagination
@@ -315,7 +325,7 @@ function ManageAdmin() {
                     setCurrentPage={setCurrentPage}
                   />
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

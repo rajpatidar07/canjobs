@@ -104,13 +104,13 @@ function JobBox({
             <h4>No Data Found</h4>
           </div>
         ) : (
-          (jobData || []).map((job, i) => (
+          (jobData || []).map((job , i) => (
             <div
               key={i}
               className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green main_job_box_"
             >
               <Link
-                to={token && user_type === "user" ? "/jobdetail" : ""}
+                to={token && ( user_type === "user" || user_type === "company") ? "/jobdetail" : "" }
                 onClick={
                   token && user_type === "user"
                     ? job.is_applied === "0"

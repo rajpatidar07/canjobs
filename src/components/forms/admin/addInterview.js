@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 function AddInterview(props) {
-  console.log(props);
+  // console.log(props);
   let [loading, setLoading] = useState(false);
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
@@ -22,7 +22,7 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
-    interview_status: ""
+    interview_status: props.resData.status === "" ? "pending" : "complete" 
   };
   // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
@@ -125,16 +125,16 @@ function AddInterview(props) {
                 <option value={"pending"}>Schedule / Reschedule</option>
                 <option value={"complete"}>Complete</option>
               </select>
+            </div>
                {/*----ERROR MESSAGE FOR EMAIL----*/}
                {errors.interview_status && (
                 <span
                   key={errors.interview_status}
-                  className="text-danger font-size-3"
+                  className="text-danger font-size-3 px-5"
                 >
                   {errors.interview_status}
                 </span>
               )}
-            </div>
             <div className="form-group mt-5">
               <label
                 htmlFor="interview_date"
@@ -146,8 +146,8 @@ function AddInterview(props) {
               <input
                 className={
                   errors.interview_date
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control coustam_datepicker border border-danger"
+                    : "form-control coustam_datepicker"
                 }
                 value={moment(state.interview_date).format("YYYY-MM-DD")}
                 onChange={onInputChange}
@@ -155,6 +155,7 @@ function AddInterview(props) {
                 name="interview_date"
                 type={"date"}
                 placeholder="Interview date"
+                onKeyDownCapture={(e) => e.preventDefault()}
                 min={moment().format("YYYY-MM-DD")}
               />
               {/*----ERROR MESSAGE FOR EMAIL----*/}

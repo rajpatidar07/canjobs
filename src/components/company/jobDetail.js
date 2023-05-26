@@ -36,8 +36,7 @@ function JobDetail({ ids }) {
           className="tab-pane fade show active"
           id="tab-pane-1"
           role="tabpanel"
-          aria-labelledby="tab-nav-1"
-        >
+          aria-labelledby="tab-nav-1">
           <div className=" bg-white rounded-4 border border-mercury shadow-9 pos-abs-xl h-1413 overflow-y-scroll mt-9 mt-xl-0">
             {/* <!-- Single Featured Job --> */}
             <div className="pt-9 pl-sm-9 pl-5 pb-8 pr-sm-9 pr-5 border-bottom border-width-1 border-default-color light-mode-texts">
