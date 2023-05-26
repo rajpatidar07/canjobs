@@ -18,7 +18,7 @@ function FollowUpDashBoard(props) {
   /* Function to get the FollowUp data*/
   const FollowUpData = async () => {
     const userData = await getFollowupLastData(
-      currentPage,
+      props.filter_by_time ? 1 : currentPage,
       columnName,
       recordsPerPage,
       sortOrder,
@@ -81,7 +81,7 @@ function FollowUpDashBoard(props) {
               >
                 <div className="table-responsive main_table_div">
                   {isLoading ? 
-              <Loader/>  :<table className="table table-striped main_data_table">
+                   <Loader/>  : <table className="table table-striped main_data_table">
                     <thead>
                       <tr>
                         <th
@@ -90,7 +90,7 @@ function FollowUpDashBoard(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("name")}
+                            onClick={() => {handleSort("name");setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Name"
                           >
@@ -103,7 +103,7 @@ function FollowUpDashBoard(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("job_title")}
+                            onClick={() => {handleSort("job_title");setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Job"
                           >
@@ -116,7 +116,7 @@ function FollowUpDashBoard(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("company_name")}
+                            onClick={() => {handleSort("company_name");setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Company"
                           >
@@ -130,7 +130,7 @@ function FollowUpDashBoard(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("next_followup_date")}
+                            onClick={() => {handleSort("next_followup_date");setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Date"
                           >

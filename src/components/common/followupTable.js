@@ -58,7 +58,7 @@ function FollowupTable() {
     props.locationFilterValue,
     props.jobSwapFilterValue,
     props.search,
-    currentPage,
+    props.categoryFilterValue || props.SkillFilterValue || props.locationFilterValue || props.jobSwapFilterValue || props.search ? 1 : currentPage,
     columnName,
     sortOrder,
   ]);
@@ -107,7 +107,7 @@ function FollowupTable() {
                   className=" border-0 font-size-4 font-weight-normal"
                 >
                   <Link
-                    onClick={() => handleSort("job_title")}
+                    onClick={() => {handleSort("job_title");setCurrentPage(1)}}
                     title="Sort by Industry"
                     className="text-gray"
                   >
@@ -121,7 +121,7 @@ function FollowupTable() {
                   <Link
                     to=""
                     title="Sort by Job"
-                    onClick={() => handleSort("job_type")}
+                    onClick={() => {handleSort("job_type");setCurrentPage(1)}}
                     className="text-gray"
                   >
                     Job Type
@@ -133,7 +133,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("location")}
+                    onClick={() => {handleSort("location");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Address"
                   >
@@ -146,7 +146,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("education")}
+                    onClick={() => {handleSort("education");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Education"
                   >
@@ -159,7 +159,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("keyskill")}
+                    onClick={() => {handleSort("keyskill");setCurrentPage(1)}}
                     title="Sort by Skills"
                     className="text-gray"
                   >
@@ -172,7 +172,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("language")}
+                    onClick={() => {handleSort("language");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Language"
                   >
@@ -185,7 +185,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("salary")}
+                    onClick={() =>{handleSort("salary");setCurrentPage(1)}}
                     title="Sort by Salary"
                     className="text-gray"
                   >
@@ -198,7 +198,7 @@ function FollowupTable() {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("experience_required")}
+                    onClick={() => {handleSort("experience_required");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Experience"
                   >

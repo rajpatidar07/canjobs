@@ -47,7 +47,6 @@ function Category() {
   let Json = await getJson()
   setCateType(Json.Category_type)
   console.log(Json)
-  
 }
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -93,7 +92,11 @@ function Category() {
       setIsLoading2(false)
     } else {
       setCategoryTypeData(userData.data);
-      setTypeTotalData(userData.total_rows);
+      const FilterByType = userData.data ? userData.data.filter((thing, index, self) =>
+      index === self.findIndex((t) => t.value === thing.value)
+      ) : [];
+      console.log(FilterByType);
+      setTypeTotalData(FilterByType.length);
       setIsLoading2(false)
     }
   };
@@ -171,10 +174,6 @@ function Category() {
       setApiCall(true);
     }
   }
-  /*Category Type Onchange function to filter the data */
-  let onCategoryTypeFilterChange = (e) => {
-    setCategoryTypeFilterValue(e.target.value);
-  };
   /*Search Onchange function to Search Category data */
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -244,7 +243,7 @@ function Category() {
                   placeholder={"Search Category"}
                   value={search}
                   name={"category_name"}
-                  onChange={(e) => onSearch(e)}
+                  onChange={(e) => {onSearch(e);setCurrentPage(1)}}
                 />
               </div>
 
@@ -255,7 +254,7 @@ function Category() {
                     name="category"
                     value={categoryTypeFilterValue}
                     id="category"
-                    onChange={onCategoryTypeFilterChange}
+                    onChange={(e)=> {setCategoryTypeFilterValue(e.target.value);setCurrentPage(1)}}
                     className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
                   >
                     <option value={""}>Select category type</option>
@@ -305,7 +304,7 @@ function Category() {
                           >
                             <Link
                               to={""}
-                              onClick={() => handleSort("category_name")}
+                              onClick={() => {handleSort("category_name");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Name"
                             >
@@ -318,7 +317,7 @@ function Category() {
                           >
                             <Link
                               to={""}
-                              onClick={() => handleSort("category_type")}
+                              onClick={() => {handleSort("category_type");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Type"
                             >

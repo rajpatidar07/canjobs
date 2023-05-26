@@ -635,14 +635,16 @@ const UserProfile = (props) => {
                      <div className="text-center text-dark" >No Data Found</div>
                     : (appliedJob || []).map((data,i)=>{
                     return (  
-                    <div className="col-lg-6 col-sm-11 mb-9" key={i}>
+                    <Link to={user_type === "admin" ? "/job" : user_type === "user" ? "/jobs" : "/managejobs"} className="col-lg-6 col-sm-11 mb-9" key={i}>
                       {/* <!-- Single Featured Job --> */}
                       <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 mr-8 rounded">
-                              <img src={data.logo ? data.data : "image/l3/png/fimize.png"} alt="" />
+                              <img src={data.logo ? data.logo : "image/l3/png/fimize.png"} alt="" 
+                               width={100} height={100}/>
                           </div>
-                          <div>
+                          <div className="row">
+                          <div className="col mx-5">
                             <span
                               to=""
                               className="font-size-3 text-default-color line-height-2"
@@ -657,9 +659,29 @@ const UserProfile = (props) => {
                                 {data.job_title}
                               </span>
                             </h3>
+                            <div className="pt-5">
+                          <span className="font-weight-semibold heading-default-color">
+                          <i className="text-gray fas fa-rupee-sign pr-2" aria-hidden="true"></i>
+                             {data.salary}
+                          </span>
                           </div>
+                          </div>
+                          <div className="col">
+                          <span className="font-weight-semibold heading-default-color">
+                          <i className="text-gray fa fa-clock pr-2"></i>
+                            {moment(data.created_at).format("YYYY-MM-DD")}
+                          </span>
+                          <div className="pt-5 heading-default-color">
+                          <i className="text-gray fa fa-briefcase pr-2"></i>
+                          <span className="font-weight-semibold">
+                            {data.experience_required}
+                          </span>
+                          </div>
+                          </div>
+                          </div>
+                          
                         </div>
-                        <div className="d-flex pt-17">
+                        <div className="d-flex pt-10">
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
                             <li>
                               <span
@@ -687,7 +709,7 @@ const UserProfile = (props) => {
                         </div>
                       </div>
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    </Link>
                    ) })}
                   </div>
                 </div>

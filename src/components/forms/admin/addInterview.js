@@ -22,7 +22,7 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
-    interview_status: props.resData.status === "" ? "pending" : "complete" 
+    interview_status: props.resData.status === "pending" || props.resData.status === "" ? "pending" : "complete" 
   };
   // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS

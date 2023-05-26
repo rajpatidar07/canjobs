@@ -109,10 +109,6 @@ function ManageAdmin() {
       setDeleteAlert(false);
     }
   }
-  /*Admin type Onchange function to filter the data */
-  let onTypeFilterChange = (e) => {
-    setTypeFilterValue(e.target.value);
-  };
   /*Search Onchange function to filter the data */
   let onSearch = (e) => {
     setSearch(e.target.value);
@@ -174,7 +170,7 @@ function ManageAdmin() {
                       placeholder={"Admin Name"}
                       value={search}
                       name={"Admin_name"}
-                      onChange={(e) => onSearch(e)}
+                      onChange={(e) => {onSearch(e);setCurrentPage(1)}}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
@@ -184,7 +180,7 @@ function ManageAdmin() {
                         name="type"
                         value={typeFilterValue}
                         id="type"
-                        onChange={onTypeFilterChange}
+                        onChange={(e) => {setTypeFilterValue(e.target.value);setCurrentPage(1)}}
                         className=" form-control"
                       >
                         <option value="">Admin type</option>

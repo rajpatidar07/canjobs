@@ -39,7 +39,7 @@ export default function EmployerTable(props) {
       props.industryFilterValue,
       props.corporationFilterValue,
       props.search,
-      currentPage,
+      props.filter_by_time || props.industryFilterValue|| props.corporationFilterValue|| props.search ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -148,7 +148,7 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={() => handleSort("company_name")}
+                    onClick={() => {handleSort("company_name");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Company Name"
                   >
@@ -164,7 +164,7 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("contact_person_name")}
+                      onClick={() => {handleSort("contact_person_name");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Name"
                     >
@@ -181,7 +181,7 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("address")}
+                      onClick={() => {handleSort("address");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Location"
                     >
@@ -198,7 +198,7 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("contact_no")}
+                      onClick={() => {handleSort("contact_no");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Contact"
                     >
@@ -212,7 +212,7 @@ export default function EmployerTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={() => handleSort("vacancy_for_post")}
+                    onClick={() => {handleSort("vacancy_for_post");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Skill"
                   >

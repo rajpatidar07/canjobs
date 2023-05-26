@@ -45,7 +45,7 @@ export default function EmployeeTable(props) {
       props.experienceFilterValue,
       props.skillFilterValue,
       props.educationFilterValue,
-      currentPage,
+      props.filter_by_time || props.search || props.experienceFilterValue || props.skillFilterValue || props.educationFilterValue ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -221,7 +221,7 @@ export default function EmployeeTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={() => handleSort("name")}
+                    onClick={() => {handleSort("name");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Name"
                   >
@@ -234,7 +234,7 @@ export default function EmployeeTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={() => handleSort("contact_no")}
+                    onClick={() => {handleSort("contact_no");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Contact"
                   >
@@ -250,7 +250,7 @@ export default function EmployeeTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("language")}
+                      onClick={() => {handleSort("language");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Languages"
                     >
@@ -267,7 +267,7 @@ export default function EmployeeTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("education")}
+                      onClick={() => {handleSort("education");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Education"
                     >
@@ -284,7 +284,7 @@ export default function EmployeeTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("skill")}
+                      onClick={() => {handleSort("skill");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Skill"
                     >
@@ -299,7 +299,7 @@ export default function EmployeeTable(props) {
                 >
                   <Link
                     to={""}
-                    onClick={() => handleSort("experience")}
+                    onClick={() => {handleSort("experience");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Experience"
                   >

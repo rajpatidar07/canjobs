@@ -246,7 +246,8 @@ function JobResponse(props) {
                       placeholder={"Search Company"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) =>{ setSearch(e.target.value);
+                                        setCurrentPage(1)}}
                     />
                   </div>
                 )}
@@ -257,7 +258,8 @@ function JobResponse(props) {
                       name="job"
                       id="job"
                       value={skillFilterValue}
-                      onChange={(e) => setSkillFilter(e.target.value)}
+                      onChange={(e) => {setSkillFilter(e.target.value);
+                                        setCurrentPage(1)}}
                       className=" form-control"
                     >
                       <option value="">Select Skil</option>
@@ -276,9 +278,10 @@ function JobResponse(props) {
                       name="experience"
                       id="experience"
                       value={experienceTypeFilterValue}
-                      onChange={(e) =>
-                        setExperienceTypeFilterValue(e.target.value)
-                      }
+                      onChange={(e) =>{
+                        setExperienceTypeFilterValue(e.target.value);
+                        setCurrentPage(1)
+                      }}
                       className=" form-control"
                     >
                       <option value="">Select Experience</option>
@@ -325,7 +328,8 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={() => handleSort("name")}
+                          onClick={() => {handleSort("name");
+                                          setCurrentPage(1)}}
                           className="text-gray"
                           title="Sort by Name"
                         >
@@ -341,7 +345,8 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("experience")}
+                            onClick={() => {handleSort("experience");
+                                            setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Experience"
                           >
@@ -355,7 +360,8 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={() => handleSort("job_title")}
+                          onClick={() => {handleSort("job_title");
+                                          setCurrentPage(1)}}
                           className="text-gray"
                           title="Sort by Job"
                         >
@@ -372,7 +378,8 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("contact_no")}
+                            onClick={() => {handleSort("contact_no");
+                                            setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Contact"
                           >
@@ -389,7 +396,8 @@ function JobResponse(props) {
                         >
                           <Link
                             to={""}
-                            onClick={() => handleSort("current_location")}
+                            onClick={() => {handleSort("current_location");
+                                            setCurrentPage(1)}}
                             className="text-gray"
                             title="Sort by Address"
                           >
@@ -403,7 +411,8 @@ function JobResponse(props) {
                       >
                         <Link
                           to={""}
-                          onClick={() => handleSort("lmia_status")}
+                          onClick={() => {handleSort("lmia_status");
+                                         setCurrentPage(1)}}
                           className="text-gray"
                           title="Sort by LIMIA Status"
                         >

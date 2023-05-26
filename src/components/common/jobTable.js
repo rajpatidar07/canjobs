@@ -5,7 +5,7 @@ import { GetAllJobs, DeleteJob } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 
 export default function JobTable(props) {
   // console.log(props.filter_by_time);
@@ -37,7 +37,7 @@ export default function JobTable(props) {
       props.categoryFilterValue,
       props.SkillFilterValue,
       props.jobSwapFilterValue,
-      currentPage,
+      props.company || props.search || props.locationFilterValue|| props.categoryFilterValue|| props.SkillFilterValue || props.jobSwapFilterValue || props.filter_by_time ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -132,7 +132,7 @@ export default function JobTable(props) {
                   className=" border-0 font-size-4 font-weight-normal"
                 >
                   <Link
-                    onClick={() => handleSort("job_title")}
+                    onClick={() => {handleSort("job_title");setCurrentPage(1)}}
                     title="Sort by Industry"
                     className="text-gray"
                   >
@@ -146,7 +146,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => handleSort("job_type")}
+                      onClick={() => {handleSort("job_type");setCurrentPage(1)}}
                       title="Sort by Job"
                       className="text-gray"
                     >
@@ -161,7 +161,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => handleSort("location")}
+                      onClick={() => {handleSort("location");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Address"
                     >
@@ -176,7 +176,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => handleSort("education")}
+                      onClick={() => {handleSort("education");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Education"
                     >
@@ -191,7 +191,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => handleSort("keyskill")}
+                      onClick={() => {handleSort("keyskill");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Skill"
                     >
@@ -206,7 +206,7 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => handleSort("language")}
+                      onClick={() => {handleSort("language");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Language"
                     >
@@ -220,7 +220,7 @@ export default function JobTable(props) {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("salary")}
+                    onClick={() => {handleSort("salary");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Salary"
                   >
@@ -233,7 +233,7 @@ export default function JobTable(props) {
                 >
                   <Link
                     to=""
-                    onClick={() => handleSort("experience_required")}
+                    onClick={() => {handleSort("experience_required");setCurrentPage(1)}}
                     className="text-gray"
                     title="Sort by Experience"
                   >
@@ -244,7 +244,7 @@ export default function JobTable(props) {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                    Total Applicants
+                   Vacancies  / Total Applicants
                 </th>
                 {props.heading === "Dashboard" ? null : (
                   <th
@@ -360,7 +360,7 @@ export default function JobTable(props) {
                     </th>
                     <th className="py-5 ">
                       <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                        {job.total_applicants}
+                       {job.role_category} / {job.total_applicants}
                       </h3>
                     </th>
                     {props.heading === "Dashboard" ? null : (

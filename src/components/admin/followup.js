@@ -154,7 +154,7 @@ function Followup() {
                       placeholder={"Search Job"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) => onSearch(e)}
+                      onChange={(e) => {onSearch(e);setCurrentPage(1)}}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
@@ -167,6 +167,7 @@ function Followup() {
                         onChange={(e) => {
                           setCategoryFilterValue(e.target.value);
                           setCatApiCall(true);
+                          setCurrentPage(1)
                         }}
                         className=" form-control"
                       >
@@ -188,7 +189,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
+                        onChange={(e) => {setJobSwapFilterValue(e.target.value);setCurrentPage(1)}}
                         className=" form-control"
                       >
                         <option value="">Select Job Type</option>
@@ -207,7 +208,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        onChange={(e) => {setSkillFilterValue(e.target.value);setCurrentPage(1)}}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
@@ -228,7 +229,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={(e) => setLocationFilterValue(e.target.value)}
+                        onChange={(e) => {setLocationFilterValue(e.target.value);setCurrentPage(1)}}
                         className=" form-control"
                       >
                         <option value="">Select Location</option>
@@ -259,7 +260,7 @@ function Followup() {
                             className=" border-0 font-size-4 font-weight-normal"
                           >
                             <Link
-                              onClick={() => handleSort("job_title")}
+                              onClick={() =>{ handleSort("job_title") ; setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Industry"
                             >
@@ -272,7 +273,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("job_type")}
+                              onClick={() => {handleSort("job_type");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Job"
                             >
@@ -285,7 +286,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("location")}
+                              onClick={() => {handleSort("location");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Address"
                             >
@@ -298,7 +299,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("education")}
+                              onClick={() => {handleSort("education");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Education"
                             >
@@ -311,7 +312,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("keyskill")}
+                              onClick={() => {handleSort("keyskill");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Skills"
                             >
@@ -324,7 +325,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("language")}
+                              onClick={() => {handleSort("language");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Language"
                             >
@@ -337,7 +338,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("salary")}
+                              onClick={() => {handleSort("salary");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Salary"
                             >
@@ -350,7 +351,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => handleSort("experience_required")}
+                              onClick={() => {handleSort("experience_required");setCurrentPage(1)}}
                               className="text-gray"
                               title="Sort by Experience"
                             >

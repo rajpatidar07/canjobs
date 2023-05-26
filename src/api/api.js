@@ -637,7 +637,7 @@ export const getInterview = async (
   sort,
   time
 ) => {
-  // console.log(job_id, employee_id);
+  // console.log(page, limit);
   const response = await axios.post(
     `${API_URL}admin/getInterview`,
     {

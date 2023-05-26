@@ -176,7 +176,7 @@ function LmiaStatus(props) {
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"
-                max={moment().format("YYYY-MM-DD")}
+                min={moment().format("YYYY-MM-DD")}
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
               {errors.completion_time && (

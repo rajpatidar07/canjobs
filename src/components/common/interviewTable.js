@@ -35,7 +35,7 @@ function Interview(props) {
       "",
       "",
       search,
-      currentPage,
+      search || props.filter_by_time ? 1 : currentPage,
       columnName,
       recordsPerPage,
       sortOrder,
@@ -126,7 +126,7 @@ function Interview(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("name")}
+                      onClick={() => {handleSort("name");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Name"
                     >
@@ -139,7 +139,7 @@ function Interview(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("job_title")}
+                      onClick={() => {handleSort("job_title");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Job"
                     >
@@ -152,7 +152,7 @@ function Interview(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("company_name")}
+                      onClick={() => {handleSort("company_name");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Company"
                     >
@@ -168,7 +168,7 @@ function Interview(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => handleSort("skill")}
+                        onClick={() => {handleSort("skill");setCurrentPage(1)}}
                         className="text-gray"
                         title="Sort by Skill"
                       >
@@ -182,7 +182,7 @@ function Interview(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => handleSort("interview_date")}
+                      onClick={() => {handleSort("interview_date");setCurrentPage(1)}}
                       className="text-gray"
                       title="Sort by Date"
                     >
