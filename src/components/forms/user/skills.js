@@ -5,7 +5,7 @@ import {
   EmployeeSkillDetails,
   AddEmployeeSkill,
   DeleteEmployeeSkill,
-  getJson,
+  GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -58,8 +58,8 @@ function Skills(props) {
   // API CALL
   const SkillData = async () => {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);
-    let SkillList = await getJson();
-    setSkillList(SkillList.Skill);
+    let SkillList = await GetFilter();
+    setSkillList(SkillList.data.data.Skill);
 
     if (SkillDetails.data.skill.length === 0) {
       SetSkillData([]);

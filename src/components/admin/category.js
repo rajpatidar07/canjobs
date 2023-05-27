@@ -4,7 +4,7 @@ import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
-import { DeleteJobCategory, getAllJobsCategory , getJson } from "../../api/api";
+import { DeleteJobCategory, getAllJobsCategory , GetFilter } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
@@ -44,9 +44,9 @@ function Category() {
 
   /*Function to get thejSon */
  const JsonData = async()=>{
-  let Json = await getJson()
-  setCateType(Json.Category_type)
-  console.log(Json)
+  let Json = await GetFilter()
+  setCateType(Json.data.data.Category_type)
+  // console.log(Json)
 }
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -67,11 +67,11 @@ function Category() {
       setCategoryData(userData.data);
       const filteredData = userData.data.filter(
         (data) => data.parent_id !== "0"
-      );
+        );
       if (filteredData.length === 0) {
-        setTotalData(userData.total_rows);
-      } else {
         setTotalData();
+      } else {
+        setTotalData(userData.total_rows);
       }
       setIsLoading(false)
     }
@@ -95,7 +95,7 @@ function Category() {
       const FilterByType = userData.data ? userData.data.filter((thing, index, self) =>
       index === self.findIndex((t) => t.value === thing.value)
       ) : [];
-      console.log(FilterByType);
+      // console.log(FilterByType);
       setTypeTotalData(FilterByType.length);
       setIsLoading2(false)
     }
@@ -176,20 +176,24 @@ function Category() {
   }
   /*Search Onchange function to Search Category data */
   const onSearch = (e) => {
-    setSearch(e.target.value);
-    if (/[-]?\d+(\.\d+)?/.test(search)) {
-      setSearchError("Admin Name can not have a number.");
-    } else if (/[^a-zA-Z0-9]/g.test(search)) {
-      setSearchError("Cannot use special character");
-    }
-    if ((search === "") === true) {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Category Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
       setSearchError("");
     }
-  };
+  }
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
-  const TypenPages = Math.ceil(TypetotalData / recordsPerPage);
-
+  const TypenPages = Math.ceil(TypetotalData / TyperecordsPerPage);
+// console.log(totalData,"<= 1 =>",recordsPerPage,"category =>",nPages , "Type =>", TypenPages);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -288,7 +292,6 @@ function Category() {
               </div>
             </div>
             <small className="text-danger">{searcherror}</small>
-            
               <div className="row">
               <div className="col-6 mb-18">
                 <h3 className="font-size-5 mb-0">Category</h3>
@@ -389,7 +392,7 @@ function Category() {
                   <Pagination
                     nPages={nPages}
                     currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
+                    setCurrentPage={setCurrentPage} total={totalData} count={categoryData.length}
                   />
                 </div>
               </div>
@@ -473,6 +476,8 @@ function Category() {
                     nPages={TypenPages}
                     currentPage={TypecurrentPage}
                     setCurrentPage={setTypeCurrentPage}
+                    total={TypetotalData}
+                    count={categoryTypeData.length}
                   />
                 </div>
               </div>

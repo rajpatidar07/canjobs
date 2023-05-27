@@ -715,12 +715,12 @@ const UserProfile = (props) => {
                 </div>
                 {/* <!-- Top End --> */}
                 {/* <!-- Bottom Start --> */}
-                <div className="">
+                {/* <div className="">
                   <h4 className="font-size-7 mb-9">Saved Jobs</h4>
                   <div className="row justify-content-center">
-                    <div className="col-lg-6 col-sm-11 mb-9">
+                    <div className="col-lg-6 col-sm-11 mb-9"> */}
                       {/* <!-- Single Featured Job --> */}
-                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                      {/* <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-orange-2 mr-8 rounded">
                             <Link to="">
@@ -770,12 +770,12 @@ const UserProfile = (props) => {
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                           ></Link>
                         </div>
-                      </div>
+                      </div> */}
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
-                    <div className="col-lg-6 col-sm-11 mb-9">
+                    {/* </div>
+                    <div className="col-lg-6 col-sm-11 mb-9"> */}
                       {/* <!-- Single Featured Job --> */}
-                      <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
+                      {/* <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                         <div className="media align-items-center">
                           <div className="square-52 bg-helio mr-8 rounded">
                             <Link to="">
@@ -825,11 +825,11 @@ const UserProfile = (props) => {
                             className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
                           ></Link>
                         </div>
-                      </div>
+                      </div> */}
                       {/* <!-- End Single Featured Job --> */}
-                    </div>
+                    {/* </div>
                   </div>
-                </div>
+                </div> */}
                 {/* <!-- Bottom End --> */}
               </div>
             </div>

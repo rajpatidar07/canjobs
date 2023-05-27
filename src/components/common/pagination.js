@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Pagination({ nPages, currentPage, setCurrentPage }) {
-  console.log(nPages, currentPage);
+function Pagination({ nPages, currentPage, setCurrentPage , total , count}) {
+  // console.log("nPages =>", nPages,"currentPage =>", currentPage);
   //Function to get dynamic page no of the pagination :-
   const pageNumbers = [];
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push(i);
   }
-  console.log("pageNumbers---" + pageNumbers);
+  // console.log("pageNumbers---" + pageNumbers);
   //Function to go to next page with pagination :-
   const nextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
@@ -22,6 +22,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
   return (
     <div>
       {pageNumbers.length > 1 ? (
+        <>
         <nav aria-label="Page navigation example">
           <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
             {/* To change page perivous page :- */}{" "}
@@ -73,6 +74,9 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
             </li>
           </ul>
         </nav>
+        <div className="d-flex justify-content-center">
+          <small>{count} of {total}</small>
+          </div></>
       ) : null}
     </div>
   );

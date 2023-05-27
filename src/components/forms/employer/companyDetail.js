@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddCompany, EmployerDetails, getJson } from "../../../api/api";
+import { AddCompany, EmployerDetails, GetFilter } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,8 +14,8 @@ function CompanyDetails(props) {
   let encoded;
   /*Function to get thejSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    let Json = await GetFilter();
+    setJson(Json.data.data);
   };
   /* Functionality to close the modal */
   const close = () => {

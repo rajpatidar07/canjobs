@@ -22,7 +22,7 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
-    interview_status: props.resData.status === "pending" || props.resData.status === "" ? "pending" : "complete" 
+    interview_status: props.resData.status === "pending" || props.resData.status === "" ? "pending" :  props.resData.status === "complete" ? "complete" : ""
   };
   // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
@@ -121,9 +121,9 @@ function AddInterview(props) {
                 onChange={onInputChange}
                 id="interview_status"
               >
-                <option value={""}>Select Status</option>
-                <option value={"pending"}>Schedule / Reschedule</option>
-                <option value={"complete"}>Complete</option>
+                <option  value={""}>Select Status</option>
+                <option value={"PENDING"}>Schedule / Reschedule</option>
+                <option value={"COMPLETE"}>Complete</option>
               </select>
             </div>
                {/*----ERROR MESSAGE FOR EMAIL----*/}

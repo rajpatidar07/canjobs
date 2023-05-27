@@ -35,14 +35,17 @@ function Interview(props) {
       "",
       "",
       search,
-      search || props.filter_by_time ? 1 : currentPage,
+      search || props.filter_by_time 
+      || props.statusFilterValue ? 1 : currentPage,
       columnName,
       recordsPerPage,
       sortOrder,
-      props.filter_by_time
+      props.filter_by_time,
+      props.statusFilterValue
     );
     if (userData.data.length === 0) {
       setInterviewData([]);
+      setIsLoading(false)
     } else {
       setInterviewData(userData.data);
       setTotalData(userData.total_rows);
@@ -62,6 +65,7 @@ function Interview(props) {
     sortOrder,
     showAddInterviewModal,
     props.filter_by_time,
+    props.statusFilterValue
   ]);
 
   /* Function to show the single data to update interview*/
@@ -250,7 +254,7 @@ function Interview(props) {
                       <th className="py-5 ">
                       
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                          {data.status === "complete" ?
+                          {data.status === "COMPLETE" ?
                             <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                             Complete
                             </span> : 
@@ -266,8 +270,9 @@ function Interview(props) {
                             style={{ fontSize: "10px" }}
                             onClick={() => editInterview(data)}
                             title=" Reschedule Interview"
+                            disabled={data.status === "COMPLETE" ? true : false}
                           >
-                        {  data.status === "complete" ? "Complete" :  "Reschedule"}
+                        Reschedule
                           </button>
                         </div>
                       </th>
@@ -281,8 +286,8 @@ function Interview(props) {
             <Pagination
               nPages={nPages}
               currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />{console.log(nPages,currentPage)}
+              setCurrentPage={setCurrentPage} total={totalData} count={interviewData.length}
+            />
           </div>
         </div>
       </div>

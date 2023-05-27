@@ -635,7 +635,8 @@ export const getInterview = async (
   column,
   limit,
   sort,
-  time
+  time,
+  status
 ) => {
   // console.log(page, limit);
   const response = await axios.post(
@@ -649,6 +650,7 @@ export const getInterview = async (
       job_id: job_id,
       employee_id: employee_id,
       filter_by_time: time,
+      filter_by_status: status,
     },
     {
       headers: {
@@ -944,7 +946,7 @@ export const AddAdmin = async (props) => {
 /*Get Filter Api */
 export const GetFilter = async (props) => {
   const response = await axios.post(
-    `${API_URL}${user_type}/getFilterList`,
+    `${API_URL}admin/getFilterList`,
     props,
     {
       headers: {

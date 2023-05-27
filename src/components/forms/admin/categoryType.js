@@ -80,6 +80,10 @@ function AddCategoryType(props) {
         props.setApiCall(true)
         return close();
       }
+      if (responseData.message === "already exist !") {
+        setErrors({...errors,category_type : "Category Type Alredy Exists."});
+        setLoading(false);
+      }
     } else {
       setLoading(false);
     }

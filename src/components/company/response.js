@@ -5,7 +5,7 @@ import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
 // import JobDetail from "./jobDetail";
-import { getJson } from "../../api/api";
+import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import Loader  from '../common/loader';
 
@@ -19,11 +19,11 @@ function Response() {
 
   /* Function to get the JSON data*/
   const FilterData = async () => {
-    const Json = await getJson();
+    const Json = await GetFilter();
     if(Json.length === 0){
       SetFilter([]);
     }else{
-        SetFilter(Json);}    
+        SetFilter(Json.data.data);}    
   };
   // console.log(filter);
 

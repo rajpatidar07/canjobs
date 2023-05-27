@@ -23,7 +23,7 @@ function AddFilter(props) {
           ? "Filter type is required"
           : value.length < 2
           ? "Filter type should have 2 or more letters"
-          : /[^a-zA-Z0-9]/g.test(value)
+          : !/^[A-Za-z0-9 ]*$/.test(value)
           ? "Cannot use special character "
           : "",
     ],

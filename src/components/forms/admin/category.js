@@ -107,6 +107,10 @@ function AddCategory(props) {
         props.setApiCall(true)
         return close();
       }
+      if (responseData.message === "already exist !") {
+        setErrors({...errors , category_name : "Category Alredy Exists."});
+        setLoading(false);
+      }
     } else {
       setLoading(false);
     }

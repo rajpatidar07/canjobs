@@ -6,23 +6,29 @@ import { useEffect } from "react";
 export default function ManageInterview() {
   /*Search state */
   let [search, setSearch] = useState("");
+  let [statusFilterValue, setStatusFilterValue] = useState("");
   const [searcherror, setSearchError] = useState("");
-
   useEffect(()=>{
     if((search === "") === true){
     setSearchError("")
   }},[search])
 
   /*Search Onchange function to Search Interview data */
-  const onSearch = (e) => { setSearch(e.target.value);
-    if(/[-]?\d+(\.\d+)?/.test(search) ){
-      setSearchError("Admin Name can not have a number.")
-    }else if(/[^a-zA-Z0-9]/g.test(search)){
-      setSearchError("Cannot use special character")
-    }if((search === "") === true){
-        setSearchError("")
-      
-    }}
+    const onSearch = (e) => {
+      const inputValue = e.target.value;
+      setSearch(inputValue);
+      if (inputValue.length > 0) {
+        if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+          setSearchError("Applicant name cannot start with a number.");
+        } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+          setSearchError("Cannot use special characters.");
+        } else {
+          setSearchError("");
+        }
+      } else {
+        setSearchError("");
+      }
+    }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -42,37 +48,34 @@ export default function ManageInterview() {
                 {/*<-- Search interview -->*/}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Employee Name:</p>
+                    <p className="input_label">Search by Applicant's Name:</p>
                     <input
                       required
                       type="text"
                       className="form-control "
-                      placeholder={"Search Employer"}
+                      placeholder={"Search Applicant"}
                       value={search}
                       name={"Interview"}
                       onChange={(e) => onSearch(e)}
+                      maxLength={30}
                     />
-                    <small className="text-danger">{searcherror}</small>
                   </div>
-                  {/* <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Type:</p>
+                  <div className="col p-1 form_group mb-5 mt-4">
+                    <p className="input_label">Filter by Status:</p>
                     <div className="select_div">
                       <select
                         name="type"
-                        value={typeFilterValue}
+                        value={statusFilterValue}
                         id="type"
-                        onChange={onTypeFilterChange}
+                        onChange={(e)=> setStatusFilterValue(e.target.value)}
                         className=" form-control"
                       >
-                        <option value="">Select type</option>
-                        {(FilterJson.AdminType || []).map((type, i) => (
-                          <option value={type} key={i}>
-                            {type}
-                          </option>
-                        ))}
+                        <option value="">Select Interview Status</option>
+                        <option value="PENDING">Schedule</option>
+                        <option value="complete">Complete</option>
                       </select>
                     </div>
-                  </div> */}
+                  </div>
                   {/* <div className="text-right col-xl-12 mt-6 mt-xl-12">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -82,9 +85,10 @@ export default function ManageInterview() {
                     </CustomButton>
                   </div> */}
                 </div>
+                <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Interview list Table -->*/}
-              <Interview search={search} heading={"Interview"} />
+             <Interview search={search} statusFilterValue={statusFilterValue} heading={"Interview"} />
             </div>
           </div>
         </div>

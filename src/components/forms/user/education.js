@@ -6,7 +6,7 @@ import {
   EmployeeEducationDetails,
   AddEmployeeEducation,
   DeleteEmployeeEducation,
-  getJson,
+  GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,8 +42,8 @@ function Education(props) {
   };
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setEducationList(Json.Education);
+    let Json = await GetFilter();
+    setEducationList(Json.data.data.Education);
   };
   /*Render method to get the json*/
   useEffect(() => {

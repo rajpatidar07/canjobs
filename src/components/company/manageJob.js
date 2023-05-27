@@ -5,7 +5,7 @@ import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
 import { ToastContainer } from "react-toastify";
-import { getJson } from "../../api/api";
+import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
 import Loader  from '../common/loader';
@@ -25,11 +25,11 @@ function ManageJobs() {
   
   /* Function to get the JSON data*/
   const FilterData = async () => {
-    const Json = await getJson();
+    const Json = await GetFilter();
     if (Json.length === 0) {
       SetFilter([]);
     } else {
-      SetFilter(Json);
+      SetFilter(Json.data.data);
     }
   };
 

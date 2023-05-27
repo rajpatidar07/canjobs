@@ -343,7 +343,7 @@ function FollowupTable() {
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
           />
         </div>
       </div>

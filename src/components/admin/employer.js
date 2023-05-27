@@ -7,7 +7,7 @@ import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { ToastContainer } from "react-toastify";
 import EmployerTable from "../common/employerTable";
-import { getJson } from "../../api/api";
+import { GetFilter } from "../../api/api";
 function Employer() {
   // eslint-disable-next-line
   /*show modal and data, id state */
@@ -23,8 +23,8 @@ function Employer() {
   let [Json , setJson] = useState([])
   /*Function to get the jSon */
  const JsonData=async()=>{
-   let Json = await getJson()
-   setJson(Json)
+   let Json = await GetFilter()
+   setJson(Json.data.data)
  }
  /*Function to Search employer */
  const onSearch = (e) => { setSearch(e.target.value);

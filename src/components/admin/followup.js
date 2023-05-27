@@ -5,7 +5,7 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, getJson } from "../../api/api";
+import { GetAllJobs, GetFilter } from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -38,8 +38,8 @@ function Followup() {
   const [responseId, setresponseId] = useState();
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    let Json = await GetFilter();
+    setJson(Json.data.data);
   };
 
   /* Function to get Job data*/
@@ -112,15 +112,20 @@ function Followup() {
   };
   /*Function to Search Follow up */
   const onSearch = (e) => {
-    setSearch(e.target.value);
-    if (/[-]?\d+(\.\d+)?/.test(search)) {
-      setSearchError("Admin Name can not have a number.");
-    } else if (/[^a-zA-Z0-9]/g.test(search)) {
-      setSearchError("Cannot use special character");
-    } else if (search === "") {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Job cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
       setSearchError("");
     }
-  };
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -146,7 +151,7 @@ function Followup() {
                 {/* <!-- Follow up search and filter --> */}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search by Name:</p>
+                    <p className="input_label">Search by Job:</p>
                     <input
                       required
                       type="text"
@@ -498,7 +503,7 @@ function Followup() {
                     <Pagination
                       nPages={nPages}
                       currentPage={currentPage}
-                      setCurrentPage={setCurrentPage}
+                      setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
                     />
                   </div>
                 </div>

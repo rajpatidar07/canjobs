@@ -5,7 +5,7 @@ import useValidation from "../../common/useValidation";
 import FilterJson from "./../../json/filterjson";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GetJob, AddJob, getAllEmployer, getJson } from "../../../api/api";
+import { GetJob, AddJob, getAllEmployer, GetFilter } from "../../../api/api";
 
 function AddJobModal(props) {
   const [company, setCompany] = useState([]);
@@ -16,8 +16,8 @@ function AddJobModal(props) {
   let [Json, setJson] = useState([]);
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    let Json = await GetFilter();
+    setJson(Json.data.data);
   };
 
   /* Functionality to close the modal */

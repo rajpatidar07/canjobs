@@ -110,16 +110,21 @@ function ManageAdmin() {
     }
   }
   /*Search Onchange function to filter the data */
-  let onSearch = (e) => {
-    setSearch(e.target.value);
-    if (search === "") {
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Admin Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
       setSearchError("");
-    } else if (/[-]?\d+(\.\d+)?/.test(search)) {
-      setSearchError("Admin Name can not have a number.");
-    } else if (/[^a-zA-Z0-9]/g.test(search)) {
-      setSearchError("Cannot use special character");
     }
-  };
+  }
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -318,7 +323,7 @@ function ManageAdmin() {
                   <Pagination
                     nPages={nPages}
                     currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
+                    setCurrentPage={setCurrentPage} total={totalData} count={adminData.length}
                   />
                 </div>
               </div>}

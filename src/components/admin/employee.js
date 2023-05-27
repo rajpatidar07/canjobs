@@ -7,7 +7,7 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import {getJson} from "../../api/api"
+import {GetFilter} from "../../api/api"
 import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
 function Employee() {
@@ -27,9 +27,9 @@ function Employee() {
   let [EducationList , setEducationList] = useState([])
   /*Function to get thejSon */
  const JsonData=async()=>{
-   let Json = await getJson()
-   setSkillList(Json.Skill)
-   setEducationList(Json.Education)
+   let Json = await GetFilter()
+   setSkillList(Json.data.data.Skill)
+   setEducationList(Json.data.data.Education)
  }
   /*Render method to get the json*/
   useEffect(()=>{
@@ -51,14 +51,21 @@ function Employee() {
     setemployeeId(e);
   };
   /*Function to search the employee */
- const onSearch = (e) => { setSearch(e.target.value);
-    if(/[-]?\d+(\.\d+)?/.test(search) ){
-      setSearchError("Admin Name can not have a number.")
-    }else if(/[^a-zA-Z0-9]/g.test(search)){
-      setSearchError("Cannot use special character")
-    }else if(search === ""){
-      setSearchError("")
-    }}
+    const onSearch = (e) => {
+      const inputValue = e.target.value;
+      setSearch(inputValue);
+      if (inputValue.length > 0) {
+        if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+          setSearchError("Company Name cannot start with a number.");
+        } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+          setSearchError("Cannot use special characters.");
+        } else {
+          setSearchError("");
+        }
+      } else {
+        setSearchError("");
+      }
+    }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">

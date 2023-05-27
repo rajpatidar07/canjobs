@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { GetAllResponse, getJson } from "../../api/api";
+import { GetAllResponse, GetFilter } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -21,6 +21,7 @@ function JobResponse(props) {
   let [limia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
+  let [searchError, setSearchError] = useState("");
   let [isLoading, setIsLoading] = useState(true);
 
   /*Filter and search state */
@@ -40,8 +41,8 @@ function JobResponse(props) {
   const user_type = localStorage.getItem("userType");
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    let Json = await GetFilter();
+    setJson(Json.data.data);
   };
 
   /* Function to get the Response data*/
@@ -89,6 +90,22 @@ function JobResponse(props) {
     props.filter_by_time,
     apiCall,
   ]);
+   /*Search Onchange function to Search REsponse data */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Category Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  }
   /*Function to open add follow up modal */
   const addFollow = (e) => {
     setFollowUp(true);
@@ -246,7 +263,7 @@ function JobResponse(props) {
                       placeholder={"Search Company"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) =>{ setSearch(e.target.value);
+                      onChange={(e) =>{onSearch(e);
                                         setCurrentPage(1)}}
                     />
                   </div>
@@ -259,7 +276,7 @@ function JobResponse(props) {
                       id="job"
                       value={skillFilterValue}
                       onChange={(e) => {setSkillFilter(e.target.value);
-                                        setCurrentPage(1)}}
+                        setCurrentPage(1)}}
                       className=" form-control"
                     >
                       <option value="">Select Skil</option>
@@ -296,11 +313,10 @@ function JobResponse(props) {
                 </div>
                 <div className="float-md-right mt-6"></div>
               </div>
+              <small className="text-danger">{searchError}</small>
             </div>
           )}
-            {
-            
-                  <div className="mb-8">
+            <div className="mb-8">
             <div
               className={
                 props.heading === "Response" ||
@@ -674,11 +690,11 @@ function JobResponse(props) {
                 <Pagination
                   nPages={nPages}
                   currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
+                  setCurrentPage={setCurrentPage} total={totalData} count={response.length}
                 />
               </div>
             </div>
-          </div>}
+          </div>
         </div>
       </div>
     </div>

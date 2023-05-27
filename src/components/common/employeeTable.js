@@ -573,7 +573,7 @@ export default function EmployeeTable(props) {
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={setCurrentPage} total={totalData} count={employeeData.length}
           />
         </div>
       </div>

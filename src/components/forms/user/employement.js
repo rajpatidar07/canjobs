@@ -6,7 +6,7 @@ import {
   EmployeeDetails,
   AddEmployeement,
   DeleteEmployeeCareer,
-  getJson,
+  GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -24,8 +24,8 @@ function EmployementDetails(props) {
 
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setIndustryList(Json.Industry);
+    let Json = await GetFilter();
+    setIndustryList(Json.data.data.Industry);
   };
 
   /* Functionality to close the modal */
