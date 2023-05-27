@@ -365,11 +365,9 @@ function Followup() {
                           </th>
                           <th
                             scope="col"
-                            className=" border-0 font-size-4 font-weight-normal"
+                            className="text-gray border-0 font-size-4 font-weight-normal"
                           >
-                            <Link to="" className="text-gray">
-                              Total Response
-                            </Link>
+                              Total Responses
                           </th>
                           <th
                             scope="col"
@@ -421,7 +419,7 @@ function Followup() {
                                 </td>
                                 <td className=" py-5">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {job.employement} - {job.job_type}
+                                    {job.employement} 
                                   </h3>
                                 </td>
                                 <td className=" py-5">
@@ -430,12 +428,12 @@ function Followup() {
                                   </h3>
                                 </td>
                                 <td className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate" title={job.education}>
                                     {job.education}
                                   </h3>
                                 </td>
                                 <td className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate" title={job.keyskill}>
                                     {job.keyskill}
                                   </h3>
                                 </td>

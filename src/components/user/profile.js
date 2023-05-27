@@ -64,13 +64,20 @@ const UserProfile = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
-  /*Function to generate resume */
-  // const ResumeClick = (employee_id) => {
-  //   const id = employee_id;
-  //   window.open(`/resume/${id}`, "_blank");
-  // };
+  /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(pdfUrl, '_blank');
+  };
+  /*Function to calculate the time duration of two dates */
+  const calculateDuration = (startDate, endDate) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const duration = moment.duration(end.diff(start));
+    const years = duration.years();
+    const months = duration.months();
+    const days = duration.days();
+
+    return `${years === 1 ? years + "year ,": years > 1 ? years +'years ,' : ''} ${months === 1 ? months + "month ,": months > 1 ? months + 'months ,' : ''} ${days === 1 ? days + "day": days !== 1 ? days + 'days' : ''}`;
   };
   return (
     /*---- Employee Profile Details Page ----*/
@@ -301,7 +308,7 @@ const UserProfile = (props) => {
                         close={() => setShowItSkills(false)}
                       /> : null}
 
-                      <ul className="list-unstyled d-flex align-items-center flex-wrap">
+                      <ul className="list-unstyled d-flex align-items-start flex-wrap">
                         {
                         userDetail.skill === undefined ? (
                           <li>No Data Found</li>
@@ -325,7 +332,7 @@ const UserProfile = (props) => {
               <div className="bg-white rounded-4 shadow-9">
                 {/*----Profile Header----*/}
                 <ul
-                  className="nav border-bottom border-mercury pl-12"
+                  className="nav border-bottom border-mercury pl-12 py-3 "
                   id="myTab"
                   role="tablist"
                 >
@@ -436,13 +443,14 @@ const UserProfile = (props) => {
                               </div>
                               <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                                 <span className="font-size-4 text-gray w-100">
-                                  {moment(CareerDetails.start_date).format(
+                                  {/* {moment(CareerDetails.start_date).format(
                                     "YYYY-MM-DD"
                                   )}
                                   -
                                   {moment(CareerDetails.end_date).format(
                                     "YYYY-MM-DD"
-                                  )}
+                                  )} */}
+                                  {calculateDuration(CareerDetails.start_date, CareerDetails.end_date)}
                                 </span>
                                 <span className="font-size-3 text-gray w-100">
                                   <span
@@ -629,7 +637,7 @@ const UserProfile = (props) => {
               >
                 {/* <!-- Top Start --> */}
                 <div className="mb-5">
-                  <h4 className="font-size-7 mb-9">Applied Jobs</h4>
+                  <h4 className="font-size-7 mb-9 mt-5">Applied Jobs</h4>
                   <div className="row justify-content-center">
                     {appliedJob === undefined || appliedJob.length === 0 ? 
                      <div className="text-center text-dark" >No Data Found</div>
@@ -641,10 +649,9 @@ const UserProfile = (props) => {
                         <div className="media align-items-center">
                           <div className="square-52 mr-8 rounded">
                               <img src={data.logo ? data.logo : "image/l3/png/fimize.png"} alt="" 
-                               width={100} height={100}/>
+                               width={100} />
                           </div>
-                          <div className="row">
-                          <div className="col mx-5">
+                          <div className=" mx-5">
                             <span
                               to=""
                               className="font-size-3 text-default-color line-height-2"
@@ -659,27 +666,7 @@ const UserProfile = (props) => {
                                 {data.job_title}
                               </span>
                             </h3>
-                            <div className="pt-5">
-                          <span className="font-weight-semibold heading-default-color">
-                          <i className="text-gray fas fa-rupee-sign pr-2" aria-hidden="true"></i>
-                             {data.salary}
-                          </span>
-                          </div>
-                          </div>
-                          <div className="col">
-                          <span className="font-weight-semibold heading-default-color">
-                          <i className="text-gray fa fa-clock pr-2"></i>
-                            {moment(data.created_at).format("YYYY-MM-DD")}
-                          </span>
-                          <div className="pt-5 heading-default-color">
-                          <i className="text-gray fa fa-briefcase pr-2"></i>
-                          <span className="font-weight-semibold">
-                            {data.experience_required}
-                          </span>
-                          </div>
-                          </div>
-                          </div>
-                          
+                          </div>                          
                         </div>
                         <div className="d-flex pt-10">
                           <ul className="list-unstyled mb-1 d-flex flex-wrap">
@@ -699,6 +686,34 @@ const UserProfile = (props) => {
                               >
                                 <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                                 {data.job_type}
+                              </span>
+                            </li>
+                            <li>
+                              <span
+                                to=""
+                                className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="text-eastern fa fa-briefcase mr-2 font-weight-bold"></i>
+                                {data.experience_required}
+                              </span>
+                            </li>
+                            <li>
+                              <span
+                                to=""
+                                className="bg-regent-opacity-15 text-gray font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="text-gray fa fa-clock mr-2 font-weight-bold"></i>
+                               {moment(data.created_at).format("YYYY-MM-DD")}
+                              </span>
+                            </li>
+                           
+                            <li>
+                              <span
+                                to=""
+                                className="bg-regent-opacity-15 text-red font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
+                              >
+                                <i className="fas fa-rupee-sign mr-2 font-weight-bold"></i>
+                                {data.salary}
                               </span>
                             </li>
                           </ul>

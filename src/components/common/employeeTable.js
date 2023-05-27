@@ -45,7 +45,7 @@ export default function EmployeeTable(props) {
       props.experienceFilterValue,
       props.skillFilterValue,
       props.educationFilterValue,
-      props.filter_by_time || props.search || props.experienceFilterValue || props.skillFilterValue || props.educationFilterValue ? 1 : currentPage,
+      sortOrder ||props.filter_by_time || props.search || props.experienceFilterValue || props.skillFilterValue || props.educationFilterValue ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,

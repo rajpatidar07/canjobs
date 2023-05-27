@@ -14,6 +14,11 @@ function JobBox({
   locationFilterValue,
   jobLocation,
   apiCall,
+  // setCategoryFilterValue,
+  // setSkillFilterValue,
+  // setJobSwapFilterValue,
+  // setJobLocation,
+
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -90,6 +95,12 @@ function JobBox({
     }
     setApiCall(true);
   };
+  // let onReset = () => {
+  //   setCategoryFilterValue("");
+  //   setSkillFilterValue("");
+  //  setJobSwapFilterValue("");
+  // setJobLocation("");
+  // }
   return (
     <>
       <div

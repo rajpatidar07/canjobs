@@ -41,7 +41,7 @@ function ManageAdmin() {
     const userData = await getallAdminData(
       typeFilterValue,
       search,
-      currentPage,
+      typeFilterValue || search || sortOrder ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder

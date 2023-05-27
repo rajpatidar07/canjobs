@@ -35,8 +35,7 @@ function Interview(props) {
       "",
       "",
       search,
-      search || props.filter_by_time 
-      || props.statusFilterValue ? 1 : currentPage,
+      search || props.filter_by_time || props.statusFilterValue || sortOrder ? 1 : currentPage,
       columnName,
       recordsPerPage,
       sortOrder,
@@ -272,7 +271,7 @@ function Interview(props) {
                             title=" Reschedule Interview"
                             disabled={data.status === "COMPLETE" ? true : false}
                           >
-                        Reschedule
+                        <i className="fa fa-calendar"></i>
                           </button>
                         </div>
                       </th>

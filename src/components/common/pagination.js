@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Pagination({ nPages, currentPage, setCurrentPage , total , count}) {
-  // console.log("nPages =>", nPages,"currentPage =>", currentPage);
+  console.log("nPages =>", nPages,"currentPage =>", currentPage);
   //Function to get dynamic page no of the pagination :-
   const pageNumbers = [];
   for (let i = 1; i <= nPages; i++) {

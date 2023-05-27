@@ -39,7 +39,7 @@ export default function EmployerTable(props) {
       props.industryFilterValue,
       props.corporationFilterValue,
       props.search,
-      props.filter_by_time || props.industryFilterValue|| props.corporationFilterValue|| props.search ? 1 : currentPage,
+      props.filter_by_time || props.industryFilterValue|| props.corporationFilterValue|| props.search || sortOrder ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -216,7 +216,7 @@ export default function EmployerTable(props) {
                     className="text-gray"
                     title="Sort by Skill"
                   >
-                    Vacancies
+                    Jobs
                   </Link>
                 </th>
                 {props.heading === "Dashboard" ? (
@@ -290,6 +290,13 @@ export default function EmployerTable(props) {
                             Unavailable
                           </p>
                         ) : (
+                         props.heading === "Dashboard" ? (
+                          ""
+                        ) : <Link
+                          to={""}
+                          title="Company Details"
+                          onClick={() => EmployerDetail(empdata.company_id)}
+                        >
                           <div className="company_profile">
                             <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                               {empdata.company_name}
@@ -298,6 +305,7 @@ export default function EmployerTable(props) {
                               {empdata.industry}
                             </p>
                           </div>
+                          </Link>
                         )}
                       </div>
                     </th>

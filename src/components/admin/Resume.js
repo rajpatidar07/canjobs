@@ -159,6 +159,18 @@ function ResumeGrerator(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // console.log("________________________" + Skills);
+
+  /*Function to calculate the time duration of two dates */
+  const calculateDuration = (startDate, endDate) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const duration = moment.duration(end.diff(start));
+    const years = duration.years();
+    const months = duration.months();
+    const days = duration.days();
+
+    return `${years === 1 ? years + "year ,": years > 1 ? years +'years ,' : ''} ${months === 1 ? months + "month ,": months > 1 ? months + 'months ,' : ''} ${days === 1 ? days + "day": days !== 1 ? days + 'days' : ''}`;
+  };
   return (
     <PDFViewer style={styles.pagesetup}>
       <Document>
@@ -313,7 +325,7 @@ function ResumeGrerator(props) {
                         b.add(months, 'months');
                       } */}
                         <Text style={styles.year}>
-                          {edu.currently_work_here != null
+                          {/* {edu.currently_work_here != null
                             ? moment(edu.end_date).diff(
                                 moment(edu.start_date),
                                 "year"
@@ -333,9 +345,10 @@ function ResumeGrerator(props) {
                                   "month"
                                 ) + "M"
                               : null
-                            : edu.start_date + "- Now"}
+                            : edu.start_date + "- Now"} */}
                           {/* {edu.start_date}-{" "}
                         {edu.end_date || edu.currently_work_here} */}
+                        {calculateDuration(edu.start_date, edu.end_date)}
                         </Text>
                         <Text style={styles.location}>
                           {edu.company_location}

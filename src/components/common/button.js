@@ -2,7 +2,7 @@ import React from "react";
 
 function CustomButton({ btn, ...btnProps }) {
   return (
-    <button {...btnProps} />
+    <button {...btnProps} style={{width : "26px",height:"26px"}} />
   );
 }
 

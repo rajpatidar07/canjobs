@@ -37,7 +37,7 @@ export default function JobTable(props) {
       props.categoryFilterValue,
       props.SkillFilterValue,
       props.jobSwapFilterValue,
-      props.company || props.search || props.locationFilterValue|| props.categoryFilterValue|| props.SkillFilterValue || props.jobSwapFilterValue || props.filter_by_time ? 1 : currentPage,
+      props.company  || props.search  || props.locationFilterValue || props.categoryFilterValue || props.SkillFilterValue  || props.jobSwapFilterValue  || props.filter_by_time ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -244,7 +244,7 @@ export default function JobTable(props) {
                   scope="col"
                   className=" border-0 font-size-4 font-weight-normal"
                 >
-                   Vacancies  / Total Applicants
+                   Vacancies  / Total Resposes
                 </th>
                 {props.heading === "Dashboard" ? null : (
                   <th

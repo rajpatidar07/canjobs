@@ -58,7 +58,7 @@ function CompanyProfile(props) {
     <div>
       <ToastContainer />
       {user_type !== "admin" ? <EmployeeHeader /> : null}
-      <div className="bg-default-2 pt-30 pt-lg-22 pb-lg-27">
+      <div className={user_type === "admin" ? "bg-default-2 mt-5" : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"}>
         <div className="container">
           {/* <!-- back Button --> */}
           {/* <div className="row justify-content-center">
@@ -80,7 +80,7 @@ function CompanyProfile(props) {
           {/* <!-- back Button End --> */}
           {isLoading ? 
             <div className="table-responsive main_table_div"><Loader/> </div>  :
-            <div className="row bg-white rounded-4 pt-11 shadow-9">
+            <div className={user_type === "admin" ? "row bg-white rounded-4 pt-12 shadow-9" :"row bg-white rounded-4 pt-11 shadow-9"}>
             {/* <!-- Company Profile --> */}
             <div className="w-100 row m-0 align-items-center px-12 mb-8 text-center text-xs-left">
               <div className="media align-items-center company_box col-10 p-0">

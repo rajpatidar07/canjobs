@@ -9,6 +9,7 @@ import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import { useEffect } from "react";
 import Loader  from '../common/loader';
+// import CustomButton from "../common/button";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -24,8 +25,15 @@ function JobSearch() {
   /*Render Method */
   useEffect(() => {
     JsonData();
-  }, [categoryFilterValue, SkillFilterValue]);
+  }, [categoryFilterValue, SkillFilterValue ,jobSwapFilterValue , jobLocation]);
   // eslint-disable-next-line no-use-before-define
+  /*Function to Rest the feilds */
+  // let onReset = () => {
+  //   setCategoryFilterValue("");
+  //   setSkillFilterValue("");
+  //   setJobSwapFilterValue("");
+  //   setJobLocation("");
+  // }
   return (
     <>
       <div className="site-wrapper overflow-hidden ">
@@ -121,6 +129,15 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
+                    {/* <div className="col-md-3 col-lg-3 mb-5">
+                    <CustomButton
+                      className="font-size-3 rounded-3 btn btn-primary border-0"
+                      onClick={()=>onReset()}
+                      title="Reset"
+                    >
+                      Reset
+                    </CustomButton>
+                    </div> */}
                   </div>
                 </form>
               </div>
@@ -142,6 +159,11 @@ function JobSearch() {
                         SkillFilterValue={SkillFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
                         jobLocation={jobLocation}
+                        // setCategoryFilterValue={setCategoryFilterValue}
+                        // setSkillFilterValue={setSkillFilterValue}
+                        // setJobSwapFilterValue={setJobSwapFilterValue}
+                        // setJobLocation={setJobLocation}
+                        // onReset={onReset}
                       /> 
                       {/* <!-- End Single Featured Job --> */}
                     </div> :

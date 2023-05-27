@@ -55,7 +55,7 @@ function JobResponse(props) {
       skillFilterValue,
       experienceTypeFilterValue,
       search,
-      currentPage,
+      props.filter_by_time || skillFilterValue || search || experienceTypeFilterValue || sortOrder ? 1 :currentPage,
       recordsPerPage,
       columnName,
       sortOrder,

@@ -477,7 +477,7 @@ function Education(props) {
               </div>
             </div>
 
-            <div className="form-group text-center">
+            <div className="form-group text-center d-flex justify-content-center">
               {loading === true ? (
                 <button
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -499,6 +499,14 @@ function Education(props) {
                   Submit
                 </button>
               )}
+              <button
+                type="button"
+                className="btn btn-primary mx-5"
+                data-dismiss="modal"
+                onClick={close}
+              >
+                Close
+              </button>
             </div>
           </form>
           {/* </div> */}
