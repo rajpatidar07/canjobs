@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
 import filterjson from "../json/filterjson";
 import { getJson } from "../../api/api";
-// eslint-disable-next-line no-use-before-define
 function SearchForm() {
   const location = useLocation();
   const path = location.pathname;
@@ -75,7 +74,7 @@ function SearchForm() {
                 <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
               </span>
             </div>
-            {/* <!-- .select-city starts --> */}
+            {/* <!-- select-city starts --> */}
             <div className="form-group position-relative">
               <Select
                 options={"" || state.country}
@@ -89,7 +88,6 @@ function SearchForm() {
                 <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
               </span>
             </div>
-            {/* <!-- ./select-city ends --> */}
           </div>
           {/* <!-- ./select-city ends --> */}
           <button

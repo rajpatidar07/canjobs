@@ -36,8 +36,6 @@ export default function ManageInterview() {
         <AdminHeader heading={"Interview"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Interview"} />
-        {/* <ToastContainer />{" "} */}
-
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container">
             <div className="mb-18">
@@ -76,14 +74,6 @@ export default function ManageInterview() {
                       </select>
                     </div>
                   </div>
-                  {/* <div className="text-right col-xl-12 mt-6 mt-xl-12">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => setShow(true)}
-                    >
-                      Add Interview
-                    </CustomButton>
-                  </div> */}
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>

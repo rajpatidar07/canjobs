@@ -12,7 +12,6 @@ import FilterJson from "../json/filterjson";
 import Loader  from '../common/loader';
 
 function ManageAdmin() {
-  // eslint-disable-next-line
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
   let [showAminDetails /*, setShowAminDetails*/] = useState(false);

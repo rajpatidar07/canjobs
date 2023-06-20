@@ -463,10 +463,11 @@ function EmployementDetails(props) {
                   name="start_date"
                   value={moment(state.start_date).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
+                  onKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.start_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control coustam_datepicker border border-danger"
+                      : "form-control coustam_datepicker"
                   }
                   id="start_date"
                 />

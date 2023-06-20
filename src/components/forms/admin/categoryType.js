@@ -54,15 +54,9 @@ function AddCategoryType(props) {
 
   // USER CATEGORY TYPE SUBMIT BUTTON
   async function onAdminCategoryClick(event) {
-    // // console.log(state);
-    // if (state.parent_id === "") {
-    //   setState({ ...state, category_name: "" });
-    //   setErrors({ ...errors, category_name: "" });
-    // }
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      // //// console.log((state);
       const responseData = await AddJobCategory(state);
       if (responseData.message === "Category added successfully") {
         toast.success("Category Type successfully", {
@@ -110,11 +104,11 @@ function AddCategoryType(props) {
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAdminCategoryClick}>
             {props.jobCategoryData === "0" ? (
-              <h5 className="text-center pt-2">Add Category Type</h5>
+              <h5 className="text-center mb-7 pt-2">Add Category Type</h5>
             ) : (
-              <h5 className="text-center pt-2">Update Category Type</h5>
+              <h5 className="text-center mb-7 pt-2">Update Category Type</h5>
             )}
-            <div className="form-group row mb-0 pt-5 mt-5">
+            <div className="form-group row mb-0 ">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -148,7 +142,7 @@ function AddCategoryType(props) {
             <div className="form-group text-center">
               {loading === true ? (
                 <button
-                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase"
                   type="button"
                   disabled
                 >

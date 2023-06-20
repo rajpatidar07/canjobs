@@ -66,7 +66,6 @@ function FilterList() {
         <AdminHeader heading={"Filter List"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Filter List"} />
-
         <div>
           <ToastContainer />
         </div>
@@ -87,7 +86,6 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Skill
                         </h4>
-
                         <AddFilter
                           apiCall={apiCall}
                           setApiCall={setApiCall}
@@ -190,89 +188,6 @@ function FilterList() {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
-                    <div className="card job_filter_card">
-                      <div className="card-body  m-0">
-                        <h4 className="card-title text-dark text-left mb-7 w-100">
-                          Category
-                        </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={2} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
-                            <p> No Data Found</p>
-                          ) : (
-                            (filterData.Category || []).map((data,i) =>
-                               (
-                                      <React.Fragment key={data.id}>
-                                        <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={data.id}
-                                        >
-                                          {data}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                              
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    </div>
-                  </div> */}
-                  {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
-                    <div className="card job_filter_card">
-                      <div className="card-body  m-0">
-                        <h4 className="card-title text-dark text-left mb-7 w-100">
-                          Location
-                        </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={3} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
-                            <p> No Data Found</p>
-                          ) : (
-                            (filterData || []).map((data) =>
-                              data.item_name === "Location"
-                                ? Object.entries(JSON.parse(data.json)).map(
-                                    (value,index) => (
-                                      <React.Fragment key={data.id}>
-                                        <li
-                                          className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
-                                          key={index}
-                                        >
-                                          {value[1]}
-                                          <Link
-                                            onClick={() =>
-                                              ShowDeleteAlert(value, data)
-                                            }
-                                            title="Delete"
-                                          >
-                                            <i
-                                              className="px-3 fa fa-times-circle"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </Link>
-                                        </li>
-                                      </React.Fragment>
-                                    )
-                                  )
-                                : null
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    </div>
-                  </div> */}
                   {/* <!-- Corporation Filter List --> */}
                   <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">

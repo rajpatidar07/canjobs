@@ -87,7 +87,6 @@ const ChangePassword = (props) => {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-10">
           {/* CHANGE PASSWORD FORM */}
           <form onSubmit={(e)=>onUserChangePassClick(e)}>
@@ -153,11 +152,6 @@ const ChangePassword = (props) => {
                     {errors.new_password}
                   </span>
                 )}
-                {/* <Link
-                          to="/"
-                          className="show-password pos-abs-cr fas mr-6 text-black-2"
-                          data-show-pass="password2"
-                        ></Link> */}
               </div>
             </div>
             <div className="form-group">
@@ -189,11 +183,6 @@ const ChangePassword = (props) => {
                     {errors.conf_password}
                   </span>
                 )}
-                {/* <Link
-                          to="/"
-                          className="show-password pos-abs-cr fas mr-6 text-black-2"
-                          data-show-pass="password23"
-                        ></Link> */}
               </div>
             </div>
             {/* END FORM FIELDS  */}

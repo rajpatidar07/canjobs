@@ -19,7 +19,6 @@ function AddJobsModal(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form>
             <h5 className="text-center pt-2">Add Jobs</h5>

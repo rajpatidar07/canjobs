@@ -8,8 +8,6 @@ import Pagination from "../common/pagination";
 import Loader from '../common/loader';
 
 export default function JobTable(props) {
-  // console.log(props.filter_by_time);
-
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
@@ -52,7 +50,6 @@ export default function JobTable(props) {
       setTotalData(userData.data.total_rows);
       setIsLoading(false)
     }
-    // // console.log(userData.data.data);
   };
 
   /*Render function to get the job */
@@ -62,7 +59,6 @@ export default function JobTable(props) {
       props.setApiCall(false);
       setApiCall(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.categoryFilterValue,
     props.SkillFilterValue,
@@ -78,12 +74,10 @@ export default function JobTable(props) {
   ]);
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-    // e.preventDefault();
     props.JobDetail(e);
   };
   /* Function to show the single data to update job */
   const editJob = (e) => {
-    // e.preventDefault();
     setShowAddJobsModal(true);
     setJobId(e);
   };
@@ -106,7 +100,6 @@ export default function JobTable(props) {
       setDeleteAlert(false);
     }
   }
-  // console.log(jobData, "List Data");
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-// import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, GetFilter } from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
@@ -36,6 +34,7 @@ function Followup() {
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [responseId, setresponseId] = useState();
+  const [responseDropDown, setresponseDropDown] = useState(false);
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -60,15 +59,13 @@ function Followup() {
       setJobId([]);
       setresponseId();
       setIsLoading(false)
+      setjobData([])
     } else {
       setjobData(userData.data.data);
       setTotalData(userData.data.total_rows);
       setresponseId(userData.data.data[0].job_id);
       setIsLoading(false)
     }
-    // if (userData.message === "No data found") {
-    // //// console.log((userData.status);
-    // }
   };
 
   /*Render function to get the job */
@@ -82,7 +79,6 @@ function Followup() {
     if ((search === "") === true) {
       setSearchError("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
     SkillFilterValue,
@@ -160,6 +156,7 @@ function Followup() {
                       value={search}
                       name={"category_name"}
                       onChange={(e) => {onSearch(e);setCurrentPage(1)}}
+                      maxLength={30}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
@@ -250,10 +247,8 @@ function Followup() {
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>
-              </div>
-            
-              
-                <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+              </div> 
+               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                   <div className="table-responsive main_table_div">
                     {isLoading ? 
                       <Loader />
@@ -461,12 +456,13 @@ function Followup() {
                                   {job.total_applicants > 0 ? (
                                     <div
                                       className="btn-group button_group"
-                                      role="group"
+                                      // role="group"
                                     >
                                       <button
                                         className="btn btn-outline-info action_btn"
                                         onClick={() => {
                                           setresponseId(job.job_id);
+                                          setresponseDropDown(responseDropDown === false ? true : false)
                                         }}
                                         title="Job Response"
                                       >
@@ -477,7 +473,7 @@ function Followup() {
                                 </td>
                               </tr>
                               {job.job_id === responseId &&
-                              job.total_applicants > 0 ? (
+                              job.total_applicants > 0 && responseDropDown === true ? (
                                 <tr>
                                   <td colSpan={10}>
                                     {/* <!-- Job Responses --> */}

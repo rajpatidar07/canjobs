@@ -45,10 +45,6 @@ function ManageJobs() {
     FilterData();
   }, [showAddJobModal, jobId]);
 
-  // const Skill = Object.keys(filter.Skill).map((key) => {
-  //   return { id: key, name: filter.Skill[key] };
-  // });
-  // console.log(filter);
 
   return (
     <>
@@ -172,12 +168,6 @@ function ManageJobs() {
                   </div>
                 </form>
                 <div>
-                  {/* <div className="d-flex align-items-center justify-content-between mx-2">
-                    <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                      <span className="text-black-2">120</span> matched jobs
-                    </h5>
-                  </div> */}
                 </div>
                  {/*<-- Add job Modal -->*/}
                {showAddJobModal ? <AddJobModal
@@ -222,7 +212,6 @@ function ManageJobs() {
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              {/* {ids === "" ? null : <JobDetail ids={ids} />} */}
             </div>
           </div>
         </div>

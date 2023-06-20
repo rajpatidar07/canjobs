@@ -25,6 +25,7 @@ function Job() {
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
+
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -37,7 +38,6 @@ function Job() {
     if ((search === "") === true) {
       setSearchError("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryFilterValue,
     SkillFilterValue,
@@ -50,7 +50,7 @@ function Job() {
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-    // e.preventDefault();
+
     setShowJobDetails(true);
     setJobId(e);
   };

@@ -16,12 +16,10 @@ function useValidation(initialState, validators) {
       desc = editor.getData().replaceAll(/"/g, "'");
     }
     setState({ ...state, desc });
-    // //// console.log((desc);
   };
 
   const validate = () => {
     let newErrors = {};
-    //// console.log(("VALIDATION CHECK" + JSON.stringify(state));
     Object.keys(state).forEach((key) => {
       const value = state[key];
       if (validators[key]) {

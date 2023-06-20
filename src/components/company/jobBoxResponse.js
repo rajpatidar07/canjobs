@@ -12,7 +12,6 @@ function JobBoxResponse({
   let [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   let [noData, setNoData] = useState("");
-  // const user_type = localStorage.getItem("userType");
   let Skill = [];
   /* Function to get Job data*/
   const JobData = async () => {
@@ -53,7 +52,7 @@ function JobBoxResponse({
       data-aos-once="true"
     >
       {/* <!-- Single Featured Job --> */}
-      {noData === 0 ? (
+      {noData === 0 || jobData.length === 0 ? (
         <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
           <h4>No Data Found</h4>
         </div>

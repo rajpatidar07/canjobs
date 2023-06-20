@@ -1,5 +1,5 @@
-import React, { useEffect, useState /*useEffect*/ } from "react";
-import { Link /*useNavigate*/ } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link} from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
@@ -33,36 +33,6 @@ const AdminHeader = (props) => {
           {/* <!-- Page Heading--> */}
           <h3 className="font-size-6 mb-0">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
-          {/* <div className="form-group w-50 d-flex">
-            <label
-              htmlFor="view_layout"
-              className="font-size-4 text-black-2  line-height-reset"
-            >
-              View as Layout :
-            </label>
-            <Select
-              options={state}
-              onChange={onSelectChange}
-              id="view_layout"
-              className="mx-1"
-            />{" "}
-            <button
-              className="btn btn-secondary rounded-5 text-uppercase mx-5"
-              type="submit"
-              onClick={onTokenGenerateClick}
-            >
-              Generate Token
-            </button>
-            <button
-              className="btn btn-primary rounded-5 text-uppercase mx-5"
-              onClick={onRest}
-            >
-              Reset
-            </button>
-          </div> */}
-          {/* {notification.length < 0 ? ( */}
-
-          {/* ) : null} */}
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
               <div className="dropdown show-gr-dropdown py-5">

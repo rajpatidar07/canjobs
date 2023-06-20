@@ -29,6 +29,7 @@ import NotFound from "./notfound";
 import ResetPassword from "./resetPassword";
 import EmailTemplate from "../admin/email";
 import Loader  from '../common/loader';
+import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -40,8 +41,6 @@ import Loader  from '../common/loader';
 function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
-  // const pathname = <CurrentRoute />;
-  // console.log("MyComponent" + JSON.stringify(pathname));
   return (
     <BrowserRouter>
       {/* <CurrentRoute /> */}
@@ -51,6 +50,7 @@ function MainLayout() {
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
+        <Route exact path="/linkedin" component={LinkedInCallback} />
         {userType === "user" && token !== ("" || null || undefined) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />

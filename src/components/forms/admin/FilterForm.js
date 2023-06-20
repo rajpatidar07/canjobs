@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddFilter(props) {
   let [loading, setLoading] = useState(false);
-  // // console.log(props);
 
   // FILTER UPDATE VALIDATION
 
@@ -36,11 +35,9 @@ function AddFilter(props) {
 
   // FILTER UPDATE SUBMIT BUTTON
   const onAddFIlterClick = async (event) => {
-    // setState({ ...state, id: props.id });
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      // setState({ ...state, id: props.id });
       const responseData = await AddFIlter(state, props.id);
       if(responseData.message === "item already exist !"){
         setErrors({...errors, json_item: ["Filter already exist !"]})
@@ -98,7 +95,6 @@ function AddFilter(props) {
                 className="btn action_btn btn-primaryy"
                 type="button"
                 disabled
-                // style={{ height: "3rem", minWidth: "40px" }}
               >
                 <div
                   className="spinner-border spinner-border-sm"
@@ -110,7 +106,6 @@ function AddFilter(props) {
                 className="btn  action_btn btn-primary "
                 type="submit"
                 id="button-addon2"
-                // style={{ height: "3rem", minWidth: "40px" }}
                 title="Add Filter"
               >
                 +

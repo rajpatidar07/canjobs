@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 function AddCategory(props) {
   const [catType, setCatType] = useState([]);
   let [loading, setLoading] = useState(false);
+  
   /* Functionality to close the modal */
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -30,8 +30,7 @@ function AddCategory(props) {
     category_name: [
       (value) =>
         value === "" || value.trim() === ""
-          ? // || errors.category_type === "Category Type is required"
-            "Category Name  is required"
+          ? "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
           : /[-]?\d+(\.\d+)?/.test(value)
@@ -72,7 +71,6 @@ function AddCategory(props) {
   const CatData = async () => {
     let categoryType = await getAllJobsCategory();
     setCatType(categoryType.data);
-    // // console.log(catType);
     if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
       setState(initialFormState);
     } else {
@@ -81,7 +79,6 @@ function AddCategory(props) {
   };
   useEffect(() => {
     CatData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // USER CATEGORY SUBMIT BUTTON
@@ -89,7 +86,6 @@ function AddCategory(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      // //// console.log((state);
       const responseData = await AddJobCategory(state);
       if (responseData.message === "Category added successfully") {
         toast.success("Category added successfully", {
@@ -139,15 +135,14 @@ function AddCategory(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAdminCategoryClick}>
             {props.jobCategoryData === "0" ? (
-              <h5 className="text-center pt-2">Add Category</h5>
+              <h5 className="text-center pt-2 mb-7">Add Category</h5>
             ) : (
-              <h5 className="text-center pt-2">Update Category</h5>
+              <h5 className="text-center pt-2 mb-7">Update Category</h5>
             )}
-            <div className="form-group row mb-0 mt-5">
+            <div className="form-group row mb-0 ">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2 mx-6 line-height-reset"
@@ -242,7 +237,6 @@ function AddCategory(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

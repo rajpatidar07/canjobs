@@ -50,8 +50,6 @@ function FollowupTable() {
   useEffect(() => {
     JobData();
     CategoryData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.categoryFilterValue,
     props.SkillFilterValue,
@@ -65,7 +63,6 @@ function FollowupTable() {
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-    // e.preventDefault();
     setJobId(e);
   };
 
@@ -87,17 +84,12 @@ function FollowupTable() {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-  /*Category type array to filter*/
-  const CategoryType = (Categorylist || []).filter(
-    (thing, index, self) =>
-      index === self.findIndex((t) => t.category_type === thing.category_type)
-  );
-
+  
   return (
     <>
-      
         <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
+      tyhrtyutfhxt
         {isLoading ? 
               <Loader/>  : <table className="table table-striped main_data_table">
            <thead>

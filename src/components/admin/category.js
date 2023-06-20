@@ -9,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-// import FilterJson from "../json/filterjson";
 import AddCategoryType from "../forms/admin/categoryType";
 import Loader  from '../common/loader';
 function Category() {
@@ -46,7 +45,6 @@ function Category() {
  const JsonData = async()=>{
   let Json = await GetFilter()
   setCateType(Json.data.data.Category_type)
-  // console.log(Json)
 }
   /* Function to get the job category data*/
   const CategoryData = async () => {
@@ -95,7 +93,6 @@ function Category() {
       const FilterByType = userData.data ? userData.data.filter((thing, index, self) =>
       index === self.findIndex((t) => t.value === thing.value)
       ) : [];
-      // console.log(FilterByType);
       setTypeTotalData(FilterByType.length);
       setIsLoading2(false)
     }
@@ -110,7 +107,6 @@ function Category() {
     if ((search === "") === true) {
       setSearchError("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     categoryTypeFilterValue,
     search,
@@ -133,21 +129,18 @@ function Category() {
 
   /* Function to show the single data to update job category*/
   const editJobCategory = (e) => {
-    // e.preventDefault();
     setShowAddCategoryModal(true);
     setCategoryId(e);
   };
 
   /* Function to show the single data to update job category*/
   const addJobCategoryType = (e) => {
-    // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
   };
 
   /* Function to show the single data to update job category Type*/
   const editJobCategoryType = (e) => {
-    // e.preventDefault();
     setShowAddCategoryTypeModal(true);
     setCategoryId(e);
   };
@@ -193,19 +186,12 @@ function Category() {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   const TypenPages = Math.ceil(TypetotalData / TyperecordsPerPage);
-// console.log(totalData,"<= 1 =>",recordsPerPage,"category =>",nPages , "Type =>", TypenPages);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
 
-  /*Category type function to filter data for not having same data */
-  // const FilterByType = CateType ? CateType.filter((thing, index, self) =>
-  // index === self.findIndex((t) => t.value === thing.value)
-  // ) : [];
-  // console.log(Type)
-  
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -408,14 +394,7 @@ function Category() {
                             scope="col"
                             className=" border-0 font-size-4 font-weight-normal text-gray"
                           >
-                            {/* <Link
-                              to={""}
-                              onClick={() => handleSort("category_type")}
-                              className="text-gray"
-                              title="Sort by Type"
-                            > */}
                             Category Type
-                            {/* </Link> */}
                           </th>
                           <th
                             scope="col"
@@ -452,15 +431,6 @@ function Category() {
                                   >
                                     <span className=" fas fa-edit text-gray"></span>
                                   </button>
-                                  {/* <button
-                                          className="btn btn-outline-info action_btn"
-                                          onClick={() => ShowDeleteAlert(catdata)}
-                                          title="Delete"
-                                        >
-                                          <span className=" text-danger">
-                                            <i className="fa fa-trash"></i>
-                                          </span>
-                                        </button> */}
                                 </div>
                               </th>
                             </tr>

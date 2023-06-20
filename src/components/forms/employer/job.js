@@ -88,23 +88,10 @@ function AddJobModal(props) {
     experience_required: [
       (value) => (value === "" ? "Experienceis required" : null),
     ],
-    // salary: [
-    //   (value) =>
-    //     value === "" || value.trim() === "" ? "Salary is required" : null,
-    // ],
     location: [
       (value) =>
         value === "" || value.trim() === "" ? "Location is required" : null,
     ],
-    // industry_type: [
-    //   (value) =>
-    //     value === ""
-    //       ? "Industry type Type is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : null,
-    // ],
-
     apply_link: [
       (value) =>
         value === "" || value.trim() === ""
@@ -117,46 +104,6 @@ function AddJobModal(props) {
           ? "Apply link  should have 3 or more letters"
           : null,
     ],
-    // job_description: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Job Description is required"
-    //       : value.length < 3
-    //       ? "Job Description  should have 3 or more letters"
-    //       : null,
-    // ],
-    // your_duties: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Your duties is required"
-    //       : value.length < 2
-    //       ? "Duties  should have 2 or more letters"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Duties can not have a number."
-    //       : "",
-    // ],
-    // requirement: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Job requirement is required"
-    //       : value.length < 2
-    //       ? "Requirement  should have 2 or more letters"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Requirement can not have a number."
-    //       : "",
-    // ],
-    // department: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Department is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : value.length < 2
-    //       ? "Department  should have 2 or more letters"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Department can not have a number."
-    //       : "",
-    // ],
     job_type: [
       (value) =>
         value === "" || value.trim() === "" ? "Job Type is required" : null,
@@ -167,39 +114,6 @@ function AddJobModal(props) {
           ? "No of vacancies is required"
           : null,
     ],
-    // education: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Education is required"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Education can not have a number."
-    //       : "",
-    // ],
-    // language: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Language is required"
-    //       : value.length < 3
-    //       ? "Language  should have 3 or more letters"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Language can not have a number."
-    //       : "",
-    // ],
-    // keyskill: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Skill is required"
-    //       : value.length < 3
-    //       ? "Skill  should have 3 or more letters"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Skill can not have a number."
-    //       : "",
-    // ],
-
-    // employement: [
-    //   (value) =>
-    //     value === "" || value.trim() === "" ? "employement is required" : null,
-    // ],
     job_category_id: [
       (value) =>
         value === "" || value.trim() === "" ? "Job category is required" : null,
@@ -210,7 +124,6 @@ function AddJobModal(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  // eslint-disable-next-line no-unused-vars
   const { state, setErrors, setState, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
@@ -227,7 +140,6 @@ function AddJobModal(props) {
     } else {
       setState(userData.data.data[0]);
     }
-    // console.log(userData.data.data[0]);
   };
 
   /* Function to get Employer data*/
@@ -257,7 +169,6 @@ function AddJobModal(props) {
       JobData();
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
@@ -286,7 +197,6 @@ function AddJobModal(props) {
     }
   };
 
-  // //// console.log(("JSON" + JSON.stringify(FilterJson.location))
 
   // END ADD JOBS VALIDATION
   /*Company type array to filter*/
@@ -294,7 +204,6 @@ function AddJobModal(props) {
     (thing, index, self) =>
       index === self.findIndex((t) => t.company_name === thing.company_name)
   );
-  // console.log(props.jobdata);
   return (
     <>
       <Modal
@@ -311,7 +220,6 @@ function AddJobModal(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAddJobsClick}>
             {props.jobdata === "0" ? (
@@ -320,7 +228,7 @@ function AddJobModal(props) {
               <h5 className="text-center pt-2 mb-7">Update Jobs</h5>
             )}
 
-            <div className="row pt-5">
+            <div className="row ">
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="job_title"
@@ -1049,7 +957,6 @@ function AddJobModal(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

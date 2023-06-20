@@ -3,13 +3,12 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { ToastContainer } from "react-toastify";
 import { GetAllEmailTemplate } from "../../api/api";
-// import { Pagination } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import ManageEmail from "../forms/admin/manageemail";
-
+import TestMail from "../forms/admin/testMail";
 function EmailTemplate() {
   const [emailData, setEmailData] = useState([]);
-  let [showAddAdminModal, setShowAdminModal] = useState(false);
+  let [showAddTamplateModal, setShowAddTamplateModal] = useState(false);
+  let [testEmail, setTestEmail] = useState(false);
   let [Email, setEmail] = useState();
 
   let userData = "";
@@ -19,21 +18,32 @@ function EmailTemplate() {
   };
   useEffect(() => {
     GetAllEmail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //   console.log("userData" + JSON.stringify(emailData));
+  /*Function to open Add or edit template */
   const editEmailTemplate = (e) => {
-    // e.preventDefault();
-    setShowAdminModal(true);
+    setShowAddTamplateModal(true);
     setEmail(e || "");
   };
+
+    /*Function to open form to test email template */
+    const TestEmailTemplate = (e) => {
+      setTestEmail(true);
+      setEmail(e || "");
+    };
   return (
     <>
-      {showAddAdminModal ? (
+      {showAddTamplateModal ? (
         <ManageEmail
-          show={showAddAdminModal}
+          show={showAddTamplateModal}
           data={Email}
-          close={() => setShowAdminModal(false)}
+          close={() => setShowAddTamplateModal(false)}
+        />
+      ) : null}
+      {testEmail ? (
+        <TestMail
+          show={testEmail}
+          data={Email}
+          close={() => setTestEmail(false)}
         />
       ) : null}
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -69,40 +79,34 @@ function EmailTemplate() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          <Link
+                          <span
                             className="text-gray"
                             to={""}
-                            // onClick={() => handleSort("name")}
-                            title="Sort by Name"
                           >
                             Id
-                          </Link>
+                          </span>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          <Link
+                          <span
                             className="text-gray"
                             to={""}
-                            // onClick={() => handleSort("admin_type")}
-                            title="Sort by Type"
                           >
                             Email Type
-                          </Link>
+                          </span>
                         </th>
                         <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          <Link
+                          <span
                             className="text-gray"
                             to={""}
-                            // onClick={() => handleSort("email")}
-                            title="Sort by Email"
                           >
                             Subject
-                          </Link>
+                          </span>
                         </th>
                         <th
                           scope="col"
@@ -130,11 +134,6 @@ function EmailTemplate() {
                               {email.subject}
                             </div>
                           </td>
-                          {/* <td className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-lowercase">
-                                {email.message}
-                              </h3>
-                            </td> */}
                           <td className="py-5 min-width-px-100">
                             <div
                               className="btn-group button_group"
@@ -149,12 +148,18 @@ function EmailTemplate() {
                               </button>
                               <button
                                 className="btn btn-outline-info action_btn"
-                                //   onClick={() => ShowDeleteAlert(admin)}
                                 title="Delete"
                               >
                                 <span className=" text-danger">
                                   <i className="fa fa-trash"></i>
                                 </span>
+                              </button>
+                              <button
+                                className="btn btn-outline-info action_btn"
+                                title="Test"
+                                onClick={() =>TestEmailTemplate(email.id)}
+                              >
+                                  Test Mail
                               </button>
                             </div>
                           </td>

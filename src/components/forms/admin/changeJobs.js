@@ -18,16 +18,15 @@ function ChangeJob(props) {
   let [alredyApplied, setAlredyApplied] = useState("");
   /* Functionality to close the modal */
   const close = () => {
-    // setErrors("");
     setLoading(false);
     props.close();
   };
+  
  // USER CHANGE JOB VALIDATION
   // INITIAL STATE ASSIGNMENT
 
   const JobData = async () => {
     const userData = await GetAllJobs();
-    // // console.log(userData.data.data);
     if (userData.data.data.length === 0) {
       setAllJobData([]);
     } else {
@@ -40,9 +39,6 @@ function ChangeJob(props) {
   }, [props, apiCall]);
   // USER CHANGE JOB SUBMIT BUTTON
   const onSelectChange = (option) => {
-    // e.preventDefault();
-    // // console.log("+++++++++++++" + JSON.stringify(option.value));
-
     setJobId(option.value);
   };
   /*Function to change job */
@@ -68,6 +64,7 @@ function ChangeJob(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      props.setChangeJob(true)
       props.setApiCall(true)
       return close();
     }
@@ -99,7 +96,7 @@ function ChangeJob(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">{props.apply==="apply" ? "Apply for Job" : "Change Jobs"}</h5>
+          <h5 className="text-center pt-2 mb-7">{props.apply==="apply" ? "Apply for Job" : "Change Jobs"}</h5>
 
           <form onSubmit={onChangeJobClick}>
             <div className="form-group ">

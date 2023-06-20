@@ -13,8 +13,6 @@ export default function GenerateToken(props) {
   /*Function to get admin list */
   const AdminData = async () => {
     const userData = await getallAdminData();
-    console.log(userData)
-    
     if (userData.data.length === 0) {
       setAllAdmin([]);
     } else {
@@ -22,7 +20,6 @@ export default function GenerateToken(props) {
       setAllAdmin(filteredData);
     }
   };
-  console.log(allAdmin)
   
   /* Functionality to close the modal */
   const close = () => {
@@ -52,7 +49,6 @@ export default function GenerateToken(props) {
   /*Function to generate Token of other admin to view as him */
   const onTokenGenerateClick = async (event) => {
     event.preventDefault();
-    // setLoading(true);
     const responseData = await GetAdminToken(AdminId);
     if (responseData.message === "successful") {
       localStorage.setItem("view_as_token", responseData.token);
@@ -93,7 +89,6 @@ export default function GenerateToken(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-15">
           {/* CHANGE PASSWORD FORM */}
           <form onSubmit={onTokenGenerateClick}>

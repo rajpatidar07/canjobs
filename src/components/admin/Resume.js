@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
 // Create Document Component
 function ResumeGrerator(props) {
   const { id } = useParams();
-  // console.log(id);
   const [User, setUser] = useState([]);
   const [Skills, setSkills] = useState([]);
   const [Education, setEducation] = useState([]);
@@ -156,9 +155,7 @@ function ResumeGrerator(props) {
   };
   useEffect(() => {
     UserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-  // console.log("________________________" + Skills);
 
   /*Function to calculate the time duration of two dates */
   const calculateDuration = (startDate, endDate) => {
@@ -188,54 +185,54 @@ function ResumeGrerator(props) {
             <View style={styles.contact}>
               <Text style={styles.subHeading}>Personal</Text>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Phone:</Text>
-                <Text style={styles.conValue}>{User.contact_no}</Text>
+               {User.contact_no ? <> <Text style={styles.icon}>Phone:</Text>
+                <Text style={styles.conValue}>{User.contact_no}</Text> </> : ""}
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Email:</Text>
-                <Text style={styles.conValue}>{User.email}</Text>
+                {User.email ? <> <Text style={styles.icon}>Email:</Text>
+                <Text style={styles.conValue}>{User.email}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>DOB:</Text>
-                <Text style={styles.conValue}>{User.date_of_birth}</Text>
+                {User.date_of_birth ? <> <Text style={styles.icon}>DOB:</Text>
+                <Text style={styles.conValue}>{User.date_of_birth}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Gender:</Text>
-                <Text style={styles.conValue}>{User.gender}</Text>
+                {User.gender ? <> <Text style={styles.icon}>Gender:</Text>
+                <Text style={styles.conValue}>{User.gender}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Marital Status:</Text>
-                <Text style={styles.conValue}>{User.marital_status}</Text>
+                {User.marital_status ? <> <Text style={styles.icon}>Marital Status:</Text>
+                <Text style={styles.conValue}>{User.marital_status}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Nationality:</Text>
-                <Text style={styles.conValue}>{User.nationality}</Text>
+                {User.nationality ? <> <Text style={styles.icon}>Nationality:</Text>
+                <Text style={styles.conValue}>{User.nationality}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Current Location:</Text>
-                <Text style={styles.conValue}>{User.current_location}</Text>
+                {User.current_location ? <> <Text style={styles.icon}>Current Location:</Text>
+                <Text style={styles.conValue}>{User.current_location}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Language:</Text>
-                <Text style={styles.conValue}>{User.language}</Text>
+                {User.language ? <> <Text style={styles.icon}>Language:</Text>
+                <Text style={styles.conValue}>{User.language}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Religion:</Text>
-                <Text style={styles.conValue}>{User.religion}</Text>
+                {User.religion ? <> <Text style={styles.icon}>Religion:</Text>
+                <Text style={styles.conValue}>{User.religion}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Expert:</Text>
-                <Text style={styles.conValue}>{User.experience} Year</Text>
+                {User.experience ? <> <Text style={styles.icon}>Expert:</Text>
+                <Text style={styles.conValue}>{User.experience} Year</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Canada Work Permit:</Text>
-                <Text style={styles.conValue}>{User.work_permit_canada}</Text>
+                {User.work_permit_canada ? <> <Text style={styles.icon}>Canada Work Permit:</Text>
+                <Text style={styles.conValue}>{User.work_permit_canada}</Text></>:""} 
               </View>
               <View style={styles.contactRow}>
-                <Text style={styles.icon}>Other Country Work Permit:</Text>
+                {User.work_permit_other_country ? <> <Text style={styles.icon}>Other Country Work Permit:</Text>
                 <Text style={styles.conValue}>
                   {User.work_permit_other_country}
-                </Text>
+                </Text></>:""} 
               </View>
             </View>
             {Skills.length === 0 ? null : (

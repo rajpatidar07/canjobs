@@ -40,13 +40,11 @@ function Employee() {
   },[skillFilterValue , educationFilterValue])
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
-    // e.preventDefault();
     setShowEmployeeProfile(true);
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
-    // e.preventDefault();
     setShowEmployeeMOdal(true);
     setemployeeId(e);
   };

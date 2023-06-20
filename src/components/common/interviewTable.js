@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import CustomButton from "../common/button";
 import { getInterview } from "../../api/api";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import SAlert from "../common/sweetAlert";
 import moment from "moment";
 import Pagination from "./pagination";
-// import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview";
 import Loader  from '../common/loader';
 import { ToastContainer } from "react-toastify";
@@ -55,7 +50,6 @@ function Interview(props) {
   /*Render function to get the interview*/
   useEffect(() => {
     InterviewData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     search,
     currentPage,
@@ -69,7 +63,6 @@ function Interview(props) {
 
   /* Function to show the single data to update interview*/
   const editInterview = (e) => {
-    // e.preventDefault();
     setShowAddInterviewModal(true);
     setJobId(e.job_id);
     setResData(e);
@@ -78,11 +71,6 @@ function Interview(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Category type array to filter*/
-  // const CategoryType = InterviewData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.category_type === thing.category_type)
-  // );
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");

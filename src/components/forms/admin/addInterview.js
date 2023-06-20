@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddInterviewSheduale, getInterview } from "../../../api/api";
+import { AddInterviewSchedule, getInterview } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 function AddInterview(props) {
-  // console.log(props);
   let [loading, setLoading] = useState(false);
   let employeeId = props.resData.employee_id;
   let jobId = props.job_id;
@@ -22,9 +21,8 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
-    interview_status: props.resData.status === "pending" || props.resData.status === "" ? "pending" :  props.resData.status === "complete" ? "complete" : ""
+    interview_status: props.resData.status === "PENDING" || props.resData.status === "" ? "PENDING" : ""
   };
-  // // console.log(props.resData.interview_date);
   // VALIDATION CONDITIONS
   const validators = {
     interview_date: [
@@ -49,29 +47,30 @@ function AddInterview(props) {
     if (userData.data.length === 0) {
       setState({ state, interview_date: "" });
     } else {
-      if(props.Interview ==="interview"){
+      if(props.Interview === "interview"){
        setState({ state, interview_date: props.resData.interview_date });
-      }else{
-        setState({ state, interview_date: userData.data[(userData.data.length - 1)].interview_date ,interview_status :  userData.data[(userData.data.length - 1)].status });
+      }
+      else{
+        setState({ state, interview_date: userData.data[0].interview_date , interview_status :  userData.data[0].status });
       }
     }
+    console.log("state =>", state , "date =>" , props.resData.interview_date ,userData)
   };
-  // // console.log(state.interview_date, "lol");
 
   /*Render function to get the interview*/
   useEffect(() => {
     InterviewData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // USER INTERVIEW UPDATE SUBMIT BUTTON
   const onAddInterviewClick = async (event) => {
+    
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddInterviewSheduale(state, employeeId, jobId );
+      const responseData = await AddInterviewSchedule(state, employeeId, jobId );
       if (responseData.message === "data inserted successfully") {
-        toast.success("Interview shedualed successfully", {
+        toast.success("Interview Scheduled successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -100,7 +99,7 @@ function AddInterview(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Schedule Interview</h5>
+          <h5 className="text-center pt-2 mb-7">Schedule Interview</h5>
 
           <form onSubmit={onAddInterviewClick}>
           <div className="form-group row mb-0">
@@ -142,7 +141,6 @@ function AddInterview(props) {
               >
                 Interview date <span className="text-danger">*</span> :
               </label>
-              {/* {// console.log(props.resData.interview_date)} */}
               <input
                 className={
                   errors.interview_date

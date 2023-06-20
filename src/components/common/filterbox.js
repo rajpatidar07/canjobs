@@ -5,7 +5,6 @@ function Filterbox(props) {
 
   let navigate = useNavigate();
   let OnFIlterClick = (data) => {
-    // console.log("Filter Heading",`.${props.filterheading}.`);
     if (user_type === " ") {
       if (props.filterheading === "Jobs by Location") {
         navigate(`/managejobs?country=${data}`);

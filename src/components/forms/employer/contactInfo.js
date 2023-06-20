@@ -58,47 +58,6 @@ function ContactInfo(props) {
           ? "Mobile no should be of 10 digits"
           : "",
     ],
-    // contact_no_other: [],
-    // address: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Address is required"
-    //       : value.length < 2
-    //       ? "Address should have 2 or more letter"
-    //       : "",
-    // ],
-    // pin_code: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "pinCode is required"
-    //       : value.length < 6
-    //       ? "PinCode no should be of 6 digits"
-    //       : "",
-    // ],
-    // city: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "City Name is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : "",
-    // ],
-    // state: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "State Name is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : "",
-    // ],
-    // country: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Country Name is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : "",
-    // ],
     designation: [
       (value) =>
         value === "" || value === null
@@ -123,13 +82,11 @@ function ContactInfo(props) {
     } else {
       setState(userData.data.company_detail[0]);
     }
-    //// console.log(userData.data);
   };
   useEffect(() => {
     props.employerId === undefined || props.employerId === "0"
       ? setState(initialFormState)
       : EmployerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // COMPANY PERSONAL INFO SUBMIT BUTTON
@@ -167,7 +124,6 @@ function ContactInfo(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyContactClick}>
             <h5 className="text-center pt-2 mb-7">Contact Detail</h5>
@@ -495,7 +451,6 @@ function ContactInfo(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

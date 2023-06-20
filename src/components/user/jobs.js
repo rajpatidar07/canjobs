@@ -9,7 +9,7 @@ import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import { useEffect } from "react";
 import Loader  from '../common/loader';
-// import CustomButton from "../common/button";
+import CustomButton from "../common/button";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -28,12 +28,12 @@ function JobSearch() {
   }, [categoryFilterValue, SkillFilterValue ,jobSwapFilterValue , jobLocation]);
   // eslint-disable-next-line no-use-before-define
   /*Function to Rest the feilds */
-  // let onReset = () => {
-  //   setCategoryFilterValue("");
-  //   setSkillFilterValue("");
-  //   setJobSwapFilterValue("");
-  //   setJobLocation("");
-  // }
+  let onReset = () => {
+    setCategoryFilterValue("");
+    setSkillFilterValue("");
+    setJobSwapFilterValue("");
+    setJobLocation("");
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden ">
@@ -100,7 +100,7 @@ function JobSearch() {
                         onChange={(e) => setJobLocation(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Experience Level ">
+                        <option value="">
                           Select Job Location
                         </option>
                         {(FilterJson.location || []).map((job) => (
@@ -119,7 +119,7 @@ function JobSearch() {
                         onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option data-display="Experience Level ">
+                        <option value="">
                           Select Job type
                         </option>
                         {(FilterJson.job_type || []).map((job_type) => (
@@ -129,15 +129,16 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
-                    {/* <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="col-md-3 col-lg-3 mb-5">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={()=>onReset()}
                       title="Reset"
+                      type="button"
                     >
                       Reset
                     </CustomButton>
-                    </div> */}
+                    </div>
                   </div>
                 </form>
               </div>
@@ -159,11 +160,6 @@ function JobSearch() {
                         SkillFilterValue={SkillFilterValue}
                         jobSwapFilterValue={jobSwapFilterValue}
                         jobLocation={jobLocation}
-                        // setCategoryFilterValue={setCategoryFilterValue}
-                        // setSkillFilterValue={setSkillFilterValue}
-                        // setJobSwapFilterValue={setJobSwapFilterValue}
-                        // setJobLocation={setJobLocation}
-                        // onReset={onReset}
                       /> 
                       {/* <!-- End Single Featured Job --> */}
                     </div> :

@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
-// import { CKEditor } from "ckeditor4-react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import { getSingleFollowup, AddFollowup } from "../../../api/api";
-// import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Addfollowup(props) {
-  // console.log(props);
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   let employId = props.resData.employee_id;
   let jobId = props.job_id;
   /* Functionality to close the modal */
-  // // console.log("RESPONSE---"+JSON.stringify(props.job_id))
-
   const close = () => {
     setState(initialFormState);
     setErrors("");
@@ -47,7 +42,6 @@ function Addfollowup(props) {
     } else {
       ResponseData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // INITIAL STATE ASSIGNMENT
@@ -114,27 +108,8 @@ function Addfollowup(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">Follow Ups</h5>
-          <form onSubmit={onAminFollowClick} className="pt-5">
-            <div className=" col pb-5 mb-5">
-              {(response || []).map((res) => (
-                <div className="card mt-5 mb-5" key={res.id}>
-                  <div className="card-header d-flex justify-content-space-between px-3 py-1">
-                    <div className="card-head font-size-3 text-dark card_left">
-                      <span className="text-dark"> Posted date: </span>
-                      {moment(res.created_at).format("YYYY-MM-DD")}
-                      {/* {moment(res.created_at).format("DD-MM-YYYY")} */}
-                    </div>
-                    <div className="card-head font-size-3 text-dark card_right">
-                      <span className="text-dark"> Next date: </span>
-                      {moment(res.created_at).format("YYYY-MM-DD")}
-                      {/* {moment(res.next_followup_date).format("DD-MM-YYYY")} */}
-                    </div>
-                  </div>
-                  <div className="card-body p-3">{res.remark}</div>
-                </div>
-              ))}
-            </div>
+          <h5 className="text-center pt-2 mb-7">Follow Ups</h5>
+          <form onSubmit={onAminFollowClick}>
             <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="remark"
@@ -188,10 +163,11 @@ function Addfollowup(props) {
                   min={moment().format("YYYY-MM-DD")}
                   value={moment(state.next_followup_date).format("YYYY-MM-DD")}
                   onChange={onInputChange}
+                  onKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.next_followup_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control coustam_datepicker border border-danger"
+                      : "form-control coustam_datepicker"
                   }
                 />
                 {/*----ERROR MESSAGE FOR next_followup_date----*/}
@@ -228,6 +204,23 @@ function Addfollowup(props) {
                   Submit
                 </button>
               )}
+            </div>
+            <div className=" col pb-5 mb-5">
+              {(response || []).map((res) => (
+                <div className="card mt-5 mb-5" key={res.id}>
+                  <div className="card-header d-flex justify-content-space-between px-3 py-1">
+                    <div className="card-head font-size-3 text-dark card_left">
+                      <span className="text-dark"> Posted date: </span>
+                      {moment(res.created_at).format("YYYY-MM-DD")}
+                    </div>
+                    <div className="card-head font-size-3 text-dark card_right">
+                      <span className="text-dark"> Next date: </span>
+                      {moment(res.created_at).format("YYYY-MM-DD")}
+                    </div>
+                  </div>
+                  <div className="card-body p-3">{res.remark}</div>
+                </div>
+              ))}
             </div>
           </form>
         </div>

@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 function KycComplianceDetails(props) {
   const [loading, setLoading] = useState(false);
 
-  //// console.log(props.employerId);
   /* Functionality to close the modal */
 
   const close = () => {
@@ -147,13 +146,11 @@ function KycComplianceDetails(props) {
     } else {
       setState(userData.data.kyc_detail[0]);
     }
-    //// console.log(userData.data.kyc_detail[0]);
   };
   useEffect(() => {
     props.employerId === undefined
       ? setState(initialFormState)
       : EmployerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // COMPANY KYC DETAIL SUBMIT BUTTON
@@ -219,7 +216,6 @@ function KycComplianceDetails(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onKycInfoClick}>
             <h5 className="text-center pt-2 mb-7">KYC Compliance Details</h5>
@@ -298,10 +294,11 @@ function KycComplianceDetails(props) {
                     max={moment().format("YYYY-MM-DD")}
                     value={moment(state.pan_date).format("YYYY-MM-DD") || ""}
                     onChange={onInputChange}
+                    onKeyDownCapture={(e) => e.preventDefault()}
                     className={
                       errors.pan_date
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "form-control coustam_datepicker border border-danger"
+                        : "form-control coustam_datepicker"
                     }
                   />
                   {/*----ERROR MESSAGE FOR pan_date----*/}
@@ -600,7 +597,6 @@ function KycComplianceDetails(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

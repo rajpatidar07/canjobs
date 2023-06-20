@@ -465,10 +465,11 @@ function PersonalDetails(props) {
                   name="date_of_birth"
                   value={moment(state.date_of_birth).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
+                  onKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.date_of_birth
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control coustam_datepicker border border-danger"
+                      : "form-control coustam_datepicker"
                   }
                   id="date_of_birth"
                 />

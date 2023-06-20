@@ -4,7 +4,6 @@ import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
 import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
-// import JobDetail from "./jobDetail";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import Loader  from '../common/loader';
@@ -25,7 +24,6 @@ function Response() {
     }else{
         SetFilter(Json.data.data);}    
   };
-  // console.log(filter);
 
   useEffect(() => {
     FilterData();
@@ -49,9 +47,7 @@ function Response() {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-lg-10 col-xl-12">
-                {/* <h2 className="font-size-8 mb-6">
-                  You’re searching "UI Designer"
-                </h2> */}
+
                 <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center ">
                     <div className="col-md-3 col-lg-3 mb-5">
@@ -137,12 +133,6 @@ function Response() {
                     </div>
                   </div>
                 </form>
-                {/* <div className="d-flex align-items-center justify-content-between mb-6 mx-2">
-                  <h5 className="font-size-4 font-weight-normal text-gray">
-                    Showing
-                    <span className="text-black-2">120</span> matched jobs
-                  </h5>
-                </div> */}
               </div>
             </div>
             <div className="row justify-content-center position-static">
@@ -178,7 +168,6 @@ function Response() {
                 {/* <!-- form end --> */}
               </div>
               {/* <!-- Right Section --> */}
-              {/* <JobDetail ids={ids} /> */}
             </div>
           </div>
         </div>

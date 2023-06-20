@@ -8,8 +8,8 @@ import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 
 function EmployeeHeader() {
-  // const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
+  const profile_photo = localStorage.getItem("profile_photo");
   let navigate = useNavigate();
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
@@ -102,11 +102,6 @@ function EmployeeHeader() {
                       Responses
                     </Link>
                   </li>
-                  {/* <li className="nav-item">
-                    <Link className="nav-link" to="/companyprofile">
-                      Profile
-                    </Link>
-                  </li> */}
                 </ul>
               ) : null}
 
@@ -181,13 +176,13 @@ function EmployeeHeader() {
               />
 
               {/* <!-- Modal for SingUp--> */}
-              <button
+              <Link
                 className="btn btn-primary"
-                to={""}
+                to={"/"}
                 onClick={() => setShowSingUp(true)}
               >
                 Sign up
-              </button>
+              </Link>
               <EmployeeSignupModal
                 show={showSingUp}
                 loginClick={LoginClick}
@@ -210,7 +205,7 @@ function EmployeeHeader() {
                   <div>
                     <img
                       className="rounded-circle"
-                      src="image/user1.jpg"
+                      src={profile_photo ? profile_photo : "image/user.png"}
                       width={50}
                       height={50}
                       alt={""}

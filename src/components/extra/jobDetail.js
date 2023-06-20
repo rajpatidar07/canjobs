@@ -5,18 +5,7 @@ import moment from "moment";
 function JobDetail({ ids }) {
   const [jobData, setJobData] = useState("");
   let userType = localStorage.getItem("userType");
-  // useEffect(() => {
-  //   const GetJobData = async () => {
-  //     let Response = await GetJobDetail(ids);
-  //     if (Response.data.data.length === 0) {
-  //       setJobData("");
-  //     } else {
-  //       setJobData(Response.data.data[0]);
-  //     }
-  //     // console.log(Response.data.data[0]);
-  //   };
-  //   GetJobData();
-  // }, [ids]);
+
   useEffect(() => {
     const GetJobData = async () => {
       let Response = await GetJobDetail(ids);
@@ -25,7 +14,6 @@ function JobDetail({ ids }) {
       } else {
         setJobData(Response.data.data[0]);
       }
-      // console.log(Response.data.data[0]);
     };
     GetJobData();
   }, [ids]);

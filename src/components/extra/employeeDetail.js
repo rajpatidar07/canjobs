@@ -5,13 +5,10 @@ import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
-// eslint-disable-next-line
 function EmployeeDetails() {
   const [showRegistration, setShowRegistration] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
-  // const [showCareerProfile, setShowCareerProfile] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
-  // const [showProjects, setShowProjects] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   return (
@@ -541,7 +538,6 @@ function EmployeeDetails() {
                       </h4>
                       <CustomButton
                         className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                        // onClick={() => setShowProjects(true)}
                       />
                     </div>
 

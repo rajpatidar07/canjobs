@@ -86,7 +86,7 @@ function Addadmin(props) {
   const AdminData = async () => {
     const userData = await AdminDetails(props.adminId);
     if (userData === undefined || userData.data.length === 0) {
-      setState(initialFormState); // setAdmindetails(userData.data[0]);
+      setState(initialFormState); 
     } else {
       setState(userData.data[0]);
     }
@@ -97,8 +97,6 @@ function Addadmin(props) {
     } else {
       AdminData();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
@@ -150,12 +148,12 @@ function Addadmin(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           {props.adminId === "0" ? (
-            <h5 className="text-center pt-2">Add Admin</h5>
+            <h5 className="text-center pt-2 mb-7">Add Admin</h5>
           ) : (
-            <h5 className="text-center pt-2">Update Admin</h5>
+            <h5 className="text-center pt-2 mb-7">Update Admin</h5>
           )}
           <form onSubmit={onAminProfileUpdateClick}>
-            <div className="form-group mt-5">
+            <div className="form-group">
               <label
                 htmlFor="name"
                 className="font-size-4 text-black-2  line-height-reset"

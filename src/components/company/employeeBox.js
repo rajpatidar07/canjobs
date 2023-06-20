@@ -44,7 +44,6 @@ function EmployeeBox() {
               <div className="row job_header m-0 align-items-center">
                 <div className="media align-items-center company_box col-9 p-0">
                   <div className="text_box text-left">
-                    {/* <img className="company_logo" src="image/logo-main-black.png" alt="" /> */}
                     <img
                       className="rounded-circle company_logo"
                       src={

@@ -71,7 +71,6 @@ function AddEmployer(props) {
     event.preventDefault();
     if (validate()) {
     } else {
-      // setLoading(false);
     }
   };
   // END USER PERSONAL DETAIL VALIDATION
@@ -92,12 +91,10 @@ function AddEmployer(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserEmployerClick}>
-            <h5 className="text-center pt-2">Add Employer</h5>
-            <div className="row pt-5">
-              {" "}
+            <h5 className="text-center pt-2 mb-7">Add Employer</h5>
+            <div className="row ">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="companyname"
@@ -292,7 +289,6 @@ function AddEmployer(props) {
               </button>
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

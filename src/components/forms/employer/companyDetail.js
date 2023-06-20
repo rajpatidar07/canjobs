@@ -9,9 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
-  const [imgError, setImgError] = useState(false);
+  const [imgError, setImgError] = useState("");
   let [Json, setJson] = useState([]);
   let encoded;
+  const user_type = localStorage.getItem("userType");
+
   /*Function to get thejSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -62,24 +64,6 @@ function CompanyDetails(props) {
           ? "Industry is required"
           : "",
     ],
-    // corporation: [
-    //   (value) =>
-    //     value === "" ||
-    //     value === null ||
-    //     value === undefined ||
-    //     value.trim() === ""
-    //       ? "Corporation type is required"
-    //       : null,
-    // ],
-    // company_start_date: [
-    //   (value) =>
-    //     value === "" ||
-    //     value === null ||
-    //     value === undefined ||
-    //     value.trim() === ""
-    //       ? "Start Date is required"
-    //       : null,
-    // ],
     company_size: [
       (value) =>
         value === "" ||
@@ -108,41 +92,6 @@ function CompanyDetails(props) {
           ? "Vacancy should have 2 or more letters."
           : "",
     ],
-    // about: [
-    //   (value) =>
-    //     value === ""
-    //       ? "Company Description is required"
-    //       : value.length < 2
-    //       ? "Company Description should have 2 or more letters."
-    //       : "",
-    // ],
-
-    // website_url: [
-    //   (value) =>
-    //     value === "" || value === null
-    //       ? ""
-    //       : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-    //           value
-    //         )
-    //       ? "Write the correct URL"
-    //       : "",
-    // ],
-    // franchise: [
-    //   (value) =>
-    //     value === ""
-    //       ? ""
-    //       : value.length < 2
-    //       ? "Franchise have 2 or more letters"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Franchise can not have a number."
-    //       : "",
-    // ],
-    // companylogo: [
-    //   (value) =>
-    //     value === "" || value === null||value===undefined|| value.trim() === "" ? "Company logo is required" : null,
-    // ],
   };
   // API CALL
   const EmployerData = async () => {
@@ -164,7 +113,6 @@ function CompanyDetails(props) {
     if (props.employerId !== "0") {
       EmployerData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
@@ -209,8 +157,7 @@ function CompanyDetails(props) {
   };
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
-    // console.log(state);
-    event.preventDefault();
+    event.preventDefault();    
     if (validate() && imgError === "") {
       setLoading(true);
       let responseData = await AddCompany(state);
@@ -266,10 +213,9 @@ function CompanyDetails(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
-            <h5 className="text-center pt-2 mb-9"> Company Details</h5>
+            <h5 className="text-center pt-2 mb-7">{user_type === "company"? "Company Details" : "Employer Details" }</h5>
             <input type="hidden" value={state.company_id || ""} />
             <div className="row">
               {" "}
@@ -500,6 +446,7 @@ function CompanyDetails(props) {
                     }
                     placeholder="Company size"
                     id="company_size"
+                    min={0}
                   />
                   {/*----ERROR MESSAGE FOR company_size----*/}
                   {errors.company_size && (
@@ -591,12 +538,6 @@ function CompanyDetails(props) {
                     onChange={handleFileChange}
                   />
                 </div>
-                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {/* {errors.about && (
-                  <span key={errors.about} className="text-danger font-size-3">
-                    {errors.about}
-                  </span>
-                )} */}
                 <small className="text-danger">{imgError}</small>
               </div>
             </div>
@@ -676,7 +617,6 @@ function CompanyDetails(props) {
               )}
             </div>
           </form>
-          {/* </div> */}
         </div>
       </Modal>
     </>

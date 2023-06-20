@@ -9,7 +9,7 @@ function CompanyDetailPage(props) {
   const [ContactDetails, setContactDetails] = useState(false);
   const [employerData, setEmployerData] = useState("");
 
-  // /*Render method to get employer data */
+ /*Render method to get employer data */
   useEffect(() => {
     const EmployerData = async () => {
       let userData = await EmployerDetails(props.employerId);
@@ -39,7 +39,6 @@ function CompanyDetailPage(props) {
           close={() => setContactDetails(false)}
         /> : null}
       </h4>
-
           <div className="pt-5 text-left row">
             <div className="col-md-12">
             { employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
@@ -49,7 +48,7 @@ function CompanyDetailPage(props) {
             { employerData.designation ? <p className="font-size-4 mb-8" title="Designation">
                 <i className="fas fa-portrait mr-2"></i> {employerData.designation}
               </p> : null}
-              { employerData.email ? <p className="font-size-4 mb-8" title="Email">
+              { employerData.email ? <p className="font-size-4 mb-8 text-break" title="Email">
                 <i className="fas fa-envelope mr-2"></i> {employerData.email}
               </p> : null}
             { employerData.contact_no ? <p className="font-size-4 mb-8" title="Contact No">

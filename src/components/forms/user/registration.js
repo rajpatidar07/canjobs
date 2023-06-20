@@ -87,8 +87,7 @@ function Registration(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Registration</h5>
-            <div className="row pt-5">
-              {" "}
+            <div className="row">
               <div className="form-group col-md-6">
                 <label
                   htmlFor="Full_Name"

@@ -2,20 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import {
-  // AdminDetails,
-  // AddAdmin,
   AddUpdateEmailTemplate,
 } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ManageEmail(props) {
-  // let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
-
-  /*Function to show hide password */
-  // const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   /* Functionality to close the modal */
   const close = () => {
@@ -23,7 +16,6 @@ function ManageEmail(props) {
     setErrors("");
     props.close();
     setLoading(false);
-    // setAlready("");
   };
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -57,7 +49,6 @@ function ManageEmail(props) {
     } else {
       setState(props.data);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
   const onAddUpdateTemplate = async (event) => {
     event.preventDefault();
@@ -69,7 +60,6 @@ function ManageEmail(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        // props.setApiCall(true);
         return close();
       }
       if (responseData.message === "data updated successfully") {
@@ -77,13 +67,8 @@ function ManageEmail(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        // props.setApiCall(true);
         return close();
       }
-      // if (responseData.message === "Admin already exists") {
-      //   setAlready("Admin already exists");
-      //   setLoading(false);
-      // }
     } else {
       setLoading(false);
     }
@@ -127,10 +112,12 @@ function ManageEmail(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  value={state.email_type}
+                  value={state.email_type || ""}
                   onChange={onInputChange}
                   id="email_type"
                   name="email_type"
+                  disabled={props.data === "" ? false : true}
+                    placeholder="Email type"
                 />
                 {/*----ERROR MESSAGE FOR Admin Name----*/}
                 {errors.name && (
@@ -155,11 +142,12 @@ function ManageEmail(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  value={state.subject}
+                  value={state.subject || ""}
                   onChange={onInputChange}
                   id="subject"
                   name="subject"
                   type={"subject"}
+                  placeholder="Subject"
                 />
                 {/*----ERROR MESSAGE FOR subject----*/}
                 {errors.subject && (
@@ -187,10 +175,11 @@ function ManageEmail(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    value={state.message}
+                    value={state.message || ""}
                     onChange={onInputChange}
                     id="message"
                     name="message"
+                    placeholder="Meaasge"
                   ></textarea>
                 </div>
                 {/*----ERROR MESSAGE FOR ADMIN message----*/}

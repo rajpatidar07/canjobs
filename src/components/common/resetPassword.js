@@ -41,7 +41,7 @@ export default function ResetPassword() {
   /*----LOGIN SUBMIT FUNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
-
+console.log(state);
     if (validate()) {
       setLoading(true);
       // handle form submission
@@ -93,17 +93,10 @@ export default function ResetPassword() {
           window.location.reload();
         }
       }
-
-      // else if (updatedTodo.message === "Invalid Credentials") {
-      //     setLoading(false);
-      //     setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-      //   }
-      // }
     }
   };
 
   // END USER LOGIN VALIDATION
-
   return (
     <>
       {/* <!-- Login --> */}

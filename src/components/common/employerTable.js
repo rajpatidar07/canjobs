@@ -10,8 +10,7 @@ import Pagination from "../common/pagination";
 import Loader  from '../common/loader';
 
 export default function EmployerTable(props) {
-  // eslint-disable-next-line
-  /*show modal and data, id state */
+  /*show modal and data , id state */
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showKycModal, setShowkycMOdal] = useState(false);
@@ -80,19 +79,16 @@ export default function EmployerTable(props) {
 
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
-    // e.preventDefault();
     setShowEmployerMOdal(true);
     setEmployerID(e);
   };
   /* Function to show the single data to update Employer Contact*/
   const editEmployerContact = (e) => {
-    // e.preventDefault();
     setShowContactMOdal(true);
     setEmployerID(e);
   };
   /* Function to show the single data to update Kyc*/
   const editEmployerKyc = (e) => {
-    // e.preventDefault();
     setShowkycMOdal(true);
     setEmployerID(e);
   };
@@ -129,7 +125,6 @@ export default function EmployerTable(props) {
   };
   /* Function to show the Job detail data */
   const EmployerDetail = (e) => {
-    // e.preventDefault();
     props.EmployerDetail(e);
   };
 

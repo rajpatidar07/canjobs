@@ -37,7 +37,6 @@ function FollowUpDashBoard(props) {
   /*Render function to get the interview*/
   useEffect(() => {
     FollowUpData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props,
     currentPage,
@@ -49,12 +48,6 @@ function FollowUpDashBoard(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Category type array to filter*/
-  // const CategoryType = InterviewData.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.category_type === thing.category_type)
-  // );
-  /*Sorting Function */
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");

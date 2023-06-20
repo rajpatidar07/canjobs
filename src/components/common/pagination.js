@@ -2,13 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Pagination({ nPages, currentPage, setCurrentPage , total , count}) {
-  console.log("nPages =>", nPages,"currentPage =>", currentPage);
   //Function to get dynamic page no of the pagination :-
   const pageNumbers = [];
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push(i);
   }
-  // console.log("pageNumbers---" + pageNumbers);
   //Function to go to next page with pagination :-
   const nextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
@@ -75,7 +73,7 @@ function Pagination({ nPages, currentPage, setCurrentPage , total , count}) {
           </ul>
         </nav>
         <div className="d-flex justify-content-center">
-          <small>{count} of {total}</small>
+          <small>{count} records of {total} total records</small>
           </div></>
       ) : null}
     </div>

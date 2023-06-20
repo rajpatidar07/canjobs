@@ -6,7 +6,7 @@ import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
 import Loader  from '../common/loader';
-function EmployeeHomePage() {
+function EmployeeHomePage() { 
   //   const [JobDetail, setJobDetail] = useState([]);
 
   //   const UserData = async () => {
@@ -19,6 +19,9 @@ function EmployeeHomePage() {
   }, [localStorage.getItem("employee_id")]);
 
   //// console.log(("JobDetail===" + JSON.stringify(JobDetail))
+
+
+
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />

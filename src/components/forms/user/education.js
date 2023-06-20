@@ -201,7 +201,7 @@ function Education(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onEducationSubmitClick}>
-            <h5 className="text-center pt-2">Education Details</h5>
+            <h5 className="text-center pt-2 mb-7">Education Details</h5>
             <div className="row mb-5">
               {(educationData || []).map((education) => (
                 <div className="col-12" key={education.education_id}>

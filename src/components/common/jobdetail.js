@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { GetJobDetail, ApplyJob } from "../../api/api";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import Loader  from '../common/loader';
 
-// eslint-disable-next-line
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let [apiCall, setApiCall] = useState(false);
@@ -14,7 +13,9 @@ function JobDetailPage(props) {
   const user_type = localStorage.getItem("userType");
   const jobId = localStorage.getItem("jobId");
   const user_id = localStorage.getItem("employee_id");
-
+  const name = localStorage.getItem("name");
+  const token = localStorage.getItem("token");
+  let navigate = useNavigate()
   /*Function to get job details data*/
   const JobData = async () => {
     let userData = await GetJobDetail(
@@ -35,6 +36,7 @@ function JobDetailPage(props) {
   useEffect(() => {
     JobData();
   }, [props.jobdata,apiCall]);
+
   /*Set skill variable to array frm string */
   if (jobDetatilsData !== "") {
     skill = jobDetatilsData.keyskill.split(",");
@@ -108,7 +110,7 @@ function JobDetailPage(props) {
               <div className="card-btn-group">
               <button
                   to={""}
-                  onClick={() => OnApplyClick(0)}
+                  onClick={token && (name === null || name === "null") ?() => navigate("/profile") :() => OnApplyClick(0)}
                   disabled={jobDetatilsData.is_applied === "0" ? false : true}
                   className={jobDetatilsData.is_applied === "0" ? "btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5":"btn btn-info text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"}
                 >
@@ -129,7 +131,7 @@ function JobDetailPage(props) {
       </div>
       <div className="job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts">
         <div className="row mb-5">
-          <div className="col-md-12">
+          <div className="col-md-6">
             <div className="media justify-content-md-start mb-6">
               <div className="image mr-5">
                 <img src="image/svg/icon-location.svg" alt="" />
@@ -165,7 +167,7 @@ function JobDetailPage(props) {
           </div>
         </div>
         <div className="row text-left">
-          <div className="col-md-6">
+         {jobDetatilsData.corporation ?  <div className="col-md-6">
             <div className="mb-lg-0 mb-10">
               <span className="font-size-4 d-block mb-4 text-gray">
                 Type of corporation
@@ -174,7 +176,69 @@ function JobDetailPage(props) {
                 {jobDetatilsData.corporation}
               </h6>
             </div>
-            <div className="tags">
+          </div> : ""}
+          {/* <div className="col-md-6 mb-lg-0 mb-8">
+            <div className="">
+              <span className="font-size-4 d-block mb-4 text-gray">
+                Career Level
+              </span>
+              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9">
+                Project Manangement
+              </h6>
+            </div>
+          </div> */}
+          {jobDetatilsData.company_size ?<div className="col-md-6">
+            <div className="">
+              <span className="font-size-4 d-block mb-4 text-gray">
+                Company size
+              </span>
+              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
+                {jobDetatilsData.company_size}
+              </h6>
+            </div>
+          </div> : ""}
+          {jobDetatilsData.created_at ? <div className="col-md-6">
+            <div className="">
+              <span className="font-size-4 d-block mb-4 text-gray">
+                Posted Time
+              </span>
+              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
+                {moment(jobDetatilsData.created_at).format("DD MMMM, YYYY")}
+              </h6>
+            </div>
+          </div> : ""}
+        </div>
+      </div>
+      <div className="pt-8 pl-sm-9 pl-6 pb-10 light-mode-texts">
+        <div className="row text-left">
+          <div className="col-xxl-12 col-xl-9 pr-xxl-18 pr-xl-0 pr-11">
+           {jobDetatilsData.job_description ? <div className="">
+              <p className="mb-4 font-size-4 text-gray">Job Description</p>
+              <p className="font-size-4 text-black-2 mb-7">
+                {jobDetatilsData.job_description}
+              </p>
+            </div> : ""}
+            <div className="">
+            {jobDetatilsData.your_duties ? <> 
+            <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
+                Your Role:
+              </span>
+              <p className="font-size-4 text-black-2 mb-7">
+                {jobDetatilsData.your_duties}
+              </p> </> : ""}
+              { jobDetatilsData.about ? <> 
+              <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
+                What you will be doing:
+              </span>
+              <p className="font-size-4 text-black-2 mb-7">
+                {jobDetatilsData.about}
+              </p> </> : ""}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="pt-5 pl-sm-9 pl-6 pb-10 light-mode-texts border-top border-width-1 border-default-color">
+      <div className="tags">
               <p className="font-size-4 text-gray mb-0"> Skill</p>
 
               <ul className="list-unstyled d-flex align-items-center flex-wrap row">
@@ -187,72 +251,7 @@ function JobDetailPage(props) {
                 ))}
               </ul>
             </div>
-          </div>
-          <div className="col-md-6 mb-lg-0 mb-8">
-            <div className="">
-              <span className="font-size-4 d-block mb-4 text-gray">
-                Career Level
-              </span>
-              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9">
-                Project Manangement
-              </h6>
             </div>
-          </div>
-          <div className="col-md-6">
-            <div className="">
-              <span className="font-size-4 d-block mb-4 text-gray">
-                Company size
-              </span>
-              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                {jobDetatilsData.company_size}
-              </h6>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="">
-              <span className="font-size-4 d-block mb-4 text-gray">
-                Posted Time
-              </span>
-              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                {moment(jobDetatilsData.created_at).format("DD MMMM, YYYY")}
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="pt-8 pl-sm-9 pl-6 pb-10 light-mode-texts">
-        <div className="row text-left">
-          <div className="col-xxl-12 col-xl-9 pr-xxl-18 pr-xl-0 pr-11">
-            <div className="">
-              <p className="mb-4 font-size-4 text-gray">Job Description</p>
-              <p className="font-size-4 text-black-2 mb-7">
-                {jobDetatilsData.job_description}
-              </p>
-            </div>
-            <div className="">
-              <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
-                Your Role:
-              </span>
-              <p className="font-size-4 text-black-2 mb-7">
-                {jobDetatilsData.your_duties}
-              </p>
-              <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
-                What you will be doing:
-              </span>
-              <p className="font-size-4 text-black-2 mb-7">
-                {jobDetatilsData.about}
-              </p>
-              {/* <Link
-                to={""}
-                className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
-                href="#"
-              >
-                Apply to this job
-              </Link> */}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>}
     </div>
     </>

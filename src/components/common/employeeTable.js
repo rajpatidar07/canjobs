@@ -68,7 +68,6 @@ export default function EmployeeTable(props) {
       props.setApiCall(false);
       setApiCall(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.experienceFilterValue,
     props.skillFilterValue,
@@ -86,36 +85,30 @@ export default function EmployeeTable(props) {
 
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
-    // e.preventDefault();
     props.employeeDetails(e);
   };
   /* Function to show the single data to update Employee Education*/
   const editEmployeeEducation = (e) => {
-    // e.preventDefault();
     setShowEducationModal(true);
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
-    // e.preventDefault();
     setShowEmployeeMOdal(true);
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee Skills*/
   const editEmployeeSkills = (e) => {
-    // e.preventDefault();
     setShowSkillsModal(true);
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee Career*/
   const editEmployeeCareer = (e) => {
-    // e.preventDefault();
     setShowEmplyomentDetails(true);
     setemployeeId(e);
   };
   /* Function to show the single data to apply job */
   const editJob = (e) => {
-    // e.preventDefault();
     setShowChangeJobModal(true);
     setemployeeId(e);
   };
@@ -463,7 +456,7 @@ export default function EmployeeTable(props) {
                         {empdata.skill === null ? (
                           <p className="font-size-3  mb-0">Unavailable</p>
                         ) : (
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                             {empdata.skill}
                           </p>
                         )}

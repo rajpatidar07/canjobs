@@ -23,7 +23,6 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   let [searchError, setSearchError] = useState("");
   let [isLoading, setIsLoading] = useState(true);
-
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
   const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
@@ -39,12 +38,15 @@ function JobResponse(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
+  let [changeJob,setChangeJob] = useState(false)
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
     setJson(Json.data.data);
   };
-
+if(apiCall === true && showChangeJobModal ===  false && changeJob === true && props.setApiCall){
+  props.setApiCall(true)
+}
   /* Function to get the Response data*/
   const ResponseData = async () => {
     setIsLoading(true)
@@ -75,10 +77,10 @@ function JobResponse(props) {
   useEffect(() => {
     ResponseData();
     JsonData();
-     if (apiCall === true) {
+     if (apiCall === true || changeJob === true) {
       setApiCall(false);
+      setChangeJob(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     skillFilterValue,
     experienceTypeFilterValue,
@@ -90,6 +92,7 @@ function JobResponse(props) {
     props.filter_by_time,
     apiCall,
   ]);
+
    /*Search Onchange function to Search REsponse data */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -140,13 +143,9 @@ function JobResponse(props) {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
-  /*Job array to filter*/
-  // const Job = (response.filter || [])(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t) => t.job_title === thing.job_title)
-  // );
 
   return (
+    
     <div
       className={
         props.heading === "Response" ||
@@ -217,6 +216,7 @@ function JobResponse(props) {
           job_id={jobId}
           show={showChangeJobModal}
           status={0}
+          setChangeJob={setChangeJob}
         />
       ) : null}
       <div
@@ -252,15 +252,16 @@ function JobResponse(props) {
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
-              <div className="row m-0 align-items-center">
+              <div className={props.heading === "Response" ||
+      (props.heading === undefined && user_type === "admin") ? "row m-0 align-items-center" : "d-none"}>
                 {props.heading === "" ? null : (
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Company:</p>
+                    <p className="input_label">Search :</p>
                     <input
                       required
                       type="text"
                       className="form-control"
-                      placeholder={"Search Company"}
+                      placeholder={"Search Company / Name"}
                       value={search}
                       name={"category_name"}
                       onChange={(e) =>{onSearch(e);
@@ -477,8 +478,6 @@ function JobResponse(props) {
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
-                            <th className="bg-white"></th>
-                            <th className="bg-white"></th>
                           </>
                         )}
                       </tr>
@@ -590,7 +589,6 @@ function JobResponse(props) {
                                   </>
                                 ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {" "}
                                     NA
                                   </span>
                                 )}
@@ -630,8 +628,8 @@ function JobResponse(props) {
                           </th>
                           <th className="  py-5 ">
                             <p className="font-size-3 font-weight-normal mb-0">
-                              {res.interview_date === null ? (
-                                <span>NA</span>
+                              {res.status === "COMPLETE" ? (
+                                <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Complete</span>
                               ) : (
                                 <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                   Scheduled
@@ -660,8 +658,9 @@ function JobResponse(props) {
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => addnterview(res)}
                                   title=" Add Interview"
+                                  disabled={res.status === "COMPLETE" ? true : false}
                                 >
-                                  <i className="fa fa-podcast text-gray px-2"></i>
+                                  <i className="fa fa-calendar text-gray px-2"></i>
                                 </button>
                                 <button
                                   className="btn btn-outline-info action_btn text-gray"

@@ -9,7 +9,6 @@ import { ToastContainer } from "react-toastify";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
 function Employer() {
-  // eslint-disable-next-line
   /*show modal and data, id state */
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
@@ -28,9 +27,7 @@ function Employer() {
  }
  /*Function to Search employer */
  const onSearch = (e) => { setSearch(e.target.value);
-  if(/[-]?\d+(\.\d+)?/.test(search) ){
-    setSearchError("Admin Name can not have a number.")
-  }else if(/[^a-zA-Z0-9]/g.test(search)){
+ if(/[^a-zA-Z0-9]/g.test(search)){
     setSearchError("Cannot use special character")
   }else if(search === ""){
     setSearchError("")
@@ -105,6 +102,7 @@ function Employer() {
                       value={search}
                       name={"Employer_name"}
                       onChange={(e) => onSearch(e)}
+                      maxLength={30}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">

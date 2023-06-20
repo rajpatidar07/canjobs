@@ -143,7 +143,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                     }
                     placeholder="Enter password"
                     id="password"
-                  />{" "}
+                  />
                   {/*----ERROR MESSAGE FOR PASSWORD----*/}
                   {errors.password && (
                     <span>
@@ -154,11 +154,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                       ))}
                     </span>
                   )}
-                  {/* <a
-                          href="http://localhost:3000/"
-                          className="show-password pos-abs-cr fas mr-6 text-black-2"
-                          data-show-pass="password"
-                        ></a> */}
                 </div>
                 {errors.Credentials && (
                   <span>
@@ -218,7 +213,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                     className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
                     type="submit"
                   >
-                    Log in{" "}
+                    Log in
                   </button>
                 )}
               </div>

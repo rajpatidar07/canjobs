@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation ,useNavigate} from "react-router-dom";
 import { GetAllJobs, ApplyJob } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
 import EmployeeLoginModal from "../user/login";
@@ -14,11 +14,6 @@ function JobBox({
   locationFilterValue,
   jobLocation,
   apiCall,
-  // setCategoryFilterValue,
-  // setSkillFilterValue,
-  // setJobSwapFilterValue,
-  // setJobLocation,
-
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -40,9 +35,8 @@ function JobBox({
   const country = searchParams.get("country");
   const category = searchParams.get("category");
   const path = location.pathname;
-  // console.log("search =>",search,"country =>",country,"category =>",category)
-  // {console.log("categoryFilterValue =>",categoryFilterValue , "SkillFilterValue =>", SkillFilterValue ,
-  // "jobSwapFilterValue =>",jobSwapFilterValue)}
+  const name = localStorage.getItem("name");
+  let navigate = useNavigate()
   // /* Function to get Job data*/
   const JobData = async () => {
     const userData = await GetAllJobs(
@@ -95,12 +89,6 @@ function JobBox({
     }
     setApiCall(true);
   };
-  // let onReset = () => {
-  //   setCategoryFilterValue("");
-  //   setSkillFilterValue("");
-  //  setJobSwapFilterValue("");
-  // setJobLocation("");
-  // }
   return (
     <>
       <div
@@ -110,7 +98,7 @@ function JobBox({
         data-aos-once="true"
       >
         {/* <!-- Maped Job --> */}
-        {noData === 0 || noData === "" ? (
+        {noData === 0 || noData === "" || jobData.length === 0 ? (
           <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
             <h4>No Data Found</h4>
           </div>
@@ -258,8 +246,8 @@ function JobBox({
                           ? "btn btn-secondary text-uppercase font-size-3"
                           : "btn btn-info text-uppercase font-size-3"
                       }
-                      onClick={() =>
-                        token && user_type === "user"
+                      onClick={token && (name === null || name === "null") ?() => navigate("/profile") : () => 
+                       token && user_type === "user"
                           ? OnApplyClick(0, job.job_id)
                           : setShowLogin(true)
                       }

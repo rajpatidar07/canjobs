@@ -88,7 +88,7 @@ const AdminSidebar = (props) => {
               <i className="fas fa-podcast mr-5"></i>Manage Interview
             </Link>
           </li>
-          <li className={props.heading === "Manage Category" ? "active" : ""}>
+          <li className={props.heading === "Manage Job Category" ? "active" : ""}>
             <Link
               to="/category"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"

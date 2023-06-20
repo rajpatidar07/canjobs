@@ -24,6 +24,7 @@ const UserProfile = (props) => {
   let [isLoading, setIsLoading] = useState(true);
   const user_type = localStorage.getItem("userType");
   let id = localStorage.getItem("employee_id");
+  const name = localStorage.getItem("name");
   const employeeId = user_type === "admin" ? props.employeeId : id;
  /*Function to get user Data */
   const UserData = async () => {
@@ -53,6 +54,7 @@ const UserProfile = (props) => {
            setAppliedJob(applied.data);
     }
   };
+  
   /*Render function to get user Data */
   useEffect(() => {
    if(appliedJob){
@@ -61,6 +63,9 @@ const UserProfile = (props) => {
     UserData();
     if(apiCall=== true){
       setApiCall(false)
+    }
+    if(PersonalDetail.name !== (undefined || "undefined" || null || "null")){
+      localStorage.setItem("name", PersonalDetail.name)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
@@ -104,9 +109,11 @@ const UserProfile = (props) => {
               </div>
             </div>
           )}
+          <h4>{name === null || name === "null" ? "Complete profile" : ""}</h4>
           {isLoading ?  
           <div className="table-responsive main_table_div">
-          <Loader/> </div> : <div className="row text-left mt-5 pt-5">
+          <Loader/> </div> :
+           <div className="row text-left mt-5 pt-5">
             <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
               <div className="p-0">
                 {/*----Slide Employee profile-----*/}
@@ -114,9 +121,9 @@ const UserProfile = (props) => {
                   <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
                     <Link
                       className="mb-4 position-relative"
-                      onClick={() => setShowPersonalDetails(true)}
+                      onClick={user_type === "company" ? null : () => setShowPersonalDetails(true)}
                     >
-                    {user_type==="admin"?<>  <input
+                    {user_type === "admin"?<>  <input
                         type="file"
                         id="ImgUploadInput"
                         className="d-none"
@@ -144,13 +151,14 @@ const UserProfile = (props) => {
                         className="text-black-2 font-size-6 font-weight-semibold"
                         onClick={() => setShowRegistration(true)}
                       > */}
-                      {PersonalDetail.name}
+                      {PersonalDetail.name ? PersonalDetail.name : ""}
                       <br />
                       <span className="age_gender font-size-3 text-smoke">
-                        ({PersonalDetail.gender},
-                        {PersonalDetail.marital_status},
-                        {moment().diff(PersonalDetail.date_of_birth, "years")}
-                        Y)
+                        {PersonalDetail.gender || PersonalDetail.marital_status || PersonalDetail.marital_status ||PersonalDetail.date_of_birth ? `(${PersonalDetail.gender},
+                        ${PersonalDetail.marital_status},
+                        ${moment().diff(PersonalDetail.date_of_birth, "years")}
+                        Y)`: ""}
+                        
                       </span>
                       {/* </Link>
                       <Registration
@@ -182,7 +190,6 @@ const UserProfile = (props) => {
                     {PersonalDetail.email === "" ||
                     PersonalDetail.length === 0 ? (
                       <div>
-                        
                         <p className="text-center">No Data Found</p>
                       </div>
                     ) : (
@@ -195,23 +202,24 @@ const UserProfile = (props) => {
                               src="image/icons/envelope.svg"
                               alt="Email"
                             />
-                            {PersonalDetail.email}
+                            {PersonalDetail.email ? PersonalDetail.email : ""}
                           </span>
                         </div>
 
                         <div className="info_box text-left">
-                          <span className="font-size-3 text-smoke  mr-7">
-                            <img
+                        {PersonalDetail.contact_no ?
+                        <span className="font-size-3 text-smoke  mr-7">
+                           <img
                               className="mr-1"
                               height={"16px"}
                               src="image/icons/mobile-button.svg"
                               alt="Mobile Number"
                             />
-                            {PersonalDetail.contact_no}
-                          </span>
+                             {PersonalDetail.contact_no }
+                          </span>  : ""}
                         </div>
                         <div className="info_box text-left">
-                          <span className="font-size-3 text-smoke  mr-7">
+                          {PersonalDetail.current_location ? <span className="font-size-3 text-smoke  mr-7">
                             <img
                               className="mr-1"
                               height={"16px"}
@@ -219,21 +227,21 @@ const UserProfile = (props) => {
                               alt="Location"
                             />
                             {PersonalDetail.current_location}
-                          </span>
+                          </span> : ""}
                         </div>
                         <div className="info_box text-left">
-                          <span className="font-size-3 text-smoke  mr-7">
-                            <img
+                        {PersonalDetail.language ? <span className="font-size-3 text-smoke  mr-7">
+                          <img
                               className="mr-1"
                               height={"16px"}
                               src="image/icons/language.svg"
                               alt="language"
                             />
                             {PersonalDetail.language}
-                          </span>
+                          </span> : ""}
                         </div>
                         <div className="info_box text-left">
-                          <span className="font-size-3 text-smoke  mr-7">
+                         {PersonalDetail.currently_located_country? <span className="font-size-3 text-smoke  mr-7">
                             <img
                               className="mr-1"
                               height={"16px"}
@@ -241,10 +249,10 @@ const UserProfile = (props) => {
                               alt="Address"
                             />
                             {PersonalDetail.currently_located_country}
-                          </span>
+                          </span> : ""}
                         </div>
                         <div className="info_box text-left">
-                          <span className="font-size-3 text-smoke  mr-7">
+                         {PersonalDetail.experience ? <span className="font-size-3 text-smoke  mr-7">
                             <img
                               className="mr-1"
                               height={"16px"}
@@ -252,7 +260,7 @@ const UserProfile = (props) => {
                               alt="Email"
                             />
                             {PersonalDetail.experience} Years
-                          </span> 
+                          </span> : ""} 
                         </div>
                         {/* <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
@@ -277,12 +285,12 @@ const UserProfile = (props) => {
                           </span>
                         </div> : null}
                         <div className="info_box text-left">
-                          <span className="font-size-3 text-smoke  mr-7">
+                        { PersonalDetail.resume ? <span className="font-size-3 text-smoke  mr-7">
                             Resume:
 
                           <Link to={""} onClick={()=> handleViewResume(PersonalDetail.resume)}>View Resume</Link>
                       
-                          </span>
+                          </span> : ""}
                         </div>
                       </div>
                     )}

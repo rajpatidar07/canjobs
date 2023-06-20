@@ -10,7 +10,6 @@ import moment from "moment";
 function LmiaStatus(props) {
   console.log(props);
   let [loading, setLoading] = useState(false);
-  // // console.log(props.resData);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
   let lmia_status = props.resData.lmia_status 
@@ -25,7 +24,6 @@ function LmiaStatus(props) {
     props.close();
   };
   // USER LIMIA UPDATE VALIDATION
-  // // console.log(lmia_status);
   useEffect(() => {
     setState({ ...state, lmia_status: lmia_status , completion_time : completion_time});
   }, [lmia_status]);
@@ -48,28 +46,6 @@ function LmiaStatus(props) {
           ? "Expected time of completion is required"
           : "",
     ],
-    // posted: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "posted is required"
-    //       : "",
-    // ],
-    // posted_company_id: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Company is required"
-    //       : null,
-    // ],
-    // date_of_posting: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Date of posting is required"
-    //       : null,
-    // ],
-    // designation: [
-    //   (value) =>
-    //     value < 2 ? "designation should have 2 or more letters." : "null",
-    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
@@ -119,14 +95,14 @@ function LmiaStatus(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2">LMIA staus</h5>
+          <h5 className="text-center pt-2 mb-7">LMIA status</h5>
           <form onSubmit={onAminProfileUpdateClick}>
-            <div className="form-group mt-5">
+            <div className="form-group ">
               <label
                 htmlFor="lmia_status"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Lmia status :
+                Lmia status <span className="text-danger">*</span>:
               </label>
               <select
                 type={"text"}
@@ -163,19 +139,20 @@ function LmiaStatus(props) {
                 htmlFor="completion_time"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Expected time of completion
+                Expected time of completion<span className="text-danger">*</span>:
               </label>
               <input
                 type="date"
                 className={
                   errors.completion_time
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control coustam_datepicker border border-danger"
+                    : "form-control coustam_datepicker"
                 }
                 value={moment(state.completion_time).format("YYYY-MM-DD") || ""}
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"
+                onKeyDownCapture={(e) => e.preventDefault()}
                 min={moment().format("YYYY-MM-DD")}
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
