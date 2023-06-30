@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 
-function Job() {
+function Job(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
@@ -18,7 +18,7 @@ function Job() {
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState(props ? props.skill : "");
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
@@ -80,23 +80,29 @@ function Job() {
   /*Skill Json for not having same data */
   const Skill = Json.Skill
     ? Json.Skill.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+      (thing, index, self) =>
+        index === self.findIndex((t) => t.value === thing.value)
+    )
     : [];
-
   return (
     <>
-      <div className="site-wrapper overflow-hidden bg-default-2">
-        {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Jobs"} />
-        {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Jobs"} />
+      <div className={props.skill === null || props.skill === undefined ?"site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
+        
+        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? 
+          <> {/* <!-- Header Area --> */}
+            <AdminHeader heading={"Manage Jobs"} />
+            {/* <!-- navbar- --> */}
+            <AdminSidebar heading={"Manage Jobs"} />
+          </> :
+          null}
         <ToastContainer />
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-16"
+              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
+              ?
+                "dashboard-main-container mt-16" :
+                ""
               : "d-none"
           }
           id="dashboard-body"
@@ -109,7 +115,7 @@ function Job() {
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -121,7 +127,7 @@ function Job() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>{" "}
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Company Name:</p>
                     <input
                       required
@@ -133,7 +139,7 @@ function Job() {
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
@@ -154,7 +160,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
@@ -175,7 +181,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
@@ -196,7 +202,7 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select
@@ -217,7 +223,8 @@ function Job() {
                       </select>
                     </div>
                   </div>
-                  <div className="text-end col-xl-12">
+                  {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
+                    <div className="text-end col-xl-12">
                     <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -229,7 +236,9 @@ function Job() {
                       {/*<-- Add Job Modal -->*/}
                     </div>
                     <small className="text-danger">{searcherror}</small>
-                  </div>
+                  </div> :
+                  null
+                    }
                 </div>
               </div>
               {/*<-- Job List Table -->*/}
@@ -243,6 +252,8 @@ function Job() {
                 JobDetail={JobDetail}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
+                skill={props.skill}
+                employee_id={props.employee_id}
               />
             </div>
           </div>

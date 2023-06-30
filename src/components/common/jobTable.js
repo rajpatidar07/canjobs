@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, DeleteJob } from "../../api/api";
+import { GetAllJobs, DeleteJob, ApplyJob } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import Loader from '../common/loader';
-
+import EmployeeModal from "../admin/Modal/employeeModal"
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [showCandidateModal, setShowCandidateModal] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
+  const [candidateSkill, setCandidateSkill] = useState([]);
+  const [alredyApplied, setAlredyApplied] = useState([]);
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -35,7 +38,7 @@ export default function JobTable(props) {
       props.categoryFilterValue,
       props.SkillFilterValue,
       props.jobSwapFilterValue,
-      props.company  || props.search  || props.locationFilterValue || props.categoryFilterValue || props.SkillFilterValue  || props.jobSwapFilterValue  || props.filter_by_time ? 1 : currentPage,
+      props.company || props.search || props.locationFilterValue || props.categoryFilterValue || props.SkillFilterValue || props.jobSwapFilterValue || props.filter_by_time ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -76,6 +79,13 @@ export default function JobTable(props) {
   const JobDetail = (e) => {
     props.JobDetail(e);
   };
+  /* Function to show the Table of the employee of perticular skill */
+  const matchingCandidates = (e) => {
+        console.log("kljkjmlmkl",e)
+
+    setShowCandidateModal(true);
+    setCandidateSkill(e);
+  };
   /* Function to show the single data to update job */
   const editJob = (e) => {
     setShowAddJobsModal(true);
@@ -109,190 +119,195 @@ export default function JobTable(props) {
     setcolumnName(columnName);
     setApiCall(true);
   };
+
+  /*Function to change job */
+  const onChangeJobClick = async (id) => {
+    const responseData = await ApplyJob(id, props.employee_id, 0);
+    if (responseData.message === "already applied on this job") {
+      toast.error("Already applied on this job", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true)
+    }
+    if (responseData.message === "Job applied successfully") {
+      toast.success("Applied successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setAlredyApplied(true)
+    }
+
+  };
   return (
     <>
-  
-     
+
+
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
-        { isLoading ? 
-           <Loader load={"yes"}/>  :  
-           <table className="table table-striped main_data_table">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    onClick={() => {handleSort("job_title");setCurrentPage(1)}}
-                    title="Sort by Industry"
-                    className="text-gray"
-                  >
-                    Job title / Industry
-                  </Link>
-                </th>
-                {props.heading === "Dashboard" ? null : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => {handleSort("job_type");setCurrentPage(1)}}
-                      title="Sort by Job"
-                      className="text-gray"
-                    >
-                      Job Type
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? null : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => {handleSort("location");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Address"
-                    >
-                      Address
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? null : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => {handleSort("education");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Education"
-                    >
-                      Education
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? null : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => {handleSort("keyskill");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Skill"
-                    >
-                      Skills
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? null : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      onClick={() => {handleSort("language");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Language"
-                    >
-                      Language
-                    </Link>
-                  </th>
-                )}
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to=""
-                    onClick={() => {handleSort("salary");setCurrentPage(1)}}
-                    className="text-gray"
-                    title="Sort by Salary"
-                  >
-                    Salary
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to=""
-                    onClick={() => {handleSort("experience_required");setCurrentPage(1)}}
-                    className="text-gray"
-                    title="Sort by Experience"
-                  >
-                    Experience
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                   Vacancies  / Total Resposes
-                </th>
-                {props.heading === "Dashboard" ? null : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    Action
-                  </th>
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {/* Map function to show the data in the list*/}
-              {totalData === 0 || jobData.length === 0 ? (
+          {isLoading ?
+            <Loader load={"yes"} /> :
+            <table className="table table-striped main_data_table">
+              <thead>
                 <tr>
-                  <th className="bg-white"></th>
-                  {props.heading === "Dashboard" ? (
-                    <th className="bg-white text-center">No Data Found</th>
-                  ) : (
-                    <th className="bg-white"></th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      onClick={() => { handleSort("job_title"); setCurrentPage(1) }}
+                      title="Sort by Industry"
+                      className="text-gray"
+                    >
+                      Job title / Industry
+                    </Link>
+                  </th>
+                  {props.heading === "Dashboard" ? null : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to=""
+                        onClick={() => { handleSort("job_type"); setCurrentPage(1) }}
+                        title="Sort by Job"
+                        className="text-gray"
+                      >
+                        Job Type
+                      </Link>
+                    </th>
                   )}
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  {props.heading !== "Dashboard" ? (
-                    <>
-                      <th className="bg-white text-center">No Data Found</th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                    </>
-                  ) : null}
+                  {props.heading === "Dashboard" ? null : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to=""
+                        onClick={() => { handleSort("location"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Address"
+                      >
+                        Address
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? null : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to=""
+                        onClick={() => { handleSort("education"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Education"
+                      >
+                        Education
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? null : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to=""
+                        onClick={() => { handleSort("keyskill"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Skill"
+                      >
+                        Skills
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? null : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to=""
+                        onClick={() => { handleSort("language"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Language"
+                      >
+                        Language
+                      </Link>
+                    </th>
+                  )}
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to=""
+                      onClick={() => { handleSort("salary"); setCurrentPage(1) }}
+                      className="text-gray"
+                      title="Sort by Salary"
+                    >
+                      Salary
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to=""
+                      onClick={() => { handleSort("experience_required"); setCurrentPage(1) }}
+                      className="text-gray"
+                      title="Sort by Experience"
+                    >
+                      Experience
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    Vacancies  / Total Resposes
+                  </th>
+                  {props.heading === "Dashboard" ? null : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      Action
+                    </th>
+                  )}
                 </tr>
-              ) : (
-                (jobData || []).map((job) => (
-                  <tr className="" key={job.job_id}>
-                    <th scope="row" className="py-5 ">
-                      <div className="">
-                        {props.heading === "Dashboard" ? (
-                          <>
-                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                              {job.job_title}
-                            </p>
-                            <p className="text-gray font-size-2 m-0 text-capitalize">
-                              {job.company_name} - {job.industry_type}
-                            </p>
-                          </>
-                        ) : (
-                          <Link
-                            title="Job Details"
-                            to={""}
-                            onClick={() => JobDetail(job.job_id)}
-                            className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                          >
+              </thead>
+              <tbody>
+                {/* Map function to show the data in the list*/}
+                {totalData === 0 || jobData.length === 0 ? (
+                  <tr>
+                    <th className="bg-white"></th>
+                    {props.heading === "Dashboard" ? (
+                      <th className="bg-white text-center">No Data Found</th>
+                    ) : (
+                      <th className="bg-white"></th>
+                    )}
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
+                    {props.heading !== "Dashboard" ? (
+                      <>
+                        <th className="bg-white text-center">No Data Found</th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                      </>
+                    ) : null}
+                  </tr>
+                ) : (
+                  (jobData || []).map((job) => (
+                    <tr className="" key={job.job_id}>
+                      <th scope="row" className="py-5 ">
+                        <div className="">
+                          {props.heading === "Dashboard" ? (
                             <>
                               <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                 {job.job_title}
@@ -301,90 +316,124 @@ export default function JobTable(props) {
                                 {job.company_name} - {job.industry_type}
                               </p>
                             </>
-                          </Link>
-                        )}
-                      </div>
-                    </th>
-                    {props.heading === "Dashboard" ? null : (
-                      <th className=" py-5">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {job.employement} - {job.job_type}
-                        </h3>
-                      </th>
-                    )}
-                    {props.heading === "Dashboard" ? null : (
-                      <th className=" py-5">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {job.location}
-                        </h3>
-                      </th>
-                    )}
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {job.education}
-                        </h3>
-                      </th>
-                    )}
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                          {job.keyskill}
-                        </h3>
-                      </th>
-                    )}
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="py-5 ">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                          {job.language}
-                        </h3>
-                      </th>
-                    )}
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        {job.salary}
-                      </h3>
-                    </th>
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        {job.experience_required}
-                        {job.experience_required === "Fresher" ? "" : "years"}
-                      </h3>
-                    </th>
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                       {job.role_category} / {job.total_applicants}
-                      </h3>
-                    </th>
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="py-5 min-width-px-100">
-                        <div className="btn-group button_group" role="group">
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => editJob(job.job_id)}
-                            title="Edit Job"
-                          >
-                            <span className=" fas fa-edit text-gray"></span>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => ShowDeleteAlert(job)}
-                            title="Delete"
-                          >
-                            <span className=" text-danger">
-                              <i className="fa fa-trash"></i>
-                            </span>
-                          </button>
+                          ) : (
+                            <Link
+                              title="Job Details"
+                              to={""}
+                              onClick={() => JobDetail(job.job_id)}
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                            >
+                              <>
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  {job.job_title}
+                                </p>
+                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                  {job.company_name} - {job.industry_type}
+                                </p>
+                              </>
+                            </Link>
+                          )}
                         </div>
                       </th>
-                    )}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>}
+                      {props.heading === "Dashboard" ? null : (
+                        <th className=" py-5">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {job.employement} - {job.job_type}
+                          </h3>
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? null : (
+                        <th className=" py-5">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {job.location}
+                          </h3>
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? null : (
+                        <th className="py-5 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {job.education}
+                          </h3>
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? null : (
+                        <th className="py-5 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            {job.keyskill}
+                          </h3>
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? null : (
+                        <th className="py-5 ">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            {job.language}
+                          </h3>
+                        </th>
+                      )}
+                      <th className="py-5 ">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {job.salary}
+                        </h3>
+                      </th>
+                      <th className="py-5 ">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {job.experience_required}
+                          {job.experience_required === "Fresher" ? "" : "years"}
+                        </h3>
+                      </th>
+                      <th className="py-5 ">
+                        <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                          {job.role_category} / {job.total_applicants}
+                        </h3>
+                      </th>
+                      {props.heading === "Dashboard" ? null : (
+                        <th className="py-5 min-width-px-100">
+                          <div className="btn-group button_group" role="group">
+                            {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? 
+                            <>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => matchingCandidates(job)}
+                              title="Matching candidates"
+                            >
+                              <span className="fas fa-user-tie text-gray"></span>
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => editJob(job.job_id)}
+                              title="Edit Job"
+                            >
+                              <span className=" fas fa-edit text-gray"></span>
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => ShowDeleteAlert(job)}
+                              title="Delete"
+                            >
+                              <span className=" text-danger">
+                                <i className="fa fa-trash"></i>
+                              </span>
+                            </button>
+                            </> 
+                            : <button
+                              className="btn btn-outline-info action_btn"
+                              disabled={alredyApplied ? true : false}
+                              onClick={() => onChangeJobClick(job.job_id)}
+                              title="Apply For job"
+                            >
+                              {alredyApplied ? "Already Applied" : "Apply"}
+                            </button>}
+                            
+                          </div>
+                        </th>
+                      )}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>}
         </div>
-        {totalData === 0  || totalData === "0" ? null : <div className="pt-2">
+        {totalData === 0 || totalData === "0" ? null : <div className="pt-2">
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
@@ -402,6 +451,15 @@ export default function JobTable(props) {
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
+      {
+        showCandidateModal ?
+          <EmployeeModal
+            show={showCandidateModal}
+            close={() => setShowCandidateModal(false)}
+            data={candidateSkill} />
+
+          : null
+      }
       <SAlert
         show={deleteAlert}
         title={deleteName}

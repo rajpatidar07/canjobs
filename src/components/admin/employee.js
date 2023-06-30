@@ -7,10 +7,10 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import {GetFilter} from "../../api/api"
+import { GetFilter } from "../../api/api"
 import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
-function Employee() {
+function Employee(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -19,25 +19,26 @@ function Employee() {
   let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
-  const [skillFilterValue, setSkillFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState(props ? props.skill : "");
   const [educationFilterValue, setEducationFilterValue] = useState("");
-  const [search , setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [SkillList , setSkillList] = useState([])
-  let [EducationList , setEducationList] = useState([])
+  let [SkillList, setSkillList] = useState([])
+  let [EducationList, setEducationList] = useState([])
+
   /*Function to get thejSon */
- const JsonData=async()=>{
-   let Json = await GetFilter()
-   setSkillList(Json.data.data.Skill)
-   setEducationList(Json.data.data.Education)
- }
+  const JsonData = async () => {
+    let Json = await GetFilter()
+    setSkillList(Json.data.data.Skill)
+    setEducationList(Json.data.data.Education)
+  }
   /*Render method to get the json*/
-  useEffect(()=>{
+  useEffect(() => {
     JsonData()
-    if((search === "") === true){
+    if ((search === "") === true) {
       setSearchError("")
     }
-  },[skillFilterValue , educationFilterValue])
+  }, [skillFilterValue, educationFilterValue])
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
     setShowEmployeeProfile(true);
@@ -49,28 +50,30 @@ function Employee() {
     setemployeeId(e);
   };
   /*Function to search the employee */
-    const onSearch = (e) => {
-      const inputValue = e.target.value;
-      setSearch(inputValue);
-      if (inputValue.length > 0) {
-        if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-          setSearchError("Company Name cannot start with a number.");
-        } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-          setSearchError("Cannot use special characters.");
-        } else {
-          setSearchError("");
-        }
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Company Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
       } else {
         setSearchError("");
       }
+    } else {
+      setSearchError("");
     }
+  }
   return (
     <>
-      <div className="site-wrapper overflow-hidden bg-default-2">
-        {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Applicants"} />
-        {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Applicants"} />
+      <div className={props.skill === null || props.skill === undefined ?"site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
+        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? <>      {/* <!-- Header Area --> */}
+          <AdminHeader heading={"Manage Applicants"} />
+          {/* <!-- navbar- --> */}
+          <AdminSidebar heading={"Manage Applicants"} />
+        </>
+          : null}
         <ToastContainer />
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
@@ -85,7 +88,9 @@ function Employee() {
         <div
           className={
             showEmployeeProfile === false
-              ? "dashboard-main-container mt-16"
+              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
+                "dashboard-main-container mt-16"
+                : ""
               : "d-none"
           }
           id="dashboard-body"
@@ -98,7 +103,7 @@ function Employee() {
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Search Employee:</p>
                     <input
                       required
@@ -107,11 +112,11 @@ function Employee() {
                       placeholder={"Search Employee"}
                       value={search}
                       name={"Employee_name"}
-                      onChange={(e) =>onSearch(e)}
+                      onChange={(e) => onSearch(e)}
                     />
-        
+
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Experience:</p>
                     <div className="select_div">
                       <select
@@ -133,7 +138,7 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Skill:</p>
                     <div className="select_div">
                       <select
@@ -154,22 +159,19 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Education:</p>
                     <div className="select_div">
                       <select
                         name="education"
                         value={educationFilterValue}
                         id="education"
-                        onChange={(e) =>
-                          setEducationFilterValue(e.target.value)
-                        }
-                        className=" form-control"
-                      >
+                        onChange={(e) =>setEducationFilterValue(e.target.value)}
+                        className=" form-control">
                         <option value="" data-display="Product Designer">
                           Select Education
                         </option>
-                        {(EducationList|| []).map((data) => {
+                        {(EducationList || []).map((data) => {
                           return (
                             <option value={data.value} key={data.id}>
                               {data.value}
@@ -179,7 +181,7 @@ function Employee() {
                       </select>
                     </div>
                   </div>
-                  <div className="col px-1 form_group mt-4 text-right">
+                  {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? <div className="col px-1 form_group mt-4 text-right">
                     <CustomButton
                       className="font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => editEmployee("0")}
@@ -187,7 +189,7 @@ function Employee() {
                     >
                       Add Employee
                     </CustomButton>
-                  </div>
+                  </div> : null}
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
@@ -200,7 +202,9 @@ function Employee() {
                 educationFilterValue={educationFilterValue}
                 skillFilterValue={skillFilterValue}
                 apiCall={apiCall}
-                setApiCall={setApiCall} 
+                setApiCall={setApiCall}
+                skill={props.skill}
+                job_id={props.job_id}
               />
             </div>
           </div>

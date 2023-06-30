@@ -1,4 +1,5 @@
 import axios from "axios";
+// const API_URL = "https://192.168.29.92/canjobs/";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
@@ -264,10 +265,13 @@ export const AddEmployeeSkill = async (props, id) => {
 export const DeleteEmployeeSkill = async (props) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeSkill`,
-    {skill_id: props,},
-    { headers: {
+    { skill_id: props, },
+    {
+      headers: {
         "Content-Type": "application/json",
-        Authorization: Token,}, }
+        Authorization: Token,
+      },
+    }
   );
   return response.data;
 };
@@ -276,10 +280,13 @@ export const DeleteEmployeeSkill = async (props) => {
 export const DeleteEmployeeEducation = async (props) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeEducation`,
-    {education_id: props,},
-    {headers: {
+    { education_id: props, },
+    {
+      headers: {
         "Content-Type": "application/json",
-        Authorization: Token,},}
+        Authorization: Token,
+      },
+    }
   );
   return response.data;
 };
@@ -288,11 +295,13 @@ export const DeleteEmployeeEducation = async (props) => {
 export const DeleteEmployeeCareer = async (props) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeCareer`,
-    { career_id: props,},
-    {headers: {
+    { career_id: props, },
+    {
+      headers: {
         "Content-Type": "application/json",
         Authorization: Token,
-      },}
+      },
+    }
   );
   return response.data;
 };
@@ -312,14 +321,18 @@ export const getProfileCompletionPercent = async () => {
 export const ApplyJob = async (job_id, employee_id, status, apply_id) => {
   const response = await axios.post(
     `${API_URL}applyJob`,
-    {apply_id: apply_id,
+    {
+      apply_id: apply_id,
       job_id: job_id,
       employee_id: employee_id,
-      status: status,},
-    {headers: {
+      status: status,
+    },
+    {
+      headers: {
         "Content-Type": "application/json",
         Authorization: Token,
-      },}
+      },
+    }
   );
   return response.data;
 };
@@ -344,8 +357,9 @@ export const GetJobDetail = async (props) => {
   // console.log(props);
   const response = await axios.post(
     `${API_URL}admin/jobDetail`,
-    {job_id: props,},
-    {headers: {
+    { job_id: props, },
+    {
+      headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
@@ -421,10 +435,12 @@ export const GetAllResponse = async (
       search: search,
       filter_by_time: time,
     },
-    {headers: {
+    {
+      headers: {
         "Content-Type": "application/json",
         Authorization: Token,
-      },}
+      },
+    }
   );
   return response;
 };
@@ -445,7 +461,8 @@ export const GetAllJobs = async (
 ) => {
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
-    {filter_category_id: category,
+    {
+      filter_category_id: category,
       filter_job_swap: job,
       filter_keyskill: skill,
       filter_location: location,
@@ -456,10 +473,12 @@ export const GetAllJobs = async (
       sort_order: sort_order,
       filter_by_time: time,
     },
-    {headers: {
+    {
+      headers: {
         "Content-Type": "application/json",
         Authorization: Token,
-      },}
+      },
+    }
   );
   return response;
 };
@@ -751,7 +770,7 @@ export const getAllAdminNotification = async () => {
 export const ReadNotification = async (props) => {
   const response = await axios.put(
     `${API_URL}common/isReadNotification`,
-   { id : props},
+    { id: props },
     {
       headers: {
         "Content-Type": "application/json",
@@ -958,7 +977,7 @@ export const AddFIlter = async (props, id) => {
     }
   );
   return response.data;
-}; 
+};
 
 /*Delete Filter Api */
 export const DeleteFilter = async (pId, cId) => {
@@ -1042,7 +1061,7 @@ export const GetAdminToken = async (props) => {
     }
   );
   return response.data;
-}; 
+};
 
 /*Api to get email template */
 export const GetAllEmailTemplate = async (props) => {
@@ -1077,10 +1096,10 @@ export const AddUpdateEmailTemplate = async (props) => {
 /*Api to Test email template */
 export const TestEmail = async (props) => {
   console.log(props);
-  const response = await axios.post(`${API_URL}/common/testEmail`,{
-    "email_id" : props.email_id,
+  const response = await axios.post(`${API_URL}/common/testEmail`, {
+    "email_id": props.email_id,
     "email_template_id": props.email_template_id
-}, {
+  }, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,
@@ -1090,61 +1109,61 @@ export const TestEmail = async (props) => {
 };
 
 /*Api to login in with linked ln in employee login*/
-export const LinkedInLogin = async (props,type) => {
-  if(type === "employeeLogin"){
-  const formData = new FormData();
-  formData.append("code", props);
-  const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`,formData );
-  return response.data;
+export const LinkedInLogin = async (props, type) => {
+  if (type === "employeeLogin") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
   }
 };
 /*Api to login in with linked ln in employeer login*/
-export const LinkedInLoginEmployer = async (props,type) => {
-  if(type === "employerLogin"){
-  const formData = new FormData();
-  formData.append("code", props);
-  const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`,formData );
-  return response.data;
+export const LinkedInLoginEmployer = async (props, type) => {
+  if (type === "employerLogin") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
   }
 };
 /*Api to login in with linked ln in employee Signup*/
-export const LinkedSignup = async (props,type) => {
-  if(type === "employeeSignup"){
-  const formData = new FormData();
-  formData.append("code", props);
-  const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`,formData );
-  return response.data;
+export const LinkedSignup = async (props, type) => {
+  if (type === "employeeSignup") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
   }
 };
 /*Api to login in with linked ln in employee login*/
-export const LinkedInSignupEmployer = async (props,type) => {
-  if(type === "employerSignup"){
-  const formData = new FormData();
-  formData.append("code", props);
-  const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`,formData );
-  return response.data;
+export const LinkedInSignupEmployer = async (props, type) => {
+  if (type === "employerSignup") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
   }
 };
 /*Api to login in with Social linkes in employee login*/
-export const SocialLogin = async (token , email , name, picture , type) => {
-  const response = await axios.post(`${API_URL}user/signupLoginViaSocialMedia`,{ 
-    "token" : token ,
-    "email": email ,
-    "name": name ,
-    "picture" : picture ,
-    "type" : type
+export const SocialLogin = async (token, email, name, picture, type) => {
+  const response = await axios.post(`${API_URL}user/signupLoginViaSocialMedia`, {
+    "token": token,
+    "email": email,
+    "name": name,
+    "picture": picture,
+    "type": type
   });
   return response.data;
 };
 
 /*Api to login in with Social linkes in employee login*/
-export const SocialCompanyLogin = async (token , email , name, picture , type) => {
-  const response = await axios.post(`${API_URL}company/signupLoginViaSocialMedia`,{ 
-    "token" : token ,
-    "email": email ,
-    "name": name ,
-    "picture" : picture ,
-    "type" : type
+export const SocialCompanyLogin = async (token, email, name, picture, type) => {
+  const response = await axios.post(`${API_URL}company/signupLoginViaSocialMedia`, {
+    "token": token,
+    "email": email,
+    "name": name,
+    "picture": picture,
+    "type": type
   });
   return response.data;
 };
