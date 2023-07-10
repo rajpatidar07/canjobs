@@ -9,8 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 function PersonalDetails(props) {
   let encoded;
-  const [loading, setLoading] = useState(false);
   const [imgError, setImgError] = useState("");
+  const [loading, setLoading] = useState(false);
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {

@@ -260,7 +260,8 @@ function Job(props) {
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-16 ">
+          <div className={ props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
+            ?"dashboard-main-container mt-16 " : ""}>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

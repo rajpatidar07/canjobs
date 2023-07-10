@@ -30,6 +30,8 @@ import ResetPassword from "./resetPassword";
 import EmailTemplate from "../admin/email";
 import Loader  from '../common/loader';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
+import LimiaStatus from "../admin/limiaStatus";
+import Visa from "../admin/visa";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -97,6 +99,8 @@ function MainLayout() {
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/job" element={<Job />} />
         <Route path="/category" element={<Category />} />
+        <Route path="/limia" element={<LimiaStatus />} />
+        <Route path="/visa" element={<Visa />} />
         <Route path="/employee" element={<Employee />} />
         <Route path="/employer" element={<Employer />} />
         <Route path="/adminprofile" element={<ManageAdmin />} />

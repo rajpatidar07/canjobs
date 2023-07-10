@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, DeleteJob, ApplyJob } from "../../api/api";
+import { GetAllJobs, DeleteJob, ApplyJob, GetEmployeeFilterJob } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
@@ -16,7 +16,6 @@ export default function JobTable(props) {
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   const [candidateSkill, setCandidateSkill] = useState([]);
-  const [alredyApplied, setAlredyApplied] = useState([]);
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -32,7 +31,11 @@ export default function JobTable(props) {
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true)
-    const userData = await GetAllJobs(
+    let userData;
+    if(props.employee_id){
+      userData = await GetEmployeeFilterJob(props.employee_id , props.SkillFilterValue)
+    }
+    else{ userData = await GetAllJobs(
       props.search,
       props.locationFilterValue,
       props.categoryFilterValue,
@@ -44,8 +47,8 @@ export default function JobTable(props) {
       sortOrder,
       props.company,
       props.filter_by_time
-    );
-    if (userData.data.data.length === 0) {
+    );}
+    if (userData.data.data.length === 0 || userData.data.length === 0) {
       setjobData([]);
       setIsLoading(false)
     } else {
@@ -75,6 +78,7 @@ export default function JobTable(props) {
     apiCall,
     props.apiCall,
   ]);
+
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
     props.JobDetail(e);
@@ -135,7 +139,6 @@ export default function JobTable(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setAlredyApplied(true)
     }
 
   };
@@ -304,7 +307,7 @@ export default function JobTable(props) {
                   </tr>
                 ) : (
                   (jobData || []).map((job) => (
-                    <tr className="" key={job.job_id}>
+                    <tr className={job.is_applied === "1" ? "d-none" : ""} key={job.job_id}>
                       <th scope="row" className="py-5 ">
                         <div className="">
                           {props.heading === "Dashboard" ? (
@@ -417,11 +420,11 @@ export default function JobTable(props) {
                             </> 
                             : <button
                               className="btn btn-outline-info action_btn"
-                              disabled={alredyApplied ? true : false}
+                              disabled={job.is_applied === "1" ? true : false}
                               onClick={() => onChangeJobClick(job.job_id)}
                               title="Apply For job"
                             >
-                              {alredyApplied ? "Already Applied" : "Apply"}
+                              {job.is_applied === "1" ? "Already Applied" : "Apply"}
                             </button>}
                             
                           </div>

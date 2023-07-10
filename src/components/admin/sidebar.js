@@ -104,6 +104,22 @@ const AdminSidebar = (props) => {
               <i className="fas fa-user mr-5"></i>Manage Admin
             </Link>
           </li>
+          <li className={props.heading === "Visa status" ? "active" : ""}>
+            <Link
+              to="/visa"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fab fa-cc-visa mr-5"></i>Manage Visa
+            </Link>
+          </li>
+          <li className={props.heading === "LIMIA status" ? "active" : ""}>
+            <Link
+              to="/limia"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-filter mr-5"></i>Manage LIMIA Status
+            </Link>
+          </li>
           <li className={props.heading === "Filter List" ? "active" : ""}>
             <Link
               to="/filter"

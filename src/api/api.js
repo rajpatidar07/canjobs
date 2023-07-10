@@ -23,6 +23,7 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
+
 /*Chanage password Api */
 export const ChangePasswordApi = async (props) => {
   const response = await axios.put(
@@ -37,6 +38,7 @@ export const ChangePasswordApi = async (props) => {
   );
   return response.data;
 };
+
 /*Sen Otp to email api */
 export const SendOtp = async (props) => {
   const response = await axios.post(`${API_URL}common/generateOtp`, {
@@ -44,6 +46,7 @@ export const SendOtp = async (props) => {
   });
   return response.data;
 };
+
 /*Employee Reset password Api */
 export const EmployeeResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}user/resetPassword`, props, {
@@ -60,6 +63,7 @@ export const getJson = async () => {
   const response = await axios.get(`${API_URL}filterList/filterList.json`);
   return response.data;
 };
+
 // EMPLOYEE'S API
 /*Employee sign */
 export const EmployeeSignUp = async (props) => {
@@ -70,6 +74,7 @@ export const EmployeeSignUp = async (props) => {
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
+
 /*Employee Login */
 export const EmployeeLogin = async (props) => {
   const formData = new FormData();
@@ -78,6 +83,39 @@ export const EmployeeLogin = async (props) => {
   const response = await axios.post(`${API_URL}employee_login`, formData);
   return response.data;
 };
+
+/*Api to login in with linked employee*/
+export const LinkedInLogin = async (props, type) => {
+  if (type === "employeeLogin") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
+  }
+};
+
+/*Api to login in with linked employee*/
+export const LinkedSignup = async (props, type) => {
+  if (type === "employeeSignup") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
+  }
+};
+
+/*Api to login in with Social linkes in employee login*/
+export const SocialLogin = async (token, email, name, picture, type) => {
+  const response = await axios.post(`${API_URL}user/signupLoginViaSocialMedia`, {
+    "token": token,
+    "email": email,
+    "name": name,
+    "picture": picture,
+    "type": type
+  });
+  return response.data;
+};
+
 /*Employee Forgot passsword api */
 export const EmployeeForgotPassword = async (props) => {
   const response = await axios.post(`${API_URL}employee/forgetPassword`, {
@@ -177,6 +215,7 @@ export const EmployeeEducationDetails = async (props) => {
   );
   return response.data;
 };
+
 /*Add Employee Education Api */
 export const AddEmployeeEducation = async (props, id) => {
   const response = await axios.put(
@@ -390,6 +429,39 @@ export const EmployerLogin = async (props) => {
   return response.data;
 };
 
+/*Api to login in with linked employer*/
+export const LinkedInLoginEmployer = async (props, type) => {
+  if (type === "employerLogin") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
+  }
+};
+
+/*Api to login in with linked  employer*/
+export const LinkedInSignupEmployer = async (props, type) => {
+  if (type === "employerSignup") {
+    const formData = new FormData();
+    formData.append("code", props);
+    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    return response.data;
+  }
+};
+
+/*Api to login in with Social linkes in employer login*/
+export const SocialCompanyLogin = async (token, email, name, picture, type) => {
+  const response = await axios.post(`${API_URL}company/signupLoginViaSocialMedia`, {
+    "token": token,
+    "email": email,
+    "name": name,
+    "picture": picture,
+    "type": type
+  });
+  return response.data;
+};
+
+
 /*Employer Reset password Api */
 export const EmployerResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}company/resetPassword`, props, {
@@ -419,7 +491,8 @@ export const GetAllResponse = async (
   limit,
   column,
   sort,
-  time
+  time,
+  lima
 ) => {
   const response = await axios.post(
     `${API_URL}getJobResponse`,
@@ -434,6 +507,7 @@ export const GetAllResponse = async (
       sort_order: sort,
       search: search,
       filter_by_time: time,
+      filter_lmia_status : lima
     },
     {
       headers: {
@@ -1108,62 +1182,16 @@ export const TestEmail = async (props) => {
   return response.data;
 };
 
-/*Api to login in with linked ln in employee login*/
-export const LinkedInLogin = async (props, type) => {
-  if (type === "employeeLogin") {
-    const formData = new FormData();
-    formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
-    return response.data;
-  }
-};
-/*Api to login in with linked ln in employeer login*/
-export const LinkedInLoginEmployer = async (props, type) => {
-  if (type === "employerLogin") {
-    const formData = new FormData();
-    formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
-    return response.data;
-  }
-};
-/*Api to login in with linked ln in employee Signup*/
-export const LinkedSignup = async (props, type) => {
-  if (type === "employeeSignup") {
-    const formData = new FormData();
-    formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
-    return response.data;
-  }
-};
-/*Api to login in with linked ln in employee login*/
-export const LinkedInSignupEmployer = async (props, type) => {
-  if (type === "employerSignup") {
-    const formData = new FormData();
-    formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
-    return response.data;
-  }
-};
-/*Api to login in with Social linkes in employee login*/
-export const SocialLogin = async (token, email, name, picture, type) => {
-  const response = await axios.post(`${API_URL}user/signupLoginViaSocialMedia`, {
-    "token": token,
-    "email": email,
-    "name": name,
-    "picture": picture,
-    "type": type
+/*Api to get the job filterd by employee id if it is applied or not */
+export const GetEmployeeFilterJob = async (id, skill) => {
+  const response = await axios.post(`${API_URL}admin/getAllJobsViewAdmin`, {
+    employee_id: id,
+    filter_keyskill : skill
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
   });
-  return response.data;
-};
-
-/*Api to login in with Social linkes in employee login*/
-export const SocialCompanyLogin = async (token, email, name, picture, type) => {
-  const response = await axios.post(`${API_URL}company/signupLoginViaSocialMedia`, {
-    "token": token,
-    "email": email,
-    "name": name,
-    "picture": picture,
-    "type": type
-  });
-  return response.data;
+  return response;
 };

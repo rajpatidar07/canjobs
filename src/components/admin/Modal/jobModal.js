@@ -3,7 +3,6 @@ import { Modal } from 'react-bootstrap'
 import Job from '../job'
 
 function JobModal(props) {
-    console.log(props)
     return (
         <Modal
             show={props.show}
