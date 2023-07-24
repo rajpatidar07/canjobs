@@ -51,7 +51,7 @@ function JobResponse(props) {
   const ResponseData = async () => {
     setIsLoading(true)
     const userData = await GetAllResponse(
-      props.heading === "Manage Follow-ups" || user_type === "company"
+      props.heading === "Manage Jobs" || user_type === "company"
         ? jobId
         : null,
       skillFilterValue,
@@ -73,6 +73,7 @@ function JobResponse(props) {
       setIsLoading(false)
     }
   };
+
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();
@@ -244,7 +245,7 @@ function JobResponse(props) {
           ) : (
             <div
               className={
-                props.heading === "Manage Follow-ups"
+                props.heading === "Manage Jobs"
                   ? "response_filters mb-2 align-items-center"
                   : "align-items-center"
               }
@@ -336,7 +337,7 @@ function JobResponse(props) {
                 {isLoading ?
                   <Loader /> : <table
                     className={
-                      props.heading === "Manage Follow-ups"
+                      props.heading === "Manage Jobs"
                         ? "table table-striped main_data_table_inn"
                         : "table table-striped main_data_table"
                     }

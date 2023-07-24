@@ -122,7 +122,7 @@ function JobBox({
                 }
               >
                 {job.job_type === "swap" ? (
-                  <span className="job_swap_label">SWAP</span>
+                  <span className="job_swap_label">SWEP</span>
                 ) : null}
                 <div className="row job_header m-0">
                   <div className="media align-items-center company_box col-md-6 p-0">

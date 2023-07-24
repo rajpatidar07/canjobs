@@ -14,7 +14,7 @@ import EmployementDetails from "../forms/user/employement";
 import Loader from '../common/loader';
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
-
+import FilterJson from "../json/filterjson";
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -25,7 +25,6 @@ export default function EmployeeTable(props) {
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
-  const [alredyApplied, setAlredyApplied] = useState([]);
 
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
@@ -173,7 +172,6 @@ export default function EmployeeTable(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setAlredyApplied(true)
     }
 
   };
@@ -526,12 +524,23 @@ export default function EmployeeTable(props) {
                           )}
                         </p>
                       </td>
-                      {/* Calulation to get user is new or retained */}
                       <td className=" py-5">
+                        <select 
+                        value="">
+                          <option value={""}>Select Applicants status</option>
+                          {(FilterJson.Employee_status||[]).map((item,index)=>{
+                            return(
+                              <option value={item} key={index}>{item}</option>
+                            )
+                          })}
+                        </select>
+                      </td>
+                      {/* Calulation to get user is new or retained */}
+                      {/* <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}                        
                           </p>
-                      </td>
+                      </td> */}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -601,6 +610,7 @@ export default function EmployeeTable(props) {
                                   >
                                     <i className="fas fa-briefcase"></i>
                                   </button>
+                                  {console.log(empdata.is_applied)}
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ShowDeleteAlert(empdata)}
@@ -613,11 +623,11 @@ export default function EmployeeTable(props) {
                               </> :
                               <button
                                 className="btn btn-outline-info action_btn"
-                                disabled={alredyApplied ? true : false}
+                                disabled={empdata.is_applied ? true : false}
                                 onClick={() => onChangeJobClick(empdata.employee_id)}
                                 title="Apply For job"
                               >
-                                {alredyApplied ? "Already Applied" : "Apply"}
+                                {empdata.is_applied ? "Already Applied" : "Apply"}
                               </button>
                             }
                           </div>

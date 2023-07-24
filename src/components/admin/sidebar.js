@@ -72,14 +72,14 @@ const AdminSidebar = (props) => {
               <i className="fas fa-reply mr-5"></i>Manage Response
             </Link>
           </li>
-          <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
+          {/* <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
             <Link
               to="/followup"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-comments mr-5"></i>Manage Follow-ups
             </Link>
-          </li>
+          </li> */}
           <li className={props.heading === "Interview" ? "active" : ""}>
             <Link
               to="/interview"

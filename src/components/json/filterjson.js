@@ -333,7 +333,7 @@ const FilterJson = {
     "Apprenticeship",
     "Internship",
     "Freelance",
-    "SWAP",
+    "SWEP",
     "Other",
   ],
   swap: ["Yes", "No"],
@@ -568,5 +568,6 @@ const FilterJson = {
   AdminType: ["Super-Admin", "Admin", "Manager", "Operator"],
   lmia_status: ["Pending", "Approved", "Reject", "Draft", "Complete", "Other"],
   Duration: ["Last week", "Last month", "last 3 months", "Last year"],
+  Employee_status: ["New", "Prospect", "Lead", "Reatined","Lost","Dead"],
 };
 export default FilterJson;

@@ -32,7 +32,7 @@
   "hmusercat_EXPLORE ALL": "EXPLORE ALL",
   "jobusersrch_You’re searching": "You’re searching",
   "jobuserfltr_Job Category": "Job Category",
-  "jobuserfltr_Job swap": "Job swap",
+  "jobuserfltr_Job swap": "Job SWEP",
   "jobuserfltr_Job  Skills": "Job  Skills",
   "jobuserfltr_Job Location": "Job Location",
   "jobuserfltrresult_Showing matched jobs": "Showing matched jobs",
@@ -47,7 +47,6 @@
   "jobuserdetailhd_Your Role": "Your Role",
   "jobuserdetailhd_What you will be doing": "What you will be doing",
   "jobuserdetailbtn_APPLY TO THIS JOB": "APPLY TO THIS JOB",
-
   "mngjobcmpsrch_You’re searching": "You’re searching",
   "mngjobcmpfltr_Job Category": "Job Category",
   "mngjobcmpfltr_Job  Skills": "Job  Skills",
@@ -64,7 +63,6 @@
   "mngjobcmpdetailhd_Job Description": "Job Description",
   "mngjobcmpdetailhd_Your Role": "Your Role",
   "mngjobcmpdetailhd_What you will be doing": "What you will be doing",
-
   "rspnscmpsrch_You’re searching": "You’re searching",
   "rspnscmpfltr_Job Category": "Job Category",
   "rspnscmpfltr_Job  Skills": "Job  Skills",
@@ -91,7 +89,6 @@
   "rspnsaddjobmdalhd_SUBMIT": "SUBMIT",
   "rspnscmpjobbox_VIEW RESPONSE": "VIEW RESPONSE",
   "rspnscmp_LOAD MORE": "LOAD MORE",
-
   "prfluserhd_Personal Info": "Personal Info",
   "prflusermdlhd_Personal Details": "Personal Details",
   "prflusermdl_Full Name:": "Full Name:",

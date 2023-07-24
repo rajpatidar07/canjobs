@@ -729,7 +729,7 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
-                  <option value={"swap"}>Swap</option>
+                  <option value={"swap"}>SWEP</option>
                   <option value={"parttime"}>Part-time</option>
                   <option value={"all"}>All</option>
                 </select>

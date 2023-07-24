@@ -39,7 +39,7 @@ function EmployeeBox() {
           >
             <div className="pt-9 px-xl-10 px-lg-10 px-8 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green position-relative">
               {empdata.interested_in === "swap" ? (
-                <span className="job_swap_label">SWAP</span>
+                <span className="job_swap_label">SWEP</span>
               ) : null}
               <div className="row job_header m-0 align-items-center">
                 <div className="media align-items-center company_box col-9 p-0">

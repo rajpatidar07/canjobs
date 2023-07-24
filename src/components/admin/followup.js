@@ -185,7 +185,7 @@ function Followup() {
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Swap:</p>
+                    <p className="input_label">Filter by Job SWEP:</p>
                     <div className="select_div">
                       <select
                         name="country"

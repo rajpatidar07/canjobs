@@ -7,6 +7,7 @@ import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import Loader from '../common/loader';
 import EmployeeModal from "../admin/Modal/employeeModal"
+import JobResponse from "../admin/response";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -27,7 +28,9 @@ export default function JobTable(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_id");
   const [sortOrder, setSortOrder] = useState("DESC");
-
+/*Response states */
+const [responseId, setresponseId] = useState();
+const [responseDropDown, setresponseDropDown] = useState(false);
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true)
@@ -35,7 +38,8 @@ export default function JobTable(props) {
     if(props.employee_id){
       userData = await GetEmployeeFilterJob(props.employee_id , props.SkillFilterValue)
     }
-    else{ userData = await GetAllJobs(
+    else
+    { userData = await GetAllJobs(
       props.search,
       props.locationFilterValue,
       props.categoryFilterValue,
@@ -307,7 +311,8 @@ export default function JobTable(props) {
                   </tr>
                 ) : (
                   (jobData || []).map((job) => (
-                    <tr className={job.is_applied === "1" ? "d-none" : ""} key={job.job_id}>
+                    <React.Fragment key={job.job_id}>
+                    <tr className={job.is_applied === "1" ? "d-none" : ""} >
                       <th scope="row" className="py-5 ">
                         <div className="">
                           {props.heading === "Dashboard" ? (
@@ -408,6 +413,22 @@ export default function JobTable(props) {
                             >
                               <span className=" fas fa-edit text-gray"></span>
                             </button>
+                                    <div
+                                      className="btn-group button_group"
+                                      // role="group"
+                                    >
+                                      <button
+                                        className="btn btn-outline-info action_btn"
+                                        onClick={() => {
+                                          setresponseId(job.job_id);
+                                          setresponseDropDown(responseDropDown === false ? true : false)
+                                        }}
+                                        disabled={job.total_applicants > 0 ?false :true}
+                                        title="Job Response"
+                                      >
+                                        Responses
+                                      </button>
+                                    </div>                             
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => ShowDeleteAlert(job)}
@@ -424,6 +445,7 @@ export default function JobTable(props) {
                               onClick={() => onChangeJobClick(job.job_id)}
                               title="Apply For job"
                             >
+                              {console.log(job.is_applied)}
                               {job.is_applied === "1" ? "Already Applied" : "Apply"}
                             </button>}
                             
@@ -431,6 +453,21 @@ export default function JobTable(props) {
                         </th>
                       )}
                     </tr>
+                     {job.job_id === responseId &&
+                      job.total_applicants > 0 && responseDropDown === true ? (
+                        <tr>
+                          <td colSpan={10}>
+                            {/* <!-- Job Responses --> */}
+                            <JobResponse
+                              responseId={responseId}
+                              apiCall={apiCall}
+                              setApiCall={setApiCall}
+                              heading={"Manage Jobs"}
+                            />
+                          </td>
+                        </tr>
+                      ) : null}
+                      </React.Fragment>
                   ))
                 )}
               </tbody>

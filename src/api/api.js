@@ -175,7 +175,8 @@ export const getallEmployeeData = async (
   limit,
   column,
   sort,
-  time
+  time,
+  jobSkill
 ) => {
   const response = await axios.post(
     `${API_URL}${user_type}/getallEmployeeView`,
@@ -190,6 +191,7 @@ export const getallEmployeeData = async (
       column_name: column,
       sort_order: sort,
       filter_by_time: time,
+      job_keyskills:jobSkill
     },
     {
       headers: {
@@ -531,7 +533,8 @@ export const GetAllJobs = async (
   column_name,
   sort_order,
   company,
-  time
+  time,
+  employeeSkill
 ) => {
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
@@ -546,6 +549,7 @@ export const GetAllJobs = async (
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
+      employee_skills:employeeSkill
     },
     {
       headers: {
