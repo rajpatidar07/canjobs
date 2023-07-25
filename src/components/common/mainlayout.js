@@ -28,10 +28,11 @@ import JobResponse from "../admin/response";
 import NotFound from "./notfound";
 import ResetPassword from "./resetPassword";
 import EmailTemplate from "../admin/email";
-import Loader  from '../common/loader';
-import { LinkedInCallback } from 'react-linkedin-login-oauth2';
+import Loader from "../common/loader";
+import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import LimiaStatus from "../admin/limiaStatus";
 import Visa from "../admin/visa";
+import Document from "../admin/document";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -89,32 +90,33 @@ function MainLayout() {
         )}
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        {userType === ( "company" || "user" || "" ) && token === ( "" || null || undefined) ? (
+        {userType === ("company" || "user" || "") &&
+        token === ("" || null || undefined) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="*" element={<NotFound />} />
           </>
-        ):(
-        <>
-        <Route path="/dashboard" element={<AdminDashboard />} />
-        <Route path="/job" element={<Job />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/limia" element={<LimiaStatus />} />
-        <Route path="/visa" element={<Visa />} />
-        <Route path="/employee" element={<Employee />} />
-        <Route path="/employer" element={<Employer />} />
-        <Route path="/adminprofile" element={<ManageAdmin />} />
-        <Route path="/followup" element={<Followup />} />
-        <Route path="/filter" element={<FilterList />} />
-        <Route path="/interview" element={<ManageInterview />} />
-        <Route path="/responses" element={<JobResponse />} />
-        <Route path="/emailtemplate" element={<EmailTemplate />} />
-        <Route path="/resume/:id" element={<ResumeGrerator />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
-        <Route path="*" element={<Loader load={"yes"}/>} />
-
-      </> 
-      )}
+        ) : (
+          <>
+            <Route path="/dashboard" element={<AdminDashboard />} />
+            <Route path="/job" element={<Job />} />
+            <Route path="/category" element={<Category />} />
+            <Route path="/limia" element={<LimiaStatus />} />
+            <Route path="/visa" element={<Visa />} />
+            <Route path="/document" element={<Document />} />
+            <Route path="/employee" element={<Employee />} />
+            <Route path="/employer" element={<Employer />} />
+            <Route path="/adminprofile" element={<ManageAdmin />} />
+            <Route path="/followup" element={<Followup />} />
+            <Route path="/filter" element={<FilterList />} />
+            <Route path="/interview" element={<ManageInterview />} />
+            <Route path="/responses" element={<JobResponse />} />
+            <Route path="/emailtemplate" element={<EmailTemplate />} />
+            <Route path="/resume/:id" element={<ResumeGrerator />} />
+            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<Loader load={"yes"} />} />
+          </>
+        )}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
