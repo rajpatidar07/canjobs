@@ -175,10 +175,11 @@ export default function EmployeeTable(props) {
     }
 
   };
+  
   /*Function to get the new user */
-  const currentDate = new Date(); // Get current date
-  const oneMonthAgo = new Date(); // Create a new date object for one month ago
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // Subtract one month from the current date
+  // const currentDate = new Date(); // Get current date
+  // const oneMonthAgo = new Date(); // Create a new date object for one month ago
+  // oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // Subtract one month from the current date
 
   return (
     <>
@@ -602,6 +603,16 @@ export default function EmployeeTable(props) {
                                   >
                                     <span className="fas fa-file text-gray"></span>
                                   </button>
+                                  <button
+                                  className="btn btn-outline-info action_btn"
+                                  // onClick={() => AddDoucument(empdata.employee_id)}
+                                  title="Documents" >
+                                  <Link
+                                  to={"/document"}
+                                  state={{ employee_id: empdata.employee_id }} >
+                                  <span className="fas fa-file text-gray"></span>
+                                  </Link>
+                                </button>
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}

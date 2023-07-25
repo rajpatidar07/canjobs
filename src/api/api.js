@@ -191,7 +191,7 @@ export const getallEmployeeData = async (
       column_name: column,
       sort_order: sort,
       filter_by_time: time,
-      job_keyskills:jobSkill
+      job_keyskills: jobSkill
     },
     {
       headers: {
@@ -509,7 +509,7 @@ export const GetAllResponse = async (
       sort_order: sort,
       search: search,
       filter_by_time: time,
-      filter_lmia_status : lima
+      filter_lmia_status: lima
     },
     {
       headers: {
@@ -549,7 +549,7 @@ export const GetAllJobs = async (
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
-      employee_skills:employeeSkill
+      employee_skills: employeeSkill
     },
     {
       headers: {
@@ -1190,7 +1190,7 @@ export const TestEmail = async (props) => {
 export const GetEmployeeFilterJob = async (id, skill) => {
   const response = await axios.post(`${API_URL}admin/getAllJobsViewAdmin`, {
     employee_id: id,
-    filter_keyskill : skill
+    filter_keyskill: skill
   }, {
     headers: {
       "Content-Type": "application/json",
@@ -1199,3 +1199,25 @@ export const GetEmployeeFilterJob = async (id, skill) => {
   });
   return response;
 };
+/*Api to upload document*/
+export const UploadApplicantsDocument = async (id, base) => {
+  const response = await axios.put(`${API_URL}user/documentsUpload `, {
+    employee_id : id,
+    passport: "",
+    drivers_license: "",
+    photograph: "",
+    immigration_status: "",
+    lmia: "", 
+    job_offer_letter: "",
+    provincial_nominee_letter: "",
+    proof_of_funds: "",
+    proof_of_employment: "",
+    marriage_certificate: "",
+    resume_or_cv: "",
+    ielts: "",
+    biometrics_validity_letter: "",
+    medical: "",
+    police_clearance: "",
+    refusal_letter: "",
+  })
+}

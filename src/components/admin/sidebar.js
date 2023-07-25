@@ -112,6 +112,14 @@ const AdminSidebar = (props) => {
               <i className="fab fa-cc-visa mr-5"></i>Manage Visa
             </Link>
           </li>
+          {/* <li className={props.heading === "Document Upload & Verification" ? "active" : ""}>
+            <Link
+              to="/document"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-file mr-5"></i>Manage Documents
+            </Link>
+          </li> */}
           <li className={props.heading === "LIMIA status" ? "active" : ""}>
             <Link
               to="/limia"
