@@ -591,6 +591,22 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
 }
 
+.container.document_container.bg-white.p-7 {
+  height: calc(100vh - 98px);
+  overflow: hidden;
+}
+
+.doc_preview_box {
+  height: calc(100vh - 140px);
+  width: 100%;
+  overflow-y: auto;
+}
+
+.list-group {
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
 @media (max-width: 767px) {
   header.site-header {
     max-width: 100%;

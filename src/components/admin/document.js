@@ -39,7 +39,7 @@ function Document() {
             <div className="col-9 p-5 bg-light rounded">
               <div className="doc_preview_box">
                 {/* <img src={Doc2} alt="" className="img-fluid" /> */}
-                <embed src={Doc2} width="800px" height="2100px" />
+                <embed src={Doc2} width="100%" height="100%" />
               </div>
             </div>
           </div>
