@@ -12,6 +12,7 @@ import LmiaStatus from "../forms/admin/lmiastatus";
 import { ToastContainer } from "react-toastify";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
+import DocumentModal from "./Modal/DocumentModal";
 
 export default function LimiaStatus(props) {
     /*show modal and data states */
@@ -20,6 +21,7 @@ export default function LimiaStatus(props) {
     //   let [followup, setFollowUp] = useState(false);
     //   let [interview, setInterview] = useState(false);
     let [limia, setLimia] = useState(false);
+    let [documentModal, setDocumentModal] = useState(false);
     let [response, setResponseData] = useState([]);
     let [resData, setResData] = useState("");
     let [searchError, setSearchError] = useState("");
@@ -39,6 +41,7 @@ export default function LimiaStatus(props) {
     const [columnName, setcolumnName] = useState("employee_id");
     const [sortOrder, setSortOrder] = useState("DESC");
     const [jobId, setJobId] = useState(props.responseId);
+    const [employeeId, setEmployeeId] = useState();
     const user_type = localStorage.getItem("userType");
     let [changeJob, setChangeJob] = useState(false)
     /*Function to get the jSon */
@@ -132,6 +135,12 @@ export default function LimiaStatus(props) {
         setResData(e);
         setJobId(e.job_id);
     };
+
+    /*Function to open add Document up modal */
+    const AddDoucument = (e) => {
+        setDocumentModal(true)
+        setEmployeeId(e)
+    }
     /* Function to show the single data to update job */
     //   const editJob = (e) => {
     //     // e.preventDefault();
@@ -196,6 +205,12 @@ export default function LimiaStatus(props) {
         }}
       />
     ) : null} */}
+    {documentModal ?
+    <DocumentModal
+    show={documentModal}
+    close={()=>setDocumentModal(false)}
+    employee_id={employeeId}/>:
+    null}
             {limia ? (
                 <LmiaStatus
                     show={limia}
@@ -705,6 +720,17 @@ export default function LimiaStatus(props) {
                                                                     >
                                                                         LMIA
                                                                     </button>
+                                                                    <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => AddDoucument(res.employee_id)}
+                                  title="Documents" >
+                                  {/* <Link
+                                  to={"/document"}
+                                  state={{ employee_id: res.employee_id }}
+                                   >
+                                  </Link> */}
+                                  <span className="fas fa-file text-gray"></span>
+                                </button>
                                                                     {/* <button
                                   className="btn btn-outline-info action_btn text-gray"
                                   onClick={() => editJob(res)}

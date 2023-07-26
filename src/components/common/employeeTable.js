@@ -603,16 +603,7 @@ export default function EmployeeTable(props) {
                                   >
                                     <span className="fas fa-file text-gray"></span>
                                   </button>
-                                  <button
-                                  className="btn btn-outline-info action_btn"
-                                  // onClick={() => AddDoucument(empdata.employee_id)}
-                                  title="Documents" >
-                                  <Link
-                                  to={"/document"}
-                                  state={{ employee_id: empdata.employee_id }} >
-                                  <span className="fas fa-file text-gray"></span>
-                                  </Link>
-                                </button>
+                                 
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}

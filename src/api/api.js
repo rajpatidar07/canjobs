@@ -1199,25 +1199,33 @@ export const GetEmployeeFilterJob = async (id, skill) => {
   });
   return response;
 };
+/*Api to get list of the Document */
+export const GetEmployeeDocumentList = async (id ,type) => {
+  const response = await axios.post(`${API_URL}user/getDocumentsUploaded`, {
+    employee_id: id,
+    type : type
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response;
+};
 /*Api to upload document*/
-export const UploadApplicantsDocument = async (id, base) => {
+export const UploadAndVarifyDocument = async (id, type, doc, docId, varify) => {
+  console.log(id, type, doc, "hello",docId, varify)
   const response = await axios.put(`${API_URL}user/documentsUpload `, {
-    employee_id : id,
-    passport: "",
-    drivers_license: "",
-    photograph: "",
-    immigration_status: "",
-    lmia: "", 
-    job_offer_letter: "",
-    provincial_nominee_letter: "",
-    proof_of_funds: "",
-    proof_of_employment: "",
-    marriage_certificate: "",
-    resume_or_cv: "",
-    ielts: "",
-    biometrics_validity_letter: "",
-    medical: "",
-    police_clearance: "",
-    refusal_letter: "",
+    employee_id: id,
+    type: type,
+    document_file: doc,
+    is_varify: varify,
+    id: docId
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
   })
-}
+  return response;
+};
