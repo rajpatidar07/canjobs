@@ -33,6 +33,7 @@ import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import LimiaStatus from "../admin/limiaStatus";
 import Visa from "../admin/visa";
 import Document from "../admin/document";
+import EmployerLMIA from "../company/lmia";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -111,6 +112,7 @@ function MainLayout() {
             <Route path="/filter" element={<FilterList />} />
             <Route path="/interview" element={<ManageInterview />} />
             <Route path="/responses" element={<JobResponse />} />
+            <Route path="/lmia_dashboard" element={<EmployerLMIA />} />
             <Route path="/emailtemplate" element={<EmailTemplate />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             {/* <Route path="*" element={<NotFound />} /> */}
