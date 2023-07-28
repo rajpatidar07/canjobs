@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
-import { getallEmployeeData, DeleteJobEmployee, ApplyJob } from "../../api/api";
+import { getallEmployeeData, DeleteJobEmployee, ApplyJob, AddEmployeeDetails } from "../../api/api";
 import moment from "moment";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
@@ -91,31 +91,37 @@ export default function EmployeeTable(props) {
   const employeeDetails = (e) => {
     props.employeeDetails(e);
   };
+
   /* Function to show the single data to update Employee Education*/
   const editEmployeeEducation = (e) => {
     setShowEducationModal(true);
     setemployeeId(e);
   };
+
   /* Function to show the single data to update Employee*/
   const editEmployee = (e) => {
     setShowEmployeeMOdal(true);
     setemployeeId(e);
   };
+
   /* Function to show the single data to update Employee*/
   const editVisa = (e) => {
     setVisaModal(true);
     setemployeeId(e);
   };
+
   /* Function to show the single data to update Employee Skills*/
   const editEmployeeSkills = (e) => {
     setShowSkillsModal(true);
     setemployeeId(e);
   };
+
   /* Function to show the single data to update Employee Career*/
   const editEmployeeCareer = (e) => {
     setShowEmplyomentDetails(true);
     setemployeeId(e);
   };
+
   /* Function to show the single data to apply job */
   const editJob = (e) => {
     setShowChangeJobModal(true);
@@ -128,17 +134,19 @@ export default function EmployeeTable(props) {
     setDeleteName(e.name);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+
   /*Function to open add Document up modal */
   const AddDoucument = (e) => {
     setDocumentModal(true)
     setemployeeId(e)
-}
-/*
-  /*To call Api to delete employee */
+  }
+  /*
+    /*To call Api to delete employee */
   async function deleteEmployee(e) {
     const responseData = await DeleteJobEmployee(e);
     if (responseData.message === "Employee has been deleted") {
@@ -150,6 +158,7 @@ export default function EmployeeTable(props) {
       setApiCall(true)
     }
   }
+
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -158,11 +167,13 @@ export default function EmployeeTable(props) {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
+
   /*Function to generate resume */
   const ResumeClick = (employee_id) => {
     const id = employee_id;
     window.open(`/resume/${id}`, "_blank");
   };
+
   /*Function to change job */
   const onChangeJobClick = async (id) => {
     const responseData = await ApplyJob(props.job_id, id, 0);
@@ -178,10 +189,27 @@ export default function EmployeeTable(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setApiCall(true)
     }
 
   };
-  
+
+  /*function to change applicants status */
+  const OnStatusChanges = async(e, id) => {
+e.preventDefault()
+    let data = {
+      employee_id: id,
+      status: e.target.value,
+    }
+    let response = await AddEmployeeDetails(data)
+    if(response.message === 'Employee data updated successfully'){
+      toast.success("Applied successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true)
+    }
+  }
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -240,12 +268,12 @@ export default function EmployeeTable(props) {
           close={() => { setShowChangeJobModal(false) }}
           data={employeeId} />
       ) : null}
- {documentModal ?
-    <DocumentModal
-    show={documentModal}
-    close={()=>setDocumentModal(false)}
-    employee_id={employeeId}/>:
-    null}
+      {documentModal ?
+        <DocumentModal
+          show={documentModal}
+          close={() => setDocumentModal(false)}
+          employee_id={employeeId} /> :
+        null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           {isLoading ?
@@ -536,17 +564,22 @@ export default function EmployeeTable(props) {
                           )}
                         </p>
                       </td>
-                      <td className=" py-5">
-                        <select 
-                        value="">
+                      <td className="">
+                        <select
+                          value={empdata.status}
+                          onChange={(e) => {
+                            OnStatusChanges(e, empdata.employee_id)
+                          }}
+                          className="form-control">
                           <option value={""}>Select Applicants status</option>
-                          {(FilterJson.Employee_status||[]).map((item,index)=>{
-                            return(
-                              <option value={item} key={index}>{item}</option>
+                          {(FilterJson.Employee_status || []).map((item, index) => {
+                            return (
+                              <option value={index+1} key={index}>{item}</option>
                             )
                           })}
                         </select>
                       </td>
+
                       {/* Calulation to get user is new or retained */}
                       {/* <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -571,78 +604,78 @@ export default function EmployeeTable(props) {
                                 >
                                   <span className="fab fa-cc-visa text-gray px-2"></span>
                                 </button>
-                                {props.visa === "yes" ?   
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => AddDoucument(empdata.employee_id)}
-                                  title="Documents" >
-                                  {/* <Link
+                                {props.visa === "yes" ?
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() => AddDoucument(empdata.employee_id)}
+                                    title="Documents" >
+                                    {/* <Link
                                   to={"/document"}
                                   state={{ employee_id: res.employee_id }}
                                    >
                                   </Link> */}
-                                  <span className="fas fa-file text-gray"></span>
-                                </button> : <> <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => editEmployee(empdata.employee_id)}
-                                  title="Edit Employee"
-                                >
-                                  <span className=" fas fa-edit text-gray px-2"></span>
-                                </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() =>
-                                      editEmployeeEducation(empdata.employee_id)
-                                    }
-                                    title="Education"
-                                  >
-                                    <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() =>
-                                      editEmployeeSkills(empdata.employee_id)
-                                    }
-                                    title="Skills"
-                                  >
-                                    <span className=" fa fa-cogs text-gray px-2"></span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() =>
-                                      editEmployeeCareer(empdata.employee_id)
-                                    }
-                                    title="Edit Career"
-                                  >
-                                    <span className="text-gray">
-                                      <i className="fas fa-user-tie"></i>
-                                    </span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn text-center"
-                                    onClick={() => ResumeClick(empdata.employee_id)}
-                                    title="View Resume"
-                                  >
                                     <span className="fas fa-file text-gray"></span>
-                                  </button>
-                                 
-                                  <button
-                                    className="btn btn-outline-info action_btn text-gray"
-                                    onClick={() => editJob(empdata)}
-                                    title="Matching jobs "
-                                    disabled={empdata.skill ? false : true}
-                                  >
-                                    <i className="fas fa-briefcase"></i>
-                                  </button>
-                                  <button
+                                  </button> : <> <button
                                     className="btn btn-outline-info action_btn"
-                                    onClick={() => ShowDeleteAlert(empdata)}
-                                    title="Delete"
+                                    onClick={() => editEmployee(empdata.employee_id)}
+                                    title="Edit Employee"
                                   >
-                                    <span className=" text-danger">
-                                      <i className="fa fa-trash "></i>
-                                    </span>
-                                  </button></>}
+                                    <span className=" fas fa-edit text-gray px-2"></span>
+                                  </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() =>
+                                        editEmployeeEducation(empdata.employee_id)
+                                      }
+                                      title="Education"
+                                    >
+                                      <span className="	fas fa-graduation-cap text-gray px-2"></span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() =>
+                                        editEmployeeSkills(empdata.employee_id)
+                                      }
+                                      title="Skills"
+                                    >
+                                      <span className=" fa fa-cogs text-gray px-2"></span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() =>
+                                        editEmployeeCareer(empdata.employee_id)
+                                      }
+                                      title="Edit Career"
+                                    >
+                                      <span className="text-gray">
+                                        <i className="fas fa-user-tie"></i>
+                                      </span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn text-center"
+                                      onClick={() => ResumeClick(empdata.employee_id)}
+                                      title="View Resume"
+                                    >
+                                      <span className="fas fa-file text-gray"></span>
+                                    </button>
+
+                                    <button
+                                      className="btn btn-outline-info action_btn text-gray"
+                                      onClick={() => editJob(empdata)}
+                                      title="Matching jobs "
+                                      disabled={empdata.skill ? false : true}
+                                    >
+                                      <i className="fas fa-briefcase"></i>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => ShowDeleteAlert(empdata)}
+                                      title="Delete"
+                                    >
+                                      <span className=" text-danger">
+                                        <i className="fa fa-trash "></i>
+                                      </span>
+                                    </button></>}
                               </> :
                               <button
                                 className="btn btn-outline-info action_btn"

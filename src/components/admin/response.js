@@ -3,13 +3,13 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { GetAllResponse, GetFilter } from "../../api/api";
+import { AddLimia, AddEmployeeDetails, GetAllResponse, GetFilter } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
 function JobResponse(props) {
@@ -39,6 +39,7 @@ function JobResponse(props) {
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
   let [changeJob, setChangeJob] = useState(false)
+
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -47,6 +48,7 @@ function JobResponse(props) {
   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {
     props.setApiCall(true)
   }
+
   /* Function to get the Response data*/
   const ResponseData = async () => {
     setIsLoading(true)
@@ -110,24 +112,58 @@ function JobResponse(props) {
       setSearchError("");
     }
   }
+
+  /*Function to Reserved Employee */
+  const ReservedEmployee = async (e) => {
+// Api call to set employee reserved
+    let data = {
+      employee_id: e.employee_id,
+      status: "7",
+    }
+    let response = await AddEmployeeDetails(data)
+    if (response.message === 'Employee data updated successfully') {
+      // Api call to set employee Visa
+      let visa = {
+        employee_id: e.employee_id,
+        work_permit_other_country: "yes"
+      }
+      let VisaResponse = await AddEmployeeDetails(visa)
+      if (VisaResponse.message === 'Employee data updated successfully') {
+        // Api call to set employee Limia
+        const limia = {lmia_status: "pending",};
+        let LimiaResponse = await AddLimia(limia, e.employee_id, e.job_id);
+        if (LimiaResponse.message === 'Data added successfully') {
+          toast.success("Employee Reserved successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setApiCall(true)
+        }
+      }
+    }
+  };
+
   /*Function to open add follow up modal */
   const addFollow = (e) => {
     setFollowUp(true);
     setResData(e);
     setJobId(e.job_id);
   };
+
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
     setInterview(true);
     setResData(e);
     setJobId(e.job_id);
   };
+
   /*Function to open add Limia up modal */
   const addLimia = (e) => {
     setLimia(true);
     setResData(e);
     setJobId(e.job_id);
   };
+
   /* Function to show the single data to update job */
   const editJob = (e) => {
     // e.preventDefault();
@@ -199,6 +235,7 @@ function JobResponse(props) {
           resData={resData}
           apiCall={apiCall}
           setApiCall={setApiCall}
+          job={"no"}
           close={() => {
             setLimia(false);
             setResData("");
@@ -614,33 +651,34 @@ function JobResponse(props) {
                             )}
                             <th className=" py-5">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.lmia_status === "Reject" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-danger">
-                                    Reject
-                                  </span>
-                                ) : res.lmia_status === "Approved" ? (
-                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                    Approved
-                                  </span>
-                                ) : res.lmia_status === "Draft" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-gray">
-                                    Draft
-                                  </span>
-                                ) : res.lmia_status === "Complete" ? (
-                                  <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                    Complete
-                                  </span>
-                                ) : res.lmia_status === "Pending" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-warning">
-                                    Pending
-                                  </span>
-                                ) : res.lmia_status === "Other" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-dark">
-                                    Other
-                                  </span>
-                                ) : (
-                                  <span>NA</span>
-                                )}
+                                <Link to="/limia" state={{ id: res.job_id }}>
+                                  {res.lmia_status === "Reject" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-danger">
+                                      Reject
+                                    </span>
+                                  ) : res.lmia_status === "Approved" ? (
+                                    <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                      Approved
+                                    </span>
+                                  ) : res.lmia_status === "Draft" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-gray">
+                                      Draft
+                                    </span>
+                                  ) : res.lmia_status === "Complete" ? (
+                                    <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                      Complete
+                                    </span>
+                                  ) : res.lmia_status === "Pending" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-warning">
+                                      Pending
+                                    </span>
+                                  ) : res.lmia_status === "Other" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-dark">
+                                      Other
+                                    </span>
+                                  ) : (
+                                    <span>NA</span>
+                                  )}</Link>
                               </div>
                             </th>
                             <th className="  py-5 ">
@@ -664,6 +702,13 @@ function JobResponse(props) {
                                   role="group"
                                   aria-label="Basic example"
                                 >
+                                  {res.employee_status === "7"  ? null :<button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() => ReservedEmployee(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Reserved
+                                  </button>}
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => addFollow(res)}
@@ -679,13 +724,13 @@ function JobResponse(props) {
                                   >
                                     <i className="fa fa-calendar text-gray px-2"></i>
                                   </button>
-                                  <button
+                                 {res.employee_status === "7"  ? <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => addLimia(res)}
                                     title="Add LMIA"
                                   >
                                     LMIA
-                                  </button>
+                                  </button> : null}
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(res)}

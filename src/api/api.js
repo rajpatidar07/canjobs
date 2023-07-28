@@ -463,7 +463,6 @@ export const SocialCompanyLogin = async (token, email, name, picture, type) => {
   return response.data;
 };
 
-
 /*Employer Reset password Api */
 export const EmployerResetPasswordApi = async (props) => {
   const response = await axios.put(`${API_URL}company/resetPassword`, props, {
@@ -749,6 +748,23 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
       interview_date: props.interview_date,
       created_by_admin: admin_id,
       interview_status: props.interview_status,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Get limia list Api */
+export const GetEmployeeByLima = async (status) => {
+  const response = await axios.post(
+    `${API_URL}/company/getLmia`,
+    {
+      lmia_status: status,
     },
     {
       headers: {

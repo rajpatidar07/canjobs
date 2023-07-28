@@ -14,7 +14,11 @@ export default function DocumrentContainer(props) {
   const [docTypData, setDocTypData] = useState("")
   const [apiCall, setApiCall] = useState("")
   const [docFile, setDocFile] = useState("")
+  const [docFileBase, setDocFileBase] = useState("")
+  const [docFileExt, setDocFileExt] = useState("")
+  const [docId, setDocId] = useState("")
   const [showMoreDocType, setShowMoreDocType] = useState(false)
+  const [showSaveDoc, setShowSaveDoc] = useState(false)
   let encoded;
 
   /*Functo get Applicants Document */
@@ -24,7 +28,6 @@ export default function DocumrentContainer(props) {
       setDocData([])
     } else {
       setDocData(response.data.data)
-      // console.log(response.data.data, "All Data")
       // eslint-disable-next-line
       if (docTypData === undefined || docTypData === "undefined" || docTypData === "" && docName === "") {
         setDocTypData(response.data.data[0])
@@ -34,6 +37,7 @@ export default function DocumrentContainer(props) {
       else if (showMoreDocType === false && response.data.data.find((item) => item.type === docName)) {
         if (response.data.data.find((item) => item.type === docName).type === docName) {
           setDocTypData(response.data.data.find((item) => item.type === docName))
+
           setDocFile(response.data.data.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
         }
       }
@@ -94,57 +98,100 @@ export default function DocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      if (window.confirm("Are you sure you want to upload this document?")) {
-        let DocFile =
+      let DocFile =
           `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
-        //Api to upload document
-        let response = await UploadDocument(props.employee_id, docName, DocFile, id)
-        if (response.data.message === "inserted successfully") {
-          toast.success("Document uploaded Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setShowMoreDocType(false)
-          setDocName(docName)
-          setApiCall(true)
-        }
-        if (response.data.message === "updated successfully") {
-          toast.success("Document Updated Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setShowMoreDocType(false)
-          setApiCall(true)
-          // console.log(docData.find((item)=>item.type === docName))
-          setDocTypData(docData.find((item) => item.type === docName))
-          setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
-        }
-        if (response.data.message === "Invalid base64-encoded data !") {
-          toast.error("Document type is not valid", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setApiCall(true)
-        }
-      } else {
-        toast.error("Document update denied.", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setApiCall(true);
-      }
+      setDocFile(base64Name)
+      setDocFileExt(fileType.slice(1))
+      setDocFileBase(DocFile)
+      setShowSaveDoc(true)
+      // if (window.confirm("Are you sure you want to upload this document?")) {
+      //   let DocFile =
+      //     `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
+      //   //Api to upload document
+      //   let response = await UploadDocument(props.employee_id, docName, DocFile, id)
+      //   if (response.data.message === "inserted successfully") {
+      //     toast.success("Document uploaded Successfully", {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     });
+      //     setShowMoreDocType(false)
+      //     setDocName(docName)
+      //     setApiCall(true)
+      //   }
+      //   if (response.data.message === "updated successfully") {
+      //     toast.success("Document Updated Successfully", {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     });
+      //     setShowMoreDocType(false)
+      //     setApiCall(true)
+      //     // console.log(docData.find((item)=>item.type === docName))
+      //     setDocTypData(docData.find((item) => item.type === docName))
+      //     setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+      //   }
+      //   if (response.data.message === "Invalid base64-encoded data !") {
+      //     toast.error("Document type is not valid", {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     });
+      //     setApiCall(true)
+      //   }
+      // } else {
+      //   toast.error("Document update denied.", {
+      //     position: toast.POSITION.TOP_RIGHT,
+      //     autoClose: 1000,
+      //   });
+      //   setApiCall(true);
+      // }
 
     }
   };
 
+  /*Function to save document */
+  const SaveDocument =async () => {
+    let response = await UploadDocument(props.employee_id,/*docName === "" ? docData[0].type : */docName, docFileBase, docId)
+    console.log(response)
+    if (response.data.message === "inserted successfully") {
+      toast.success("Document uploaded Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setShowMoreDocType(false)
+      setDocName(docName)
+      setDocFileBase("")
+      setDocFileExt("")
+      setShowSaveDoc(false)
+      setApiCall(true)
+    }
+    if (response.data.message === "updated successfully") {
+      toast.success("Document Updated Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setShowMoreDocType(false)
+      setApiCall(true)
+      // console.log(docData.find((item)=>item.type === docName))
+      setDocTypData(docData.find((item) => item.type === docName))
+      setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+    }
+    if (response.data.message === "Invalid base64-encoded data !") {
+      toast.error("Document type is not valid", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true)
+    }
+  }
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
     return <FileViewer
-      fileType={docTypData.extension_type === "vnd.openxmlformats-officedocument.wordprocessingml.document" ? "docx" : docTypData.extension_type}
+      fileType={docFileExt ? docFileExt :
+        docTypData.extension_type === "vnd.openxmlformats-officedocument.wordprocessingml.document" ? "docx" : docTypData.extension_type}
       filePath={docFile}
       errorComponent={() => <div>Error loading document</div>}
     />
   }
+
   /*Function to verify the applicants documents */
   const onVerifyDocuments = async (id, verify) => {
     let response = await VarifyDocument(id, verify);
@@ -156,6 +203,7 @@ export default function DocumrentContainer(props) {
       setApiCall(true);
     }
   };
+
   /*Type array */
   let DocTypeData = [
     "passport",
@@ -193,6 +241,7 @@ export default function DocumrentContainer(props) {
       <div className="row mb-11 ">
         <div className="col-4">
           <h5>Document List</h5>
+          {/* Documents type list */}
           <ListGroup defaultActiveKey="#link1">
             {(docData || []).map((item, index) =>
             (
@@ -204,6 +253,7 @@ export default function DocumrentContainer(props) {
                   setShowMoreDocType(false)
                   setDocTypData(item)
                   setDocName(item.type)
+                  setDocId(item.id)
                   setDocFile(item.document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
                 }}
               >
@@ -258,62 +308,70 @@ export default function DocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        {docTypData ? (
-          <div className="col-7 p-5 bg-light rounded">
-            <div className="doc_preview_box" >
-              <div className='d-flex justify-content-between'>
-                {showMoreDocType ?
-                  <Form.Select
-                    className='form-control'
-                    value={docName}
-                    onChange={(e) => setDocName(e.target.value)}>
-                    <option value={""}>Select document</option>
-                    {(DocTypeData || []).map((item, index) => {
-                      return (
-                        <option value={item} key={index}>
-                          {item}
-                        </option>
-                      );
-                    })}
-                  </Form.Select> :
-                  null}
-                <div className=''>
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    style={{ display: "none" }}
-                    onChange={(e) => handleFileChange(e, docTypData.id)}
-                  />
-                  <button
-                    className="btn btn-primary"
-                    onClick={() =>
-                      document.querySelector('input[type="file"]').click()
-                    }>
-                    {docTypData.id ? "Update Document" : "Upload Document"}
-                  </button>
+        {docTypData ?
+          // Code to update document
+          (
+            <div className="col-7 p-5 bg-light rounded">
+              <div className="doc_preview_box" >
+                <div className='d-flex justify-content-between'>
+                  {showMoreDocType ?
+                    <Form.Select
+                      className='form-control'
+                      value={docName}
+                      onChange={(e) => setDocName(e.target.value)}>
+                      <option value={""}>Select document</option>
+                      {(DocTypeData || []).map((item, index) => {
+                        return (
+                          <option value={item} key={index}>
+                            {item}
+                          </option>
+                        );
+                      })}
+                    </Form.Select> :
+                    null}
+                  <div className=''>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                      style={{ display: "none" }}
+                      onChange={(e) => handleFileChange(e, docTypData.id)}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={() =>
+                        document.querySelector('input[type="file"]').click()
+                      }>
+                      {docTypData.id ? "Update Document" : "Upload Document"}
+                    </button>
+                  </div>
+                  {showSaveDoc ?
+                    <div className="">
+                      <button onClick={SaveDocument}>Save Document</button>
+                    </div>
+                    : null}
+                  <div className="">
+                    <button
+                      className="btn btn-secondary"
+                      disabled={docTypData.is_varify === "0" ? false : true}
+                      onClick={() => onVerifyDocuments(docTypData.id, 1)}>
+                      {docTypData.is_varify === "1" ?
+                        <span>Verifed <i className="fas fa-check fs-1 p-1 border border-white rounded-circle"></i>
+                        </span> :
+                        "Verify document"}
+                    </button>
+                  </div>
                 </div>
-                <div className="">
-                  <button
-                    className="btn btn-secondary"
-                    disabled={docTypData.is_varify === "0" ? false : true}
-                    onClick={() => onVerifyDocuments(docTypData.id, 1)}>
-                    {docTypData.is_varify === "1" ?
-                      <span>Verifed <i className="fas fa-check fs-1 p-1 border border-white rounded-circle"></i>
-                      </span> :
-                      "Verify document"}
-                  </button>
-                </div>
+                {docTypData.id ?
+                  <RenderNewDocFile />
+                  :
+                  <div className='text-center'>
+                    <h2> No Documents </h2>
+                  </div>
+                }
               </div>
-              {docTypData.id ?
-                <RenderNewDocFile />
-                :
-                <div className='text-center'>
-                  <h2> No Documents </h2>
-                </div>
-              }
             </div>
-          </div>
-        ) :
+          ) :
+          // Code to Upload new document
           <>
             {showMoreDocType ?
               <div className="d-flex justify-content-between">
@@ -336,7 +394,9 @@ export default function DocumrentContainer(props) {
                       document.querySelector('input[type="file"]').click()
                     }>Upload Document</button>
                 </div>
-              </div> : null}</>}
+              </div> :
+              null}
+          </>}
       </div>
     </div>
   );

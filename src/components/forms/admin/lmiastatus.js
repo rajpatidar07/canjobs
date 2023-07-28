@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AddLimia } from "../../../api//api";
+import { AddLimia, AddJob } from "../../../api//api";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom"
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 import moment from "moment";
@@ -11,9 +12,10 @@ function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
-  let lmia_status = props.resData.lmia_status 
+  let lmia_status = props.resData.lmia_status
   let completion_time = props.resData.expected_time_of_completion
   let jobId = props.resData.job_id;
+  let location = useLocation()
   const [company] = useState([]);
   /* Functionality to close the modal */
   const close = () => {
@@ -24,7 +26,7 @@ function LmiaStatus(props) {
   };
   // USER LIMIA UPDATE VALIDATION
   useEffect(() => {
-    setState({ ...state, lmia_status: lmia_status , completion_time : completion_time});
+    setState({ ...state, lmia_status: lmia_status, completion_time: completion_time });
   }, [lmia_status]);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -49,10 +51,26 @@ function LmiaStatus(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
-    
+
   // USER LIMIA UPDATE FILTER SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
+    if (validate() && props.job === "yes" && location.pathname === "/job") {
+      let data = {
+        completion_time: state.completion_time,
+        lmia_status: state.lmia_status,
+        job_id: jobId
+      }
+      let responseData = await AddJob(data);
+      if (responseData.message === "job data updated successfully") {
+        toast.success("Lmia Status Updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true)
+        return close();
+      }
+    }
     if (validate()) {
       setLoading(true);
       const responseData = await AddLimia(state, employeeId, jobId);
@@ -75,6 +93,7 @@ function LmiaStatus(props) {
     } else {
       setLoading(false);
     }
+
   };
   // END LIMIA VALIDATION
   return (

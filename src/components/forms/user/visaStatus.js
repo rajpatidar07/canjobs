@@ -10,24 +10,7 @@ export default function VisaStatus(props) {
     // USER PERSONAL DETAIL VALIDATION
     // INITIAL STATE ASSIGNMENT
     const initialFormStateuser = {
-      name: "",
-      email: "",
-      contact_no: "",
-      description: "",
-      date_of_birth: "",
-      gender: "",
-      marital_status: "",
-      nationality: "",
-      current_location: "",
-      currently_located_country: "",
-      language: "",
-      religion: "",
-      interested_in: "",
-      experience: "",
-      work_permit_canada: "",
       work_permit_other_country: "",
-      resume: "",
-      profile_photo: "",
     };
     /* Functionality to close the modal */
   

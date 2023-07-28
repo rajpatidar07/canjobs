@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import Addfollowup from "../forms/admin/addfollowup";
 import { GetAllResponse, GetFilter } from "../../api/api";
 import moment from "moment";
@@ -44,6 +44,8 @@ export default function LimiaStatus(props) {
     const [employeeId, setEmployeeId] = useState();
     const user_type = localStorage.getItem("userType");
     let [changeJob, setChangeJob] = useState(false)
+    let location = useLocation()
+
     /*Function to get the jSon */
     const JsonData = async () => {
         let Json = await GetFilter();
@@ -52,13 +54,14 @@ export default function LimiaStatus(props) {
     //   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {
     //     props.setApiCall(true)
     //   }
+
     /* Function to get the Response data*/
     const ResponseData = async () => {
         setIsLoading(true)
         const userData = await GetAllResponse(
             props.heading === "Manage Follow-ups" || user_type === "company"
                 ? jobId
-                : null,
+                : location.state === null ? null : location.state.id,
             skillFilterValue,
             experienceTypeFilterValue,
             search,
@@ -80,6 +83,7 @@ export default function LimiaStatus(props) {
             setIsLoading(false)
         }
     };
+
     /*Render function to get the Response*/
     useEffect(() => {
         ResponseData();
@@ -205,12 +209,12 @@ export default function LimiaStatus(props) {
         }}
       />
     ) : null} */}
-    {documentModal ?
-    <DocumentModal
-    show={documentModal}
-    close={()=>setDocumentModal(false)}
-    employee_id={employeeId}/>:
-    null}
+            {documentModal ?
+                <DocumentModal
+                    show={documentModal}
+                    close={() => setDocumentModal(false)}
+                    employee_id={employeeId} /> :
+                null}
             {limia ? (
                 <LmiaStatus
                     show={limia}
@@ -721,11 +725,11 @@ export default function LimiaStatus(props) {
                                                                         LMIA
                                                                     </button>
                                                                     <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => AddDoucument(res.employee_id)}
-                                  title="Documents" >
-                                  <span className="fas fa-file text-gray"></span>
-                                </button>
+                                                                        className="btn btn-outline-info action_btn"
+                                                                        onClick={() => AddDoucument(res.employee_id)}
+                                                                        title="Documents" >
+                                                                        <span className="fas fa-file text-gray"></span>
+                                                                    </button>
                                                                     {/* <button
                                   className="btn btn-outline-info action_btn text-gray"
                                   onClick={() => editJob(res)}

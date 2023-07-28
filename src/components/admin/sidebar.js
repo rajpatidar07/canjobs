@@ -64,14 +64,14 @@ const AdminSidebar = (props) => {
               <i className="far fa-address-card mr-5"></i>Manage Jobs
             </Link>
           </li>
-          <li className={props.heading === "Response" ? "active" : ""}>
+          {/* <li className={props.heading === "Response" ? "active" : ""}>
             <Link
               to="/responses"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-reply mr-5"></i>Manage Response
             </Link>
-          </li>
+          </li> */}
           {/* <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
             <Link
               to="/followup"
