@@ -1213,13 +1213,12 @@ export const GetEmployeeDocumentList = async (id ,type) => {
   return response;
 };
 /*Api to upload document*/
-export const UploadDocument = async (id, type, doc, docId, varify) => {
-  console.log(id, type, doc, "hello",docId, varify)
+export const UploadDocument = async (id, type, doc, docId, ) => {
   const response = await axios.put(`${API_URL}user/documentsUpload `, {
     employee_id: id,
     type: type,
     document_file: doc,
-    is_varify: varify,
+    is_varify: "0",
     id: docId
   }, {
     headers: {

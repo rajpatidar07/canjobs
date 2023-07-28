@@ -724,11 +724,6 @@ export default function LimiaStatus(props) {
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => AddDoucument(res.employee_id)}
                                   title="Documents" >
-                                  {/* <Link
-                                  to={"/document"}
-                                  state={{ employee_id: res.employee_id }}
-                                   >
-                                  </Link> */}
                                   <span className="fas fa-file text-gray"></span>
                                 </button>
                                                                     {/* <button

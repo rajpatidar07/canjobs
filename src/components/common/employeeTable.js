@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import EmployementDetails from "../forms/user/employement";
-// import ChangeJob from "../forms/admin/changeJobs";
+import DocumentModal from "../admin/Modal/DocumentModal";
 import Loader from '../common/loader';
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
@@ -25,7 +25,7 @@ export default function EmployeeTable(props) {
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
-
+  let [documentModal, setDocumentModal] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
   let [employeeId, setemployeeId] = useState();
@@ -132,6 +132,12 @@ export default function EmployeeTable(props) {
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+  /*Function to open add Document up modal */
+  const AddDoucument = (e) => {
+    setDocumentModal(true)
+    setemployeeId(e)
+}
+/*
   /*To call Api to delete employee */
   async function deleteEmployee(e) {
     const responseData = await DeleteJobEmployee(e);
@@ -234,7 +240,12 @@ export default function EmployeeTable(props) {
           close={() => { setShowChangeJobModal(false) }}
           data={employeeId} />
       ) : null}
-
+ {documentModal ?
+    <DocumentModal
+    show={documentModal}
+    close={()=>setDocumentModal(false)}
+    employee_id={employeeId}/>:
+    null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           {isLoading ?
@@ -560,7 +571,18 @@ export default function EmployeeTable(props) {
                                 >
                                   <span className="fab fa-cc-visa text-gray px-2"></span>
                                 </button>
-                                {props.visa === "yes" ? null : <> <button
+                                {props.visa === "yes" ?   
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => AddDoucument(empdata.employee_id)}
+                                  title="Documents" >
+                                  {/* <Link
+                                  to={"/document"}
+                                  state={{ employee_id: res.employee_id }}
+                                   >
+                                  </Link> */}
+                                  <span className="fas fa-file text-gray"></span>
+                                </button> : <> <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => editEmployee(empdata.employee_id)}
                                   title="Edit Employee"
@@ -612,7 +634,6 @@ export default function EmployeeTable(props) {
                                   >
                                     <i className="fas fa-briefcase"></i>
                                   </button>
-                                  {console.log(empdata.is_applied)}
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ShowDeleteAlert(empdata)}

@@ -7,30 +7,34 @@ import { useEffect } from 'react';
 export default function DocumrentContainer(props) {
   const [docName, setDocName] = useState("")
   const [docData, setDocData] = useState([])
-  const [docTypData, setDocTypData] = useState({})
+  const [docTypData, setDocTypData] = useState("")
   const [apiCall, setApiCall] = useState("")
+  const [docFile, setDocFile] = useState("")
   const [showMoreDocType, setShowMoreDocType] = useState(false)
   let encoded;
 
   /*Functo get Applicants Document */
   const GetDocument = async () => {
-    // if (docName) {
     let response = await GetEmployeeDocumentList(props.employee_id)
     if (response.data.data === undefined || response.data.data === "" || response.data.data === null || response.data.data.length === 0) {
       setDocData([])
     } else {
       setDocData(response.data.data)
+      // console.log(response.data.data, "All Data")
+      // eslint-disable-next-line
+      if (docTypData === undefined || docTypData === "undefined" || docTypData === "" && docName === "") {
+        setDocTypData(response.data.data[0])
+        setDocFile(response.data.data[0].document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+      }
+      
+      else if (showMoreDocType === false && response.data.data.find((item) => item.type === docName)) {
+        if (response.data.data.find((item) => item.type === docName).type === docName) {
+          setDocTypData(response.data.data.find((item) => item.type === docName))
+          setDocFile(response.data.data.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+        }
+      }
     }
-    // }  
   }
-  /*Render method */
-  useEffect(() => {
-    GetDocument()
-    RenderNewDocFile()
-    if (apiCall === true) {
-      setApiCall(false)
-    }
-  }, [docName, apiCall])
 
   /*Function to convert file to base64 */
   const convertToBase64 = (file) => {
@@ -57,7 +61,7 @@ export default function DocumrentContainer(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      return; 
+      return;
     }
     // Check file type
     const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
@@ -83,36 +87,56 @@ export default function DocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile =
-        `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
-      let response = await UploadDocument(props.employee_id, docName, DocFile, id)
-      if (response.data.message === "successfully") {
-        toast.success("Document uploaded Successfully", {
+      if (window.confirm("Are you sure you want to upload this document?")) {
+        let DocFile =
+          `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
+        //Api to upload document
+        let response = await UploadDocument(props.employee_id, docName, DocFile, id)
+        if (response.data.message === "inserted successfully") {
+          toast.success("Document uploaded Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setShowMoreDocType(false)
+          setDocName(docName)
+          setApiCall(true)
+        }
+        if (response.data.message === "updated successfully") {
+          toast.success("Document Updated Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setShowMoreDocType(false)
+          setApiCall(true)
+          // console.log(docData.find((item)=>item.type === docName))
+          setDocTypData(docData.find((item) => item.type === docName))
+          setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+        }
+        if (response.data.message === "Invalid base64-encoded data !") {
+          toast.error("Document type is not valid", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setApiCall(true)
+        }
+      } else {
+        toast.error("Document update denied.", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         setApiCall(true)
       }
-      if (response.data.message === "Invalid base64-encoded data !") {
-        toast.error("Document type is not valid", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setApiCall(true)
-      }
+
     }
   };
 
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
-    let version = docTypData.document_url + `?v=${new Date().getMinutes() +new Date().getSeconds()}`
-    console.log(version)
     return <FileViewer
-      fileType={docTypData.extension_type}
-      filePath={version}
+      fileType={docTypData.extension_type === "vnd.openxmlformats-officedocument.wordprocessingml.document" ? "docx" : docTypData.extension_type}
+      filePath={docFile}
       errorComponent={() => <div>Error loading document</div>}
     />
-
   }
   /*Function to verify the applicants documents */
   const onVerifyDocuments = async (id, verify) => {
@@ -125,6 +149,7 @@ export default function DocumrentContainer(props) {
       setApiCall(true)
     }
   }
+
   /*Type array */
   let DocTypeData = ["passport",
     "drivers_license",
@@ -142,169 +167,105 @@ export default function DocumrentContainer(props) {
     "education_post_graduation",
     "resume_or_cv",
     "ielts",
-    "biometrics_validity_letter",
     "medical",
     "police_clearance",
     "refusal_letter"]
 
-  // function isDocumentVerified(documentType, data) {
-  //   const foundItem = docData.find((item) => item.type === documentType);
-  //   // return foundItem ? foundItem.is_varify === "1" : false;
-  //   return( 
-  //     docData.map((item,index) => (
-  //     <ListGroup.Item
-  //       key={index}
-  //       action
-  //       active={docName === item.type}
-  //       onClick={() => setDocTypData(item)}
-  //     >
-  //       {item.type} {item.is_varify === "1" ? <span><i className="fas fa-check"></i> Verified </span> : null}
-  //     </ListGroup.Item>
-  //   )))
-  // }
-  console.log(docTypData)
+  /*Render method */
+  useEffect(() => {
+    GetDocument()
+    RenderNewDocFile()
+    if (apiCall === true) {
+      setApiCall(false)
+    }
+  }, [docName, apiCall, docFile])
+
   return (
     <div className="container document_container bg-white p-7">
       <div className="row mb-11 ">
         <div className="col-4">
           <h5>Document List</h5>
           <ListGroup defaultActiveKey="#link1">
-            {/* <ListGroup.Item action
-              active={docName === "passport" ? true : false}
-              onClick={() => setDocName("passport")}>
-              Passport
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "drivers_license" ? true : false}
-              onClick={() => setDocName("drivers_license")}>Driving License</ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "immigration_status" ? true : false}
-              onClick={() => setDocName("immigration_status")}>
-              Proof of current immigration status
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "lmia" ? true : false}
-              onClick={() => setDocName("lmia")}>
-              A copy of the Labour Market Impact Assessment (LMIA)
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "job_offer_letter" ? true : false}
-              onClick={() => setDocName("job_offer_letter")}>
-              A copy of your job offer from your prospective Canadian
-              employer
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "provincial_nominee_letter" ? true : false}
-              onClick={() => setDocName("provincial_nominee_letter")}>
-              If you're a Provincial Nominee with an LMIA-exempt job offer
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "proof_of_funds" ? true : false}
-              onClick={() => setDocName("proof_of_funds")}>
-              Proof of funds
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "proof_of_employment" ? true : false}
-              onClick={() => setDocName("proof_of_employment")}>
-              Proof of employment - Proof of job requirements met.
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "marriage_certificate" ? true : false}
-              onClick={() => setDocName("marriage_certificate")}>
-              Photocopy of Marriage certificate
-            </ListGroup.Item>
-            <ListGroup.Item
-              as={DropdownButton}
-              title="Educational documents"
-              variant="light"
-              id="dropdown-basic"
-              active={docName === "education_metric" || docName === "education_higher_secondary" || docName === "education_graduation" || docName === "education_post_graduation" ? true : false}
-            >
-              <Dropdown.Item
-                onClick={() => setDocName("education_metric")}
-              >
-                10th Marksheet
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => setDocName("education_higher_secondary")}
-              >
-                12th Marksheet
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => setDocName("education_graduation")}
-              >
-                Graduation Marksheet
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => setDocName("education_post_graduation")}
-              >
-                Post Graduation Marksheet
-              </Dropdown.Item>
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "resume_or_cv" ? true : false}
-              onClick={() => setDocName("resume_or_cv")}>
-              Résumé or CV of your work and education history
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "ielts" ? true : false}
-              onClick={() => setDocName("ielts")}>
-              IELTS test
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "biometrics_validity_letter" ? true : false}
-              onClick={() => setDocName("biometrics_validity_letter")}>
-              validited Biometrics letter
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "medical" ? true : false}
-              onClick={() => setDocName("medical")}>
-              Medical certificate
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "police_clearance" ? true : false}
-              onClick={() => setDocName("police_clearance")}>
-              Police clearance letter
-            </ListGroup.Item>
-            <ListGroup.Item action
-              active={docName === "refusal_letter" ? true : false}
-              onClick={() => setDocName("refusal_letter")}>
-              Any past refusals
-            </ListGroup.Item> */}
-            {(docData || []).map((item, index) => (
+            {(docData || []).map((item, index) =>
+            (
               <ListGroup.Item
                 key={index}
                 action
-                active={docTypData.type === item.type}
+                active={docTypData.type === item.type || (showMoreDocType === false && item.type === docName)}
                 onClick={() => {
+                  setShowMoreDocType(false)
                   setDocTypData(item)
                   setDocName(item.type)
+                  setDocFile(item.document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
                 }}
               >
-                {item.type} {item.is_varify === "1" ? <span><i className="fas fa-check"></i> Verified </span> : null}
+                {item.type === "passport" ? "Passport"
+                  :
+                  item.type === "drivers_license" ? "Driving License"
+                    :
+                    item.type === "immigration_status" ? "Current Immigration Status"
+                      :
+                      item.type === "lmia" ? "Lmia"
+                        :
+                        item.type === "job_offer_letter" ? "Job Offer"
+                          :
+                          item.type === "provincial_nominee_letter" ? "Provincial Nominee"
+                            :
+                            item.type === "proof_of_funds" ? "Funds"
+                              :
+                              item.type === "proof_of_employment" ? "Employment"
+                                :
+                                item.type === "marriage_certificate" ? "Marriage Certificate"
+                                  :
+                                  item.type === "education_metric" ? "Education Metric (10Th marksheet)"
+                                    :
+                                    item.type === "education_higher_secondary" ? "Education Higher Secondary (12Th marksheet)"
+                                      :
+                                      item.type === "education_graduation" ? "Education Graduation (UG marksheet)"
+                                        :
+                                        item.type === "education_post_graduation" ? "Education Post Graduation (PG marksheet)"
+                                          :
+                                          item.type === "resume_or_cv" ? "Resumne"
+                                            :
+                                            item.type === "ielts" ? "IELTS"
+                                              :
+                                              item.type === "medical" ? "Medical Certificate"
+                                                :
+                                                item.type === "police_clearance" ? "Police Clearance Certificate"
+                                                  :
+                                                  item.type === "refusal_letter" ? "Refusal Letter"
+                                                    :
+                                                    item.type === "photograph" ? "Photograph"
+                                                      :
+                                                      null
+                }
+                {item.is_varify === "1" ? <span><i className="fas fa-check"></i> Verified </span> : null}
               </ListGroup.Item>
             ))}
             <ListGroup.Item >
-              <button className='btn btn-primary w-100' onClick={() => setShowMoreDocType(true)}>Add New Documents</button>
-
-
+              <button className='btn btn-primary w-100' onClick={() => {
+                setShowMoreDocType(true)
+                setDocTypData("")
+              }}>Add New Documents</button>
             </ListGroup.Item>
           </ListGroup>
-
-
         </div>
         {docTypData ?
           <div className="col-7 p-5 bg-light rounded">
             <div className="doc_preview_box" >
               <div className='d-flex justify-content-between'>
                 {showMoreDocType ?
-                  <Form.Select className='form-control' value={docName} onChange={(e) => setDocName(e.target.value)}>
+                  <Form.Select
+                    className='form-control'
+                    value={docName}
+                    onChange={(e) => setDocName(e.target.value)}>
                     <option value={""}>Select document</option>
                     {(DocTypeData || []).map((item, index) => {
                       return (
                         <option value={item} key={index}>{item}</option>)
                     })}
-                  </Form.Select> : null}
+                  </Form.Select> :
+                  null}
                 <div className=''>
                   <input
                     type="file"
@@ -315,26 +276,55 @@ export default function DocumrentContainer(props) {
                   <button className="btn btn-primary"
                     onClick={() =>
                       document.querySelector('input[type="file"]').click()
-                    }>{docTypData.id ? "Update Document" : "Upload Document"}</button>
+                    }>
+                    {docTypData.id ? "Update Document" : "Upload Document"}
+                  </button>
                 </div>
                 <div className=''>
                   <button className="btn btn-secondary"
                     disabled={docTypData.is_varify === "0" ? false : true}
                     onClick={() => onVerifyDocuments(docTypData.id, 1)}>
-                    {docTypData.is_varify === "1" ? <span>Verifed <i className="fas fa-check fs-1 p-1 border border-white rounded-circle"></i></span> :
+                    {docTypData.is_varify === "1" ?
+                      <span>Verifed <i className="fas fa-check fs-1 p-1 border border-white rounded-circle"></i>
+                      </span> :
                       "Verify document"}
                   </button>
                 </div>
               </div>
               {docTypData.id ?
-                RenderNewDocFile()
+                <RenderNewDocFile />
                 :
                 <div className='text-center'>
                   <h2> No Documents </h2>
                 </div>
               }
             </div>
-          </div> : null}
+          </div> :
+          <>
+           {showMoreDocType ?
+            <div className="d-flex justify-content-between">
+            <Form.Select className='form-control' value={docName} onChange={(e) => setDocName(e.target.value)}>
+            <option value={""}>Select document</option>
+            {(DocTypeData || []).map((item, index) => {
+              return (
+                <option value={item} key={index}>{item}</option>)
+            })}
+          </Form.Select>
+          <div className=''>
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            style={{ display: "none" }}
+            onChange={(e) => handleFileChange(e, docTypData.id)}
+          />
+          <button className="btn btn-primary"
+            onClick={() =>
+              document.querySelector('input[type="file"]').click()
+            }>Upload Document</button>
+        </div>
+            </div>:null}</>}
+
+
       </div>
     </div>
   )
