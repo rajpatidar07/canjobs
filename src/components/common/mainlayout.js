@@ -80,6 +80,7 @@ function MainLayout() {
             <Route path="/response" element={<Response />} />
             <Route path="/empsearch" element={<EmployeeSearch />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/lmia_dashboard" element={<EmployerLMIA />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             <Route path="*" element={<NotFound />} />
           </>

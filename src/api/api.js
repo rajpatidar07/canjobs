@@ -89,7 +89,10 @@ export const LinkedInLogin = async (props, type) => {
   if (type === "employeeLogin") {
     const formData = new FormData();
     formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    const response = await axios.post(
+      `${API_URL}api/Common_controller/linkedinLogin`,
+      formData
+    );
     return response.data;
   }
 };
@@ -99,20 +102,26 @@ export const LinkedSignup = async (props, type) => {
   if (type === "employeeSignup") {
     const formData = new FormData();
     formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    const response = await axios.post(
+      `${API_URL}api/Common_controller/linkedinLogin`,
+      formData
+    );
     return response.data;
   }
 };
 
 /*Api to login in with Social linkes in employee login*/
 export const SocialLogin = async (token, email, name, picture, type) => {
-  const response = await axios.post(`${API_URL}user/signupLoginViaSocialMedia`, {
-    "token": token,
-    "email": email,
-    "name": name,
-    "picture": picture,
-    "type": type
-  });
+  const response = await axios.post(
+    `${API_URL}user/signupLoginViaSocialMedia`,
+    {
+      token: token,
+      email: email,
+      name: name,
+      picture: picture,
+      type: type,
+    }
+  );
   return response.data;
 };
 
@@ -191,7 +200,7 @@ export const getallEmployeeData = async (
       column_name: column,
       sort_order: sort,
       filter_by_time: time,
-      job_keyskills: jobSkill
+      job_keyskills: jobSkill,
     },
     {
       headers: {
@@ -306,7 +315,7 @@ export const AddEmployeeSkill = async (props, id) => {
 export const DeleteEmployeeSkill = async (props) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeSkill`,
-    { skill_id: props, },
+    { skill_id: props },
     {
       headers: {
         "Content-Type": "application/json",
@@ -321,7 +330,7 @@ export const DeleteEmployeeSkill = async (props) => {
 export const DeleteEmployeeEducation = async (props) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeEducation`,
-    { education_id: props, },
+    { education_id: props },
     {
       headers: {
         "Content-Type": "application/json",
@@ -336,7 +345,7 @@ export const DeleteEmployeeEducation = async (props) => {
 export const DeleteEmployeeCareer = async (props) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeCareer`,
-    { career_id: props, },
+    { career_id: props },
     {
       headers: {
         "Content-Type": "application/json",
@@ -398,7 +407,7 @@ export const GetJobDetail = async (props) => {
   // console.log(props);
   const response = await axios.post(
     `${API_URL}admin/jobDetail`,
-    { job_id: props, },
+    { job_id: props },
     {
       headers: {
         "Content-Type": "application/json",
@@ -436,7 +445,10 @@ export const LinkedInLoginEmployer = async (props, type) => {
   if (type === "employerLogin") {
     const formData = new FormData();
     formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    const response = await axios.post(
+      `${API_URL}api/Common_controller/linkedinLogin`,
+      formData
+    );
     return response.data;
   }
 };
@@ -446,20 +458,26 @@ export const LinkedInSignupEmployer = async (props, type) => {
   if (type === "employerSignup") {
     const formData = new FormData();
     formData.append("code", props);
-    const response = await axios.post(`${API_URL}api/Common_controller/linkedinLogin`, formData);
+    const response = await axios.post(
+      `${API_URL}api/Common_controller/linkedinLogin`,
+      formData
+    );
     return response.data;
   }
 };
 
 /*Api to login in with Social linkes in employer login*/
 export const SocialCompanyLogin = async (token, email, name, picture, type) => {
-  const response = await axios.post(`${API_URL}company/signupLoginViaSocialMedia`, {
-    "token": token,
-    "email": email,
-    "name": name,
-    "picture": picture,
-    "type": type
-  });
+  const response = await axios.post(
+    `${API_URL}company/signupLoginViaSocialMedia`,
+    {
+      token: token,
+      email: email,
+      name: name,
+      picture: picture,
+      type: type,
+    }
+  );
   return response.data;
 };
 
@@ -472,7 +490,7 @@ export const EmployerResetPasswordApi = async (props) => {
     },
   });
   return response.data;
-}
+};
 
 /*Employer Forgot passsword api */
 export const EmployerForgotPassword = async (props) => {
@@ -508,7 +526,7 @@ export const GetAllResponse = async (
       sort_order: sort,
       search: search,
       filter_by_time: time,
-      filter_lmia_status: lima
+      filter_lmia_status: lima,
     },
     {
       headers: {
@@ -548,7 +566,7 @@ export const GetAllJobs = async (
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
-      employee_skills: employeeSkill
+      employee_skills: employeeSkill,
     },
     {
       headers: {
@@ -816,7 +834,19 @@ export const getFollowupLastData = async (page, column, limit, sort, time) => {
   );
   return response.data;
 };
-
+export const getLMIAstatus = async (props) => {
+  const response = await axios.post(
+    `https://apnaorganicstore.in/canjobs/company/getLmia`,
+    { lmia_status: props },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
 // ADMIN'S API
 /*Get Summary Count Api */
 export const getSummaryCount = async () => {
@@ -873,7 +903,7 @@ export const ReadNotification = async (props) => {
     }
   );
   return response.data;
-}
+};
 
 /*Admin List Api */
 export const getallAdminData = async (
@@ -1045,16 +1075,12 @@ export const AddAdmin = async (props) => {
 
 /*Get Filter Api */
 export const GetFilter = async (props) => {
-  const response = await axios.post(
-    `${API_URL}admin/getFilterList`,
-    props,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.post(`${API_URL}admin/getFilterList`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response;
 };
 
@@ -1190,70 +1216,90 @@ export const AddUpdateEmailTemplate = async (props) => {
 /*Api to Test email template */
 export const TestEmail = async (props) => {
   console.log(props);
-  const response = await axios.post(`${API_URL}/common/testEmail`, {
-    "email_id": props.email_id,
-    "email_template_id": props.email_template_id
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+  const response = await axios.post(
+    `${API_URL}/common/testEmail`,
+    {
+      email_id: props.email_id,
+      email_template_id: props.email_template_id,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 
 /*Api to get the job filterd by employee id if it is applied or not */
 export const GetEmployeeFilterJob = async (id, skill) => {
-  const response = await axios.post(`${API_URL}admin/getAllJobsViewAdmin`, {
-    employee_id: id,
-    filter_keyskill: skill
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+  const response = await axios.post(
+    `${API_URL}admin/getAllJobsViewAdmin`,
+    {
+      employee_id: id,
+      filter_keyskill: skill,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response;
 };
 /*Api to get list of the Document */
-export const GetEmployeeDocumentList = async (id ,type) => {
-  const response = await axios.post(`${API_URL}user/getDocumentsUploaded`, {
-    employee_id: id,
-    type : type
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+export const GetEmployeeDocumentList = async (id, type) => {
+  const response = await axios.post(
+    `${API_URL}user/getDocumentsUploaded`,
+    {
+      employee_id: id,
+      type: type,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response;
 };
 /*Api to upload document*/
-export const UploadDocument = async (id, type, doc, docId, ) => {
-  const response = await axios.put(`${API_URL}user/documentsUpload `, {
-    employee_id: id,
-    type: type,
-    document_file: doc,
-    is_varify: "0",
-    id: docId
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+export const UploadDocument = async (id, type, doc, docId) => {
+  const response = await axios.put(
+    `${API_URL}user/documentsUpload `,
+    {
+      employee_id: id,
+      type: type,
+      document_file: doc,
+      is_varify: "0",
+      id: docId,
     },
-  })
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response;
 };
 /*Api to verify Applicants document */
 export const VarifyDocument = async (id, verify) => {
-  const response = await axios.put(`${API_URL}user/isVarify `, {
-    is_varify: verify,
-    id: id
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+  const response = await axios.put(
+    `${API_URL}user/isVarify `,
+    {
+      is_varify: verify,
+      id: id,
     },
-  })
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response;
 };
