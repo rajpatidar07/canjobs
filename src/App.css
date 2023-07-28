@@ -607,6 +607,24 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
   overflow-y: auto;
 }
 
+.dash_card.card h3.heading {
+  color: #4751fa;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0px;
+  font-size: 30px;
+}
+
+span.dash_statistic {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 90px;
+  font-weight: 900;
+  line-height: 1;
+  color: #ff8c8e;
+}
+
 @media (max-width: 767px) {
   header.site-header {
     max-width: 100%;

@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { ListGroup, Form } from "react-bootstrap";
-import { UploadDocument, GetEmployeeDocumentList, VarifyDocument } from "../../api/api"
-import { toast } from 'react-toastify';
-import FileViewer from "react-file-viewer"
-import { useEffect } from 'react';
+import {
+  UploadDocument,
+  GetEmployeeDocumentList,
+  VarifyDocument,
+} from "../../api/api";
+import { toast } from "react-toastify";
+import FileViewer from "react-file-viewer";
+import { useEffect } from "react";
 export default function DocumrentContainer(props) {
   const [docName, setDocName] = useState("")
   const [docData, setDocData] = useState([])
@@ -26,7 +30,7 @@ export default function DocumrentContainer(props) {
         setDocTypData(response.data.data[0])
         setDocFile(response.data.data[0].document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
       }
-      
+
       else if (showMoreDocType === false && response.data.data.find((item) => item.type === docName)) {
         if (response.data.data.find((item) => item.type === docName).type === docName) {
           setDocTypData(response.data.data.find((item) => item.type === docName))
@@ -67,11 +71,14 @@ export default function DocumrentContainer(props) {
     const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const fileType = `.${file.name.split(".").pop()}`;
     if (!allowedTypes.includes(fileType.toLowerCase())) {
-      console.log("not matched")
-      toast.error("Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log("not matched");
+      toast.error(
+        "Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        }
+      );
       return;
     }
     // Check file size
@@ -124,7 +131,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setApiCall(true)
+        setApiCall(true);
       }
 
     }
@@ -140,18 +147,18 @@ export default function DocumrentContainer(props) {
   }
   /*Function to verify the applicants documents */
   const onVerifyDocuments = async (id, verify) => {
-    let response = await VarifyDocument(id, verify)
+    let response = await VarifyDocument(id, verify);
     if (response.data.message === "successfully") {
       toast.success("Document Verify Successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true)
+      setApiCall(true);
     }
-  }
-
+  };
   /*Type array */
-  let DocTypeData = ["passport",
+  let DocTypeData = [
+    "passport",
     "drivers_license",
     "photograph",
     "immigration_status",
@@ -169,7 +176,8 @@ export default function DocumrentContainer(props) {
     "ielts",
     "medical",
     "police_clearance",
-    "refusal_letter"]
+    "refusal_letter",
+  ];
 
   /*Render method */
   useEffect(() => {
@@ -250,7 +258,7 @@ export default function DocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        {docTypData ?
+        {docTypData ? (
           <div className="col-7 p-5 bg-light rounded">
             <div className="doc_preview_box" >
               <div className='d-flex justify-content-between'>
@@ -262,7 +270,10 @@ export default function DocumrentContainer(props) {
                     <option value={""}>Select document</option>
                     {(DocTypeData || []).map((item, index) => {
                       return (
-                        <option value={item} key={index}>{item}</option>)
+                        <option value={item} key={index}>
+                          {item}
+                        </option>
+                      );
                     })}
                   </Form.Select> :
                   null}
@@ -273,15 +284,17 @@ export default function DocumrentContainer(props) {
                     style={{ display: "none" }}
                     onChange={(e) => handleFileChange(e, docTypData.id)}
                   />
-                  <button className="btn btn-primary"
+                  <button
+                    className="btn btn-primary"
                     onClick={() =>
                       document.querySelector('input[type="file"]').click()
                     }>
                     {docTypData.id ? "Update Document" : "Upload Document"}
                   </button>
                 </div>
-                <div className=''>
-                  <button className="btn btn-secondary"
+                <div className="">
+                  <button
+                    className="btn btn-secondary"
                     disabled={docTypData.is_varify === "0" ? false : true}
                     onClick={() => onVerifyDocuments(docTypData.id, 1)}>
                     {docTypData.is_varify === "1" ?
@@ -299,33 +312,32 @@ export default function DocumrentContainer(props) {
                 </div>
               }
             </div>
-          </div> :
+          </div>
+        ) :
           <>
-           {showMoreDocType ?
-            <div className="d-flex justify-content-between">
-            <Form.Select className='form-control' value={docName} onChange={(e) => setDocName(e.target.value)}>
-            <option value={""}>Select document</option>
-            {(DocTypeData || []).map((item, index) => {
-              return (
-                <option value={item} key={index}>{item}</option>)
-            })}
-          </Form.Select>
-          <div className=''>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-            style={{ display: "none" }}
-            onChange={(e) => handleFileChange(e, docTypData.id)}
-          />
-          <button className="btn btn-primary"
-            onClick={() =>
-              document.querySelector('input[type="file"]').click()
-            }>Upload Document</button>
-        </div>
-            </div>:null}</>}
-
-
+            {showMoreDocType ?
+              <div className="d-flex justify-content-between">
+                <Form.Select className='form-control' value={docName} onChange={(e) => setDocName(e.target.value)}>
+                  <option value={""}>Select document</option>
+                  {(DocTypeData || []).map((item, index) => {
+                    return (
+                      <option value={item} key={index}>{item}</option>)
+                  })}
+                </Form.Select>
+                <div className=''>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    style={{ display: "none" }}
+                    onChange={(e) => handleFileChange(e, docTypData.id)}
+                  />
+                  <button className="btn btn-primary"
+                    onClick={() =>
+                      document.querySelector('input[type="file"]').click()
+                    }>Upload Document</button>
+                </div>
+              </div> : null}</>}
       </div>
     </div>
-  )
+  );
 }
