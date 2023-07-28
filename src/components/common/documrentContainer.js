@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ListGroup, DropdownButton, Dropdown, Form } from "react-bootstrap";
+import { ListGroup, Form } from "react-bootstrap";
 import { UploadDocument, GetEmployeeDocumentList, VarifyDocument } from "../../api/api"
 import { toast } from 'react-toastify';
 import FileViewer from "react-file-viewer"
@@ -10,8 +10,8 @@ export default function DocumrentContainer(props) {
   const [docTypData, setDocTypData] = useState({})
   const [apiCall, setApiCall] = useState("")
   const [showMoreDocType, setShowMoreDocType] = useState(false)
-
   let encoded;
+
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     // if (docName) {
@@ -26,6 +26,7 @@ export default function DocumrentContainer(props) {
   /*Render method */
   useEffect(() => {
     GetDocument()
+    RenderNewDocFile()
     if (apiCall === true) {
       setApiCall(false)
     }
@@ -56,12 +57,11 @@ export default function DocumrentContainer(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      return; // No file selected, you may handle this case accordingly.
+      return; 
     }
     // Check file type
     const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const fileType = `.${file.name.split(".").pop()}`;
-    console.log(allowedTypes.includes(fileType.toLowerCase()))
     if (!allowedTypes.includes(fileType.toLowerCase())) {
       console.log("not matched")
       toast.error("Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG", {
@@ -86,7 +86,6 @@ export default function DocumrentContainer(props) {
       let DocFile =
         `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
       let response = await UploadDocument(props.employee_id, docName, DocFile, id)
-      console.log(response.data.message)
       if (response.data.message === "successfully") {
         toast.success("Document uploaded Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -106,7 +105,8 @@ export default function DocumrentContainer(props) {
 
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
-    let version = docTypData.document_url + `?v=${new Date().getSeconds()}`
+    let version = docTypData.document_url + `?v=${new Date().getMinutes() +new Date().getSeconds()}`
+    console.log(version)
     return <FileViewer
       fileType={docTypData.extension_type}
       filePath={version}
