@@ -348,17 +348,19 @@ export default function EmployerTable(props) {
                         ) : (
                           <>
                             <div className="font-size-3 font-weight-normal mb-0">
-                              {"+" + empdata.contact_no}
+                              + <Link className="text-dark" to={`tel:${empdata.contact_no}`}>{empdata.contact_no}</Link>
                             </div>
                             <div className="font-size-3 font-weight-normal mb-0">
                               {empdata.contact_no_other === null ||
                               empdata.contact_no_other === undefined ||
                               empdata.contact_no_other === ""
                                 ? ""
-                                : "+" + empdata.contact_no_other}
+                                :  <><Link className="text-dark" to={`tel:${empdata.contact_no_other}`}>{empdata.contact_no_other}</Link></>}
                             </div>
                             <p className="text-gray font-size-2 font-weight-normal m-0">
+                            <Link className="text-dark" to={`mailto:${empdata.email}`}>
                               {empdata.email}
+                            </Link>
                             </p>
                           </>
                         )}

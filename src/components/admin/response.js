@@ -565,7 +565,7 @@ function JobResponse(props) {
                                         {res.name}
                                       </p>
                                       <p className="text-gray font-size-2 m-0 text-capitalize">
-                                        {res.gender} ({res.marital_status + ", "}
+                                        {res.gender === "female" ? "F" : "M"} ({res.marital_status + ", "}
                                         {/*Calculation of age from date of birth*/}
                                         {moment().diff(
                                           res.date_of_birth,
@@ -735,6 +735,7 @@ function JobResponse(props) {
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(res)}
                                     title="Change Job"
+                                    disabled={props.total_applicants >= props.role_category ? true : false}
                                   >
                                     <i className="fas fa-briefcase"></i>
                                   </button>

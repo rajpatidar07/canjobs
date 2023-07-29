@@ -9,6 +9,7 @@ import { EmployerDetails } from "../../api/api";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import Loader from '../common/loader';
+import { Link } from "react-router-dom";
 
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
@@ -117,7 +118,9 @@ function CompanyProfile(props) {
                 </div> : null}
                 {employerData.email ? <div className="font-size-3 mb-4 mr-10" title="Website URL">
                   <i className="fas fa-globe mr-2"></i>
-                  {employerData.email}
+                  <Link className="text-dark" to={`mailto:${employerData.email}`}>
+                              {employerData.email}
+                            </Link>
                 </div> : null}
                 {employerData.vacancy_for_post ? <div className="font-size-3 mb-4 mr-10" title="Hiring for">
                   <i className="fas fa-bullhorn mr-2"></i>

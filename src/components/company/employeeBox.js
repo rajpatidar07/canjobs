@@ -66,7 +66,7 @@ function EmployeeBox() {
                     <p className="font-size-3 text-default-color line-height-2 m-0">
                       {empdata.name}
                       <span className="age_gender font-size-3 text-smoke">
-                        ( {empdata.gender}{" "}
+                        ( {empdata.gender === "female" ? "F" : "M"}{" "}
                         {moment().diff(empdata.date_of_birth, "years")}
                         Y)
                       </span>

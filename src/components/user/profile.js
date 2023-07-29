@@ -154,7 +154,7 @@ const UserProfile = (props) => {
                       {PersonalDetail.name ? PersonalDetail.name : ""}
                       <br />
                       <span className="age_gender font-size-3 text-smoke">
-                        {PersonalDetail.gender || PersonalDetail.marital_status || PersonalDetail.marital_status ||PersonalDetail.date_of_birth ? `(${PersonalDetail.gender},
+                        {PersonalDetail.gender || PersonalDetail.marital_status || PersonalDetail.marital_status ||PersonalDetail.date_of_birth ? `(${PersonalDetail.gender  === "female" ? "F" : "M"},
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`: ""}
@@ -202,7 +202,9 @@ const UserProfile = (props) => {
                               src="image/icons/envelope.svg"
                               alt="Email"
                             />
-                            {PersonalDetail.email ? PersonalDetail.email : ""}
+                              {PersonalDetail.email ?<Link className="text-dark" to={`mailto:${PersonalDetail.email}`}>
+                              {PersonalDetail.email}
+                            </Link>: ""}
                           </span>
                         </div>
 
@@ -215,7 +217,7 @@ const UserProfile = (props) => {
                               src="image/icons/mobile-button.svg"
                               alt="Mobile Number"
                             />
-                             {PersonalDetail.contact_no }
+                            <Link className="text-dark" to={`tel:${PersonalDetail.contact_no}`}>{PersonalDetail.contact_no}</Link>
                           </span>  : ""}
                         </div>
                         <div className="info_box text-left">

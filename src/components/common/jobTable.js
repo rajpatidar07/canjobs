@@ -465,6 +465,8 @@ export default function JobTable(props) {
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => matchingCandidates(job)}
                                     title="Matching candidates"
+                                    disabled={job.total_applicants 
+                                      >= job.role_category ? true : false}
                                   >
                                     <span className="fas fa-user-tie text-gray"></span>
                                   </button>
@@ -503,11 +505,11 @@ export default function JobTable(props) {
                                 </>
                                 : <button
                                   className="btn btn-outline-info action_btn"
-                                  disabled={job.is_applied === "1" ? true : false}
+                                  disabled={job.is_applied === "1" ? true : false||
+                                  job.total_applicants >= job.role_category ? true : false}
                                   onClick={() => onChangeJobClick(job.job_id)}
                                   title="Apply For job"
                                 >
-                                  {console.log(job.is_applied)}
                                   {job.is_applied === "1" ? "Already Applied" : "Apply"}
                                 </button>}
                             </div>
@@ -524,6 +526,8 @@ export default function JobTable(props) {
                               apiCall={apiCall}
                               setApiCall={setApiCall}
                               heading={"Manage Jobs"}
+                              total_applicants={job.total_applicants}
+                              role_category={job.role_category} 
                             />
                           </td>
                         </tr>

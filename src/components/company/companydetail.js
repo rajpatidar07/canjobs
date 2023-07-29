@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import CustomButton from "../common/button";
 import ContactInfo from "../forms/employer/contactInfo";
 import { EmployerDetails } from "../../api/api";
-
+import { Link } from "react-router-dom";
 function CompanyDetailPage(props) {
   /*Show modal and data state */
   const [apiCall, setApiCall] = useState(false);
   const [ContactDetails, setContactDetails] = useState(false);
   const [employerData, setEmployerData] = useState("");
 
- /*Render method to get employer data */
+  /*Render method to get employer data */
   useEffect(() => {
     const EmployerData = async () => {
       let userData = await EmployerDetails(props.employerId);
@@ -39,33 +39,37 @@ function CompanyDetailPage(props) {
           close={() => setContactDetails(false)}
         /> : null}
       </h4>
-          <div className="pt-5 text-left row">
-            <div className="col-md-12">
-            { employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
-                <i className="fas fa-user mr-2"></i>
-                {employerData.contact_person_name}
-              </p> : null}
-            { employerData.designation ? <p className="font-size-4 mb-8" title="Designation">
-                <i className="fas fa-portrait mr-2"></i> {employerData.designation}
-              </p> : null}
-              { employerData.email ? <p className="font-size-4 mb-8 text-break" title="Email">
-                <i className="fas fa-envelope mr-2"></i> {employerData.email}
-              </p> : null}
-            { employerData.contact_no ? <p className="font-size-4 mb-8" title="Contact No">
-                <i className="fas fa-phone-alt mr-2"></i> {employerData.contact_no}
-              </p> : null}
-              {employerData.contact_no_other ? (
-                <p className="font-size-4 mb-8" title="Contact No">
-                  <i className="fas fa-phone-alt mr-2"></i>
-                  {employerData.contact_no_other}
-                </p>
-              ) : null}
-              {employerData.address ? <p className="font-size-4 mb-8" title="Address">
-                <i className="fas fa-map-marker-alt mr-2"></i>
-                {employerData.address}
-              </p> : null}
-            </div>
-          </div>
+      <div className="pt-5 text-left row">
+        <div className="col-md-12">
+          {employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
+            <i className="fas fa-user mr-2"></i>
+            {employerData.contact_person_name}
+          </p> : null}
+          {employerData.designation ? <p className="font-size-4 mb-8" title="Designation">
+            <i className="fas fa-portrait mr-2"></i> {employerData.designation}
+          </p> : null}
+          {employerData.email ? <p className="font-size-4 mb-8 text-break" title="Email">
+            <i className="fas fa-envelope mr-2"></i>
+            <Link className="text-dark" to={`mailto:${employerData.email}`}>
+              {employerData.email}
+            </Link>
+          </p> : null}
+          {employerData.contact_no ? <p className="font-size-4 mb-8" title="Contact No">
+            <i className="fas fa-phone-alt mr-2"></i>
+            <Link className="text-dark" to={`tel:${employerData.contact_no}`}>{employerData.contact_no}</Link>
+          </p> : null}
+          {employerData.contact_no_other ? (
+            <p className="font-size-4 mb-8" title="Contact No">
+              <i className="fas fa-phone-alt mr-2"></i>
+              <Link className="text-dark" to={`tel:${employerData.contact_no_other}`}>{employerData.contact_no_other}</Link>
+            </p>
+          ) : null}
+          {employerData.address ? <p className="font-size-4 mb-8" title="Address">
+            <i className="fas fa-map-marker-alt mr-2"></i>
+            {employerData.address}
+          </p> : null}
+        </div>
+      </div>
     </div>
   );
 }

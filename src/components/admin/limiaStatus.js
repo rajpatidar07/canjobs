@@ -566,7 +566,7 @@ export default function LimiaStatus(props) {
                                                                                 {res.name}
                                                                             </p>
                                                                             <p className="text-gray font-size-2 m-0 text-capitalize">
-                                                                                {res.gender} ({res.marital_status + ", "}
+                                                                                {res.gender === "female" ? "F" : "M"} ({res.marital_status + ", "}
                                                                                 {/*Calculation of age from date of birth*/}
                                                                                 {moment().diff(
                                                                                     res.date_of_birth,
@@ -615,10 +615,12 @@ export default function LimiaStatus(props) {
                                                                     {res.contact_no || res.email ? (
                                                                         <>
                                                                             <p className="font-size-3 font-weight-normal m-0">
-                                                                                {`+${res.contact_no}`}
+                                                                            +<Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no}</Link>
                                                                             </p>
                                                                             <p className="font-size-3 font-weight-normal m-0">
-                                                                                {res.email}
+                                                                                <Link className="text-dark" to={`mailto:${res.email}`}>
+                                                                                    {res.email}
+                                                                                </Link>
                                                                             </p>
                                                                         </>
                                                                     ) : (

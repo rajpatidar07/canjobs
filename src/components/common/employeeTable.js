@@ -214,7 +214,10 @@ export default function EmployeeTable(props) {
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
   // oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // Subtract one month from the current date
-
+  /*Funcion to get the user time from updated time */
+  function isTimeWithin24Hours(createdTime) {
+    return Date.now() - new Date(createdTime).getTime() <= 86400000;
+  }
   return (
     <>
       {showAddEmployeeModal ? (
@@ -379,12 +382,12 @@ export default function EmployeeTable(props) {
                   >
                     Profile
                   </th>
-                  <th
+                  {props.visa === "yes" ? null : <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
                     Status
-                  </th>
+                  </th>}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -452,9 +455,9 @@ export default function EmployeeTable(props) {
                                 {empdata.gender === "female" ? "F" : "M"} ({empdata.marital_status + ", "}
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
-                                Y)<br/>
-                                    {empdata.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>
-                                    : null}
+                                Y)<br />
+                                {empdata.is_featured === "1" ? <span className="bg-info text-white p-1"> Featured </span>
+                                  : null}
                               </p>
                             </div>
                           ) : (
@@ -477,7 +480,7 @@ export default function EmployeeTable(props) {
                                     {empdata.name}
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
-                                  {empdata.gender === "female" ? "F" : "M"} (
+                                    {empdata.gender === "female" ? "F" : "M"} (
                                     {empdata.marital_status + ", "}
                                     {/*Calculation of age from date of birth*/}
                                     {moment().diff(
@@ -485,9 +488,9 @@ export default function EmployeeTable(props) {
                                       "years"
                                     )}
                                     Y)
-                                    <br/>
-                                    {empdata.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>
-                                    : null}
+                                    <br />
+                                    {empdata.is_featured === "1" ? <span className="bg-info text-white p-1"> Featured </span>
+                                      : null}
                                   </p>
                                 </div>
                               )}
@@ -499,11 +502,15 @@ export default function EmployeeTable(props) {
                         {empdata.contact_no === null ? (
                           <p className="font-size-3 mb-0">Unavailable</p>
                         ) : (
-                          <p className="m-0">+{empdata.contact_no}</p>
+                          <p className="m-0">
+                            +<Link className="text-dark" to={`tel:${empdata.contact_no}`}>{empdata.contact_no}</Link>
+                            </p>
                         )}
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           <p className="text-gray font-size-2 m-0">
-                            {empdata.email}
+                            <Link className="text-dark" to={`mailto:${empdata.email}`}>
+                              {empdata.email}
+                            </Link>
                           </p>
                         </h3>
                       </td>
@@ -569,13 +576,13 @@ export default function EmployeeTable(props) {
                           )}
                         </p>
                       </td>
-                      <td className="">
+                      {props.visa === "yes" ? null : <td className="">
                         <select
                           value={empdata.status}
                           onChange={(e) => {
                             OnStatusChanges(e, empdata.employee_id)
                           }}
-                          className="form-control">
+                          className={!isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" : "form-control"}>
                           <option value={""}>Select Applicants status</option>
                           {(FilterJson.Employee_status || []).map((item, index) => {
                             return (
@@ -583,7 +590,7 @@ export default function EmployeeTable(props) {
                             )
                           })}
                         </select>
-                      </td>
+                      </td>}
 
                       {/* Calulation to get user is new or retained */}
                       {/* <td className=" py-5">

@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 
 function ManageAdmin() {
   /*data and id state */
@@ -174,7 +174,7 @@ function ManageAdmin() {
                       placeholder={"Admin Name"}
                       value={search}
                       name={"Admin_name"}
-                      onChange={(e) => {onSearch(e);setCurrentPage(1)}}
+                      onChange={(e) => { onSearch(e); setCurrentPage(1) }}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
@@ -184,7 +184,7 @@ function ManageAdmin() {
                         name="type"
                         value={typeFilterValue}
                         id="type"
-                        onChange={(e) => {setTypeFilterValue(e.target.value);setCurrentPage(1)}}
+                        onChange={(e) => { setTypeFilterValue(e.target.value); setCurrentPage(1) }}
                         className=" form-control"
                       >
                         <option value="">Admin type</option>
@@ -209,123 +209,125 @@ function ManageAdmin() {
                 <small className="text-danger">{searcherror}</small>
               </div>
               {
-              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                <div className="table-responsive main_table_div">
-                 {isLoading ? 
-                  <Loader />
-                  : <table className="table table-striped main_data_table">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          className="border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            className="text-gray"
-                            to={""}
-                            onClick={() => handleSort("name")}
-                            title="Sort by Name"
-                          >
-                            Admin Name
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            className="text-gray"
-                            to={""}
-                            onClick={() => handleSort("admin_type")}
-                            title="Sort by Type"
-                          >
-                            Admin Type
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            className="text-gray"
-                            to={""}
-                            onClick={() => handleSort("email")}
-                            title="Sort by Email"
-                          >
-                            Email
-                          </Link>
-                        </th>
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {totalData === 0 || adminData.length === 0 ? (
-                        <tr>
-                          <th className="bg-white"></th>
-                          <th className="bg-white text-center">No Data Found</th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                        </tr>
-                      ) : (
-                        (adminData || []).map((admin) => (
-                          <tr className="" key={admin.admin_id}>
-                            <th className=" py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
-                                {admin.name}
-                              </h3>
-                            </th>
-                            <th className="py-5">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
-                                {admin.admin_type}
-                              </h3>
-                            </th>
-                            <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-lowercase">
-                                {admin.email}
-                              </h3>
-                            </th>
-                            <th className="py-5 min-width-px-100">
-                              <div
-                                className="btn-group button_group"
-                                role="group"
+                <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+                  <div className="table-responsive main_table_div">
+                    {isLoading ?
+                      <Loader />
+                      : <table className="table table-striped main_data_table">
+                        <thead>
+                          <tr>
+                            <th
+                              scope="col"
+                              className="border-0 font-size-4 font-weight-normal"
+                            >
+                              <Link
+                                className="text-gray"
+                                to={""}
+                                onClick={() => handleSort("name")}
+                                title="Sort by Name"
                               >
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => editAdmin(admin.admin_id)}
-                                  title="Edit Admin"
-                                >
-                                  <span className=" fas fa-edit text-gray"></span>
-                                </button>
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  onClick={() => ShowDeleteAlert(admin)}
-                                  title="Delete"
-                                >
-                                  <span className=" text-danger">
-                                    <i className="fa fa-trash"></i>
-                                  </span>
-                                </button>
-                              </div>
+                                Admin Name
+                              </Link>
+                            </th>
+                            <th
+                              scope="col"
+                              className="pl-4 border-0 font-size-4 font-weight-normal"
+                            >
+                              <Link
+                                className="text-gray"
+                                to={""}
+                                onClick={() => handleSort("admin_type")}
+                                title="Sort by Type"
+                              >
+                                Admin Type
+                              </Link>
+                            </th>
+                            <th
+                              scope="col"
+                              className="pl-4 border-0 font-size-4 font-weight-normal"
+                            >
+                              <Link
+                                className="text-gray"
+                                to={""}
+                                onClick={() => handleSort("email")}
+                                title="Sort by Email"
+                              >
+                                Email
+                              </Link>
+                            </th>
+                            <th
+                              scope="col"
+                              className="pl-4 border-0 font-size-4 font-weight-normal"
+                            >
+                              Action
                             </th>
                           </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>}
-                </div>
-                <div className="pt-2">
-                  <Pagination
-                    nPages={nPages}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage} total={totalData} count={adminData.length}
-                  />
-                </div>
-              </div>}
+                        </thead>
+                        <tbody>
+                          {totalData === 0 || adminData.length === 0 ? (
+                            <tr>
+                              <th className="bg-white"></th>
+                              <th className="bg-white text-center">No Data Found</th>
+                              <th className="bg-white"></th>
+                              <th className="bg-white"></th>
+                            </tr>
+                          ) : (
+                            (adminData || []).map((admin) => (
+                              <tr className="" key={admin.admin_id}>
+                                <th className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
+                                    {admin.name}
+                                  </h3>
+                                </th>
+                                <th className="py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
+                                    {admin.admin_type}
+                                  </h3>
+                                </th>
+                                <th className="py-5 ">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-lowercase">
+                                    <Link className="text-dark" to={`mailto:${admin.email}`}>
+                                      {admin.email}
+                                    </Link>
+                                  </h3>
+                                </th>
+                                <th className="py-5 min-width-px-100">
+                                  <div
+                                    className="btn-group button_group"
+                                    role="group"
+                                  >
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => editAdmin(admin.admin_id)}
+                                      title="Edit Admin"
+                                    >
+                                      <span className=" fas fa-edit text-gray"></span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => ShowDeleteAlert(admin)}
+                                      title="Delete"
+                                    >
+                                      <span className=" text-danger">
+                                        <i className="fa fa-trash"></i>
+                                      </span>
+                                    </button>
+                                  </div>
+                                </th>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>}
+                  </div>
+                  <div className="pt-2">
+                    <Pagination
+                      nPages={nPages}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage} total={totalData} count={adminData.length}
+                    />
+                  </div>
+                </div>}
             </div>
           </div>
         </div>
