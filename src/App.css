@@ -597,9 +597,9 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .doc_preview_box {
-  height: calc(100vh - 140px);
+  height: calc(100vh - 200px);
   width: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .list-group {
@@ -623,6 +623,31 @@ span.dash_statistic {
   font-weight: 900;
   line-height: 1;
   color: #ff8c8e;
+}
+
+.row.doc_upload_row select.form-control.form-select {
+  height: 40px;
+  padding: 5px 10px;
+}
+
+select.form-control.select_document_type {
+  text-transform: capitalize;
+}
+
+.list-group .list-group-item .verified_doc {
+  max-width: 50px;
+  float: right;
+  padding: 2px;
+  background-color: #fff;
+}
+
+.verified_doc_img {
+  height: 40px;
+  width: auto;
+}
+
+.row.doc_upload_row {
+  gap: 15px;
 }
 
 @media (max-width: 767px) {
