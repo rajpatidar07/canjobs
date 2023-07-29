@@ -340,6 +340,8 @@ export default function JobTable(props) {
                                 </p>
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
                                   {job.company_name} - {job.industry_type}
+                                  <br />
+                                  {job.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>:null}
                                 </p>
                               </>
                             ) : (
@@ -355,6 +357,8 @@ export default function JobTable(props) {
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
                                     {job.company_name} - {job.industry_type}
+                                    <br />
+                                    {job.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>:null}
                                   </p>
                                 </>
                               </Link>
@@ -414,34 +418,34 @@ export default function JobTable(props) {
                         </th>
                         <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          <Link to="/limia" state={{id:job.job_id}}>
-                            {job.lmia_status === "Reject" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-danger">
-                                Reject
-                              </span>
-                            ) : job.lmia_status === "Approved" ? (
-                              <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                Approved
-                              </span>
-                            ) : job.lmia_status === "Draft" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-gray">
-                                Draft
-                              </span>
-                            ) : job.lmia_status === "Complete" ? (
-                              <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                Complete
-                              </span>
-                            ) : job.lmia_status === "Pending" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-warning">
-                                Pending
-                              </span>
-                            ) : job.lmia_status === "Other" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-dark">
-                                Other
-                              </span>
-                            ) : (
-                              <span>NA</span>
-                            )}
+                            <Link to="/limia" state={{ id: job.job_id }}>
+                              {job.lmia_status === "Reject" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-danger">
+                                  Reject
+                                </span>
+                              ) : job.lmia_status === "Approved" ? (
+                                <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                  Approved
+                                </span>
+                              ) : job.lmia_status === "Draft" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-gray">
+                                  Draft
+                                </span>
+                              ) : job.lmia_status === "Complete" ? (
+                                <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                  Complete
+                                </span>
+                              ) : job.lmia_status === "Pending" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-warning">
+                                  Pending
+                                </span>
+                              ) : job.lmia_status === "Other" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-dark">
+                                  Other
+                                </span>
+                              ) : (
+                                <span>NA</span>
+                              )}
                             </Link>
                           </div>
                         </th>

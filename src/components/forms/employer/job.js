@@ -71,6 +71,7 @@ function AddJobModal(props) {
     keyskill: "",
     employement: "",
     job_category_id: "",
+    is_featured:"",
     company_id: user_type === "company" ? company_id : "",
   };
   // VALIDATION CONDITIONS
@@ -125,7 +126,7 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
     let userData = await GetJob(props.jobdata);
@@ -933,6 +934,26 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
+            </div>
+            <div className="row">
+            <div className="form-group col-md-4">
+                <label
+                  htmlFor="fetured"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Featured: <input
+                  type="checkbox"
+                  id="fetured"
+                  name="fetured"
+                  value={state.is_featured}
+                  onChange={(e) => setState(
+                    {
+                      ...state, is_featured:
+                        (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
+                    })}
+                />
+                </label>
+                </div>
             </div>
 
 

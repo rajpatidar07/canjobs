@@ -195,14 +195,14 @@ export default function EmployeeTable(props) {
   };
 
   /*function to change applicants status */
-  const OnStatusChanges = async(e, id) => {
-e.preventDefault()
+  const OnStatusChanges = async (e, id) => {
+    e.preventDefault()
     let data = {
       employee_id: id,
       status: e.target.value,
     }
     let response = await AddEmployeeDetails(data)
-    if(response.message === 'Employee data updated successfully'){
+    if (response.message === 'Employee data updated successfully') {
       toast.success("Applied successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -449,10 +449,12 @@ e.preventDefault()
                                 {empdata.name}
                               </p>
                               <p className="text-gray font-size-2 m-0 text-capitalize">
-                                {empdata.gender} ({empdata.marital_status + ", "}
+                                {empdata.gender === "female" ? "F" : "M"} ({empdata.marital_status + ", "}
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
-                                Y)
+                                Y)<br/>
+                                    {empdata.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>
+                                    : null}
                               </p>
                             </div>
                           ) : (
@@ -475,7 +477,7 @@ e.preventDefault()
                                     {empdata.name}
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
-                                    {empdata.gender} (
+                                  {empdata.gender === "female" ? "F" : "M"} (
                                     {empdata.marital_status + ", "}
                                     {/*Calculation of age from date of birth*/}
                                     {moment().diff(
@@ -483,6 +485,9 @@ e.preventDefault()
                                       "years"
                                     )}
                                     Y)
+                                    <br/>
+                                    {empdata.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>
+                                    : null}
                                   </p>
                                 </div>
                               )}
@@ -574,7 +579,7 @@ e.preventDefault()
                           <option value={""}>Select Applicants status</option>
                           {(FilterJson.Employee_status || []).map((item, index) => {
                             return (
-                              <option value={index+1} key={index}>{item}</option>
+                              <option value={index + 1} key={index}>{item}</option>
                             )
                           })}
                         </select>
