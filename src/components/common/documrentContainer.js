@@ -149,17 +149,18 @@ export default function DocumrentContainer(props) {
 
   /*Function to save document */
   const SaveDocument =async () => {
-    let response = await UploadDocument(props.employee_id,/*docName === "" ? docData[0].type : */docName, docFileBase, docId)
-    console.log(response)
+      let response = await UploadDocument(props.employee_id,docData[0] === docTypData ? docTypData.type : docName, docFileBase, docData[0] === docTypData ?docTypData.id : docId)
     if (response.data.message === "inserted successfully") {
       toast.success("Document uploaded Successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      console.log(docName)
       setShowMoreDocType(false)
       setDocName(docName)
       setDocFileBase("")
       setDocFileExt("")
+      setDocId("")
       setShowSaveDoc(false)
       setApiCall(true)
     }
@@ -171,8 +172,8 @@ export default function DocumrentContainer(props) {
       setShowMoreDocType(false)
       setApiCall(true)
       // console.log(docData.find((item)=>item.type === docName))
-      setDocTypData(docData.find((item) => item.type === docName))
-      setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+      setDocTypData(docData.find((item) => item.type === (docData[0] === docTypData ? docTypData.type : docName)))
+      setDocFile(docData.find((item) => item.type === (docData[0] === docTypData ? docTypData.type : docName)).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
     }
     if (response.data.message === "Invalid base64-encoded data !") {
       toast.error("Document type is not valid", {
@@ -234,7 +235,7 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false)
     }
-  }, [docName, apiCall, docFile])
+  }, [docName, apiCall])
 
   return (
     <div className="container document_container bg-white p-7">
@@ -308,7 +309,7 @@ export default function DocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        {docTypData ?
+        {/* {docTypData ?
           // Code to update document
           (
             <div className="col-7 p-5 bg-light rounded">
@@ -396,7 +397,116 @@ export default function DocumrentContainer(props) {
                 </div>
               </div> :
               null}
-          </>}
+          </>} */}
+          <div className="col-7 p-5 bg-light rounded">
+          {docTypData ?
+            // Code to update document
+            (<div className="doc_preview_box" >
+              <div className='d-flex justify-content-between'>
+                {showMoreDocType ?
+                  <Form.Select
+                    className='form-control'
+                    value={docName}
+                    onChange={(e) => {
+                      setDocName(e.target.value)
+                      setDocId("")}}>
+                    <option value={""}>Select document</option>
+                    {(DocTypeData || []).map((item, index) => {
+                      return (
+                        <option value={item} key={index}>
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </Form.Select> :
+                  null}
+                <div className=''>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    style={{ display: "none" }}
+                    onChange={(e) => handleFileChange(e, docTypData.id)}
+                  />
+                  <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      document.querySelector('input[type="file"]').click()
+                    }>
+                    {docTypData.id ? "Update Document" : "Upload Document"}
+                  </button>
+                </div>
+                {showSaveDoc ?
+                  <div className="">
+                    <button
+                      className="btn btn-primary"
+                      onClick={SaveDocument}>Save Document</button>
+                  </div>
+                  : null}
+                <div className="">
+                  <button
+                    className="btn btn-secondary"
+                    disabled={docTypData.is_varify === "0" ? false : true}
+                    onClick={() => onVerifyDocuments(docTypData.id, 1)}>
+                    {docTypData.is_varify === "1" ?
+                      <span>Verifed <i className="fas fa-check fs-1 p-1 border border-white rounded-circle"></i>
+                      </span> :
+                      "Verify document"}
+                  </button>
+                </div>
+              </div>
+              {docTypData.id ?
+                <RenderNewDocFile />
+                :
+                <div className='text-center'>
+                  <h2> No Documents </h2>
+                </div>
+              }
+            </div>)
+            :
+            (<>
+              {// Code to Upload new document
+                showMoreDocType ?
+                  (<div className="doc_preview_box">
+                    <div className="d-flex justify-content-between">
+                      <Form.Select className='form-control' value={docName} onChange={(e) => setDocName(e.target.value)}>
+                        <option value={""}>Select document</option>
+                        {(DocTypeData || []).map((item, index) => {
+                          return (
+                            <option value={item} key={index}>{item}</option>)
+                        })}
+                      </Form.Select>
+                      <div className=''>
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                          style={{ display: "none" }}
+                          onChange={(e) => handleFileChange(e, docTypData.id)}
+                        />
+                        <button className="btn btn-primary "
+                          onClick={() =>
+                            document.querySelector('input[type="file"]').click()
+                          }>Upload Document</button>
+                      </div>
+                      {showSaveDoc ?
+                        <div className="">
+                          <button
+                            className="btn btn-primary"
+                            onClick={SaveDocument}>Save Document</button>
+                        </div>
+                        : null}
+                    </div>
+                    {docFileBase ?
+                      <RenderNewDocFile />
+                      :
+                      <div className='text-center'>
+                        <h2> No Documents </h2>
+                      </div>
+                    }
+                  </div>) :
+                  null}
+            </>)
+          }
+        </div>
       </div>
     </div>
   );

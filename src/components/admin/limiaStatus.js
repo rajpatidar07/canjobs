@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link, useLocation } from "react-router-dom";
 // import Addfollowup from "../forms/admin/addfollowup";
-import { GetAllResponse, GetFilter } from "../../api/api";
+import { GetEmployeeByLima, GetFilter } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -58,7 +58,7 @@ export default function LimiaStatus(props) {
     /* Function to get the Response data*/
     const ResponseData = async () => {
         setIsLoading(true)
-        const userData = await GetAllResponse(
+        const userData = await GetEmployeeByLima(
             props.heading === "Manage Follow-ups" || user_type === "company"
                 ? jobId
                 : location.state === null ? null : location.state.id,
@@ -73,13 +73,13 @@ export default function LimiaStatus(props) {
             limiaFilterValue,
             limiaFilterValue
         );
-        if (userData.data.data.length === 0) {
+        if (userData.data.length === 0) {
             setResData([]);
             setResponseData([]);
             setIsLoading(false)
         } else {
-            setResponseData(userData.data.data);
-            setTotalData(userData.data.total_rows);
+            setResponseData(userData.data);
+            setTotalData(userData.total_rows);
             setIsLoading(false)
         }
     };
