@@ -32,6 +32,7 @@ function PersonalDetails(props) {
     work_permit_other_country: "",
     resume: "",
     profile_photo: "",
+    is_featured: ""
   };
   /* Functionality to close the modal */
 
@@ -50,30 +51,30 @@ function PersonalDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Name should have 2 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Name should have 2 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Name can not have a number."
+                : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile number should be of 10 digits"
-          : value.length > 11
-          ? "Mobile number should not be more than 11 digits"
-          : "",
+            ? "Mobile number should be of 10 digits"
+            : value.length > 11
+              ? "Mobile number should not be more than 11 digits"
+              : "",
     ],
     // description: [
     //   (value) =>
@@ -97,24 +98,24 @@ function PersonalDetails(props) {
         value === "" || value === null
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Nationality should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Nationality can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Nationality should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Nationality can not have a number."
+                : "",
     ],
     current_location: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Location should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Location can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Location should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Location can not have a number."
+                : "",
     ],
     // currently_located_country: [
     //   (value) =>
@@ -868,6 +869,26 @@ function PersonalDetails(props) {
                     {errors.resume}
                   </span>
                 )}
+              </div>
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="fetured"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Featured: <input
+                  type="checkbox"
+                  id="fetured"
+                  name="fetured"
+                  value={state.is_featured}
+                  onChange={(e) => setState(
+                    {
+                      ...state, is_featured:
+                        (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
+                    })}
+                />
+                </label>
+                
+                
               </div>
             </div>
             <div className="form-group text-center">
