@@ -360,7 +360,7 @@ export default function DocumrentContainer(props) {
                   : null}
                 {item.is_varify === "1" ? (
                   <span className="verified_doc">
-                    <img className="w-100" src={Verified} />
+                    <img className="w-100" src={Verified} alt="" />
                   </span>
                 ) : null}
               </ListGroup.Item>
@@ -515,7 +515,7 @@ export default function DocumrentContainer(props) {
             {docTypData ? (
               <div className="doc_upload_col">
                 {docTypData.is_varify === "1" ? (
-                  <img className="verified_doc_img" src={Verified} />
+                  <img className="verified_doc_img" src={Verified} alt="" />
                 ) : (
                   <button
                     className="btn btn-secondary"
