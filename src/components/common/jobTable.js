@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
-import { GetAllJobs, DeleteJob, ApplyJob, GetEmployeeFilterJob } from "../../api/api";
+import {
+  GetAllJobs,
+  DeleteJob,
+  ApplyJob,
+  GetEmployeeFilterJob,
+} from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-import Loader from '../common/loader';
-import EmployeeModal from "../admin/Modal/employeeModal"
+import Loader from "../common/loader";
+import EmployeeModal from "../admin/Modal/employeeModal";
 import JobResponse from "../admin/response";
 import LmiaStatus from "../forms/admin/lmiastatus";
 export default function JobTable(props) {
@@ -36,19 +41,29 @@ export default function JobTable(props) {
   const [responseDropDown, setresponseDropDown] = useState(false);
   /* Function to get Job data*/
   const JobData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     let userData;
     if (props.employee_id) {
-      userData = await GetEmployeeFilterJob(props.employee_id, props.SkillFilterValue)
-    }
-    else {
+      userData = await GetEmployeeFilterJob(
+        props.employee_id,
+        props.SkillFilterValue
+      );
+    } else {
       userData = await GetAllJobs(
         props.search,
         props.locationFilterValue,
         props.categoryFilterValue,
         props.SkillFilterValue,
         props.jobSwapFilterValue,
-        props.company || props.search || props.locationFilterValue || props.categoryFilterValue || props.SkillFilterValue || props.jobSwapFilterValue || props.filter_by_time ? 1 : currentPage,
+        props.company ||
+          props.search ||
+          props.locationFilterValue ||
+          props.categoryFilterValue ||
+          props.SkillFilterValue ||
+          props.jobSwapFilterValue ||
+          props.filter_by_time
+          ? 1
+          : currentPage,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -58,11 +73,11 @@ export default function JobTable(props) {
     }
     if (userData.data.data.length === 0 || userData.data.length === 0) {
       setjobData([]);
-      setIsLoading(false)
+      setIsLoading(false);
     } else {
       setjobData(userData.data.data);
       setTotalData(userData.data.total_rows);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -94,7 +109,7 @@ export default function JobTable(props) {
 
   /* Function to show the Table of the employee of perticular skill */
   const matchingCandidates = (e) => {
-    console.log("kljkjmlmkl", e)
+    console.log("kljkjmlmkl", e);
 
     setShowCandidateModal(true);
     setCandidateSkill(e);
@@ -142,7 +157,7 @@ export default function JobTable(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true)
+      setApiCall(true);
     }
     if (responseData.message === "Job applied successfully") {
       toast.success("Applied successfully", {
@@ -150,22 +165,20 @@ export default function JobTable(props) {
         autoClose: 1000,
       });
     }
-
   };
 
   /*Function to open update LIMA */
   const updateLima = (job) => {
-    setJobId(job)
-    setOpenLimia(true)
-  }
+    setJobId(job);
+    setOpenLimia(true);
+  };
   return (
     <>
-
-
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
-          {isLoading ?
-            <Loader load={"yes"} /> :
+          {isLoading ? (
+            <Loader load={"yes"} />
+          ) : (
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
@@ -174,7 +187,10 @@ export default function JobTable(props) {
                     className=" border-0 font-size-4 font-weight-normal"
                   >
                     <Link
-                      onClick={() => { handleSort("job_title"); setCurrentPage(1) }}
+                      onClick={() => {
+                        handleSort("job_title");
+                        setCurrentPage(1);
+                      }}
                       title="Sort by Industry"
                       className="text-gray"
                     >
@@ -188,7 +204,10 @@ export default function JobTable(props) {
                     >
                       <Link
                         to=""
-                        onClick={() => { handleSort("job_type"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("job_type");
+                          setCurrentPage(1);
+                        }}
                         title="Sort by Job"
                         className="text-gray"
                       >
@@ -203,7 +222,10 @@ export default function JobTable(props) {
                     >
                       <Link
                         to=""
-                        onClick={() => { handleSort("location"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("location");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Address"
                       >
@@ -218,7 +240,10 @@ export default function JobTable(props) {
                     >
                       <Link
                         to=""
-                        onClick={() => { handleSort("education"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("education");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Education"
                       >
@@ -233,7 +258,10 @@ export default function JobTable(props) {
                     >
                       <Link
                         to=""
-                        onClick={() => { handleSort("keyskill"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("keyskill");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Skill"
                       >
@@ -248,7 +276,10 @@ export default function JobTable(props) {
                     >
                       <Link
                         to=""
-                        onClick={() => { handleSort("language"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("language");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Language"
                       >
@@ -262,7 +293,10 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => { handleSort("salary"); setCurrentPage(1) }}
+                      onClick={() => {
+                        handleSort("salary");
+                        setCurrentPage(1);
+                      }}
                       className="text-gray"
                       title="Sort by Salary"
                     >
@@ -275,7 +309,10 @@ export default function JobTable(props) {
                   >
                     <Link
                       to=""
-                      onClick={() => { handleSort("experience_required"); setCurrentPage(1) }}
+                      onClick={() => {
+                        handleSort("experience_required");
+                        setCurrentPage(1);
+                      }}
                       className="text-gray"
                       title="Sort by Experience"
                     >
@@ -286,7 +323,7 @@ export default function JobTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Vacancies  / Total Resposes
+                    Vacancies / Total Resposes
                   </th>
                   <th
                     scope="col"
@@ -330,7 +367,7 @@ export default function JobTable(props) {
                 ) : (
                   (jobData || []).map((job) => (
                     <React.Fragment key={job.job_id}>
-                      <tr className={job.is_applied === "1" ? "d-none" : ""} >
+                      <tr className={job.is_applied === "1" ? "d-none" : ""}>
                         <th scope="row" className="py-5 ">
                           <div className="">
                             {props.heading === "Dashboard" ? (
@@ -341,7 +378,12 @@ export default function JobTable(props) {
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
                                   {job.company_name} - {job.industry_type}
                                   <br />
-                                  {job.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>:null}
+                                  {job.is_featured === "1" ? (
+                                    <span className="bg-info text-white p-1">
+                                      {" "}
+                                      Featured{" "}
+                                    </span>
+                                  ) : null}
                                 </p>
                               </>
                             ) : (
@@ -358,7 +400,12 @@ export default function JobTable(props) {
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
                                     {job.company_name} - {job.industry_type}
                                     <br />
-                                    {job.is_featured === "1" ?<span className="bg-info text-white p-1"> Featured </span>:null}
+                                    {job.is_featured === "1" ? (
+                                      <span className="bg-info text-white p-1">
+                                        {" "}
+                                        Featured{" "}
+                                      </span>
+                                    ) : null}
                                   </p>
                                 </>
                               </Link>
@@ -408,7 +455,9 @@ export default function JobTable(props) {
                         <th className="py-5 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {job.experience_required}
-                            {job.experience_required === "Fresher" ? "" : "years"}
+                            {job.experience_required === "Fresher"
+                              ? ""
+                              : "years"}
                           </h3>
                         </th>
                         <th className="py-5 ">
@@ -451,8 +500,13 @@ export default function JobTable(props) {
                         </th>
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 min-width-px-100">
-                            <div className="btn-group button_group" role="group">
-                              {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
+                            <div
+                              className="btn-group button_group"
+                              role="group"
+                            >
+                              {props.skill === null ||
+                              props.skill === undefined ||
+                              Object.keys(props.skill).length === 0 ? (
                                 <>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -465,8 +519,11 @@ export default function JobTable(props) {
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => matchingCandidates(job)}
                                     title="Matching candidates"
-                                    disabled={job.total_applicants 
-                                      >= job.role_category ? true : false}
+                                    disabled={
+                                      job.total_applicants >= job.role_category
+                                        ? true
+                                        : false
+                                    }
                                   >
                                     <span className="fas fa-user-tie text-gray"></span>
                                   </button>
@@ -479,15 +536,21 @@ export default function JobTable(props) {
                                   </button>
                                   <div
                                     className="btn-group button_group"
-                                  // role="group"
+                                    // role="group"
                                   >
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() => {
                                         setresponseId(job.job_id);
-                                        setresponseDropDown(responseDropDown === false ? true : false)
+                                        setresponseDropDown(
+                                          responseDropDown === false
+                                            ? true
+                                            : false
+                                        );
                                       }}
-                                      disabled={job.total_applicants > 0 ? false : true}
+                                      disabled={
+                                        job.total_applicants > 0 ? false : true
+                                      }
                                       title="Job Response"
                                     >
                                       Responses
@@ -503,23 +566,35 @@ export default function JobTable(props) {
                                     </span>
                                   </button>
                                 </>
-                                : <button
+                              ) : (
+                                <button
                                   className="btn btn-outline-info action_btn"
-                                  disabled={job.is_applied === "1" ? true : false||
-                                  job.total_applicants >= job.role_category ? true : false}
+                                  disabled={
+                                    job.is_applied === "1"
+                                      ? true
+                                      : false ||
+                                        job.total_applicants >=
+                                          job.role_category
+                                      ? true
+                                      : false
+                                  }
                                   onClick={() => onChangeJobClick(job.job_id)}
                                   title="Apply For job"
                                 >
-                                  {job.is_applied === "1" ? "Already Applied" : "Apply"}
-                                </button>}
+                                  {job.is_applied === "1"
+                                    ? "Already Applied"
+                                    : "Apply"}
+                                </button>
+                              )}
                             </div>
                           </th>
                         )}
                       </tr>
                       {job.job_id === responseId &&
-                        job.total_applicants > 0 && responseDropDown === true ? (
+                      job.total_applicants > 0 &&
+                      responseDropDown === true ? (
                         <tr>
-                          <td colSpan={10}>
+                          <td colSpan={11}>
                             {/* <!-- Job Responses --> */}
                             <JobResponse
                               responseId={responseId}
@@ -527,7 +602,7 @@ export default function JobTable(props) {
                               setApiCall={setApiCall}
                               heading={"Manage Jobs"}
                               total_applicants={job.total_applicants}
-                              role_category={job.role_category} 
+                              role_category={job.role_category}
                             />
                           </td>
                         </tr>
@@ -536,15 +611,20 @@ export default function JobTable(props) {
                   ))
                 )}
               </tbody>
-            </table>}
+            </table>
+          )}
         </div>
-        {totalData === 0 || totalData === "0" ? null : <div className="pt-2">
-          <Pagination
-            nPages={nPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
-          />
-        </div>}
+        {totalData === 0 || totalData === "0" ? null : (
+          <div className="pt-2">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={totalData}
+              count={jobData.length}
+            />
+          </div>
+        )}
       </div>
       {showAddJobsModal ? (
         <AddJobModal
@@ -556,23 +636,22 @@ export default function JobTable(props) {
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
-      {
-        showCandidateModal ?
-          <EmployeeModal
-            show={showCandidateModal}
-            close={() => setShowCandidateModal(false)}
-            data={candidateSkill} />
-
-          : null
-      }
-      {openLimia ?
+      {showCandidateModal ? (
+        <EmployeeModal
+          show={showCandidateModal}
+          close={() => setShowCandidateModal(false)}
+          data={candidateSkill}
+        />
+      ) : null}
+      {openLimia ? (
         <LmiaStatus
           resData={JobId}
           show={openLimia}
           close={() => setOpenLimia(false)}
           job={"yes"}
-          setApiCall={setApiCall} /> :
-        null}
+          setApiCall={setApiCall}
+        />
+      ) : null}
       <SAlert
         show={deleteAlert}
         title={deleteName}
