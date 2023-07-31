@@ -467,7 +467,7 @@ export default function JobTable(props) {
                         </th>
                         <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            <Link to="/limia" state={{ id: job.job_id }}>
+                            <Link to="/lmia" state={{ id: job.job_id }}>
                               {job.lmia_status === "Reject" ? (
                                 <span className="px-3 py-2 badge badge-pill badge-danger">
                                   Reject

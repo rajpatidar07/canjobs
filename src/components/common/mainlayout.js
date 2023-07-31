@@ -34,6 +34,8 @@ import LimiaStatus from "../admin/limiaStatus";
 import Visa from "../admin/visa";
 import Document from "../admin/document";
 import EmployerLMIA from "../company/lmia";
+import SelfApplicat from "../admin/selfApplicat";
+import SelfJob from "../admin/selfJob";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -102,11 +104,13 @@ function MainLayout() {
           <>
             <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/job" element={<Job />} />
+            <Route path="/selfjob" element={<SelfJob />} />
             <Route path="/category" element={<Category />} />
-            <Route path="/limia" element={<LimiaStatus />} />
+            <Route path="/lmia" element={<LimiaStatus />} />
             <Route path="/visa" element={<Visa />} />
             <Route path="/document" element={<Document />} />
             <Route path="/employee" element={<Employee />} />
+            <Route path="/selfemployee" element={<SelfApplicat />} />
             <Route path="/employer" element={<Employer />} />
             <Route path="/adminprofile" element={<ManageAdmin />} />
             <Route path="/followup" element={<Followup />} />

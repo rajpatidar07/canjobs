@@ -48,6 +48,14 @@ const AdminSidebar = (props) => {
               <i className="far fa-user mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
+          <li className={props.heading === "Manage Self Applicants" ? "active" : ""}>
+            <Link
+              to="/selfemployee"
+              className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="far fa-user mr-5"></i>Self Registered Applicants{" "}
+            </Link>
+          </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
             <Link
               to="/employer"
@@ -122,7 +130,7 @@ const AdminSidebar = (props) => {
           </li> */}
           <li className={props.heading === "LIMIA status" ? "active" : ""}>
             <Link
-              to="/limia"
+              to="/lmia"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-filter mr-5"></i>Manage LIMIA Status

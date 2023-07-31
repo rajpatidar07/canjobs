@@ -185,7 +185,8 @@ export const getallEmployeeData = async (
   column,
   sort,
   time,
-  jobSkill
+  jobSkill,
+  status
 ) => {
   const response = await axios.post(
     `${API_URL}${user_type}/getallEmployeeView`,
@@ -201,6 +202,7 @@ export const getallEmployeeData = async (
       sort_order: sort,
       filter_by_time: time,
       job_keyskills: jobSkill,
+      filter_status :status,
     },
     {
       headers: {
@@ -777,7 +779,7 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
   return response.data;
 };
 
-/*Get limia list Api */
+/*Get lmia list Api */
 export const GetEmployeeByLima = async (status) => {
   const response = await axios.post(
     `${API_URL}/company/getLmia`,
