@@ -521,7 +521,9 @@ label.image_upload_btn {
 /* DASHBOARD */
 .dashboard_card {
   overflow: hidden;
-  min-height: 100%;
+  /* min-height: 100%; */
+  box-shadow: 6px 2px 8px #ccc;
+  padding-bottom: 15px;
 }
 
 .dashboard_card .dashboard_select {
@@ -550,6 +552,11 @@ label.image_upload_btn {
 .table-responsive.main_table_div {
   position: relative;
   min-height: 150px;
+}
+
+.dashboard_card .table-responsive.main_table_div {
+  position: relative;
+  min-height: unset;
 }
 
 .custom_loader {
