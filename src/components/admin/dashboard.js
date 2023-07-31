@@ -57,7 +57,7 @@ const AdminDashboard = () => {
         className={
           // showEmployeeProfile === false
           //   ?
-          "dashboard-main-container mt-25 mt-lg-22"
+          "dashboard-main-container mt-23 mt-lg-20"
           //   :"dashboard-main-container mt-25 mt-lg-22 d-none"
         }
         id="dashboard-body"
@@ -271,221 +271,205 @@ const AdminDashboard = () => {
               {/* <!-- End Single Category --> */}
             </div>
           </div>
-          <div className="mb-14">
-            <div className="row mb-11 ">
+          <div className="row">
+            <div className="col-md-6">
               {/* <!-- Recent Jobs- --> */}
-              <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0 ">
-                      Recently Added Jobs
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="job"
-                          value={job}
-                          id="job"
-                          onChange={(e) => setJob(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        {" "}
-                        <Link
-                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/job"}
-                          title="View All Jobs"
-                        >
-                          View All
-                        </Link>
-                      </div>
+              <div className="bg-white rounded dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0 ">Recently Added Jobs</h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="job"
+                        value={job}
+                        id="job"
+                        onChange={(e) => setJob(e.target.value)}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      {" "}
+                      <Link
+                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/job"}
+                        title="View All Jobs"
+                      >
+                        View All
+                      </Link>
                     </div>
                   </div>
-                  <JobTable heading={"Dashboard"} filter_by_time={job} apiCall={apiCall} setApiCall={setApiCall}/>
                 </div>
+                <JobTable
+                  heading={"Dashboard"}
+                  filter_by_time={job}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
+                />
               </div>
+              {/* <!-- Recent Job Response- --> */}
+              <div className="bg-white rounded dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Job Response
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="response"
+                        value={response}
+                        id="response"
+                        onChange={(e) => setResponse(e.target.value)}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      <Link
+                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/responses"}
+                        title="View All Responses"
+                      >
+                        View All
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <JobResponse heading={"Dashboard"} filter_by_time={response} />
+              </div>
+              {/* <!-- Recent Interviews- --> */}
+              <div className="bg-white rounded dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Interview
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="interview"
+                        value={interview}
+                        id="interview"
+                        onChange={(e) => setInterview(e.target.value)}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      <Link
+                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/interview"}
+                        title="View All Interview"
+                      >
+                        View All
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <Interview heading={"Dashboard"} filter_by_time={interview} />
+              </div>
+            </div>
+            <div className="col-md-6">
               {/* <!-- Recent Employees- --> */}
-              <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Added Employee
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="employee"
-                          value={employee}
-                          id="employee"
-                          onChange={(e) => setEmployee(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        {" "}
-                        <Link
-                          className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/employee"}
-                          title="View all Applicants"
-                        >
-                          View All
-                        </Link>
-                      </div>
+              <div className="bg-white rounded dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Employee
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="employee"
+                        value={employee}
+                        id="employee"
+                        onChange={(e) => setEmployee(e.target.value)}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      {" "}
+                      <Link
+                        className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/employee"}
+                        title="View all Applicants"
+                      >
+                        View All
+                      </Link>
                     </div>
                   </div>
-                  <EmployeeTable
-                    heading={"Dashboard"}
-                    filter_by_time={employee}
-                  />
                 </div>
+                <EmployeeTable
+                  heading={"Dashboard"}
+                  filter_by_time={employee}
+                />
               </div>
-            </div>
-          </div>
-          <div className="mb-14">
-            <div className="row">
-            {/* <!-- Recent Job Response- --> */}
-            <div className="col-lg-6">
-          <div className="bg-white rounded dashboard_card">
-            <div className="d-flex justify-content-between p-5 align-items-center">
-              <h3 className="font-size-5 px-3 m-0  ">
-                Recently Job Response
-              </h3>
-              <div className="d-flex justify-content-between p-0">
-                <div className="select_div mr-5">
-                  <select
-                    name="response"
-                    value={response}
-                    id="response"
-                    onChange={(e) => setResponse(e.target.value)}
-                    className="form-control-sm bg-white dashboard_select rounded-3"
-                  >
-                    <option value={""}>Select</option>
-                    <option value={"today"}>Today </option>
-                    <option value={"this_week"}>This Week </option>
-                    <option value={"last_week"}>Last Week</option>
-                    <option value={"last_month"}>Last Month</option>
-                    <option value={"current_month"}>Current Month</option>
-                  </select>
-                </div>
-                <div className="">
-                  <Link
-                    className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                    to={"/responses"}
-                    title="View All Responses"
-                  >
-                    View All
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <JobResponse
-              heading={"Dashboard"}
-              filter_by_time={response}
-            />
-          </div>
-            </div>
               {/* <!-- Recent Follow- --> */}
-              <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0">
-                      Recently Added FollowUp
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="followup"
-                          value={followup}
-                          id="followup"
-                          onChange={(e) => setFollowUP(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        {" "}
-                        <Link
-                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/followup"}
-                          title="View All Followup"
-                        >
-                          View All
-                        </Link>
-                      </div>
+              <div className="bg-white rounded dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0">
+                    Recently Added FollowUp
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="followup"
+                        value={followup}
+                        id="followup"
+                        onChange={(e) => setFollowUP(e.target.value)}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      {" "}
+                      <Link
+                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/followup"}
+                        title="View All Followup"
+                      >
+                        View All
+                      </Link>
                     </div>
                   </div>
-                  <FollowUpDashBoard
-                    heading={"Dashboard"}
-                    filter_by_time={followup}
-                  />
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="mb-14">
-            <div className="row mb-11 ">
-           {/* <!-- Recent Interviews- --> */}
-              <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Added Interview
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="interview"
-                          value={interview}
-                          id="interview"
-                          onChange={(e) => setInterview(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        <Link
-                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/interview"}
-                          title="View All Interview"
-                        >
-                          View All
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <Interview heading={"Dashboard"} filter_by_time={interview} />
-                </div>
+                <FollowUpDashBoard
+                  heading={"Dashboard"}
+                  filter_by_time={followup}
+                />
               </div>
               {/* <!-- Recent Companies- --> */}
               {/* <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card">
+                <div className="bg-white rounded dashboard_card mb-7">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
                       Recently Added Companies
