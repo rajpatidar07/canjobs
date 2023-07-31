@@ -162,7 +162,7 @@ function Skills(props) {
                 htmlFor="skill"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
-                Skill / Software Name <span className="text-danger">*</span> :
+                Skill<span className="text-danger">*</span> :
               </label>
               {/* <input
                 maxLength={30}
