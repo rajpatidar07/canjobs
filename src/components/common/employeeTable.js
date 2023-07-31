@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
-import { getallEmployeeData, DeleteJobEmployee, ApplyJob, AddEmployeeDetails } from "../../api/api";
+import { getallEmployeeData, DeleteJobEmployee, ApplyJob } from "../../api/api";
 import moment from "moment";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
@@ -14,7 +14,7 @@ import DocumentModal from "../admin/Modal/DocumentModal";
 import Loader from '../common/loader';
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
-import FilterJson from "../json/filterjson";
+import ApplicantsStatusModal from "../admin/Modal/ApplicantsStatusModal";
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -26,6 +26,7 @@ export default function EmployeeTable(props) {
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [documentModal, setDocumentModal] = useState(false);
+  let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
   let [employeeId, setemployeeId] = useState();
@@ -194,21 +195,10 @@ export default function EmployeeTable(props) {
 
   };
 
-  /*function to change applicants status */
-  const OnStatusChanges = async (e, id) => {
-    e.preventDefault()
-    let data = {
-      employee_id: id,
-      status: e.target.value,
-    }
-    let response = await AddEmployeeDetails(data)
-    if (response.message === 'Employee data updated successfully') {
-      toast.success("Applied successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setApiCall(true)
-    }
+  /*function to Open  change applicants status Modal */
+  const ChangeApplicantsStatus = (e) => {
+    setemployeeId(e)
+    setShowStatusChange(true)
   }
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
@@ -256,6 +246,13 @@ export default function EmployeeTable(props) {
           close={() => setShowSkillsModal(false)}
         />
       ) : null}
+      {showStatusChangeModal ?
+        <ApplicantsStatusModal
+          show={showStatusChangeModal}
+          close={() => setShowStatusChange(false)}
+          data={employeeId}
+          setApiCall={setApiCall} /> :
+        null}
       {showEmplyomentDetails ? (
         <EmployementDetails
           show={showEmplyomentDetails}
@@ -504,7 +501,7 @@ export default function EmployeeTable(props) {
                         ) : (
                           <p className="m-0">
                             +<Link className="text-dark" to={`tel:${empdata.contact_no}`}>{empdata.contact_no}</Link>
-                            </p>
+                          </p>
                         )}
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                           <p className="text-gray font-size-2 m-0">
@@ -577,19 +574,27 @@ export default function EmployeeTable(props) {
                         </p>
                       </td>
                       {props.visa === "yes" ? null : <td className="">
-                        <select
-                          value={empdata.status}
-                          onChange={(e) => {
-                            OnStatusChanges(e, empdata.employee_id)
-                          }}
-                          className={!isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" : "form-control"}>
-                          <option value={""}>Select Applicants status</option>
-                          {(FilterJson.Employee_status || []).map((item, index) => {
-                            return (
-                              <option value={index + 1} key={index}>{item}</option>
-                            )
-                          })}
-                        </select>
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                          {empdata.status === "1" ?
+                           <span
+                           className={!isTimeWithin24Hours(empdata.created_at) ? "p-1 bg-danger text-white text-center w-100 border rounded-pill" : "p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill"}> New </span> :
+                            empdata.status === "2" ?
+                            <span
+                            className="p-1 bg-warning text-white text-center w-100 border rounded-pill"> Prospect </span> :
+                              empdata.status === "3" ?
+                              <span
+                              className="p-1 bg-info text-white text-center w-100 border rounded-pill"> Lead </span> :
+                                empdata.status === "4" ?
+                                <span
+                                className="p-1 bg-secondary text-white text-center w-100 border rounded-pill"> Reatined </span> :
+                                  empdata.status === "5" ?
+                                  <span
+                                  className="p-1 bg-spray text-white text-center w-100 border rounded-pill"> Lost </span> :
+                                    empdata.status === "6" ?
+                                    <span
+                                    className="p-1 bg-dark text-white text-center w-100 border rounded-pill"> Dead </span>  :
+                                      null}
+                        </p>
                       </td>}
 
                       {/* Calulation to get user is new or retained */}
@@ -627,13 +632,23 @@ export default function EmployeeTable(props) {
                                    >
                                   </Link> */}
                                     <span className="fas fa-file text-gray"></span>
-                                  </button> : <> <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => editEmployee(empdata.employee_id)}
-                                    title="Edit Employee"
-                                  >
-                                    <span className=" fas fa-edit text-gray px-2"></span>
-                                  </button>
+                                  </button> : <>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() =>
+                                        ChangeApplicantsStatus(empdata)
+                                      }
+                                      title="Change Applicant status"
+                                    >
+                                      <span className="fa fa-badge text-gray px-2"></span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => editEmployee(empdata.employee_id)}
+                                      title="Edit Employee"
+                                    >
+                                      <span className=" fas fa-edit text-gray px-2"></span>
+                                    </button>
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() =>

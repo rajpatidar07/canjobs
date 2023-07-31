@@ -32,7 +32,8 @@ function PersonalDetails(props) {
     work_permit_other_country: "",
     resume: "",
     profile_photo: "",
-    is_featured: ""
+    is_featured: "",
+    status : props.employeeId === "0" ? "1" : ""
   };
   /* Functionality to close the modal */
 
@@ -197,6 +198,7 @@ function PersonalDetails(props) {
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
+    console.log(state)
     if (validate() && imgError === "") {
       setLoading(true);
       const responseData = await AddEmployeeDetails(state);
