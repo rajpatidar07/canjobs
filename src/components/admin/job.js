@@ -254,6 +254,7 @@ function Job(props) {
                 setApiCall={setApiCall}
                 skill={props.skill}
                 employee_id={props.employee_id}
+                selfJob={"no"}
               />
             </div>
           </div>

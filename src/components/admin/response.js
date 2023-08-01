@@ -18,7 +18,7 @@ function JobResponse(props) {
   let [apiCall, setApiCall] = useState(props.apiCall);
   let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
-  let [limia, setLimia] = useState(false);
+  let [lmia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
   let [resData, setResData] = useState("");
   let [searchError, setSearchError] = useState("");
@@ -70,7 +70,11 @@ function JobResponse(props) {
       setResponseData([]);
       setIsLoading(false)
     } else {
-      setResponseData(userData.data.data);
+      if(props.self === "yes"){
+        setResponseData(userData.data.data.filter((item)=>item.apply_by_admin_id === "0"));
+      }else{
+        setResponseData(userData.data.data.filter((item)=>item.apply_by_admin_id !== "0"));
+      }
       setTotalData(userData.data.total_rows);
       setIsLoading(false)
     }
@@ -130,8 +134,8 @@ function JobResponse(props) {
       let VisaResponse = await AddEmployeeDetails(visa)
       if (VisaResponse.message === 'Employee data updated successfully') {
         // Api call to set employee Limia
-        const limia = {lmia_status: "pending",};
-        let LimiaResponse = await AddLimia(limia, e.employee_id, e.job_id);
+        const lmia = {lmia_status: "pending",};
+        let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
         if (LimiaResponse.message === 'Data added successfully') {
           toast.success("Employee Reserved successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -182,8 +186,7 @@ function JobResponse(props) {
   };
 
   return (
-
-    <div
+  <div
       className={
         props.heading === "Response" ||
           (props.heading === undefined && user_type === "admin")
@@ -229,9 +232,9 @@ function JobResponse(props) {
           }}
         />
       ) : null}
-      {limia ? (
+      {lmia ? (
         <LmiaStatus
-          show={limia}
+          show={lmia}
           resData={resData}
           apiCall={apiCall}
           setApiCall={setApiCall}
@@ -497,7 +500,7 @@ function JobResponse(props) {
                           Interview
                         </th>
                         {props.heading === "Dashboard" ||
-                          user_type === "company" ? (
+                          user_type === "company" || props.self === "yes" ? (
                           ""
                         ) : (
                           <th
@@ -651,7 +654,7 @@ function JobResponse(props) {
                             )}
                             <th className=" py-5">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                <Link to="/limia" state={{ id: res.job_id }}>
+                                <Link to="/lmia" state={{ id: res.job_id }}>
                                   {res.lmia_status === "Reject" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-danger">
                                       Reject
@@ -693,7 +696,7 @@ function JobResponse(props) {
                               </p>
                             </th>
                             {props.heading === "Dashboard" ||
-                              user_type === "company" ? (
+                              user_type === "company" || props.self === "yes" ? (
                               ""
                             ) : (
                               <th className="py-5  min-width-px-100">

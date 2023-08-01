@@ -61,7 +61,9 @@ export default function EmployeeTable(props) {
       recordsPerPage,
       columnName,
       sortOrder,
-      props.filter_by_time
+      props.filter_by_time,
+      "",
+      props.status
     );
     if (userData.data.length === 0) {
       setemployeeData([]);
@@ -677,7 +679,7 @@ export default function EmployeeTable(props) {
                           {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}                        
                           </p>
                       </td> */}
-                      {props.heading === "Dashboard" ? (
+                      {props.heading === "Dashboard" || props.self === "yes" ? (
                         ""
                       ) : (
                         <td className=" py-5 min-width-px-100">
@@ -808,6 +810,15 @@ export default function EmployeeTable(props) {
                             )}
                           </div>
                         </td>
+                      )}
+                      {props.self === "yes" ? (
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          onClick={() => ChangeApplicantsStatus(empdata)}
+                          title="Change Applicant status"
+                        ></button>
+                      ) : (
+                        ""
                       )}
                     </tr>
                   ))

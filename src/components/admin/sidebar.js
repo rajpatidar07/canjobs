@@ -48,6 +48,14 @@ const AdminSidebar = (props) => {
               <i className="far fa-user mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
+          <li className={props.heading === "Manage Self Applicants" ? "active" : ""}>
+            <Link
+              to="/selfemployee"
+              className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="far fa-user mr-5"></i>Self Registered Applicants{" "}
+            </Link>
+          </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
             <Link
               to="/employer"
@@ -62,6 +70,14 @@ const AdminSidebar = (props) => {
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-address-card mr-5"></i>Manage Jobs
+            </Link>
+          </li>
+          <li className={props.heading === "Manage Self Jobs" ? "active" : ""}>
+            <Link
+              to="/selfjob"
+              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="far fa-address-card mr-5"></i>Manage self Applied Jobs
             </Link>
           </li>
           {/* <li className={props.heading === "Response" ? "active" : ""}>
@@ -122,7 +138,7 @@ const AdminSidebar = (props) => {
           </li> */}
           <li className={props.heading === "LIMIA status" ? "active" : ""}>
             <Link
-              to="/limia"
+              to="/lmia"
               className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-filter mr-5"></i>Manage LIMIA Status

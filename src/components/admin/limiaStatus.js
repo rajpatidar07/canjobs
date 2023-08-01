@@ -20,7 +20,7 @@ export default function LimiaStatus(props) {
     let [apiCall, setApiCall] = useState(props.apiCall);
     //   let [followup, setFollowUp] = useState(false);
     //   let [interview, setInterview] = useState(false);
-    let [limia, setLimia] = useState(false);
+    let [lmia, setLimia] = useState(false);
     let [documentModal, setDocumentModal] = useState(false);
     let [response, setResponseData] = useState([]);
     let [resData, setResData] = useState("");
@@ -215,9 +215,9 @@ export default function LimiaStatus(props) {
                     close={() => setDocumentModal(false)}
                     employee_id={employeeId} /> :
                 null}
-            {limia ? (
+            {lmia ? (
                 <LmiaStatus
-                    show={limia}
+                    show={lmia}
                     resData={resData}
                     apiCall={apiCall}
                     setApiCall={setApiCall}
@@ -343,8 +343,8 @@ export default function LimiaStatus(props) {
                                     <p className="input_label">Filter by Experience:</p>
                                     <div className="select_div">
                                         <select
-                                            name="limia"
-                                            id="limia"
+                                            name="lmia"
+                                            id="lmia"
                                             value={limiaFilterValue}
                                             onChange={(e) => {
                                                 setLimailter(e.target.value);

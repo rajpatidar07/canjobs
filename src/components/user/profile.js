@@ -121,7 +121,7 @@ const UserProfile = (props) => {
                   <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
                     <Link
                       className="mb-4 position-relative"
-                      onClick={user_type === "company" ? null : () => setShowPersonalDetails(true)}
+                      onClick={user_type === "company" || props.self==="yes" ? null : () => setShowPersonalDetails(true)}
                     >
                     {user_type === "admin"?<>  <input
                         type="file"
@@ -173,7 +173,7 @@ const UserProfile = (props) => {
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Personal Info</span>
-                      {user_type === "company" ? null : (
+                      {user_type === "company" || props.self==="yes" ? null : (
                         <CustomButton
                           className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowPersonalDetails(true)}
@@ -300,7 +300,7 @@ const UserProfile = (props) => {
                   <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10">
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>Skill</span>
-                      {user_type === "company" ? null : (
+                      {user_type === "company" || props.self==="yes" ? null : (
                         <CustomButton
                           className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                           onClick={() => setShowItSkills(true)}
@@ -410,7 +410,7 @@ const UserProfile = (props) => {
                     >
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                         <span>Career Profile</span>
-                        {user_type === "company" ? null : (
+                        {user_type === "company" || props.self==="yes" ? null : (
                           <CustomButton
                             className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowEmplyomentDetails(true)}
@@ -488,7 +488,7 @@ const UserProfile = (props) => {
                     >
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                         <span>Education</span>
-                        {user_type === "company" ? null : (
+                        {user_type === "company" || props.self==="yes" ? null : (
                           <CustomButton
                             className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowEducation(true)}
