@@ -400,27 +400,8 @@ function JobResponse(props) {
                             Name
                           </Link>
                         </th>
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
-                          <th
-                            scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
-                          >
-                            <Link
-                              to={""}
-                              onClick={() => {
-                                handleSort("experience");
-                                setCurrentPage(1)
-                              }}
-                              className="text-gray"
-                              title="Sort by Experience"
-                            >
-                              Experience
-                            </Link>
-                          </th>
-                        )}
-                        <th
+                       
+                        {/* <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
@@ -435,7 +416,7 @@ function JobResponse(props) {
                           >
                             Job / Company
                           </Link>
-                        </th>
+                        </th> */}
 
                         {props.heading === "Dashboard" ? (
                           ""
@@ -474,6 +455,26 @@ function JobResponse(props) {
                               title="Sort by Address"
                             >
                               Address
+                            </Link>
+                          </th>
+                        )}
+                         {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                          >
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("experience");
+                                setCurrentPage(1)
+                              }}
+                              className="text-gray"
+                              title="Sort by Experience"
+                            >
+                              Experience
                             </Link>
                           </th>
                         )}
@@ -585,29 +586,15 @@ function JobResponse(props) {
                                 )}
                               </h3>
                             </th>
-                            {props.heading === "Dashboard" ? (
-                              ""
-                            ) : (
-                              <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {res.experience ? (
-                                    res.experience
-                                  ) : (
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      NA
-                                    </span>
-                                  )}
-                                </h3>
-                              </th>
-                            )}
-                            <th className="py-5 ">
+                            
+                            {/* <th className="py-5 ">
                               <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
                                 {res.job_title}
                               </p>
                               <p className="font-size-3 font-weight-normal m-0 text-capitalize">
                                 {res.company_name}
                               </p>
-                            </th>
+                            </th> */}
 
                             {props.heading === "Dashboard" ? (
                               ""
@@ -644,6 +631,21 @@ function JobResponse(props) {
                                         {res.currently_located_country}
                                       </span>
                                     </>
+                                  ) : (
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
+                                    </span>
+                                  )}
+                                </h3>
+                              </th>
+                            )}
+                            {props.heading === "Dashboard" ? (
+                              ""
+                            ) : (
+                              <th className=" py-5">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {res.experience ? (
+                                    res.experience
                                   ) : (
                                     <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                       NA
@@ -730,7 +732,7 @@ function JobResponse(props) {
                                  {res.employee_status === "7"  ? <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => addLimia(res)}
-                                    title="Add LMIA"
+                                    title="Update LMIA status"
                                   >
                                     LMIA
                                   </button> : null}
