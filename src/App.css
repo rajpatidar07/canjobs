@@ -132,7 +132,7 @@ button.btn.action_btn {
   line-height: 1.25;
 }
 
-.dashboard-main-container>.container {
+.dashboard-main-container>.container-fluid {
   margin: 0 15px;
   width: calc(100% - 30px);
   border-radius: 10px;
