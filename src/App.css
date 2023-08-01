@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
   overscroll-behavior: none;
 }
@@ -218,6 +218,26 @@ table.table.table-striped.main_data_table_inn tr {
   margin: 0;
   font-size: 12px;
   font-weight: 600;
+}
+
+.btn-group.button_group {
+  flex-wrap: wrap;
+  max-width: 160px;
+  gap: 5px 0;
+}
+
+.applicant_row,
+.job_row {
+  position: relative;
+}
+
+span.featured_tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px;
+  font-size: 10px;
+  font-weight: 400;
 }
 
 /* SIDEBAR */
@@ -557,6 +577,11 @@ label.image_upload_btn {
 .dashboard_card .table-responsive.main_table_div {
   position: relative;
   min-height: unset;
+}
+
+.dashboard_card .mb-18,
+.dashboard_card .mb-8 {
+  margin-bottom: 0 !important;
 }
 
 .custom_loader {

@@ -323,13 +323,13 @@ export default function JobTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Vacancies / Total Resposes
+                    Vacancies/Responses
                   </th>
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    LIMIA status
+                    LMIA status
                   </th>
                   {props.heading === "Dashboard" ? null : (
                     <th
@@ -367,7 +367,11 @@ export default function JobTable(props) {
                 ) : (
                   (jobData || []).map((job) => (
                     <React.Fragment key={job.job_id}>
-                      <tr className={job.is_applied === "1" ? "d-none" : ""}>
+                      <tr
+                        className={
+                          job.is_applied === "1" ? "d-none job_row" : "job_row"
+                        }
+                      >
                         <th scope="row" className="py-5 ">
                           <div className="">
                             {props.heading === "Dashboard" ? (
@@ -379,9 +383,8 @@ export default function JobTable(props) {
                                   {job.company_name} - {job.industry_type}
                                   <br />
                                   {job.is_featured === "1" ? (
-                                    <span className="bg-info text-white p-1">
-                                      {" "}
-                                      Featured{" "}
+                                    <span className="bg-orange text-white featured_tag">
+                                      Featured
                                     </span>
                                   ) : null}
                                 </p>
@@ -401,7 +404,7 @@ export default function JobTable(props) {
                                     {job.company_name} - {job.industry_type}
                                     <br />
                                     {job.is_featured === "1" ? (
-                                      <span className="bg-info text-white p-1">
+                                      <span className="bg-orange text-white featured_tag">
                                         {" "}
                                         Featured{" "}
                                       </span>
