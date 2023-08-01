@@ -70,7 +70,11 @@ function JobResponse(props) {
       setResponseData([]);
       setIsLoading(false)
     } else {
-      setResponseData(userData.data.data);
+      if(props.self === "yes"){
+        setResponseData(userData.data.data.filter((item)=>item.apply_by_admin_id === "0"));
+      }else{
+        setResponseData(userData.data.data.filter((item)=>item.apply_by_admin_id !== "0"));
+      }
       setTotalData(userData.data.total_rows);
       setIsLoading(false)
     }
@@ -182,8 +186,7 @@ function JobResponse(props) {
   };
 
   return (
-
-    <div
+  <div
       className={
         props.heading === "Response" ||
           (props.heading === undefined && user_type === "admin")
@@ -497,7 +500,7 @@ function JobResponse(props) {
                           Interview
                         </th>
                         {props.heading === "Dashboard" ||
-                          user_type === "company" ? (
+                          user_type === "company" || props.self === "yes" ? (
                           ""
                         ) : (
                           <th
@@ -693,7 +696,7 @@ function JobResponse(props) {
                               </p>
                             </th>
                             {props.heading === "Dashboard" ||
-                              user_type === "company" ? (
+                              user_type === "company" || props.self === "yes" ? (
                               ""
                             ) : (
                               <th className="py-5  min-width-px-100">

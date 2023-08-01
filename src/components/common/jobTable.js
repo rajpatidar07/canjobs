@@ -601,6 +601,7 @@ export default function JobTable(props) {
                               apiCall={apiCall}
                               setApiCall={setApiCall}
                               heading={"Manage Jobs"}
+                              self={props.selfJob}
                               total_applicants={job.total_applicants}
                               role_category={job.role_category}
                             />

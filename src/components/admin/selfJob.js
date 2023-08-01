@@ -90,9 +90,9 @@ function SelfJob(props) {
         
         {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? 
           <> {/* <!-- Header Area --> */}
-            <AdminHeader heading={"Manage Jobs"} />
+            <AdminHeader heading={"Manage Self Jobs"} />
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"Manage Jobs"} />
+            <AdminSidebar heading={"Manage Self Jobs"} />
           </> :
           null}
         <ToastContainer />
