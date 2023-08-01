@@ -37,13 +37,13 @@ function LmiaStatus(props) {
   const validators = {
     lmia_status: [
       (value) =>
-        value === "" || value === null || value.trim() === ""
+        value === "" || value === null 
           ? "Lmia status is required"
           : "",
     ],
     completion_time: [
       (value) =>
-        value === "" || value === null || value.trim() === ""
+        value === "" || value === null 
           ? "Expected time of completion is required"
           : "",
     ],
@@ -126,8 +126,8 @@ function LmiaStatus(props) {
                 type={"text"}
                 className={
                   errors.lmia_status
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control text-capitalize border border-danger"
+                    : "form-control text-capitalize"
                 }
                 value={state.lmia_status || ""}
                 onChange={onInputChange}
@@ -137,9 +137,15 @@ function LmiaStatus(props) {
               >
                 <option value={""}>Select lmia status</option>
                 {(FilterJson.lmia_status || []).map((status, i) => (
-                  <option value={status} key={i}>
-                    {status}
-                  </option>
+                   location.pathname === "/job" ? (i <= 6 && (
+                    <option value={status} key={i}>
+                      {status}
+                    </option>
+                  )) : (i > 6 && (
+                    <option value={status} key={i}>
+                      {status}
+                    </option>
+                  ))
                 ))}
               </select>
               {/*----ERROR MESSAGE FOR LIMA STATUS----*/}

@@ -1296,6 +1296,7 @@ export const UploadDocument = async (id, type, doc, docId) => {
   );
   return response;
 };
+
 /*Api to verify Applicants document */
 export const VarifyDocument = async (id, verify) => {
   const response = await axios.put(
@@ -1303,6 +1304,26 @@ export const VarifyDocument = async (id, verify) => {
     {
       is_varify: verify,
       id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Api to Add update document */
+export const AddUpdateVisa = async (employee_id, state,id) => {
+  console.log(employee_id, state,id)
+  const response = await axios.put(
+    `${API_URL}addUpdateVisa `,
+    {
+      employee_id: employee_id,
+      id: id,
+      country:state.country,
+      status :state.status
     },
     {
       headers: {

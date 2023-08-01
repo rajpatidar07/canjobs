@@ -232,7 +232,7 @@ function JobResponse(props) {
       {showVisaModal ? (
         <VisaStatus
           show={showVisaModal}
-          employeeId={employeeId}
+          employeeData={employeeId}
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
@@ -706,27 +706,27 @@ function JobResponse(props) {
                             <th className=" py-5">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 <Link to="/lmia" state={{ id: res.job_id }}>
-                                  {res.lmia_status === "reject" ? (
+                                  {res.lmia_status === "limia rejected" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-danger">
                                       Reject
                                     </span>
-                                  ) : res.lmia_status === "approved" ? (
+                                  ) : res.lmia_status === "lmia approved" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                       Approved
                                     </span>
-                                  ) : res.lmia_status === "draft" ? (
+                                  ) : res.lmia_status === "Lmia partial" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-gray">
                                       Draft
                                     </span>
-                                  ) : res.lmia_status === "complete" ? (
+                                  ) : res.lmia_status === "Payment done" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
                                       Complete
                                     </span>
-                                  ) : res.lmia_status === "pending" ? (
+                                  ) : res.lmia_status === "Interview done" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-warning">
                                       Pending
                                     </span>
-                                  ) : res.lmia_status === "other" ? (
+                                  ) : res.lmia_status === "position approved" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-dark">
                                       Other
                                     </span>
@@ -737,13 +737,7 @@ function JobResponse(props) {
                             </th>
                             <th className="  py-5 ">
                               <p className="font-size-3 font-weight-normal mb-0">
-                                {res.work_permit_canada === "yes" ? (
-                                  <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Yes</span>
-                                ) : (
-                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                    No
-                                  </span>
-                                )}
+                                {res.visa_status}
                               </p>
                             </th>
                             <th className="  py-5 ">
@@ -777,7 +771,7 @@ function JobResponse(props) {
                                  
                                   {props.response === "visa"  ? <button
                                     className="btn btn-outline-info action_btn"
-                                    onClick={() => editVisa(res.employee_id)}
+                                    onClick={() => editVisa(res)}
                                     title="Update Visa status"
                                   >
                                     <span className="fab fa-cc-visa text-gray px-2"></span>

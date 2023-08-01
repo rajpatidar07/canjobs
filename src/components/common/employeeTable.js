@@ -29,6 +29,7 @@ export default function EmployeeTable(props) {
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
+  const [alredyApplied, setAlredyApplied] = useState([]);
   let [employeeId, setemployeeId] = useState();
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -82,6 +83,9 @@ export default function EmployeeTable(props) {
       props.setApiCall(false);
       setApiCall(false);
     }
+    if(alredyApplied === true) {
+      setAlredyApplied(false)
+    }
   }, [
     props.experienceFilterValue,
     props.skillFilterValue,
@@ -115,10 +119,10 @@ export default function EmployeeTable(props) {
   };
 
   /* Function to show the single data to update Employee*/
-  const editVisa = (e) => {
-    setVisaModal(true);
-    setemployeeId(e);
-  };
+  // const editVisa = (e) => {
+  //   setVisaModal(true);
+  //   setemployeeId(e);
+  // };
 
   /* Function to show the single data to update Employee Skills*/
   const editEmployeeSkills = (e) => {
@@ -151,11 +155,11 @@ export default function EmployeeTable(props) {
   };
 
   /*Function to open add Document up modal */
-  const AddDoucument = (e) => {
-    setDocumentModal(true);
-    setemployeeId(e);
-  };
-  /*
+  // const AddDoucument = (e) => {
+  //   setDocumentModal(true);
+  //   setemployeeId(e);
+  // };
+  // /*
     /*To call Api to delete employee */
   async function deleteEmployee(e) {
     const responseData = await DeleteJobEmployee(e);
@@ -200,6 +204,7 @@ export default function EmployeeTable(props) {
         autoClose: 1000,
       });
       setApiCall(true);
+      setAlredyApplied(true)
     }
   };
 
@@ -638,7 +643,7 @@ export default function EmployeeTable(props) {
                                 className={
                                   !isTimeWithin24Hours(empdata.created_at)
                                     ? "p-1 bg-danger text-white text-center w-100 border rounded-pill"
-                                    : "p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill"
+                                    : "p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill"
                                 }
                               >
                                 New
@@ -668,7 +673,11 @@ export default function EmployeeTable(props) {
                                 {" "}
                                 Dead{" "}
                               </span>
-                            ) : null}
+                            ) :  empdata.status === "7" ? (
+                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                {" "}
+                                Reserved{" "}
+                              </span>):null}
                           </p>
                         </td>
                       )}
@@ -691,14 +700,14 @@ export default function EmployeeTable(props) {
                             {props.skill === null ||
                             props.skill === undefined ? (
                               <>
-                                <button
+                                {/* <button
                                   className="btn btn-outline-info action_btn"
                                   onClick={() => editVisa(empdata.employee_id)}
                                   title="Update Visa status"
                                 >
                                   <span className="fab fa-cc-visa text-gray px-2"></span>
-                                </button>
-                                {props.visa === "yes" ? (
+                                </button> */}
+                                {/* {props.visa === "yes" ? (
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>
@@ -706,14 +715,11 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Documents"
                                   >
-                                    {/* <Link
-                                  to={"/document"}
-                                  state={{ employee_id: res.employee_id }}
-                                   >
-                                  </Link> */}
+                                    
                                     <span className="fas fa-file text-gray"></span>
                                   </button>
-                                ) : (
+                                ) :
+                                 ( */}
                                   <>
                                     <button
                                       className="btn btn-outline-info action_btn"
@@ -773,7 +779,6 @@ export default function EmployeeTable(props) {
                                     >
                                       <span className="fas fa-file text-gray"></span>
                                     </button>
-
                                     <button
                                       className="btn btn-outline-info action_btn text-gray"
                                       onClick={() => editJob(empdata)}
@@ -792,18 +797,18 @@ export default function EmployeeTable(props) {
                                       </span>
                                     </button>
                                   </>
-                                )}
+                                {/* )} */}
                               </>
                             ) : (
                               <button
                                 className="btn btn-outline-info action_btn"
-                                disabled={empdata.is_applied ? true : false}
+                                disabled={alredyApplied ? true : false}
                                 onClick={() =>
                                   onChangeJobClick(empdata.employee_id)
                                 }
                                 title="Apply For job"
                               >
-                                {empdata.is_applied
+                                {alredyApplied
                                   ? "Already Applied"
                                   : "Apply"}
                               </button>

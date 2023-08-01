@@ -479,31 +479,35 @@ export default function JobTable(props) {
                         <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <Link to="/lmia" state={{ id: job.job_id }}>
-                              {job.lmia_status === "Reject" ? (
+                              {job.lmia_status === "Advertisement running" ? (
                                 <span className="px-3 py-2 badge badge-pill badge-danger">
-                                  Reject
+                                  Advertisement running
                                 </span>
-                              ) : job.lmia_status === "Approved" ? (
+                              ) : job.lmia_status === "Application in review" ? (
                                 <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                  Approved
+                                  Application in review
                                 </span>
-                              ) : job.lmia_status === "Draft" ? (
+                              ) : job.lmia_status === "Job bank requested" ? (
                                 <span className="px-3 py-2 badge badge-pill badge-gray">
-                                  Draft
+                                  Job bank requested
                                 </span>
-                              ) : job.lmia_status === "Complete" ? (
+                              ) : job.lmia_status === "Additional information required" ? (
                                 <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                  Complete
+                                  Additional information required
                                 </span>
-                              ) : job.lmia_status === "Pending" ? (
+                              ) : job.lmia_status === "Need to start" ? (
                                 <span className="px-3 py-2 badge badge-pill badge-warning">
-                                  Pending
+                                  Need to start
                                 </span>
-                              ) : job.lmia_status === "Other" ? (
+                              ) : job.lmia_status === "Working on it" ? (
                                 <span className="px-3 py-2 badge badge-pill badge-dark">
-                                  Other
+                                  Working on it
                                 </span>
-                              ) : (
+                              ) : (job.lmia_status === "Application submitted" ? (
+                                <span className="px-3 py-2 badge badge-pill badge-info">
+                                  Application submitted
+                                </span>
+                              ) :
                                 <span>NA</span>
                               )}
                             </Link>
