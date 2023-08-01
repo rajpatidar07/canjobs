@@ -4,9 +4,13 @@ html {
 }
 
 body {
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
   overscroll-behavior: none;
+}
+
+body.admin_body {
+  overflow: hidden;
 }
 
 * {
