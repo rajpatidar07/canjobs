@@ -225,9 +225,9 @@ table.table.table-striped.main_data_table_inn tr {
 }
 
 .btn-group.button_group {
-  flex-wrap: wrap;
-  max-width: 160px;
-  gap: 5px 0;
+  /* flex-wrap: wrap; */
+  /* max-width: 160px; */
+  /* gap: 5px 0; */
 }
 
 .applicant_row,
