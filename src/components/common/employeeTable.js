@@ -485,7 +485,7 @@ export default function EmployeeTable(props) {
                               <p className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate">
                                 {empdata.name}
                               </p>
-                              <p className="text-gray font-size-2 m-0 text-capitalize">
+                              <div className="text-gray font-size-2 m-0 text-capitalize">
                                 {empdata.gender === "female" ? "F" : "M"} (
                                 {empdata.marital_status + ", "}
                                 {/*Calculation of age from date of birth*/}
@@ -496,7 +496,7 @@ export default function EmployeeTable(props) {
                                     Featured
                                   </span>
                                 ) : null}
-                              </p>
+                              </div>
                             </div>
                           ) : (
                             <Link
@@ -722,7 +722,7 @@ export default function EmployeeTable(props) {
                                       }
                                       title="Change Applicant status"
                                     >
-                                      <span className="fa fa-badge text-gray px-2"></span>
+                                      <i class="fas fa-stream text-gray"></i>
                                     </button>
                                     <button
                                       className="btn btn-outline-info action_btn"
@@ -812,11 +812,15 @@ export default function EmployeeTable(props) {
                         </td>
                       )}
                       {props.self === "yes" ? (
-                        <button
-                          className="btn btn-outline-info action_btn"
-                          onClick={() => ChangeApplicantsStatus(empdata)}
-                          title="Change Applicant status"
-                        ></button>
+                        <td>
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => ChangeApplicantsStatus(empdata)}
+                            title="Change Applicant status"
+                          >
+                            <i class="fas fa-stream text-gray"></i>
+                          </button>
+                        </td>
                       ) : (
                         ""
                       )}

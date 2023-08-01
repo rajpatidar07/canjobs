@@ -559,7 +559,7 @@ export default function JobTable(props) {
                                     onClick={() => updateLima(job)}
                                     title="Update LIMA"
                                   >
-                                    LIMIA
+                                    LMIA
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"

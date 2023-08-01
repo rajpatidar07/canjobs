@@ -35,7 +35,7 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Dashboard" ? "active" : ""}>
             <Link
               to="/dashboard"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fab fa-blackberry mr-5"></i>Dashboard
             </Link>
@@ -43,15 +43,19 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Manage Applicants" ? "active" : ""}>
             <Link
               to="/employee"
-              className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-user mr-5"></i>Manage Applicants{" "}
             </Link>
           </li>
-          <li className={props.heading === "Manage Self Applicants" ? "active" : ""}>
+          <li
+            className={
+              props.heading === "Manage Self Applicants" ? "active" : ""
+            }
+          >
             <Link
               to="/selfemployee"
-              className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-user mr-5"></i>Self Registered Applicants{" "}
             </Link>
@@ -59,7 +63,7 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Manage Companies" ? "active" : ""}>
             <Link
               to="/employer"
-              className="px-9 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-building mr-5"></i>Manage Companies
             </Link>
@@ -67,7 +71,7 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Manage Jobs" ? "active" : ""}>
             <Link
               to="/job"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-address-card mr-5"></i>Manage Jobs
             </Link>
@@ -75,15 +79,16 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Manage Self Jobs" ? "active" : ""}>
             <Link
               to="/selfjob"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="far fa-address-card mr-5"></i>Manage self Applied Jobs
+              <i className="far fa-address-card mr-5"></i>Manage self Applied
+              Jobs
             </Link>
           </li>
           {/* <li className={props.heading === "Response" ? "active" : ""}>
             <Link
               to="/responses"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-reply mr-5"></i>Manage Response
             </Link>
@@ -91,7 +96,7 @@ const AdminSidebar = (props) => {
           {/* <li className={props.heading === "Manage Follow-ups" ? "active" : ""}>
             <Link
               to="/followup"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="far fa-comments mr-5"></i>Manage Follow-ups
             </Link>
@@ -99,15 +104,17 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Interview" ? "active" : ""}>
             <Link
               to="/interview"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-podcast mr-5"></i>Manage Interview
             </Link>
           </li>
-          <li className={props.heading === "Manage Job Category" ? "active" : ""}>
+          <li
+            className={props.heading === "Manage Job Category" ? "active" : ""}
+          >
             <Link
               to="/category"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-qrcode mr-5"></i>Manage Job Category
             </Link>
@@ -115,7 +122,7 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
             <Link
               to="/adminprofile"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-user mr-5"></i>Manage Admin
             </Link>
@@ -123,7 +130,7 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Visa status" ? "active" : ""}>
             <Link
               to="/visa"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fab fa-cc-visa mr-5"></i>Manage Visa
             </Link>
@@ -131,7 +138,7 @@ const AdminSidebar = (props) => {
           {/* <li className={props.heading === "Document Upload & Verification" ? "active" : ""}>
             <Link
               to="/document"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-file mr-5"></i>Manage Documents
             </Link>
@@ -139,15 +146,15 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "LIMIA status" ? "active" : ""}>
             <Link
               to="/lmia"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fas fa-filter mr-5"></i>Manage LIMIA Status
+              <i className="fas fa-filter mr-5"></i>Manage LMIA Status
             </Link>
           </li>
           <li className={props.heading === "Filter List" ? "active" : ""}>
             <Link
               to="/filter"
-              className="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               <i className="fas fa-filter mr-5"></i>Manage Filter List
             </Link>
