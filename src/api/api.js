@@ -127,7 +127,7 @@ export const SocialLogin = async (token, email, name, picture, type) => {
 
 /*Employee Forgot passsword api */
 export const EmployeeForgotPassword = async (props) => {
-  const response = await axios.post(`${API_URL}employee/forgetPassword`, {
+  const response = await axios.post(`${API_URL}employee/ForgetPassword`, {
     forget_email: props.forget_email,
   });
   return response.data;
@@ -513,7 +513,8 @@ export const GetAllResponse = async (
   column,
   sort,
   time,
-  lima
+  lima,
+  status
 ) => {
   const response = await axios.post(
     `${API_URL}getJobResponse`,
@@ -529,6 +530,7 @@ export const GetAllResponse = async (
       search: search,
       filter_by_time: time,
       filter_lmia_status: lima,
+      employee_status : status
     },
     {
       headers: {
@@ -780,11 +782,17 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
 };
 
 /*Get lmia list Api */
-export const GetEmployeeByLima = async (status) => {
+export const GetEmployeeByLima = async (id,search,status,page,limit,col,ord) => {
   const response = await axios.post(
     `${API_URL}/company/getLmia`,
     {
       lmia_status: status,
+      search:search,
+      filter_by_job_id :id,
+      page:page,
+      limit:limit,
+      sort_order : ord ,
+      column_name :col
     },
     {
       headers: {

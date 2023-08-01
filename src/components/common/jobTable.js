@@ -465,7 +465,15 @@ export default function JobTable(props) {
                         </th>
                         <th className="py-5 ">
                           <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            {job.role_category} / {job.total_applicants}
+                            <Link  onClick={() => {
+                                        setresponseId(job.job_id);
+                                        setresponseDropDown(
+                                          responseDropDown === false
+                                            ? true
+                                            : false
+                                        );
+                                      }} className="text-dark">{job.role_category} / {job.total_applicants}
+                                      </Link>
                           </h3>
                         </th>
                         <th className=" py-5">
@@ -507,9 +515,44 @@ export default function JobTable(props) {
                               className="btn-group button_group"
                               role="group"
                             >
-                              {props.skill === null ||
-                              props.skill === undefined ||
-                              Object.keys(props.skill).length === 0 ? (
+                              { props.response === "lmia" ? 
+                              <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => {
+                                        setresponseId(job.job_id);
+                                        setresponseDropDown(
+                                          responseDropDown === false
+                                            ? true
+                                            : false
+                                        );
+                                      }}
+                                      // disabled={
+                                      //   job.total_applicants > 0 ? false : true
+                                      // }
+                                      title="Job LMIA"
+                                    >
+                                      LMIA
+                                    </button> :
+                                    props.response === "visa" ? 
+                              <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => {
+                                        setresponseId(job.job_id);
+                                        setresponseDropDown(
+                                          responseDropDown === false
+                                            ? true
+                                            : false
+                                        );
+                                      }}
+                                      // disabled={
+                                      //   job.total_applicants > 0 ? false : true
+                                      // }
+                                      title="Job visa"
+                                    >
+                                      Visa
+                                    </button> : props.skill === null ||
+                                props.skill === undefined ||
+                                Object.keys(props.skill).length === 0 ? (
                                 <>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -539,7 +582,7 @@ export default function JobTable(props) {
                                   </button>
                                   <div
                                     className="btn-group button_group"
-                                    // role="group"
+                                  // role="group"
                                   >
                                     <button
                                       className="btn btn-outline-info action_btn"
@@ -569,7 +612,9 @@ export default function JobTable(props) {
                                     </span>
                                   </button>
                                 </>
-                              ) : (
+                              ) 
+                              :
+                              (
                                 <button
                                   className="btn btn-outline-info action_btn"
                                   disabled={
@@ -577,9 +622,9 @@ export default function JobTable(props) {
                                       ? true
                                       : false ||
                                         job.total_applicants >=
-                                          job.role_category
-                                      ? true
-                                      : false
+                                        job.role_category
+                                        ? true
+                                        : false
                                   }
                                   onClick={() => onChangeJobClick(job.job_id)}
                                   title="Apply For job"
@@ -594,20 +639,25 @@ export default function JobTable(props) {
                         )}
                       </tr>
                       {job.job_id === responseId &&
-                      job.total_applicants > 0 &&
-                      responseDropDown === true ? (
+                        job.total_applicants > 0 &&
+                        responseDropDown === true ? (
                         <tr>
                           <td colSpan={11}>
-                            {/* <!-- Job Responses --> */}
-                            <JobResponse
-                              responseId={responseId}
-                              apiCall={apiCall}
-                              setApiCall={setApiCall}
-                              heading={"Manage Jobs"}
-                              self={props.selfJob}
-                              total_applicants={job.total_applicants}
-                              role_category={job.role_category}
-                            />
+                            { 
+                                <>
+                                  {/* <!-- Job Responses --> */}
+                                  <JobResponse
+                                    responseId={responseId}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    heading={"Manage Jobs"}
+                                    self={props.selfJob}
+                                    total_applicants={job.total_applicants}
+                                    role_category={job.role_category}
+                                    status={props.response === "visa"|| props.response === "lmia"?"7":""}
+                                    response={props.response}
+                                  /></> 
+                                }
                           </td>
                         </tr>
                       ) : null}

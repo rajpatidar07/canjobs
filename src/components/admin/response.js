@@ -12,8 +12,10 @@ import LmiaStatus from "../forms/admin/lmiastatus";
 import { toast, ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
+import VisaStatus from "../forms/user/visaStatus";
 function JobResponse(props) {
   /*show modal and data states */
+  let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [apiCall, setApiCall] = useState(props.apiCall);
   let [followup, setFollowUp] = useState(false);
@@ -23,8 +25,10 @@ function JobResponse(props) {
   let [resData, setResData] = useState("");
   let [searchError, setSearchError] = useState("");
   let [isLoading, setIsLoading] = useState(true);
+  let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
+  const [limiaFilterValue, setLmiaFilter] = useState("");
   const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
     useState("");
   let [Json, setJson] = useState([]);
@@ -63,17 +67,19 @@ function JobResponse(props) {
       recordsPerPage,
       columnName,
       sortOrder,
-      props.filter_by_time
+      props.filter_by_time,
+      limiaFilterValue,
+      props.status
     );
     if (userData.data.data.length === 0) {
       setResData([]);
       setResponseData([]);
       setIsLoading(false)
     } else {
-      if(props.self === "yes"){
-        setResponseData(userData.data.data.filter((item)=>item.apply_by_admin_id === "0"));
-      }else{
-        setResponseData(userData.data.data.filter((item)=>item.apply_by_admin_id !== "0"));
+      if (props.self === "yes") {
+        setResponseData(userData.data.data.filter((item) => item.apply_by_admin_id === "0"));
+      } else {
+        setResponseData(userData.data.data.filter((item) => item.apply_by_admin_id !== "0"));
       }
       setTotalData(userData.data.total_rows);
       setIsLoading(false)
@@ -119,7 +125,7 @@ function JobResponse(props) {
 
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
-// Api call to set employee reserved
+    // Api call to set employee reserved
     let data = {
       employee_id: e.employee_id,
       status: "7",
@@ -134,7 +140,7 @@ function JobResponse(props) {
       let VisaResponse = await AddEmployeeDetails(visa)
       if (VisaResponse.message === 'Employee data updated successfully') {
         // Api call to set employee Limia
-        const lmia = {lmia_status: "pending",};
+        const lmia = { lmia_status: "pending", };
         let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
         if (LimiaResponse.message === 'Data added successfully') {
           toast.success("Employee Reserved successfully", {
@@ -175,7 +181,11 @@ function JobResponse(props) {
     setResData(e);
     setJobId(e.job_id);
   };
-
+  /* Function to show the single data to update Employee*/
+  const editVisa = (e) => {
+    setVisaModal(true);
+    setemployeeId(e);
+  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -186,7 +196,7 @@ function JobResponse(props) {
   };
 
   return (
-  <div
+    <div
       className={
         props.heading === "Response" ||
           (props.heading === undefined && user_type === "admin")
@@ -217,6 +227,15 @@ function JobResponse(props) {
             setFollowUp(false);
             setResData("");
           }}
+        />
+      ) : null}
+      {showVisaModal ? (
+        <VisaStatus
+          show={showVisaModal}
+          employeeId={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setVisaModal(false)}
         />
       ) : null}
       {interview ? (
@@ -290,11 +309,13 @@ function JobResponse(props) {
                   : "align-items-center"
               }
             >
+              {console.log(props.heading)}
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
               <div className={props.heading === "Response" ||
-                (props.heading === undefined && user_type === "admin") ? "row m-0 align-items-center" : "d-none"}>
+                (props.heading === undefined && user_type === "admin") ?
+                "row m-0 align-items-center" : "d-none"}>
                 {props.heading === "" ? null : (
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search :</p>
@@ -329,6 +350,28 @@ function JobResponse(props) {
                       {(Json.Skill || []).map((skill) => (
                         <option value={skill.value} key={skill.id}>
                           {skill.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col p-1 form_group mb-5 mt-4">
+                  <p className="input_label">Filter by Skill:</p>
+                  <div className="select_div">
+                    <select
+                      name="job"
+                      id="job"
+                      value={limiaFilterValue}
+                      onChange={(e) => {
+                        setLmiaFilter(e.target.value);
+                        setCurrentPage(1)
+                      }}
+                      className=" form-control"
+                    >
+                      <option value="">Select LMIA</option>
+                      {(Json.lmia || []).map((lmia) => (
+                        <option value={lmia.value} key={lmia.id}>
+                          {lmia.value}
                         </option>
                       ))}
                     </select>
@@ -400,7 +443,7 @@ function JobResponse(props) {
                             Name
                           </Link>
                         </th>
-                       
+
                         {/* <th
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
@@ -458,7 +501,7 @@ function JobResponse(props) {
                             </Link>
                           </th>
                         )}
-                         {props.heading === "Dashboard" ? (
+                        {props.heading === "Dashboard" ? (
                           ""
                         ) : (
                           <th
@@ -493,6 +536,12 @@ function JobResponse(props) {
                           >
                             LMIA
                           </Link>
+                        </th>
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Visa
                         </th>
                         <th
                           scope="col"
@@ -586,7 +635,7 @@ function JobResponse(props) {
                                 )}
                               </h3>
                             </th>
-                            
+
                             {/* <th className="py-5 ">
                               <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
                                 {res.job_title}
@@ -657,27 +706,27 @@ function JobResponse(props) {
                             <th className=" py-5">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 <Link to="/lmia" state={{ id: res.job_id }}>
-                                  {res.lmia_status === "Reject" ? (
+                                  {res.lmia_status === "reject" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-danger">
                                       Reject
                                     </span>
-                                  ) : res.lmia_status === "Approved" ? (
+                                  ) : res.lmia_status === "approved" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                       Approved
                                     </span>
-                                  ) : res.lmia_status === "Draft" ? (
+                                  ) : res.lmia_status === "draft" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-gray">
                                       Draft
                                     </span>
-                                  ) : res.lmia_status === "Complete" ? (
+                                  ) : res.lmia_status === "complete" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
                                       Complete
                                     </span>
-                                  ) : res.lmia_status === "Pending" ? (
+                                  ) : res.lmia_status === "pending" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-warning">
                                       Pending
                                     </span>
-                                  ) : res.lmia_status === "Other" ? (
+                                  ) : res.lmia_status === "other" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-dark">
                                       Other
                                     </span>
@@ -685,6 +734,17 @@ function JobResponse(props) {
                                     <span>NA</span>
                                   )}</Link>
                               </div>
+                            </th>
+                            <th className="  py-5 ">
+                              <p className="font-size-3 font-weight-normal mb-0">
+                                {res.work_permit_canada === "yes" ? (
+                                  <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Yes</span>
+                                ) : (
+                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                    No
+                                  </span>
+                                )}
+                              </p>
                             </th>
                             <th className="  py-5 ">
                               <p className="font-size-3 font-weight-normal mb-0">
@@ -707,14 +767,28 @@ function JobResponse(props) {
                                   role="group"
                                   aria-label="Basic example"
                                 >
-                                  {res.employee_status === "7"  ? null :<button
+                                  {res.employee_status === "7" ? null : <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ReservedEmployee(res)}
                                     title="Reserved Employee"
                                   >
                                     Reserved
                                   </button>}
-                                  <button
+                                 
+                                  {props.response === "visa"  ? <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() => editVisa(res.employee_id)}
+                                    title="Update Visa status"
+                                  >
+                                    <span className="fab fa-cc-visa text-gray px-2"></span>
+                                  </button> :
+                                  props.response === "lmia"  ? <button
+                                      className="btn btn-outline-info action_btn text-gray"
+                                      onClick={() => addLimia(res)}
+                                      title="Update LMIA status"
+                                    >
+                                      LMIA
+                                    </button> :  <><button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => addFollow(res)}
                                     title=" Add Follow Up"
@@ -729,13 +803,6 @@ function JobResponse(props) {
                                   >
                                     <i className="fa fa-calendar text-gray px-2"></i>
                                   </button>
-                                 {res.employee_status === "7"  ? <button
-                                    className="btn btn-outline-info action_btn text-gray"
-                                    onClick={() => addLimia(res)}
-                                    title="Update LMIA status"
-                                  >
-                                    LMIA
-                                  </button> : null}
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(res)}
@@ -743,7 +810,7 @@ function JobResponse(props) {
                                     disabled={props.total_applicants >= props.role_category ? true : false}
                                   >
                                     <i className="fas fa-briefcase"></i>
-                                  </button>
+                                  </button></>}
                                 </div>
                               </th>
                             )}

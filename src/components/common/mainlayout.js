@@ -30,12 +30,12 @@ import ResetPassword from "./resetPassword";
 import EmailTemplate from "../admin/email";
 import Loader from "../common/loader";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
-import LimiaStatus from "../admin/limiaStatus";
 import Visa from "../admin/visa";
 import Document from "../admin/document";
 import EmployerLMIA from "../company/lmia";
 import SelfApplicat from "../admin/selfApplicat";
 import SelfJob from "../admin/selfJob";
+import LimaContainer from "../admin/lmiaContainer";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -106,7 +106,7 @@ function MainLayout() {
             <Route path="/job" element={<Job />} />
             <Route path="/selfjob" element={<SelfJob />} />
             <Route path="/category" element={<Category />} />
-            <Route path="/lmia" element={<LimiaStatus />} />
+            <Route path="/lmia" element={<LimaContainer />} />
             <Route path="/visa" element={<Visa />} />
             <Route path="/document" element={<Document />} />
             <Route path="/employee" element={<Employee />} />

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import { Link, useLocation } from "react-router-dom";
 // import Addfollowup from "../forms/admin/addfollowup";
-import { GetEmployeeByLima, GetFilter } from "../../api/api";
+import { GetEmployeeByLima } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 // import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
-import DocumentModal from "./Modal/DocumentModal";
+import DocumentModal from "../admin/Modal/DocumentModal";
 
 export default function LimiaStatus(props) {
     /*show modal and data states */
@@ -27,11 +27,11 @@ export default function LimiaStatus(props) {
     let [searchError, setSearchError] = useState("");
     let [isLoading, setIsLoading] = useState(true);
     /*Filter and search state */
-    const [skillFilterValue, setSkillFilter] = useState("");
     const [limiaFilterValue, setLimailter] = useState("");
-    const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
-        useState("");
-    let [Json, setJson] = useState([]);
+    // const [skillFilterValue, setSkillFilter] = useState("");
+    // const [experienceTypeFilterValue, setExperienceTypeFilterValue] =
+    //     useState("");
+    // let [Json, setJson] = useState([]);
     const [search, setSearch] = useState("");
     /*Pagination states */
     const [totalData, setTotalData] = useState("");
@@ -47,31 +47,29 @@ export default function LimiaStatus(props) {
     let location = useLocation()
 
     /*Function to get the jSon */
-    const JsonData = async () => {
-        let Json = await GetFilter();
-        setJson(Json.data.data);
-    };
+    // const JsonData = async () => {
+    //     let Json = await GetFilter();
+    //     setJson(Json.data.data);
+    // };
     //   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {
     //     props.setApiCall(true)
     //   }
 
     /* Function to get the Response data*/
     const ResponseData = async () => {
+        console.log(props.heading)
         setIsLoading(true)
         const userData = await GetEmployeeByLima(
-            props.heading === "Manage Follow-ups" || user_type === "company"
-                ? jobId
-                : location.state === null ? null : location.state.id,
-            skillFilterValue,
-            experienceTypeFilterValue,
+            // props.heading === "Manage Follow-ups" || props.heading === "LIMIA status" || user_type === "company"
+            //     ? jobId
+            //     : 
+            location.state === null ? jobId : location.state.id,
             search,
-            props.filter_by_time || limiaFilterValue || skillFilterValue || search || experienceTypeFilterValue || sortOrder ? 1 : currentPage,
+            limiaFilterValue,
+            limiaFilterValue  || search || sortOrder ? 1 : currentPage,
             recordsPerPage,
             columnName,
             sortOrder,
-            props.filter_by_time,
-            limiaFilterValue,
-            limiaFilterValue
         );
         if (userData.data.length === 0) {
             setResData([]);
@@ -87,20 +85,17 @@ export default function LimiaStatus(props) {
     /*Render function to get the Response*/
     useEffect(() => {
         ResponseData();
-        JsonData();
+        // JsonData();
         if (apiCall === true || changeJob === true) {
             setApiCall(false);
             setChangeJob(false)
         }
     }, [
-        skillFilterValue,
-        experienceTypeFilterValue,
         search,
         currentPage,
         recordsPerPage,
         columnName,
         sortOrder,
-        props.filter_by_time,
         apiCall,
         limiaFilterValue
     ]);
@@ -165,24 +160,25 @@ export default function LimiaStatus(props) {
     return (
         <div
             className={
-                props.heading === "LIMIA status" ||
-                    (props.heading === undefined && user_type === "admin")
-                    ? "site-wrapper overflow-hidden bg-default-2  "
-                    : props.heading === "Dashboard"
-                        ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-                        : "response_main_div"
+                // props.heading === "LIMIA status" ||
+                //     (props.heading === undefined && user_type === "admin")
+                //     ? "site-wrapper overflow-hidden bg-default-2  "
+                //     : props.heading === "Dashboard"
+                // ? 
+                "site-wrapper overflow-hidden bg-default-2 bg-white"
+                // : "response_main_div"
             }
         >
-            {props.heading === "LIMIA status" ||
+            {/* {props.heading === "LIMIA status" ||
                 (props.heading === undefined && user_type === "admin") ? (
                 <>
-                    {/* <!-- Header Area --> */}
+                    <!-- Header Area -->
                     <AdminHeader heading={"LIMIA status"} />
-                    {/* <!-- navbar- --> */}
+                    <!-- navbar- -->
                     <AdminSidebar heading={"LIMIA status"} />
                     <ToastContainer />
                 </>
-            ) : null}
+            ) : null} */}
             {/* {followup ? (
       <Addfollowup
         show={followup}
@@ -244,22 +240,24 @@ export default function LimiaStatus(props) {
     ) : null} */}
             <div
                 className={
-                    props.heading === "LIMIA status" ||
-                        (props.heading === undefined && user_type === "admin")
-                        ? "dashboard-main-container mt-16"
-                        : props.heading === "Dashboard"
-                            ? ""
-                            : "response__container"
+                    // props.heading === "LIMIA status" ||
+                    //     (props.heading === undefined && user_type === "admin")
+                    //     ? "dashboard-main-container mt-16"
+                    //     : props.heading === "Dashboard"
+                    //         ? ""
+                    //         : "response__container"
+                    ""
                 }
             >
                 <div
                     className={
-                        props.heading === "LIMIA status" ||
-                            (props.heading === undefined && user_type === "admin")
-                            ? "container"
-                            : props.heading === "Dashboard"
-                                ? ""
-                                : "container"
+                        // props.heading === "LIMIA status" ||
+                        //     (props.heading === undefined && user_type === "admin")
+                        //     ? "container"
+                        //     : props.heading === "Dashboard"
+                        //         ?
+                        ""
+                        // : "container"
                     }
                 >
                     {props.heading === "Dashboard" ? (
@@ -294,7 +292,7 @@ export default function LimiaStatus(props) {
                                         />
                                     </div>
                                 )}
-                                <div className="col p-1 form_group mb-5 mt-4">
+                                {/* <div className="col p-1 form_group mb-5 mt-4">
                                     <p className="input_label">Filter by Skill:</p>
                                     <div className="select_div">
                                         <select
@@ -338,9 +336,9 @@ export default function LimiaStatus(props) {
                                             ))}
                                         </select>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="col p-1 form_group mb-5 mt-4">
-                                    <p className="input_label">Filter by Experience:</p>
+                                    <p className="input_label">Filter by LMIA status:</p>
                                     <div className="select_div">
                                         <select
                                             name="lmia"
@@ -369,12 +367,13 @@ export default function LimiaStatus(props) {
                     <div className="mb-8">
                         <div
                             className={
-                                props.heading === "LIMIA status" ||
-                                    (props.heading === undefined && user_type === "admin")
-                                    ? ""
-                                    : props.heading === "Dashboard"
-                                        ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                                        : ""
+                                // props.heading === "LIMIA status" ||
+                                // (props.heading === undefined && user_type === "admin")
+                                // ? ""
+                                // : props.heading === "Dashboard"
+                                // ?
+                                "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                                // : ""
                             }
                         >
                             <div className="table-responsive main_table_div">
@@ -419,7 +418,7 @@ export default function LimiaStatus(props) {
                                                         </Link>
                                                     </th>
                                                 )}
-                                                <th
+                                                {/* <th
                                                     scope="col"
                                                     className="pl-4 border-0 font-size-4 font-weight-normal"
                                                 >
@@ -434,7 +433,7 @@ export default function LimiaStatus(props) {
                                                     >
                                                         Job / Company
                                                     </Link>
-                                                </th>
+                                                </th> */}
 
                                                 {props.heading === "Dashboard" ? (
                                                     ""
@@ -598,14 +597,14 @@ export default function LimiaStatus(props) {
                                                                 </h3>
                                                             </th>
                                                         )}
-                                                        <th className="py-5 ">
+                                                        {/* <th className="py-5 ">
                                                             <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
                                                                 {res.job_title}
                                                             </p>
                                                             <p className="font-size-3 font-weight-normal m-0 text-capitalize">
                                                                 {res.company_name}
                                                             </p>
-                                                        </th>
+                                                        </th> */}
 
                                                         {props.heading === "Dashboard" ? (
                                                             ""
@@ -615,7 +614,7 @@ export default function LimiaStatus(props) {
                                                                     {res.contact_no || res.email ? (
                                                                         <>
                                                                             <p className="font-size-3 font-weight-normal m-0">
-                                                                            +<Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no}</Link>
+                                                                                +<Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no}</Link>
                                                                             </p>
                                                                             <p className="font-size-3 font-weight-normal m-0">
                                                                                 <Link className="text-dark" to={`mailto:${res.email}`}>
@@ -654,27 +653,27 @@ export default function LimiaStatus(props) {
                                                         )}
                                                         <th className=" py-5">
                                                             <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                                                {res.lmia_status === "Reject" ? (
+                                                                {res.lmia_status === "reject" ? (
                                                                     <span className="px-3 py-2 badge badge-pill badge-danger">
                                                                         Reject
                                                                     </span>
-                                                                ) : res.lmia_status === "Approved" ? (
+                                                                ) : res.lmia_status === "approved" ? (
                                                                     <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                                                         Approved
                                                                     </span>
-                                                                ) : res.lmia_status === "Draft" ? (
+                                                                ) : res.lmia_status === "draft" ? (
                                                                     <span className="px-3 py-2 badge badge-pill badge-gray">
                                                                         Draft
                                                                     </span>
-                                                                ) : res.lmia_status === "Complete" ? (
+                                                                ) : res.lmia_status === "complete" ? (
                                                                     <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
                                                                         Complete
                                                                     </span>
-                                                                ) : res.lmia_status === "Pending" ? (
+                                                                ) : res.lmia_status === "pending" ? (
                                                                     <span className="px-3 py-2 badge badge-pill badge-warning">
                                                                         Pending
                                                                     </span>
-                                                                ) : res.lmia_status === "Other" ? (
+                                                                ) : res.lmia_status === "other" ? (
                                                                     <span className="px-3 py-2 badge badge-pill badge-dark">
                                                                         Other
                                                                     </span>

@@ -565,9 +565,9 @@ const FilterJson = {
     "Yoruba",
     "Zhuang, Chuang",
   ],
-  AdminType: ["Super-Admin", "Admin", "Manager", "Operator"],
-  lmia_status: ["Pending", "Approved", "Reject", "Draft", "Complete", "Other"],
+  AdminType: ["super-Admin", "admin", "manager", "operator"],
+  lmia_status: ["pending", "approved", "reject", "draft", "complete", "other"],
   Duration: ["Last week", "Last month", "last 3 months", "Last year"],
-  Employee_status: ["New", "Prospect", "Lead", "Reatined","Lost","Dead"],
+  Employee_status: ["new", "prospect", "lead", "reatined","lost","dead"],
 };
 export default FilterJson;
