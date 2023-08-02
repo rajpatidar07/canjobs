@@ -102,6 +102,16 @@ function EmployeeHeader() {
                       Responses
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/lmia">
+                      LMIA
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/visa">
+                      Visa
+                    </Link>
+                  </li>
                 </ul>
               ) : null}
 

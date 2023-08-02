@@ -126,7 +126,7 @@ function Employee(props) {
                         onChange={(e) =>
                           setExperienceFilterValue(e.target.value)
                         }
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value={""}>Select Experience</option>
                         {(FilterJson.experience || []).map((ex, i) => (

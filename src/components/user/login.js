@@ -63,6 +63,7 @@ export default  function EmployeeLoginModal(props) {
       // handle form submission
       setLoading(true);
       const updatedTodo = await EmployeeLogin(state);
+      console.log(updatedTodo)
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
         localStorage.setItem("userType", "user");

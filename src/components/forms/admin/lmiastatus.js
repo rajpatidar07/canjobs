@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom"
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-import moment from "moment";
+// import moment from "moment";
 
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ function LmiaStatus(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     lmia_status: "",
-    completion_time: "",
+    // completion_time: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -41,12 +41,12 @@ function LmiaStatus(props) {
           ? "Lmia status is required"
           : "",
     ],
-    completion_time: [
-      (value) =>
-        value === "" || value === null 
-          ? "Expected time of completion is required"
-          : "",
-    ],
+    // completion_time: [
+    //   (value) =>
+    //     value === "" || value === null 
+    //       ? "Expected time of completion is required"
+    //       : "",
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
@@ -158,7 +158,7 @@ function LmiaStatus(props) {
                 </span>
               )}
             </div>
-            <div className="form-group mt-5">
+            {/* <div className="form-group mt-5">
               <label
                 htmlFor="completion_time"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -179,7 +179,7 @@ function LmiaStatus(props) {
                 onKeyDownCapture={(e) => e.preventDefault()}
                 min={moment().format("YYYY-MM-DD")}
               />
-              {/*----ERROR MESSAGE FOR Admin Name----*/}
+              ----ERROR MESSAGE FOR Admin Name----
               {errors.completion_time && (
                 <span
                   key={errors.completion_time}
@@ -188,7 +188,7 @@ function LmiaStatus(props) {
                   {errors.completion_time}
                 </span>
               )}
-            </div>
+            </div> */}
             {state.lmia_status === "complete" ? (
               <>
                 <div className="form-group">

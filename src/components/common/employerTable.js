@@ -29,7 +29,7 @@ export default function EmployerTable(props) {
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("company_id");
-  const [sortOrder, setSortOrder] = useState("DESC");
+  const [sortOrder, setSortOrder] = useState("");
 
   /* Function to get Employer data*/
   const EmployerData = async () => {
@@ -38,7 +38,11 @@ export default function EmployerTable(props) {
       props.industryFilterValue,
       props.corporationFilterValue,
       props.search,
-      props.filter_by_time || props.industryFilterValue|| props.corporationFilterValue|| props.search || sortOrder ? 1 : currentPage,
+      props.filter_by_time ||
+       props.industryFilterValue||
+        props.corporationFilterValue||
+         props.search ||
+          sortOrder ? 1 : currentPage,
       recordsPerPage,
       columnName,
       sortOrder,
@@ -76,7 +80,6 @@ export default function EmployerTable(props) {
     props.apiCall,
     props.showEmployerDetails
   ]);
-
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
     setShowEmployerMOdal(true);
@@ -99,6 +102,7 @@ export default function EmployerTable(props) {
     setDeleteName(e.company_name);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
@@ -209,7 +213,7 @@ export default function EmployerTable(props) {
                     to={""}
                     onClick={() => {handleSort("vacancy_for_post");setCurrentPage(1)}}
                     className="text-gray"
-                    title="Sort by Skill"
+                    title="Sort by jobs"
                   >
                     Jobs
                   </Link>
@@ -407,6 +411,18 @@ export default function EmployerTable(props) {
                             title="Contact"
                           >
                             <span className="fa fa-address-book text-gray px-1"></span>
+                          </button>
+                          <button
+                            className="btn btn-outline-info action_btn"
+                          >
+                          <Link
+                            // onClick={() => Joblist(empdata.company_name)}
+                            to="/job"
+                            state={{company_name : empdata.company_name}}
+                            title="Jobs"
+                          >
+                            <span className="fas fa-briefcase text-gray  "></span>
+                          </Link>
                           </button>
                           <button
                             className="btn btn-outline-info action_btn"

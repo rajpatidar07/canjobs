@@ -10,6 +10,7 @@ import { getJson } from "../../api/api";
 import { useEffect } from "react";
 import Loader  from '../common/loader';
 import CustomButton from "../common/button";
+import { ToastContainer } from "react-bootstrap";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -38,6 +39,7 @@ function JobSearch() {
     <>
       <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
+        <ToastContainer/>
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">

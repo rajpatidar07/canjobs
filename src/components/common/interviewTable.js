@@ -4,7 +4,7 @@ import { getInterview } from "../../api/api";
 import moment from "moment";
 import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 import { ToastContainer } from "react-toastify";
 
 function Interview(props) {
@@ -78,7 +78,7 @@ function Interview(props) {
   };
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {showAddInterviewModal ? (
         <AddInterview
           resData={resData}
@@ -106,168 +106,172 @@ function Interview(props) {
           }
         >
           <div className="table-responsive main_table_div">
-           {isLoading ? 
-            <Loader/>  :  
-            <table className="table table-striped main_data_table">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("name");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      Name
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("job_title");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Job"
-                    >
-                      Applied Job
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("company_name");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Company"
-                    >
-                      Company Name
-                    </Link>
-                  </th>
-                  {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
+            {isLoading ?
+              <Loader /> :
+              <table className="table table-striped main_data_table">
+                <thead>
+                  <tr>
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
                       <Link
                         to={""}
-                        onClick={() => {handleSort("skill");setCurrentPage(1)}}
+                        onClick={() => { handleSort("name"); setCurrentPage(1) }}
                         className="text-gray"
-                        title="Sort by Skill"
+                        title="Sort by Name"
                       >
-                        Skill
+                        Name
                       </Link>
                     </th>
-                  )}
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("interview_date");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Date"
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
                     >
-                      Interview date
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    Interview
-                  </th>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* Map function to show the data in the list*/}
-                {totalData === 0 || interviewData.length === 0 ? (
-                  <tr>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    <th className="bg-white text-center">No Data Found</th>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
+                      <Link
+                        to={""}
+                        onClick={() => { handleSort("job_title"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Job"
+                      >
+                        Applied Job
+                      </Link>
+                    </th>
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => { handleSort("company_name"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Company"
+                      >
+                        Company Name
+                      </Link>
+                    </th>
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <th
+                        scope="col"
+                        className="border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          onClick={() => { handleSort("skill"); setCurrentPage(1) }}
+                          className="text-gray"
+                          title="Sort by Skill"
+                        >
+                          Skill
+                        </Link>
+                      </th>
+                    )}
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => { handleSort("interview_date"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Date"
+                      >
+                        Interview date
+                      </Link>
+                    </th>
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      Interview
+                    </th>
+                    {props.heading === "Dashboard" ? null : <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      Action
+                    </th>}
                   </tr>
-                ) : (
-                  (interviewData || []).map((data) => (
-                    <tr className="" key={data.id}>
-                      <th scope="row" className="py-5 ">
-                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                          {data.name}
-                        </div>
-                      </th>
-                      <th scope="row" className="py-5 ">
-                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                          {data.job_title}
-                        </div>
-                      </th>
-                      <th scope="row" className="py-5 ">
-                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                          {data.company_name}
-                        </div>
-                      </th>
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
+                </thead>
+                <tbody>
+                  {/* Map function to show the data in the list*/}
+                  {totalData === 0 || interviewData.length === 0 ? (
+                    <tr>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      {props.heading === "Dashboard" ?
+                        <th className="bg-white text-center">No Data Found</th>
+                        : <th className="bg-white"></th>}
+                      {props.heading === "Dashboard" ?
+                        <th className="bg-white"></th>
+                        : <th className="bg-white text-center">No Data Found</th>}
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                      <th className="bg-white"></th>
+                    </tr>
+                  ) : (
+                    (interviewData || []).map((data) => (
+                      <tr className="" key={data.id}>
                         <th scope="row" className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {data.skill}
+                            {data.name}
                           </div>
                         </th>
-                      )}
-                      <th className=" py-5">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {moment(data.interview_date).format("DD MMMM, YYYY")}
-                        </h3>
-                      </th>
-                      <th className="py-5 ">
-                      
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                          {data.status === "COMPLETE" ?
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                            Complete
-                            </span> : 
-                            <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                            Schedule
-                          </span>}
-                        </p>
-                      </th>
-                      <th className="py-5 ">
-                        <div className="btn-group button_group" role="group">
-                           <button
-                            className="btn btn-outline-info action_btn "
-                            style={{ fontSize: "10px" }}
-                            onClick={() => editInterview(data)}
-                            title=" Reschedule Interview"
-                            disabled={data.status === "COMPLETE" ? true : false}
-                          >
-                        <i className="fa fa-calendar"></i>
-                          </button>
-                        </div>
-                      </th>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>}
+                        <th scope="row" className="py-5 ">
+                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            {data.job_title}
+                          </div>
+                        </th>
+                        <th scope="row" className="py-5 ">
+                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            {data.company_name}
+                          </div>
+                        </th>
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <th scope="row" className="py-5 ">
+                            <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              {data.skill}
+                            </div>
+                          </th>
+                        )}
+                        <th className=" py-5">
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {moment(data.interview_date).format("DD MMMM, YYYY")}
+                          </h3>
+                        </th>
+                        <th className="py-5 ">
+
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            {data.status === "COMPLETE" ?
+                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                Complete
+                              </span> :
+                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                Schedule
+                              </span>}
+                          </p>
+                        </th>
+                        <th className="py-5 ">
+                          <div className="btn-group button_group" role="group">
+                            <button
+                              className="btn btn-outline-info action_btn "
+                              style={{ fontSize: "10px" }}
+                              onClick={() => editInterview(data)}
+                              title=" Reschedule Interview"
+                              disabled={data.status === "COMPLETE" ? true : false}
+                            >
+                              <i className="fa fa-calendar"></i>
+                            </button>
+                          </div>
+                        </th>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>}
           </div>
           <div className="pt-2">
             <Pagination

@@ -268,8 +268,8 @@ function Education(props) {
                 <select
                   className={
                     errors.qualification
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control text-capitalize border border-danger"
+                      : "form-control text-capitalize"
                   }
                   name="qualification"
                   id="qualification"
@@ -305,8 +305,8 @@ function Education(props) {
                 <select
                   className={
                     errors.course
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
                   }
                   name="course"
                   id="course"
@@ -369,8 +369,8 @@ function Education(props) {
                   <select
                     className={
                       errors.institute_location
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "form-control text-capitalize border border-danger"
+                        : "form-control text-capitalize"
                     }
                     name="institute_location"
                     id="institute_location"

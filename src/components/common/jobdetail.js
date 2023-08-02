@@ -116,14 +116,14 @@ function JobDetailPage(props) {
                 >
                   {jobDetatilsData.is_applied === "0" ? "Apply to this job" : "Already Applied"}
                 </button> 
-                <button
+                {/* <button
                   to={""}
                   onClick={() => OnApplyClick(3)}
                   className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                 >
                   <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                   Save job
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

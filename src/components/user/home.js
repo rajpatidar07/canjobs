@@ -5,8 +5,8 @@ import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
-import Loader  from '../common/loader';
-function EmployeeHomePage() { 
+import Loader from '../common/loader';
+function EmployeeHomePage() {
   //   const [JobDetail, setJobDetail] = useState([]);
 
   //   const UserData = async () => {
@@ -55,12 +55,13 @@ function EmployeeHomePage() {
             </div>
           </div>
           {/* <!-- Section Title End --> */}
-         {
-          <JobBox /> ? <div className="row justify-content-center">
-            <JobBox />
-          </div>
-          : 
-          <div className="table-responsive main_table_div"><Loader/></div>}
+          {
+            <JobBox /> ?
+              <div className="row justify-content-center">
+                <JobBox />
+              </div>
+              :
+              <div className="table-responsive main_table_div"><Loader /></div>}
         </div>
       </section>
       {/* <!-- featuredJobOne Area --> */}

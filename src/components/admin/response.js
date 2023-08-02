@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { AddLimia, AddEmployeeDetails, GetAllResponse, GetFilter } from "../../api/api";
+import { AddLimia, AddEmployeeDetails, GetAllResponse, GetFilter ,AddUpdateVisa} from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -13,8 +13,10 @@ import { toast, ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
 import VisaStatus from "../forms/user/visaStatus";
+import DocumentModal from "../forms/admin/DocumentModal";
 function JobResponse(props) {
   /*show modal and data states */
+  let [documentModal, setDocumentModal] = useState(false);
   let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [apiCall, setApiCall] = useState(props.apiCall);
@@ -122,23 +124,22 @@ function JobResponse(props) {
       setSearchError("");
     }
   }
-
+ 
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
     // Api call to set employee reserved
     let data = {
       employee_id: e.employee_id,
-      status: "7",
+    job_status:"1",
+    posted_job_id: jobId
     }
     let response = await AddEmployeeDetails(data)
     if (response.message === 'Employee data updated successfully') {
       // Api call to set employee Visa
-      let visa = {
-        employee_id: e.employee_id,
-        work_permit_other_country: "yes"
-      }
-      let VisaResponse = await AddEmployeeDetails(visa)
-      if (VisaResponse.message === 'Employee data updated successfully') {
+
+        let status = "pending"
+      let VisaResponse = await AddUpdateVisa(e.employee_id, status )
+      if (VisaResponse.data.message === "created successfully") {
         // Api call to set employee Limia
         const lmia = { lmia_status: "pending", };
         let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
@@ -186,6 +187,11 @@ function JobResponse(props) {
     setVisaModal(true);
     setemployeeId(e);
   };
+  /*Function to open add Document up modal */
+  const AddDoucument = (e) => {
+    setDocumentModal(true);
+    setemployeeId(e);
+  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -216,69 +222,7 @@ function JobResponse(props) {
           <ToastContainer />
         </>
       ) : null}
-      {followup ? (
-        <Addfollowup
-          show={followup}
-          job_id={jobId}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => {
-            setFollowUp(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {showVisaModal ? (
-        <VisaStatus
-          show={showVisaModal}
-          employeeData={employeeId}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => setVisaModal(false)}
-        />
-      ) : null}
-      {interview ? (
-        <AddInterview
-          show={interview}
-          job_id={jobId}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => {
-            setInterview(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {lmia ? (
-        <LmiaStatus
-          show={lmia}
-          resData={resData}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job={"no"}
-          close={() => {
-            setLimia(false);
-            setResData("");
-          }}
-        />
-      ) : null}
-      {showChangeJobModal ? (
-        <ChangeJob
-          resData={resData}
-          close={() => {
-            setShowChangeJobModal(false);
-            setResData("");
-          }}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          job_id={jobId}
-          show={showChangeJobModal}
-          status={0}
-          setChangeJob={setChangeJob}
-        />
-      ) : null}
+      
       <div
         className={
           props.heading === "Response" ||
@@ -309,7 +253,6 @@ function JobResponse(props) {
                   : "align-items-center"
               }
             >
-              {console.log(props.heading)}
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
@@ -388,7 +331,7 @@ function JobResponse(props) {
                         setExperienceTypeFilterValue(e.target.value);
                         setCurrentPage(1)
                       }}
-                      className=" form-control"
+                      className="text-capitalize form-control"
                     >
                       <option value="">Select Experience</option>
                       {(FilterJson.experience || []).map((ex, i) => (
@@ -427,6 +370,10 @@ function JobResponse(props) {
                   >
                     <thead>
                       <tr>
+                        <th  scope="col"
+                          className="pl-0 border-0 font-size-4 font-weight-normal">
+                            Employee Id
+                          </th>
                         <th
                           scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
@@ -567,6 +514,7 @@ function JobResponse(props) {
                         <tr>
                           <th className="bg-white"></th>
                           <th className="bg-white"></th>
+                          <th className="bg-white"></th>
                           {props.heading === "Dashboard" ? (
                             <th className="bg-white">No Data Found</th>
                           ) : (
@@ -591,6 +539,9 @@ function JobResponse(props) {
                       ) : (
                         (response || []).map((res, i) => (
                           <tr className="" key={i}>
+                             <th className="py-5 ">
+                              {res.employee_id}
+                            </th>
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.name || res.gender || res.date_of_birth ? (
@@ -708,27 +659,27 @@ function JobResponse(props) {
                                 <Link to="/lmia" state={{ id: res.job_id }}>
                                   {res.lmia_status === "limia rejected" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-danger">
-                                      Reject
+                                     Lmia Reject
                                     </span>
                                   ) : res.lmia_status === "lmia approved" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                      Approved
+                                     Lmia Approved
                                     </span>
-                                  ) : res.lmia_status === "Lmia partial" ? (
+                                  ) : res.lmia_status === "lmia partial" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-gray">
-                                      Draft
+                                      Lmia partial
                                     </span>
-                                  ) : res.lmia_status === "Payment done" ? (
+                                  ) : res.lmia_status === "payment done" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                      Complete
+                                      Payment done
                                     </span>
-                                  ) : res.lmia_status === "Interview done" ? (
+                                  ) : res.lmia_status === "interview done" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-warning">
-                                      Pending
+                                      Interview done
                                     </span>
                                   ) : res.lmia_status === "position approved" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-dark">
-                                      Other
+                                      Position approved
                                     </span>
                                   ) : (
                                     <span>NA</span>
@@ -761,21 +712,33 @@ function JobResponse(props) {
                                   role="group"
                                   aria-label="Basic example"
                                 >
-                                  {res.employee_status === "7" ? null : <button
+                                  {res.job_status === "0" ?  <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ReservedEmployee(res)}
                                     title="Reserved Employee"
                                   >
                                     Reserved
-                                  </button>}
+                                  </button>:
                                  
-                                  {props.response === "visa"  ? <button
+                                  props.response === "visa"  ?
+                                  <> <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => editVisa(res)}
                                     title="Update Visa status"
                                   >
                                     <span className="fab fa-cc-visa text-gray px-2"></span>
-                                  </button> :
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      AddDoucument(res.employee_id)
+                                    }
+                                    title="Documents"
+                                  >
+                                    <span className="fas fa-file text-gray"></span>
+                                  </button>
+                                   </>
+                                  :
                                   props.response === "lmia"  ? <button
                                       className="btn btn-outline-info action_btn text-gray"
                                       onClick={() => addLimia(res)}
@@ -793,7 +756,7 @@ function JobResponse(props) {
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => addnterview(res)}
                                     title=" Add Interview"
-                                    disabled={res.status === "COMPLETE" ? true : false}
+                                    disabled={res.status === "complete" ? true : false}
                                   >
                                     <i className="fa fa-calendar text-gray px-2"></i>
                                   </button>
@@ -825,6 +788,76 @@ function JobResponse(props) {
           </div>
         </div>
       </div>
+      {documentModal ? (
+        <DocumentModal
+          show={documentModal}
+          close={() => setDocumentModal(false)}
+          employee_id={employeeId}
+        />
+      ) : null}
+      {followup ? (
+        <Addfollowup
+          show={followup}
+          job_id={jobId}
+          resData={resData}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => {
+            setFollowUp(false);
+            setResData("");
+          }}
+        />
+      ) : null}
+      {showVisaModal ? (
+        <VisaStatus
+          show={showVisaModal}
+          employeeData={employeeId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setVisaModal(false)}
+        />
+      ) : null}
+      {interview ? (
+        <AddInterview
+          show={interview}
+          job_id={jobId}
+          resData={resData}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => {
+            setInterview(false);
+            setResData("");
+          }}
+        />
+      ) : null}
+      {lmia ? (
+        <LmiaStatus
+          show={lmia}
+          resData={resData}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          job={"no"}
+          close={() => {
+            setLimia(false);
+            setResData("");
+          }}
+        />
+      ) : null}
+      {showChangeJobModal ? (
+        <ChangeJob
+          resData={resData}
+          close={() => {
+            setShowChangeJobModal(false);
+            setResData("");
+          }}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          job_id={jobId}
+          show={showChangeJobModal}
+          status={0}
+          setChangeJob={setChangeJob}
+        />
+      ) : null}
     </div>
   );
 }

@@ -8,7 +8,8 @@ import { GetFilter } from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
-
+import EmployeeHeader from "../common/header";
+import EmployeeFooter from "../common/footer";
 function LimaContainer(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
@@ -24,7 +25,7 @@ function LimaContainer(props) {
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-
+  let userType = localStorage.getItem("userType")
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -85,16 +86,23 @@ function LimaContainer(props) {
     : [];
   return (
     <>
-      <div className="site-wrapper overflow-hidden bg-default-2">
-        {/* <!-- Header Area --> */}
-            <AdminHeader heading={"LIMIA status"} />
-            {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"LIMIA status"} />
-          
+      <div className={userType === "company" ?
+        "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
+        : "site-wrapper overflow-hidden bg-default-2"}>
+        {userType === "company" ? <EmployeeHeader /> : <>
+          {/* <!-- Header Area --> */}
+          <AdminHeader heading={"LIMIA status"} />
+          {/* <!-- navbar- --> */}
+          <AdminSidebar heading={"LIMIA status"} />
+        </>}
+
         <ToastContainer />
         <div
           className={
-            showJobDetails === false?
+            showJobDetails === false
+              ?
+              userType === "company" ?
+                "mt-16" :
                 "dashboard-main-container mt-16"
               : "d-none"
           }
@@ -103,11 +111,11 @@ function LimaContainer(props) {
           <div className="container">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
-                <div className="page___heading">
+                <div className={userType === "company" ? "" : "page___heading"}>
                   <h3 className="font-size-6 mb-0">LMIA of Jobs </h3>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
-                <div className="row m-0 align-items-center">
+                {userType === "company" ? null : <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search:</p>
                     <input
@@ -217,7 +225,7 @@ function LimaContainer(props) {
                       </select>
                     </div>
                   </div>
-                </div>
+                </div>}
               </div>
               {/*<-- Job List Table -->*/}
               <JobTable
@@ -240,7 +248,9 @@ function LimaContainer(props) {
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-16">
+          <div className={userType === "company" ?
+            "mt-16"
+            : "dashboard-main-container mt-16"}>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
@@ -275,6 +285,7 @@ function LimaContainer(props) {
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
+      {userType === "company" ? <EmployeeFooter /> : null}
     </>
   );
 }

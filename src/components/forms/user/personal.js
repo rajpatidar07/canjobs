@@ -663,8 +663,8 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.language
-                      ? " form-control border border-danger position-relative overflow-hidden"
-                      : " form-control position-relative overflow-hidden"
+                      ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                      : "text-capitalize form-control position-relative overflow-hidden"
                   }
                   placeholder="Language"
                   id="language"
@@ -759,8 +759,8 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.experience
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control text-capitalize border border-danger"
+                      : "form-control text-capitalize"
                   }
                   id="experience"
                 >

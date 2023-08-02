@@ -186,7 +186,7 @@ export const getallEmployeeData = async (
   sort,
   time,
   jobSkill,
-  status
+  status,
 ) => {
   const response = await axios.post(
     `${API_URL}${user_type}/getallEmployeeView`,
@@ -203,6 +203,7 @@ export const getallEmployeeData = async (
       filter_by_time: time,
       job_keyskills: jobSkill,
       filter_status :status,
+      is_featured:user_type === "company" ? "1": ""
     },
     {
       headers: {
@@ -555,7 +556,7 @@ export const GetAllJobs = async (
   sort_order,
   company,
   time,
-  employeeSkill
+  // employeeSkill
 ) => {
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
@@ -570,7 +571,7 @@ export const GetAllJobs = async (
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
-      employee_skills: employeeSkill,
+      // employee_skills: employeeSkill,
     },
     {
       headers: {

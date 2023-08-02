@@ -10,6 +10,7 @@ import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
 import Verified from "../../media/verified.png";
 export default function DocumrentContainer(props) {
+  const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
   const [docData, setDocData] = useState([]);
   const [docTypData, setDocTypData] = useState("");
@@ -38,12 +39,12 @@ export default function DocumrentContainer(props) {
       if (
         docTypData === undefined ||
         docTypData === "undefined" ||
-        (docTypData === "" && docName === "")
+        (docTypData === "" && docName === "" && otherDoc === false)
       ) {
         setDocTypData(response.data.data[0]);
         setDocFile(
           response.data.data[0].document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
         );
         setDocName(response.data.data[0].type);
       } else if (
@@ -61,7 +62,7 @@ export default function DocumrentContainer(props) {
           setDocFile(
             response.data.data.find((item) => item.type === docName)
               .document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
         }
       }
@@ -122,9 +123,8 @@ export default function DocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-        base64Name.split(";")[1]
-      }`;
+      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+        }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
@@ -186,6 +186,7 @@ export default function DocumrentContainer(props) {
       });
       // console.log(docName);
       setShowMoreDocType(false);
+      setOtherDoc(false);
       setDocName(docName);
       setDocFileBase("");
       setDocFileExt("");
@@ -214,7 +215,7 @@ export default function DocumrentContainer(props) {
             item.type ===
             (docData[0] === docTypData ? docTypData.type : docName)
         ).document_url +
-          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+        `?v=${new Date().getMinutes() + new Date().getSeconds()}`
       );
     }
     if (response.data.message === "Invalid base64-encoded data !") {
@@ -227,7 +228,7 @@ export default function DocumrentContainer(props) {
   };
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
-    console.log(docFile, "???????");
+    // console.log(docFile, "???????");
     return (
       <FileViewer
         key={docTypData.id}
@@ -236,8 +237,8 @@ export default function DocumrentContainer(props) {
             ? docFileExt
             : docTypData.extension_type ===
               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-            ? "docx"
-            : docTypData.extension_type
+              ? "docx"
+              : docTypData.extension_type
         }
         filePath={docFile}
         errorComponent={() => <div>Error loading document</div>}
@@ -292,6 +293,19 @@ export default function DocumrentContainer(props) {
     }
   }, [docName, apiCall]);
 
+  const handleDocTypeChange = (e) => {
+    const selectedValue = e.target.value;
+  if (selectedValue === "other") {
+      setOtherDoc(true);
+      setShowMoreDocType(false);
+      setDocTypData("");
+      setDocId("");
+      setDocName("")
+    } else {
+      setOtherDoc(false);
+      setDocName(selectedValue);
+    }
+  };
   return (
     <div className="container document_container bg-white p-7">
       <div className="row mb-11 ">
@@ -315,49 +329,49 @@ export default function DocumrentContainer(props) {
                   setDocId(item.id);
                   setDocFile(
                     item.document_url +
-                      `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
                   );
                 }}
               >
                 {item.type === "passport"
                   ? "Passport"
                   : item.type === "drivers_license"
-                  ? "Driving License"
-                  : item.type === "immigration_status"
-                  ? "Current Immigration Status"
-                  : item.type === "lmia"
-                  ? "Lmia"
-                  : item.type === "job_offer_letter"
-                  ? "Job Offer"
-                  : item.type === "provincial_nominee_letter"
-                  ? "Provincial Nominee"
-                  : item.type === "proof_of_funds"
-                  ? "Funds"
-                  : item.type === "proof_of_employment"
-                  ? "Employment"
-                  : item.type === "marriage_certificate"
-                  ? "Marriage Certificate"
-                  : item.type === "education_metric"
-                  ? "Education Metric (10th marksheet)"
-                  : item.type === "education_higher_secondary"
-                  ? "Education Higher Secondary (12th marksheet)"
-                  : item.type === "education_graduation"
-                  ? "Education Graduation (UG marksheet)"
-                  : item.type === "education_post_graduation"
-                  ? "Education Post Graduation (PG marksheet)"
-                  : item.type === "resume_or_cv"
-                  ? "Resumne"
-                  : item.type === "ielts"
-                  ? "IELTS"
-                  : item.type === "medical"
-                  ? "Medical Certificate"
-                  : item.type === "police_clearance"
-                  ? "Police Clearance Certificate"
-                  : item.type === "refusal_letter"
-                  ? "Refusal Letter"
-                  : item.type === "photograph"
-                  ? "Photograph"
-                  : null}
+                    ? "Driving License"
+                    : item.type === "immigration_status"
+                      ? "Current Immigration Status"
+                      : item.type === "lmia"
+                        ? "Lmia"
+                        : item.type === "job_offer_letter"
+                          ? "Job Offer"
+                          : item.type === "provincial_nominee_letter"
+                            ? "Provincial Nominee"
+                            : item.type === "proof_of_funds"
+                              ? "Funds"
+                              : item.type === "proof_of_employment"
+                                ? "Employment"
+                                : item.type === "marriage_certificate"
+                                  ? "Marriage Certificate"
+                                  : item.type === "education_metric"
+                                    ? "Education Metric (10th marksheet)"
+                                    : item.type === "education_higher_secondary"
+                                      ? "Education Higher Secondary (12th marksheet)"
+                                      : item.type === "education_graduation"
+                                        ? "Education Graduation (UG marksheet)"
+                                        : item.type === "education_post_graduation"
+                                          ? "Education Post Graduation (PG marksheet)"
+                                          : item.type === "resume_or_cv"
+                                            ? "Resumne"
+                                            : item.type === "ielts"
+                                              ? "IELTS"
+                                              : item.type === "medical"
+                                                ? "Medical Certificate"
+                                                : item.type === "police_clearance"
+                                                  ? "Police Clearance Certificate"
+                                                  : item.type === "refusal_letter"
+                                                    ? "Refusal Letter"
+                                                    : item.type === "photograph"
+                                                      ? "Photograph"
+                                                      : item.type}
                 {item.is_varify === "1" ? (
                   <span className="verified_doc">
                     <img className="w-100" src={Verified} alt="" />
@@ -371,101 +385,13 @@ export default function DocumrentContainer(props) {
                 setShowMoreDocType(true);
                 setDocTypData("");
                 setDocId("");
+                setOtherDoc(false);
               }}
             >
               <b>+ Add New Documents</b>
             </ListGroup.Item>
           </ListGroup>
         </div>
-        {/* {docTypData ?
-          // Code to update document
-          (
-            <div className="col-7 p-5 bg-light rounded">
-              <div className="doc_preview_box" >
-                <div className='d-flex justify-content-between'>
-                  {showMoreDocType ?
-                    <Form.Select
-                      className='form-control'
-                      value={docName}
-                      onChange={(e) => setDocName(e.target.value)}>
-                      <option value={""}>Select document</option>
-                      {(DocTypeData || []).map((item, index) => {
-                        return (
-                          <option value={item} key={index}>
-                            {item}
-                          </option>
-                        );
-                      })}
-                    </Form.Select> :
-                    null}
-                  <div className=''>
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                      style={{ display: "none" }}
-                      onChange={(e) => handleFileChange(e, docTypData.id)}
-                    />
-                    <button
-                      className="btn btn-primary"
-                      onClick={() =>
-                        document.querySelector('input[type="file"]').click()
-                      }>
-                      {docTypData.id ? "Update Document" : "Upload Document"}
-                    </button>
-                  </div>
-                  {showSaveDoc ?
-                    <div className="">
-                      <button onClick={SaveDocument}>Save Document</button>
-                    </div>
-                    : null}
-                  <div className="">
-                    <button
-                      className="btn btn-secondary"
-                      disabled={docTypData.is_varify === "0" ? false : true}
-                      onClick={() => onVerifyDocuments(docTypData.id, 1)}>
-                      {docTypData.is_varify === "1" ?
-                        <span>Verifed <i className="fas fa-check fs-1 p-1 border border-white rounded-circle"></i>
-                        </span> :
-                        "Verify document"}
-                    </button>
-                  </div>
-                </div>
-                {docTypData.id ?
-                  <RenderNewDocFile />
-                  :
-                  <div className='text-center'>
-                    <h2> No Documents </h2>
-                  </div>
-                }
-              </div>
-            </div>
-          ) :
-          // Code to Upload new document
-          <>
-            {showMoreDocType ?
-              <div className="d-flex justify-content-between">
-                <Form.Select className='form-control' value={docName} onChange={(e) => setDocName(e.target.value)}>
-                  <option value={""}>Select document</option>
-                  {(DocTypeData || []).map((item, index) => {
-                    return (
-                      <option value={item} key={index}>{item}</option>)
-                  })}
-                </Form.Select>
-                <div className=''>
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    style={{ display: "none" }}
-                    onChange={(e) => handleFileChange(e, docTypData.id)}
-                  />
-                  <button className="btn btn-primary"
-                    onClick={() =>
-                      document.querySelector('input[type="file"]').click()
-                    }>Upload Document</button>
-                </div>
-              </div> :
-              null}
-          </>} */}
         <div className="col-8">
           <div className="row p-5 doc_upload_row">
             {showMoreDocType ? (
@@ -473,9 +399,7 @@ export default function DocumrentContainer(props) {
                 <Form.Select
                   className="form-control select_document_type"
                   value={docName}
-                  onChange={(e) => {
-                    setDocName(e.target.value);
-                  }}
+                  onChange={(e) => handleDocTypeChange(e)}
                 >
                   <option value={""}>Select document</option>
                   {(DocTypeData || []).map((item, index) => {
@@ -486,10 +410,18 @@ export default function DocumrentContainer(props) {
                       </option>
                     );
                   })}
+                  <option value={"other"}>Other
+                  </option>
                 </Form.Select>
               </div>
             ) : null}
-            <div className="doc_upload_col">
+            {otherDoc === true ?
+              <div className="doc_upload_col">
+                <label className="font-size-3 text-black-2 font-weight-semibold "
+                  >Document Name :</label>
+                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)} />
+              </div> : null}
+            <div className="">
               <input
                 type="file"
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"

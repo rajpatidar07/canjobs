@@ -8,27 +8,28 @@ export default function ManageInterview() {
   let [search, setSearch] = useState("");
   let [statusFilterValue, setStatusFilterValue] = useState("");
   const [searcherror, setSearchError] = useState("");
-  useEffect(()=>{
-    if((search === "") === true){
-    setSearchError("")
-  }},[search])
+  useEffect(() => {
+    if ((search === "") === true) {
+      setSearchError("")
+    }
+  }, [search])
 
   /*Search Onchange function to Search Interview data */
-    const onSearch = (e) => {
-      const inputValue = e.target.value;
-      setSearch(inputValue);
-      if (inputValue.length > 0) {
-        if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-          setSearchError("Applicant name cannot start with a number.");
-        } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-          setSearchError("Cannot use special characters.");
-        } else {
-          setSearchError("");
-        }
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Applicant name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
       } else {
         setSearchError("");
       }
+    } else {
+      setSearchError("");
     }
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -65,7 +66,7 @@ export default function ManageInterview() {
                         name="type"
                         value={statusFilterValue}
                         id="type"
-                        onChange={(e)=> setStatusFilterValue(e.target.value)}
+                        onChange={(e) => setStatusFilterValue(e.target.value)}
                         className=" form-control"
                       >
                         <option value="">Select Interview Status</option>
@@ -78,7 +79,10 @@ export default function ManageInterview() {
                 <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Interview list Table -->*/}
-             <Interview search={search} statusFilterValue={statusFilterValue} heading={"Interview"} />
+              <Interview
+                search={search}
+                statusFilterValue={statusFilterValue}
+                heading={"Interview"} />
             </div>
           </div>
         </div>

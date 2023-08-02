@@ -273,8 +273,8 @@ function AddJobModal(props) {
                       onChange={onInputChange}
                       className={
                         errors.company_id
-                          ? " form-control border border-danger position-relative overflow-hidden"
-                          : " form-control position-relative overflow-hidden"
+                          ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                          : "text-capitalize form-control position-relative overflow-hidden"
                       }
                       placeholder="company name"
                       id="company_id"
@@ -314,8 +314,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.job_category_id
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
+                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                        : "text-capitalize form-control position-relative overflow-hidden"
                     }
                     placeholder="Job category"
                     id="job_category_id"
@@ -351,8 +351,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.industry_type
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "text-capitalize form-control border border-danger"
+                        : "text-capitalize form-control"
                     }
                     id="industry_type"
                   >
@@ -388,8 +388,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.experience_required
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "form-control text-capitalize border border-danger"
+                        : "form-control text-capitalize"
                     }
                     placeholder="Experience"
                     id="experience_required"
@@ -428,8 +428,8 @@ function AddJobModal(props) {
                   type="number"
                   className={
                     errors.salary
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control text-capitalize border border-danger"
+                      : "form-control text-capitalize"
                   }
                   placeholder="Salary"
                   id="salary"
@@ -463,8 +463,8 @@ function AddJobModal(props) {
                   type="text"
                   className={
                     errors.location
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control text-capitalize border border-danger"
+                      : "form-control text-capitalize"
                   }
                   placeholder="Location"
                   id="location"
@@ -758,8 +758,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.job_type
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
+                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                        : "text-capitalize form-control position-relative overflow-hidden"
                     }
                   >
                     <option value={""}>Select job type</option>
@@ -794,8 +794,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.education
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
+                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                        : "text-capitalize form-control position-relative overflow-hidden"
                     }
                     placeholder="Apply education"
                     id="education"
@@ -835,8 +835,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.language
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
+                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                        : "text-capitalize form-control position-relative overflow-hidden"
                     }
                     placeholder="Language"
                     id="language"
@@ -873,8 +873,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.keyskill
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "text-capitalize form-control border border-danger"
+                        : "text-capitalize form-control"
                     }
                     id="keyskill"
                   >
@@ -910,8 +910,8 @@ function AddJobModal(props) {
                     onChange={onInputChange}
                     className={
                       errors.employement
-                        ? " form-control border border-danger position-relative overflow-hidden"
-                        : " form-control position-relative overflow-hidden"
+                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                        : "text-capitalize form-control position-relative overflow-hidden"
                     }
                     placeholder="Apply employement"
                     id="employement"

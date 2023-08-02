@@ -196,8 +196,8 @@ function AddEmployer(props) {
                 <select
                   className={
                     errors.infostatus
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
                   }
                   value={state.infostatus}
                   onChange={onInputChange}
@@ -205,8 +205,8 @@ function AddEmployer(props) {
                   name="infostatus"
                 >
                   <option value={""}>Select status</option>
-                  <option value={"Complete"}>Complete</option>
-                  <option value={"Incomplete"}>Incomplete</option>
+                  <option value={"complete"}>Complete</option>
+                  <option value={"incomplete"}>Incomplete</option>
                 </select>
                 {errors.infostatus && (
                   <span

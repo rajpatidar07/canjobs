@@ -360,8 +360,8 @@ function EmployementDetails(props) {
                     onChange={onInputChange}
                     className={
                       errors.industry
-                        ? "form-control border border-danger"
-                        : "form-control"
+                        ? "text-capitalize form-control border border-danger"
+                        : "form-control text-capitalize"
                     }
                     id="industry"
                   >

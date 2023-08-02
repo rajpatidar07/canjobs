@@ -10,11 +10,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import EmployementDetails from "../forms/user/employement";
-import DocumentModal from "../admin/Modal/DocumentModal";
+// import DocumentModal from "../forms/admin/DocumentModal";
 import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
-import ApplicantsStatusModal from "../admin/Modal/ApplicantsStatusModal";
+import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -25,7 +25,7 @@ export default function EmployeeTable(props) {
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
-  let [documentModal, setDocumentModal] = useState(false);
+  // let [documentModal, setDocumentModal] = useState(false);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
@@ -41,7 +41,7 @@ export default function EmployeeTable(props) {
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
-  const [sortOrder, setSortOrder] = useState("DESC");
+  const [sortOrder, setSortOrder] = useState("");
 
   /* Function to get Employee data*/
   const EmpData = async () => {
@@ -285,13 +285,13 @@ export default function EmployeeTable(props) {
           data={employeeId}
         />
       ) : null}
-      {documentModal ? (
+      {/* {documentModal ? (
         <DocumentModal
           show={documentModal}
           close={() => setDocumentModal(false)}
           employee_id={employeeId}
         />
-      ) : null}
+      ) : null} */}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div className="table-responsive main_table_div">
           {isLoading ? (
@@ -300,6 +300,12 @@ export default function EmployeeTable(props) {
             <table className="table table-striped main_data_table">
               <thead>
                 <tr className="">
+                <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    Employee Id
+                  </th>
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -444,6 +450,7 @@ export default function EmployeeTable(props) {
                   <tr>
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
+                    <th className="bg-white"></th>
                     {props.heading === "Dashboard" ? (
                       <th className="bg-white text-center">No Data Found</th>
                     ) : (
@@ -466,6 +473,11 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata) => (
                     <tr className="applicant_row" key={empdata.employee_id}>
+                       <td className=" py-5">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {empdata.employee_id}                        
+                          </p>
+                      </td>
                       <td className=" py-5">
                         <div className="d-flex profile_box gx-2">
                           <div className="media  align-items-center">

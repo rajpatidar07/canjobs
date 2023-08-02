@@ -121,8 +121,8 @@ function AddInterview(props) {
                 id="interview_status"
               >
                 <option  value={""}>Select Status</option>
-                <option value={"PENDING"}>Schedule / Reschedule</option>
-                <option value={"COMPLETE"}>Complete</option>
+                <option value={"pemdimg"}>Schedule / Reschedule</option>
+                <option value={"complete"}>Complete</option>
               </select>
             </div>
                {/*----ERROR MESSAGE FOR EMAIL----*/}

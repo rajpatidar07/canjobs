@@ -3,7 +3,7 @@ import FilterJson from "../json/filterjson";
 import Select from "react-select";
 import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
-import filterjson from "../json/filterjson";
+// import filterjson from "../json/filterjson";
 import { getJson } from "../../api/api";
 function SearchForm() {
   const location = useLocation();
@@ -99,12 +99,12 @@ function SearchForm() {
           </button>
         </div>
       {path === "/jobs"  || path === "/managejobs" || path === "/response" ? null :  <div className="row m-0 job_filter_block mt-5">
-          <Filterbox
+          {/* <Filterbox
             name="country"
             filterheading=" Jobs by Location"
             filterjson={filterjson.location}
             type={"location"}
-          />
+          /> */}
           <Filterbox
             name="category"
             filterheading=" Jobs by Category"

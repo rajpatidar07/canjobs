@@ -297,8 +297,8 @@ function CompanyDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.industry
-                      ? "form-control px-5 border border-danger"
-                      : "form-control px-5"
+                      ? "text-capitalize form-control px-5 border border-danger"
+                      : "text-capitalize form-control px-5"
                   }
                   id="industry"
                 >
@@ -335,8 +335,8 @@ function CompanyDetails(props) {
                   onChange={onInputChange}
                   className={
                     errors.corporation
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
                   }
                   id="corporation"
                 >

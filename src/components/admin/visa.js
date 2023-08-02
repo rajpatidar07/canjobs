@@ -12,6 +12,8 @@ import { GetFilter } from "../../api/api"
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 import JobDetailsBox from "../common/jobdetail" 
+import EmployeeHeader from "../common/header";
+import EmployeeFooter from "../common/footer";
 export default function Visa() {
      /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -32,7 +34,7 @@ export default function Visa() {
  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
  const [company, setCompany] = useState("");
  let [Json, setJson] = useState([]);
-
+ let userType = localStorage.getItem("userType")
  /*Render function to get the job */
  useEffect(() => {
    JsonData();
@@ -90,16 +92,21 @@ export default function Visa() {
   }
   return (
     <>
-    <div className="site-wrapper overflow-hidden bg-default-2">
+    <div className={userType === "company" ?
+        "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
+        : "site-wrapper overflow-hidden bg-default-2"}>
+        {userType === "company" ? <EmployeeHeader /> :<>
     {/* <!-- Header Area --> */}
         <AdminHeader heading={"Visa status"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Visa status"} />
+        </>}
 
       <ToastContainer />
       <div
         className={
           showJobDetails === false?
+          userType === "company" ?"mt-16":
               "dashboard-main-container mt-16"
             : "d-none"
         }
@@ -108,8 +115,8 @@ export default function Visa() {
         <div className="container">
           <div className="mb-18">
             <div className="mb-4 align-items-center">
-              <div className="page___heading">
-                <h3 className="font-size-6 mb-0">Applicants</h3>
+              <div className={userType === "company" ? "":"page___heading"}>
+                <h3 className="font-size-6 mb-0">Visa of job</h3>
               </div>
               {/* <!-- Employee Search and Filter- --> */}
               {/* <div className="row m-0 align-items-center">
@@ -202,7 +209,8 @@ export default function Visa() {
                 </div> : null}
               </div> */}
                 {/*<-- Job Search and Filter -->*/}
-                <div className="row m-0 align-items-center">
+                <div className={userType === "company" ? "d-none"
+                :"row m-0 align-items-center"}>
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search:</p>
                     <input
@@ -373,7 +381,7 @@ export default function Visa() {
     </div>
     {/*<-- Job Detail -->*/}
     {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-16">
+          <div className={userType === "company" ?"mt-16":"dashboard-main-container mt-16"}>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
@@ -397,6 +405,7 @@ export default function Visa() {
             </div>
           </div>
         ) : null}
+        {userType === "company" ?<EmployeeFooter/>:null}
   </>  )
 }
 

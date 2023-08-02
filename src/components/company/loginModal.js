@@ -83,8 +83,8 @@ export default function CompanyLogin(props) {
 
     if (validate()) {
       setLoading(true);
-      // console.log("555");
       let Response = await EmployerLogin(state);
+      console.log("Response =>",Response);
       if (
         Response.status === true ||
         Response.message === "Successfully Logged In"
@@ -215,10 +215,10 @@ export default function CompanyLogin(props) {
 
   /*FUnctiom to login with facebook */
   const responseFacebook = async (response) => {
-    console.log(response);
+    // console.log(response);
     if(response.graphDomain === "facebook"){
       let data = await SocialCompanyLogin(response.userID , response.email , response.name  ,response.picture.data.url,"Facebook");
-        console.log(data); 
+        // console.log(data); 
         localStorage.setItem("token", data.token);
         localStorage.setItem("userType", "company");
         localStorage.setItem("employee_id", data.employer_id);

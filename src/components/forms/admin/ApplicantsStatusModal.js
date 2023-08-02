@@ -57,9 +57,9 @@ export default function ApplicantsStatusModal(props) {
               }}
               className={
                 // !isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" :
-                "form-control"}>
+                "text-capitalize form-control"}>
               <option value={""}>Select Applicants status</option>
-              {(FilterJson.Employee_status || []).map((item, index) => {
+              {(FilterJson.employee_status || []).map((item, index) => {
                 return (
                   <option value={index + 1} key={index}>{item}</option>
                 )

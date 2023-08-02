@@ -7,7 +7,7 @@ import EmployeeBox from "./employeeBox";
 // import filterjson from "../json/filterjson";
 import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 function EmployerHome() {
   return (
     <div>
@@ -54,10 +54,12 @@ function EmployerHome() {
             </div>
           </div>
           {/* <!-- Section Title End --> */}
-         {
-          <EmployeeBox /> ? <div className="row justify-content-center">
-            <EmployeeBox />
-          </div> : <div className="table-responsive main_table_div"> <Loader/> </div> }
+          {
+            <EmployeeBox /> ?
+              <div className="row justify-content-center">
+                <EmployeeBox />
+              </div> :
+              <div className="table-responsive main_table_div"> <Loader /> </div>}
         </div>
       </section>
       {/* <!-- featuredJobOne Area --> */}

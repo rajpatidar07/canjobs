@@ -24,7 +24,6 @@ export default function JobTable(props) {
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState();
   const [candidateSkill, setCandidateSkill] = useState([]);
-
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -35,7 +34,7 @@ export default function JobTable(props) {
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_id");
-  const [sortOrder, setSortOrder] = useState("DESC");
+  const [sortOrder, setSortOrder] = useState("");
   /*Response states */
   const [responseId, setresponseId] = useState();
   const [responseDropDown, setresponseDropDown] = useState(false);
@@ -61,7 +60,8 @@ export default function JobTable(props) {
           props.categoryFilterValue ||
           props.SkillFilterValue ||
           props.jobSwapFilterValue ||
-          props.filter_by_time
+          props.filter_by_time||
+          sortOrder
           ? 1
           : currentPage,
         recordsPerPage,
@@ -109,8 +109,6 @@ export default function JobTable(props) {
 
   /* Function to show the Table of the employee of perticular skill */
   const matchingCandidates = (e) => {
-    console.log("kljkjmlmkl", e);
-
     setShowCandidateModal(true);
     setCandidateSkill(e);
   };
@@ -366,6 +364,7 @@ export default function JobTable(props) {
                   </tr>
                 ) : (
                   (jobData || []).map((job) => (
+                    job.total_applicants === "0" ? null :
                     <React.Fragment key={job.job_id}>
                       <tr
                         className={
@@ -530,12 +529,12 @@ export default function JobTable(props) {
                                             : false
                                         );
                                       }}
-                                      // disabled={
-                                      //   job.total_applicants > 0 ? false : true
-                                      // }
+                                      disabled={
+                                        job.total_applicants > 0 ? false : true
+                                      }
                                       title="Job LMIA"
                                     >
-                                      LMIA
+                                      LMIA Responses
                                     </button> :
                                     props.response === "visa" ? 
                               <button
@@ -548,16 +547,34 @@ export default function JobTable(props) {
                                             : false
                                         );
                                       }}
-                                      // disabled={
-                                      //   job.total_applicants > 0 ? false : true
-                                      // }
+                                      disabled={
+                                        job.total_applicants > 0 ? false : true
+                                      }
                                       title="Job visa"
                                     >
-                                      Visa
+                                      Visa Responses
                                     </button> : props.skill === null ||
                                 props.skill === undefined ||
                                 Object.keys(props.skill).length === 0 ? (
                                 <>
+                                  <div
+                                    className="btn-group button_group"
+                                  // role="group"
+                                  >
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => {
+                                        setresponseId(job.job_id);
+                                      }}
+                                      disabled={
+                                        job.total_applicants > 0 ? false : true
+                                      }
+                                      title="Job Response"
+                                    >
+                                      Responses
+                                    </button>
+                                  </div>
+                                 {props.selfJob === "yes" ? null : <>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => updateLima(job)}
@@ -584,28 +601,6 @@ export default function JobTable(props) {
                                   >
                                     <span className=" fas fa-edit text-gray"></span>
                                   </button>
-                                  <div
-                                    className="btn-group button_group"
-                                  // role="group"
-                                  >
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => {
-                                        setresponseId(job.job_id);
-                                        setresponseDropDown(
-                                          responseDropDown === false
-                                            ? true
-                                            : false
-                                        );
-                                      }}
-                                      disabled={
-                                        job.total_applicants > 0 ? false : true
-                                      }
-                                      title="Job Response"
-                                    >
-                                      Responses
-                                    </button>
-                                  </div>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ShowDeleteAlert(job)}
@@ -615,6 +610,7 @@ export default function JobTable(props) {
                                       <i className="fa fa-trash"></i>
                                     </span>
                                   </button>
+                                  </>}
                                 </>
                               ) 
                               :
@@ -643,8 +639,7 @@ export default function JobTable(props) {
                         )}
                       </tr>
                       {job.job_id === responseId &&
-                        job.total_applicants > 0 &&
-                        responseDropDown === true ? (
+                        job.total_applicants > 0  ? (
                         <tr>
                           <td colSpan={11}>
                             { 

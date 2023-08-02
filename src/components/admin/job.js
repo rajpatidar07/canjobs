@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
@@ -25,7 +25,7 @@ function Job(props) {
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-
+let location = useLocation()
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -37,6 +37,9 @@ function Job(props) {
     JsonData();
     if ((search === "") === true) {
       setSearchError("");
+    }
+    if(location.state){
+      setCompany(location.state.company_name)
     }
   }, [
     categoryFilterValue,
@@ -170,7 +173,7 @@ function Job(props) {
                         onChange={(e) => {
                           setJobSwapFilterValue(e.target.value);
                         }}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
@@ -210,7 +213,7 @@ function Job(props) {
                         id="country"
                         value={locationFilterValue}
                         onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Location</option>
                         {(FilterJson.location || []).map((data) => {

@@ -184,7 +184,7 @@ function Skills(props) {
                 id="skill"
                 onChange={onSelectChange}
                 className={
-                  errors.skill ? "border border-danger w-100" : "w-100"
+                  errors.skill ? "border border-danger w-100 text-capitalize" : "text-capitalize w-100"
                 }
               />
               {loading === true ? (

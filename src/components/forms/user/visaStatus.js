@@ -28,7 +28,7 @@ export default function VisaStatus(props) {
   const validators = {
     status: [
       (value) =>
-        value === "" || value === null ? "Work Permit is required" : null,
+        value === "" || value === null ? "Visa is required" : null,
     ],
   };
 
@@ -145,7 +145,7 @@ export default function VisaStatus(props) {
                 name="country"
                 value={state.country || ""}
                 onChange={onInputChange}
-                className={"form-control"}
+                className={"form-control text-capitalize"}
                 id="country"
               >
                 <option value={""}>Select visa Country </option>
