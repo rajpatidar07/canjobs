@@ -57,7 +57,7 @@ function EmployerHome() {
           {
             <EmployeeBox /> ?
               <div className="row justify-content-center">
-                <EmployeeBox />
+                <EmployeeBox featured="yes"/>
               </div> :
               <div className="table-responsive main_table_div"> <Loader /> </div>}
         </div>
@@ -73,7 +73,8 @@ function EmployerHome() {
               <div className="col-12">
                 <div className="section-title mb-9 text-center">
                   <h5 className="font-size-5 font-weight-normal text-gray">
-                    Get hired in top companies
+                    {/* Get hired in top companies */}
+                    Hired the Best candidates
                   </h5>
                 </div>
               </div>

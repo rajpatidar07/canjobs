@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
@@ -9,7 +9,8 @@ import { toast } from "react-toastify";
 
 function EmployeeHeader() {
   const userType = localStorage.getItem("userType");
-  const profile_photo = localStorage.getItem("profile_photo");
+  let profile_photo = localStorage.getItem("profile_photo");
+  // let name = localStorage.getItem("name");
   let navigate = useNavigate();
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
@@ -56,7 +57,17 @@ function EmployeeHeader() {
     setShowCompanyLogin(true);
     setShowCompanySignUp(false);
   };
-  //  END COMPANY LOGIN AND SIGNUP
+
+  useEffect(() => {
+    profile_photo = localStorage.getItem("profile_photo");
+    // name = localStorage.getItem("name");
+    // condition to remove the class from the body when we are not at the admin modual
+    // eslint-disable-next-line 
+    if(window.location.pathname === "/" || window.location.pathname === "/jobs" && localStorage.getItem("userType") === "admin"){
+          document.body.classList.remove("admin_body");
+          }
+  }, [localStorage.getItem("profile_photo")])
+
   return (
     <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
       <div className="container">
@@ -215,11 +226,12 @@ function EmployeeHeader() {
                   <div>
                     <img
                       className="rounded-circle"
-                      src={profile_photo ? profile_photo : "image/user.png"}
+                      src={profile_photo === (null ||"null" || undefined|| "undefined") ?  "image/user.png":profile_photo}
                       width={50}
                       height={50}
                       alt={""}
                     />
+                    {/* {name} */}
                   </div>
                   <i className="fas fa-chevron-down heading-default-color ml-6"></i>
                 </Link>
@@ -244,8 +256,8 @@ function EmployeeHeader() {
                       userType === "user"
                         ? "/profile"
                         : userType === "company"
-                        ? "/companyprofile"
-                        : null
+                          ? "/companyprofile"
+                          : null
                     }
                   >
                     Profile

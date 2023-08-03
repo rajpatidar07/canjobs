@@ -203,7 +203,6 @@ export const getallEmployeeData = async (
       filter_by_time: time,
       job_keyskills: jobSkill,
       filter_status :status,
-      is_featured:user_type === "company" ? "1": ""
     },
     {
       headers: {
@@ -813,7 +812,7 @@ export const AddLimia = async (props, employee_id, job_id) => {
       job_id: job_id,
       employee_id: employee_id,
       lmia_status: props.lmia_status,
-      completion_time: props.completion_time,
+      // completion_time: props.completion_time,
     },
     {
       headers: {

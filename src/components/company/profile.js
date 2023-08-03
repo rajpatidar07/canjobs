@@ -43,6 +43,7 @@ function CompanyProfile(props) {
       setIsLoading(false)
     } else {
       setEmployerData(userData.data.company_detail[0]);
+      localStorage.setItem("profile_photo", userData.data.company_detail[0].logo)
       setEmployerKycData(userData.data.kyc_detail[0]);
       setIsLoading(false)
     }

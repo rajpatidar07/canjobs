@@ -198,7 +198,7 @@ function PersonalDetails(props) {
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
-    console.log(state)
+    // console.log(state)
     if (validate() && imgError === "") {
       setLoading(true);
       const responseData = await AddEmployeeDetails(state);
@@ -670,7 +670,7 @@ function PersonalDetails(props) {
                   id="language"
                 >
                   <option value={""}>Known Language</option>
-                  {(FilterJson.Language || []).map((Language) => (
+                  {(FilterJson.language || []).map((Language) => (
                     <option key={Language} value={Language}>
                       {Language}
                     </option>

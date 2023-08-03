@@ -69,6 +69,7 @@ export default  function EmployeeLoginModal(props) {
         localStorage.setItem("userType", "user");
         localStorage.setItem("employee_id", updatedTodo.employee_id);
         localStorage.setItem("name", updatedTodo.name);
+        localStorage.setItem("skill", updatedTodo.skill);
         localStorage.setItem("profile_photo", updatedTodo.profile_photo);
         toast.success("Logged In Successfully", {
           position: toast.POSITION.TOP_RIGHT,

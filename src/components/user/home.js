@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import Loader from '../common/loader';
 function EmployeeHomePage() {
   //   const [JobDetail, setJobDetail] = useState([]);
-
+let token = localStorage.getItem("token")
   //   const UserData = async () => {
   //     const jobData = await GetAllJobs();
   //     setJobDetail(jobData);
@@ -46,7 +46,7 @@ function EmployeeHomePage() {
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-                Featured Jobs
+                {token ? "Recommended Jobs" :"Featured Jobs"}
               </h2>
               <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
                 Leverage agile frameworks to provide a robust synopsis for high

@@ -29,7 +29,7 @@ export default function EmployeeTable(props) {
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
-  const [alredyApplied, setAlredyApplied] = useState([]);
+  const [alredyApplied, setAlredyApplied] = useState(false);
   let [employeeId, setemployeeId] = useState();
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -197,13 +197,15 @@ export default function EmployeeTable(props) {
         autoClose: 1000,
       });
       setApiCall(true);
+      props.setApiCall(true)
     }
     if (responseData.message === "Job applied successfully") {
       toast.success("Applied successfully", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
+      props.setApiCall(true);
+      setApiCall(true)
       setAlredyApplied(true)
     }
   };
@@ -450,18 +452,19 @@ export default function EmployeeTable(props) {
                   <tr>
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
-                    <th className="bg-white"></th>
                     {props.heading === "Dashboard" ? (
                       <th className="bg-white text-center">No Data Found</th>
                     ) : (
                       <th className="bg-white"></th>
                     )}
+                    <th className="bg-white"></th>
                     {props.heading === "Dashboard" ? null : (
                       <th className="bg-white text-center">No Data Found</th>
                     )}
                     <th className="bg-white"></th>
                     {props.heading !== "Dashboard" ? (
                       <>
+                        <th className="bg-white"></th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
@@ -814,14 +817,14 @@ export default function EmployeeTable(props) {
                             ) : (
                               <button
                                 className="btn btn-outline-info action_btn"
-                                disabled={alredyApplied ? true : false}
+                                // disabled={alredyApplied ? false : true}
                                 onClick={() =>
                                   onChangeJobClick(empdata.employee_id)
                                 }
                                 title="Apply For job"
                               >
-                                {alredyApplied
-                                  ? "Already Applied"
+                                {alredyApplied 
+                                ? "Already Applied"
                                   : "Apply"}
                               </button>
                             )}

@@ -7,12 +7,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function ApplyBeforeform(props) {
     const [loading, setLoading] = useState(false);
+    const user_id = localStorage.getItem("employee_id");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
     name: "",
     email: "",
     contact_no: "",
+    employee_id:user_id
   };
   /* Functionality to close the modal */
 
@@ -74,6 +76,7 @@ function ApplyBeforeform(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        localStorage.setItem("name",state.name)
         props.setApiCall(true);
         return close();
       }
@@ -82,6 +85,7 @@ function ApplyBeforeform(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        localStorage.setItem("name",state.name)
         props.setApiCall(true);
         return close();
       }

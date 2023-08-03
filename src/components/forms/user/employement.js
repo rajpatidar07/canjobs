@@ -57,24 +57,24 @@ function EmployementDetails(props) {
         value === "" || value.trim() === ""
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          // : /[-]?\d+(\.\d+)?/.test(value)
-          // ? "Company name can not have a number."
-          : value.length < 2
-          ? "Company name should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            // : /[-]?\d+(\.\d+)?/.test(value)
+            // ? "Company name can not have a number."
+            : value.length < 2
+              ? "Company name should have 2 or more letters"
+              : "",
     ],
     designation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Designation is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Designation can not have a number."
-          : value.length < 2
-          ? "Designation should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Designation can not have a number."
+              : value.length < 2
+                ? "Designation should have 2 or more letters"
+                : "",
     ],
     // company_location: [
     //   (value) =>
@@ -123,7 +123,7 @@ function EmployementDetails(props) {
       EmployeementData();
     }
     JsonData();
-    if(apiCall === true){
+    if (apiCall === true) {
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -215,14 +215,16 @@ function EmployementDetails(props) {
                     <div className="text_box text-left w-100 mt-n2">
                       <h3 className="mb-0">
                         <div className="font-size-6 text-black-2 font-weight-semibold">
-                          {CareerDetails.designation} -{" "}
+                          {CareerDetails.designation} -
                           <span className="font-size-4">
                             {CareerDetails.functional_area}
                           </span>
                         </div>
                       </h3>
                       <span className="font-size-4 text-default-color line-height-2">
-                        {CareerDetails.company} ({CareerDetails.industry})
+                        {CareerDetails.company} {CareerDetails.industry ?
+                          `(${CareerDetails.industry})` :
+                          null}
                       </span>
                     </div>
                   </div>

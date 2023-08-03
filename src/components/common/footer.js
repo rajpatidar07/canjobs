@@ -88,7 +88,7 @@ function EmployeeFooter() {
               <div className="media-body pl-5">
                 <p className="mb-0 font-size-4 text-white">Contact us at</p>
                 <Link className="mb-0 font-size-4 font-weight-bold" to="">
-                  support@uxtheme.net
+                  canjobs.com
                 </Link>
               </div>
             </div>
@@ -127,7 +127,7 @@ function EmployeeFooter() {
             </div>
             {/* <!-- widget social icon end --> */}
           </div>
-          <div className="col-lg-8 col-md-6">
+          <div className="col-lg-8 col-md-6 d-none">
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6">
                 <div className="footer-widget widget2 mb-md-0 mb-13">
@@ -174,7 +174,7 @@ function EmployeeFooter() {
                   {/* <!-- widget social menu end --> */}
                 </div>
               </div>
-              <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6">
+              <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6 ">
                 <div className="footer-widget widget3 mb-sm-0 mb-13">
                   {/* <!-- footer widget title start --> */}
                   <p className="widget-title font-size-4 text-gray mb-md-8 mb-7">

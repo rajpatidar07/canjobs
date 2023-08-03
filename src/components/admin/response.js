@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { AddLimia, AddEmployeeDetails, GetAllResponse, GetFilter ,AddUpdateVisa} from "../../api/api";
+import { AddLimia, AddEmployeeDetails, GetAllResponse, GetFilter, AddUpdateVisa } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -124,24 +124,23 @@ function JobResponse(props) {
       setSearchError("");
     }
   }
- 
+
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
     // Api call to set employee reserved
     let data = {
       employee_id: e.employee_id,
-    job_status:"1",
-    posted_job_id: jobId
+      job_status: "1",
+      posted_job_id: jobId
     }
     let response = await AddEmployeeDetails(data)
     if (response.message === 'Employee data updated successfully') {
       // Api call to set employee Visa
-
-        let status = "pending"
-      let VisaResponse = await AddUpdateVisa(e.employee_id, status )
+      let status = "pending"
+      let VisaResponse = await AddUpdateVisa(e.employee_id, status)
       if (VisaResponse.data.message === "created successfully") {
         // Api call to set employee Limia
-        const lmia = { lmia_status: "pending", };
+        const lmia = { lmia_status: "position approved" };
         let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
         if (LimiaResponse.message === 'Data added successfully') {
           toast.success("Employee Reserved successfully", {
@@ -222,7 +221,7 @@ function JobResponse(props) {
           <ToastContainer />
         </>
       ) : null}
-      
+
       <div
         className={
           props.heading === "Response" ||
@@ -370,10 +369,10 @@ function JobResponse(props) {
                   >
                     <thead>
                       <tr>
-                        <th  scope="col"
+                        <th scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal">
-                            Employee Id
-                          </th>
+                          Employee Id
+                        </th>
                         <th
                           scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
@@ -539,7 +538,7 @@ function JobResponse(props) {
                       ) : (
                         (response || []).map((res, i) => (
                           <tr className="" key={i}>
-                             <th className="py-5 ">
+                            <th className="py-5 ">
                               {res.employee_id}
                             </th>
                             <th className=" py-5">
@@ -659,11 +658,11 @@ function JobResponse(props) {
                                 <Link to="/lmia" state={{ id: res.job_id }}>
                                   {res.lmia_status === "limia rejected" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-danger">
-                                     Lmia Reject
+                                      Lmia Reject
                                     </span>
                                   ) : res.lmia_status === "lmia approved" ? (
                                     <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                     Lmia Approved
+                                      Lmia Approved
                                     </span>
                                   ) : res.lmia_status === "lmia partial" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-gray">
@@ -712,62 +711,60 @@ function JobResponse(props) {
                                   role="group"
                                   aria-label="Basic example"
                                 >
-                                  {res.job_status === "0" ?  <button
+                                  {res.job_status === "0" ? <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ReservedEmployee(res)}
                                     title="Reserved Employee"
                                   >
                                     Reserved
-                                  </button>:
-                                 
-                                  props.response === "visa"  ?
-                                  <> <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => editVisa(res)}
-                                    title="Update Visa status"
-                                  >
-                                    <span className="fab fa-cc-visa text-gray px-2"></span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() =>
-                                      AddDoucument(res.employee_id)
-                                    }
-                                    title="Documents"
-                                  >
-                                    <span className="fas fa-file text-gray"></span>
-                                  </button>
-                                   </>
-                                  :
-                                  props.response === "lmia"  ? <button
-                                      className="btn btn-outline-info action_btn text-gray"
-                                      onClick={() => addLimia(res)}
-                                      title="Update LMIA status"
-                                    >
-                                      LMIA
-                                    </button> :  <><button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => addFollow(res)}
-                                    title=" Add Follow Up"
-                                  >
-                                    <i className=" fas fa-plus text-gray px-2"></i>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => addnterview(res)}
-                                    title=" Add Interview"
-                                    disabled={res.status === "complete" ? true : false}
-                                  >
-                                    <i className="fa fa-calendar text-gray px-2"></i>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn text-gray"
-                                    onClick={() => editJob(res)}
-                                    title="Change Job"
-                                    disabled={props.total_applicants >= props.role_category ? true : false}
-                                  >
-                                    <i className="fas fa-briefcase"></i>
-                                  </button></>}
+                                  </button> :
+                                    <>
+                                      <button
+                                        className={props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                        onClick={() => addLimia(res)}
+                                        title="Update LMIA status"
+                                      >
+                                        LMIA
+                                      </button>
+                                      <button
+                                        className={props.response === "lmia" ?  "d-none" : "btn btn-outline-info action_btn" }
+                                        onClick={() => editVisa(res)}
+                                        title="Update Visa status"
+                                      >
+                                        <span className="fab fa-cc-visa text-gray px-2"></span>
+                                      </button>
+                                      <button
+                                        className={props.response === "visa" || props.response === "lmia" ? "btn btn-outline-info action_btn" : "d-none"}
+                                        onClick={() =>
+                                          AddDoucument(res.employee_id)
+                                        }
+                                        title="Documents"
+                                      >
+                                        <span className="fas fa-file text-gray"></span>
+                                      </button>
+                                      <button
+                                        className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
+                                        onClick={() => addFollow(res)}
+                                        title=" Add Follow Up"
+                                      >
+                                        <i className=" fas fa-plus text-gray px-2"></i>
+                                      </button>
+                                      <button
+                                        className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
+                                        onClick={() => addnterview(res)}
+                                        title=" Add Interview"
+                                        disabled={res.status === "complete" ? true : false}
+                                      >
+                                        <i className="fa fa-calendar text-gray px-2"></i>
+                                      </button>
+                                      <button
+                                        className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                        onClick={() => editJob(res)}
+                                        title="Change Job"
+                                        disabled={props.total_applicants >= props.role_category ? true : false}
+                                      >
+                                        <i className="fas fa-briefcase"></i>
+                                      </button></>}
                                 </div>
                               </th>
                             )}

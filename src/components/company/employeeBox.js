@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getallEmployeeData } from "../../api/api";
 import moment from "moment";
-function EmployeeBox() {
+function EmployeeBox({featured}) {
   let [employeeData, setEmployeeData] = useState([]);
   let [totalData, setTotalData] = useState([]);
   let Skill = [];
+  let location = useLocation()
   /*Api function to get the employee data */
   const EmpData = async () => {
     const userData = await getallEmployeeData();
     if (userData.data.length === 0) {
       setEmployeeData([]);
     } else {
-      setEmployeeData(userData.data);
+      if(location.pathname === "/company"){
+        if(featured === "yes"){
+          setEmployeeData(userData.data.filter((item)=>item.is_featured === "1"));
+        }
+      }else{
+        setEmployeeData(userData.data);
+      }
       setTotalData(userData.totalData);
     }
   };
@@ -42,13 +49,18 @@ function EmployeeBox() {
                 <span className="job_swap_label">SWEP</span>
               ) : null}
               <div className="row job_header m-0 align-items-center">
+              {empdata.is_featured === "1" ? (
+            <span className="bg-orange text-white featured_tag">
+              Featured
+            </span>
+          ) : null}
                 <div className="media align-items-center company_box col-9 p-0">
                   <div className="text_box text-left">
                     <img
                       className="rounded-circle company_logo"
                       src={
                         empdata.profile_photo === null
-                          ? "image/user1.jpg"
+                          ? "image/user.png"
                           : empdata.profile_photo
                       }
                       width="50"

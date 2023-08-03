@@ -215,7 +215,7 @@ function Addfollowup(props) {
                     </div>
                     <div className="card-head font-size-3 text-dark card_right">
                       <span className="text-dark"> Next date: </span>
-                      {moment(res.created_at).format("YYYY-MM-DD")}
+                      {moment(res.next_followup_date).format("YYYY-MM-DD")}
                     </div>
                   </div>
                   <div className="card-body p-3">{res.remark}</div>

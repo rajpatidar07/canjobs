@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // import EmployeeDetails from "../common/employeeDetail";
 import { ToastContainer } from "react-toastify";
 import Interview from "../common/interviewTable";
-import JobResponse from "./response";
+// import JobResponse from "./response";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 // import EmployerTable from "../common/employerTable";
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   let [employee, setEmployee] = useState("");
   // let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
-  let [response, setResponse] = useState("");
+  // let [response, setResponse] = useState("");
   let [followup, setFollowUP] = useState("");
   let [apiCall, setApiCall] = useState("");
   /*Function to get the summary count */
@@ -314,7 +314,7 @@ const AdminDashboard = () => {
                 />
               </div>
               {/* <!-- Recent Job Response- --> */}
-              <div className="bg-white rounded dashboard_card mb-7">
+              {/* <div className="bg-white rounded dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
                     Recently Job Response
@@ -348,7 +348,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
                 <JobResponse heading={"Dashboard"} filter_by_time={response} />
-              </div>
+              </div> */}
               {/* <!-- Recent Interviews- --> */}
               <div className="bg-white rounded dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">

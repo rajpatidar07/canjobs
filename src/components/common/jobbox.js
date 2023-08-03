@@ -29,6 +29,7 @@ function JobBox({
   const token = localStorage.getItem("token");
   const user_type = localStorage.getItem("userType");
   const user_id = localStorage.getItem("employee_id");
+  const skill = localStorage.getItem("skill");
 
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
@@ -44,16 +45,21 @@ function JobBox({
       search,
       path === "/jobs" || path === "/managejobs" || path === "/response" ? jobLocation : country,
       path === "/jobs" || path === "/managejobs" || path === "/response" ? categoryFilterValue : category,
-      SkillFilterValue,
+      token && location.pathname === "/" ? skill : SkillFilterValue,
       jobSwapFilterValue
     );
     if (userData.data.data.length === 0) {
       setjobData([]);
     } else {
-      setjobData(userData.data.data);
+      if (!token && location.pathname === "/") {
+        setjobData(userData.data.data.filter((item) => item.is_featured === "1"));
+      } else {
+        setjobData(userData.data.data)
+      }
       setNoData(userData.data.total_rows);
     }
   };
+
   /*Render Function */
   useEffect(() => {
     JobData();
@@ -80,6 +86,7 @@ function JobBox({
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setApiCall(true);
     }
     if (Response.message === "already applied on this job") {
       toast.success("Already applied on this job", {
@@ -130,7 +137,13 @@ function JobBox({
                   {job.job_type === "swap" ? (
                     <span className="job_swap_label">SWEP</span>
                   ) : null}
+                  {job.is_featured === "1" ? (
+                    <span className="bg-orange text-white featured_tag">
+                      Featured
+                    </span>
+                  ) : null}
                   <div className="row job_header m-0">
+
                     <div className="media align-items-center company_box col-md-6 p-0">
                       <div className="text_box text-left">
                         <img
@@ -245,6 +258,7 @@ function JobBox({
                         >
                           Edit
                         </button>
+
                       </>
                     ) : (
                       <button
@@ -253,15 +267,22 @@ function JobBox({
                             ? "btn btn-secondary text-uppercase font-size-3"
                             : "btn btn-info text-uppercase font-size-3"
                         }
-                        onClick={name === null ||
-                          name === "null" ||
-                          name === "" ||
-                          name === undefined ||
-                          name === "undefined" ?
-                          () => setShowDataForm(true) :
+                        onClick={
+                          // name === null ||
+                          // name === "null" ||
+                          // name === "" ||
+                          // name === undefined ||
+                          // name === "undefined" ?
+                          // () => setShowDataForm(true) :
                           () =>
                             token && user_type === "user"
-                              ? OnApplyClick(0, job.job_id)
+                              ?
+                              name === null ||
+                                name === "null" ||
+                                name === "" ||
+                                name === undefined ||
+                                name === "undefined" ?
+                                setShowDataForm(true) : OnApplyClick(0, job.job_id)
                               : setShowLogin(true)
                         }
                         disabled={job.is_applied === "0" ? false : true}
@@ -287,7 +308,8 @@ function JobBox({
         ?
         <ApplyBeforeform
           show={showDataForm}
-          close={() => setShowDataForm(false)} />
+          close={() => setShowDataForm(false)}
+          setApiCall={setApiCall} />
         : null}
       {showAddJobsModal ? (
         <AddJobModal
