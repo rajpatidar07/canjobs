@@ -22,7 +22,7 @@ export default function DocumrentContainer(props) {
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   let encoded;
-
+let user_type = localStorage.getItem("userType")
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     let response = await GetEmployeeDocumentList(props.employee_id);
@@ -444,7 +444,7 @@ export default function DocumrentContainer(props) {
                 </button>
               </div>
             ) : null}
-            {docTypData ? (
+            {docTypData && user_type === "admin" ? (
               <div className="doc_upload_col">
                 {docTypData.is_varify === "1" ? (
                   <img className="verified_doc_img" src={Verified} alt="" />

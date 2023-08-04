@@ -11,8 +11,10 @@ import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import Loader from '../common/loader';
+import DocumentModal from "..//forms/admin/DocumentModal"
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
+  const [showDoc, setShowDoc] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -163,7 +165,6 @@ const UserProfile = (props) => {
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`: ""}
-
                         </span>
                         {/* </Link>
                       <Registration
@@ -178,12 +179,20 @@ const UserProfile = (props) => {
                     <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
                       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                         <span>Personal Info</span>
-                        {user_type === "company" || props.self === "yes" ? null : (
-                          <CustomButton
-                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                            onClick={() => setShowPersonalDetails(true)}
-                          />
-                        )}
+                        
+                          {user_type === "company" || props.self === "yes" ? null : (
+                            <CustomButton
+                              className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                              onClick={() => setShowPersonalDetails(true)}
+                            />
+                          )}
+
+                        {showDoc ? (<DocumentModal
+                          show={showDoc}
+                          close={() => setShowDoc(false)}
+                          employee_id={employeeId}
+                        />
+                        ) : null}
                         {showPersonalDetails ? <PersonalDetails
                           show={showPersonalDetails}
                           employeeId={employeeId}
@@ -401,8 +410,12 @@ const UserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5 px-9">
-                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                          About
+                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold d-flex align-items-center justify-content-space-between">
+                          <span>About</span>  
+                          {user_type === "user" ? <CustomButton
+                          className=" font-size-4 rounded-3 btn-primary border-0"
+                          onClick={() => setShowDoc(true)}
+                          >Add Document </CustomButton>: null}
                         </h4>
                         <p className="font-size-4 mb-8">
                           {PersonalDetail.description}
