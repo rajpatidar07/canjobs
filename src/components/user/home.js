@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
@@ -8,12 +8,12 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import Loader from '../common/loader';
 function EmployeeHomePage() {
-  //   const [JobDetail, setJobDetail] = useState([]);
+    const [JobDetail, setJobDetail] = useState();
 let token = localStorage.getItem("token")
     const UserData = async () => {
       // const jobData = await GetAllJobs();
       const res = await axios.get("https://api.ipify.org/?format=json");
-      console.log(res.data.ip)
+      setJobDetail(res.data.ip)
       // setJobDetail(jobData);
     };
   useEffect(() => {
@@ -23,7 +23,7 @@ let token = localStorage.getItem("token")
 
   //// console.log(("JobDetail===" + JSON.stringify(JobDetail))
 
-console.log("hello")
+
 
   return (
     <div className="site-wrapper overflow-hidden ">
@@ -49,7 +49,7 @@ console.log("hello")
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-                {token ? "Recommended Jobs" :"Featured Jobs"}
+                {token ? "Recommended Jobs" :"Featured Jobs"}<br/>Ip :-{JobDetail}
               </h2>
               <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
                 Leverage agile frameworks to provide a robust synopsis for high
