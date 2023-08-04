@@ -43,10 +43,13 @@ function SearchForm() {
   const Onsearch = () => {
     if (user_type === "company") {
       navigate(
-        `/managejobs?search=${state.search}&country=${state.country_value}`
+        `/empsearch?search=${state.search}`
       );
+      setState({...state,search : ""})
+
     } else {
       navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
+      setState({...state,search : "",country : ""})
     }
   };
   return (
@@ -75,6 +78,7 @@ function SearchForm() {
               </span>
             </div>
             {/* <!-- select-city starts --> */}
+            {user_type === "company" ? null :
             <div className="form-group position-relative">
               <Select
                 options={"" || state.country}
@@ -87,7 +91,7 @@ function SearchForm() {
               <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                 <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
               </span>
-            </div>
+            </div>}
           </div>
           {/* <!-- ./select-city ends --> */}
           <button
@@ -98,7 +102,7 @@ function SearchForm() {
             Search
           </button>
         </div>
-      {path === "/jobs"  || path === "/managejobs" || path === "/response" ? null :  <div className="row m-0 job_filter_block mt-5">
+      {path === "/jobs"  || path === "/managejobs" || path === "/response" ||user_type === "company"  ? null :  <div className="row m-0 job_filter_block mt-5">
           {/* <Filterbox
             name="country"
             filterheading=" Jobs by Location"

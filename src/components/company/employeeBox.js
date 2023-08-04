@@ -2,22 +2,39 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getallEmployeeData } from "../../api/api";
 import moment from "moment";
-function EmployeeBox({featured}) {
+function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
   let [employeeData, setEmployeeData] = useState([]);
   let [totalData, setTotalData] = useState([]);
-  let Skill = [];
-  let location = useLocation()
+  let skillList = [];
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const search = searchParams.get("search");
   /*Api function to get the employee data */
   const EmpData = async () => {
-    const userData = await getallEmployeeData();
+    const userData = await getallEmployeeData(
+      search,
+      Exp,
+      Skill,
+      "",
+      1,
+      10,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      categorye,
+      Swap,
+      candian);
     if (userData.data.length === 0) {
       setEmployeeData([]);
     } else {
-      if(location.pathname === "/company"){
-        if(featured === "yes"){
-          setEmployeeData(userData.data.filter((item)=>item.is_featured === "1"));
+      if (location.pathname === "/company") {
+        if (featured === "yes") {
+          setEmployeeData(userData.data.filter((item) => item.is_featured === "1"));
         }
-      }else{
+      } else {
         setEmployeeData(userData.data);
       }
       setTotalData(userData.totalData);
@@ -26,8 +43,12 @@ function EmployeeBox({featured}) {
   /*Render Method*/
   useEffect(() => {
     EmpData();
-  }, []);
-
+    //Function to replace the url path after searching Employee
+    if (search) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  }, [search, categorye, Skill, Swap, Exp, candian]);
   return (
     <>
       {/* <!-- Single Featured Job --> */}
@@ -49,11 +70,11 @@ function EmployeeBox({featured}) {
                 <span className="job_swap_label">SWEP</span>
               ) : null}
               <div className="row job_header m-0 align-items-center">
-              {empdata.is_featured === "1" ? (
-            <span className="bg-orange text-white featured_tag">
-              Featured
-            </span>
-          ) : null}
+                {empdata.is_featured === "1" ? (
+                  <span className="bg-orange text-white featured_tag">
+                    Featured
+                  </span>
+                ) : null}
                 <div className="media align-items-center company_box col-9 p-0">
                   <div className="text_box text-left">
                     <img
@@ -152,8 +173,8 @@ function EmployeeBox({featured}) {
                 <div className="col-md-12">
                   <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                     {empdata.skill
-                      ? ((Skill = empdata.skill.split(",")),
-                        (Skill || []).map((skill, i) => (
+                      ? ((skillList = empdata.skill.split(",")),
+                        (skillList || []).map((skill, i) => (
                           <li key={i}>
                             <span className="bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                               {skill}

@@ -63,6 +63,11 @@ function JobBox({
   /*Render Function */
   useEffect(() => {
     JobData();
+     //Function to replace the url path after searching Job
+     if (search) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
   }, [
     showAddJobsModal,
     showAddJobModal,

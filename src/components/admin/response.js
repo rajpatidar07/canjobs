@@ -371,7 +371,7 @@ function JobResponse(props) {
                       <tr>
                         <th scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal">
-                          Employee Id
+                          E Id
                         </th>
                         <th
                           scope="col"

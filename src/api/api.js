@@ -187,6 +187,10 @@ export const getallEmployeeData = async (
   time,
   jobSkill,
   status,
+  job_id,
+  categorye,
+  inserted,
+  candian
 ) => {
   const response = await axios.post(
     `${API_URL}${user_type}/getallEmployeeView`,
@@ -203,6 +207,9 @@ export const getallEmployeeData = async (
       filter_by_time: time,
       job_keyskills: jobSkill,
       filter_status :status,
+      job_id:job_id,
+      work_permit_canada:candian,
+      interested_in:inserted
     },
     {
       headers: {

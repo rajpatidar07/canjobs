@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EmployeeBox from "../company/employeeBox";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import SearchForm from "../common/search_form";
+import { getJson } from "../../api/api";
+import FilterJson from "../json/filterjson";
+import CustomButton from "../common/button";
 
 function EmployeeSearch() {
+  /*Filter states */
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [candianFilterValue, setCandianFilterValue] = useState("");
+  const [jobExp, setJobExp] = useState("");
+  let [Json, setJson] = useState([]);
+  /*Function to get thejSon */
+  const JsonData = async () => {
+    let Json = await getJson();
+    setJson(Json);
+  };
+  /*Render Method */
+  useEffect(() => {
+    JsonData();
+  }, [ SkillFilterValue,
+    jobSwapFilterValue, jobExp, candianFilterValue]);
+  // eslint-disable-next-line no-use-before-define
+
+  /*Function to Rest the feilds */
+  let onReset = () => {
+    setSkillFilterValue("");
+    setJobSwapFilterValue("");
+    setJobExp("");
+    setCandianFilterValue("")
+  }
   return (
     <div>
       <EmployeeHeader />
@@ -21,7 +49,99 @@ function EmployeeSearch() {
       </div>
       <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
         <div className="container">
-          <div className="row justify-content-center">
+          <div className="col-12 col-lg-10 col-xl-12 text-center">
+            <form className="mb-8" action="/">
+              <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <select
+                    name="skill"
+                    id="skill"
+                    value={SkillFilterValue}
+                    /*Skill Onchange function to filter the data */
+                    onChange={(e) => setSkillFilterValue(e.target.value)}
+                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                  >
+                    <option value="">Select Skill</option>
+                    {(Json.Skill || []).map((data) => {
+                      return (
+                        <option value={data.value} key={data.id}>
+                          {data.value}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <select
+                    name="job_location"
+                    id="job_location"
+                    value={jobExp}
+                    /*Job Onchange function to filter the data */
+                    onChange={(e) => setJobExp(e.target.value)}
+                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                  >
+                    <option value="">
+                      Select Experience
+                    </option>
+                    {(FilterJson.experience || []).map((job) => (
+                      <option key={job} value={job}>
+                        {job}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <select
+                    name="job_type"
+                    id="job_type"
+                    value={jobSwapFilterValue}
+                    /*Job Onchange function to filter the data */
+                    onChange={(e) => setJobSwapFilterValue(e.target.value)}
+                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                  >
+                    <option value="">
+                      Select Interest
+                    </option>
+                    {(FilterJson.interested||[]).map((interest)=>
+                  <option key={interest} value={interest}>
+                  {interest}
+                </option>)}
+                  </select>
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <select
+                    name="job_type"
+                    id="job_type"
+                    value={candianFilterValue}
+                    /*Job Onchange function to filter the data */
+                    onChange={(e) => setCandianFilterValue(e.target.value)}
+                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                  >
+                    <option value="">
+                      Select  Candian Option
+                    </option>
+                    <option value="yes">
+                      Yes
+                    </option><option value="no">
+                      NO
+                    </option>
+
+                  </select>
+                </div>
+                <div className="col-md-3 col-lg-3 mb-5">
+                  <CustomButton
+                    className="font-size-3 rounded-3 btn btn-primary border-0"
+                    onClick={() => onReset()}
+                    title="Reset"
+                    type="button"
+                  >
+                    Reset
+                  </CustomButton>
+                </div>
+              </div>
+            </form>
+          </div>
+          {/* <div className="row justify-content-center">
             <div className="col-12 col-lg-10 col-xl-12">
               <h2 className="font-size-8 mb-6">
                 You’re searching "UI Designer"
@@ -78,7 +198,7 @@ function EmployeeSearch() {
                 </h5>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row justify-content-center position-static">
             <div className="col-12 col-xxl-8 col-xl-7 col-lg-10">
               {/* <!-- Left Section --> */}
@@ -90,27 +210,11 @@ function EmployeeSearch() {
                 >
                   <div className="mb-8 p-0 w-100 active nav-link active">
                     {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
-                    {/* <!-- End Single Featured Job --> */}
-                  </div>
-                  <div className="mb-8 p-0 w-100 active nav-link active">
-                    {/* <!-- Single Featured Job --> */}
-                    <EmployeeBox />
+                    <EmployeeBox
+                      Skill={SkillFilterValue}
+                      Swap={jobSwapFilterValue}
+                      Exp={jobExp}
+                      candian={candianFilterValue} />
                     {/* <!-- End Single Featured Job --> */}
                   </div>
                 </div>
@@ -127,7 +231,7 @@ function EmployeeSearch() {
               {/* <!-- form end --> */}
             </div>
             {/* <!-- Right Section --> */}
-            <div className="col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
+            <div className="d-none col-12 col-xxl-4 col-xl-5 col-lg-10 position-static">
               <div className="tab-content" id="serachlist-tab">
                 <div
                   className="tab-pane fade show active"

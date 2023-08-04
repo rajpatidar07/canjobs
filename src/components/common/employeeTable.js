@@ -64,7 +64,8 @@ export default function EmployeeTable(props) {
       sortOrder,
       props.filter_by_time,
       "",
-      props.status
+      props.status,
+      props.job_id
     );
     if (userData.data.length === 0) {
       setemployeeData([]);
@@ -306,7 +307,7 @@ export default function EmployeeTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Employee Id
+                    E Id
                   </th>
                   <th
                     scope="col"

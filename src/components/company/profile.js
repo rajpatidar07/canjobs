@@ -28,6 +28,7 @@ function CompanyProfile(props) {
   /*Function to get employer data */
   const EmployerData = async () => {
     let userData = await EmployerDetails(props.employerId);
+    localStorage.setItem("profile_photo", userData.data.company_detail[0].logo)
     if (userData === undefined) {
       setEmployerData("");
       setEmployerKycData("");
@@ -43,7 +44,6 @@ function CompanyProfile(props) {
       setIsLoading(false)
     } else {
       setEmployerData(userData.data.company_detail[0]);
-      localStorage.setItem("profile_photo", userData.data.company_detail[0].logo)
       setEmployerKycData(userData.data.kyc_detail[0]);
       setIsLoading(false)
     }

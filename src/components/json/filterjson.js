@@ -580,5 +580,6 @@ const filterjson = {
     "position approved"],
   duration: ["last week", "last month", "last 3 months", "last year"],
   employee_status: ["new", "prospect", "lead", "reatined", "lost", "dead"],
+  interested: ["swep", "internship", "co-op", "part-time", "full-time", "contract","all"]
 };
 export default filterjson;

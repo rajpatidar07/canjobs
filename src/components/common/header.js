@@ -226,7 +226,7 @@ function EmployeeHeader() {
                   <div>
                     <img
                       className="rounded-circle"
-                      src={profile_photo === (null ||"null" || undefined|| "undefined") ?  "image/user.png":profile_photo}
+                      src={profile_photo === null || profile_photo === "null" || profile_photo ===  undefined|| profile_photo ===  "undefined" ?  "image/user.png":profile_photo}
                       width={50}
                       height={50}
                       alt={""}

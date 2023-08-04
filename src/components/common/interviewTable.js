@@ -111,6 +111,12 @@ function Interview(props) {
               <table className="table table-striped main_data_table">
                 <thead>
                   <tr>
+                  <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                        E id
+                    </th>
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -213,6 +219,11 @@ function Interview(props) {
                   ) : (
                     (interviewData || []).map((data) => (
                       <tr className="" key={data.id}>
+                        <th scope="row" className="py-5 ">
+                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                            {data.employee_id}
+                          </div>
+                        </th>
                         <th scope="row" className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             {data.name}

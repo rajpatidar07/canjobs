@@ -7,10 +7,12 @@ import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
+import filterjson from "../../json/filterjson";
 function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
+  let user_type =localStorage.getItem("userType")
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -732,9 +734,13 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
-                  <option value={"swap"}>SWEP</option>
+                  {(filterjson.interested||[]).map((interest)=>
+                  <option key={interest} value={interest}>
+                  {interest}
+                </option>)}
+                  {/* <option value={"swap"}>SWEP</option>
                   <option value={"parttime"}>Part-time</option>
-                  <option value={"all"}>All</option>
+                  <option value={"all"}>All</option> */}
                 </select>
                 {/*----ERROR MESSAGE FOR interested_in----*/}
                 {errors.interested_in && (
@@ -872,7 +878,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-4">
+             {user_type === "admin" ? <div className="form-group col-md-4">
                 <label
                   htmlFor="fetured"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -892,6 +898,7 @@ function PersonalDetails(props) {
                 
                 
               </div>
+              :null}
             </div>
             <div className="form-group text-center">
               {loading === true ? (

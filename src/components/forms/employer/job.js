@@ -935,7 +935,7 @@ function AddJobModal(props) {
                 )}
               </div>
             </div>
-            <div className="row">
+           {user_type === "admin" ? <div className="row">
             <div className="form-group col-md-4">
                 <label
                   htmlFor="fetured"
@@ -955,6 +955,7 @@ function AddJobModal(props) {
                 </label>
                 </div>
             </div>
+            :null}
 
 
             <div className="form-group text-center">

@@ -23,7 +23,7 @@ export default function JobTable(props) {
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState();
-  const [candidateSkill, setCandidateSkill] = useState([]);
+  const [candidateSkill, setCandidateSkill] = useState();
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -345,12 +345,12 @@ export default function JobTable(props) {
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
                     <th className="bg-white"></th>
+                    <th className="bg-white"></th>
                     {props.heading === "Dashboard" ? (
                       <th className="bg-white text-center">No Data Found</th>
                     ) : (
                       <th className="bg-white"></th>
                     )}
-                    <th className="bg-white"></th>
                     <th className="bg-white"></th>
                     {props.heading !== "Dashboard" ? (
                       <>
@@ -637,8 +637,7 @@ export default function JobTable(props) {
                                             job.is_applied === "1"
                                               ? true
                                               : false ||
-                                                job.total_applicants >=
-                                                job.role_category
+                                               Number(job.applied_by_admin) >= Number(job.role_category)
                                                 ? true
                                                 : false
                                           }
@@ -651,6 +650,12 @@ export default function JobTable(props) {
                                         </button>
                                       )}
                               </div>
+                              {console.log( job.is_applied === "1"
+                                              ,
+                                                job.total_applicants >=
+                                                job.role_category
+                                               
+)}
                             </th>
                           )}
                         </tr>
@@ -711,6 +716,7 @@ export default function JobTable(props) {
           close={() => setShowCandidateModal(false)}
           data={candidateSkill}
           setApiCall={setApiCall}
+          job_id={candidateSkill.job_id}
         />
       ) : null}
       {openLimia ? (

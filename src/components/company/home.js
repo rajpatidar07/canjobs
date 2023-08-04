@@ -2,7 +2,7 @@ import React from "react";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import EmployeeBox from "./employeeBox";
-// import SearchForm from "../common/search_form";
+import SearchForm from "../common/search_form";
 // import Filterbox from "../common/filterbox";
 // import filterjson from "../json/filterjson";
 import { ToastContainer } from "react-toastify";
@@ -21,7 +21,7 @@ function EmployerHome() {
           <div className="row position-relative align-items-center justify-content-center position-static w-80">
             {/* <!-- Hero Form --> */}
             <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
-              {/* <SearchForm /> */}
+              <SearchForm />
             </div>
             {/* <!-- End Hero Form --> */}
           </div>
