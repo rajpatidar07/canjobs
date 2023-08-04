@@ -1,23 +1,20 @@
-import React, { useEffect ,useState} from "react";
+import React, { useEffect } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
-import axios from "axios";
 import Loader from '../common/loader';
 function EmployeeHomePage() {
-    const [JobDetail, setJobDetail] = useState();
+  //   const [JobDetail, setJobDetail] = useState([]);
 let token = localStorage.getItem("token")
-    const UserData = async () => {
-      // const jobData = await GetAllJobs();
-      const res = await axios.get("https://api.ipify.org/?format=json");
-      setJobDetail(res.data.ip)
-      // setJobDetail(jobData);
-    };
+  //   const UserData = async () => {
+  //     const jobData = await GetAllJobs();
+  //     setJobDetail(jobData);
+  //   };
   useEffect(() => {
-    UserData();
+    // UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("employee_id")]);
 
@@ -49,7 +46,7 @@ let token = localStorage.getItem("token")
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-                {token ? "Recommended Jobs" :"Featured Jobs"}<br/>Ip :-{JobDetail}
+                {token ? "Recommended Jobs" :"Featured Jobs"}
               </h2>
               <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
                 Leverage agile frameworks to provide a robust synopsis for high
