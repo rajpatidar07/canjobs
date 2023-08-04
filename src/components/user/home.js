@@ -23,7 +23,7 @@ let token = localStorage.getItem("token")
 
   //// console.log(("JobDetail===" + JSON.stringify(JobDetail))
 
-
+console.log("hello")
 
   return (
     <div className="site-wrapper overflow-hidden ">
