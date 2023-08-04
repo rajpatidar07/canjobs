@@ -650,12 +650,6 @@ export default function JobTable(props) {
                                         </button>
                                       )}
                               </div>
-                              {console.log( job.is_applied === "1"
-                                              ,
-                                                job.total_applicants >=
-                                                job.role_category
-                                               
-)}
                             </th>
                           )}
                         </tr>

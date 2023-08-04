@@ -537,6 +537,7 @@ function JobResponse(props) {
                         </tr>
                       ) : (
                         (response || []).map((res, i) => (
+                         ((props.response === "response") ||(props.response === "visa" || props.response === "lmia" && res.job_status === "1"))?
                           <tr className="" key={i}>
                             <th className="py-5 ">
                               {res.employee_id}
@@ -711,30 +712,30 @@ function JobResponse(props) {
                                   role="group"
                                   aria-label="Basic example"
                                 >
-                                  {res.job_status === "0" ? <button
-                                    className="btn btn-outline-info action_btn"
+                                   <button
+                                    className={res.job_status === "0" ?"btn btn-outline-info action_btn" :" d-none"}
                                     onClick={() => ReservedEmployee(res)}
                                     title="Reserved Employee"
                                   >
                                     Reserved
-                                  </button> :
-                                    <>
+                                  </button> 
+                                    
                                       <button
-                                        className={props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                        className={props.response === "visa" || res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
                                         onClick={() => addLimia(res)}
                                         title="Update LMIA status"
                                       >
                                         LMIA
                                       </button>
                                       <button
-                                        className={props.response === "lmia" ?  "d-none" : "btn btn-outline-info action_btn" }
+                                        className={props.response === "lmia" || res.job_status === "0"?  "d-none" : "btn btn-outline-info action_btn" }
                                         onClick={() => editVisa(res)}
                                         title="Update Visa status"
                                       >
                                         <span className="fab fa-cc-visa text-gray px-2"></span>
                                       </button>
                                       <button
-                                        className={props.response === "visa" || props.response === "lmia" ? "btn btn-outline-info action_btn" : "d-none"}
+                                        className={props.response === "visa" || props.response === "lmia"  && res.job_status === "1"? "btn btn-outline-info action_btn" : "d-none"}
                                         onClick={() =>
                                           AddDoucument(res.employee_id)
                                         }
@@ -764,11 +765,12 @@ function JobResponse(props) {
                                         disabled={props.total_applicants >= props.role_category ? true : false}
                                       >
                                         <i className="fas fa-briefcase"></i>
-                                      </button></>}
+                                      </button>
                                 </div>
                               </th>
                             )}
                           </tr>
+                          :null
                         ))
                       )}
                     </tbody>
