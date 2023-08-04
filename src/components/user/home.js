@@ -5,16 +5,19 @@ import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 // import { GetAllJobs } from "../../api/api";
+import axios from "axios";
 import Loader from '../common/loader';
 function EmployeeHomePage() {
   //   const [JobDetail, setJobDetail] = useState([]);
 let token = localStorage.getItem("token")
-  //   const UserData = async () => {
-  //     const jobData = await GetAllJobs();
-  //     setJobDetail(jobData);
-  //   };
+    const UserData = async () => {
+      // const jobData = await GetAllJobs();
+      const res = await axios.get("https://api.ipify.org/?format=json");
+      console.log(res.data.ip)
+      // setJobDetail(jobData);
+    };
   useEffect(() => {
-    // UserData();
+    UserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage.getItem("employee_id")]);
 
