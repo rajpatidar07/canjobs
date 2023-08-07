@@ -76,6 +76,7 @@ export default function JobTable(props) {
       setIsLoading(false);
     } else {
       setjobData(userData.data.data);
+      setresponseId(userData.data.data[0].job_id)
       setTotalData(userData.data.total_rows);
       setIsLoading(false);
     }

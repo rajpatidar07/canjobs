@@ -85,6 +85,30 @@ const AdminSidebar = (props) => {
               Jobs
             </Link>
           </li>
+          <li className={props.heading === "Visa status" ? "active" : ""}>
+            <Link
+              to="/visa"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fab fa-cc-visa mr-5"></i>Manage Visa
+            </Link>
+          </li>
+          {/* <li className={props.heading === "Document Upload & Verification" ? "active" : ""}>
+            <Link
+              to="/document"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-file mr-5"></i>Manage Documents
+            </Link>
+          </li> */}
+          <li className={props.heading === "LIMIA status" ? "active" : ""}>
+            <Link
+              to="/lmia"
+              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+            >
+              <i className="fas fa-filter mr-5"></i>Manage LMIA Status
+            </Link>
+          </li>
           {/* <li className={props.heading === "Response" ? "active" : ""}>
             <Link
               to="/responses"
@@ -109,16 +133,8 @@ const AdminSidebar = (props) => {
               <i className="fas fa-podcast mr-5"></i>Manage Interview
             </Link>
           </li>
-          <li
-            className={props.heading === "Manage Job Category" ? "active" : ""}
-          >
-            <Link
-              to="/category"
-              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
-            >
-              <i className="fas fa-qrcode mr-5"></i>Manage Job Category
-            </Link>
-          </li>
+         
+          
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
             <Link
               to="/adminprofile"
@@ -127,28 +143,14 @@ const AdminSidebar = (props) => {
               <i className="fas fa-user mr-5"></i>Manage Admin
             </Link>
           </li>
-          <li className={props.heading === "Visa status" ? "active" : ""}>
+          <li
+            className={props.heading === "Manage Job Category" ? "active" : ""}
+          >
             <Link
-              to="/visa"
+              to="/category"
               className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
-              <i className="fab fa-cc-visa mr-5"></i>Manage Visa
-            </Link>
-          </li>
-          {/* <li className={props.heading === "Document Upload & Verification" ? "active" : ""}>
-            <Link
-              to="/document"
-              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
-            >
-              <i className="fas fa-file mr-5"></i>Manage Documents
-            </Link>
-          </li> */}
-          <li className={props.heading === "LIMIA status" ? "active" : ""}>
-            <Link
-              to="/lmia"
-              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
-            >
-              <i className="fas fa-filter mr-5"></i>Manage LMIA Status
+              <i className="fas fa-qrcode mr-5"></i>Manage Job Category
             </Link>
           </li>
           <li className={props.heading === "Filter List" ? "active" : ""}>

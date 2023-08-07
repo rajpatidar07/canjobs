@@ -394,6 +394,12 @@ const UserProfile = (props) => {
                         Applied Jobs
                       </Link>
                     </li>
+                    <li className="tab-menu-items nav-item pr-12">
+                    {user_type === "user" ||user_type === "company" ? <CustomButton
+                          className=" font-size-4 rounded-3 btn-primary border-0"
+                          onClick={() => setShowDoc(true)}
+                          >{user_type === "user" ? "Add Document" :"Documents"} </CustomButton>: null}
+                          </li>
                   </ul>
                   {/*---Profile Details----*/}
                   <div
@@ -412,10 +418,7 @@ const UserProfile = (props) => {
                       <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5 px-9">
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold d-flex align-items-center justify-content-space-between">
                           <span>About</span>  
-                          {user_type === "user" ? <CustomButton
-                          className=" font-size-4 rounded-3 btn-primary border-0"
-                          onClick={() => setShowDoc(true)}
-                          >Add Document </CustomButton>: null}
+                          
                         </h4>
                         <p className="font-size-4 mb-8">
                           {PersonalDetail.description}
