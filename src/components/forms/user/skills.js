@@ -198,6 +198,7 @@ function Skills(props) {
                 className={
                   errors.skill ? "border border-danger w-100 text-capitalize" : "text-capitalize w-100"
                 }
+                isClearable={""}
               />
               {loading === true ? (
                 <button

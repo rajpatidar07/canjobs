@@ -540,6 +540,7 @@ export default function JobTable(props) {
                                 role="group"
                               >
                                 {props.response === "lmia" ?
+                                <>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => {
@@ -558,7 +559,15 @@ export default function JobTable(props) {
                                     title="Job LMIA"
                                   >
                                     LMIA Responses
-                                  </button> :
+                                  </button> 
+                                  <button
+                                            className="btn btn-outline-info action_btn"
+                                            onClick={() => updateLima(job)}
+                                            title="Update LMiA for jobs"
+                                          >
+                                            LMIA
+                                          </button>
+                                          </>:
                                   props.response === "visa" ?
                                     <button
                                       className="btn btn-outline-info action_btn"
