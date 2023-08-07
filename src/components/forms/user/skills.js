@@ -60,13 +60,13 @@ function Skills(props) {
     let SkillDetails = await EmployeeSkillDetails(props.employeeId);
     let SkillList = await GetFilter();
     setSkillList(SkillList.data.data.Skill);
-
     if (SkillDetails.data.skill.length === 0) {
       SetSkillData([]);
     } else {
       SetSkillData(SkillDetails.data.skill);
     }
   };
+  /*Render method to get the skill data */
   useEffect(() => {
     if (props.employeeId !== undefined) {
       SkillData();
@@ -95,7 +95,7 @@ function Skills(props) {
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
     event.preventDefault();
-    if (validate()) {
+     if (validate()) {
       setLoading(true);
       let responseData = await AddEmployeeSkill(state, props.employeeId);
       if (responseData.message === "Employee data updated successfully") {
@@ -103,16 +103,26 @@ function Skills(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState(initialFormState);
+        setState({...state , skill :""});
         setErrors("");
         setLoading(false);
         props.setApiCall(true);
         setApiCall(true)
       }
-    } else {
-      setLoading(false);
-    }
+      else if(responseData.message === "already exist !"){
+        toast.error("Skill Already added", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setState({...state , skill :""});
+        setErrors("");
+        setLoading(false);
+        props.setApiCall(true);
+        setApiCall(true)
+      }
+    } 
   };
+
   // END USER PERSONAL DETAIL VALIDATION
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -120,10 +130,12 @@ function Skills(props) {
     setDeleteName(e.skill);
     setDeleteAlert(true);
   };
+
   /*To cancel the delete alert box */
   const CancelDelete = () => {
     setDeleteAlert(false);
   };
+
   /*To call Api to delete Skill */
   async function deleteSkill(e) {
     const responseData = await DeleteEmployeeSkill(e);

@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import FilterJson from "../../json/filterjson";
-import { AddEmployeeDetails ,ApplyJob } from "../../../api/api"
+import { AddEmployeeDetails } from "../../../api/api"
 import { toast } from 'react-toastify';
 export default function ApplicantsStatusModal(props) {
   const [status, setStatus] = useState("")
   const [loading, setLoading] = useState(false)
-
   /*function to change applicants status */
   const OnStatusChangesClick = async (e) => {
     e.preventDefault()
@@ -17,16 +16,13 @@ export default function ApplicantsStatusModal(props) {
     }
     let response = await AddEmployeeDetails(data)
     if (response.message === 'Employee data updated successfully') {
-      // let ChangeEmployeRes = await ApplyJob()
-      // if(ChangeEmployeRes){
-        toast.success("Employee status changes successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        setLoading(false)
-        props.close()
-      // }
+      toast.success("Employee status changes successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      props.setApiCall(true)
+      setLoading(false)
+      props.close()
     }
   }
   return (
@@ -53,8 +49,9 @@ export default function ApplicantsStatusModal(props) {
               className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
             >
               Status <span className="text-danger">*</span> :
-            </label>            <select
-              value={props.data.status}
+            </label>
+            <select
+              value={status|| props.data.status}
               onChange={(e) => {
                 setStatus(e.target.value)
               }}
@@ -71,28 +68,28 @@ export default function ApplicantsStatusModal(props) {
           </div>
           <div className="form-group text-center d-flex justify-content-center">
 
-              {loading === true ? (
-                <button
-                  className="btn-primary px-5  mx-2  rounded-5 text-uppercase"
-                  type="button"
-                  disabled
-                >
-                  <span
-                    className="spinner-border spinner-border-sm "
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="sr-only">Loading...</span>
-                </button>
-              ) : (
-                <button
-                  className=" btn-primary px-5  mx-2  rounded-5 text-uppercase"
-                  type="submit"
-                >
-                 submit
-                </button>
-              )}
-              </div>
+            {loading === true ? (
+              <button
+                className="btn-primary px-5  mx-2  rounded-5 text-uppercase"
+                type="button"
+                disabled
+              >
+                <span
+                  className="spinner-border spinner-border-sm "
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="sr-only">Loading...</span>
+              </button>
+            ) : (
+              <button
+                className=" btn-primary px-5  mx-2  rounded-5 text-uppercase"
+                type="submit"
+              >
+                submit
+              </button>
+            )}
+          </div>
         </form>
 
       </div>

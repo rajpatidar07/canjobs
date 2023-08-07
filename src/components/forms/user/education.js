@@ -62,10 +62,10 @@ function Education(props) {
         value === null || value.trim() === ""
           ? "University is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "University should have 2 or more letters"
-          : null,
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "University should have 2 or more letters"
+              : null,
     ],
     course: [
       (value) =>
@@ -106,7 +106,7 @@ function Education(props) {
     }
   };
   useEffect(() => {
-    if(apiCall === true) {
+    if (apiCall === true) {
       setApiCall(false)
     }
     if (
@@ -256,8 +256,8 @@ function Education(props) {
                 </div>
               ))}
             </div>
+            <h4>{state.qualification ? "Update Education" : "Add Education"} </h4>
             <div className="row pt-5">
-              {" "}
               <div className="form-group col-md-6">
                 <label
                   htmlFor="qualification"
@@ -463,7 +463,7 @@ function Education(props) {
                   name="passing_year"
                   value={moment(state.passing_year).format("YYYY")}
                   onChange={onInputChange}
-                  // max={currentYear}
+                // max={currentYear}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
                 {errors.passing_year && (

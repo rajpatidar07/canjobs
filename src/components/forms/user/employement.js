@@ -94,7 +94,13 @@ function EmployementDetails(props) {
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
     ],
-    end_date: [(value) => (value === "" ? "End Date is required" : null)],
+    end_date:
+      [(value) => (
+        state.currently_work_here ?
+          null :
+          value === "" ?
+            "End Date is required" :
+            null)],
     // work_level: [
     //   (value) =>
     //     value === "" || value.trim() === "" ? "Work Level is required" : null,
@@ -231,7 +237,7 @@ function EmployementDetails(props) {
                   <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                     <span className="font-size-4 text-gray w-100">
                       {moment(CareerDetails.start_date).format("YYYY-MM-DD")} -{" "}
-                      {moment(CareerDetails.end_date).format("YYYY-MM-DD")}
+                      {CareerDetails.currently_work_here === ("1"||1) ? "Currently working" :moment(CareerDetails.end_date).format("YYYY-MM-DD")}
                     </span>
                     <span className="font-size-3 text-gray w-100">
                       <span className="mr-4" style={{ marginTop: "-2px" }}>
@@ -488,13 +494,16 @@ function EmployementDetails(props) {
                   htmlFor="end_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  End Date: <span className="text-danger">*</span>
+                  End Date: {state.currently_work_here ?
+                    null :
+                    <span className="text-danger">*</span>}
                 </label>
                 <input
                   min={state.start_date}
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
+                  disabled={state.currently_work_here}
                   value={moment(state.end_date).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
                   className={
@@ -518,13 +527,12 @@ function EmployementDetails(props) {
                 <input
                   type="checkbox"
                   name="currently_work_here"
-                  checked={state.currently_work_here}
-                  onChange={(event) =>
-                    setState({
-                      ...state,
-                      currently_work_here: event.target.checked,
-                    })
-                  }
+                  checked={state.currently_work_here === "1"}
+                  onChange={(e) => setState(
+                    {
+                      ...state, currently_work_here:
+                        (state.currently_work_here === "" || state.currently_work_here === "0" ? "1" : "0")
+                    })}
                   id="currently_work_here"
                 />
                 <label

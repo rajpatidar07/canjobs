@@ -744,7 +744,7 @@ export default function EmployeeTable(props) {
                                       }
                                       title="Change Applicant status"
                                     >
-                                      <i class="fas fa-stream text-gray"></i>
+                                      <i className="fas fa-stream text-gray"></i>
                                     </button>
                                     <button
                                       className="btn btn-outline-info action_btn"
@@ -839,7 +839,7 @@ export default function EmployeeTable(props) {
                             onClick={() => ChangeApplicantsStatus(empdata)}
                             title="Change Applicant status"
                           >
-                            <i class="fas fa-stream text-gray"></i>
+                            <i className="fas fa-stream text-gray"></i>
                           </button>
                         </td>
                       ) : (

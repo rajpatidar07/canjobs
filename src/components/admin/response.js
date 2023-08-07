@@ -79,9 +79,9 @@ function JobResponse(props) {
       setIsLoading(false)
     } else {
       if (props.self === "yes") {
-        setResponseData(userData.data.data.filter((item) => item.apply_by_admin_id === "0"));
+        setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
       } else {
-        setResponseData(userData.data.data.filter((item) => item.apply_by_admin_id !== "0"));
+        setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
       }
       setTotalData(userData.data.total_rows);
       setIsLoading(false)
@@ -537,13 +537,12 @@ function JobResponse(props) {
                         </tr>
                       ) : (
                         (response || []).map((res, i) => (
-                          ((props.response === "response") ||
+                          ((props.response === "response") || (props.response === "self") ||
                             ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
                             <tr className="" key={i}>
                               <th className="py-5 ">
                                 {res.employee_id}
                               </th>
-                              {console.log(props.response)}
                               <th className=" py-5">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {res.name || res.gender || res.date_of_birth ? (
@@ -606,10 +605,14 @@ function JobResponse(props) {
                                     {res.contact_no || res.email ? (
                                       <>
                                         <p className="font-size-3 font-weight-normal m-0">
-                                          {`+${res.contact_no}`}
+                                          <Link className="text-dark" to={`tel:${res.contact_no}`}>
+                                            {`+${res.contact_no}`}
+                                          </Link>
                                         </p>
                                         <p className="font-size-3 font-weight-normal m-0">
-                                          {res.email}
+                                          <Link className="text-dark" to={`mailto:${res.email}`}>
+                                            {res.email}
+                                          </Link>
                                         </p>
                                       </>
                                     ) : (

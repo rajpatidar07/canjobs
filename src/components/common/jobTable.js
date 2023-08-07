@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
 import {
   GetAllJobs,
@@ -38,6 +38,7 @@ export default function JobTable(props) {
   /*Response states */
   const [responseId, setresponseId] = useState();
   const [responseDropDown, setresponseDropDown] = useState(false);
+  let location = useLocation()
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -75,12 +76,25 @@ export default function JobTable(props) {
       setjobData([]);
       setIsLoading(false);
     } else {
-      if (props.heading !== "Dashboard") {
+      if (props.heading === "Dashboard" || location.pathname === "/employee") {
+        setresponseId()
+      } else {
         setresponseId(userData.data.data[0].job_id)
       }
-      setjobData(userData.data.data);
-      setTotalData(userData.data.total_rows);
-      setIsLoading(false);
+      //condition for limia and visa page
+      if(props.response === "lmia" || props.response === "visa"){
+        setjobData(userData.data.data.filter((item)=>item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
+        setIsLoading(false);
+      }
+      //condition for Self job applied page
+      else if(props.response === "self"){
+        setjobData(userData.data.data.filter((item)=>item.applied_by_self !== "0" || item.applied_by_self !== "0"));
+        setIsLoading(false);
+      }else{
+        setjobData(userData.data.data);
+        setTotalData(userData.data.total_rows);
+        setIsLoading(false);
+      }
     }
   };
 
@@ -369,12 +383,6 @@ export default function JobTable(props) {
                   </tr>
                 ) : (
                   (jobData || []).map((job) => (
-                    ((props.response === "lmia" || props.response === "visa")
-                      && job.applied_by_self === "0")
-                      ||
-                      ((props.response === "lmia" || props.response === "visa") &&
-                        job.applied_by_admin === "0")
-                      ? null :
                       <React.Fragment key={job.job_id}>
                         <tr
                           className={
@@ -676,6 +684,7 @@ export default function JobTable(props) {
                                   /></>
                               }
                             </td>
+                            {console.log(props.response)}
                           </tr>
                         ) : null}
                       </React.Fragment>

@@ -656,7 +656,7 @@ function PersonalDetails(props) {
                   htmlFor="language"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Languages Known (Max 3):
+                  Languages Known {/*(Max 3)*/}:
                   <span className="text-danger">*</span>
                 </label>
                 <select
@@ -887,6 +887,7 @@ function PersonalDetails(props) {
                   type="checkbox"
                   id="fetured"
                   name="fetured"
+                  checked={state.is_featured === "1"}
                   value={state.is_featured}
                   onChange={(e) => setState(
                     {
