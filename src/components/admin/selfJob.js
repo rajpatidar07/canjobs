@@ -223,9 +223,8 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
                     <div className="text-end col-xl-12">
-                    <div className="float-md-right">
+                    {/* <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editJob("0")}
@@ -233,12 +232,10 @@ function SelfJob(props) {
                       >
                         Add Job
                       </CustomButton>
-                      {/*<-- Add Job Modal -->*/}
-                    </div>
+                      <-- Add Job Modal -->
+                    </div> */}
                     <small className="text-danger">{searcherror}</small>
-                  </div> :
-                  null
-                    }
+                  </div>
                 </div>
               </div>
               {/*<-- Job List Table -->*/}
