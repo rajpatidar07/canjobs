@@ -945,6 +945,7 @@ function AddJobModal(props) {
                   type="checkbox"
                   id="fetured"
                   name="fetured"
+                  checked={state.is_featured === "1"}
                   value={state.is_featured}
                   onChange={(e) => setState(
                     {

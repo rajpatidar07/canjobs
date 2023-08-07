@@ -39,11 +39,11 @@ function JobSearch() {
     <>
       <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
-        <ToastContainer/>
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row ">
+            <ToastContainer/>
               {/* <!-- Hero Form --> */}
               <div className="col-lg-12 col-12 translateY-25  pb-10 job_search_box_page">
                 <SearchForm />

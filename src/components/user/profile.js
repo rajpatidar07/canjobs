@@ -42,6 +42,7 @@ const UserProfile = (props) => {
       setPersonalDetail(userData.data.employee[0]);
       localStorage.setItem("profile_photo", userData.data.employee[0].profile_photo)
       localStorage.setItem("name", userData.data.employee[0].name)
+      localStorage.setItem("skill",  userData.data.skill.map(obj => obj.skill).join(', '));
       setIsLoading(false)
     }
   };
@@ -420,7 +421,7 @@ const UserProfile = (props) => {
                           <span>About</span>  
                           
                         </h4>
-                        <p className="font-size-4 mb-8">
+                        <p className="font-size-4 mb-8 text-break">
                           {PersonalDetail.description}
                         </p>
                       </div>

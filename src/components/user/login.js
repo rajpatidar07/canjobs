@@ -123,6 +123,7 @@ export default  function EmployeeLoginModal(props) {
           localStorage.setItem("userType", "user");
           localStorage.setItem("employee_id", res.employee_id);
           localStorage.setItem("profile_photo", res.profile_photo);
+          localStorage.setItem("skill", res.skill);
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -169,6 +170,7 @@ export default  function EmployeeLoginModal(props) {
             localStorage.setItem("userType", "user");
             localStorage.setItem("employee_id", data.employee_id);
             localStorage.setItem("profile_photo", data.profile_photo);
+            localStorage.setItem("skill", data.skill);
             toast.success("Logged In Successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
@@ -187,6 +189,7 @@ export default  function EmployeeLoginModal(props) {
           })
           } 
         },[])
+
       /*Functiom to login with facebook */
       const responseFacebook = async (response) => {
         if(response.graphDomain === "facebook"){
@@ -195,6 +198,7 @@ export default  function EmployeeLoginModal(props) {
             localStorage.setItem("userType", "user");
             localStorage.setItem("employee_id", data.employee_id);
             localStorage.setItem("profile_photo", data.profile_photo);
+            localStorage.setItem("skill", data.skill);
             toast.success("Logged In Successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CustomButton from "../common/button";
+// import CustomButton from "../common/button";
 import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
@@ -56,11 +56,11 @@ function SelfJob(props) {
   };
 
   /* Function to show the single data to update job */
-  const editJob = (e) => {
-    // e.preventDefault();
-    setShowAddJobsModal(true);
-    setJobId(e);
-  };
+  // const editJob = (e) => {
+  //   // e.preventDefault();
+  //   setShowAddJobsModal(true);
+  //   setJobId(e);
+  // };
   /*Function to search the Job */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -86,9 +86,9 @@ function SelfJob(props) {
     : [];
   return (
     <>
-      <div className={props.skill === null || props.skill === undefined ?"site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
-        
-        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? 
+      <div className={props.skill === null || props.skill === undefined ? "site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
+
+        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
           <> {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Self Jobs"} />
             {/* <!-- navbar- --> */}
@@ -99,8 +99,8 @@ function SelfJob(props) {
         <div
           className={
             showJobDetails === false
-              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
-              ?
+              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
+                ?
                 "dashboard-main-container mt-16" :
                 ""
               : "d-none"
@@ -115,7 +115,7 @@ function SelfJob(props) {
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 <div className="row m-0 align-items-center">
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -127,7 +127,7 @@ function SelfJob(props) {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>{" "}
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Company Name:</p>
                     <input
                       required
@@ -139,7 +139,7 @@ function SelfJob(props) {
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
@@ -160,7 +160,7 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
@@ -181,7 +181,7 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
@@ -202,7 +202,7 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select
@@ -223,7 +223,7 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                    <div className="text-end col-xl-12">
+                  <div className="text-end col-xl-12">
                     {/* <div className="float-md-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -252,15 +252,15 @@ function SelfJob(props) {
                 skill={props.skill}
                 employee_id={props.employee_id}
                 selfJob={"yes"}
-               response={"self"}
+                response={"self"}
               />
             </div>
           </div>
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className={ props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
-            ?"dashboard-main-container mt-16 " : ""}>
+          <div className={props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
+            ? "dashboard-main-container mt-16 " : ""}>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

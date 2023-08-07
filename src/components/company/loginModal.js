@@ -47,20 +47,7 @@ export default function CompanyLogin(props) {
           ? null
           : "Email is invalid",
     ],
-    password: [
-      (value) =>
-        value === ""
-          ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
-    ],
-    // remember: [
-    //   (value) =>
-    //     value ? null : "Please accept terms and conditions to continue",
-    // ],
+    password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
       (value) =>
         state.email
@@ -84,7 +71,7 @@ export default function CompanyLogin(props) {
     if (validate()) {
       setLoading(true);
       let Response = await EmployerLogin(state);
-      console.log("Response =>",Response);
+      // console.log("Response =>",Response);
       if (
         Response.status === true ||
         Response.message === "Successfully Logged In"
@@ -112,7 +99,8 @@ export default function CompanyLogin(props) {
 
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
-
+    
+    console.log(state,"working",errors)
     if (validate()) {
       setLoading(true);
       let Response = await EmployerForgotPassword(state);
