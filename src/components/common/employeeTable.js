@@ -307,7 +307,7 @@ export default function EmployeeTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    E Id
+                    EID
                   </th>
                   <th
                     scope="col"

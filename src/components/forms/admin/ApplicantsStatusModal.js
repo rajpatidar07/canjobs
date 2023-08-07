@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import FilterJson from "../../json/filterjson";
-import { AddEmployeeDetails } from "../../../api/api"
+import { AddEmployeeDetails ,ApplyJob } from "../../../api/api"
 import { toast } from 'react-toastify';
 export default function ApplicantsStatusModal(props) {
   const [status, setStatus] = useState("")
@@ -17,13 +17,16 @@ export default function ApplicantsStatusModal(props) {
     }
     let response = await AddEmployeeDetails(data)
     if (response.message === 'Employee data updated successfully') {
-      toast.success("Applied successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.setApiCall(true)
-      setLoading(false)
-      props.close()
+      // let ChangeEmployeRes = await ApplyJob()
+      // if(ChangeEmployeRes){
+        toast.success("Employee status changes successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true)
+        setLoading(false)
+        props.close()
+      // }
     }
   }
   return (

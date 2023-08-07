@@ -111,11 +111,11 @@ function Interview(props) {
               <table className="table table-striped main_data_table">
                 <thead>
                   <tr>
-                  <th
+                    <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      E id
+                      EID
                     </th>
                     <th
                       scope="col"
@@ -265,7 +265,7 @@ function Interview(props) {
                               </span>}
                           </p>
                         </th>
-                        <th className="py-5 ">
+                        <th className={props.heading === "Dashboard" ? "d-none" : "py-5 "}>
                           <div className="btn-group button_group" role="group">
                             <button
                               className="btn btn-outline-info action_btn "

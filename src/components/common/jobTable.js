@@ -75,8 +75,10 @@ export default function JobTable(props) {
       setjobData([]);
       setIsLoading(false);
     } else {
+      if (props.heading !== "Dashboard") {
+        setresponseId(userData.data.data[0].job_id)
+      }
       setjobData(userData.data.data);
-      setresponseId(userData.data.data[0].job_id)
       setTotalData(userData.data.total_rows);
       setIsLoading(false);
     }
@@ -596,7 +598,7 @@ export default function JobTable(props) {
                                             className="btn btn-outline-info action_btn"
                                             onClick={() => updateLima(job)}
                                             title="Update LIMA"
-                                            >
+                                          >
                                             LMIA
                                           </button>
                                           <button
@@ -638,7 +640,7 @@ export default function JobTable(props) {
                                             job.is_applied === "1"
                                               ? true
                                               : false ||
-                                               Number(job.applied_by_admin) >= Number(job.role_category)
+                                                Number(job.applied_by_admin) >= Number(job.role_category)
                                                 ? true
                                                 : false
                                           }
