@@ -429,7 +429,7 @@ let user_type = localStorage.getItem("userType")
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={user_type === "admin" ?"btn btn-primary" :"d-none"}
+                className={(user_type === "user" && showMoreDocType) || user_type === "admin" ?"btn btn-primary" :"d-none"}
                 onClick={() =>
                   document.querySelector('input[type="file"]').click()
                 }
