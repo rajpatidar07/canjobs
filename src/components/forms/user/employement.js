@@ -506,10 +506,11 @@ function EmployementDetails(props) {
                   disabled={state.currently_work_here}
                   value={moment(state.end_date).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
+                  nKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.end_date
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? "form-control coustam_datepicker border border-danger"
+                      : "form-control coustam_datepicker"
                   }
                   id="end_date"
                 />

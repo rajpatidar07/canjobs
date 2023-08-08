@@ -103,7 +103,8 @@ function Skills(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState({...state , skill :""});
+        setState({ ...state, skill: "" }); 
+        setSkillOption({ ...state, skill: "" });
         setErrors("");
         setLoading(false);
         props.setApiCall(true);
@@ -114,7 +115,8 @@ function Skills(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState({...state , skill :""});
+        setState({ ...state, skill: "" }); 
+        setSkillOption({ ...state, skill: "" });
         setErrors("");
         setLoading(false);
         props.setApiCall(true);

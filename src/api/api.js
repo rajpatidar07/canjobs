@@ -1283,6 +1283,7 @@ export const GetEmployeeDocumentList = async (id, type) => {
   );
   return response;
 };
+
 /*Api to upload document*/
 export const UploadDocument = async (id, type, doc, docId) => {
   const response = await axios.put(
@@ -1321,7 +1322,7 @@ export const VarifyDocument = async (id, verify) => {
   );
   return response;
 };
-/*Api to Add update document */
+/*Api to Add update visa */
 export const AddUpdateVisa = async (employee_id, state,id) => {
   console.log(employee_id, state,id)
   const response = await axios.put(
@@ -1338,6 +1339,25 @@ export const AddUpdateVisa = async (employee_id, state,id) => {
         Authorization: Token,
       },
     }
+  );
+  return response;
+};
+/*Api to get Visa List */
+export const GetEmployeeVisaList = async (search,status,country,interested) => {
+  const response = await axios.post(
+    `${API_URL}getVisa`,
+    {
+      search:search,
+      filter_by_interested_in: interested,
+      filter_by_visa_country: country,
+      filter_by_visa_status:status,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Token,
+        },
+      }
   );
   return response;
 };

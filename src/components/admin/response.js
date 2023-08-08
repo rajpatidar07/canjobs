@@ -181,7 +181,7 @@ function JobResponse(props) {
     setResData(e);
     setJobId(e.job_id);
   };
-  /* Function to show the single data to update Employee*/
+  /* Function to show the single data to update visa*/
   const editVisa = (e) => {
     setVisaModal(true);
     setemployeeId(e);

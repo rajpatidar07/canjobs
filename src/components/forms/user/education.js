@@ -11,7 +11,6 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../../common/sweetAlert";
-import moment from "moment";
 import FilterJson from "../../json/filterjson";
 
 function Education(props) {
@@ -85,13 +84,20 @@ function Education(props) {
     // ],
     passing_year: [
       (value) =>
-        value === "" || value === null ? "Passing Year is required" : null,
+        value === "" || value === null ?
+          "Passing Year is required" :
+          !/^[0-9]+$/.test(value) ?
+            "Only numbers are allowed" :
+            !/^(?!0000)\d{4}$/.test(value) ?
+              "Please enter a valid year between 1000 and 9999." : null,
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
+
+  /*Function to get education data */
   const EducationData = async (data) => {
     let EducationDetails = await EmployeeEducationDetails(
       props.employeeId
@@ -105,6 +111,8 @@ function Education(props) {
       setState(data);
     }
   };
+
+  /*Render function to get education list */
   useEffect(() => {
     if (apiCall === true) {
       setApiCall(false)
@@ -120,7 +128,8 @@ function Education(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, props.employeeId]);
-  /*----LOGIN SUBMIT FUNCTION----*/
+
+  /*----EDUCATION SUBMIT FUNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
     if (validate()) {
@@ -225,21 +234,21 @@ function Education(props) {
                           </span>
                         </div>
                       </div>
-                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                        <span className="font-size-4 text-gray w-100">
-                          {education.passing_year}
-                        </span>
-                        <span className="font-size-3 text-gray w-100">
-                          <span className="mr-4">
-                            <img
-                              src="image/svg/icon-loaction-pin-black.svg"
-                              alt=""
-                            />
-                          </span>
-                          {education.institute_location}
-                        </span>
-                      </div>
                       <div className="d-flex">
+                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                          <span className="font-size-4 text-gray w-100">
+                            {education.passing_year}
+                          </span>
+                          <span className="font-size-3 text-gray w-100">
+                            <span className="mr-4">
+                              <img
+                                src="image/svg/icon-loaction-pin-black.svg"
+                                alt=""
+                              />
+                            </span>
+                            {education.institute_location}
+                          </span>
+                        </div>
                         <Link
                           to=""
                           className="fa fa-edit text-gray px-5"
@@ -452,7 +461,7 @@ function Education(props) {
                   Passing Year: <span className="text-danger">*</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   className={
                     errors.passing_year
                       ? "form-control border border-danger"
@@ -461,9 +470,11 @@ function Education(props) {
                   placeholder="Passing Year"
                   id="passing_year"
                   name="passing_year"
-                  value={moment(state.passing_year).format("YYYY")}
+                  value={state.passing_year}
                   onChange={onInputChange}
-                // max={currentYear}
+                  // max={currentYear}
+                  maxLength={4}
+                  minLength={4}
                 />
                 {/*----ERROR MESSAGE FOR PASSING YEAR----*/}
                 {errors.passing_year && (

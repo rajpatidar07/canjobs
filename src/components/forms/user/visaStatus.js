@@ -12,7 +12,7 @@ export default function VisaStatus(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
     status: props.employeeData.visa_status,
-    country: "",
+    country: props.employeeData.visa_country,
   };
   /* Functionality to close the modal */
 
