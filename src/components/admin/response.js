@@ -81,7 +81,11 @@ function JobResponse(props) {
       if (props.self === "yes") {
         setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
       } else {
-        setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
+        if(props.employee_id){
+          setResponseData(userData.data.data.filter((item) => item.employee_status !== "0" && item.employee_id === props.employee_id));
+        }else{
+          setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
+        }
       }
       setTotalData(userData.data.total_rows);
       setIsLoading(false)
@@ -578,6 +582,11 @@ function JobResponse(props) {
                                           )}
                                           Y)
                                         </p>
+                                        {res.created_by_admin === ("0"||0) ? (
+                                          <span className="bg-info text-white web_tag">
+                                            Web
+                                          </span>
+                                        ) : null}
                                       </div>
                                     </div>
                                   ) : (
@@ -738,6 +747,22 @@ function JobResponse(props) {
                                       title="Update Visa status"
                                     >
                                       <span className="fab fa-cc-visa text-gray px-2"></span>
+                                    </button>
+                                    <button
+                                      className={res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                      title="Employee LMIA"
+                                    >
+                                      <Link to="/lmia" state={{id:res.job_id,employee_id : res.employee_id}}>
+                                      <span className="fab fa-cc-visa text-gray px-2"></span>
+                                      </Link>
+                                    </button>
+                                    <button
+                                      className={res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                      title="Employee Visa"
+                                    >
+                                      <Link to="/visa" state={{id:res.employee_id}}>
+                                      <span className="fab fa-cc-visa text-gray px-2"></span>
+                                      </Link>
                                     </button>
                                     <button
                                       className={(props.response === "visa" || props.response === "lmia") && res.job_status === "1" ? "btn btn-outline-info action_btn" : "d-none"}

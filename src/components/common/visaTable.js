@@ -8,6 +8,7 @@ import DocumentModal from "../forms/admin/DocumentModal";
 import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
 export default function VisaTable(props) {
+    console.log(props.employee_id)
     /*Show modal states */
     let [apiCall, setApiCall] = useState(false);
     let [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ export default function VisaTable(props) {
     const [recordsPerPage] = useState(10);
     /*Shorting states */
     const [columnName, setcolumnName] = useState("employee_id");
-    const [sortOrder, setSortOrder] = useState("");
+    const [sortOrder, setSortOrder] = useState("DESC");
 
     /* Function to get Employee visa data*/
     const EmpData = async () => {
@@ -42,7 +43,7 @@ export default function VisaTable(props) {
             recordsPerPage,
             columnName,
             sortOrder,
-
+            props.employee_id
         );
         // console.log(userData.data)
         if (userData.data.data.length === 0) {
@@ -337,6 +338,11 @@ export default function VisaTable(props) {
                                                                         Featured
                                                                     </span>
                                                                 ) : null}
+                                                                {empdata.created_by_admin === "0" ? (
+                                                                    <span className="bg-info text-white web_tag">
+                                                                        Web
+                                                                    </span>
+                                                                ) : null}
                                                             </div>
                                                         </div>
                                                     ) : (
@@ -363,8 +369,13 @@ export default function VisaTable(props) {
                                                                         Y)
                                                                         {empdata.is_featured === "1" ? (
                                                                             <span className="bg-orange text-white featured_tag">
-                                                                                
+
                                                                                 Featured
+                                                                            </span>
+                                                                        ) : null}
+                                                                        {empdata.created_by_admin === "0" ? (
+                                                                            <span className="bg-info text-white web_tag">
+                                                                                Web
                                                                             </span>
                                                                         ) : null}
                                                                     </p>
@@ -465,7 +476,7 @@ export default function VisaTable(props) {
                                                     )}
                                                 </p>
                                             </td>
-                                        
+
                                             <td className="">
                                                 <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                                     {empdata.visa_status === "pending" ? (
@@ -477,26 +488,26 @@ export default function VisaTable(props) {
                                                         </span>
                                                     ) : empdata.visa_status === "reject" ? (
                                                         <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                                            
+
                                                             Reject
                                                         </span>
                                                     ) : empdata.visa_status === "experied" ? (
                                                         <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
-                                                            
+
                                                             Experied
                                                         </span>
                                                     ) : empdata.visa_status === "approved" ? (
                                                         <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                                            
+
                                                             Approved
                                                         </span>) : empdata.visa_status === "cancel" ? (
                                                             <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                                                
+
                                                                 Cancel
                                                             </span>) : null}
                                                 </p>
                                             </td>
-                                            
+
                                             {/* Calulation to get user is new or retained */}
                                             {/* <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">

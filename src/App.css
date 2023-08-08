@@ -244,6 +244,15 @@ span.featured_tag {
   font-weight: 400;
 }
 
+span.web_tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 3px;
+  font-size: 10px;
+  font-weight: 400;
+}
+
 /* SIDEBAR */
 
 ul.list-unstyled.dashboard-layout-sidebar {

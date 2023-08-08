@@ -59,8 +59,11 @@ export default function ApplicantsStatusModal(props) {
                 // !isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" :
                 "text-capitalize form-control"}>
               <option value={""}>Select Applicants status</option>
-              {(FilterJson.employee_status || []).map((item, index) => {
+             { props.self === "yes" ?
+              <option value={1}>Approve</option> :
+              (FilterJson.employee_status || []).map((item, index) => {
                 return (
+                  
                   <option value={index + 1} key={index}>{item}</option>
                 )
               })}

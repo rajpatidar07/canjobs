@@ -15,7 +15,9 @@ import FilterJson from "../json/filterjson";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import VisaTable from "../common/visaTable";
+import { useLocation } from "react-router-dom";
 export default function Visa() {
+  let location = useLocation()
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   //   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -23,7 +25,7 @@ export default function Visa() {
   /*data and id states */
   // let [employeeId, setemployeeId] = useState();
   // let [showJobDetails, setShowJobDetails] = useState(false);
-  // const [JobId, setJobId] = useState([]);
+  const [EmpId, setEmpId] = useState(location.state ? location.state.id : "");
   /*Filter and search state */
   // let [SkillList, setSkillList] = useState([])
   // let [EducationList, setEducationList] = useState([])
@@ -81,6 +83,7 @@ export default function Visa() {
 
   /*Function to search the employee */
   const onSearch = (e) => {
+    setEmpId("")
     const inputValue = e.target.value;
     setSearch(inputValue);
     if (inputValue.length > 0) {
@@ -146,7 +149,8 @@ export default function Visa() {
                         value={VisaCountryFilter}
                         id="experience"
                         onChange={(e) =>
-                          setVisaCountryFilter(e.target.value)
+                          {setVisaCountryFilter(e.target.value)
+                            setEmpId("")}
                         }
                         className=" form-control"
                       >
@@ -166,7 +170,8 @@ export default function Visa() {
                         name="status"
                         value={VisStatusFilterValue}
                         id="status"
-                        onChange={(e) => setVisStatusFilterValue(e.target.value)}
+                        onChange={(e) => {setVisStatusFilterValue(e.target.value)
+                          setEmpId("")}}
                         className=" form-control"
                       >
                         <option value={""}>Select visa status </option>
@@ -185,7 +190,8 @@ export default function Visa() {
                         name="intrested_in"
                         value={IntrestedFilterValue}
                         id="intrested_in"
-                        onChange={(e) => setIntrestedFilterValue(e.target.value)}
+                        onChange={(e) => {setIntrestedFilterValue(e.target.value)
+                          setEmpId("")}}
                         className=" form-control">
                         <option value="" data-display="Product Designer">
                           Select Interested in
@@ -349,6 +355,7 @@ export default function Visa() {
                 VisStatusFilterValue={VisStatusFilterValue}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
+                employee_id={EmpId}
               />
             </div>
           </div>

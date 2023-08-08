@@ -268,6 +268,7 @@ export default function EmployeeTable(props) {
           close={() => setShowStatusChange(false)}
           data={employeeId}
           setApiCall={setApiCall}
+          self={props.self}
         />
       ) : null}
       {showEmplyomentDetails ? (
@@ -517,7 +518,13 @@ export default function EmployeeTable(props) {
                                     Featured
                                   </span>
                                 ) : null}
+                                {empdata.created_by_admin === "0" ? (
+                                  <span className="bg-info text-white web_tag">
+                                    Web
+                                  </span>
+                                ) : null}
                               </div>
+                              
                             </div>
                           ) : (
                             <Link
@@ -553,6 +560,11 @@ export default function EmployeeTable(props) {
                                         Featured{" "}
                                       </span>
                                     ) : null}
+                                    {empdata.created_by_admin === "0" ? (
+                                  <span className="bg-info text-white web_tag">
+                                    Web
+                                  </span>
+                                ) : null}
                                   </p>
                                 </div>
                               )}
@@ -659,7 +671,7 @@ export default function EmployeeTable(props) {
                                 className={
                                   !isTimeWithin24Hours(empdata.created_at)
                                     ? "p-1 bg-danger text-white text-center w-100 border rounded-pill"
-                                    : "p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill"
+                                    : "p-1 bg-info text-white text-center w-100 border rounded-pill"
                                 }
                               >
                                 New
@@ -670,7 +682,7 @@ export default function EmployeeTable(props) {
                                 Prospect{" "}
                               </span>
                             ) : empdata.status === "3" ? (
-                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                              <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
                                 {" "}
                                 Lead{" "}
                               </span>
@@ -693,7 +705,12 @@ export default function EmployeeTable(props) {
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                 {" "}
                                 Reserved{" "}
-                              </span>):null}
+                              </span>)
+                              :  empdata.status === "0" ? (
+                                <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                  {" "}
+                                  New{" "}
+                                </span>):null}
                           </p>
                         </td>
                       )}
@@ -742,7 +759,7 @@ export default function EmployeeTable(props) {
                                       onClick={() =>
                                         ChangeApplicantsStatus(empdata)
                                       }
-                                      title="Change Applicant status"
+                                      title="Change status"
                                     >
                                       <i className="fas fa-stream text-gray"></i>
                                     </button>
@@ -798,7 +815,7 @@ export default function EmployeeTable(props) {
                                     <button
                                       className="btn btn-outline-info action_btn text-gray"
                                       onClick={() => editJob(empdata)}
-                                      title="Matching jobs "
+                                      title="All jobs "
                                       disabled={empdata.skill ? false : true}
                                     >
                                       <i className="fas fa-briefcase"></i>
@@ -837,7 +854,7 @@ export default function EmployeeTable(props) {
                           <button
                             className="btn btn-outline-info action_btn"
                             onClick={() => ChangeApplicantsStatus(empdata)}
-                            title="Change Applicant status"
+                            title="Approve Applicant"
                           >
                             <i className="fas fa-stream text-gray"></i>
                           </button>

@@ -562,6 +562,7 @@ export const GetAllJobs = async (
   sort_order,
   company,
   time,
+  id
   // employeeSkill
 ) => {
   const response = await axios.post(
@@ -577,6 +578,7 @@ export const GetAllJobs = async (
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
+      job_id : id
       // employee_skills: employeeSkill,
     },
     {
@@ -1343,7 +1345,7 @@ export const AddUpdateVisa = async (employee_id, state,id) => {
   return response;
 };
 /*Api to get Visa List */
-export const GetEmployeeVisaList = async (search,status,country,interested) => {
+export const GetEmployeeVisaList = async (search,status,country,interested,page,limit,column,sort,id) => {
   const response = await axios.post(
     `${API_URL}getVisa`,
     {
@@ -1351,6 +1353,11 @@ export const GetEmployeeVisaList = async (search,status,country,interested) => {
       filter_by_interested_in: interested,
       filter_by_visa_country: country,
       filter_by_visa_status:status,
+      filter_by_employee_id:id,
+      page: page,
+      limit: limit,
+      column_name: column,
+      sort_order: sort,
       },
       {
         headers: {
