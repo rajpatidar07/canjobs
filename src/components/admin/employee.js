@@ -19,7 +19,7 @@ function Employee(props) {
   let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
-  const [skillFilterValue, setSkillFilterValue] = useState(props ? props.skill : "");
+  const [skillFilterValue, setSkillFilterValue] = useState(/*props ? props.skill : */"");
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");

@@ -256,7 +256,7 @@ function Interview(props) {
                         <th className="py-5 ">
 
                           <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                            {data.status === "COMPLETE" ?
+                            {data.status === "complete" ?
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                 Complete
                               </span> :
@@ -272,7 +272,7 @@ function Interview(props) {
                               style={{ fontSize: "10px" }}
                               onClick={() => editInterview(data)}
                               title=" Reschedule Interview"
-                              disabled={data.status === "COMPLETE" ? true : false}
+                              disabled={data.status === "complete" ? true : false}
                             >
                               <i className="fa fa-calendar"></i>
                             </button>

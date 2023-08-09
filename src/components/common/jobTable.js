@@ -624,12 +624,12 @@ export default function JobTable(props) {
                                         <button
                                           className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
                                           onClick={() => matchingCandidates(job)}
-                                          title="Matching candidates"
-                                          disabled={
-                                            Number(job.applied_by_admin) >= Number(job.role_category)
-                                              ? true
-                                              : false
-                                          }
+                                          title="All candidates"
+                                          // disabled={
+                                          //   Number(job.applied_by_admin) >= Number(job.role_category)
+                                          //     ? true
+                                          //     : false
+                                          // }
                                         >
                                           <span className="fas fa-user-tie text-gray"></span>
                                         </button>

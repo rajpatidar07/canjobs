@@ -92,6 +92,19 @@ function CompanyDetails(props) {
           ? "Vacancy should have 2 or more letters."
           : "",
     ],
+    
+    franchise: [
+      (value) =>
+        value === "" ||
+        value === null ||
+        value === undefined 
+          ? ""
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "franchise can not have a number."
+          : "",
+    ],
   };
   // API CALL
   const EmployerData = async () => {

@@ -98,36 +98,36 @@ function KycComplianceDetails(props) {
           ? "Cannot use special character "
           : "",
     ],
-    // gstin: [
-    //   (value) =>
-    //     value === "" || value === null
-    //       ? ""
-    //       : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
-    //       ? "Invalid GSTIN"
-    //       : "",
-    // ],
-    // tan_number: [
-    //   (value) =>
-    //     value === "" || value === null
-    //       ? ""
-    //       : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
-    //       ? "Invalid TAN"
-    //       : "",
-    // ],
+    gstin: [
+      (value) =>
+        value === "" || value === null
+          ? ""
+          : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
+          ? "Invalid GSTIN"
+          : "",
+    ],
+    tan_number: [
+      (value) =>
+        value === "" || value === null
+          ? ""
+          : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
+          ? "Invalid TAN"
+          : "",
+    ],
     country: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Country is required"
           : "",
     ],
-    // fax_number: [
-    //   (value) =>
-    //     value === "" || value === null
-    //       ? ""
-    //       : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
-    //       ? "Invalid Fax"
-    //       : "",
-    // ],
+    fax_number: [
+      (value) =>
+        value === "" || value === null
+          ? ""
+          : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
+          ? "Invalid Fax"
+          : "",
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
