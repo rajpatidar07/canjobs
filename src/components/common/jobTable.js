@@ -705,7 +705,6 @@ export default function JobTable(props) {
                                 /></>
                             }
                           </td>
-                          {console.log(props.response)}
                         </tr>
                       ) : null}
                     </React.Fragment>

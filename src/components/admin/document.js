@@ -1,7 +1,7 @@
 import React from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import DocumrentContainer from "../common/documrentContainer";
+import DocumrentContainer from "../common/employeeDocumrentContainer";
 function Document() {
   
   // const handleFileChange = (event) => {

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { ListGroup, Form } from "react-bootstrap";
 import {
-  UploadDocument,
-  GetEmployeeDocumentList,
+  UploadEmployerDocument,
+  GetEmployerDocumentList,
   VarifyDocument,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
 import Verified from "../../media/verified.png";
-export default function DocumrentContainer(props) {
+export default function EmployerDocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
   const [docData, setDocData] = useState([]);
@@ -25,7 +25,7 @@ export default function DocumrentContainer(props) {
 let user_type = localStorage.getItem("userType")
   /*Functo get Applicants Document */
   const GetDocument = async () => {
-    let response = await GetEmployeeDocumentList(props.employee_id);
+    let response = await GetEmployerDocumentList(props.employer_id);
     if (
       response.data.data === undefined ||
       response.data.data === "" ||
@@ -86,7 +86,7 @@ let user_type = localStorage.getItem("userType")
   /*Onchange function of Logo */
   const handleFileChange = async (event, id) => {
     const file = event.target.files[0];
-    // console.log("employee_id",props.employee_id,
+    // console.log("employer_id",props.employer_id,
     // "document =>", base64Name,
     // "Type =>" , docName)
     if (!file) {
@@ -129,52 +129,13 @@ let user_type = localStorage.getItem("userType")
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
       setShowSaveDoc(true);
-      // if (window.confirm("Are you sure you want to upload this document?")) {
-      //   let DocFile =
-      //     `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
-      //   //Api to upload document
-      //   let response = await UploadDocument(props.employee_id, docName, DocFile, id)
-      //   if (response.data.message === "inserted successfully") {
-      //     toast.success("Document uploaded Successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     setShowMoreDocType(false)
-      //     setDocName(docName)
-      //     setApiCall(true)
-      //   }
-      //   if (response.data.message === "updated successfully") {
-      //     toast.success("Document Updated Successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     setShowMoreDocType(false)
-      //     setApiCall(true)
-      //     // console.log(docData.find((item)=>item.type === docName))
-      //     setDocTypData(docData.find((item) => item.type === docName))
-      //     setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
-      //   }
-      //   if (response.data.message === "Invalid base64-encoded data !") {
-      //     toast.error("Document type is not valid", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     setApiCall(true)
-      //   }
-      // } else {
-      //   toast.error("Document update denied.", {
-      //     position: toast.POSITION.TOP_RIGHT,
-      //     autoClose: 1000,
-      //   });
-      //   setApiCall(true);
-      // }
     }
   };
 
   /*Function to save document */
   const SaveDocument = async () => {
-    let response = await UploadDocument(
-      props.employee_id,
+    let response = await UploadEmployerDocument(
+      props.employer_id,
       docData[0] === docTypData ? docTypData.type : docName,
       docFileBase,
       docData[0] === docTypData ? docTypData.id : docId
@@ -245,6 +206,7 @@ let user_type = localStorage.getItem("userType")
       />
     );
   };
+  /*Function to replace select box text */
   const textReplaceFunction = (e) => {
     let new_text = e.replaceAll("_", " ");
     return new_text;
@@ -293,6 +255,7 @@ let user_type = localStorage.getItem("userType")
     }
   }, [docName, apiCall]);
 
+  /*Function to change document type */
   const handleDocTypeChange = (e) => {
     const selectedValue = e.target.value;
   if (selectedValue === "other") {
@@ -305,6 +268,44 @@ let user_type = localStorage.getItem("userType")
       setOtherDoc(false);
       setDocName(selectedValue);
     }
+  };
+  
+  /*Function to download Document */
+  const DownloadDocument = async () => {
+    const response = await fetch(docFile);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = docFile + docFileExt;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Clean up the temporary URL
+    URL.revokeObjectURL(url);
+  };
+  /*Function to Print Document  */
+  const PrintDocument = () => {
+    const printWindow = window.open('', '_blank');
+    const content = `
+      <html>
+        <head>
+          <title>Print Document</title>
+        </head>
+        <body>
+          <embed src="${docFile}" width="100%" height="100%">
+        </body>
+      </html>
+    `;
+
+    printWindow.document.open();
+    printWindow.document.write(content);
+    printWindow.document.close();
+    printWindow.onload = () => {
+      printWindow.print();
+    };
   };
   return (
     <div className="container document_container bg-white p-7">
@@ -327,6 +328,7 @@ let user_type = localStorage.getItem("userType")
                   setDocTypData(item);
                   setDocName(item.type);
                   setDocId(item.id);
+                  setOtherDoc(false)
                   setDocFile(
                     item.document_url +
                     `?v=${new Date().getMinutes() + new Date().getSeconds()}`
@@ -380,12 +382,13 @@ let user_type = localStorage.getItem("userType")
               </ListGroup.Item>
             ))}
             <ListGroup.Item
-              className={user_type === "user" || user_type === "admin" ?"bg-secondary text-white" : "d-none"}
+              className={user_type === "company" || user_type === "admin" ?"bg-secondary text-white" : "d-none"}
               onClick={() => {
                 setShowMoreDocType(true);
                 setDocTypData("");
                 setDocId("");
                 setOtherDoc(false);
+                setDocFile("")
               }}
             >
               <b>+ Add New Documents</b>
@@ -417,9 +420,8 @@ let user_type = localStorage.getItem("userType")
             ) : null}
             {otherDoc === true ?
               <div className="doc_upload_col">
-                <label className="font-size-3 text-black-2 font-weight-semibold "
-                  >Document Name :</label>
-                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)} />
+                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)} 
+                placeholder="Docuent Name"/>
               </div> : null}
             <div className="">
               <input
@@ -429,7 +431,7 @@ let user_type = localStorage.getItem("userType")
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "user" && showMoreDocType) || user_type === "admin" ?"btn btn-primary" :"d-none"}
+                className={(user_type === "company" && showMoreDocType) || user_type === "admin" ?"btn btn-primary" :"d-none"}
                 onClick={() =>
                   document.querySelector('input[type="file"]').click()
                 }
@@ -459,8 +461,19 @@ let user_type = localStorage.getItem("userType")
                 )}
               </div>
             ) : null}
+           { docFile && user_type === "admin" ? <div className="doc_upload_col flex-end">
+              <button className="btn-gray mx-3"onClick={PrintDocument}
+              title="Print Document">
+              <i className="fa fa-print" aria-hidden="true"></i>
+              </button>
+              <button className="btn-regent"
+              onClick={DownloadDocument} title="Download Document">
+                <i className="fa fa-download" aria-hidden="true"></i>
+              </button>
+              </div> : null}
           </div>
           <div className="doc_preview_box  p-5 bg-light rounded">
+            
             {/* {docTypData ? ( */}
             <RenderNewDocFile />
             {/* ) : (
@@ -468,6 +481,7 @@ let user_type = localStorage.getItem("userType")
                 <h2> No Documents </h2>
               </div>
             )} */}
+
           </div>
         </div>
       </div>

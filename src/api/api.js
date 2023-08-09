@@ -206,10 +206,10 @@ export const getallEmployeeData = async (
       sort_order: sort,
       filter_by_time: time,
       job_keyskills: jobSkill,
-      filter_status :status,
-      job_id:job_id,
-      work_permit_canada:candian,
-      interested_in:inserted
+      filter_status: status,
+      job_id: job_id,
+      work_permit_canada: candian,
+      interested_in: inserted
     },
     {
       headers: {
@@ -426,7 +426,106 @@ export const GetJobDetail = async (props) => {
   );
   return response;
 };
+/*Api to get list of the Document */
+export const GetEmployeeDocumentList = async (id, type) => {
+  const response = await axios.post(
+    `${API_URL}user/getDocumentsUploaded`,
+    {
+      employee_id: id,
+      type: type,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
 
+/*Api to upload document*/
+export const UploadDocument = async (id, type, doc, docId) => {
+  const response = await axios.put(
+    `${API_URL}user/documentsUpload `,
+    {
+      employee_id: id,
+      type: type,
+      document_file: doc,
+      is_varify: "0",
+      id: docId,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+
+/*Api to verify Applicants document */
+export const VarifyDocument = async (id, verify) => {
+  const response = await axios.put(
+    `${API_URL}user/isVarify `,
+    {
+      is_varify: verify,
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Api to Add update visa */
+export const AddUpdateVisa = async (employee_id, state, id) => {
+  console.log(employee_id, state, id)
+  const response = await axios.put(
+    `${API_URL}addUpdateVisa `,
+    {
+      employee_id: employee_id,
+      id: id,
+      country: state.country,
+      status: state.status
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Api to get Visa List */
+export const GetEmployeeVisaList = async (search, status, country, interested, page, limit, column, sort, id) => {
+  const response = await axios.post(
+    `${API_URL}getVisa`,
+    {
+      search: search,
+      filter_by_interested_in: interested,
+      filter_by_visa_country: country,
+      filter_by_visa_status: status,
+      filter_by_employee_id: id,
+      page: page,
+      limit: limit,
+      column_name: column,
+      sort_order: sort,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
 // EMPLOYER'S API
 /*Employer sign up */
 export const EmployerSignUp = async (props) => {
@@ -537,7 +636,7 @@ export const GetAllResponse = async (
       search: search,
       filter_by_time: time,
       filter_lmia_status: lima,
-      employee_status : status
+      employee_status: status
     },
     {
       headers: {
@@ -578,7 +677,7 @@ export const GetAllJobs = async (
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
-      job_id : id
+      job_id: id
       // employee_skills: employeeSkill,
     },
     {
@@ -791,17 +890,17 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
 };
 
 /*Get lmia list Api */
-export const GetEmployeeByLima = async (id,search,status,page,limit,col,ord) => {
+export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord) => {
   const response = await axios.post(
     `${API_URL}/company/getLmia`,
     {
       lmia_status: status,
-      search:search,
-      filter_by_job_id :id,
-      page:page,
-      limit:limit,
-      sort_order : ord ,
-      column_name :col
+      search: search,
+      filter_by_job_id: id,
+      page: page,
+      limit: limit,
+      sort_order: ord,
+      column_name: col
     },
     {
       headers: {
@@ -866,6 +965,61 @@ export const getLMIAstatus = async (props) => {
   );
   return response.data;
 };
+/*Api to get list of the Document */
+export const GetEmployerDocumentList = async (id, type) => {
+  const response = await axios.post(
+    `${API_URL}company/getDocumentsUploaded`,
+    {
+      company_id: id,
+      type: type,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+
+/*Api to upload document*/
+export const UploadEmployerDocument = async (id, type, doc, docId) => {
+  const response = await axios.put(
+    `${API_URL}company/documentsUpload `,
+    {
+      company_id: id,
+      type: type,
+      document_file: doc
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+
+/*Api to verify Applicants document */
+export const VarifyEmployerDocument = async (id, verify) => {
+  const response = await axios.put(
+    `${API_URL}company/isVarify `,
+    {
+      is_varify: verify,
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+
 // ADMIN'S API
 /*Get Summary Count Api */
 export const getSummaryCount = async () => {
@@ -1268,103 +1422,4 @@ export const GetEmployeeFilterJob = async (id, skill) => {
   );
   return response;
 };
-/*Api to get list of the Document */
-export const GetEmployeeDocumentList = async (id, type) => {
-  const response = await axios.post(
-    `${API_URL}user/getDocumentsUploaded`,
-    {
-      employee_id: id,
-      type: type,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
-};
 
-/*Api to upload document*/
-export const UploadDocument = async (id, type, doc, docId) => {
-  const response = await axios.put(
-    `${API_URL}user/documentsUpload `,
-    {
-      employee_id: id,
-      type: type,
-      document_file: doc,
-      is_varify: "0",
-      id: docId,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
-};
-
-/*Api to verify Applicants document */
-export const VarifyDocument = async (id, verify) => {
-  const response = await axios.put(
-    `${API_URL}user/isVarify `,
-    {
-      is_varify: verify,
-      id: id,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
-};
-/*Api to Add update visa */
-export const AddUpdateVisa = async (employee_id, state,id) => {
-  console.log(employee_id, state,id)
-  const response = await axios.put(
-    `${API_URL}addUpdateVisa `,
-    {
-      employee_id: employee_id,
-      id: id,
-      country:state.country,
-      status :state.status
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
-};
-/*Api to get Visa List */
-export const GetEmployeeVisaList = async (search,status,country,interested,page,limit,column,sort,id) => {
-  const response = await axios.post(
-    `${API_URL}getVisa`,
-    {
-      search:search,
-      filter_by_interested_in: interested,
-      filter_by_visa_country: country,
-      filter_by_visa_status:status,
-      filter_by_employee_id:id,
-      page: page,
-      limit: limit,
-      column_name: column,
-      sort_order: sort,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: Token,
-        },
-      }
-  );
-  return response;
-};

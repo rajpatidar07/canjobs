@@ -10,6 +10,7 @@ import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import Loader from '../common/loader';
 import { Link } from "react-router-dom";
+import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
@@ -17,6 +18,7 @@ function CompanyProfile(props) {
   /*Show modal and data state */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
+  let [showDoc, setShowDoc] = useState(false);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [
     showKycComplainDetailsModal,
@@ -90,14 +92,20 @@ function CompanyProfile(props) {
                     </p>
                   </div>
                 </div>
+                <div className="d-flex  justify-content-between">
                 <div
-                  className="company_info_box text-md-right fd-column col-2 m-0 p-0"
+                  className="company_info_box text-md-right fd-column col-2 m-0 p-0 px-3"
                   title="Edit KYC Details"
                 >
                   <CustomButton
                     className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
                     onClick={() => setShowKycComplainDetailsModal(true)}
                   />
+                </div>
+                <CustomButton
+                  className=" font-size-4 rounded-3 btn-primary border-0"
+                  onClick={() => setShowDoc(true)}
+                >Add Document</CustomButton>
                 </div>
               </div>
               <div className="company_detail_box w-100 row m-0 pl-12 pt-5 pb-7 pr-12 pr-xxl-12">
@@ -120,8 +128,8 @@ function CompanyProfile(props) {
                 {employerData.email ? <div className="font-size-3 mb-4 mr-10" title="Website URL">
                   <i className="fas fa-globe mr-2"></i>
                   <Link className="text-dark" to={`mailto:${employerData.email}`}>
-                              {employerData.email}
-                            </Link>
+                    {employerData.email}
+                  </Link>
                 </div> : null}
                 {employerData.vacancy_for_post ? <div className="font-size-3 mb-4 mr-10" title="Hiring for">
                   <i className="fas fa-bullhorn mr-2"></i>
@@ -186,6 +194,13 @@ function CompanyProfile(props) {
         setApiCall={setApiCall}
         close={() => setShowKycComplainDetailsModal(false)}
       /> : null}
+      {showDoc ?
+        <EmployerDocumentModal
+          show={showDoc}
+          close={() => setShowDoc(false)}
+          employer_id={user_type === "company" ? company_id : props.employerId}
+        /> :
+        null}
     </div>
   );
 }

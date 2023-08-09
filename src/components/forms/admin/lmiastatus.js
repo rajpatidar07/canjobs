@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom"
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
+import LmiaTime from "../../common/lmiaTime";
 // import moment from "moment";
 
 function LmiaStatus(props) {
@@ -37,7 +38,7 @@ function LmiaStatus(props) {
   const validators = {
     lmia_status: [
       (value) =>
-        value === "" || value === null 
+        value === "" || value === null
           ? "Lmia status is required"
           : "",
     ],
@@ -96,11 +97,14 @@ function LmiaStatus(props) {
 
   };
   // END LIMIA VALIDATION
+
+  // const currentIndex = FilterJson.lmia_status.findIndex(status => status === state.lmia_status);
+
   return (
     <>
       <Modal
         show={props.show}
-        size="md"
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -113,7 +117,30 @@ function LmiaStatus(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+
           <h5 className="text-center pt-2 mb-7">LMIA status</h5>
+          {/* <div className="arrow-wrapper">
+            <div className="arrow-steps clearfix p-2">
+              {(FilterJson.lmia_status || []).map((status, i) => {
+                const isDone = currentIndex > -1 && i <= currentIndex;
+                return (
+                  location.pathname === "/job" && props.job === "yes" ?
+                    (i <= 6 && (
+                      <div key={i} className={`step m-2 ${isDone ? 'current' : ''}`}>
+                        <span>{status}</span>
+                      </div>
+                    )) : (i > 6 && (
+                      <div key={i} className={`step m-2 ${isDone ? 'current' : ''}`}>
+                        <span>{status}</span>
+                      </div>
+                    ))
+                )
+              })}
+            </div>
+          </div> */}
+          <LmiaTime lmia={state.lmia_status}
+          job={props.job}
+          location={location.pathname}/>
           <form onSubmit={onAminProfileUpdateClick}>
             <div className="form-group ">
               <label
@@ -137,7 +164,7 @@ function LmiaStatus(props) {
               >
                 <option value={""}>Select lmia status</option>
                 {(FilterJson.lmia_status || []).map((status, i) => (
-                   location.pathname === "/job" ? (i <= 6 && (
+                  location.pathname === "/job" && props.job === "yes" ? (i <= 6 && (
                     <option value={status} key={i}>
                       {status}
                     </option>

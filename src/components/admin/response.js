@@ -13,7 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
 import VisaStatus from "../forms/user/visaStatus";
-import DocumentModal from "../forms/admin/DocumentModal";
+import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 function JobResponse(props) {
   /*show modal and data states */
   let [documentModal, setDocumentModal] = useState(false);
@@ -28,6 +28,8 @@ function JobResponse(props) {
   let [searchError, setSearchError] = useState("");
   let [isLoading, setIsLoading] = useState(true);
   let [employeeId, setemployeeId] = useState();
+  let [lmiaStatus, setLmiaStatus] = useState();
+
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
   const [limiaFilterValue, setLmiaFilter] = useState("");
@@ -45,7 +47,7 @@ function JobResponse(props) {
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
   let [changeJob, setChangeJob] = useState(false)
-
+  
   /*Function to get the jSon */
   const JsonData = async () => {
     let Json = await GetFilter();
@@ -81,9 +83,9 @@ function JobResponse(props) {
       if (props.self === "yes") {
         setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
       } else {
-        if(props.employee_id){
+        if (props.employee_id) {
           setResponseData(userData.data.data.filter((item) => item.employee_status !== "0" && item.employee_id === props.employee_id));
-        }else{
+        } else {
           setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
         }
       }
@@ -193,7 +195,8 @@ function JobResponse(props) {
   /*Function to open add Document up modal */
   const AddDoucument = (e) => {
     setDocumentModal(true);
-    setemployeeId(e);
+    setemployeeId(e.employee_id);
+    setLmiaStatus(e.lmia_status)
   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -582,7 +585,7 @@ function JobResponse(props) {
                                           )}
                                           Y)
                                         </p>
-                                        {res.created_by_admin === ("0"||0) ? (
+                                        {res.created_by_admin === ("0" || 0) ? (
                                           <span className="bg-info text-white web_tag">
                                             Web
                                           </span>
@@ -752,22 +755,22 @@ function JobResponse(props) {
                                       className={res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
                                       title="Employee LMIA"
                                     >
-                                      <Link to="/lmia" state={{id:res.job_id,employee_id : res.employee_id}}>
-                                      <span className="fab fa-cc-visa text-gray px-2"></span>
+                                      <Link to="/lmia" state={{ id: res.job_id, employee_id: res.employee_id }}>
+                                        <span className="fas fa-arrow-left text-gray px-2"></span>
                                       </Link>
                                     </button>
                                     <button
                                       className={res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
                                       title="Employee Visa"
                                     >
-                                      <Link to="/visa" state={{id:res.employee_id}}>
-                                      <span className="fab fa-cc-visa text-gray px-2"></span>
+                                      <Link to="/visa" state={{ id: res.employee_id }}>
+                                        <span className="fas fa-arrow-right text-gray px-2"></span>
                                       </Link>
                                     </button>
                                     <button
                                       className={(props.response === "visa" || props.response === "lmia") && res.job_status === "1" ? "btn btn-outline-info action_btn" : "d-none"}
                                       onClick={() =>
-                                        AddDoucument(res.employee_id)
+                                        AddDoucument(res)
                                       }
                                       title="Documents"
                                     >
@@ -822,6 +825,8 @@ function JobResponse(props) {
           show={documentModal}
           close={() => setDocumentModal(false)}
           employee_id={employeeId}
+          job={"no"}
+          lmia={lmiaStatus}
         />
       ) : null}
       {followup ? (

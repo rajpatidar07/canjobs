@@ -11,7 +11,7 @@ import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import Loader from '../common/loader';
-import DocumentModal from "..//forms/admin/DocumentModal"
+import DocumentModal from "../forms/admin/EmployeeDocumentModal"
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showDoc, setShowDoc] = useState(false);

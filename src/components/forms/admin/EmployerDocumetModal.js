@@ -1,8 +1,8 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import DocumrentContainer from '../../common/documrentContainer'
+import EmployerDocumrentContainer from '../../common/employerDocumentContainer'
 
-export default function DocumentModal(props) {
+export default function EmployerDocumentModal(props) {
   return (
 <Modal show={props.show}
             size="xl"
@@ -15,6 +15,6 @@ export default function DocumentModal(props) {
                 onClick={props.close}>
                 <i className="fas fa-times"></i>
             </button>
-    <DocumrentContainer employee_id={props.employee_id}/>
+    <EmployerDocumrentContainer employer_id={props.employer_id}/>
 </Modal>  )
 }

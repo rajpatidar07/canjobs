@@ -4,11 +4,10 @@ import { GetEmployeeVisaList } from "../../api/api";
 import moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
-import DocumentModal from "../forms/admin/DocumentModal";
+import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
 export default function VisaTable(props) {
-    console.log(props.employee_id)
     /*Show modal states */
     let [apiCall, setApiCall] = useState(false);
     let [isLoading, setIsLoading] = useState(true);
@@ -17,6 +16,7 @@ export default function VisaTable(props) {
     /*data and id states */
     const [employeeData, setemployeeData] = useState([]);
     let [employeeId, setemployeeId] = useState();
+    let [lmiaStatus, setLmiaStatus] = useState();
     /*Pagination states */
     const [totalData, setTotalData] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,6 @@ export default function VisaTable(props) {
     /*Shorting states */
     const [columnName, setcolumnName] = useState("employee_id");
     const [sortOrder, setSortOrder] = useState("DESC");
-
     /* Function to get Employee visa data*/
     const EmpData = async () => {
         setIsLoading(true);
@@ -85,7 +84,9 @@ export default function VisaTable(props) {
     /*Function to open add Document up modal */
     const AddDoucument = (e) => {
         setDocumentModal(true);
-        setemployeeId(e);
+        console.log(e)
+        setemployeeId(e.employee_id);
+        setLmiaStatus(e.lmia_status)
     };
 
     /*Pagination Calculation */
@@ -114,6 +115,8 @@ export default function VisaTable(props) {
                     show={documentModal}
                     close={() => setDocumentModal(false)}
                     employee_id={employeeId}
+                    job={"no"}
+                    lmia={lmiaStatus}
                 />
             ) : null}
             <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -532,7 +535,7 @@ export default function VisaTable(props) {
                                                     <button
                                                         className="btn btn-outline-info action_btn"
                                                         onClick={() =>
-                                                            AddDoucument(empdata.employee_id)
+                                                            AddDoucument(empdata)
                                                         }
                                                         title="Documents"
                                                     >
