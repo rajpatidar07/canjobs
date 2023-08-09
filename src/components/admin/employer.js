@@ -115,7 +115,7 @@ function Employer() {
                         onChange={(e) =>
                           setcorporationFilterValue(e.target.value)
                         }
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
+                        className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Corporation</option>
                         {(Corporation || []).map(
@@ -136,7 +136,7 @@ function Employer() {
                         value={industryFilterValue}
                         id="industry"
                         onChange={(e) => setIndutryFilterValue(e.target.value)}
-                        className=" nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
+                        className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Industry</option>
                         {(Industry || []).map((industry) => (

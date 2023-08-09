@@ -92,11 +92,11 @@ function JobDetailPage(props) {
               <Link className="text_box text-left w-100" to="">
                 <p
                   href=""
-                  className="font-size-3 text-default-color line-height-2 m-0"
+                  className="font-size-3 text-default-color line-height-2 m-0 text-capitalize" 
                 >
                   {jobDetatilsData.job_title}
                 </p>
-                <h3 className="mb-0 font-size-6 heading-dark-color">
+                <h3 className="mb-0 font-size-6 heading-dark-color text-capitalize">
                   {jobDetatilsData.department}
                 </h3>
               </Link>
@@ -136,7 +136,7 @@ function JobDetailPage(props) {
               <div className="image mr-5">
                 <img src="image/svg/icon-location.svg" alt="" />
               </div>
-              <p className="font-size-5 text-gray mb-0">
+              <p className="font-size-5 text-gray mb-0 text-capitalize">
                 {jobDetatilsData.location}
               </p>
             </div>
@@ -160,7 +160,7 @@ function JobDetailPage(props) {
               <div className="image mr-5">
                 <img src="image/svg/icon-briefcase.svg" alt="" />
               </div>
-              <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
+              <p className="font-weight-semibold font-size-5 text-black-2 mb-0 text-capitalize">
                 {jobDetatilsData.job_type}
               </p>
             </div>
@@ -172,7 +172,7 @@ function JobDetailPage(props) {
               <span className="font-size-4 d-block mb-4 text-gray">
                 Type of corporation
               </span>
-              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9">
+              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9 text-capitalize">
                 {jobDetatilsData.corporation}
               </h6>
             </div>
@@ -192,7 +192,7 @@ function JobDetailPage(props) {
               <span className="font-size-4 d-block mb-4 text-gray">
                 Company size
               </span>
-              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
+              <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0 text-capitalize">
                 {jobDetatilsData.company_size}
               </h6>
             </div>
@@ -244,7 +244,7 @@ function JobDetailPage(props) {
               <ul className="list-unstyled d-flex align-items-center flex-wrap row">
                 {(skill || []).map((skill) => (
                   <li key={skill}>
-                    <span className="bg-polar text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                    <span className="bg-polar text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center text-capitalize">
                       {skill}
                     </span>
                   </li>

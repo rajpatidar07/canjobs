@@ -112,8 +112,8 @@ export default function VisaStatus(props) {
                 onChange={onInputChange}
                 className={
                   errors.status
-                    ? "form-control border border-danger"
-                    : "form-control"
+                    ? "form-control text-capitalize border border-danger"
+                    : "form-control text-capitalize"
                 }
                 id="status"
               >

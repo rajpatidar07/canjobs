@@ -386,7 +386,7 @@ export default function JobTable(props) {
                     <React.Fragment key={job.job_id}>
                       <tr
                         className={
-                          job.is_applied === "1" ? "d-none job_row" : "job_row"
+                          job.is_applied === "1" ? "d-none" : "text-capitalize job_row"
                         }
                       >
                         <th scope="row" className="py-5 ">
@@ -652,7 +652,8 @@ export default function JobTable(props) {
                                         <button
                                           className={props.response === "response" && location.pathname === "/job" ? "btn btn-outline-info action_btn" : "d-none"}
                                           title="Job LMIA"><Link to="/lmia"
-                                            className="text-dark" state={{ id: job.job_id }}>!</Link></button>
+                                            className="text-dark" state={{ id: job.job_id }}>
+                                              <span className="fas fa-arrow-left text-gray px-2"></span></Link></button>
                                       </>}
                                   </>
                                 )

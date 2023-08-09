@@ -39,7 +39,7 @@ function CompanyDetailPage(props) {
           close={() => setContactDetails(false)}
         /> : null}
       </h4>
-      <div className="pt-5 text-left row">
+      <div className="pt-5 text-left row text-capitalize">
         <div className="col-md-12">
           {employerData.contact_person_name ? <p className="font-size-4 mb-8" title="Contact Person Name">
             <i className="fas fa-user mr-2"></i>

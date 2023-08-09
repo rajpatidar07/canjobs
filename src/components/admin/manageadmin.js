@@ -188,7 +188,7 @@ function ManageAdmin() {
                         className=" form-control"
                       >
                         <option value="">Admin type</option>
-                        {(FilterJson.AdminType || []).map((type, i) => (
+                        {(FilterJson.admintype || []).map((type, i) => (
                           <option value={type} key={i}>
                             {type}
                           </option>
@@ -273,7 +273,7 @@ function ManageAdmin() {
                             </tr>
                           ) : (
                             (adminData || []).map((admin) => (
-                              <tr className="" key={admin.admin_id}>
+                              <tr className="text-capitalize" key={admin.admin_id}>
                                 <th className=" py-5">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                                     {admin.name}

@@ -218,7 +218,7 @@ function Interview(props) {
                     </tr>
                   ) : (
                     (interviewData || []).map((data) => (
-                      <tr className="" key={data.id}>
+                      <tr className="text-capitalize" key={data.id}>
                         <th className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-normal text-black-2">
                             {data.employee_id}

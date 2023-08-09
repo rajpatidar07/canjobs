@@ -96,7 +96,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                       localStorage.setItem("employee_id", empdata.employee_id)
                     }
                   >
-                    <p className="font-size-3 text-default-color line-height-2 m-0">
+                    <p className="font-size-3 text-default-color line-height-2 m-0 text-capitalize">
                       {empdata.name}
                       <span className="age_gender font-size-3 text-smoke">
                         ( {empdata.gender === "female" ? "F" : "M"}{" "}
@@ -104,7 +104,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                         Y)
                       </span>
                     </p>
-                    <h3 className="mb-0 font-size-6 heading-dark-color">
+                    <h3 className="mb-0 font-size-6 heading-dark-color text-capitalize">
                       {empdata.education}
                     </h3>
                   </Link>
@@ -131,7 +131,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                           alt=""
                         />
                       </span>
-                      <span className="font-weight-semibold">
+                      <span className="font-weight-semibold text-capitalize">
                         {empdata.current_location},
                         {empdata.currently_located_country}
                       </span>
@@ -151,7 +151,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                       <span className="mr-4">
                         <img src="image/icons/language.svg" alt="" />
                       </span>
-                      <span className="font-weight-semibold">
+                      <span className="font-weight-semibold text-capitalize">
                         {empdata.language}
                       </span>
                     </li>
@@ -159,7 +159,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                       <span className="mr-4">
                         <img src="image/svg/icon-suitecase.svg" alt="" />
                       </span>
-                      <span className="font-weight-semibold">
+                      <span className="font-weight-semibold text-capitalize">
                         {empdata.nationality}
                       </span>
                     </li>
@@ -168,7 +168,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
               </div>
               <div className="row pt-4">
                 <div className="col-md-12 text-left">
-                  <p className="text-truncate-1">{empdata.description}</p>
+                  <p className="text-truncate-1 ">{empdata.description}</p>
                 </div>
                 <div className="col-md-12">
                   <ul className="d-flex list-unstyled mr-n3 flex-wrap">
@@ -176,7 +176,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                       ? ((skillList = empdata.skill.split(",")),
                         (skillList || []).map((skill, i) => (
                           <li key={i}>
-                            <span className="bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                            <span className="text-capitalize bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                               {skill}
                             </span>
                           </li>

@@ -92,6 +92,7 @@ function Skills(props) {
     setSkillOption({ ...state, skill: options });
   }, [SkillList]);
 
+  // console.log("Option =>" ,state.skill)
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
     event.preventDefault();
@@ -197,10 +198,12 @@ function Skills(props) {
                 name="skill"
                 id="skill"
                 onChange={onSelectChange}
+                defaultInputValue={state.skill}
                 className={
                   errors.skill ? "border border-danger w-100 text-capitalize" : "text-capitalize w-100"
                 }
-                isClearable={""}
+                // clearValue={true}
+                isClearable={true}
               />
               {loading === true ? (
                 <button

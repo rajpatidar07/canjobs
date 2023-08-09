@@ -143,7 +143,7 @@ function FollowUpDashBoard(props) {
                         </tr>
                       ) : (
                         (followUpData || []).map((data) => (
-                          <tr className="" key={data.id}>
+                          <tr className="text-capitalize" key={data.id}>
                             <th scope="row" className="py-5 ">
                               <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                 {data.name}

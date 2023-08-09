@@ -150,7 +150,7 @@ let location = useLocation()
                         id="country"
                         value={categoryFilterValue}
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Category</option>
                         {(Json.Category || []).map((data) => {
@@ -192,7 +192,7 @@ let location = useLocation()
                         id="country"
                         value={SkillFilterValue}
                         onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Skill</option>
                         {(Skill || []).map((data) => {

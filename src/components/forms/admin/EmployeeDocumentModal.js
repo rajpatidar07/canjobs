@@ -22,7 +22,8 @@ export default function DocumentModal(props) {
         {user_type === "admin" ?
           <LmiaTime lmia={props.lmia}
             job={props.job}
-            location={location.pathname} />
+            location={location.pathname}
+            doc="yes" />
           : null}
         <DocumrentContainer employee_id={props.employee_id} />
       </div>

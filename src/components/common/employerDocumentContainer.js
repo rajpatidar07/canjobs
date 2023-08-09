@@ -308,7 +308,7 @@ let user_type = localStorage.getItem("userType")
     };
   };
   return (
-    <div className="container document_container bg-white p-7">
+    <div className="container document_container bg-white p-7 mb-10">
       <div className="row mb-11 ">
         <div className="col-4">
           <h5>Document List</h5>
@@ -334,46 +334,9 @@ let user_type = localStorage.getItem("userType")
                     `?v=${new Date().getMinutes() + new Date().getSeconds()}`
                   );
                 }}
+                className="text-capitalize"
               >
-                {item.type === "passport"
-                  ? "Passport"
-                  : item.type === "drivers_license"
-                    ? "Driving License"
-                    : item.type === "immigration_status"
-                      ? "Current Immigration Status"
-                      : item.type === "lmia"
-                        ? "Lmia"
-                        : item.type === "job_offer_letter"
-                          ? "Job Offer"
-                          : item.type === "provincial_nominee_letter"
-                            ? "Provincial Nominee"
-                            : item.type === "proof_of_funds"
-                              ? "Funds"
-                              : item.type === "proof_of_employment"
-                                ? "Employment"
-                                : item.type === "marriage_certificate"
-                                  ? "Marriage Certificate"
-                                  : item.type === "education_metric"
-                                    ? "Education Metric (10th marksheet)"
-                                    : item.type === "education_higher_secondary"
-                                      ? "Education Higher Secondary (12th marksheet)"
-                                      : item.type === "education_graduation"
-                                        ? "Education Graduation (UG marksheet)"
-                                        : item.type === "education_post_graduation"
-                                          ? "Education Post Graduation (PG marksheet)"
-                                          : item.type === "resume_or_cv"
-                                            ? "Resumne"
-                                            : item.type === "ielts"
-                                              ? "IELTS"
-                                              : item.type === "medical"
-                                                ? "Medical Certificate"
-                                                : item.type === "police_clearance"
-                                                  ? "Police Clearance Certificate"
-                                                  : item.type === "refusal_letter"
-                                                    ? "Refusal Letter"
-                                                    : item.type === "photograph"
-                                                      ? "Photograph"
-                                                      : item.type}
+               {textReplaceFunction(item.type)} 
                 {item.is_varify === "1" ? (
                   <span className="verified_doc">
                     <img className="w-100" src={Verified} alt="" />

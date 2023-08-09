@@ -75,7 +75,7 @@ function JobBoxResponse({
                     alt=""
                   />
                 </div>
-                <div className="text_box text-left w-100">
+                <div className="text_box text-left w-100 text-capitalize">
                   <p className="font-size-3 text-default-color line-height-2 m-0">
                     {job.company_name}
                   </p>
@@ -84,7 +84,7 @@ function JobBoxResponse({
                   </h3>
                 </div>
               </div>
-              <div className="col-md-6 p-0">
+              <div className="col-md-6 p-0 text-capitalize">
                 <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
                   <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
                     <span className="mr-4">
@@ -123,7 +123,7 @@ function JobBoxResponse({
                         <li key={i}>
                           <Link
                             to={""}
-                            className="bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                            className="text-capitalize bg-polar mt-2 text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                           >
                             {skill}
                           </Link>

@@ -293,7 +293,7 @@ function JobResponse(props) {
                         setSkillFilter(e.target.value);
                         setCurrentPage(1)
                       }}
-                      className=" form-control"
+                      className="text-capitalize form-control"
                     >
                       <option value="">Select Skil</option>
                       {(Json.Skill || []).map((skill) => (
@@ -315,7 +315,7 @@ function JobResponse(props) {
                         setLmiaFilter(e.target.value);
                         setCurrentPage(1)
                       }}
-                      className=" form-control"
+                      className="text-capitalize form-control"
                     >
                       <option value="">Select LMIA</option>
                       {(Json.lmia || []).map((lmia) => (
@@ -546,7 +546,7 @@ function JobResponse(props) {
                         (response || []).map((res, i) => (
                           ((props.response === "response") || (props.response === "self") ||
                             ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
-                            <tr className="" key={i}>
+                            <tr className="text-capitalize" key={i}>
                               <th className="py-5 ">
                                 {res.employee_id}
                               </th>

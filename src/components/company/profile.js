@@ -83,7 +83,7 @@ function CompanyProfile(props) {
                       alt=""
                     />
                   </div>
-                  <div className="text_box text-left w-100">
+                  <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color">
                       {employerData.company_name}
                     </h3>
@@ -108,7 +108,7 @@ function CompanyProfile(props) {
                 >Add Document</CustomButton>
                 </div>
               </div>
-              <div className="company_detail_box w-100 row m-0 pl-12 pt-5 pb-7 pr-12 pr-xxl-12">
+              <div className="text-capitalize company_detail_box w-100 row m-0 pl-12 pt-5 pb-7 pr-12 pr-xxl-12">
                 {employerData.industry ? <div className="font-size-3 mb-4 mr-10" title="Industry">
                   <i className="far fa-building mr-2"></i>
                   {employerData.industry}

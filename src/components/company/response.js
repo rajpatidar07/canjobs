@@ -57,7 +57,7 @@ function Response() {
                         value={categoryFilterValue}
                         /*Category Onchange function to filter the data */
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option  value="">Select Job Category</option>
                         {(filter.Category || []).map((data, i) => {
@@ -76,7 +76,7 @@ function Response() {
                         value={SkillFilterValue}
                         /*Skill Onchange function to filter the data */
                         onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option  value={''}>Select Job Skills</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
@@ -95,7 +95,7 @@ function Response() {
                         value={locationFilterValue}
                         /*Skill Onchange function to filter the data */
                         onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option  value="">Select Job Location</option>
                         {(FilterJson.location || []).map((data, i) => {

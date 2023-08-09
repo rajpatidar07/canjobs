@@ -64,7 +64,7 @@ function JobSearch() {
                         value={categoryFilterValue}
                         /*Category Onchange function to filter the data */
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option value="">Select Category</option>
                         {(Json.Category || []).map((cat) => (
@@ -81,7 +81,7 @@ function JobSearch() {
                         value={SkillFilterValue}
                         /*Skill Onchange function to filter the data */
                         onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option value="">Select Skill</option>
                         {(Json.Skill || []).map((data) => {
@@ -100,7 +100,7 @@ function JobSearch() {
                         value={jobLocation}
                         /*Job Onchange function to filter the data */
                         onChange={(e) => setJobLocation(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option value="">
                           Select Job Location
@@ -119,7 +119,7 @@ function JobSearch() {
                         value={jobSwapFilterValue}
                         /*Job Onchange function to filter the data */
                         onChange={(e) => setJobSwapFilterValue(e.target.value)}
-                        className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
                         <option value="">
                           Select Job type

@@ -98,7 +98,7 @@ function FilterList() {
                             (filterData.Skill || []).map((data, i) => (
                               <React.Fragment key={data.id}>
                                 <li
-                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
                                 >
                                   {data.value}
@@ -133,7 +133,7 @@ function FilterList() {
                           ) : (
                             (filterData.Industry || []).map((data, i) => (
                               <React.Fragment key={data.id}>
-                                <li className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                <li className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 4)}
@@ -167,7 +167,7 @@ function FilterList() {
                             (filterData.Education || []).map((data) => (
                               <React.Fragment key={data.id}>
                                 <li
-                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
                                 >
                                   {data.value}
@@ -203,7 +203,7 @@ function FilterList() {
                             (filterData.Corporation || []).map((data, i) => (
                               <React.Fragment key={data.id}>
                                 <li
-                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
                                 >
                                   {data.value}
@@ -239,7 +239,7 @@ function FilterList() {
                             (filterData.Language || []).map((data) => (
                               <React.Fragment key={data.id}>
                                 <li
-                                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
                                 >
                                   {data.value}

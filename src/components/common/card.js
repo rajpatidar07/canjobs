@@ -28,7 +28,7 @@ const DashboardCard = (props) => {
           aria-expanded={open}
           className="w-100"
         >
-          <h3 className="heading">
+          <h3 className="heading text-capitalize">
             {props.heading}
             <p className="font-size-3 font-weight-normal">{props.subheading}</p>
             <span className="float-right dash_statistic">{totalData || 0}</span>
@@ -48,7 +48,7 @@ const DashboardCard = (props) => {
               </thead>
               <tbody>
                 {(LMIAdata || []).map((item) => (
-                  <tr>
+                  <tr className="text-capitalize">
                     <td>{item.company_name}</td>
                     <td>{item.job_title}</td>
                     <td>{item.name}</td>

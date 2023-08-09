@@ -70,7 +70,7 @@ export default function ManageInterview() {
                         className=" form-control"
                       >
                         <option value="">Select Interview Status</option>
-                        <option value="PENDING">Schedule</option>
+                        <option value="pending">Schedule</option>
                         <option value="complete">Complete</option>
                       </select>
                     </div>

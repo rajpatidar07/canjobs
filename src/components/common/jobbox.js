@@ -158,10 +158,10 @@ function JobBox({
                         />
                       </div>
                       <div className="text_box text-left w-100">
-                        <p className="font-size-3 text-default-color line-height-2 m-0">
+                        <p className="font-size-3 text-default-color line-height-2 m-0 text-capitalize">
                           {job.company_name}
                         </p>
-                        <h3 className="mb-0 font-size-6 heading-dark-color">
+                        <h3 className="mb-0 font-size-6 heading-dark-color text-capitalize">
                           {job.job_title}
                         </h3>
                       </div>
@@ -178,7 +178,7 @@ function JobBox({
                               alt=""
                             />
                           </span>
-                          <span className="font-weight-semibold">
+                          <span className="font-weight-semibold text-capitalize">
                             {job.industry_type}
                           </span>
                         </li>
@@ -192,7 +192,7 @@ function JobBox({
                               alt=""
                             />
                           </span>
-                          <span className="font-weight-semibold">
+                          <span className="font-weight-semibold text-capitalize">
                             {job.location}
                           </span>
                         </li>
@@ -203,7 +203,7 @@ function JobBox({
                           <span className="mr-4">
                             <img src="image/svg/icon-suitecase.svg" alt="" />
                           </span>
-                          <span className="font-weight-semibold">
+                          <span className="font-weight-semibold text-capitalize" >
                             {job.employement}
                           </span>
                         </li>
@@ -234,7 +234,7 @@ function JobBox({
                   </div>
                 </Link>
                 <div className="row pt-4">
-                  <div className="col-md-12 text-left">
+                  <div className="col-md-12 text-left text-capitalize">
                     <p>{job.job_description}</p>
                   </div>
                   <div className="col-md-8">
@@ -243,7 +243,7 @@ function JobBox({
                         <li key={index}>
                           <span
                             to={""}
-                            className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
+                            className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2"
                           >
                             {item}
                           </span>

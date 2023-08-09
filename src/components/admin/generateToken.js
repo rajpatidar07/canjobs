@@ -104,7 +104,7 @@ export default function GenerateToken(props) {
                 options={state}
                 onChange={onSelectChange}
                 id="view_layout"
-                className="mx-1"
+                className="text-capitalize mx-1"
               />
               <small className="text-danger">{Unauthorized}</small>
             </div>

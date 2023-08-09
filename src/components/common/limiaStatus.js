@@ -348,7 +348,7 @@ export default function LimiaStatus(props) {
                                                 setLimailter(e.target.value);
                                                 setCurrentPage(1)
                                             }}
-                                            className=" form-control"
+                                            className="text-capitalize form-control"
                                         >
                                             <option value="">Select LIMIA status</option>
                                             {(FilterJson.lmia_status || []).map((data, i) => (
@@ -537,7 +537,7 @@ export default function LimiaStatus(props) {
                                                 </tr>
                                             ) : (
                                                 (response || []).map((res, i) => (
-                                                    <tr className="" key={i}>
+                                                    <tr className="text-capitalize" key={i}>
                                                         <th className=" py-5">
                                                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                                                 {res.name || res.gender || res.date_of_birth ? (

@@ -152,7 +152,7 @@ export default function Visa() {
                           {setVisaCountryFilter(e.target.value)
                             setEmpId("")}
                         }
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value={""}>Select Country</option>
                         {(FilterJson.location || []).map((item, i) => (
@@ -172,7 +172,7 @@ export default function Visa() {
                         id="status"
                         onChange={(e) => {setVisStatusFilterValue(e.target.value)
                           setEmpId("")}}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value={""}>Select visa status </option>
                         <option value={"pending"}>Pending</option>
@@ -192,7 +192,7 @@ export default function Visa() {
                         id="intrested_in"
                         onChange={(e) => {setIntrestedFilterValue(e.target.value)
                           setEmpId("")}}
-                        className=" form-control">
+                        className="text-capitalize form-control">
                         <option value="" data-display="Product Designer">
                           Select Interested in
                         </option>

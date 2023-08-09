@@ -245,7 +245,7 @@ function Category() {
                     value={categoryTypeFilterValue}
                     id="category"
                     onChange={(e)=> {setCategoryTypeFilterValue(e.target.value);setCurrentPage(1)}}
-                    className="form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
+                    className="text-capitalize form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
                   >
                     <option value={""}>Select category type</option>
                     {(CateType || []).map((data, i) => {
@@ -332,7 +332,7 @@ function Category() {
                           </tr>
                         ) : (
                           (categoryData || []).map((catdata) => (
-                            <tr className="" key={catdata.job_category_id}>
+                            <tr className="text-capitalize" key={catdata.job_category_id}>
                               <th scope="row" className="py-5 ">
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {catdata.category_name}

@@ -264,7 +264,7 @@ export default function EmployerTable(props) {
                 </tr>
               ) : (
                 (employerData || []).map((empdata) => (
-                  <tr className="" key={empdata.company_id}>
+                  <tr className="text-capitalize" key={empdata.company_id}>
                     <th scope="row" className="pl-5 py-5 pr-0   ">
                       <div className="d-flex profile_box gx-2">
                         <div className="media  align-items-center">

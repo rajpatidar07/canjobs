@@ -31,7 +31,7 @@ const AdminHeader = (props) => {
       <div className="container-fluid-fluid px-7">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Page Heading--> */}
-          <h3 className="font-size-6 mb-0">{props.heading}</h3>
+          <h3 className="font-size-6 mb-0 text-capitalize">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
@@ -47,7 +47,7 @@ const AdminHeader = (props) => {
                 >
                   <div>
                     {" "}
-                    <h6 className="m-0">Hii ! {Admin}</h6>
+                    <h6 className="m-0 text-capitalize">Hii ! {Admin}</h6>
                   </div>
                   <i className="fas fa-chevron-down heading-default-color px-3"></i>
                 </Link>

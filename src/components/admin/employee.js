@@ -146,7 +146,7 @@ function Employee(props) {
                         value={skillFilterValue}
                         id="Skill"
                         onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value={""}>Select Skill</option>
                         {(SkillList || []).map((data) => {
@@ -167,7 +167,7 @@ function Employee(props) {
                         value={educationFilterValue}
                         id="education"
                         onChange={(e) =>setEducationFilterValue(e.target.value)}
-                        className=" form-control">
+                        className="text-capitalize form-control">
                         <option value="" data-display="Product Designer">
                           Select Education
                         </option>

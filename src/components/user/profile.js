@@ -154,7 +154,7 @@ const UserProfile = (props) => {
                           height={"100px"}
                         />
                       </Link>
-                      <h4 className="mb-0">
+                      <h4 className="mb-0 text-capitalize">
                         {/* <Link
                         className="text-black-2 font-size-6 font-weight-semibold"
                         onClick={() => setShowRegistration(true)}
@@ -235,7 +235,7 @@ const UserProfile = (props) => {
                                 <Link className="text-dark" to={`tel:${PersonalDetail.contact_no}`}>{PersonalDetail.contact_no}</Link>
                               </span> : ""}
                           </div>
-                          <div className="info_box text-left">
+                          <div className="info_box text-left text-capitalize">
                             {PersonalDetail.current_location ? <span className="font-size-3 text-smoke  mr-7">
                               <img
                                 className="mr-1"
@@ -246,7 +246,7 @@ const UserProfile = (props) => {
                               {PersonalDetail.current_location}
                             </span> : ""}
                           </div>
-                          <div className="info_box text-left">
+                          <div className="info_box text-left text-capitalize">
                             {PersonalDetail.language ? <span className="font-size-3 text-smoke  mr-7">
                               <img
                                 className="mr-1"
@@ -257,7 +257,7 @@ const UserProfile = (props) => {
                               {PersonalDetail.language}
                             </span> : ""}
                           </div>
-                          <div className="info_box text-left">
+                          <div className="info_box text-left text-capitalize">
                             {PersonalDetail.currently_located_country ? <span className="font-size-3 text-smoke  mr-7">
                               <img
                                 className="mr-1"
@@ -268,7 +268,7 @@ const UserProfile = (props) => {
                               {PersonalDetail.currently_located_country}
                             </span> : ""}
                           </div>
-                          <div className="info_box text-left">
+                          <div className="info_box text-left text-capitalize">
                             {PersonalDetail.experience ? <span className="font-size-3 text-smoke  mr-7">
                               <img
                                 className="mr-1"
@@ -285,18 +285,18 @@ const UserProfile = (props) => {
                           </span>
                         </div> */}
                           {PersonalDetail.nationality ? <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7">
+                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                               Nationality: <b> {PersonalDetail.nationality}</b>
                             </span>
                           </div> : null}
                           {PersonalDetail.work_permit_canada ? <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7">
+                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                               Work Permit of Canada:
                               <b> {PersonalDetail.work_permit_canada}</b>
                             </span>
                           </div> : null}
                           {PersonalDetail.work_permit_other_country ? <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7">
+                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                               Work Permit of Other Country:
                               <b> {PersonalDetail.work_permit_other_country}</b>
                             </span>
@@ -458,7 +458,7 @@ const UserProfile = (props) => {
                             <div className="w-100" key={CareerDetails.career_id}>
                               <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                                 <div className="media align-items-center company_box col-md-6 p-0">
-                                  <div className="text_box text-left w-100 mt-n2">
+                                  <div className="text_box text-left w-100 mt-n2 text-capitalize">
                                     <h3 className="mb-0">
                                       <span className="font-size-6 text-black-2 font-weight-semibold">
                                         {CareerDetails.designation} -
@@ -473,7 +473,7 @@ const UserProfile = (props) => {
                                     </span>
                                   </div>
                                 </div>
-                                <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                                <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
                                   <span className="font-size-4 text-gray w-100">
                                     {/* {moment(CareerDetails.start_date).format(
                                     "YYYY-MM-DD"
@@ -537,7 +537,7 @@ const UserProfile = (props) => {
                               >
                                 <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                                   <div className="media align-items-center company_box p-0">
-                                    <div className="text_box text-left w-100 mt-n2">
+                                    <div className="text_box text-left w-100 mt-n2 text-capitalize">
                                       <h3 className="mb-0">
                                         <span className="font-size-6 text-black-2 font-weight-semibold">
                                           {EducationDetails.qualification}
@@ -556,7 +556,7 @@ const UserProfile = (props) => {
                                       </span>
                                     </div>
                                   </div>
-                                  <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                                  <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
                                     <span className="font-size-4 text-gray w-100">
                                       {EducationDetails.passing_year}
                                     </span>
@@ -683,7 +683,7 @@ const UserProfile = (props) => {
                                     <img src={data.logo ? data.logo : "image/l3/png/fimize.png"} alt=""
                                       width={100} />
                                   </div>
-                                  <div className=" mx-5">
+                                  <div className=" mx-5 text-capitalize" >
                                     <span
                                       to=""
                                       className="font-size-3 text-default-color line-height-2"
@@ -701,7 +701,7 @@ const UserProfile = (props) => {
                                   </div>
                                 </div>
                                 <div className="d-flex pt-10">
-                                  <ul className="list-unstyled mb-1 d-flex flex-wrap">
+                                  <ul className="list-unstyled mb-1 d-flex flex-wrap text-capitalize">
                                     <li>
                                       <span
                                         to=""

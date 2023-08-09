@@ -171,7 +171,7 @@ function Followup() {
                           setCatApiCall(true);
                           setCurrentPage(1)
                         }}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Select Category</option>
                         {(Json.Category || []).map((data) => {
@@ -192,7 +192,7 @@ function Followup() {
                         id="country"
                         value={jobSwapFilterValue}
                         onChange={(e) => {setJobSwapFilterValue(e.target.value);setCurrentPage(1)}}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
@@ -232,7 +232,7 @@ function Followup() {
                         id="country"
                         value={locationFilterValue}
                         onChange={(e) => {setLocationFilterValue(e.target.value);setCurrentPage(1)}}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Select Location</option>
                         {(FilterJson.location || []).map((data, i) => {
@@ -391,7 +391,7 @@ function Followup() {
                           (jobData || []).map((job) => (
                             <React.Fragment key={job.job_id}>
                               <tr
-                                className="aos-init aos-animate"
+                                className="text-capitalize aos-init aos-animate"
                                 data-aos="fade-right"
                                 data-aos-duration="800"
                                 data-aos-once="true"

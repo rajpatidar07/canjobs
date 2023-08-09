@@ -477,7 +477,7 @@ export default function EmployeeTable(props) {
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata) => (
-                    <tr className="applicant_row" key={empdata.employee_id}>
+                    <tr className="text-capitalize applicant_row" key={empdata.employee_id}>
                        <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {empdata.employee_id}                        

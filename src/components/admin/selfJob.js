@@ -147,7 +147,7 @@ function SelfJob(props) {
                         id="country"
                         value={categoryFilterValue}
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Category</option>
                         {(Json.Category || []).map((data) => {
@@ -170,7 +170,7 @@ function SelfJob(props) {
                         onChange={(e) => {
                           setJobSwapFilterValue(e.target.value);
                         }}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Type</option>
                         {(FilterJson.job_type || []).map((job, i) => (
@@ -189,7 +189,7 @@ function SelfJob(props) {
                         id="country"
                         value={SkillFilterValue}
                         onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Skill</option>
                         {(Skill || []).map((data) => {
@@ -210,7 +210,7 @@ function SelfJob(props) {
                         id="country"
                         value={locationFilterValue}
                         onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className=" form-control"
+                        className="text-capitalize form-control"
                       >
                         <option value="">Job Location</option>
                         {(FilterJson.location || []).map((data) => {
