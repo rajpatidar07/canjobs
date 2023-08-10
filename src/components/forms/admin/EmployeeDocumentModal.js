@@ -19,7 +19,7 @@ export default function DocumentModal(props) {
         <i className="fas fa-times"></i>
       </button>
       <div className="bg-white rounded h-100 px-11 overflow-y-hidden">
-        {user_type === "admin" ?
+        {user_type === "admin" && location.pathname === "/lmia" ?
           <LmiaTime lmia={props.lmia}
             job={props.job}
             location={location.pathname}

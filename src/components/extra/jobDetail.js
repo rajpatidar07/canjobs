@@ -8,13 +8,19 @@ function JobDetail({ ids }) {
 
   useEffect(() => {
     const GetJobData = async () => {
+    try{
       let Response = await GetJobDetail(ids);
       if (Response.data.data.length === 0) {
         setJobData("");
       } else {
         setJobData(Response.data.data[0]);
       }
-    };
+    ;}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }}
     GetJobData();
   }, [ids]);
   return (

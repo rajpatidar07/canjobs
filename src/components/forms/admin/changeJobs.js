@@ -8,10 +8,10 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 // import { Select, Button } from "antd"; // "3.26.7" worked
 import Select from "react-select";
 function ChangeJob(props) {
-  let [apiCall , setApiCall] = useState(props.apiCall)
+  let [apiCall, setApiCall] = useState(props.apiCall)
   let [loading, setLoading] = useState(false);
   const [state, setState] = useState([]);
-  let employeeId =  props.resData.employee_id;
+  let employeeId = props.resData.employee_id;
   let applyId = props.resData.apply_id;
   let [allJobData, setAllJobData] = useState([]);
   let [JobId, setJobId] = useState("");
@@ -21,16 +21,23 @@ function ChangeJob(props) {
     setLoading(false);
     props.close();
   };
-  
- // USER CHANGE JOB VALIDATION
+
+  // USER CHANGE JOB VALIDATION
   // INITIAL STATE ASSIGNMENT
 
   const JobData = async () => {
-    const userData = await GetAllJobs();
-    if (userData.data.data.length === 0) {
-      setAllJobData([]);
-    } else {
-      setAllJobData(userData.data.data);
+    try {
+      const userData = await GetAllJobs();
+      if (userData.data.data.length === 0) {
+        setAllJobData([]);
+      } else {
+        setAllJobData(userData.data.data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -45,30 +52,38 @@ function ChangeJob(props) {
   const onChangeJobClick = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const responseData = await ApplyJob(JobId, employeeId , props.status , applyId);
-    if (responseData.message === "Job switched successfully") {
-      toast.success("Job Changed successfully", {
+    try {
+      const responseData = await ApplyJob(JobId, employeeId, props.status, applyId);
+      if (responseData.message === "Job switched successfully") {
+        toast.success("Job Changed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true)
+        return close();
+      }
+      if (responseData.message === "already applied on this job") {
+        setAlredyApplied("Already applied on this job")
+        setLoading(false)
+        setApiCall(true)
+      }
+      if (responseData.message === "Job applied successfully") {
+        toast.success("Applied successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setChangeJob(true)
+        props.setApiCall(true)
+        return close();
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-     setApiCall(true)
-      return close();
-    }
-    if (responseData.message === "already applied on this job") {
-      setAlredyApplied("Already applied on this job")
       setLoading(false)
-     setApiCall(true)
     }
-    if (responseData.message === "Job applied successfully") {
-      toast.success("Applied successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.setChangeJob(true)
-      props.setApiCall(true)
-      return close();
-    }
-    
+
   };
   // END USER CHANGE JOB VALIDATION
   /*FUnction to redender the data in the option of the select box*/
@@ -96,7 +111,7 @@ function ChangeJob(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2 mb-7">{props.apply==="apply" ? "Apply for Job" : "Change Jobs"}</h5>
+          <h5 className="text-center pt-2 mb-7">{props.apply === "apply" ? "Apply for Job" : "Change Jobs"}</h5>
 
           <form onSubmit={onChangeJobClick}>
             <div className="form-group ">
@@ -107,7 +122,7 @@ function ChangeJob(props) {
                 Jobs <span className="text-danger">*</span> :
               </label>
               <Select options={state || ""} onChange={onSelectChange} id="job_id" />
-             <small className="text-danger">{alredyApplied}</small> 
+              <small className="text-danger">{alredyApplied}</small>
             </div>
             <div className="form-group text-center">
               {loading === true ? (

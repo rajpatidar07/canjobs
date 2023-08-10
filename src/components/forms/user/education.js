@@ -41,8 +41,15 @@ function Education(props) {
   };
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setEducationList(Json.data.data.Education);
+    try {
+      let Json = await GetFilter();
+      setEducationList(Json.data.data.Education);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   /*Render method to get the json*/
   useEffect(() => {
@@ -99,16 +106,23 @@ function Education(props) {
 
   /*Function to get education data */
   const EducationData = async (data) => {
-    let EducationDetails = await EmployeeEducationDetails(
-      props.employeeId
-    ); /*"No Employee found"*/
-    if (EducationDetails.data.education.length === 0) {
-      setEducationData([]);
-    } else {
-      setEducationData(EducationDetails.data.education);
-    }
-    if (data !== undefined || data) {
-      setState(data);
+    try {
+      let EducationDetails = await EmployeeEducationDetails(
+        props.employeeId
+      ); /*"No Employee found"*/
+      if (EducationDetails.data.education.length === 0) {
+        setEducationData([]);
+      } else {
+        setEducationData(EducationDetails.data.education);
+      }
+      if (data !== undefined || data) {
+        setState(data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -134,28 +148,37 @@ function Education(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddEmployeeEducation(state, props.employeeId);
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Education Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setState(initialFormState);
-        setErrors("");
-        setLoading(false);
-        setApiCall(true)
-        props.setApiCall(true);
+      try {
+        let responseData = await AddEmployeeEducation(state, props.employeeId);
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Education Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+          setApiCall(true)
+          props.setApiCall(true);
+        }
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Education Added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+          setApiCall(true)
+          props.setApiCall(true);
+        }
       }
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Education Added successfully", {
+      catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState(initialFormState);
-        setErrors("");
-        setLoading(false);
-        setApiCall(true)
-        props.setApiCall(true);
+        setLoading(false)
       } //"
       // handle form submission
     } else {
@@ -177,15 +200,22 @@ function Education(props) {
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
     //console.log((e);
-    const responseData = await DeleteEmployeeEducation(e);
-    if (responseData.message === "Education details has been deleted") {
-      toast.error("Education deleted Successfully", {
+    try {
+      const responseData = await DeleteEmployeeEducation(e);
+      if (responseData.message === "Education details has been deleted") {
+        toast.error("Education deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
-      props.setApiCall(true);
-      setDeleteAlert(false);
     }
   }
   /*Code to get current year */

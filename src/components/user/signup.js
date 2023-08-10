@@ -68,7 +68,7 @@ export default function EmployeeSignupModal(props) {
       if (isChecked) {
         settermsErr("");
         setLoading(true);
-        const signUpData = await EmployeeSignUp(state);
+        try{const signUpData = await EmployeeSignUp(state);
         if (signUpData.message === "Employee has been registered") {
           setSingUpSuccess("success");
           setLoading(false);
@@ -78,6 +78,11 @@ export default function EmployeeSignupModal(props) {
         } else if (signUpData.message === " incorrect otp ") {
           setLoading(false);
           setErrors({ ...errors, otp: "Invalid Otp" });
+        }}catch(err){
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
         }
       } else {
         setLoading(false);
@@ -86,13 +91,19 @@ export default function EmployeeSignupModal(props) {
     } else if (otpBox === false && validate()) {
       /*Api to get otp */
       setLoading(true);
-      const updatedTodo = await SendOtp(state);
+      try{const updatedTodo = await SendOtp(state);
       if (updatedTodo.message === "successful") {
         toast.success("Otp sent Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         setOtpBox(true);
+        setLoading(false);
+      }}catch(err){
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         setLoading(false);
       }
     }
@@ -110,6 +121,7 @@ export default function EmployeeSignupModal(props) {
         });
         console.log(data.data);
         if(data.data.email_verified === true){
+         try {
           let res = await SocialLogin(data.data.sub,data.data.email,data.data.name,data.data.picture,"Google");
           console.log(res,);
           localStorage.setItem("token", res.token);
@@ -123,7 +135,12 @@ export default function EmployeeSignupModal(props) {
           props.close();
           navigate("/");
           window.location.reload();
-        }
+        }catch(err){
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        }}
       } catch (err) {
         console.log(err);
       }
@@ -157,7 +174,7 @@ export default function EmployeeSignupModal(props) {
         response.then((res) =>{
         let decode = JSON.parse(res.data)
         if(res.data.email_verified === true){
-          let data =  SocialLogin(res.data.sub,res.data.email,res.data.name,res.data.picture,"Linkedin");
+         try{ let data =  SocialLogin(res.data.sub,res.data.email,res.data.name,res.data.picture,"Linkedin");
           console.log(data);
           localStorage.setItem("token", data.token);
           localStorage.setItem("userType", "user");
@@ -170,6 +187,12 @@ export default function EmployeeSignupModal(props) {
           props.close();
           navigate("/");
           window.location.reload();
+        }catch(err){
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        }
         }if(res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"){
           toast.error("Token Expired", {
             position: toast.POSITION.TOP_RIGHT,
@@ -187,7 +210,7 @@ export default function EmployeeSignupModal(props) {
   const responseFacebook = async (response) => {
     console.log(response);
     if(response.graphDomain === "facebook"){
-    let data = await SocialLogin(response.userID,response.email,response.name,response.picture.data.url,"Facebook");
+    try{let data = await SocialLogin(response.userID,response.email,response.name,response.picture.data.url,"Facebook");
       console.log(data); 
       localStorage.setItem("token", data.token);
       localStorage.setItem("userType", "user");
@@ -200,6 +223,12 @@ export default function EmployeeSignupModal(props) {
       props.close();
       navigate("/");
       window.location.reload();
+    }catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
     }
    }
   return (

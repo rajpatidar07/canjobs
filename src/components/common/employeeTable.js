@@ -46,34 +46,42 @@ export default function EmployeeTable(props) {
   /* Function to get Employee data*/
   const EmpData = async () => {
     setIsLoading(true);
-    const userData = await getallEmployeeData(
-      props.search,
-      props.experienceFilterValue,
-      props.skillFilterValue,
-      props.educationFilterValue,
-      sortOrder ||
-        props.filter_by_time ||
-        props.search ||
-        props.experienceFilterValue ||
-        props.skillFilterValue ||
-        props.educationFilterValue
-        ? 1
-        : currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder,
-      props.filter_by_time,
-      "",
-      props.status,
-      props.job_id
-    );
-    if (userData.data.length === 0) {
-      setemployeeData([]);
-      setIsLoading(false);
-    } else {
-      setemployeeData(userData.data);
-      setTotalData(userData.total_rows);
-      setIsLoading(false);
+    try {
+      const userData = await getallEmployeeData(
+        props.search,
+        props.experienceFilterValue,
+        props.skillFilterValue,
+        props.educationFilterValue,
+        sortOrder ||
+          props.filter_by_time ||
+          props.search ||
+          props.experienceFilterValue ||
+          props.skillFilterValue ||
+          props.educationFilterValue
+          ? 1
+          : currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder,
+        props.filter_by_time,
+        "",
+        props.status,
+        props.job_id
+      );
+      if (userData.data.length === 0) {
+        setemployeeData([]);
+        setIsLoading(false);
+      } else {
+        setemployeeData(userData.data);
+        setTotalData(userData.total_rows);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setIsLoading(false)
     }
   };
 
@@ -84,7 +92,7 @@ export default function EmployeeTable(props) {
       props.setApiCall(false);
       setApiCall(false);
     }
-    if(alredyApplied === true) {
+    if (alredyApplied === true) {
       setAlredyApplied(false)
     }
   }, [
@@ -161,16 +169,23 @@ export default function EmployeeTable(props) {
   //   setemployeeId(e);
   // };
   // /*
-    /*To call Api to delete employee */
+  /*To call Api to delete employee */
   async function deleteEmployee(e) {
-    const responseData = await DeleteJobEmployee(e);
-    if (responseData.message === "Employee has been deleted") {
-      toast.error("Employee deleted Successfully", {
+    try {
+      const responseData = await DeleteJobEmployee(e);
+      if (responseData.message === "Employee has been deleted") {
+        toast.error("Employee deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlert(false);
+        setApiCall(true);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setDeleteAlert(false);
-      setApiCall(true);
     }
   }
 
@@ -191,23 +206,30 @@ export default function EmployeeTable(props) {
 
   /*Function to change job */
   const onChangeJobClick = async (id) => {
-    const responseData = await ApplyJob(props.job_id, id, 0);
-    if (responseData.message === "already applied on this job") {
-      toast.error("Already applied on this job", {
+    try {
+      const responseData = await ApplyJob(props.job_id, id, 0);
+      if (responseData.message === "already applied on this job") {
+        toast.error("Already applied on this job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true)
+      }
+      if (responseData.message === "Job applied successfully") {
+        toast.success("Applied successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true);
+        setApiCall(true)
+        setAlredyApplied(true)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
-      props.setApiCall(true)
-    }
-    if (responseData.message === "Job applied successfully") {
-      toast.success("Applied successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.setApiCall(true);
-      setApiCall(true)
-      setAlredyApplied(true)
     }
   };
 
@@ -304,7 +326,7 @@ export default function EmployeeTable(props) {
             <table className="table table-striped main_data_table">
               <thead>
                 <tr className="">
-                <th
+                  <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
@@ -478,10 +500,10 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata) => (
                     <tr className="text-capitalize applicant_row" key={empdata.employee_id}>
-                       <td className=" py-5">
+                      <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {empdata.employee_id}                        
-                          </p>
+                          {empdata.employee_id}
+                        </p>
                       </td>
                       <td className=" py-5">
                         <div className="d-flex profile_box gx-2">
@@ -508,7 +530,7 @@ export default function EmployeeTable(props) {
                                 {empdata.name}
                               </p>
                               <div className="text-gray font-size-2 m-0 text-capitalize">
-                                {empdata.gender === "female" ? "F" : "M"} (
+                                {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
                                 {empdata.marital_status + ", "}
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
@@ -524,7 +546,7 @@ export default function EmployeeTable(props) {
                                   </span>
                                 ) : null}
                               </div>
-                              
+
                             </div>
                           ) : (
                             <Link
@@ -546,7 +568,7 @@ export default function EmployeeTable(props) {
                                     {empdata.name}
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
-                                    {empdata.gender === "female" ? "F" : "M"} (
+                                    {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
                                     {empdata.marital_status + ", "}
                                     {/*Calculation of age from date of birth*/}
                                     {moment().diff(
@@ -561,10 +583,10 @@ export default function EmployeeTable(props) {
                                       </span>
                                     ) : null}
                                     {empdata.created_by_admin === "0" ? (
-                                  <span className="bg-info text-white web_tag">
-                                    Web
-                                  </span>
-                                ) : null}
+                                      <span className="bg-info text-white web_tag">
+                                        Web
+                                      </span>
+                                    ) : null}
                                   </p>
                                 </div>
                               )}
@@ -701,16 +723,16 @@ export default function EmployeeTable(props) {
                                 {" "}
                                 Dead{" "}
                               </span>
-                            ) :  empdata.status === "7" ? (
+                            ) : empdata.status === "7" ? (
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                 {" "}
                                 Reserved{" "}
                               </span>)
-                              :  empdata.status === "0" ? (
+                              : empdata.status === "0" ? (
                                 <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
                                   {" "}
                                   New{" "}
-                                </span>):null}
+                                </span>) : null}
                           </p>
                         </td>
                       )}
@@ -731,7 +753,7 @@ export default function EmployeeTable(props) {
                             aria-label="Basic example"
                           >
                             {props.skill === null ||
-                            props.skill === undefined ? (
+                              props.skill === undefined ? (
                               <>
                                 {/* <button
                                   className="btn btn-outline-info action_btn"
@@ -753,83 +775,83 @@ export default function EmployeeTable(props) {
                                   </button>
                                 ) :
                                  ( */}
-                                  <>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() =>
-                                        ChangeApplicantsStatus(empdata)
-                                      }
-                                      title="Change status"
-                                    >
-                                      <i className="fas fa-stream text-gray"></i>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() =>
-                                        editEmployee(empdata.employee_id)
-                                      }
-                                      title="Edit Employee"
-                                    >
-                                      <span className=" fas fa-edit text-gray px-2"></span>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() =>
-                                        editEmployeeEducation(
-                                          empdata.employee_id
-                                        )
-                                      }
-                                      title="Education"
-                                    >
-                                      <span className="	fas fa-graduation-cap text-gray px-2"></span>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() =>
-                                        editEmployeeSkills(empdata.employee_id)
-                                      }
-                                      title="Skills"
-                                    >
-                                      <span className=" fa fa-cogs text-gray px-2"></span>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() =>
-                                        editEmployeeCareer(empdata.employee_id)
-                                      }
-                                      title="Edit Career"
-                                    >
-                                      <span className="text-gray">
-                                        <i className="fas fa-user-tie"></i>
-                                      </span>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn text-center"
-                                      onClick={() =>
-                                        ResumeClick(empdata.employee_id)
-                                      }
-                                      title="View Resume"
-                                    >
-                                      <span className="fas fa-file text-gray"></span>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn text-gray"
-                                      onClick={() => editJob(empdata)}
-                                      title="All jobs "
-                                      disabled={empdata.skill ? false : true}
-                                    >
-                                      <i className="fas fa-briefcase"></i>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => ShowDeleteAlert(empdata)}
-                                      title="Delete"
-                                    >
-                                      <span className=" text-danger">
-                                        <i className="fa fa-trash "></i>
-                                      </span>
-                                    </button>
-                                  </>
+                                <>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      ChangeApplicantsStatus(empdata)
+                                    }
+                                    title="Change status"
+                                  >
+                                    <i className="fas fa-stream text-gray"></i>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployee(empdata.employee_id)
+                                    }
+                                    title="Edit Employee"
+                                  >
+                                    <span className=" fas fa-edit text-gray px-2"></span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeEducation(
+                                        empdata.employee_id
+                                      )
+                                    }
+                                    title="Education"
+                                  >
+                                    <span className="	fas fa-graduation-cap text-gray px-2"></span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeSkills(empdata.employee_id)
+                                    }
+                                    title="Skills"
+                                  >
+                                    <span className=" fa fa-cogs text-gray px-2"></span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeCareer(empdata.employee_id)
+                                    }
+                                    title="Edit Career"
+                                  >
+                                    <span className="text-gray">
+                                      <i className="fas fa-user-tie"></i>
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn text-center"
+                                    onClick={() =>
+                                      ResumeClick(empdata.employee_id)
+                                    }
+                                    title="View Resume"
+                                  >
+                                    <span className="fas fa-file text-gray"></span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn text-gray"
+                                    onClick={() => editJob(empdata)}
+                                    title="All jobs "
+                                  // disabled={empdata.skill ? false : true}
+                                  >
+                                    <i className="fas fa-briefcase"></i>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() => ShowDeleteAlert(empdata)}
+                                    title="Delete"
+                                  >
+                                    <span className=" text-danger">
+                                      <i className="fa fa-trash "></i>
+                                    </span>
+                                  </button>
+                                </>
                                 {/* )} */}
                               </>
                             ) : (
@@ -841,8 +863,8 @@ export default function EmployeeTable(props) {
                                 }
                                 title="Apply For job"
                               >
-                                {alredyApplied 
-                                ? "Already Applied"
+                                {alredyApplied
+                                  ? "Already Applied"
                                   : "Apply"}
                               </button>
                             )}

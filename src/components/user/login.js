@@ -62,10 +62,11 @@ export default  function EmployeeLoginModal(props) {
     if (validate()) {
       // handle form submission
       setLoading(true);
-      const updatedTodo = await EmployeeLogin(state);
+      try{const updatedTodo = await EmployeeLogin(state);
       console.log(updatedTodo)
       if (updatedTodo.status) {
         localStorage.setItem("token", updatedTodo.token);
+        localStorage.setItem("email",updatedTodo.email)
         localStorage.setItem("userType", "user");
         localStorage.setItem("employee_id", updatedTodo.employee_id);
         localStorage.setItem("name", updatedTodo.name);
@@ -84,7 +85,13 @@ export default  function EmployeeLoginModal(props) {
         setLoading(false);
         setErrors({ ...errors, email: "Invalid credentials !" });
       }
-    }
+    }catch(err){
+      toast.success("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setLoading(false);
+    }}
   };
   // END USER LOGIN VALIDATION
   const onForgoteClick = async (event) => {
@@ -92,7 +99,7 @@ export default  function EmployeeLoginModal(props) {
     if (validate()) {
       // setLoading(true)
       setLoading(true);
-      const Response = await EmployeeForgotPassword(state);
+     try{ const Response = await EmployeeForgotPassword(state);
       if (Response.status === 1 || Response.message === "Sent you a mail") {
         toast.success("Email sent Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -104,6 +111,12 @@ export default  function EmployeeLoginModal(props) {
         setLoading(false);
         setErrors({ ...errors, Credentials: ["No user found"] });
         //   handle form submission
+      }}catch(err){
+        toast.success("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setLoading(false);
       }
     }
   };
@@ -116,10 +129,11 @@ export default  function EmployeeLoginModal(props) {
               "Authorization": `Bearer ${tokenResponse.access_token}`
             }
           });
-         if(data.data.email_verified === true){
+         try{if(data.data.email_verified === true){
           let res = await SocialLogin(data.data.sub,data.data.email,data.data.name,data.data.picture,"Google");
           console.log(res,);
           localStorage.setItem("token", res.token);
+          localStorage.setItem("email",res.email)
           localStorage.setItem("userType", "user");
           localStorage.setItem("employee_id", res.employee_id);
           localStorage.setItem("profile_photo", res.profile_photo);
@@ -131,6 +145,12 @@ export default  function EmployeeLoginModal(props) {
           props.close();
           navigate("/");
           window.location.reload();
+        }}catch(err){
+          toast.success("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
         }
         } catch (err) {
           console.log(err);
@@ -167,6 +187,7 @@ export default  function EmployeeLoginModal(props) {
             let data =  SocialLogin(res.data.sub,res.data.email,res.data.name,res.data.picture,"Linkedin");
             console.log(data);
             localStorage.setItem("token", data.token);
+            localStorage.setItem("email",data.email)
             localStorage.setItem("userType", "user");
             localStorage.setItem("employee_id", data.employee_id);
             localStorage.setItem("profile_photo", data.profile_photo);
@@ -186,6 +207,11 @@ export default  function EmployeeLoginModal(props) {
             navigate("/");}
           }).catch((err) => {
             console.log(err.data);
+              toast.success("Something went wrong", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+              setLoading(false);
           })
           } 
         },[])
@@ -193,8 +219,9 @@ export default  function EmployeeLoginModal(props) {
       /*Functiom to login with facebook */
       const responseFacebook = async (response) => {
         if(response.graphDomain === "facebook"){
-          let data = await SocialLogin(response.userID,response.email,response.name,response.picture.data.url,"Facebook");
+         try{ let data = await SocialLogin(response.userID,response.email,response.name,response.picture.data.url,"Facebook");
             localStorage.setItem("token", data.token);
+            localStorage.setItem("email",data.email)
             localStorage.setItem("userType", "user");
             localStorage.setItem("employee_id", data.employee_id);
             localStorage.setItem("profile_photo", data.profile_photo);
@@ -205,7 +232,14 @@ export default  function EmployeeLoginModal(props) {
             });
             props.close();
             navigate("/");
-            window.location.reload();
+            window.location.reload();}
+            catch(err){
+              toast.success("Something went Wrong", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+              setLoading(false);
+            }
           }
       }
   return (

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import useValidation from "./useValidation";
 import { Modal } from "react-bootstrap";
-import {ChangePasswordApi} from "../../api/api"
+import { ChangePasswordApi } from "../../api/api"
 import { toast } from "react-toastify";
 const ChangePassword = (props) => {
-  let [loading , setLoading] = useState(false)
+  let [loading, setLoading] = useState(false)
   // USER CHANGE PASSWORD VALIDATION
 
-   /* Functionality to close the modal */
-   const close = () => {
+  /* Functionality to close the modal */
+  const close = () => {
     setState(initialFormState);
     setErrors("");
     setLoading(false);
@@ -31,10 +31,10 @@ const ChangePassword = (props) => {
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     conf_password: [
       (value) => (value ? null : "Confirm Password is required"),
@@ -55,18 +55,27 @@ const ChangePassword = (props) => {
     event.preventDefault();
     if (validate()) {
       setLoading(true)
-    let Response = await ChangePasswordApi(state)
-    if (Response.message === "Wrong password") {
-      setErrors({...errors,password : "Wrong current Password"})
-      setLoading(false)
-    }
-    if (Response.message === "Password updated successfully") {
-      toast.success("Password updated successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      close()
-    }
+      try {
+        let Response = await ChangePasswordApi(state)
+        if (Response.message === "Wrong password") {
+          setErrors({ ...errors, password: "Wrong current Password" })
+          setLoading(false)
+        }
+        if (Response.message === "Password updated successfully") {
+          toast.success("Password updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          close()
+        }
+      }
+      catch(err){
+        toast.success("Something went Wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setLoading(false);
+      }
     }
   };
   // END USER CHANGE PASSWORD VALIDATION
@@ -89,7 +98,7 @@ const ChangePassword = (props) => {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-10">
           {/* CHANGE PASSWORD FORM */}
-          <form onSubmit={(e)=>onUserChangePassClick(e)}>
+          <form onSubmit={(e) => onUserChangePassClick(e)}>
             <h5 className="text-center pb-8"> Change Password</h5>
             {/* FORM FIELDS */}
             <div className="form-group">
@@ -187,7 +196,7 @@ const ChangePassword = (props) => {
             </div>
             {/* END FORM FIELDS  */}
             <div className="form-group text-center">
-            {loading === true ? (
+              {loading === true ? (
                 <button
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
@@ -202,13 +211,13 @@ const ChangePassword = (props) => {
                 </button>
               ) : (
                 <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="submit"
-              >
-                Submit
-              </button>
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
               )}
-              
+
             </div>
           </form>
         </div>

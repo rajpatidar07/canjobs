@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
 // import filterjson from "../json/filterjson";
 import { getJson } from "../../api/api";
+import { toast } from "react-toastify";
 function SearchForm() {
   const location = useLocation();
   const path = location.pathname;
@@ -20,8 +21,14 @@ function SearchForm() {
   let [Json, setJson] = useState([]);
   /*Function to get thejSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    try{let Json = await getJson();
+    setJson(Json);}
+    catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   let navigate = useNavigate();
   /*Function to set data to the search job by country */

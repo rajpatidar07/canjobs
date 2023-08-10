@@ -12,7 +12,7 @@ function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
-  let user_type =localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType")
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -35,7 +35,7 @@ function PersonalDetails(props) {
     resume: "",
     profile_photo: "",
     is_featured: "",
-    status : props.employeeId === "0" ? "1" : ""
+    status: props.employeeId === "0" ? "1" : ""
   };
   /* Functionality to close the modal */
 
@@ -181,11 +181,19 @@ function PersonalDetails(props) {
     useValidation(initialFormStateuser, validators);
   // API CALL
   const UserData = async () => {
-    const userData = await EmployeeDetails(props.employeeId);
-    if (userData.data.employee.length === 0) {
-      setState([]);
-    } else {
-      setState(userData.data.employee[0]);
+    try {
+      const userData = await EmployeeDetails(props.employeeId);
+      if (userData.data.employee.length === 0) {
+        setState([]);
+      } else {
+        setState(userData.data.employee[0]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -203,22 +211,30 @@ function PersonalDetails(props) {
     // console.log(state)
     if (validate() && imgError === "") {
       setLoading(true);
-      const responseData = await AddEmployeeDetails(state);
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Employee added successfully", {
+      try {
+        const responseData = await AddEmployeeDetails(state);
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Employee added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Employee Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
-      }
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Employee Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true);
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -734,10 +750,10 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
-                  {(filterjson.interested||[]).map((interest)=>
-                  <option key={interest} value={interest}>
-                  {interest}
-                </option>)}
+                  {(filterjson.interested || []).map((interest) =>
+                    <option key={interest} value={interest}>
+                      {interest}
+                    </option>)}
                   {/* <option value={"swap"}>SWEP</option>
                   <option value={"parttime"}>Part-time</option>
                   <option value={"all"}>All</option> */}
@@ -878,28 +894,28 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-             {user_type === "admin" ? <div className="form-group col-md-4">
+              {user_type === "admin" ? <div className="form-group col-md-4">
                 <label
                   htmlFor="fetured"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Featured: <input
-                  type="checkbox"
-                  id="fetured"
-                  name="fetured"
-                  checked={state.is_featured === "1"}
-                  value={state.is_featured}
-                  onChange={(e) => setState(
-                    {
-                      ...state, is_featured:
-                        (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
-                    })}
-                />
+                    type="checkbox"
+                    id="fetured"
+                    name="fetured"
+                    checked={state.is_featured === "1"}
+                    value={state.is_featured}
+                    onChange={(e) => setState(
+                      {
+                        ...state, is_featured:
+                          (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
+                      })}
+                  />
                 </label>
-                
-                
+
+
               </div>
-              :null}
+                : null}
             </div>
             <div className="form-group text-center">
               {loading === true ? (

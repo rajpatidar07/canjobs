@@ -42,7 +42,7 @@ export default function JobTable(props) {
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
-    let userData;
+    try{let userData;
     if (props.employee_id) {
       userData = await GetEmployeeFilterJob(
         props.employee_id,
@@ -70,11 +70,14 @@ export default function JobTable(props) {
         sortOrder,
         props.company,
         props.filter_by_time,
-        location.state ? location.state.id : ""
+        location.state ? location.state.id : "",
+         props.response === "self"? "1":"0",
+        props.response === "lmia" ? "1" : "0"
       );
     }
-    if (userData.data.data.length === 0 || userData.data.length === 0) {
+    if (userData.data.data.length === 0 || userData.data.length === 0 || userData.data.data === undefined) {
       setjobData([]);
+      setresponseId()
       setIsLoading(false);
     } else {
       if (props.heading === "Dashboard" || location.pathname === "/employee") {
@@ -83,19 +86,27 @@ export default function JobTable(props) {
         setresponseId(userData.data.data[0].job_id)
       }
       //condition for limia and visa page
-      if (props.response === "lmia" || props.response === "visa") {
-        setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
-        setIsLoading(false);
-      }
-      //condition for Self job applied page
-      else if (props.response === "self") {
-        setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_self !== "0"));
-        setIsLoading(false);
-      } else {
+      // if (props.response === "lmia" || props.response === "visa") {
+      //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
+      //   setIsLoading(false);
+      // } 
+      // //condition for Self job applied page
+      // else if (props.response === "self") {
+      //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0"));
+      //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
+      //   setIsLoading(false);
+      // } else
+       
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
-      }
+      
+    }}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setIsLoading(false)
     }
   };
   /*Render function to get the job */
@@ -144,7 +155,7 @@ export default function JobTable(props) {
 
   /*To call Api to delete Job */
   async function deleteJob(e) {
-    const responseData = await DeleteJob(e);
+    try{const responseData = await DeleteJob(e);
     if (responseData.message === "job has been deleted") {
       toast.error("Job deleted Successfully", {
         position: toast.POSITION.TOP_RIGHT,
@@ -152,6 +163,11 @@ export default function JobTable(props) {
       });
       setApiCall(true);
       setDeleteAlert(false);
+    }}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   }
   /*Pagination Calculation */
@@ -166,7 +182,7 @@ export default function JobTable(props) {
 
   /*Function to change job */
   const onChangeJobClick = async (id) => {
-    const responseData = await ApplyJob(id, props.employee_id, 0);
+    try{const responseData = await ApplyJob(id, props.employee_id, 0);
     if (responseData.message === "already applied on this job") {
       toast.error("Already applied on this job", {
         position: toast.POSITION.TOP_RIGHT,
@@ -180,6 +196,11 @@ export default function JobTable(props) {
         autoClose: 1000,
       });
       setApiCall(true);
+    }}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -386,7 +407,7 @@ export default function JobTable(props) {
                     <React.Fragment key={job.job_id}>
                       <tr
                         className={
-                          job.is_applied === "1" ? "d-none" : "text-capitalize job_row"
+                          /*job.is_applied === "1" ? "d-none" : */"text-capitalize job_row"
                         }
                       >
                         <th scope="row" className="py-5 ">
@@ -696,7 +717,7 @@ export default function JobTable(props) {
                                   self={props.selfJob}
                                   total_applicants={job.total_applicants}
                                   role_category={job.role_category}
-                                  status={props.response === "visa" || props.response === "lmia" ? "7" : ""}
+                                  status={props.response === "response"||props.response === "visa" || props.response === "lmia" ? "1" : "0"}
                                   response={props.response}
                                   employee_id={location.state ?
                                     location.state.employee_id ?

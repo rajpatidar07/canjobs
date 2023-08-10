@@ -6,7 +6,7 @@ import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
-
+import { toast } from "react-toastify";
 function EmployeeSearch() {
   /*Filter states */
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -16,8 +16,13 @@ function EmployeeSearch() {
   let [Json, setJson] = useState([]);
   /*Function to get thejSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+   try{ let Json = await getJson();
+    setJson(Json);}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   /*Render Method */
   useEffect(() => {

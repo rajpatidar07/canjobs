@@ -47,11 +47,18 @@ function JobResponse(props) {
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
   let [changeJob, setChangeJob] = useState(false)
-  
+
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setJson(Json.data.data);
+    try {
+      let Json = await GetFilter();
+      setJson(Json.data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {
     props.setApiCall(true)
@@ -60,36 +67,47 @@ function JobResponse(props) {
   /* Function to get the Response data*/
   const ResponseData = async () => {
     setIsLoading(true)
-    const userData = await GetAllResponse(
-      props.heading === "Manage Jobs" || user_type === "company"
-        ? jobId
-        : null,
-      skillFilterValue,
-      experienceTypeFilterValue,
-      search,
-      props.filter_by_time || skillFilterValue || search || experienceTypeFilterValue || sortOrder ? 1 : currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder,
-      props.filter_by_time,
-      limiaFilterValue,
-      props.status
-    );
-    if (userData.data.data.length === 0) {
-      setResData([]);
-      setResponseData([]);
-      setIsLoading(false)
-    } else {
-      if (props.self === "yes") {
-        setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
+    try {
+      const userData = await GetAllResponse(
+        props.heading === "Manage Jobs" || user_type === "company"
+          ? jobId
+          : null,
+        skillFilterValue,
+        experienceTypeFilterValue,
+        search,
+        props.filter_by_time || skillFilterValue || search || experienceTypeFilterValue || sortOrder ? 1 : currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder,
+        props.filter_by_time,
+        limiaFilterValue,
+        props.status,
+        props.employee_id,
+        props.response === "lmia" ? "1" :"0"
+      );
+      if (userData.data.data.length === 0) {
+        setResData([]);
+        setResponseData([]);
+        setIsLoading(false)
       } else {
-        if (props.employee_id) {
-          setResponseData(userData.data.data.filter((item) => item.employee_status !== "0" && item.employee_id === props.employee_id));
-        } else {
-          setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
-        }
+        // if (props.self === "yes") {
+        //   setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
+        // } else {
+        //   if (props.employee_id) {
+        //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0" && item.employee_id === props.employee_id));
+        //   } else {
+        //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
+        //   }
+        // }
+        setResponseData(userData.data.data)
+        setTotalData(userData.data.total_rows);
+        setIsLoading(false)
       }
-      setTotalData(userData.data.total_rows);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setIsLoading(false)
     }
   };
@@ -139,23 +157,45 @@ function JobResponse(props) {
       job_status: "1",
       posted_job_id: jobId
     }
-    let response = await AddEmployeeDetails(data)
-    if (response.message === 'Employee data updated successfully') {
-      // Api call to set employee Visa
-      let status = "pending"
-      let VisaResponse = await AddUpdateVisa(e.employee_id, status)
-      if (VisaResponse.data.message === "created successfully") {
-        // Api call to set employee Limia
-        const lmia = { lmia_status: "position approved" };
-        let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
-        if (LimiaResponse.message === 'Data added successfully') {
-          toast.success("Employee Reserved successfully", {
+    try {
+      let response = await AddEmployeeDetails(data)
+      if (response.message === 'Employee data updated successfully') {
+        // Api call to set employee Visa
+        let status = "pending"
+        try {
+          let VisaResponse = await AddUpdateVisa(e.employee_id, status)
+          if (VisaResponse.data.message === "created successfully") {
+            // Api call to set employee Limia
+            const lmia = { lmia_status: "position approved" };
+            try {
+              let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
+              if (LimiaResponse.message === 'Data added successfully') {
+                toast.success("Employee Reserved successfully", {
+                  position: toast.POSITION.TOP_RIGHT,
+                  autoClose: 1000,
+                });
+                setApiCall(true)
+              }
+            } catch (err) {
+              toast.error("Something went wrong", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+
+            }
+          }
+        } catch (err) {
+          toast.error("Something went wrong", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setApiCall(true)
         }
       }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -544,8 +584,8 @@ function JobResponse(props) {
                         </tr>
                       ) : (
                         (response || []).map((res, i) => (
-                          ((props.response === "response") || (props.response === "self") ||
-                            ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
+                          // ((props.response === "response") || (props.response === "self") ||
+                          //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
                             <tr className="text-capitalize" key={i}>
                               <th className="py-5 ">
                                 {res.employee_id}
@@ -577,7 +617,7 @@ function JobResponse(props) {
                                           {res.name}
                                         </p>
                                         <p className="text-gray font-size-2 m-0 text-capitalize">
-                                          {res.gender === "female" ? "F" : "M"} ({res.marital_status + ", "}
+                                          {res.gender === "female" ? "F" : res.gender === "male" ? "M" : "O"} ({res.marital_status + ", "}
                                           {/*Calculation of age from date of birth*/}
                                           {moment().diff(
                                             res.date_of_birth,
@@ -803,7 +843,7 @@ function JobResponse(props) {
                                 </th>
                               )}
                             </tr>
-                            : null
+                            // : null
                         ))
                       )}
                     </tbody>

@@ -15,7 +15,7 @@ export default function ResetPassword() {
   let userType = path.split("/")[2].split(":")[0];
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
-  /*----USER LOGIN VALIDATION----*/
+  /*----USER RESET PASSWORD VALIDATION----*/
   const initialFormState = {
     password: "",
     conf_password: "",
@@ -33,19 +33,20 @@ export default function ResetPassword() {
           : "",
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----RESET PASSWORD ONCHANGE FUNCTION----*/
   const { state, onInputChange, setState, errors, validate } = useValidation(
     initialFormState,
     validators
   );
-  /*----LOGIN SUBMIT FUNCTION----*/
-  const onUserLoginClick = async (event) => {
+  /*----RESET PASSWORD SUBMIT FUNCTION----*/
+  const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
 console.log(state);
     if (validate()) {
       setLoading(true);
       // handle form submission
       if (userType === "user") {
+        try{
         let updatedTodo = await EmployeeResetPasswordApi(state);
         if (
           updatedTodo.status === true ||
@@ -59,10 +60,17 @@ console.log(state);
           setState(initialFormState);
           navigate("/");
           window.location.reload();
+        }}
+        catch(err){
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false)
         }
       }
       if (userType === "company") {
-        let updatedTodo = await EmployerResetPasswordApi(state);
+        try{let updatedTodo = await EmployerResetPasswordApi(state);
         if (
           updatedTodo.status === true ||
           updatedTodo.message === "Password updated successfully"
@@ -75,10 +83,16 @@ console.log(state);
           setState(initialFormState);
           navigate("/");
           window.location.reload();
+        }} catch(err){
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false)
         }
       }
       if (userType === "admin") {
-        let updatedTodo = await AdminResetPasswordApi(state);
+       try{ let updatedTodo = await AdminResetPasswordApi(state);
         if (
           updatedTodo.status === true ||
           updatedTodo.message === "Password updated successfully"
@@ -91,15 +105,21 @@ console.log(state);
           setState(initialFormState);
           navigate("/");
           window.location.reload();
+        }} catch(err){
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false)
         }
       }
     }
   };
 
-  // END USER LOGIN VALIDATION
+  // END USER RESET PASSWORD VALIDATION
   return (
     <>
-      {/* <!-- Login --> */}
+      {/* <!-- RESET PASSWORD --> */}
       <link rel="stylesheet" href="http://localhost:3000/css/bootstrap.css" />
       <link
         rel="stylesheet"
@@ -126,8 +146,8 @@ console.log(state);
                 alt="logo"
               />
             </div>
-            {/* user login form */}
-            <form onSubmit={onUserLoginClick}>
+            {/* user RESET PASSWORD form */}
+            <form onSubmit={onUserResetPasswordClick}>
               <h5 className="text-center pb-8"> Reset Password</h5>
               <div className="form-group">
                 <label

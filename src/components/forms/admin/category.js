@@ -117,7 +117,7 @@ function AddCategory(props) {
   const CategoryType = catType.filter(
     (thing, index, self) =>
       index === self.findIndex((t) => t.category_type === thing.category_type)
-  );console.log(CategoryType)
+  );
   
   return (
     <>

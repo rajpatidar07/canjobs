@@ -16,8 +16,15 @@ function AddJobModal(props) {
   let [Json, setJson] = useState([]);
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setJson(Json.data.data);
+    try {
+      let Json = await GetFilter();
+      setJson(Json.data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
 
   /* Functionality to close the modal */
@@ -65,13 +72,13 @@ function AddJobModal(props) {
     requirement: "",
     department: "",
     job_type: "",
-    role_category:  "",
+    role_category: "",
     education: "",
     language: "",
     keyskill: "",
     employement: "",
     job_category_id: "",
-    is_featured:"",
+    is_featured: "",
     company_id: user_type === "company" ? company_id : "",
   };
   // VALIDATION CONDITIONS
@@ -81,10 +88,10 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Job Title is required"
           : value.length < 2
-          ? "Job Title should have 2 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Job Title can not have a number."
-          : "",
+            ? "Job Title should have 2 or more letters"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Job Title can not have a number."
+              : "",
     ],
     experience_required: [
       (value) => (value === "" ? "Experienceis required" : null),
@@ -98,12 +105,12 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Apply link is required"
           : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-              value
-            )
-          ? "Write the correct link"
-          : value.length < 3
-          ? "Apply link  should have 3 or more letters"
-          : null,
+            value
+          )
+            ? "Write the correct link"
+            : value.length < 3
+              ? "Apply link  should have 3 or more letters"
+              : null,
     ],
     job_type: [
       (value) =>
@@ -126,30 +133,44 @@ function AddJobModal(props) {
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
-  useValidation(initialFormState, validators);
+    useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
-    let userData = await GetJob(props.jobdata);
-    if (
-      props.jobdata === undefined ||
-      props.jobdata === "0" ||
-      props.jobdata.length === 0 ||
-      state === undefined ||
-      userData.data.data.length === 0
-    ) {
-      setState(initialFormState);
-    } else {
-      setState(userData.data.data[0]);
+    try {
+      let userData = await GetJob(props.jobdata);
+      if (
+        props.jobdata === undefined ||
+        props.jobdata === "0" ||
+        props.jobdata.length === 0 ||
+        state === undefined ||
+        userData.data.data.length === 0
+      ) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data.data[0]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
   /* Function to get Employer data*/
   const CompnayData = async () => {
-    const userData = await getAllEmployer();
-    if (userData.data.length === 0) {
-      setCompany([]);
-    } else {
-      setCompany(userData.data);
+    try {
+      const userData = await getAllEmployer();
+      if (userData.data.length === 0) {
+        setCompany([]);
+      } else {
+        setCompany(userData.data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -176,22 +197,29 @@ function AddJobModal(props) {
     event.preventDefault();
     setLoading(true);
     if (validate()) {
-      let responseData = await AddJob(state);
-      if (responseData.message === "job data inserted successfully") {
-        toast.success("Job Added successfully", {
+      try {
+        let responseData = await AddJob(state);
+        if (responseData.message === "job data inserted successfully") {
+          toast.success("Job Added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "job data updated successfully") {
+          toast.success("Job Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
-      }
-      if (responseData.message === "job data updated successfully") {
-        toast.success("Job Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true);
-        return close();
       }
     } else {
       setLoading(false);
@@ -542,7 +570,7 @@ function AddJobModal(props) {
                     id="role_category"
                   />
                   {/*----ERROR MESSAGE FOR role_category----*/}
-                     {errors.role_category && (
+                  {errors.role_category && (
                     <span
                       key={errors.role_category}
                       className="text-danger font-size-3"
@@ -935,28 +963,28 @@ function AddJobModal(props) {
                 )}
               </div>
             </div>
-           {user_type === "admin" ? <div className="row">
-            <div className="form-group col-md-4">
+            {user_type === "admin" ? <div className="row">
+              <div className="form-group col-md-4">
                 <label
                   htmlFor="fetured"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Featured: <input
-                  type="checkbox"
-                  id="fetured"
-                  name="fetured"
-                  checked={state.is_featured === "1"}
-                  value={state.is_featured}
-                  onChange={(e) => setState(
-                    {
-                      ...state, is_featured:
-                        (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
-                    })}
-                />
+                    type="checkbox"
+                    id="fetured"
+                    name="fetured"
+                    checked={state.is_featured === "1"}
+                    value={state.is_featured}
+                    onChange={(e) => setState(
+                      {
+                        ...state, is_featured:
+                          (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
+                      })}
+                  />
                 </label>
-                </div>
+              </div>
             </div>
-            :null}
+              : null}
 
 
             <div className="form-group text-center">

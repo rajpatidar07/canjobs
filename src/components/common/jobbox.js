@@ -41,32 +41,42 @@ function JobBox({
   const name = localStorage.getItem("name");
   // /* Function to get Job data*/
   const JobData = async () => {
-    const userData = await GetAllJobs(
-      search,
-      path === "/jobs" || path === "/managejobs" || path === "/response" ? jobLocation : country,
-      path === "/jobs" || path === "/managejobs" || path === "/response" ? categoryFilterValue : category,
-      token && location.pathname === "/" ? skill : SkillFilterValue,
-      jobSwapFilterValue
-    );
-    if (userData.data.data.length === 0) {
-      setjobData([]);
-    } else {
-      if (!token && location.pathname === "/") {
-        setjobData(userData.data.data.filter((item) => item.is_featured === "1"));
+    try {
+      const userData = await GetAllJobs(
+        search,
+        path === "/jobs" || path === "/managejobs" || path === "/response" ? jobLocation : country,
+        path === "/jobs" || path === "/managejobs" || path === "/response" ? categoryFilterValue : category,
+        token && location.pathname === "/" ? skill : SkillFilterValue,
+        jobSwapFilterValue
+      );
+      if (userData.data.data.length === 0) {
+        setjobData([]);
       } else {
-        setjobData(userData.data.data)
+        if (!token && location.pathname === "/") {
+          setjobData(userData.data.data.filter((item) => item.is_featured === "1"));
+        } else {
+          setjobData(userData.data.data)
+        }
+        setNoData(userData.data.total_rows);
       }
-      setNoData(userData.data.total_rows);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
   /*Render Function */
   useEffect(() => {
     JobData();
-     //Function to replace the url path after searching Job
-     if (search) {
+    //Function to replace the url path after searching Job
+    if (search) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
+    }
+    if (ApiCall === true) {
+      setApiCall(false)
     }
   }, [
     showAddJobsModal,
@@ -85,22 +95,32 @@ function JobBox({
 
   /*FUnction to apply to the job */
   const OnApplyClick = async (status, job_id) => {
-    let Response = await ApplyJob(job_id, user_id, status);
-    if (Response.message === "Job applied successfully") {
-      toast.success("Job Applied successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+    try {
+      let Response = await ApplyJob(job_id, user_id, status);
+      if (Response.message === "Job applied successfully") {
+        toast.success("Job Applied successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+      if (Response.message === "already applied on this job") {
+        toast.success("Already applied on this job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
       setApiCall(true);
     }
-    if (Response.message === "already applied on this job") {
-      toast.success("Already applied on this job", {
+    catch (err) {
+      console.log(err)
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
     }
-    setApiCall(true);
   };
+
   return (
     <>
       <div
@@ -119,7 +139,11 @@ function JobBox({
             // Convert the skill string to an array
             let skill = [];
             if (job !== "") {
-              skill = job.keyskill.split(",");
+              skill = job.keyskill === null ||
+                job.keyskill === undefined ||
+                job.keyskill === "undefined" ?
+                [] :
+                job.keyskill.split(",");
             }
             return (
               <div
@@ -234,7 +258,7 @@ function JobBox({
                   </div>
                 </Link>
                 <div className="row pt-4">
-                  <div className="col-md-12 text-left text-capitalize">
+                  <div className="col-md-12 text-left text-capitalize text-break">
                     <p>{job.job_description}</p>
                   </div>
                   <div className="col-md-8">

@@ -21,7 +21,7 @@ function JobModal(props) {
             <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
                 <h5 className='text-center mt-5'>Relevant job  </h5>
                     <Job
-                        skill={props.data.skill}
+                        skill={"props.data.skill"}
                         employee_id={props.data.employee_id}
                     />
             </div>

@@ -44,10 +44,10 @@ function Skills(props) {
         value === "" || value.trim() === ""
           ? "Skills / Software Name is required"
           : value.length < 3
-          ? "Skills / Software Name should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Skills / Software Name can not have a number."
-          : "",
+            ? "Skills / Software Name should have 3 or more letter"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Skills / Software Name can not have a number."
+              : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -57,13 +57,28 @@ function Skills(props) {
   );
   // API CALL
   const SkillData = async () => {
-    let SkillDetails = await EmployeeSkillDetails(props.employeeId);
-    let SkillList = await GetFilter();
-    setSkillList(SkillList.data.data.Skill);
-    if (SkillDetails.data.skill.length === 0) {
-      SetSkillData([]);
-    } else {
-      SetSkillData(SkillDetails.data.skill);
+    try {
+      let SkillDetails = await EmployeeSkillDetails(props.employeeId);
+      try {
+        let SkillList = await GetFilter();
+        setSkillList(SkillList.data.data.Skill);
+      }
+      catch (err) {
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
+      if (SkillDetails.data.skill.length === 0) {
+        SetSkillData([]);
+      } else {
+        SetSkillData(SkillDetails.data.skill);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   /*Render method to get the skill data */
@@ -71,7 +86,7 @@ function Skills(props) {
     if (props.employeeId !== undefined) {
       SkillData();
     }
-    if(apiCall === true){
+    if (apiCall === true) {
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,34 +111,42 @@ function Skills(props) {
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
     event.preventDefault();
-     if (validate()) {
+    if (validate()) {
       setLoading(true);
-      let responseData = await AddEmployeeSkill(state, props.employeeId);
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Skill Updated successfully", {
+      try {
+        let responseData = await AddEmployeeSkill(state, props.employeeId);
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Skill Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState({ ...state, skill: "" });
+          setSkillOption({ ...state, skill: "" });
+          setErrors("");
+          setLoading(false);
+          props.setApiCall(true);
+          setApiCall(true)
+        }
+        else if (responseData.message === "already exist !") {
+          toast.error("Skill Already added", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setState({ ...state, skill: "" });
+          setSkillOption({ ...state, skill: "" });
+          setErrors("");
+          setLoading(false);
+          props.setApiCall(true);
+          setApiCall(true)
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState({ ...state, skill: "" }); 
-        setSkillOption({ ...state, skill: "" });
-        setErrors("");
-        setLoading(false);
-        props.setApiCall(true);
-        setApiCall(true)
+        setLoading(false)
       }
-      else if(responseData.message === "already exist !"){
-        toast.error("Skill Already added", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setState({ ...state, skill: "" }); 
-        setSkillOption({ ...state, skill: "" });
-        setErrors("");
-        setLoading(false);
-        props.setApiCall(true);
-        setApiCall(true)
-      }
-    } 
+    }
   };
 
   // END USER PERSONAL DETAIL VALIDATION
@@ -141,15 +164,22 @@ function Skills(props) {
 
   /*To call Api to delete Skill */
   async function deleteSkill(e) {
-    const responseData = await DeleteEmployeeSkill(e);
-    if (responseData.message === "skill has been deleted") {
-      toast.error("Skill deleted Successfully", {
+    try {
+      const responseData = await DeleteEmployeeSkill(e);
+      if (responseData.message === "skill has been deleted") {
+        toast.error("Skill deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true);
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true);
-      setApiCall(true);
-      setDeleteAlert(false);
     }
   }
   return (
@@ -198,12 +228,10 @@ function Skills(props) {
                 name="skill"
                 id="skill"
                 onChange={onSelectChange}
-                defaultInputValue={state.skill}
                 className={
                   errors.skill ? "border border-danger w-100 text-capitalize" : "text-capitalize w-100"
                 }
-                // clearValue={true}
-                isClearable={true}
+                isClearable={""}
               />
               {loading === true ? (
                 <button

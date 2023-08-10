@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getallEmployeeData } from "../../api/api";
 import moment from "moment";
+import { toast } from "react-toastify";
 function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
   let [employeeData, setEmployeeData] = useState([]);
   let [totalData, setTotalData] = useState([]);
@@ -11,33 +12,40 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
   const search = searchParams.get("search");
   /*Api function to get the employee data */
   const EmpData = async () => {
-    const userData = await getallEmployeeData(
-      search,
-      Exp,
-      Skill,
-      "",
-      1,
-      10,
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      categorye,
-      Swap,
-      candian);
-    if (userData.data.length === 0) {
-      setEmployeeData([]);
-    } else {
-      if (location.pathname === "/company") {
-        if (featured === "yes") {
-          setEmployeeData(userData.data.filter((item) => item.is_featured === "1"));
-        }
+    try {
+      const userData = await getallEmployeeData(
+        search,
+        Exp,
+        Skill,
+        "",
+        1,
+        10,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        categorye,
+        Swap,
+        candian);
+      if (userData.data.length === 0) {
+        setEmployeeData([]);
       } else {
-        setEmployeeData(userData.data);
+        if (location.pathname === "/company") {
+          if (featured === "yes") {
+            setEmployeeData(userData.data.filter((item) => item.is_featured === "1"));
+          }
+        } else {
+          setEmployeeData(userData.data);
+        }
+        setTotalData(userData.totalData);
       }
-      setTotalData(userData.totalData);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   /*Render Method*/

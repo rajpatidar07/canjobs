@@ -9,7 +9,7 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
 import moment from "moment";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Loader from '../common/loader';
 import DocumentModal from "../forms/admin/EmployeeDocumentModal"
 const UserProfile = (props) => {
@@ -30,19 +30,27 @@ const UserProfile = (props) => {
   const employeeId = user_type === "admin" ? props.employeeId : id;
   /*Function to get user Data */
   const UserData = async () => {
-    const userData = await EmployeeDetails(employeeId);
-    if (userData.data === undefined ||
-      userData.data.length === 0 ||
-      userData.data.employee.length === 0) {
-      setuserDetail([]);
-      setPersonalDetail([]);
-      setIsLoading(false)
-    } else {
-      setuserDetail(userData.data);
-      setPersonalDetail(userData.data.employee[0]);
-      localStorage.setItem("profile_photo", userData.data.employee[0].profile_photo)
-      localStorage.setItem("name", userData.data.employee[0].name)
-      localStorage.setItem("skill",  userData.data.skill.map(obj => obj.skill).join(', '));
+    try {
+      const userData = await EmployeeDetails(employeeId);
+      if (userData.data === undefined ||
+        userData.data.length === 0 ||
+        userData.data.employee.length === 0) {
+        setuserDetail([]);
+        setPersonalDetail([]);
+        setIsLoading(false)
+      } else {
+        setuserDetail(userData.data);
+        setPersonalDetail(userData.data.employee[0]);
+        localStorage.setItem("profile_photo", userData.data.employee[0].profile_photo)
+        localStorage.setItem("name", userData.data.employee[0].name)
+        localStorage.setItem("skill", userData.data.skill.map(obj => obj.skill).join(', '));
+        setIsLoading(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setIsLoading(false)
     }
   };
@@ -50,13 +58,20 @@ const UserProfile = (props) => {
 
   /*Function to Geyt applied job data */
   const AppliedJob = async () => {
-    const applied = await EmployeeAppliedJob(employeeId);
-    if (applied.data === undefined ||
-      applied.data.length === 0
-    ) {
-      setAppliedJob([])
-    } else {
-      setAppliedJob(applied.data);
+    try {
+      const applied = await EmployeeAppliedJob(employeeId);
+      if (applied.data === undefined ||
+        applied.data.length === 0
+      ) {
+        setAppliedJob([])
+      } else {
+        setAppliedJob(applied.data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -162,7 +177,7 @@ const UserProfile = (props) => {
                         {PersonalDetail.name ? PersonalDetail.name : ""}
                         <br />
                         <span className="age_gender font-size-3 text-smoke">
-                          {PersonalDetail.gender || PersonalDetail.marital_status || PersonalDetail.marital_status || PersonalDetail.date_of_birth ? `(${PersonalDetail.gender === "female" ? "F" : "M"},
+                          {PersonalDetail.gender || PersonalDetail.marital_status || PersonalDetail.marital_status || PersonalDetail.date_of_birth ? `(${PersonalDetail.gender === "female" ? "F" : PersonalDetail.gender === "male" ? "M" : "O"},
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`: ""}
@@ -180,13 +195,13 @@ const UserProfile = (props) => {
                     <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10  border-bottom border-mercury">
                       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                         <span>Personal Info</span>
-                        
-                          {user_type === "company" || props.self === "yes" ? null : (
-                            <CustomButton
-                              className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                              onClick={() => setShowPersonalDetails(true)}
-                            />
-                          )}
+
+                        {user_type === "company" || props.self === "yes" ? null : (
+                          <CustomButton
+                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                            onClick={() => setShowPersonalDetails(true)}
+                          />
+                        )}
 
                         {showDoc ? (<DocumentModal
                           show={showDoc}
@@ -396,11 +411,11 @@ const UserProfile = (props) => {
                       </Link>
                     </li>
                     <li className="tab-menu-items nav-item pr-12">
-                    {user_type === "user" ||user_type === "company" ? <CustomButton
-                          className=" font-size-4 rounded-3 btn-primary border-0"
-                          onClick={() => setShowDoc(true)}
-                          >{user_type === "user" ? "Add Document" :"Documents"} </CustomButton>: null}
-                          </li>
+                      {user_type === "user" || user_type === "company" ? <CustomButton
+                        className=" font-size-4 rounded-3 btn-primary border-0"
+                        onClick={() => setShowDoc(true)}
+                      >{user_type === "user" ? "Add Document" : "Documents"} </CustomButton> : null}
+                    </li>
                   </ul>
                   {/*---Profile Details----*/}
                   <div
@@ -418,8 +433,8 @@ const UserProfile = (props) => {
                       {/*----About Employee----*/}
                       <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5 px-9">
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold d-flex align-items-center justify-content-space-between">
-                          <span>About</span>  
-                          
+                          <span>About</span>
+
                         </h4>
                         <p className="font-size-4 mb-8 text-break">
                           {PersonalDetail.description}
@@ -699,7 +714,12 @@ const UserProfile = (props) => {
                                       </span>
                                     </h3>
                                   </div>
+
                                 </div>
+                                <div className="pt-5"><span className="font-size-3 text-gray  mr-7">
+                                  Resume:<b>{data.employee_lmia_status}</b>
+                                </span></div>
+
                                 <div className="d-flex pt-10">
                                   <ul className="list-unstyled mb-1 d-flex flex-wrap text-capitalize">
                                     <li>

@@ -6,15 +6,19 @@ import { AddEmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function ApplyBeforeform(props) {
-    const [loading, setLoading] = useState(false);
-    const user_id = localStorage.getItem("employee_id");
+  const [loading, setLoading] = useState(false);
+  const user_id = localStorage.getItem("employee_id");
+  const email = localStorage.getItem("email");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
     name: "",
-    email: "",
+    email: email === "undefined" ||
+      email === null ||
+      email === "" ||
+      email === undefined ? "" : email,
     contact_no: "",
-    employee_id:user_id
+    employee_id: user_id
   };
   /* Functionality to close the modal */
 
@@ -63,38 +67,46 @@ function ApplyBeforeform(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, validate, setErrors } =
     useValidation(initialFormStateuser, validators);
-  
+
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
     console.log(state)
     if (validate()) {
       setLoading(true);
-      const responseData = await AddEmployeeDetails(state);
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Employee added successfully", {
+      try {
+        const responseData = await AddEmployeeDetails(state);
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Employee added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          localStorage.setItem("name", state.name)
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Employee Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          localStorage.setItem("name", state.name)
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        localStorage.setItem("name",state.name)
-        props.setApiCall(true);
-        return close();
-      }
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Employee Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        localStorage.setItem("name",state.name)
-        props.setApiCall(true);
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);
     }
   }
   // END USER PERSONAL DETAIL VALIDATION
-  
+
   return (
     <>
       <Modal
@@ -113,9 +125,9 @@ function ApplyBeforeform(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserPersonalDetailClick}>
-            
-              <h5 className="text-center pt-2 mb-7">Add Personal Details</h5>
-            
+
+            <h5 className="text-center pt-2 mb-7">Add Personal Details</h5>
+
             <div className="row pt-5">
               <input
                 maxLength={20}
@@ -165,6 +177,11 @@ function ApplyBeforeform(props) {
                   name="email"
                   value={state.email || ""}
                   onChange={onInputChange}
+                  disabled={email === "undefined" ||
+                    email === null ||
+                    email === "" ||
+                    email === undefined ?
+                    false : true}
                   className={
                     errors.email
                       ? "form-control border border-danger"
@@ -212,8 +229,8 @@ function ApplyBeforeform(props) {
                 )}
               </div>
             </div>
-             
-              {/* <div className="form-group col-md-4">
+
+            {/* <div className="form-group col-md-4">
                 <label
                   htmlFor="resume"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

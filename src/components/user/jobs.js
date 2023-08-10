@@ -8,9 +8,9 @@ import FilterJson from "../json/filterjson";
 import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import { useEffect } from "react";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 import CustomButton from "../common/button";
-import { ToastContainer } from "react-bootstrap";
+import { ToastContainer ,toast } from "react-toastify";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -20,13 +20,18 @@ function JobSearch() {
   let [Json, setJson] = useState([]);
   /*Function to get thejSon */
   const JsonData = async () => {
-    let Json = await getJson();
-    setJson(Json);
+    try{let Json = await getJson();
+    setJson(Json);}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   /*Render Method */
   useEffect(() => {
     JsonData();
-  }, [categoryFilterValue, SkillFilterValue ,jobSwapFilterValue , jobLocation]);
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
   // eslint-disable-next-line no-use-before-define
   /*Function to Rest the feilds */
   let onReset = () => {
@@ -39,11 +44,11 @@ function JobSearch() {
     <>
       <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
+        <ToastContainer />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
             <div className="row ">
-            <ToastContainer/>
               {/* <!-- Hero Form --> */}
               <div className="col-lg-12 col-12 translateY-25  pb-10 job_search_box_page">
                 <SearchForm />
@@ -57,7 +62,7 @@ function JobSearch() {
               <div className="col-12 col-lg-10 col-xl-12 text-center">
                 <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
-                    <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="col-md-2 col-lg-2 mb-5">
                       <select
                         name="category"
                         id="category"
@@ -74,7 +79,7 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
-                    <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="col-md-2 col-lg-2 mb-5">
                       <select
                         name="skill"
                         id="skill"
@@ -93,7 +98,7 @@ function JobSearch() {
                         })}
                       </select>
                     </div>
-                    <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="col-md-2 col-lg-2 mb-5">
                       <select
                         name="job_location"
                         id="job_location"
@@ -112,7 +117,7 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
-                    <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="col-md-2 col-lg-2 mb-5">
                       <select
                         name="job_type"
                         id="job_type"
@@ -131,15 +136,15 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
-                    <div className="col-md-3 col-lg-3 mb-5">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={()=>onReset()}
-                      title="Reset"
-                      type="button"
-                    >
-                      Reset
-                    </CustomButton>
+                    <div className="col-md-4 col-lg-4 mb-5">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => onReset()}
+                        title="Reset"
+                        type="button"
+                      >
+                        Reset
+                      </CustomButton>
                     </div>
                   </div>
                 </form>
@@ -155,18 +160,18 @@ function JobSearch() {
                     role="tablist"
                   >
                     {
-                      <JobBox/> ? <div className="mb-8 p-0 w-100 active active">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox
-                        categoryFilterValue={categoryFilterValue}
-                        SkillFilterValue={SkillFilterValue}
-                        jobSwapFilterValue={jobSwapFilterValue}
-                        jobLocation={jobLocation}
-                      /> 
-                      {/* <!-- End Single Featured Job --> */}
-                    </div> :
-                    <div className="table-responsive main_table_div">
-                    <Loader/></div> }
+                      <JobBox /> ? <div className="mb-8 p-0 w-100 active active">
+                        {/* <!-- Single Featured Job --> */}
+                        <JobBox
+                          categoryFilterValue={categoryFilterValue}
+                          SkillFilterValue={SkillFilterValue}
+                          jobSwapFilterValue={jobSwapFilterValue}
+                          jobLocation={jobLocation}
+                        />
+                        {/* <!-- End Single Featured Job --> */}
+                      </div> :
+                        <div className="table-responsive main_table_div">
+                          <Loader /></div>}
                   </div>
                 </div>
                 {/* <!-- form end --> */}

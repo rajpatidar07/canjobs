@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { EmployeeDetails } from "../../api/api";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -140,7 +141,7 @@ function ResumeGrerator(props) {
   const [Education, setEducation] = useState([]);
   const [userCareer, setuserCareer] = useState([]);
   const UserData = async () => {
-    const userData = await EmployeeDetails(id);
+   try{ const userData = await EmployeeDetails(id);
     if (userData.data.length === 0) {
       setUser([]);
       setSkills([]);
@@ -151,6 +152,11 @@ function ResumeGrerator(props) {
       setSkills(userData.data.skill);
       setuserCareer(userData.data.career);
       setEducation(userData.data.education);
+    }}catch(err){
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {

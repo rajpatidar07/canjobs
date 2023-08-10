@@ -14,15 +14,23 @@ export default function ApplicantsStatusModal(props) {
       employee_id: props.data.employee_id,
       status: status,
     }
-    let response = await AddEmployeeDetails(data)
-    if (response.message === 'Employee data updated successfully') {
-      toast.success("Employee status changes successfully", {
+    try {
+      let response = await AddEmployeeDetails(data)
+      if (response.message === 'Employee data updated successfully') {
+        toast.success("Employee status changes successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true)
+        setLoading(false)
+        props.close()
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true)
       setLoading(false)
-      props.close()
     }
   }
   return (
@@ -51,7 +59,7 @@ export default function ApplicantsStatusModal(props) {
               Status <span className="text-danger">*</span> :
             </label>
             <select
-              value={status|| props.data.status}
+              value={status || props.data.status}
               onChange={(e) => {
                 setStatus(e.target.value)
               }}
@@ -59,14 +67,14 @@ export default function ApplicantsStatusModal(props) {
                 // !isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" :
                 "text-capitalize form-control"}>
               <option value={""}>Select Applicants status</option>
-             { props.self === "yes" ?
-              <option value={1}>Approve</option> :
-              (FilterJson.employee_status || []).map((item, index) => {
-                return (
-                  
-                  <option value={index + 1} key={index}>{item}</option>
-                )
-              })}
+              {props.self === "yes" ?
+                <option value={1}>Approve</option> :
+                (FilterJson.employee_status || []).map((item, index) => {
+                  return (
+
+                    <option value={index + 1} key={index}>{item}</option>
+                  )
+                })}
             </select>
           </div>
           <div className="form-group text-center d-flex justify-content-center">

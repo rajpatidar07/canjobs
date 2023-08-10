@@ -24,8 +24,15 @@ function EmployementDetails(props) {
 
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setIndustryList(Json.data.data.Industry);
+    try {
+      let Json = await GetFilter();
+      setIndustryList(Json.data.data.Industry);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
 
   /* Functionality to close the modal */
@@ -111,15 +118,22 @@ function EmployementDetails(props) {
     useValidation(initialFormState, validators);
   // API CALL
   const EmployeementData = async (data) => {
-    let Employment = await EmployeeDetails(props.employeeId);
-    // setEmployementData(Employment.data.career);
-    if (Employment.data.career.length === 0) {
-      setEmployementData([]);
-    } else {
-      setEmployementData(Employment.data.career);
-    }
-    if (data !== undefined || data) {
-      setState(data);
+    try {
+      let Employment = await EmployeeDetails(props.employeeId);
+      // setEmployementData(Employment.data.career);
+      if (Employment.data.career.length === 0) {
+        setEmployementData([]);
+      } else {
+        setEmployementData(Employment.data.career);
+      }
+      if (data !== undefined || data) {
+        setState(data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -140,28 +154,36 @@ function EmployementDetails(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddEmployeement(state, props.employeeId);
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Career Updated successfully", {
+      try {
+        let responseData = await AddEmployeement(state, props.employeeId);
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Career Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          setApiCall(true);
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+        }
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Career Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          setApiCall(true);
+          setState(initialFormState);
+          setErrors("");
+          setLoading(false);
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        setApiCall(true);
-        setState(initialFormState);
-        setErrors("");
-        setLoading(false);
-      }
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Career Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true);
-        setApiCall(true);
-        setState(initialFormState);
-        setErrors("");
-        setLoading(false);
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -180,15 +202,23 @@ function EmployementDetails(props) {
   };
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
-    const responseData = await DeleteEmployeeCareer(e);
-    if (responseData.message === "career details has been deleted") {
-      toast.error("Career deleted Successfully", {
+    try {
+      const responseData = await DeleteEmployeeCareer(e);
+      if (responseData.message === "career details has been deleted") {
+        toast.error("Career deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true);
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      props.setApiCall(true);
-      setApiCall(true);
-      setDeleteAlert(false);
+      setLoading(false)
     }
   }
   return (
@@ -237,7 +267,7 @@ function EmployementDetails(props) {
                   <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                     <span className="font-size-4 text-gray w-100">
                       {moment(CareerDetails.start_date).format("YYYY-MM-DD")} -{" "}
-                      {CareerDetails.currently_work_here === ("1"||1) ? "Currently working" :moment(CareerDetails.end_date).format("YYYY-MM-DD")}
+                      {CareerDetails.currently_work_here === ("1" || 1) ? "Currently working" : moment(CareerDetails.end_date).format("YYYY-MM-DD")}
                     </span>
                     <span className="font-size-3 text-gray w-100">
                       <span className="mr-4" style={{ marginTop: "-2px" }}>

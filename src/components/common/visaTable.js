@@ -325,30 +325,7 @@ export default function VisaTable(props) {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    {props.heading === "Dashboard" ? (
-                                                        <div className=" mb-0">
-                                                            <p className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate">
-                                                                {empdata.name}
-                                                            </p>
-                                                            <div className="text-gray font-size-2 m-0 text-capitalize">
-                                                                {empdata.gender === "female" ? "F" : "M"} (
-                                                                {empdata.marital_status + ", "}
-                                                                {/*Calculation of age from date of birth*/}
-                                                                {moment().diff(empdata.date_of_birth, "years")}
-                                                                Y)
-                                                                {empdata.is_featured === "1" ? (
-                                                                    <span className="bg-orange text-white featured_tag">
-                                                                        Featured
-                                                                    </span>
-                                                                ) : null}
-                                                                {empdata.created_by_admin === "0" ? (
-                                                                    <span className="bg-info text-white web_tag">
-                                                                        Web
-                                                                    </span>
-                                                                ) : null}
-                                                            </div>
-                                                        </div>
-                                                    ) : (
+                                                 
                                                         <div
                                                             title="Employee Details"
                                                         >
@@ -362,7 +339,7 @@ export default function VisaTable(props) {
                                                                         {empdata.name}
                                                                     </p>
                                                                     <p className="text-gray font-size-2 m-0 text-capitalize">
-                                                                        {empdata.gender === "female" ? "F" : "M"} (
+                                                                    {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
                                                                         {empdata.marital_status + ", "}
                                                                         {/*Calculation of age from date of birth*/}
                                                                         {moment().diff(
@@ -385,7 +362,7 @@ export default function VisaTable(props) {
                                                                 </div>
                                                             )}
                                                         </div>
-                                                    )}
+                                                   
                                                 </div>
                                             </td>
                                             <td className="py-5 ">

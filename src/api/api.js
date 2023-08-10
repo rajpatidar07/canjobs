@@ -443,7 +443,7 @@ export const GetEmployeeDocumentList = async (id, type) => {
   );
   return response;
 };
-
+// yaha se
 /*Api to upload document*/
 export const UploadDocument = async (id, type, doc, docId) => {
   const response = await axios.put(
@@ -620,7 +620,9 @@ export const GetAllResponse = async (
   sort,
   time,
   lima,
-  status
+  status,
+  employee_id,
+  job_status
 ) => {
   const response = await axios.post(
     `${API_URL}getJobResponse`,
@@ -636,7 +638,9 @@ export const GetAllResponse = async (
       search: search,
       filter_by_time: time,
       filter_lmia_status: lima,
-      employee_status: status
+      filter_employee_status: status,
+      filter_employee_id: employee_id,
+      filter_job_status: job_status
     },
     {
       headers: {
@@ -661,7 +665,9 @@ export const GetAllJobs = async (
   sort_order,
   company,
   time,
-  id
+  id,
+  selfValue,
+  adminValue
   // employeeSkill
 ) => {
   const response = await axios.post(
@@ -672,12 +678,15 @@ export const GetAllJobs = async (
       filter_keyskill: skill,
       filter_location: location,
       page: page,
-      search: search ? search : company,
+      search: search /*? search : company*/,
       limit: limit,
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
-      job_id: id
+      job_id: id,
+      filter_company_name: company,
+      filter_applied_by_self: selfValue,
+      filter_applied_by_admin: adminValue
       // employee_skills: employeeSkill,
     },
     {
