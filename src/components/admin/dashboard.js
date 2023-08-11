@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 // import EmployeeDetails from "../common/employeeDetail";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer/*,toast */ } from "react-toastify";
 import Interview from "../common/interviewTable";
 // import JobResponse from "./response";
 import JobTable from "../common/jobTable";
@@ -25,12 +25,17 @@ const AdminDashboard = () => {
   let [apiCall, setApiCall] = useState("");
   /*Function to get the summary count */
   // let AllCounts = async () => {
-  //   let Data = await getSummaryCount();
+  // try{  let Data = await getSummaryCount();
   //   // console.log(Data);
   //   if (Data.length === 0) {
   //     setCountData("");
   //   } else {
   //     setCountData(Data);
+  //   }}catch(err){
+  //     toast.error("Something went wrong", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
   //   }
   // };
   // useEffect(() => {

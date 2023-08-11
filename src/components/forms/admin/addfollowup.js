@@ -21,18 +21,25 @@ function Addfollowup(props) {
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
-    const userData = await getSingleFollowup(
-      props.resData.employee_id,
-      props.job_id
-    );
-    if (
-      userData.data.followup.length === 0 ||
-      props.resData.employee_id === "" ||
-      props.resData.employee_id === undefined
-    ) {
-      setResponseData([]);
-    } else {
-      setResponseData(userData.data.followup);
+    try {
+      const userData = await getSingleFollowup(
+        props.resData.employee_id,
+        props.job_id
+      );
+      if (
+        userData.data.followup.length === 0 ||
+        props.resData.employee_id === "" ||
+        props.resData.employee_id === undefined
+      ) {
+        setResponseData([]);
+      } else {
+        setResponseData(userData.data.followup);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -56,8 +63,8 @@ function Addfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-          ? "Discription should have 2 or more letters."
-          : "",
+            ? "Discription should have 2 or more letters."
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -75,14 +82,22 @@ function Addfollowup(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddFollowup({ state, employId, jobId });
-      if (responseData.message === "follow up updated successfully") {
-        toast.success("Followup Updated successfully", {
+      try {
+        let responseData = await AddFollowup({ state, employId, jobId });
+        if (responseData.message === "follow up updated successfully") {
+          toast.success("Followup Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);

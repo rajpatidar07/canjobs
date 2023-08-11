@@ -95,26 +95,28 @@ export default function CompanySignUp(props) {
     event.preventDefault();
     if (validate() && state.otp && state.term_and_condition) {
       /*Api to signup */
-     try{ let Response = await EmployerSignUp(state);
-      if (Response.message === "Employer has been registered") {
-        toast.success("Registered Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setErrors("");
-        setState(initialFormState);
-        setOtpBox(false);
-        setSingUpSuccess("success");
-      } else if (Response.message === " incorrect otp ") {
-        setLoading(false);
-        setotperr("Invalid Otp");
-        setErrors({ ...errors, term_and_condition: "" });
-        setErrors({ ...errors, contact_no: "" });
-      } else if (Response.message === "Email already exists") {
-        setErrors({ ...errors, email: ["Email already exists"] });
-        setState(initialFormState);
-        setOtpBox(false);
-      }}catch (err) {
+      try {
+        let Response = await EmployerSignUp(state);
+        if (Response.message === "Employer has been registered") {
+          toast.success("Registered Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setErrors("");
+          setState(initialFormState);
+          setOtpBox(false);
+          setSingUpSuccess("success");
+        } else if (Response.message === " incorrect otp ") {
+          setLoading(false);
+          setotperr("Invalid Otp");
+          setErrors({ ...errors, term_and_condition: "" });
+          setErrors({ ...errors, contact_no: "" });
+        } else if (Response.message === "Email already exists") {
+          setErrors({ ...errors, email: ["Email already exists"] });
+          setState(initialFormState);
+          setOtpBox(false);
+        }
+      } catch (err) {
         toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,

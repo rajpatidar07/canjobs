@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
@@ -57,8 +57,9 @@ export default function VisaStatus(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddUpdateVisa(props.employeeData.employee_id, state ,props.employeeData.visa_id);
-      console.log(responseData)
+      try {
+        const responseData = await AddUpdateVisa(props.employeeData.employee_id, state, props.employeeData.visa_id);
+        console.log(responseData)
         if (responseData.data.message === "created successfully") {
           toast.success("Visa created successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -75,7 +76,14 @@ export default function VisaStatus(props) {
           props.setApiCall(true);
           return close();
         }
-      } else {
+      } catch (err) {
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setLoading(false)
+      }
+    } else {
       //   setLoading(false);
     }
   }

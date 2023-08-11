@@ -5,7 +5,7 @@ import moment from "moment";
 import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
 import Loader from '../common/loader';
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 function Interview(props) {
   let search = props.search;
@@ -26,24 +26,31 @@ function Interview(props) {
 
   //   /* Function to get the intervew data*/
   const InterviewData = async () => {
-    const userData = await getInterview(
-      "",
-      "",
-      search,
-      search || props.filter_by_time || props.statusFilterValue || sortOrder ? 1 : currentPage,
-      columnName,
-      recordsPerPage,
-      sortOrder,
-      props.filter_by_time,
-      props.statusFilterValue
-    );
-    if (userData.data.length === 0) {
-      setInterviewData([]);
-      setIsLoading(false)
-    } else {
-      setInterviewData(userData.data);
-      setTotalData(userData.total_rows);
-      setIsLoading(false)
+    try {
+      const userData = await getInterview(
+        "",
+        "",
+        search,
+        search || props.filter_by_time || props.statusFilterValue || sortOrder ? 1 : currentPage,
+        columnName,
+        recordsPerPage,
+        sortOrder,
+        props.filter_by_time,
+        props.statusFilterValue
+      );
+      if (userData.data.length === 0) {
+        setInterviewData([]);
+        setIsLoading(false)
+      } else {
+        setInterviewData(userData.data);
+        setTotalData(userData.total_rows);
+        setIsLoading(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -244,7 +251,7 @@ function Interview(props) {
                         ) : (
                           <th scope="row" className="py-5 ">
                             <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              {data.skill}
+                              {data.skill ? data.skill :"N/A"}
                             </div>
                           </th>
                         )}

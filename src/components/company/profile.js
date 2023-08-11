@@ -7,11 +7,10 @@ import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
 import moment from "moment";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Loader from '../common/loader';
 import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
-
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
@@ -29,25 +28,32 @@ function CompanyProfile(props) {
 
   /*Function to get employer data */
   const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    localStorage.setItem("profile_photo", userData.data.company_detail[0].logo)
-    if (userData === undefined) {
-      setEmployerData("");
-      setEmployerKycData("");
-    } else if (
-      userData.data.kyc_detail.length === 0 ||
-      userData.data.kyc_detail === undefined ||
-      userData.data.kyc_detail === "0" ||
-      userData.data.kyc_detail === [] ||
-      userData.data.kyc_detail === null
-    ) {
-      setEmployerKycData("");
-      setEmployerData(userData.data.company_detail[0]);
-      setIsLoading(false)
-    } else {
-      setEmployerData(userData.data.company_detail[0]);
-      setEmployerKycData(userData.data.kyc_detail[0]);
-      setIsLoading(false)
+    try {
+      let userData = await EmployerDetails(props.employerId);
+      localStorage.setItem("profile_photo", userData.data.company_detail[0].logo)
+      if (userData === undefined) {
+        setEmployerData("");
+        setEmployerKycData("");
+      } else if (
+        userData.data.kyc_detail.length === 0 ||
+        userData.data.kyc_detail === undefined ||
+        userData.data.kyc_detail === "0" ||
+        userData.data.kyc_detail === [] ||
+        userData.data.kyc_detail === null
+      ) {
+        setEmployerKycData("");
+        setEmployerData(userData.data.company_detail[0]);
+        setIsLoading(false)
+      } else {
+        setEmployerData(userData.data.company_detail[0]);
+        setEmployerKycData(userData.data.kyc_detail[0]);
+        setIsLoading(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   /*Render method to get employer data */
@@ -93,19 +99,19 @@ function CompanyProfile(props) {
                   </div>
                 </div>
                 <div className="d-flex  justify-content-between">
-                <div
-                  className="company_info_box text-md-right fd-column col-2 m-0 p-0 px-3"
-                  title="Edit KYC Details"
-                >
+                  <div
+                    className="company_info_box text-md-right fd-column col-2 m-0 p-0 px-3"
+                    title="Edit KYC Details"
+                  >
+                    <CustomButton
+                      className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                      onClick={() => setShowKycComplainDetailsModal(true)}
+                    />
+                  </div>
                   <CustomButton
-                    className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                    onClick={() => setShowKycComplainDetailsModal(true)}
-                  />
-                </div>
-                <CustomButton
-                  className=" font-size-4 rounded-3 btn-primary border-0"
-                  onClick={() => setShowDoc(true)}
-                >Add Document</CustomButton>
+                    className=" font-size-4 rounded-3 btn-primary border-0"
+                    onClick={() => setShowDoc(true)}
+                  >Add Document</CustomButton>
                 </div>
               </div>
               <div className="text-capitalize company_detail_box w-100 row m-0 pl-12 pt-5 pb-7 pr-12 pr-xxl-12">

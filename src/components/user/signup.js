@@ -83,6 +83,7 @@ export default function EmployeeSignupModal(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          setLoading(false)
         }
       } else {
         setLoading(false);

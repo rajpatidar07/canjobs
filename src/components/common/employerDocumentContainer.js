@@ -3,7 +3,7 @@ import { ListGroup, Form } from "react-bootstrap";
 import {
   UploadEmployerDocument,
   GetEmployerDocumentList,
-  VarifyDocument,
+  VarifyEmployerDocument,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
@@ -21,51 +21,59 @@ export default function EmployerDocumrentContainer(props) {
   const [docId, setDocId] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
+  const [hide, setHide] = useState(false);
   let encoded;
-let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType")
   /*Functo get Applicants Document */
   const GetDocument = async () => {
-    let response = await GetEmployerDocumentList(props.employer_id);
-    if (
-      response.data.data === undefined ||
-      response.data.data === "" ||
-      response.data.data === null ||
-      response.data.data.length === 0
-    ) {
-      setDocData([]);
-    } else {
-      setDocData(response.data.data);
-      // eslint-disable-next-line
+    try {
+      let response = await GetEmployerDocumentList(props.employer_id);
       if (
-        docTypData === undefined ||
-        docTypData === "undefined" ||
-        (docTypData === "" && docName === "" && otherDoc === false)
+        response.data.data === undefined ||
+        response.data.data === "" ||
+        response.data.data === null ||
+        response.data.data.length === 0
       ) {
-        setDocTypData(response.data.data[0]);
-        setDocFile(
-          response.data.data[0].document_url +
-          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-        );
-        setDocName(response.data.data[0].type);
-      } else if (
-        showMoreDocType === false &&
-        response.data.data.find((item) => item.type === docName)
-      ) {
+        setDocData([]);
+      } else {
+        setDocData(response.data.data);
+        // eslint-disable-next-line
         if (
-          response.data.data.find((item) => item.type === docName).type ===
-          docName
+          docTypData === undefined ||
+          docTypData === "undefined" ||
+          (docTypData === "" && docName === "" && otherDoc === false)
         ) {
-          setDocTypData(
-            response.data.data.find((item) => item.type === docName)
-          );
-
+          setDocTypData(response.data.data[0]);
           setDocFile(
-            response.data.data.find((item) => item.type === docName)
-              .document_url +
+            response.data.data[0].document_url +
             `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
+          setDocName(response.data.data[0].type);
+        } else if (
+          showMoreDocType === false &&
+          response.data.data.find((item) => item.type === docName)
+        ) {
+          if (
+            response.data.data.find((item) => item.type === docName).type ===
+            docName
+          ) {
+            setDocTypData(
+              response.data.data.find((item) => item.type === docName)
+            );
+
+            setDocFile(
+              response.data.data.find((item) => item.type === docName)
+                .document_url +
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            );
+          }
         }
       }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -134,59 +142,71 @@ let user_type = localStorage.getItem("userType")
 
   /*Function to save document */
   const SaveDocument = async () => {
-    let response = await UploadEmployerDocument(
-      props.employer_id,
-      docData[0] === docTypData ? docTypData.type : docName,
-      docFileBase,
-      docData[0] === docTypData ? docTypData.id : docId
-    );
-    if (response.data.message === "inserted successfully") {
-      toast.success("Document uploaded Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      // console.log(docName);
-      setShowMoreDocType(false);
-      setOtherDoc(false);
-      setDocName(docName);
-      setDocFileBase("");
-      setDocFileExt("");
-      setDocId("");
-      setShowSaveDoc(false);
-      setApiCall(true);
-    }
-    if (response.data.message === "updated successfully") {
-      toast.success("Document Updated Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setShowMoreDocType(false);
-      setApiCall(true);
-      // console.log(docData.find((item)=>item.type === docName))
-      setDocTypData(
-        docData.find(
-          (item) =>
-            item.type ===
-            (docData[0] === docTypData ? docTypData.type : docName)
-        )
+    try {
+      let response = await UploadEmployerDocument(
+        props.employer_id,
+        docData[0] === docTypData ? docTypData.type : docName,
+        docFileBase,
+        docData[0] === docTypData ? docTypData.id : docId
       );
-      setDocFile(
-        docData.find(
-          (item) =>
-            item.type ===
-            (docData[0] === docTypData ? docTypData.type : docName)
-        ).document_url +
-        `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-      );
-    }
-    if (response.data.message === "Invalid base64-encoded data !") {
-      toast.error("Document type is not valid", {
+      if (response.data.message === "inserted successfully") {
+        toast.success("Document uploaded Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        // console.log(docName);
+        setShowMoreDocType(false);
+        setOtherDoc(false);
+        setDocName(docName);
+        setDocFileBase("");
+        setDocFileExt("");
+        setDocId("");
+        setShowSaveDoc(false);
+        setApiCall(true);
+        setHide(false)
+      }
+      if (response.data.message === "updated successfully") {
+        toast.success("Document Updated Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setShowMoreDocType(false);
+        setApiCall(true);
+        setHide(false)
+        // console.log(docData.find((item)=>item.type === docName))
+        setDocTypData(
+          docData.find(
+            (item) =>
+              item.type ===
+              (docData[0] === docTypData ? docTypData.type : docName)
+          )
+        );
+        setDocFile(
+          docData.find(
+            (item) =>
+              item.type ===
+              (docData[0] === docTypData ? docTypData.type : docName)
+          ).document_url +
+          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+        );
+      }
+      if (response.data.message === "Invalid base64-encoded data !") {
+        toast.error("Document type is not valid", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setHide(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
+      setHide(false)
     }
   };
+
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
     // console.log(docFile, "???????");
@@ -213,13 +233,20 @@ let user_type = localStorage.getItem("userType")
   };
   /*Function to verify the applicants documents */
   const onVerifyDocuments = async (id, verify) => {
-    let response = await VarifyDocument(id, verify);
-    if (response.data.message === "successfully") {
-      toast.success("Document Verify Successfully", {
+    try {
+      let response = await VarifyEmployerDocument(id, verify);
+      if (response.data.message === "successfully") {
+        toast.success("Document Verify Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
     }
   };
 
@@ -258,7 +285,7 @@ let user_type = localStorage.getItem("userType")
   /*Function to change document type */
   const handleDocTypeChange = (e) => {
     const selectedValue = e.target.value;
-  if (selectedValue === "other") {
+    if (selectedValue === "other") {
       setOtherDoc(true);
       setShowMoreDocType(false);
       setDocTypData("");
@@ -269,7 +296,7 @@ let user_type = localStorage.getItem("userType")
       setDocName(selectedValue);
     }
   };
-  
+
   /*Function to download Document */
   const DownloadDocument = async () => {
     const response = await fetch(docFile);
@@ -329,6 +356,8 @@ let user_type = localStorage.getItem("userType")
                   setDocName(item.type);
                   setDocId(item.id);
                   setOtherDoc(false)
+                  setHide(false)
+                  setShowSaveDoc(false)
                   setDocFile(
                     item.document_url +
                     `?v=${new Date().getMinutes() + new Date().getSeconds()}`
@@ -336,7 +365,7 @@ let user_type = localStorage.getItem("userType")
                 }}
                 className="text-capitalize"
               >
-               {textReplaceFunction(item.type)} 
+                {textReplaceFunction(item.type)}
                 {item.is_varify === "1" ? (
                   <span className="verified_doc">
                     <img className="w-100" src={Verified} alt="" />
@@ -345,13 +374,15 @@ let user_type = localStorage.getItem("userType")
               </ListGroup.Item>
             ))}
             <ListGroup.Item
-              className={user_type === "company" || user_type === "admin" ?"bg-secondary text-white" : "d-none"}
+              className={user_type === "company" || user_type === "admin" ? "bg-secondary text-white" : "d-none"}
               onClick={() => {
                 setShowMoreDocType(true);
                 setDocTypData("");
                 setDocId("");
                 setOtherDoc(false);
                 setDocFile("")
+                setHide(false)
+                setShowSaveDoc(false)
               }}
             >
               <b>+ Add New Documents</b>
@@ -383,8 +414,8 @@ let user_type = localStorage.getItem("userType")
             ) : null}
             {otherDoc === true ?
               <div className="doc_upload_col">
-                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)} 
-                placeholder="Docuent Name"/>
+                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)}
+                  placeholder="Docuent Name" />
               </div> : null}
             <div className="">
               <input
@@ -394,9 +425,11 @@ let user_type = localStorage.getItem("userType")
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "company" && showMoreDocType) || user_type === "admin" ?"btn btn-primary" :"d-none"}
-                onClick={() =>
+                className={(user_type === "company" && showMoreDocType) || user_type === "admin" ? "btn btn-light" : "d-none"}
+                onClick={() => {
                   document.querySelector('input[type="file"]').click()
+                  setHide(true)
+                }
                 }
               >
                 {docTypData.id ? "Update Document" : "Upload Document"}
@@ -409,7 +442,7 @@ let user_type = localStorage.getItem("userType")
                 </button>
               </div>
             ) : null}
-            {docTypData && user_type === "admin" ? (
+            {hide === false && docTypData && user_type === "admin" ? (
               <div className="doc_upload_col">
                 {docTypData.is_varify === "1" ? (
                   <img className="verified_doc_img" src={Verified} alt="" />
@@ -424,19 +457,32 @@ let user_type = localStorage.getItem("userType")
                 )}
               </div>
             ) : null}
-           { docFile && user_type === "admin" ? <div className="doc_upload_col flex-end">
-              <button className="btn-gray mx-3"onClick={PrintDocument}
-              title="Print Document">
-              <i className="fa fa-print" aria-hidden="true"></i>
+            {hide === false && docFile && user_type === "admin" ? 
+            <div className="doc_upload_col flex-end">
+              <button className="btn btn-gray mx-3" onClick={PrintDocument}
+                title="Print Document">
+                <i className="fa fa-print" aria-hidden="true"></i>
               </button>
-              <button className="btn-regent"
-              onClick={DownloadDocument} title="Download Document">
+              <button className="btn btn-regent"
+                onClick={DownloadDocument} title="Download Document">
                 <i className="fa fa-download" aria-hidden="true"></i>
               </button>
+            </div> : null}
+            {hide === true
+              ? <div className="doc_upload_col">
+                <button className="btn btn-dark text-white" onClick={() => {
+                  setHide(false)
+                  setApiCall(true)
+                  setShowSaveDoc(false)
+                  setDocFile("")
+                  setDocFileExt("")
+                }}>
+                  Cancel
+                </button>
               </div> : null}
           </div>
           <div className="doc_preview_box  p-5 bg-light rounded">
-            
+
             {/* {docTypData ? ( */}
             <RenderNewDocFile />
             {/* ) : (

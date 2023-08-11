@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 import { GetFilter } from "../../api/api"
@@ -28,9 +28,16 @@ function Employee(props) {
 
   /*Function to get thejSon */
   const JsonData = async () => {
-    let Json = await GetFilter()
-    setSkillList(Json.data.data.Skill)
-    setEducationList(Json.data.data.Education)
+    try {
+      let Json = await GetFilter()
+      setSkillList(Json.data.data.Skill)
+      setEducationList(Json.data.data.Education)
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   }
   /*Render method to get the json*/
   useEffect(() => {
@@ -67,7 +74,7 @@ function Employee(props) {
   }
   return (
     <>
-      <div className={props.skill === null || props.skill === undefined ?"site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
+      <div className={props.skill === null || props.skill === undefined ? "site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
         {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? <>      {/* <!-- Header Area --> */}
           <AdminHeader heading={"Manage Applicants"} />
           {/* <!-- navbar- --> */}
@@ -103,7 +110,7 @@ function Employee(props) {
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
                 <div className="row m-0 align-items-center">
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Search Employee:</p>
                     <input
                       required
@@ -116,7 +123,7 @@ function Employee(props) {
                     />
 
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Experience:</p>
                     <div className="select_div">
                       <select
@@ -132,13 +139,13 @@ function Employee(props) {
                         {(FilterJson.experience || []).map((ex, i) => (
                           <option value={ex} key={i}>
                             {ex}
-                            {ex === "Fresher" || ex === "Other" ? "" : "Years"}
+                            {ex === "fresher" || ex === "Other" ? "" : "Years"}
                           </option>
                         ))}
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Skill:</p>
                     <div className="select_div">
                       <select
@@ -159,14 +166,14 @@ function Employee(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Education:</p>
                     <div className="select_div">
                       <select
                         name="education"
                         value={educationFilterValue}
                         id="education"
-                        onChange={(e) =>setEducationFilterValue(e.target.value)}
+                        onChange={(e) => setEducationFilterValue(e.target.value)}
                         className="text-capitalize form-control">
                         <option value="" data-display="Product Designer">
                           Select Education
@@ -213,8 +220,8 @@ function Employee(props) {
         </div>
         {/* <!-- Employee Details- --> */}
         {showEmployeeProfile === true ? (
-          <div className={ props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
-            ? "dashboard-main-container mt-16" :""}>
+          <div className={props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
+            ? "dashboard-main-container mt-16" : ""}>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

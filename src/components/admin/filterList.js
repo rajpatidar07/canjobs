@@ -19,13 +19,20 @@ function FilterList() {
 
   /* Function to get the filter data*/
   const FilterData = async () => {
-    let Data = await GetFilter();
-    if (Data.data.data.length === 0) {
-      setFilterData([]);
-    } else {
-      // setTotalData(Data.data);
-      setFilterData(Data.data.data);
-      setApiCall(false);
+    try {
+      let Data = await GetFilter();
+      if (Data.data.data.length === 0) {
+        setFilterData([]);
+      } else {
+        // setTotalData(Data.data);
+        setFilterData(Data.data.data);
+        setApiCall(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -49,14 +56,21 @@ function FilterList() {
   /*To call Api to delete category */
   async function deleteFilter(e, f) {
     /*Function to delete the filter */
-    const responseData = await DeleteFilter(e, f);
-    if (responseData.message === "List item has been deleted") {
-      toast.error("Filter deleted Successfully", {
+    try {
+      const responseData = await DeleteFilter(e, f);
+      if (responseData.message === "List item has been deleted") {
+        toast.error("Filter deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
-      setDeleteAlert(false);
     }
   }
   return (

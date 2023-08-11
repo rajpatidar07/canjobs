@@ -46,7 +46,11 @@ function JobDetailPage(props) {
 
   /*Set skill variable to array frm string */
   if (jobDetatilsData !== "") {
-    skill = jobDetatilsData.keyskill.split(",");
+    skill = jobDetatilsData.keyskill === null ||
+                jobDetatilsData.keyskill === undefined ||
+                jobDetatilsData.keyskill === "undefined" ?
+                [] :
+                jobDetatilsData.keyskill.split(",");
   }
   /*FUnction to apply to the job */
   const OnApplyClick = async (status) => {

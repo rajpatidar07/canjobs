@@ -37,29 +37,37 @@ function ManageAdmin() {
   /* Function to get the Amin data*/
   const AdminData = async () => {
     setIsLoading(true)
-    const userData = await getallAdminData(
-      typeFilterValue,
-      search,
-      typeFilterValue || search || sortOrder ? 1 : currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder
-    );
-    if (userData.data.length === 0) {
-      setAdminData([]);
-      setIsLoading(false)
+    try {
+      const userData = await getallAdminData(
+        typeFilterValue,
+        search,
+        typeFilterValue || search || sortOrder ? 1 : currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder
+      );
+      if (userData.data.length === 0) {
+        setAdminData([]);
+        setIsLoading(false)
 
-    } else {
-      setAdminData(userData.data);
-      setTotalData(userData.total_rows);
-      if (apiCall === true) {
-        let Admin_name = userData.data.filter(
-          (data) => data.admin_id === localStorage.getItem("admin_id")
-        );
-        if (Admin_name[0].admin_id === localStorage.getItem("admin_id")) {
-          localStorage.setItem("admin", Admin_name[0].name);
+      } else {
+        setAdminData(userData.data);
+        setTotalData(userData.total_rows);
+        if (apiCall === true) {
+          let Admin_name = userData.data.filter(
+            (data) => data.admin_id === localStorage.getItem("admin_id")
+          );
+          if (Admin_name[0].admin_id === localStorage.getItem("admin_id")) {
+            localStorage.setItem("admin", Admin_name[0].name);
+          }
         }
+        setIsLoading(false)
       }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setIsLoading(false)
     }
   };
@@ -98,14 +106,21 @@ function ManageAdmin() {
   };
   /*To call Api to delete category */
   async function deleteAdmin(e) {
-    const responseData = await DeleteAdmin(e);
-    if (responseData.message === "admin has been deleted") {
-      toast.error("Admin deleted Successfully", {
+    try {
+      const responseData = await DeleteAdmin(e);
+      if (responseData.message === "admin has been deleted") {
+        toast.error("Admin deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setApiCall(true);
-      setDeleteAlert(false);
     }
   }
   /*Search Onchange function to filter the data */

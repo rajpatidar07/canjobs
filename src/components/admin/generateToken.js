@@ -8,19 +8,26 @@ export default function GenerateToken(props) {
   let [allAdmin, setAllAdmin] = useState([]);
   let [AdminId, setAdminId] = useState("");
   const [state, setState] = useState([]);
-  let[ Unauthorized,setUnauthorized ]= useState("")
+  let [Unauthorized, setUnauthorized] = useState("")
 
   /*Function to get admin list */
   const AdminData = async () => {
-    const userData = await getallAdminData();
-    if (userData.data.length === 0) {
-      setAllAdmin([]);
-    } else {
-      const filteredData = userData.data.filter(item => item.admin_type === "manager");
-      setAllAdmin(filteredData);
+    try {
+      const userData = await getallAdminData();
+      if (userData.data.length === 0) {
+        setAllAdmin([]);
+      } else {
+        const filteredData = userData.data.filter(item => item.admin_type === "manager");
+        setAllAdmin(filteredData);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
-  
+
   /* Functionality to close the modal */
   const close = () => {
     setState([]);
@@ -49,18 +56,25 @@ export default function GenerateToken(props) {
   /*Function to generate Token of other admin to view as him */
   const onTokenGenerateClick = async (event) => {
     event.preventDefault();
-    const responseData = await GetAdminToken(AdminId);
-    if (responseData.message === "successful") {
-      localStorage.setItem("view_as_token", responseData.token);
-      toast.success("Token Generated successfully", {
+    try {
+      const responseData = await GetAdminToken(AdminId);
+      if (responseData.message === "successful") {
+        localStorage.setItem("view_as_token", responseData.token);
+        toast.success("Token Generated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        close();
+        window.location.reload();
+      }
+      if (responseData.message === "Unauthorized admin") {
+        setUnauthorized("Unauthorized admin")
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      close();
-      window.location.reload();
-    }
-    if (responseData.message === "Unauthorized admin"){
-      setUnauthorized("Unauthorized admin")
     }
   };
   /*Function to reset the token */

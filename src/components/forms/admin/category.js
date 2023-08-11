@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 function AddCategory(props) {
   const [catType, setCatType] = useState([]);
   let [loading, setLoading] = useState(false);
-  
+
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
@@ -23,7 +23,7 @@ function AddCategory(props) {
     category_name: "",
     category_type: "",
     parent_id: "",
-    job_category_id : ""
+    job_category_id: ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -32,12 +32,12 @@ function AddCategory(props) {
         value === "" || value.trim() === ""
           ? "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Category Name can not have a number."
-          : value.length < 2
-          ? "Category Name should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Category Name can not have a number."
+              : value.length < 2
+                ? "Category Name should have 2 or more letters"
+                : "",
     ],
     category_type: [
       (value) =>
@@ -57,7 +57,7 @@ function AddCategory(props) {
       (data) => data.job_category_id === value
     )
       ? CategoryType.find((data) => data.job_category_id === value)
-          .category_type
+        .category_type
       : "";
     setState({
       category_type: category_type,
@@ -66,15 +66,22 @@ function AddCategory(props) {
       job_category_id: state.job_category_id,
     });
   };
-  
+
   // API CALL
   const CatData = async () => {
-    let categoryType = await getAllJobsCategory();
-    setCatType(categoryType.data);
-    if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
-      setState(initialFormState);
-    } else {
-      setState(props.jobCategoryData);
+    try {
+      let categoryType = await getAllJobsCategory();
+      setCatType(categoryType.data);
+      if (props.jobCategoryData === "0" || props.jobCategoryData.length === 0) {
+        setState(initialFormState);
+      } else {
+        setState(props.jobCategoryData);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -86,26 +93,34 @@ function AddCategory(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddJobCategory(state);
-      if (responseData.message === "Category added successfully") {
-        toast.success("Category added successfully", {
+      try {
+        const responseData = await AddJobCategory(state);
+        if (responseData.message === "Category added successfully") {
+          toast.success("Category added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+        if (responseData.message === "Category updated successfully") {
+          toast.success("Category Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+        if (responseData.message === "already exist !") {
+          setErrors({ ...errors, category_name: "Category Alredy Exists." });
+          setLoading(false);
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Category updated successfully") {
-        toast.success("Category Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "already exist !") {
-        setErrors({...errors , category_name : "Category Alredy Exists."});
-        setLoading(false);
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -118,7 +133,7 @@ function AddCategory(props) {
     (thing, index, self) =>
       index === self.findIndex((t) => t.category_type === thing.category_type)
   );
-  
+
   return (
     <>
       <Modal

@@ -220,6 +220,7 @@ function AddJobModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -426,7 +427,7 @@ function AddJobModal(props) {
                     {(FilterJson.experience || []).map((exp, i) => (
                       <option key={i} value={exp}>
                         {exp}
-                        {exp === "Fresher" || exp === "Other" ? "" : "Years"}
+                        {exp === "fresher" || exp === "Other" ? "" : "Years"}
                       </option>
                     ))}
                   </select>

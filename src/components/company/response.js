@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../common/footer";
 import Headers from "../common/header";
 import JobBoxResponse from "./jobBoxResponse";
@@ -6,10 +6,10 @@ import SearchForm from "../common/search_form";
 import { Link } from "react-router-dom";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
-import Loader  from '../common/loader';
-
+import Loader from '../common/loader';
+import { toast } from "react-toastify"
 function Response() {
-  let [filter,  SetFilter] = useState([]);
+  let [filter, SetFilter] = useState([]);
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
@@ -18,16 +18,24 @@ function Response() {
 
   /* Function to get the JSON data*/
   const FilterData = async () => {
-    const Json = await GetFilter();
-    if(Json.length === 0){
-      SetFilter([]);
-    }else{
-        SetFilter(Json.data.data);}    
+    try {
+      const Json = await GetFilter();
+      if (Json.length === 0) {
+        SetFilter([]);
+      } else {
+        SetFilter(Json.data.data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
 
   useEffect(() => {
     FilterData();
-  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue , locationFilterValue]);
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, locationFilterValue]);
   return (
     <>
       <div>
@@ -59,7 +67,7 @@ function Response() {
                         onChange={(e) => setCategoryFilterValue(e.target.value)}
                         className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option  value="">Select Job Category</option>
+                        <option value="">Select Job Category</option>
                         {(filter.Category || []).map((data, i) => {
                           return (
                             <option value={data.value} key={data.id}>
@@ -78,7 +86,7 @@ function Response() {
                         onChange={(e) => setSkillFilterValue(e.target.value)}
                         className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option  value={''}>Select Job Skills</option>
+                        <option value={''}>Select Job Skills</option>
                         {(FilterJson.keyskill || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -97,7 +105,7 @@ function Response() {
                         onChange={(e) => setLocationFilterValue(e.target.value)}
                         className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option  value="">Select Job Location</option>
+                        <option value="">Select Job Location</option>
                         {(FilterJson.location || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -116,7 +124,7 @@ function Response() {
                         onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option  value="">Select Job Type</option>
+                        <option value="">Select Job Type</option>
                         {(FilterJson.job_type || []).map((data, i) => {
                           return (
                             <option value={data} key={i}>
@@ -144,7 +152,7 @@ function Response() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                   {<JobBoxResponse/> ? <div className="mb-8 p-0 w-100 active nav-link active">
+                    {<JobBoxResponse /> ? <div className="mb-8 p-0 w-100 active nav-link active">
                       {/* <!-- Single Featured Job --> */}
                       <JobBoxResponse
                         categoryFilterValue={categoryFilterValue}
@@ -153,7 +161,7 @@ function Response() {
                         locationFilterValue={locationFilterValue}
                       />
                       {/* <!-- End Single Featured Job --> */}
-                    </div> : <div className="table-responsive main_table_div"><Loader/> </div>}
+                    </div> : <div className="table-responsive main_table_div"><Loader /> </div>}
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link

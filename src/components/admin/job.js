@@ -6,7 +6,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetFilter } from "../../api/api";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 
@@ -25,11 +25,18 @@ function Job(props) {
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-let location = useLocation()
+  let location = useLocation()
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setJson(Json.data.data);
+    try {
+      let Json = await GetFilter();
+      setJson(Json.data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
 
   /*Render function to get the job */
@@ -38,7 +45,7 @@ let location = useLocation()
     if ((search === "") === true) {
       setSearchError("");
     }
-    if(location.state){
+    if (location.state) {
       setCompany(location.state.company_name)
     }
   }, [
@@ -89,9 +96,9 @@ let location = useLocation()
     : [];
   return (
     <>
-      <div className={props.skill === null || props.skill === undefined ?"site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
-        
-        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? 
+      <div className={props.skill === null || props.skill === undefined ? "site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
+
+        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
           <> {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Jobs"} />
             {/* <!-- navbar- --> */}
@@ -102,8 +109,8 @@ let location = useLocation()
         <div
           className={
             showJobDetails === false
-              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
-              ?
+              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
+                ?
                 "dashboard-main-container mt-16" :
                 ""
               : "d-none"
@@ -118,7 +125,7 @@ let location = useLocation()
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 <div className="row m-0 align-items-center">
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -130,7 +137,7 @@ let location = useLocation()
                       onChange={(e) => onSearch(e)}
                     />
                   </div>{" "}
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Company Name:</p>
                     <input
                       required
@@ -142,7 +149,7 @@ let location = useLocation()
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
@@ -163,7 +170,7 @@ let location = useLocation()
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
@@ -184,7 +191,7 @@ let location = useLocation()
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
@@ -205,7 +212,7 @@ let location = useLocation()
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ?"col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select
@@ -228,20 +235,20 @@ let location = useLocation()
                   </div>
                   {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
                     <div className="text-end col-xl-12">
-                    <div className="float-md-right">
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => editJob("0")}
-                        title="Add Jobs"
-                      >
-                        Add Job
-                      </CustomButton>
-                      {/*<-- Add Job Modal -->*/}
-                    </div>
-                    <small className="text-danger">{searcherror}</small>
-                  </div> :
-                  null
-                    }
+                      <div className="float-md-right">
+                        <CustomButton
+                          className="font-size-3 rounded-3 btn btn-primary border-0"
+                          onClick={() => editJob("0")}
+                          title="Add Jobs"
+                        >
+                          Add Job
+                        </CustomButton>
+                        {/*<-- Add Job Modal -->*/}
+                      </div>
+                      <small className="text-danger">{searcherror}</small>
+                    </div> :
+                    null
+                  }
                 </div>
               </div>
               {/*<-- Job List Table -->*/}
@@ -265,8 +272,8 @@ let location = useLocation()
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className={ props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 
-            ?"dashboard-main-container mt-16 " : ""}>
+          <div className={props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
+            ? "dashboard-main-container mt-16 " : ""}>
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

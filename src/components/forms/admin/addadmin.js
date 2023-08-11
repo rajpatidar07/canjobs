@@ -48,32 +48,32 @@ function Addadmin(props) {
         value === "" || value.trim() === ""
           ? "Admin name is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Admin name can not have a number."
-          : value.length < 2
-          ? "Admin name should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Admin name can not have a number."
+            : value.length < 2
+              ? "Admin name should have 2 or more letters"
+              : /[^A-Za-z 0-9]/g.test(value)
+                ? "Cannot use special character "
+                : "",
     ],
     email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         state.admin_id
           ? value === ""
           : value === ""
-          ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+            ? "Password is required"
+            : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
               value
             )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              ? null
+              : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     admin_type: [
       (value) =>
@@ -83,12 +83,20 @@ function Addadmin(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
+  /*Function to get admin detail */
   const AdminData = async () => {
-    const userData = await AdminDetails(props.adminId);
-    if (userData === undefined || userData.data.length === 0) {
-      setState(initialFormState); 
-    } else {
-      setState(userData.data[0]);
+    try {
+      const userData = await AdminDetails(props.adminId);
+      if (userData === undefined || userData.data.length === 0) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data[0]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -104,25 +112,33 @@ function Addadmin(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddAdmin(state);
-      if (responseData.message === "admin added successfully") {
-        toast.success("Admin added successfully", {
+      try {
+        const responseData = await AddAdmin(state);
+        if (responseData.message === "admin added successfully") {
+          toast.success("Admin added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "admin updated successfully") {
+          toast.success("Admin Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Admin already exists") {
+          setAlready("Admin already exists");
+          setLoading(false);
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
-      }
-      if (responseData.message === "admin updated successfully") {
-        toast.success("Admin Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true);
-        return close();
-      }
-      if (responseData.message === "Admin already exists") {
-        setAlready("Admin already exists");
         setLoading(false);
       }
     } else {

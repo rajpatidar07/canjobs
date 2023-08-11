@@ -21,6 +21,7 @@ export default function DocumrentContainer(props) {
   const [docId, setDocId] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
+  const [hide, setHide] = useState(false);
   let encoded;
   let user_type = localStorage.getItem("userType")
   /*Functo get Applicants Document */
@@ -201,6 +202,7 @@ export default function DocumrentContainer(props) {
         setDocId("");
         setShowSaveDoc(false);
         setApiCall(true);
+        setHide(false)
       }
       if (response.data.message === "updated successfully") {
         toast.success("Document Updated Successfully", {
@@ -209,6 +211,7 @@ export default function DocumrentContainer(props) {
         });
         setShowMoreDocType(false);
         setApiCall(true);
+        setHide(false)
         // console.log(docData.find((item)=>item.type === docName))
         setDocTypData(
           docData.find(
@@ -232,12 +235,14 @@ export default function DocumrentContainer(props) {
           autoClose: 1000,
         });
         setApiCall(true);
+        setHide(false)
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setHide(false)
     }
   };
   /*Fuinction to render image */
@@ -384,9 +389,11 @@ export default function DocumrentContainer(props) {
                 onClick={() => {
                   setShowMoreDocType(false);
                   setDocTypData(item);
+                  setHide(false)
                   setDocName(item.type);
                   setDocId(item.id);
                   setOtherDoc(false)
+                  setShowSaveDoc(false)
                   setDocFile(
                     item.document_url +
                     `?v=${new Date().getMinutes() + new Date().getSeconds()}`
@@ -409,6 +416,8 @@ export default function DocumrentContainer(props) {
                 setDocId("");
                 setOtherDoc(false);
                 setDocFile("")
+                setHide(false)
+                setShowSaveDoc(false)
               }}
             >
               <b>+ Add New Documents</b>
@@ -451,14 +460,17 @@ export default function DocumrentContainer(props) {
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "user" && showMoreDocType) || user_type === "admin" ? "btn btn-primary" : "d-none"}
-                onClick={() =>
+                className={(user_type === "user" && showMoreDocType) || user_type === "admin" ? "btn btn-light" : "d-none"}
+                onClick={() => {
                   document.querySelector('input[type="file"]').click()
+                  setHide(true)
+                }
                 }
               >
                 {docTypData.id ? "Update Document" : "Upload Document"}
               </button>
             </div>
+
             {showSaveDoc ? (
               <div className="doc_upload_col">
                 <button className="btn btn-primary" onClick={SaveDocument}>
@@ -466,7 +478,7 @@ export default function DocumrentContainer(props) {
                 </button>
               </div>
             ) : null}
-            {docTypData && user_type === "admin" ? (
+            {hide === false && docTypData && user_type === "admin" ? (
               <div className="doc_upload_col">
                 {docTypData.is_varify === "1" ? (
                   <img className="verified_doc_img" src={Verified} alt="" />
@@ -481,16 +493,28 @@ export default function DocumrentContainer(props) {
                 )}
               </div>
             ) : null}
-            {docFile && user_type === "admin" ? <div className="doc_upload_col flex-end">
-              <button className="btn-gray mx-3" onClick={PrintDocument}
+            {hide === false && docFile && user_type === "admin" ? <div className="doc_upload_col flex-end">
+              <button className="btn btn-gray mx-3" onClick={PrintDocument}
                 title="Print Document">
                 <i className="fa fa-print" aria-hidden="true"></i>
               </button>
-              <button className="btn-regent"
+              <button className="btn btn-regent"
                 onClick={DownloadDocument} title="Download Document">
                 <i className="fa fa-download" aria-hidden="true"></i>
               </button>
             </div> : null}
+            {hide === true
+              ? <div className="doc_upload_col">
+                <button className="btn btn-dark text-white" onClick={() => {
+                  setHide(false)
+                  setApiCall(true)
+                  setShowSaveDoc(false)
+                  setDocFile("")
+                  setDocFileExt("")
+                }}>
+                  Cancel
+                </button>
+              </div> : null}
           </div>
           <div className="doc_preview_box  p-5 bg-light rounded">
             {/* {docTypData ? ( */}

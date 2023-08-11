@@ -42,66 +42,69 @@ export default function JobTable(props) {
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
-    try{let userData;
-    if (props.employee_id) {
-      userData = await GetEmployeeFilterJob(
-        props.employee_id,
-        // props.SkillFilterValue
-      );
-    } else {
-      userData = await GetAllJobs(
-        props.search,
-        props.locationFilterValue,
-        props.categoryFilterValue,
-        props.SkillFilterValue,
-        props.jobSwapFilterValue,
-        props.company ||
-          props.search ||
-          props.locationFilterValue ||
-          props.categoryFilterValue ||
-          props.SkillFilterValue ||
-          props.jobSwapFilterValue ||
-          props.filter_by_time ||
-          sortOrder
-          ? 1
-          : currentPage,
-        recordsPerPage,
-        columnName,
-        sortOrder,
-        props.company,
-        props.filter_by_time,
-        location.state ? location.state.id : "",
-         props.response === "self"? "1":"0",
-        props.response === "lmia" ? "1" : "0"
-      );
-    }
-    if (userData.data.data.length === 0 || userData.data.length === 0 || userData.data.data === undefined) {
-      setjobData([]);
-      setresponseId()
-      setIsLoading(false);
-    } else {
-      if (props.heading === "Dashboard" || location.pathname === "/employee") {
-        setresponseId()
+    try {
+      let userData;
+      if (props.employee_id) {
+        userData = await GetEmployeeFilterJob(
+          props.employee_id,
+          // props.SkillFilterValue
+        );
       } else {
-        setresponseId(userData.data.data[0].job_id)
+        userData = await GetAllJobs(
+          props.search,
+          props.locationFilterValue,
+          props.categoryFilterValue,
+          props.SkillFilterValue,
+          props.jobSwapFilterValue,
+          props.company ||
+            props.search ||
+            props.locationFilterValue ||
+            props.categoryFilterValue ||
+            props.SkillFilterValue ||
+            props.jobSwapFilterValue ||
+            props.filter_by_time ||
+            sortOrder
+            ? 1
+            : currentPage,
+          recordsPerPage,
+          columnName,
+          sortOrder,
+          props.company,
+          props.filter_by_time,
+          location.state ? location.state.id : "",
+          props.response === "self" ? "1" : "0",
+          props.response === "lmia" ? "1" : "0",
+          props.response === "lmia" ? "1" : "0"
+        );
       }
-      //condition for limia and visa page
-      // if (props.response === "lmia" || props.response === "visa") {
-      //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
-      //   setIsLoading(false);
-      // } 
-      // //condition for Self job applied page
-      // else if (props.response === "self") {
-      //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0"));
-      //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
-      //   setIsLoading(false);
-      // } else
-       
+      if (userData.data.data.length === 0 || userData.data.length === 0 || userData.data.data === undefined) {
+        setjobData([]);
+        setresponseId()
+        setIsLoading(false);
+      } else {
+        if (props.heading === "Dashboard" || location.pathname === "/employee") {
+          setresponseId()
+        } else {
+          setresponseId(userData.data.data[0].job_id)
+        }
+        //condition for limia and visa page
+        // if (props.response === "lmia" || props.response === "visa") {
+        //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
+        //   setIsLoading(false);
+        // } 
+        // //condition for Self job applied page
+        // else if (props.response === "self") {
+        //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0"));
+        //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
+        //   setIsLoading(false);
+        // } else
+
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
-      
-    }}catch(err){
+
+      }
+    } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -155,15 +158,17 @@ export default function JobTable(props) {
 
   /*To call Api to delete Job */
   async function deleteJob(e) {
-    try{const responseData = await DeleteJob(e);
-    if (responseData.message === "job has been deleted") {
-      toast.error("Job deleted Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setApiCall(true);
-      setDeleteAlert(false);
-    }}catch(err){
+    try {
+      const responseData = await DeleteJob(e);
+      if (responseData.message === "job has been deleted") {
+        toast.error("Job deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -182,21 +187,23 @@ export default function JobTable(props) {
 
   /*Function to change job */
   const onChangeJobClick = async (id) => {
-    try{const responseData = await ApplyJob(id, props.employee_id, 0);
-    if (responseData.message === "already applied on this job") {
-      toast.error("Already applied on this job", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setApiCall(true);
-    }
-    if (responseData.message === "Job applied successfully") {
-      toast.success("Applied successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setApiCall(true);
-    }}catch(err){
+    try {
+      const responseData = await ApplyJob(id, props.employee_id, 0);
+      if (responseData.message === "already applied on this job") {
+        toast.error("Already applied on this job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+      if (responseData.message === "Job applied successfully") {
+        toast.success("Applied successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+    } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -470,33 +477,33 @@ export default function JobTable(props) {
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.education}
+                              {job.education ?job.education:"N/A"}
                             </h3>
                           </th>
                         )}
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {job.keyskill}
+                              {job.keyskill ? job.keyskill :"N/A"}
                             </h3>
                           </th>
                         )}
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {job.language}
+                              {job.language?job.language:"N/A"}
                             </h3>
                           </th>
                         )}
                         <th className="py-5 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.salary}
+                            {job.salary?job.salary:"N/A"}
                           </h3>
                         </th>
                         <th className="py-5 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {job.experience_required}
-                            {job.experience_required === "Fresher"
+                            {job.experience_required === "fresher"
                               ? ""
                               : "years"}
                           </h3>
@@ -519,7 +526,6 @@ export default function JobTable(props) {
                         </th>
                         <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-
                             {job.lmia_status === "advertisement running" ? (
                               <span className="px-3 py-2 badge badge-pill badge-danger">
                                 Advertisement running
@@ -646,11 +652,11 @@ export default function JobTable(props) {
                                           className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
                                           onClick={() => matchingCandidates(job)}
                                           title="All candidates"
-                                          // disabled={
-                                          //   Number(job.applied_by_admin) >= Number(job.role_category)
-                                          //     ? true
-                                          //     : false
-                                          // }
+                                        // disabled={
+                                        //   Number(job.applied_by_admin) >= Number(job.role_category)
+                                        //     ? true
+                                        //     : false
+                                        // }
                                         >
                                           <span className="fas fa-user-tie text-gray"></span>
                                         </button>
@@ -674,7 +680,7 @@ export default function JobTable(props) {
                                           className={props.response === "response" && location.pathname === "/job" ? "btn btn-outline-info action_btn" : "d-none"}
                                           title="Job LMIA"><Link to="/lmia"
                                             className="text-dark" state={{ id: job.job_id }}>
-                                              <span className="fas fa-arrow-left text-gray px-2"></span></Link></button>
+                                            <span className="fas fa-arrow-left text-gray px-2"></span></Link></button>
                                       </>}
                                   </>
                                 )
@@ -717,7 +723,7 @@ export default function JobTable(props) {
                                   self={props.selfJob}
                                   total_applicants={job.total_applicants}
                                   role_category={job.role_category}
-                                  status={props.response === "response"||props.response === "visa" || props.response === "lmia" ? "1" : "0"}
+                                  status={props.response === "response" || props.response === "visa" || props.response === "lmia" ? "1" : "0"}
                                   response={props.response}
                                   employee_id={location.state ?
                                     location.state.employee_id ?

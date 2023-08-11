@@ -21,14 +21,14 @@ function AddFilter(props) {
         value === "" || value.trim() === ""
           ? "Filter type is required"
           : value.length < 2
-          ? "Filter type should have 2 or more letters"
-          : !/^[A-Za-z0-9 ]*$/.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Filter type should have 2 or more letters"
+            : !/^[A-Za-z0-9 ]*$/.test(value)
+              ? "Cannot use special character "
+              : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, setErrors , errors, validate } = useValidation(
+  const { state, setState, onInputChange, setErrors, errors, validate } = useValidation(
     initialFormState,
     validators
   );
@@ -38,22 +38,30 @@ function AddFilter(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddFIlter(state, props.id);
-      if(responseData.message === "item already exist !"){
-        setErrors({...errors, json_item: ["Filter already exist !"]})
-        props.setApiCall(true);
-        setState(initialFormState);
-        setLoading(false);
-      }
-      if (responseData.message === "filter item added successfully") {
-        toast.success("Filter added successfully", {
+      try {
+        const responseData = await AddFIlter(state, props.id);
+        if (responseData.message === "item already exist !") {
+          setErrors({ ...errors, json_item: ["Filter already exist !"] })
+          props.setApiCall(true);
+          setState(initialFormState);
+          setLoading(false);
+        }
+        if (responseData.message === "filter item added successfully") {
+          toast.success("Filter added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          setState(initialFormState);
+          setLoading(false);
+          setErrors("")
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        setState(initialFormState);
-        setLoading(false);
-        setErrors("")
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -80,14 +88,14 @@ function AddFilter(props) {
                 props.id === 1
                   ? "Skill Type"
                   : props.id === 4
-                  ? "Industry Type"
-                  : props.id === 5
-                  ? "Education Type"
-                  : props.id === 6
-                  ? "Corporation Type"
-                  : props.id === 7
-                  ? "Language Type"
-                  : ""
+                    ? "Industry Type"
+                    : props.id === 5
+                      ? "Education Type"
+                      : props.id === 6
+                        ? "Corporation Type"
+                        : props.id === 7
+                          ? "Language Type"
+                          : ""
               }
             />
             {loading === true ? (

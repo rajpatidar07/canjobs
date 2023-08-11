@@ -443,7 +443,7 @@ export const GetEmployeeDocumentList = async (id, type) => {
   );
   return response;
 };
-// yaha se
+
 /*Api to upload document*/
 export const UploadDocument = async (id, type, doc, docId) => {
   const response = await axios.put(
@@ -482,6 +482,7 @@ export const VarifyDocument = async (id, verify) => {
   );
   return response;
 };
+
 /*Api to Add update visa */
 export const AddUpdateVisa = async (employee_id, state, id) => {
   console.log(employee_id, state, id)
@@ -622,7 +623,7 @@ export const GetAllResponse = async (
   lima,
   status,
   employee_id,
-  job_status
+  reserved_status
 ) => {
   const response = await axios.post(
     `${API_URL}getJobResponse`,
@@ -640,7 +641,7 @@ export const GetAllResponse = async (
       filter_lmia_status: lima,
       filter_employee_status: status,
       filter_employee_id: employee_id,
-      filter_job_status: job_status
+      filter_is_reserve: reserved_status
     },
     {
       headers: {
@@ -661,13 +662,14 @@ export const GetAllJobs = async (
   job,
   page,
   limit,
-  column_name,
+  column_name, 
   sort_order,
   company,
   time,
   id,
   selfValue,
-  adminValue
+  adminValue,
+  reserved
   // employeeSkill
 ) => {
   const response = await axios.post(
@@ -678,15 +680,16 @@ export const GetAllJobs = async (
       filter_keyskill: skill,
       filter_location: location,
       page: page,
-      search: search /*? search : company*/,
+      search: search ? search : company,
       limit: limit,
       column_name: column_name,
       sort_order: sort_order,
       filter_by_time: time,
       job_id: id,
-      filter_company_name: company,
+      // filter_company_name: company,
       filter_applied_by_self: selfValue,
-      filter_applied_by_admin: adminValue
+      filter_applied_by_admin: adminValue,
+      filter_reserved_employee:reserved
       // employee_skills: employeeSkill,
     },
     {
@@ -1432,3 +1435,20 @@ export const GetEmployeeFilterJob = async (id, skill) => {
   return response;
 };
 
+/*Api to Reserved employee for a job */
+export const ReservedEmployeeForJob = async (id, status) => {
+  const response = await axios.put(
+    `${API_URL}setEmployeeReserve`,
+    {
+      apply_id: id,
+      is_reserve: status
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};

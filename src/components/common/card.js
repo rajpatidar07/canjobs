@@ -4,14 +4,22 @@ import Card from "react-bootstrap/Card";
 import { getLMIAstatus } from "../../api/api";
 import { Table } from "react-bootstrap";
 import moment from "moment";
+import { toast } from "react-toastify"
 const DashboardCard = (props) => {
   const [open, setOpen] = useState(false);
   const [LMIAdata, setLMIAdata] = useState([]);
   const [totalData, settotalData] = useState([]);
   const getLMIAdata = async () => {
-    let lmiaData = await getLMIAstatus(props.lmia_status);
-    settotalData(lmiaData.total_rows);
-    setLMIAdata(lmiaData.data);
+    try {
+      let lmiaData = await getLMIAstatus(props.lmia_status);
+      settotalData(lmiaData.total_rows);
+      setLMIAdata(lmiaData.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   /*Render function to get the job */
   useEffect(() => {

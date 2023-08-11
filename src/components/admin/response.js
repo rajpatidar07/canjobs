@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { AddLimia, AddEmployeeDetails, GetAllResponse, GetFilter, AddUpdateVisa } from "../../api/api";
+import { AddLimia, ReservedEmployeeForJob, GetAllResponse, GetFilter, AddUpdateVisa } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -83,7 +83,7 @@ function JobResponse(props) {
         limiaFilterValue,
         props.status,
         props.employee_id,
-        props.response === "lmia" ? "1" :"0"
+        props.response === "lmia" ? "1" : ""
       );
       if (userData.data.data.length === 0) {
         setResData([]);
@@ -152,21 +152,17 @@ function JobResponse(props) {
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
     // Api call to set employee reserved
-    let data = {
-      employee_id: e.employee_id,
-      job_status: "1",
-      posted_job_id: jobId
-    }
     try {
-      let response = await AddEmployeeDetails(data)
-      if (response.message === 'Employee data updated successfully') {
+      let response = await ReservedEmployeeForJob(e.apply_id, "1")
+      console.log(response)
+      if (response.message === "Successfully") {
         // Api call to set employee Visa
         let status = "pending"
         try {
           let VisaResponse = await AddUpdateVisa(e.employee_id, status)
           if (VisaResponse.data.message === "created successfully") {
             // Api call to set employee Limia
-            const lmia = { lmia_status: "position approved" };
+            const lmia = { lmia_status: "payment done" };
             try {
               let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
               if (LimiaResponse.message === 'Data added successfully') {
@@ -383,7 +379,7 @@ function JobResponse(props) {
                       {(FilterJson.experience || []).map((ex, i) => (
                         <option value={ex} key={i}>
                           {ex}
-                          {ex === "Fresher" || ex === "Other" ? "" : "Year"}
+                          {ex === "fresher" || ex === "Other" ? "" : "Year"}
                         </option>
                       ))}
                     </select>
@@ -586,61 +582,61 @@ function JobResponse(props) {
                         (response || []).map((res, i) => (
                           // ((props.response === "response") || (props.response === "self") ||
                           //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
-                            <tr className="text-capitalize" key={i}>
-                              <th className="py-5 ">
-                                {res.employee_id}
-                              </th>
-                              <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {res.name || res.gender || res.date_of_birth ? (
-                                    <div className="d-flex profile_box gx-2">
-                                      <div className="media  align-items-center">
-                                        <div className="circle-36 mx-auto overflow-hidden">
-                                          {res.profile_photo === null ? (
-                                            <img
-                                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                              alt=""
-                                              className="w-100"
-                                            />
-                                          ) : (
-                                            <img
-                                              src={res.profile_photo}
-                                              alt=""
-                                              className="w-100"
-                                            />
-                                          )}
-                                        </div>
-                                      </div>
-
-                                      <div className=" mb-0">
-                                        <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                          {res.name}
-                                        </p>
-                                        <p className="text-gray font-size-2 m-0 text-capitalize">
-                                          {res.gender === "female" ? "F" : res.gender === "male" ? "M" : "O"} ({res.marital_status + ", "}
-                                          {/*Calculation of age from date of birth*/}
-                                          {moment().diff(
-                                            res.date_of_birth,
-                                            "years"
-                                          )}
-                                          Y)
-                                        </p>
-                                        {res.created_by_admin === ("0" || 0) ? (
-                                          <span className="bg-info text-white web_tag">
-                                            Web
-                                          </span>
-                                        ) : null}
+                          <tr className="text-capitalize" key={i}>
+                            <th className="py-5 ">
+                              {res.employee_id}
+                            </th>
+                            <th className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {res.name || res.gender || res.date_of_birth ? (
+                                  <div className="d-flex profile_box gx-2">
+                                    <div className="media  align-items-center">
+                                      <div className="circle-36 mx-auto overflow-hidden">
+                                        {res.profile_photo === null ? (
+                                          <img
+                                            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                            alt=""
+                                            className="w-100"
+                                          />
+                                        ) : (
+                                          <img
+                                            src={res.profile_photo}
+                                            alt=""
+                                            className="w-100"
+                                          />
+                                        )}
                                       </div>
                                     </div>
-                                  ) : (
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      NA
-                                    </span>
-                                  )}
-                                </h3>
-                              </th>
 
-                              {/* <th className="py-5 ">
+                                    <div className=" mb-0">
+                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                        {res.name}
+                                      </p>
+                                      <p className="text-gray font-size-2 m-0 text-capitalize">
+                                        {res.gender === "female" ? "F" : res.gender === "male" ? "M" : "O"} ({res.marital_status + ", "}
+                                        {/*Calculation of age from date of birth*/}
+                                        {moment().diff(
+                                          res.date_of_birth,
+                                          "years"
+                                        )}
+                                        Y)
+                                      </p>
+                                      {res.created_by_admin === ("0" || 0) ? (
+                                        <span className="bg-info text-white web_tag">
+                                          Web
+                                        </span>
+                                      ) : null}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    NA
+                                  </span>
+                                )}
+                              </h3>
+                            </th>
+
+                            {/* <th className="py-5 ">
                               <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
                                 {res.job_title}
                               </p>
@@ -649,201 +645,231 @@ function JobResponse(props) {
                               </p>
                             </th> */}
 
-                              {props.heading === "Dashboard" ? (
-                                ""
-                              ) : (
-                                <th className=" py-5">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {res.contact_no || res.email ? (
-                                      <>
-                                        <p className="font-size-3 font-weight-normal m-0">
-                                          <Link className="text-dark" to={`tel:${res.contact_no}`}>
-                                            {`+${res.contact_no}`}
-                                          </Link>
-                                        </p>
-                                        <p className="font-size-3 font-weight-normal m-0">
-                                          <Link className="text-dark" to={`mailto:${res.email}`}>
-                                            {res.email}
-                                          </Link>
-                                        </p>
-                                      </>
-                                    ) : (
-                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                        NA
-                                      </span>
-                                    )}
-                                  </h3>
-                                </th>
-                              )}
-                              {props.heading === "Dashboard" ? (
-                                ""
-                              ) : (
-                                <th className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {res.current_location ||
-                                      res.currently_located_country ? (
-                                      <>
-                                        <span>{res.current_location}</span>
-                                        <span className="px-1">
-                                          {res.currently_located_country}
-                                        </span>
-                                      </>
-                                    ) : (
-                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                        NA
-                                      </span>
-                                    )}
-                                  </h3>
-                                </th>
-                              )}
-                              {props.heading === "Dashboard" ? (
-                                ""
-                              ) : (
-                                <th className=" py-5">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {res.experience ? (
-                                      res.experience
-                                    ) : (
-                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                        NA
-                                      </span>
-                                    )}
-                                  </h3>
-                                </th>
-                              )}
+                            {props.heading === "Dashboard" ? (
+                              ""
+                            ) : (
                               <th className=" py-5">
-                                <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  <Link to="/lmia" state={{ id: res.job_id }}>
-                                    {res.lmia_status === "limia rejected" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-danger">
-                                        Lmia Reject
-                                      </span>
-                                    ) : res.lmia_status === "lmia approved" ? (
-                                      <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                        Lmia Approved
-                                      </span>
-                                    ) : res.lmia_status === "lmia partial" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-gray">
-                                        Lmia partial
-                                      </span>
-                                    ) : res.lmia_status === "payment done" ? (
-                                      <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                        Payment done
-                                      </span>
-                                    ) : res.lmia_status === "interview done" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-warning">
-                                        Interview done
-                                      </span>
-                                    ) : res.lmia_status === "position approved" ? (
-                                      <span className="px-3 py-2 badge badge-pill badge-dark">
-                                        Position approved
-                                      </span>
-                                    ) : (
-                                      <span>NA</span>
-                                    )}</Link>
-                                </div>
-                              </th>
-                              <th className="  py-5 ">
-                                <p className="font-size-3 font-weight-normal mb-0">
-                                  {res.visa_status}
-                                </p>
-                              </th>
-                              <th className="  py-5 ">
-                                <p className="font-size-3 font-weight-normal mb-0">
-                                  {res.status === "COMPLETE" ? (
-                                    <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Complete</span>
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {res.contact_no || res.email ? (
+                                    <>
+                                      <p className="font-size-3 font-weight-normal m-0">
+                                        <Link className="text-dark" to={`tel:${res.contact_no}`}>
+                                          {`+${res.contact_no}`}
+                                        </Link>
+                                      </p>
+                                      <p className="font-size-3 font-weight-normal m-0">
+                                        <Link className="text-dark" to={`mailto:${res.email}`}>
+                                          {res.email}
+                                        </Link>
+                                      </p>
+                                    </>
                                   ) : (
-                                    <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                      Scheduled
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
                                     </span>
                                   )}
-                                </p>
+                                </h3>
                               </th>
-                              {props.heading === "Dashboard" ||
-                                user_type === "company" || props.self === "yes" ? (
-                                ""
-                              ) : (
-                                <th className="py-5  min-width-px-100">
-                                  <div
-                                    className="btn-group button_group"
-                                    role="group"
-                                    aria-label="Basic example"
-                                  >
-                                    <button
-                                      className={res.job_status === "0" ? "btn btn-outline-info action_btn" : " d-none"}
-                                      onClick={() => ReservedEmployee(res)}
-                                      title="Reserved Employee"
-                                    >
-                                      Reserved
-                                    </button>
+                            )}
+                            {props.heading === "Dashboard" ? (
+                              ""
+                            ) : (
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {res.current_location ||
+                                    res.currently_located_country ? (
+                                    <>
+                                      <span>{res.current_location}</span>
+                                      <span className="px-1">
+                                        {res.currently_located_country}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
+                                    </span>
+                                  )}
+                                </h3>
+                              </th>
+                            )}
+                            {props.heading === "Dashboard" ? (
+                              ""
+                            ) : (
+                              <th className=" py-5">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {res.experience ? (
+                                    res.experience
+                                  ) : (
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
+                                    </span>
+                                  )}
+                                </h3>
+                              </th>
+                            )}
+                            <th className=" py-5">
+                              <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <Link to="/lmia" state={{ id: res.job_id }}>
+                                  {res.lmia_status === "limia rejected" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-danger">
+                                      Lmia Reject
+                                    </span>
+                                  ) : res.lmia_status === "lmia approved" ? (
+                                    <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                      Lmia Approved
+                                    </span>
+                                  ) : res.lmia_status === "lmia partial" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-gray">
+                                      Lmia partial
+                                    </span>
+                                  ) : res.lmia_status === "payment done" ? (
+                                    <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                      Payment done
+                                    </span>
+                                  ) : res.lmia_status === "interview done" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-warning">
+                                      Interview done
+                                    </span>
+                                  ) : res.lmia_status === "position approved" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-dark">
+                                      Position approved
+                                    </span>
+                                  ) : (
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
+                                    </span>
+                                  )}</Link>
+                              </div>
+                            </th>
+                            <th className="  py-5 ">
+                              <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                {res.visa_status === "pending" ? (
+                                  <span
+                                    className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill"
 
-                                    <button
-                                      className={props.response === "visa" || res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
-                                      onClick={() => addLimia(res)}
-                                      title="Update LMIA status"
-                                    >
-                                      LMIA
-                                    </button>
-                                    <button
-                                      className={props.response === "lmia" || res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
-                                      onClick={() => editVisa(res)}
-                                      title="Update Visa status"
-                                    >
-                                      <span className="fab fa-cc-visa text-gray px-2"></span>
-                                    </button>
-                                    <button
-                                      className={res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
-                                      title="Employee LMIA"
-                                    >
-                                      <Link to="/lmia" state={{ id: res.job_id, employee_id: res.employee_id }}>
-                                        <span className="fas fa-arrow-left text-gray px-2"></span>
-                                      </Link>
-                                    </button>
-                                    <button
-                                      className={res.job_status === "0" ? "d-none" : "btn btn-outline-info action_btn"}
-                                      title="Employee Visa"
-                                    >
-                                      <Link to="/visa" state={{ id: res.employee_id }}>
-                                        <span className="fas fa-arrow-right text-gray px-2"></span>
-                                      </Link>
-                                    </button>
-                                    <button
-                                      className={(props.response === "visa" || props.response === "lmia") && res.job_status === "1" ? "btn btn-outline-info action_btn" : "d-none"}
-                                      onClick={() =>
-                                        AddDoucument(res)
-                                      }
-                                      title="Documents"
-                                    >
-                                      <span className="fas fa-file text-gray"></span>
-                                    </button>
-                                    <button
-                                      className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
-                                      onClick={() => addFollow(res)}
-                                      title=" Add Follow Up"
-                                    >
-                                      <i className=" fas fa-plus text-gray px-2"></i>
-                                    </button>
-                                    <button
-                                      className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
-                                      onClick={() => addnterview(res)}
-                                      title=" Add Interview"
-                                      disabled={res.status === "complete" ? true : false}
-                                    >
-                                      <i className="fa fa-calendar text-gray px-2"></i>
-                                    </button>
-                                    <button
-                                      className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
-                                      onClick={() => editJob(res)}
-                                      title="Change Job"
-                                      disabled={props.total_applicants >= props.role_category ? true : false}
-                                    >
-                                      <i className="fas fa-briefcase"></i>
-                                    </button>
-                                  </div>
-                                </th>
-                              )}
-                            </tr>
-                            // : null
+                                  >
+                                    Pending
+                                  </span>
+                                ) : res.visa_status === "reject" ? (
+                                  <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+
+                                    Reject
+                                  </span>
+                                ) : res.visa_status === "experied" ? (
+                                  <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
+
+                                    Experied
+                                  </span>
+                                ) : res.visa_status === "approved" ? (
+                                  <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+
+                                    Approved
+                                  </span>) : res.visa_status === "cancel" ? (
+                                    <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
+
+                                      Cancel
+                                    </span>) : 
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
+                                    </span>}
+                              </p>
+                            </th>
+                            <th className="  py-5 ">
+                              <p className="font-size-3 font-weight-normal mb-0">
+                                {res.status === "COMPLETE" ? (
+                                  <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Complete</span>
+                                ) : (
+                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                    Scheduled
+                                  </span>
+                                )}
+                              </p>
+                            </th>
+                            {props.heading === "Dashboard" ||
+                              user_type === "company" || props.self === "yes" ? (
+                              ""
+                            ) : (
+                              <th className="py-5  min-width-px-100">
+                                <div
+                                  className="btn-group button_group"
+                                  role="group"
+                                  aria-label="Basic example"
+                                >
+                                  <button
+                                    className={res.is_reserve === "0" ? "btn btn-outline-info action_btn" : " d-none"}
+                                    onClick={() => ReservedEmployee(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Reserved
+                                  </button>
+
+                                  <button
+                                    className={props.response === "visa" || res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                    onClick={() => addLimia(res)}
+                                    title="Update LMIA status"
+                                  >
+                                    LMIA
+                                  </button>
+                                  <button
+                                    className={props.response === "lmia" || res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    onClick={() => editVisa(res)}
+                                    title="Update Visa status"
+                                  >
+                                    <span className="fab fa-cc-visa text-gray px-2"></span>
+                                  </button>
+                                  <button
+                                    className={res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    title="Employee LMIA"
+                                  >
+                                    <Link to="/lmia" state={{ id: res.job_id, employee_id: res.employee_id }}>
+                                      <span className="fas fa-arrow-left text-gray px-2"></span>
+                                    </Link>
+                                  </button>
+                                  <button
+                                    className={res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    title="Employee Visa"
+                                  >
+                                    <Link to="/visa" state={{ id: res.employee_id }}>
+                                      <span className="fas fa-arrow-right text-gray px-2"></span>
+                                    </Link>
+                                  </button>
+                                  <button
+                                    className={(props.response === "visa" || props.response === "lmia") && res.is_reserve === "1" ? "btn btn-outline-info action_btn" : "d-none"}
+                                    onClick={() =>
+                                      AddDoucument(res)
+                                    }
+                                    title="Documents"
+                                  >
+                                    <span className="fas fa-file text-gray"></span>
+                                  </button>
+                                  <button
+                                    className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    onClick={() => addFollow(res)}
+                                    title=" Add Follow Up"
+                                  >
+                                    <i className=" fas fa-plus text-gray px-2"></i>
+                                  </button>
+                                  <button
+                                    className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    onClick={() => addnterview(res)}
+                                    title=" Add Interview"
+                                    disabled={res.status === "complete" ? true : false}
+                                  >
+                                    <i className="fa fa-calendar text-gray px-2"></i>
+                                  </button>
+                                  <button
+                                    className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                    onClick={() => editJob(res)}
+                                    title="Change Job"
+                                    disabled={props.total_applicants >= props.role_category ? true : false}
+                                  >
+                                    <i className="fas fa-briefcase"></i>
+                                  </button>
+                                </div>
+                              </th>
+                            )}
+                          </tr>
+                          // : null
                         ))
                       )}
                     </tbody>

@@ -62,34 +62,49 @@ function LmiaStatus(props) {
         lmia_status: state.lmia_status,
         job_id: jobId
       }
-      let responseData = await AddJob(data);
-      if (responseData.message === "job data updated successfully") {
-        toast.success("Lmia Status Updated successfully", {
+      try {
+        let responseData = await AddJob(data);
+        if (responseData.message === "job data updated successfully") {
+          toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
-        return close();
       }
     }
     if (validate()) {
       setLoading(true);
-      const responseData = await AddLimia(state, employeeId, jobId);
-      if (responseData.message === "Data added successfully") {
-        toast.success("Lmia Status Updated successfully", {
+      try {
+        const responseData = await AddLimia(state, employeeId, jobId);
+        if (responseData.message === "Data added successfully") {
+          toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+        if (responseData.message === "Data updated successfully") {
+          toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Data updated successfully") {
-        toast.success("Lmia Status Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -139,8 +154,8 @@ function LmiaStatus(props) {
             </div>
           </div> */}
           <LmiaTime lmia={state.lmia_status}
-          job={props.job}
-          location={location.pathname}/>
+            job={props.job}
+            location={location.pathname} />
           <form onSubmit={onAminProfileUpdateClick}>
             <div className="form-group ">
               <label

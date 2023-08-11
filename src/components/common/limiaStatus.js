@@ -9,7 +9,7 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 // import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-// import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
 import DocumentModal from "../admin/Modal/DocumentModal";
@@ -59,25 +59,33 @@ export default function LimiaStatus(props) {
     const ResponseData = async () => {
         console.log(props.heading)
         setIsLoading(true)
-        const userData = await GetEmployeeByLima(
-            // props.heading === "Manage Follow-ups" || props.heading === "LIMIA status" || user_type === "company"
-            //     ? jobId
-            //     : 
-            location.state === null ? jobId : location.state.id,
-            search,
-            limiaFilterValue,
-            limiaFilterValue  || search || sortOrder ? 1 : currentPage,
-            recordsPerPage,
-            columnName,
-            sortOrder,
-        );
-        if (userData.data.length === 0) {
-            setResData([]);
-            setResponseData([]);
-            setIsLoading(false)
-        } else {
-            setResponseData(userData.data);
-            setTotalData(userData.total_rows);
+        try {
+            const userData = await GetEmployeeByLima(
+                // props.heading === "Manage Follow-ups" || props.heading === "LIMIA status" || user_type === "company"
+                //     ? jobId
+                //     : 
+                location.state === null ? jobId : location.state.id,
+                search,
+                limiaFilterValue,
+                limiaFilterValue || search || sortOrder ? 1 : currentPage,
+                recordsPerPage,
+                columnName,
+                sortOrder,
+            );
+            if (userData.data.length === 0) {
+                setResData([]);
+                setResponseData([]);
+                setIsLoading(false)
+            } else {
+                setResponseData(userData.data);
+                setTotalData(userData.total_rows);
+                setIsLoading(false)
+            }
+        } catch (err) {
+            toast.error("Something went wrong", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+            });
             setIsLoading(false)
         }
     };
@@ -331,7 +339,7 @@ export default function LimiaStatus(props) {
                                             {(FilterJson.experience || []).map((ex, i) => (
                                                 <option value={ex} key={i}>
                                                     {ex}
-                                                    {ex === "Fresher" || ex === "Other" ? "" : "Year"}
+                                                    {ex === "fresher" || ex === "Other" ? "" : "Year"}
                                                 </option>
                                             ))}
                                         </select>

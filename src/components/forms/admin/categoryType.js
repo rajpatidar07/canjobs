@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 import { AddJobCategory } from "../../../api/api";
@@ -7,14 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddCategoryType(props) {
   let [loading, setLoading] = useState(false);
-  
+
   /* Functionality to close the modal */
   const close = () => {
-    setState( {...state,
+    setState({
+      ...state,
       category_type: "",
       parent_id: "",
-      job_category_id :""
-  });
+      job_category_id: ""
+    });
     setErrors("");
     setLoading(false);
     props.close();
@@ -25,11 +26,11 @@ function AddCategoryType(props) {
   const initialFormState = {
     category_type: "",
     parent_id: "",
-    job_category_id :""
+    job_category_id: ""
   };
   /*Function to get the selected Catgeory type which you want to edit*/
   useEffect(() => {
-    setState({ ...state, category_type: (props.jobCategoryData.category_type) , job_category_id : (props.jobCategoryData.job_category_id) });
+    setState({ ...state, category_type: (props.jobCategoryData.category_type), job_category_id: (props.jobCategoryData.job_category_id) });
   }, [props]);
   // VALIDATION CONDITIONS
   const validators = {
@@ -38,12 +39,12 @@ function AddCategoryType(props) {
         value === "" || value.trim() === ""
           ? "Category Type  is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Category Type can not have a number."
-          : value.length < 2
-          ? "Category Type should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Category Type can not have a number."
+              : value.length < 2
+                ? "Category Type should have 2 or more letters"
+                : "",
     ],
   };
 
@@ -57,26 +58,34 @@ function AddCategoryType(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddJobCategory(state);
-      if (responseData.message === "Category added successfully") {
-        toast.success("Category Type successfully", {
+      try {
+        const responseData = await AddJobCategory(state);
+        if (responseData.message === "Category added successfully") {
+          toast.success("Category Type successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+        if (responseData.message === "Category updated successfully") {
+          toast.success("Category Type updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+        if (responseData.message === "already exist !") {
+          setErrors({ ...errors, category_type: "Category Type Alredy Exists." });
+          setLoading(false);
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "Category updated successfully") {
-        toast.success("Category Type updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true)
-        return close();
-      }
-      if (responseData.message === "already exist !") {
-        setErrors({...errors,category_type : "Category Type Alredy Exists."});
-        setLoading(false);
+        setLoading(false)
       }
     } else {
       setLoading(false);

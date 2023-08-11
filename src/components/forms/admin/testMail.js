@@ -46,13 +46,19 @@ function TestMail(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await TestEmail(state);
+     try{ const responseData = await TestEmail(state);
       if (responseData.message === "email sent successfully") {
         toast.success("Email sent successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         return close();
+      }}catch(err){
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setLoading(false)
       }
     } else {
       setLoading(false);

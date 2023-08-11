@@ -54,20 +54,28 @@ function ManageEmail(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddUpdateEmailTemplate(state);
-      if (responseData.message === "data inserted successfully") {
-        toast.success("Data inserted successfully", {
+      try {
+        const responseData = await AddUpdateEmailTemplate(state);
+        if (responseData.message === "data inserted successfully") {
+          toast.success("Data inserted successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          return close();
+        }
+        if (responseData.message === "data updated successfully") {
+          toast.success("Data updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        return close();
-      }
-      if (responseData.message === "data updated successfully") {
-        toast.success("Data updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -117,7 +125,7 @@ function ManageEmail(props) {
                   id="email_type"
                   name="email_type"
                   disabled={props.data === "" ? false : true}
-                    placeholder="Email type"
+                  placeholder="Email type"
                 />
                 {/*----ERROR MESSAGE FOR Admin Name----*/}
                 {errors.name && (

@@ -1,8 +1,8 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { Link, useNavigate , useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useValidation from "../common/useValidation";
-import { EmployerLogin , EmployerForgotPassword , LinkedInLoginEmployer , SocialCompanyLogin} from "../../api/api";
+import { EmployerLogin, EmployerForgotPassword, LinkedInLoginEmployer, SocialCompanyLogin } from "../../api/api";
 import { toast } from "react-toastify";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
@@ -18,10 +18,10 @@ export default function CompanyLogin(props) {
   let i = 0;
   const [searchParams] = useSearchParams()
   let code = searchParams.get("code")
-  if(props.show === true){
+  if (props.show === true) {
     localStorage.setItem("linkedin", "employerLogin");
-   }
-   const type = localStorage.getItem("linkedin");
+  }
+  const type = localStorage.getItem("linkedin");
   /* Functionality to close the modal */
   const close = () => {
     setErrors("");
@@ -44,8 +44,8 @@ export default function CompanyLogin(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -53,10 +53,10 @@ export default function CompanyLogin(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -70,67 +70,83 @@ export default function CompanyLogin(props) {
 
     if (validate()) {
       setLoading(true);
-      let Response = await EmployerLogin(state);
-      // console.log("Response =>",Response);
-      if (
-        Response.status === true ||
-        Response.message === "Successfully Logged In"
-      ) {
-        localStorage.setItem("token", Response.token);
-        localStorage.setItem("userType", "company");
-        localStorage.setItem("company_id", Response.company_id);
-        localStorage.setItem("profile_photo", Response.company_logo);
-        // console.log("------------------------------", Response.company_id);
+      try {
+        let Response = await EmployerLogin(state);
+        // console.log("Response =>",Response);
+        if (
+          Response.status === true ||
+          Response.message === "Successfully Logged In"
+        ) {
+          localStorage.setItem("token", Response.token);
+          localStorage.setItem("userType", "company");
+          localStorage.setItem("company_id", Response.company_id);
+          localStorage.setItem("profile_photo", Response.company_logo);
+          // console.log("------------------------------", Response.company_id);
 
-        toast.success("Log in Successfully", {
+          toast.success("Log in Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          close();
+          Navigate("/company");
+          window.location.reload();
+        } else if (Response.message === "Invalid Credentials !") {
+          setLoading(false);
+          setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+          // handle form submission
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        close();
-        Navigate("/company");
-        window.location.reload();
-      } else if (Response.message === "Invalid Credentials !") {
-        setLoading(false);
-        setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-        // handle form submission
+        setLoading(false)
       }
     }
   };
 
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
-    
-    console.log(state,"working",errors)
+
+    console.log(state, "working", errors)
     if (validate()) {
       setLoading(true);
-      let Response = await EmployerForgotPassword(state);
-      if (Response.status === 1 || Response.message === "Sent you a mail") {
-        toast.success("Email sent Successfully", {
+      try {
+        let Response = await EmployerForgotPassword(state);
+        if (Response.status === 1 || Response.message === "Sent you a mail") {
+          toast.success("Email sent Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          close();
+        } else if (Response.message === "No user found") {
+          setLoading(false);
+          setErrors({ ...errors, Credentials: ["No user found"] });
+          //   handle form submission
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        close();
-      } else if (Response.message === "No user found") {
-        setLoading(false);
-        setErrors({ ...errors, Credentials: ["No user found"] });
-        //   handle form submission
+        setLoading(false)
       }
     }
   };
 
   // END USER LOGIN VALIDATION
-   /*Function to login with google */
-   const GoogleLogin = useGoogleLogin({
+  /*Function to login with google */
+  const GoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         let data = await axios("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: {  
+          headers: {
             "Authorization": `Bearer ${tokenResponse.access_token}`
           }
         });
         console.log("response =>", data.data);
-        if(data.data.email_verified === true){
-          let res = await SocialCompanyLogin(data.data.sub,data.data.email,data.data.name,data.data.picture,"Google");
+        if (data.data.email_verified === true) {
+          let res = await SocialCompanyLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
           console.log(res);
           localStorage.setItem("token", res.token);
           localStorage.setItem("userType", "company");
@@ -146,6 +162,10 @@ export default function CompanyLogin(props) {
         }
       } catch (err) {
         console.log(err);
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     }
   });
@@ -170,12 +190,12 @@ export default function CompanyLogin(props) {
   };
   useEffect(() => {
     i = i + 4
-    if((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 4 && type === "employerLogin"){
-        const response =  LinkedInLoginEmployer(code ,type);
-        response.then((res) =>{
-          let decode = JSON.parse(res.data)
-        if(res.data.email_verified === true){
-          let data =  SocialCompanyLogin(res.data.sub,res.data.email,res.data.name,res.data.picture,"Linkedin");
+    if ((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 4 && type === "employerLogin") {
+      const response = LinkedInLoginEmployer(code, type);
+      response.then((res) => {
+        let decode = JSON.parse(res.data)
+        if (res.data.email_verified === true) {
+          let data = SocialCompanyLogin(res.data.sub, res.data.email, res.data.name, res.data.picture, "Linkedin");
           console.log(data);
           localStorage.setItem("token", data.token);
           localStorage.setItem("userType", "company");
@@ -188,38 +208,42 @@ export default function CompanyLogin(props) {
           props.close();
           Navigate("/company");
           window.location.reload();
-        }if(res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"){
+        } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
           toast.error("Token Expired", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           Navigate("/company");
         }
-        }).catch((err)=>{
-          console.log(err.data);
-        })
-        } 
-      },[])
+      }).catch((err) => {
+        console.log(err.data);
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      })
+    }
+  }, [])
 
   /*FUnctiom to login with facebook */
   const responseFacebook = async (response) => {
     // console.log(response);
-    if(response.graphDomain === "facebook"){
-      let data = await SocialCompanyLogin(response.userID , response.email , response.name  ,response.picture.data.url,"Facebook");
-        // console.log(data); 
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userType", "company");
-        localStorage.setItem("employee_id", data.employer_id);
-        localStorage.setItem("profile_photo", data.company_logo);
-        toast.success("Logged In Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.close();
-        Navigate ("/company");
-        window.location.reload();
-      }
-  } 
+    if (response.graphDomain === "facebook") {
+      let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
+      // console.log(data); 
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userType", "company");
+      localStorage.setItem("employee_id", data.employer_id);
+      localStorage.setItem("profile_photo", data.company_logo);
+      toast.success("Logged In Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      props.close();
+      Navigate("/company");
+      window.location.reload();
+    }
+  }
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -276,16 +300,16 @@ export default function CompanyLogin(props) {
               </div>
               <div className="col-lg-7 col-md-6">
                 <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
-                <div
+                  <div
                     className={showCompanyForgotPassword === false ? "row" : "d-none"}
                   >
                     <div className="col-4 col-xs-12">
                       <button onClick={handleLinkedInLogin}
-                      className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0">
-                      <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
-                            <span className="d-none d-xs-block mx-5 px-3">
-                              Import from LinkedIn
-                            </span>
+                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0">
+                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
+                        <span className="d-none d-xs-block mx-5 px-3">
+                          Import from LinkedIn
+                        </span>
                       </button>
                     </div>
                     <div className="col-4 col-xs-12">
@@ -301,7 +325,7 @@ export default function CompanyLogin(props) {
                     </div>
                     <div className="col-4 col-xs-12">
                       <Link
-                        to="" onClick={()=>setFacebook(true)}
+                        to="" onClick={() => setFacebook(true)}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
@@ -309,20 +333,20 @@ export default function CompanyLogin(props) {
                           Import from Facebook
                         </span>
                       </Link>
-                      {facebook ? 
-                      <FacebookLogin
+                      {facebook ?
+                        <FacebookLogin
                           appId="2170088543184291"
                           autoLoad
                           callback={responseFacebook}
                           fields="name,email,picture"
-                          scope="public_profile,user_friends,email,user_actions.books"         
+                          scope="public_profile,user_friends,email,user_actions.books"
                           className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                           render={renderProps => (
                             <button onClick={renderProps.onClick} className="d-none">
-                              </button>
+                            </button>
                           )}
                         />
-                        :null}
+                        : null}
                     </div>
                   </div>
                   {/* END SOCIAL MEDIA LINK BUTTONS */}

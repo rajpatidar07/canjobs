@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { GetAllJobs } from "../../api/api";
 import moment from "moment";
 import Response from "../admin/response";
+import { toast } from "react-toastify";
 function JobBoxResponse({
   categoryFilterValue,
   locationFilterValue,
@@ -15,18 +16,25 @@ function JobBoxResponse({
   let Skill = [];
   /* Function to get Job data*/
   const JobData = async () => {
-    const userData = await GetAllJobs(
-      "",
-      locationFilterValue,
-      categoryFilterValue,
-      SkillFilterValue,
-      jobSwapFilterValue
-    );
-    if (userData.data.data.length === 0) {
-      setjobData([]);
-    } else {
-      setjobData(userData.data.data);
-      setNoData(userData.data.total_rows);
+    try {
+      const userData = await GetAllJobs(
+        "",
+        locationFilterValue,
+        categoryFilterValue,
+        SkillFilterValue,
+        jobSwapFilterValue
+      );
+      if (userData.data.data.length === 0) {
+        setjobData([]);
+      } else {
+        setjobData(userData.data.data);
+        setNoData(userData.data.total_rows);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   /*---- Function to Open response Table on Click ----*/

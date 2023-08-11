@@ -1,11 +1,11 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
 function Employer() {
@@ -19,26 +19,35 @@ function Employer() {
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [Json , setJson] = useState([])
+  let [Json, setJson] = useState([])
   /*Function to get the jSon */
- const JsonData=async()=>{
-   let Json = await GetFilter()
-   setJson(Json.data.data)
- }
- /*Function to Search employer */
- const onSearch = (e) => { setSearch(e.target.value);
- if(/[^a-zA-Z0-9]/g.test(search)){
-    setSearchError("Cannot use special character")
-  }else if(search === ""){
-    setSearchError("")
-  }} 
-  /*Render method to get the json*/
-  useEffect(()=>{
-    JsonData()
-    if((search === "") === true){
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter()
+      setJson(Json.data.data)
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  }
+  /*Function to Search employer */
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+    if (/[^a-zA-Z0-9]/g.test(search)) {
+      setSearchError("Cannot use special character")
+    } else if (search === "") {
       setSearchError("")
     }
-  },[industryFilterValue,corporationFilterValue])
+  }
+  /*Render method to get the json*/
+  useEffect(() => {
+    JsonData()
+    if ((search === "") === true) {
+      setSearchError("")
+    }
+  }, [industryFilterValue, corporationFilterValue])
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
     // e.preventDefault();
@@ -51,15 +60,15 @@ function Employer() {
     setShowEmployerDetails(true);
     setEmployerID(e);
   };
-    /*Corporation Json for not having same data */
-    const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
+  /*Corporation Json for not having same data */
+  const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
     index === self.findIndex((t) => t.value === thing.value)
-    ) : [];
-    /*Industry Json for not having same data */
-    const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
+  ) : [];
+  /*Industry Json for not having same data */
+  const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
     index === self.findIndex((t) => t.value === thing.value)
-    ) : [];
-    
+  ) : [];
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -178,19 +187,19 @@ function Employer() {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
-                <div className="mb-9">
-                  <Link
-                    to={""}
-                    onClick={() => setShowEmployerDetails(false)}
-                    className="d-flex align-items-center ml-4"
-                  >
-                    {" "}
-                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8 mt-10"></i>
-                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                      Back
-                    </span>
-                  </Link>
-                </div>
+                  <div className="mb-9">
+                    <Link
+                      to={""}
+                      onClick={() => setShowEmployerDetails(false)}
+                      className="d-flex align-items-center ml-4"
+                    >
+                      {" "}
+                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8 mt-10"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
+                  </div>
                 </div>
               </div>
               <EmployerProfile employerId={employerId} />

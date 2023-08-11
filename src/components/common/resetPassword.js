@@ -29,8 +29,8 @@ export default function ResetPassword() {
         value === ""
           ? "Confirm Password is required"
           : value !== state.password
-          ? "Confirm Password must be Same as Password"
-          : "",
+            ? "Confirm Password must be Same as Password"
+            : "",
     ],
   };
   /*----RESET PASSWORD ONCHANGE FUNCTION----*/
@@ -41,27 +41,28 @@ export default function ResetPassword() {
   /*----RESET PASSWORD SUBMIT FUNCTION----*/
   const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
-console.log(state);
+    console.log(state);
     if (validate()) {
       setLoading(true);
       // handle form submission
       if (userType === "user") {
-        try{
-        let updatedTodo = await EmployeeResetPasswordApi(state);
-        if (
-          updatedTodo.status === true ||
-          updatedTodo.message === "Password updated successfully"
-        ) {
-          toast.success("Password updated successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setLoading(false);
-          setState(initialFormState);
-          navigate("/");
-          window.location.reload();
-        }}
-        catch(err){
+        try {
+          let updatedTodo = await EmployeeResetPasswordApi(state);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState);
+            navigate("/");
+            window.location.reload();
+          }
+        }
+        catch (err) {
           toast.error("Something went wrong", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -70,20 +71,22 @@ console.log(state);
         }
       }
       if (userType === "company") {
-        try{let updatedTodo = await EmployerResetPasswordApi(state);
-        if (
-          updatedTodo.status === true ||
-          updatedTodo.message === "Password updated successfully"
-        ) {
-          toast.success("Password updated successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setLoading(false);
-          setState(initialFormState);
-          navigate("/");
-          window.location.reload();
-        }} catch(err){
+        try {
+          let updatedTodo = await EmployerResetPasswordApi(state);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState);
+            navigate("/");
+            window.location.reload();
+          }
+        } catch (err) {
           toast.error("Something went wrong", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -92,20 +95,22 @@ console.log(state);
         }
       }
       if (userType === "admin") {
-       try{ let updatedTodo = await AdminResetPasswordApi(state);
-        if (
-          updatedTodo.status === true ||
-          updatedTodo.message === "Password updated successfully"
-        ) {
-          toast.success("Password updated successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setLoading(false);
-          setState(initialFormState);
-          navigate("/");
-          window.location.reload();
-        }} catch(err){
+        try {
+          let updatedTodo = await AdminResetPasswordApi(state);
+          if (
+            updatedTodo.status === true ||
+            updatedTodo.message === "Password updated successfully"
+          ) {
+            toast.success("Password updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setLoading(false);
+            setState(initialFormState);
+            navigate("/");
+            window.location.reload();
+          }
+        } catch (err) {
           toast.error("Something went wrong", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,

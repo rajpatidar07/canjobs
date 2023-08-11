@@ -4,13 +4,13 @@ import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddCategory from "../forms/admin/category";
-import { DeleteJobCategory, getAllJobsCategory , GetFilter } from "../../api/api";
+import { DeleteJobCategory, getAllJobsCategory, GetFilter } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import AddCategoryType from "../forms/admin/categoryType";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 function Category() {
   /*Modal and Data states */
   let [isLoading, setIsLoading] = useState(true);
@@ -42,59 +42,81 @@ function Category() {
   const [sortOrder, setSortOrder] = useState("DESC");
 
   /*Function to get thejSon */
- const JsonData = async()=>{
-  let Json = await GetFilter()
-  setCateType(Json.data.data.Category_type)
-}
+  const JsonData = async () => {
+    try {
+      let Json = await GetFilter()
+      setCateType(Json.data.data.Category_type)
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  }
   /* Function to get the job category data*/
   const CategoryData = async () => {
     setIsLoading(true)
-    const userData = await getAllJobsCategory(
-      1,
-      categoryTypeFilterValue,
-      search,
-      currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder
-    );
-    if (userData.data.length === 0) {
-      setCategoryData([]);
-      setIsLoading(false)
-    } else {
-      setCategoryData(userData.data);
-      const filteredData = userData.data.filter(
-        (data) => data.parent_id !== "0"
-        );
-      if (filteredData.length === 0) {
-        setTotalData();
+    try {
+      const userData = await getAllJobsCategory(
+        1,
+        categoryTypeFilterValue,
+        search,
+        currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder
+      );
+      if (userData.data.length === 0) {
+        setCategoryData([]);
+        setIsLoading(false)
       } else {
-        setTotalData(userData.total_rows);
+        setCategoryData(userData.data);
+        const filteredData = userData.data.filter(
+          (data) => data.parent_id !== "0"
+        );
+        if (filteredData.length === 0) {
+          setTotalData();
+        } else {
+          setTotalData(userData.total_rows);
+        }
+        setIsLoading(false)
       }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setIsLoading(false)
     }
   };
   /* Function to get the job category Type data*/
   const CategoryTypeData = async () => {
-    const userData = await getAllJobsCategory(
-      0,
-      "",
-      "",
-      TypecurrentPage,
-      TyperecordsPerPage,
-      "job_category_id",
-      "DESC"
-    );
-    if (userData.data.length === 0) {
-      setCategoryTypeData([]);
-      setIsLoading2(false)
-    } else {
-      setCategoryTypeData(userData.data);
-      const FilterByType = userData.data ? userData.data.filter((thing, index, self) =>
-      index === self.findIndex((t) => t.value === thing.value)
-      ) : [];
-      setTypeTotalData(FilterByType.length);
-      setIsLoading2(false)
+    try {
+      const userData = await getAllJobsCategory(
+        0,
+        "",
+        "",
+        TypecurrentPage,
+        TyperecordsPerPage,
+        "job_category_id",
+        "DESC"
+      );
+      if (userData.data.length === 0) {
+        setCategoryTypeData([]);
+        setIsLoading2(false)
+      } else {
+        setCategoryTypeData(userData.data);
+        const FilterByType = userData.data ? userData.data.filter((thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+        ) : [];
+        setTypeTotalData(FilterByType.length);
+        setIsLoading2(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   /*Render function to get the job category*/
@@ -157,14 +179,21 @@ function Category() {
   };
   /*To call Api to delete category */
   async function deleteCategory(e) {
-    const responseData = await DeleteJobCategory(e);
-    if (responseData.message === "job category has been deleted") {
-      toast.error("Category deleted Successfully", {
+    try {
+      const responseData = await DeleteJobCategory(e);
+      if (responseData.message === "job category has been deleted") {
+        toast.error("Category deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlert(false);
+        setApiCall(true);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setDeleteAlert(false);
-      setApiCall(true);
     }
   }
   /*Search Onchange function to Search Category data */
@@ -233,7 +262,7 @@ function Category() {
                   placeholder={"Search Category"}
                   value={search}
                   name={"category_name"}
-                  onChange={(e) => {onSearch(e);setCurrentPage(1)}}
+                  onChange={(e) => { onSearch(e); setCurrentPage(1) }}
                 />
               </div>
 
@@ -244,7 +273,7 @@ function Category() {
                     name="category"
                     value={categoryTypeFilterValue}
                     id="category"
-                    onChange={(e)=> {setCategoryTypeFilterValue(e.target.value);setCurrentPage(1)}}
+                    onChange={(e) => { setCategoryTypeFilterValue(e.target.value); setCurrentPage(1) }}
                     className="text-capitalize form-control nice-select pl-7 h-100 arrow-3 arrow-3-black w-100 text-black-2"
                   >
                     <option value={""}>Select category type</option>
@@ -278,99 +307,99 @@ function Category() {
               </div>
             </div>
             <small className="text-danger">{searcherror}</small>
-              <div className="row">
+            <div className="row">
               <div className="col-6 mb-18">
                 <h3 className="font-size-5 mb-0">Category</h3>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
                   <div className="table-responsive main_table_div">
-                   {isLoading ? 
-                     <Loader/>  :  <table className="table table-striped main_data_table">
-                      <thead>
-                        <tr>
-                          <th
-                            scope="col"
-                            className="border-0 font-size-4 font-weight-normal"
-                          >
-                            <Link
-                              to={""}
-                              onClick={() => {handleSort("category_name");setCurrentPage(1)}}
-                              className="text-gray"
-                              title="Sort by Name"
-                            >
-                              Name
-                            </Link>
-                          </th>
-                          <th
-                            scope="col"
-                            className=" border-0 font-size-4 font-weight-normal"
-                          >
-                            <Link
-                              to={""}
-                              onClick={() => {handleSort("category_type");setCurrentPage(1)}}
-                              className="text-gray"
-                              title="Sort by Type"
-                            >
-                              Category Type
-                            </Link>
-                          </th>
-                          <th
-                            scope="col"
-                            className=" border-0 font-size-4 font-weight-normal"
-                          >
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* Map function to show the data in the list*/}
-                        {
-                        totalData === 0 || categoryData.length === 0 ? (
+                    {isLoading ?
+                      <Loader /> : <table className="table table-striped main_data_table">
+                        <thead>
                           <tr>
-                            <th className="bg-white"></th>
-                            <th className="bg-white text-center">No Data Found</th>
-                            <th className="bg-white"></th>
+                            <th
+                              scope="col"
+                              className="border-0 font-size-4 font-weight-normal"
+                            >
+                              <Link
+                                to={""}
+                                onClick={() => { handleSort("category_name"); setCurrentPage(1) }}
+                                className="text-gray"
+                                title="Sort by Name"
+                              >
+                                Name
+                              </Link>
+                            </th>
+                            <th
+                              scope="col"
+                              className=" border-0 font-size-4 font-weight-normal"
+                            >
+                              <Link
+                                to={""}
+                                onClick={() => { handleSort("category_type"); setCurrentPage(1) }}
+                                className="text-gray"
+                                title="Sort by Type"
+                              >
+                                Category Type
+                              </Link>
+                            </th>
+                            <th
+                              scope="col"
+                              className=" border-0 font-size-4 font-weight-normal"
+                            >
+                              Action
+                            </th>
                           </tr>
-                        ) : (
-                          (categoryData || []).map((catdata) => (
-                            <tr className="text-capitalize" key={catdata.job_category_id}>
-                              <th scope="row" className="py-5 ">
-                                <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                                  {catdata.category_name}
-                                </div>
-                              </th>
-                              <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {catdata.parent_type}
-                                </h3>
-                              </th>
-                              <th className="py-5 min-width-px-100">
-                                <div
-                                  className="btn-group button_group"
-                                  role="group"
-                                >
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => editJobCategory(catdata)}
-                                    title="Edit Category"
-                                  >
-                                    <span className=" fas fa-edit text-gray"></span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => ShowDeleteAlert(catdata)}
-                                    title="Delete"
-                                  >
-                                    <span className=" text-danger">
-                                      <i className="fa fa-trash"></i>
-                                    </span>
-                                  </button>
-                                </div>
-                              </th>
-                            </tr>
-                          ))
-                        )}
-                      </tbody>
-                    </table>}
+                        </thead>
+                        <tbody>
+                          {/* Map function to show the data in the list*/}
+                          {
+                            totalData === 0 || categoryData.length === 0 ? (
+                              <tr>
+                                <th className="bg-white"></th>
+                                <th className="bg-white text-center">No Data Found</th>
+                                <th className="bg-white"></th>
+                              </tr>
+                            ) : (
+                              (categoryData || []).map((catdata) => (
+                                <tr className="text-capitalize" key={catdata.job_category_id}>
+                                  <th scope="row" className="py-5 ">
+                                    <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                      {catdata.category_name}
+                                    </div>
+                                  </th>
+                                  <th className=" py-5">
+                                    <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      {catdata.parent_type}
+                                    </h3>
+                                  </th>
+                                  <th className="py-5 min-width-px-100">
+                                    <div
+                                      className="btn-group button_group"
+                                      role="group"
+                                    >
+                                      <button
+                                        className="btn btn-outline-info action_btn"
+                                        onClick={() => editJobCategory(catdata)}
+                                        title="Edit Category"
+                                      >
+                                        <span className=" fas fa-edit text-gray"></span>
+                                      </button>
+                                      <button
+                                        className="btn btn-outline-info action_btn"
+                                        onClick={() => ShowDeleteAlert(catdata)}
+                                        title="Delete"
+                                      >
+                                        <span className=" text-danger">
+                                          <i className="fa fa-trash"></i>
+                                        </span>
+                                      </button>
+                                    </div>
+                                  </th>
+                                </tr>
+                              ))
+                            )}
+                        </tbody>
+                      </table>}
                   </div>
                 </div>
                 {/* <!-- Pagination- --> */}
@@ -386,58 +415,58 @@ function Category() {
                 <h3 className="font-size-5 mb-0">Category type</h3>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 d-flex  justify-content-between ">
                   <div className="table-responsive main_table_div">
-                    {isLoading2 ? 
-                    <Loader/>  : <table className="table table-striped main_data_table">
-                      <thead>
-                        <tr>
-                          <th
-                            scope="col"
-                            className=" border-0 font-size-4 font-weight-normal text-gray"
-                          >
-                            Category Type
-                          </th>
-                          <th
-                            scope="col"
-                            className=" border-0 font-size-4 font-weight-normal"
-                          >
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* Map function to show the data in the list*/}
-                        {TypetotalData === 0  || categoryTypeData.length === 0 ? (
+                    {isLoading2 ?
+                      <Loader /> : <table className="table table-striped main_data_table">
+                        <thead>
                           <tr>
-                            <th className="bg-white text-center">No Data Found</th>
-                            <th className="bg-white"></th>
+                            <th
+                              scope="col"
+                              className=" border-0 font-size-4 font-weight-normal text-gray"
+                            >
+                              Category Type
+                            </th>
+                            <th
+                              scope="col"
+                              className=" border-0 font-size-4 font-weight-normal"
+                            >
+                              Action
+                            </th>
                           </tr>
-                        ) : (
-                          (categoryTypeData || []).map((catdata) => (
-                            <tr className="" key={catdata.job_category_id}>
-                              <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  {catdata.category_type}
-                                </h3>
-                              </th>
-                              <th className="py-5 min-width-px-100">
-                                <div
-                                  className="btn-group button_group"
-                                  role="group"
-                                >
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => editJobCategoryType(catdata)}
-                                    title="Edit Category"
-                                  >
-                                    <span className=" fas fa-edit text-gray"></span>
-                                  </button>
-                                </div>
-                              </th>
+                        </thead>
+                        <tbody>
+                          {/* Map function to show the data in the list*/}
+                          {TypetotalData === 0 || categoryTypeData.length === 0 ? (
+                            <tr>
+                              <th className="bg-white text-center">No Data Found</th>
+                              <th className="bg-white"></th>
                             </tr>
-                          ))
-                        )}
-                      </tbody>
-                    </table>}
+                          ) : (
+                            (categoryTypeData || []).map((catdata) => (
+                              <tr className="" key={catdata.job_category_id}>
+                                <th className=" py-5">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    {catdata.category_type}
+                                  </h3>
+                                </th>
+                                <th className="py-5 min-width-px-100">
+                                  <div
+                                    className="btn-group button_group"
+                                    role="group"
+                                  >
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => editJobCategoryType(catdata)}
+                                      title="Edit Category"
+                                    >
+                                      <span className=" fas fa-edit text-gray"></span>
+                                    </button>
+                                  </div>
+                                </th>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>}
                   </div>
                 </div>
                 {/* <!-- Pagination- --> */}

@@ -3,6 +3,7 @@ import CustomButton from "../common/button";
 import ContactInfo from "../forms/employer/contactInfo";
 import { EmployerDetails } from "../../api/api";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 function CompanyDetailPage(props) {
   /*Show modal and data state */
   const [apiCall, setApiCall] = useState(false);
@@ -12,11 +13,18 @@ function CompanyDetailPage(props) {
   /*Render method to get employer data */
   useEffect(() => {
     const EmployerData = async () => {
-      let userData = await EmployerDetails(props.employerId);
-      if (userData === undefined || userData.data.company_detail.length === 0) {
-        setEmployerData([]);
-      } else {
-        setEmployerData(userData.data.company_detail[0]);
+      try {
+        let userData = await EmployerDetails(props.employerId);
+        if (userData === undefined || userData.data.company_detail.length === 0) {
+          setEmployerData([]);
+        } else {
+          setEmployerData(userData.data.company_detail[0]);
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     };
     if (props.employerId !== "0" || props.employerId !== undefined) {

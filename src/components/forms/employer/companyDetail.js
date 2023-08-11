@@ -16,8 +16,15 @@ function CompanyDetails(props) {
 
   /*Function to get thejSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setJson(Json.data.data);
+    try {
+      let Json = await GetFilter();
+      setJson(Json.data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   /* Functionality to close the modal */
   const close = () => {
@@ -48,15 +55,15 @@ function CompanyDetails(props) {
     company_name: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Company name is required"
           : value.length < 2
-          ? "Company Name should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Company Name should have 2 or more letters"
+            : /[^A-Za-z 0-9]/g.test(value)
+              ? "Cannot use special character "
+              : "",
     ],
     industry: [
       (value) =>
@@ -67,58 +74,65 @@ function CompanyDetails(props) {
     company_size: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Company Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value === "0" || value === 0
-          ? "Company Size can not be zero"
-          : "",
+            ? "Cannot use special character "
+            : value === "0" || value === 0
+              ? "Company Size can not be zero"
+              : "",
     ],
     vacancy_for_post: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Vacancy can not have a number."
-          : value.length < 2
-          ? "Vacancy should have 2 or more letters."
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Vacancy can not have a number."
+              : value.length < 2
+                ? "Vacancy should have 2 or more letters."
+                : "",
     ],
-    
+
     franchise: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined 
+          value === null ||
+          value === undefined
           ? ""
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "franchise can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "franchise can not have a number."
+              : "",
     ],
   };
   // API CALL
   const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    if (
-      userData === undefined ||
-      props.employerId === "0" ||
-      props.employerId === undefined ||
-      props.employerId.length === 0 ||
-      userData.data.company_detail.length === 0
-    ) {
-      setState(initialFormState);
-    } else {
-      setState(userData.data.company_detail[0]);
+    try {
+      let userData = await EmployerDetails(props.employerId);
+      if (
+        userData === undefined ||
+        props.employerId === "0" ||
+        props.employerId === undefined ||
+        props.employerId.length === 0 ||
+        userData.data.company_detail.length === 0
+      ) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data.company_detail[0]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -170,26 +184,33 @@ function CompanyDetails(props) {
   };
   // COMPANY DETAIL SUBMIT BUTTON
   const onCompanyDetailClick = async (event) => {
-    event.preventDefault();    
+    event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
-      let responseData = await AddCompany(state);
-      if (responseData.message === "Employer data inserted successfully") {
-        toast.success("Company Added successfully", {
+      try {
+        let responseData = await AddCompany(state);
+        if (responseData.message === "Employer data inserted successfully") {
+          toast.success("Company Added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Employer data updated successfully") {
+          toast.success("Company Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
-      }
-
-      if (responseData.message === "Employer data updated successfully") {
-        toast.success("Company Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true);
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -199,16 +220,16 @@ function CompanyDetails(props) {
   /*Industry Json for not having same data */
   const Industry = Json.Industry
     ? Json.Industry.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+      (thing, index, self) =>
+        index === self.findIndex((t) => t.value === thing.value)
+    )
     : [];
   /*Corporation Json for not having same data */
   const Corporation = Json.Corporation
     ? Json.Corporation.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+      (thing, index, self) =>
+        index === self.findIndex((t) => t.value === thing.value)
+    )
     : [];
   return (
     <>
@@ -228,7 +249,7 @@ function CompanyDetails(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCompanyDetailClick}>
-            <h5 className="text-center pt-2 mb-7">{user_type === "company"? "Company Details" : "Employer Details" }</h5>
+            <h5 className="text-center pt-2 mb-7">{user_type === "company" ? "Company Details" : "Employer Details"}</h5>
             <input type="hidden" value={state.company_id || ""} />
             <div className="row">
               {" "}

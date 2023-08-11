@@ -3,13 +3,13 @@ import { AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 export default function AdminLoginFrom({ setAdminLoggedIn }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
-  let [isLoading , setIsLoading] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
 
-  
+
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -23,8 +23,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
   };
@@ -41,30 +41,38 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
     if (validate()) {
       setLoading(true);
       // handle form submission
-      const updatedTodo = await AdminLogin(state);
-      console.log(updatedTodo);
+      try {
+        const updatedTodo = await AdminLogin(state);
+        console.log(updatedTodo);
 
-      if (
-        updatedTodo.status === true ||
-        updatedTodo.message === "Successfully Logged "
-      ) {
-        setIsLoading(true)
-        localStorage.setItem("token", updatedTodo.token);
-        localStorage.setItem("userType", "admin");
-        localStorage.setItem("admin", updatedTodo.name);
-        localStorage.setItem("admin_id", updatedTodo.admin_id);
-        localStorage.setItem("admin_type", updatedTodo.user_type);
-        toast.success("Logged In Successfully", {
+        if (
+          updatedTodo.status === true ||
+          updatedTodo.message === "Successfully Logged "
+        ) {
+          setIsLoading(true)
+          localStorage.setItem("token", updatedTodo.token);
+          localStorage.setItem("userType", "admin");
+          localStorage.setItem("admin", updatedTodo.name);
+          localStorage.setItem("admin_id", updatedTodo.admin_id);
+          localStorage.setItem("admin_type", updatedTodo.user_type);
+          toast.success("Logged In Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setIsLoading(false)
+          navigate("/dashboard");
+          window.location.reload();
+        } else if (updatedTodo.message === "Invalid Credentials") {
+          setLoading(false);
+          setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoading(false);
-        setIsLoading(false)
-        navigate("/dashboard");
-        window.location.reload();
-      } else if (updatedTodo.message === "Invalid Credentials") {
-        setLoading(false);
-        setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+        setLoading(false)
       }
     }
   };
@@ -78,95 +86,95 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
       <div className="d-flex justify-content-center pt-21">
         <div className="bg-white rounded-8 overflow-hidden pt-21">
           {
-            isLoading ? 
-            <Loader/> :
-            <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
-            <div className="pb-5 mb-5 text-center">
-              <img
-                src="image/logo-main-black.png"
-                className="img-fluid "
-                height={200}
-                width={200}
-                alt="logo"
-              />
-            </div>
-            {/* user login form */}
-            <form onSubmit={onUserLoginClick}>
-              <div className="form-group">
-                <label
-                  htmlFor="email"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={state.email}
-                  onChange={onInputChange}
-                  className={
-                    errors.email
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  placeholder="example@gmail.com"
-                  id="email"
-                />
-                {/*----ERROR MESSAGE FOR EMAIL----*/}
-                {errors.email && (
-                  <span>
-                    {errors.email.map((error) => (
-                      <span key={error} className="text-danger font-size-3">
-                        {error}
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </div>
-              <div className="form-group">
-                <label
-                  htmlFor="password"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Password
-                </label>
-                <div className="position-relative">
-                  <input
-                    name="password"
-                    type="password"
-                    value={state.password}
-                    onChange={onInputChange}
-                    className={
-                      errors.password
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    placeholder="Enter password"
-                    id="password"
+            isLoading ?
+              <Loader /> :
+              <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
+                <div className="pb-5 mb-5 text-center">
+                  <img
+                    src="image/logo-main-black.png"
+                    className="img-fluid "
+                    height={200}
+                    width={200}
+                    alt="logo"
                   />
-                  {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                  {errors.password && (
-                    <span>
-                      {errors.password.map((error) => (
-                        <span key={error} className="text-danger font-size-3">
-                          {error}
-                        </span>
-                      ))}
-                    </span>
-                  )}
                 </div>
-                {errors.Credentials && (
-                  <span>
-                    {errors.Credentials.map((error) => (
-                      <span key={error} className="text-danger font-size-3">
-                        {error}
+                {/* user login form */}
+                <form onSubmit={onUserLoginClick}>
+                  <div className="form-group">
+                    <label
+                      htmlFor="email"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      E-mail
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={state.email}
+                      onChange={onInputChange}
+                      className={
+                        errors.email
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      placeholder="example@gmail.com"
+                      id="email"
+                    />
+                    {/*----ERROR MESSAGE FOR EMAIL----*/}
+                    {errors.email && (
+                      <span>
+                        {errors.email.map((error) => (
+                          <span key={error} className="text-danger font-size-3">
+                            {error}
+                          </span>
+                        ))}
                       </span>
-                    ))}
-                  </span>
-                )}
-              </div>
+                    )}
+                  </div>
+                  <div className="form-group">
+                    <label
+                      htmlFor="password"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Password
+                    </label>
+                    <div className="position-relative">
+                      <input
+                        name="password"
+                        type="password"
+                        value={state.password}
+                        onChange={onInputChange}
+                        className={
+                          errors.password
+                            ? "form-control border border-danger"
+                            : "form-control"
+                        }
+                        placeholder="Enter password"
+                        id="password"
+                      />
+                      {/*----ERROR MESSAGE FOR PASSWORD----*/}
+                      {errors.password && (
+                        <span>
+                          {errors.password.map((error) => (
+                            <span key={error} className="text-danger font-size-3">
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                    {errors.Credentials && (
+                      <span>
+                        {errors.Credentials.map((error) => (
+                          <span key={error} className="text-danger font-size-3">
+                            {error}
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
 
-              {/* <div className="d-flex flex-wrap justify-content-between">
+                  {/* <div className="d-flex flex-wrap justify-content-between">
                 <label
                   htmlFor="terms-check"
                   className="gr-check-input d-flex  mr-3"
@@ -183,42 +191,42 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                   </span>
                 </label> */}
 
-              {/* <Link
+                  {/* <Link
                   to={""}
                   className="font-size-3 text-dodger line-height-reset mb-3"
                   onClick={() => setShowForgotPassword(true)}
                 >
                   Forget Password
                 </Link> */}
-              {/*----ERROR MESSAGE FOR terms----*/}
-              {/* {errors.tandr && (
+                  {/*----ERROR MESSAGE FOR terms----*/}
+                  {/* {errors.tandr && (
                   <span key={errors.tandr} className="text-danger font-size-3">
                     {errors.tandr}
                   </span>
                 )} */}
-              {/* </div> */}
+                  {/* </div> */}
 
-              <div className="form-group mb-8">
-                {loading === true ? (
-                  <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
-                    <span
-                      className="spinner-border spinner-border-sm "
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="sr-only">Loading...</span>
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
-                    type="submit"
-                  >
-                    Log in
-                  </button>
-                )}
-              </div>
-            </form>
-          </div>}
+                  <div className="form-group mb-8">
+                    {loading === true ? (
+                      <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                        <span
+                          className="spinner-border spinner-border-sm "
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="sr-only">Loading...</span>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
+                        type="submit"
+                      >
+                        Log in
+                      </button>
+                    )}
+                  </div>
+                </form>
+              </div>}
         </div>
       </div>
     </>

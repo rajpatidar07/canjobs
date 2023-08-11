@@ -8,8 +8,8 @@ import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
-import Loader  from '../common/loader';
-
+import Loader from '../common/loader';
+import { toast } from "react-toastify";
 function Followup() {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -37,33 +37,48 @@ function Followup() {
   const [responseDropDown, setresponseDropDown] = useState(false);
   /*Function to get the jSon */
   const JsonData = async () => {
-    let Json = await GetFilter();
-    setJson(Json.data.data);
+    try {
+      let Json = await GetFilter();
+      setJson(Json.data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
 
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true)
-    const userData = await GetAllJobs(
-      search,
-      locationFilterValue,
-      categoryFilterValue,
-      SkillFilterValue,
-      jobSwapFilterValue,
-      currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder
-    );
-    if (userData.data.data.length === 0) {
-      setJobId([]);
-      setresponseId();
-      setIsLoading(false)
-      setjobData([])
-    } else {
-      setjobData(userData.data.data);
-      setTotalData(userData.data.total_rows);
-      setresponseId(userData.data.data[0].job_id);
+    try {
+      const userData = await GetAllJobs(
+        search,
+        locationFilterValue,
+        categoryFilterValue,
+        SkillFilterValue,
+        jobSwapFilterValue,
+        currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder
+      );
+      if (userData.data.data.length === 0) {
+        setJobId([]);
+        setresponseId();
+        setIsLoading(false)
+        setjobData([])
+      } else {
+        setjobData(userData.data.data);
+        setTotalData(userData.data.total_rows);
+        setresponseId(userData.data.data[0].job_id);
+        setIsLoading(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setIsLoading(false)
     }
   };
@@ -155,7 +170,7 @@ function Followup() {
                       placeholder={"Search Job"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) => {onSearch(e);setCurrentPage(1)}}
+                      onChange={(e) => { onSearch(e); setCurrentPage(1) }}
                       maxLength={30}
                     />
                   </div>
@@ -191,7 +206,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={(e) => {setJobSwapFilterValue(e.target.value);setCurrentPage(1)}}
+                        onChange={(e) => { setJobSwapFilterValue(e.target.value); setCurrentPage(1) }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Select Job Type</option>
@@ -210,7 +225,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={(e) => {setSkillFilterValue(e.target.value);setCurrentPage(1)}}
+                        onChange={(e) => { setSkillFilterValue(e.target.value); setCurrentPage(1) }}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
@@ -231,7 +246,7 @@ function Followup() {
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={(e) => {setLocationFilterValue(e.target.value);setCurrentPage(1)}}
+                        onChange={(e) => { setLocationFilterValue(e.target.value); setCurrentPage(1) }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Select Location</option>
@@ -247,12 +262,12 @@ function Followup() {
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>
-              </div> 
-               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                  <div className="table-responsive main_table_div">
-                    {isLoading ? 
-                      <Loader />
-                      :<table className="table table-striped main_data_table">
+              </div>
+              <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+                <div className="table-responsive main_table_div">
+                  {isLoading ?
+                    <Loader />
+                    : <table className="table table-striped main_data_table">
                       <thead>
                         <tr>
                           <th
@@ -260,7 +275,7 @@ function Followup() {
                             className=" border-0 font-size-4 font-weight-normal"
                           >
                             <Link
-                              onClick={() =>{ handleSort("job_title") ; setCurrentPage(1)}}
+                              onClick={() => { handleSort("job_title"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Industry"
                             >
@@ -273,7 +288,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("job_type");setCurrentPage(1)}}
+                              onClick={() => { handleSort("job_type"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Job"
                             >
@@ -286,7 +301,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("location");setCurrentPage(1)}}
+                              onClick={() => { handleSort("location"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Address"
                             >
@@ -299,7 +314,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("education");setCurrentPage(1)}}
+                              onClick={() => { handleSort("education"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Education"
                             >
@@ -312,7 +327,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("keyskill");setCurrentPage(1)}}
+                              onClick={() => { handleSort("keyskill"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Skills"
                             >
@@ -325,7 +340,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("language");setCurrentPage(1)}}
+                              onClick={() => { handleSort("language"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Language"
                             >
@@ -338,7 +353,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("salary");setCurrentPage(1)}}
+                              onClick={() => { handleSort("salary"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Salary"
                             >
@@ -351,7 +366,7 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => {handleSort("experience_required");setCurrentPage(1)}}
+                              onClick={() => { handleSort("experience_required"); setCurrentPage(1) }}
                               className="text-gray"
                               title="Sort by Experience"
                             >
@@ -362,7 +377,7 @@ function Followup() {
                             scope="col"
                             className="text-gray border-0 font-size-4 font-weight-normal"
                           >
-                              Total Responses
+                            Total Responses
                           </th>
                           <th
                             scope="col"
@@ -414,7 +429,7 @@ function Followup() {
                                 </td>
                                 <td className=" py-5">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {job.employement} 
+                                    {job.employement}
                                   </h3>
                                 </td>
                                 <td className=" py-5">
@@ -456,7 +471,7 @@ function Followup() {
                                   {job.total_applicants > 0 ? (
                                     <div
                                       className="btn-group button_group"
-                                      // role="group"
+                                    // role="group"
                                     >
                                       <button
                                         className="btn btn-outline-info action_btn"
@@ -473,7 +488,7 @@ function Followup() {
                                 </td>
                               </tr>
                               {job.job_id === responseId &&
-                              job.total_applicants > 0 && responseDropDown === true ? (
+                                job.total_applicants > 0 && responseDropDown === true ? (
                                 <tr>
                                   <td colSpan={10}>
                                     {/* <!-- Job Responses --> */}
@@ -491,16 +506,16 @@ function Followup() {
                         )}
                       </tbody>
                     </table>}
-                  </div>
-                  {/* <!-- Follow up Pagination --> */}
-                  <div className="pt-2">
-                    <Pagination
-                      nPages={nPages}
-                      currentPage={currentPage}
-                      setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
-                    />
-                  </div>
                 </div>
+                {/* <!-- Follow up Pagination --> */}
+                <div className="pt-2">
+                  <Pagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

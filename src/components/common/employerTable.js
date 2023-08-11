@@ -7,7 +7,7 @@ import { getAllEmployer, DeleteEmployer } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 
 export default function EmployerTable(props) {
   /*show modal and data , id state */
@@ -34,26 +34,34 @@ export default function EmployerTable(props) {
   /* Function to get Employer data*/
   const EmployerData = async () => {
     setIsLoading(true)
-    const userData = await getAllEmployer(
-      props.industryFilterValue,
-      props.corporationFilterValue,
-      props.search,
-      props.filter_by_time ||
-       props.industryFilterValue||
-        props.corporationFilterValue||
-         props.search ||
+    try {
+      const userData = await getAllEmployer(
+        props.industryFilterValue,
+        props.corporationFilterValue,
+        props.search,
+        props.filter_by_time ||
+          props.industryFilterValue ||
+          props.corporationFilterValue ||
+          props.search ||
           sortOrder ? 1 : currentPage,
-      recordsPerPage,
-      columnName,
-      sortOrder,
-      props.filter_by_time
-    );
-    if (userData.data.length === 0) {
-      setemployerData([]);
-      setIsLoading(false)
-    } else {
-      setemployerData(userData.data);
-      setTotalData(userData.total_rows);
+        recordsPerPage,
+        columnName,
+        sortOrder,
+        props.filter_by_time
+      );
+      if (userData.data.length === 0) {
+        setemployerData([]);
+        setIsLoading(false)
+      } else {
+        setemployerData(userData.data);
+        setTotalData(userData.total_rows);
+        setIsLoading(false)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setIsLoading(false)
     }
   };
@@ -61,7 +69,7 @@ export default function EmployerTable(props) {
   /*Render function to get the employer*/
   useEffect(() => {
     EmployerData();
-    if(apiCall === true || props.apiCall === true){
+    if (apiCall === true || props.apiCall === true) {
       props.setApiCall(false)
       setApiCall(false)
     }
@@ -76,7 +84,7 @@ export default function EmployerTable(props) {
     columnName,
     sortOrder,
     props.filter_by_time,
-    apiCall, 
+    apiCall,
     props.apiCall,
     props.showEmployerDetails
   ]);
@@ -109,14 +117,21 @@ export default function EmployerTable(props) {
   };
   /*To call Api to delete Employer */
   async function deleteEmployer(e) {
-    const responseData = await DeleteEmployer(e);
-    if (responseData.message === "company has been deleted") {
-      toast.error("Employer deleted Successfully", {
+    try {
+      const responseData = await DeleteEmployer(e);
+      if (responseData.message === "company has been deleted") {
+        toast.error("Employer deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlert(false);
+        setApiCall(true)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setDeleteAlert(false);
-      setApiCall(true)
     }
   }
   /*Pagination Calculation */
@@ -134,325 +149,325 @@ export default function EmployerTable(props) {
 
   return (
     <>
-      
-        <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
+
+      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
         <div className="table-responsive main_table_div">
-        {isLoading ? 
-        <Loader /> :<table className="table table-striped main_data_table">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                    onClick={() => {handleSort("company_name");setCurrentPage(1)}}
-                    className="text-gray"
-                    title="Sort by Company Name"
-                  >
-                    Company name
-                  </Link>
-                </th>
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("contact_person_name");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      Name
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("address");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Location"
-                    >
-                      Location
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {handleSort("contact_no");setCurrentPage(1)}}
-                      className="text-gray"
-                      title="Sort by Contact"
-                    >
-                      Contact Info
-                    </Link>
-                  </th>
-                )}
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                    onClick={() => {handleSort("vacancy_for_post");setCurrentPage(1)}}
-                    className="text-gray"
-                    title="Sort by jobs"
-                  >
-                    Jobs
-                  </Link>
-                </th>
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    Profile
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    Action
-                  </th>
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {/* Map function to show the data in the list*/}
-              {totalData === 0 || employerData.length === 0 ? (
+          {isLoading ?
+            <Loader /> : <table className="table table-striped main_data_table">
+              <thead>
                 <tr>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => { handleSort("company_name"); setCurrentPage(1) }}
+                      className="text-gray"
+                      title="Sort by Company Name"
+                    >
+                      Company name
+                    </Link>
+                  </th>
                   {props.heading === "Dashboard" ? (
-                    <th className="bg-white">No Data Found</th>
-                  ) : (
-                    <th className="bg-white"></th>
-                  )}
-                      <th className="bg-white">No Data Found</th>
-                  <th className="bg-white"></th>
-                  {props.heading !== "Dashboard" ? (
-                    <>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                    </>
-                  ) : (
                     ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => { handleSort("contact_person_name"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Name"
+                      >
+                        Name
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => { handleSort("address"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Location"
+                      >
+                        Location
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => { handleSort("contact_no"); setCurrentPage(1) }}
+                        className="text-gray"
+                        title="Sort by Contact"
+                      >
+                        Contact Info
+                      </Link>
+                    </th>
+                  )}
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => { handleSort("vacancy_for_post"); setCurrentPage(1) }}
+                      className="text-gray"
+                      title="Sort by jobs"
+                    >
+                      Jobs
+                    </Link>
+                  </th>
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      Profile
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      Action
+                    </th>
                   )}
                 </tr>
-              ) : (
-                (employerData || []).map((empdata) => (
-                  <tr className="text-capitalize" key={empdata.company_id}>
-                    <th scope="row" className="pl-5 py-5 pr-0   ">
-                      <div className="d-flex profile_box gx-2">
-                        <div className="media  align-items-center">
-                          <div className="circle-36 mx-auto">
-                            {empdata.logo === null ? (
-                              <img
-                                src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
-                                alt=""
-                                className="w-100"
-                              />
-                            ) : (
-                              <img
-                                src={empdata.logo}
-                                alt=""
-                                className="w-100"
-                              />
-                            )}
-                          </div>
-                        </div>
-                        {empdata.company_name === null ? (
-                          <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                            Unavailable
-                          </p>
-                        ) : (
-                         props.heading === "Dashboard" ? (
-                          ""
-                        ) : <Link
-                          to={""}
-                          title="Company Details"
-                          onClick={() => EmployerDetail(empdata.company_id)}
-                        >
-                          <div className="company_profile">
-                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                              {empdata.company_name}
-                            </p>
-                            <p className="font-size-3 font-weight-normal mb-0">
-                              {empdata.industry}
-                            </p>
-                          </div>
-                          </Link>
-                        )}
-                      </div>
-                    </th>
+              </thead>
+              <tbody>
+                {/* Map function to show the data in the list*/}
+                {totalData === 0 || employerData.length === 0 ? (
+                  <tr>
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
                     {props.heading === "Dashboard" ? (
-                      ""
+                      <th className="bg-white">No Data Found</th>
                     ) : (
-                      <th className="py-5 pr-0">
-                        <Link
-                          to={""}
-                          title="Company Details"
-                          onClick={() => EmployerDetail(empdata.company_id)}
-                        >
-                          <p className="m-0 font-weight-normal text-capitalize">
-                            {empdata.contact_person_name === null
-                              ? "Unavailable"
-                              : empdata.contact_person_name}
-                          </p>
-                        </Link>
-                      </th>
+                      <th className="bg-white"></th>
                     )}
-                    {props.heading === "Dashboard" ? (
-                      ""
+                    <th className="bg-white">No Data Found</th>
+                    <th className="bg-white"></th>
+                    {props.heading !== "Dashboard" ? (
+                      <>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                      </>
                     ) : (
-                      <th className=" py-5  pr-0">
-                        {empdata.address === null ? (
+                      ""
+                    )}
+                  </tr>
+                ) : (
+                  (employerData || []).map((empdata) => (
+                    <tr className="text-capitalize" key={empdata.company_id}>
+                      <th scope="row" className="pl-5 py-5 pr-0   ">
+                        <div className="d-flex profile_box gx-2">
+                          <div className="media  align-items-center">
+                            <div className="circle-36 mx-auto">
+                              {empdata.logo === null ? (
+                                <img
+                                  src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
+                                  alt=""
+                                  className="w-100"
+                                />
+                              ) : (
+                                <img
+                                  src={empdata.logo}
+                                  alt=""
+                                  className="w-100"
+                                />
+                              )}
+                            </div>
+                          </div>
+                          {empdata.company_name === null ? (
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                              Unavailable
+                            </p>
+                          ) : (
+                            props.heading === "Dashboard" ? (
+                              ""
+                            ) : <Link
+                              to={""}
+                              title="Company Details"
+                              onClick={() => EmployerDetail(empdata.company_id)}
+                            >
+                              <div className="company_profile">
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  {empdata.company_name}
+                                </p>
+                                <p className="font-size-3 font-weight-normal mb-0">
+                                  {empdata.industry}
+                                </p>
+                              </div>
+                            </Link>
+                          )}
+                        </div>
+                      </th>
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th className="py-5 pr-0">
+                          <Link
+                            to={""}
+                            title="Company Details"
+                            onClick={() => EmployerDetail(empdata.company_id)}
+                          >
+                            <p className="m-0 font-weight-normal text-capitalize">
+                              {empdata.contact_person_name === null
+                                ? "Unavailable"
+                                : empdata.contact_person_name}
+                            </p>
+                          </Link>
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th className=" py-5  pr-0">
+                          {empdata.address === null ? (
+                            <p className="font-size-3 font-weight-bold  mb-0">
+                              Unavailable
+                            </p>
+                          ) : (
+                            <p className="font-size-3 font-weight-normal mb-0">
+                              {empdata.address} {empdata.city} ({empdata.pin_code}
+                              ) {empdata.state} {empdata.country}
+                            </p>
+                          )}
+                        </th>
+                      )}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th className=" py-5  pr-0">
+                          {empdata.contact_no === null ? (
+                            <p className="font-size-3 font-weight-bold  mb-0">
+                              Unavailable
+                            </p>
+                          ) : (
+                            <>
+                              <div className="font-size-3 font-weight-normal mb-0">
+                                + <Link className="text-dark" to={`tel:${empdata.contact_no}`}>{empdata.contact_no}</Link>
+                              </div>
+                              <div className="font-size-3 font-weight-normal mb-0">
+                                {empdata.contact_no_other === null ||
+                                  empdata.contact_no_other === undefined ||
+                                  empdata.contact_no_other === ""
+                                  ? ""
+                                  : <><Link className="text-dark" to={`tel:${empdata.contact_no_other}`}>{empdata.contact_no_other}</Link></>}
+                              </div>
+                              <p className="text-gray font-size-2 font-weight-normal m-0">
+                                <Link className="text-dark" to={`mailto:${empdata.email}`}>
+                                  {empdata.email}
+                                </Link>
+                              </p>
+                            </>
+                          )}
+                        </th>
+                      )}
+                      <th className="py-5 ">
+                        {empdata.vacancy_for_post === null ? (
                           <p className="font-size-3 font-weight-bold  mb-0">
                             Unavailable
                           </p>
                         ) : (
                           <p className="font-size-3 font-weight-normal mb-0">
-                            {empdata.address} {empdata.city} ({empdata.pin_code}
-                            ) {empdata.state} {empdata.country}
+                            {empdata.vacancy_for_post} ({empdata.vacancies})
                           </p>
                         )}
                       </th>
-                    )}
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
-                      <th className=" py-5  pr-0">
-                        {empdata.contact_no === null ? (
-                          <p className="font-size-3 font-weight-bold  mb-0">
-                            Unavailable
-                          </p>
-                        ) : (
-                          <>
-                            <div className="font-size-3 font-weight-normal mb-0">
-                              + <Link className="text-dark" to={`tel:${empdata.contact_no}`}>{empdata.contact_no}</Link>
-                            </div>
-                            <div className="font-size-3 font-weight-normal mb-0">
-                              {empdata.contact_no_other === null ||
-                              empdata.contact_no_other === undefined ||
-                              empdata.contact_no_other === ""
-                                ? ""
-                                :  <><Link className="text-dark" to={`tel:${empdata.contact_no_other}`}>{empdata.contact_no_other}</Link></>}
-                            </div>
-                            <p className="text-gray font-size-2 font-weight-normal m-0">
-                            <Link className="text-dark" to={`mailto:${empdata.email}`}>
-                              {empdata.email}
-                            </Link>
-                            </p>
-                          </>
-                        )}
-                      </th>
-                    )}
-                    <th className="py-5 ">
-                      {empdata.vacancy_for_post === null ? (
-                        <p className="font-size-3 font-weight-bold  mb-0">
-                          Unavailable
-                        </p>
+                      {props.heading === "Dashboard" ? (
+                        ""
                       ) : (
-                        <p className="font-size-3 font-weight-normal mb-0">
-                          {empdata.vacancy_for_post} ({empdata.vacancies})
-                        </p>
+                        <th className="  py-5 ">
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            {empdata.profile_complete >= 99.00 ? (
+                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                Complete
+                              </span>
+
+                            ) : (
+                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                Incompelete
+                              </span>
+                            )}</p>
+                        </th>
                       )}
-                    </th>
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
-                      <th className="  py-5 ">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        {empdata.profile_complete >= 99.00 ? (
-                          <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                              Complete
-                          </span>
-                                      
-                        ) : (
-                          <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                              Incompelete
-                          </span>
-                        )}</p>
-                      </th>
-                    )}
-                    {props.heading === "Dashboard" ? (
-                      ""
-                    ) : (
-                      <th className="py-5 min-width-px-100">
-                        <div className="btn-group button_group" role="group">
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() =>
-                              editEmployerContact(empdata.company_id)
-                            }
-                            title="Contact"
-                          >
-                            <span className="fa fa-address-book text-gray px-1"></span>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                          >
-                          <Link
-                            // onClick={() => Joblist(empdata.company_name)}
-                            to="/job"
-                            state={{company_name : empdata.company_name}}
-                            title="Jobs"
-                          >
-                            <span className="fas fa-briefcase text-gray  "></span>
-                          </Link>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => editEmployerKyc(empdata.company_id)}
-                            title="KYC"
-                          >
-                            <span className="fa fa-file text-gray px-1 "></span>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => editEmployer(empdata.company_id)}
-                            title="Edit Employer"
-                          >
-                            <span className=" fas fa-edit text-gray px-1"></span>
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => ShowDeleteAlert(empdata)}
-                            title="Delete"
-                          >
-                            <span className="fa fa-trash text-danger px-1"></span>
-                          </button>
-                        </div>
-                      </th>
-                    )}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <th className="py-5 min-width-px-100">
+                          <div className="btn-group button_group" role="group">
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() =>
+                                editEmployerContact(empdata.company_id)
+                              }
+                              title="Contact"
+                            >
+                              <span className="fa fa-address-book text-gray px-1"></span>
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                            >
+                              <Link
+                                // onClick={() => Joblist(empdata.company_name)}
+                                to="/job"
+                                state={{ company_name: empdata.company_name }}
+                                title="Jobs"
+                              >
+                                <span className="fas fa-briefcase text-gray  "></span>
+                              </Link>
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => editEmployerKyc(empdata.company_id)}
+                              title="KYC"
+                            >
+                              <span className="fa fa-file text-gray px-1 "></span>
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => editEmployer(empdata.company_id)}
+                              title="Edit Employer"
+                            >
+                              <span className=" fas fa-edit text-gray px-1"></span>
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => ShowDeleteAlert(empdata)}
+                              title="Delete"
+                            >
+                              <span className="fa fa-trash text-danger px-1"></span>
+                            </button>
+                          </div>
+                        </th>
+                      )}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>}
         </div>
         <div className="pt-2">
           <Pagination
@@ -462,14 +477,14 @@ export default function EmployerTable(props) {
           />
         </div>
       </div>
-      {showAddEmployerModal ?   <CompanyDetails
+      {showAddEmployerModal ? <CompanyDetails
         show={showAddEmployerModal}
         employerId={employerId}
         setApiCall={setApiCall}
         apiCall={apiCall}
         close={() => setShowEmployerMOdal(false)}
       /> : null}
-     {showContactModal ? <ContactInfo
+      {showContactModal ? <ContactInfo
         show={showContactModal}
         employerId={employerId}
         setApiCall={setApiCall}
@@ -482,7 +497,7 @@ export default function EmployerTable(props) {
         setApiCall={setApiCall}
         apiCall={apiCall}
         close={() => setShowkycMOdal(false)}
-      /> : null }
+      /> : null}
       <SAlert
         show={deleteAlert}
         title={deleteName}

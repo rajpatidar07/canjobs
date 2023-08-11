@@ -12,7 +12,7 @@ function AddInterview(props) {
 
   /* Functionality to close the modal */
   const close = () => {
-    setState({ ...state, interview_date: "" ,interview_status : "" });
+    setState({ ...state, interview_date: "", interview_status: "" });
     setErrors("");
     setLoading(false);
     props.close();
@@ -31,7 +31,7 @@ function AddInterview(props) {
           ? "Interview date is required"
           : null,
     ],
-    interview_status : [
+    interview_status: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Interview status is required"
@@ -43,18 +43,25 @@ function AddInterview(props) {
     useValidation(initialFormState, validators);
 
   const InterviewData = async () => {
-    const userData = await getInterview(jobId, employeeId);
-    if (userData.data.length === 0) {
-      setState({ state, interview_date: "" });
-    } else {
-      if(props.Interview === "interview"){
-       setState({ state, interview_date: props.resData.interview_date });
+    try {
+      const userData = await getInterview(jobId, employeeId);
+      if (userData.data.length === 0) {
+        setState({ state, interview_date: "" });
+      } else {
+        if (props.Interview === "interview") {
+          setState({ state, interview_date: props.resData.interview_date });
+        }
+        else {
+          setState({ state, interview_date: userData.data[0].interview_date, interview_status: userData.data[0].status });
+        }
       }
-      else{
-        setState({ state, interview_date: userData.data[0].interview_date , interview_status :  userData.data[0].status });
-      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
-    console.log("state =>", state , "date =>" , props.resData.interview_date ,userData)
+    // console.log("state =>", state , "date =>" , props.resData.interview_date ,userData)
   };
 
   /*Render function to get the interview*/
@@ -64,18 +71,26 @@ function AddInterview(props) {
 
   // USER INTERVIEW UPDATE SUBMIT BUTTON
   const onAddInterviewClick = async (event) => {
-    
+
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      const responseData = await AddInterviewSchedule(state, employeeId, jobId );
-      if (responseData.message === "data inserted successfully") {
-        toast.success("Interview Scheduled successfully", {
+      try {
+        const responseData = await AddInterviewSchedule(state, employeeId, jobId);
+        if (responseData.message === "data inserted successfully") {
+          toast.success("Interview Scheduled successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);
@@ -102,7 +117,7 @@ function AddInterview(props) {
           <h5 className="text-center pt-2 mb-7">Schedule Interview</h5>
 
           <form onSubmit={onAddInterviewClick}>
-          <div className="form-group row mb-0">
+            <div className="form-group row mb-0">
               <label
                 htmlFor="interview_status"
                 className="font-size-4 text-black-2  line-height-reset"
@@ -120,20 +135,20 @@ function AddInterview(props) {
                 onChange={onInputChange}
                 id="interview_status"
               >
-                <option  value={""}>Select Status</option>
-                <option value={"pemdimg"}>Schedule / Reschedule</option>
+                <option value={""}>Select Status</option>
+                <option value={"pendimg"}>Schedule / Reschedule</option>
                 <option value={"complete"}>Complete</option>
               </select>
             </div>
-               {/*----ERROR MESSAGE FOR EMAIL----*/}
-               {errors.interview_status && (
-                <span
-                  key={errors.interview_status}
-                  className="text-danger font-size-3 px-5"
-                >
-                  {errors.interview_status}
-                </span>
-              )}
+            {/*----ERROR MESSAGE FOR EMAIL----*/}
+            {errors.interview_status && (
+              <span
+                key={errors.interview_status}
+                className="text-danger font-size-3 px-5"
+              >
+                {errors.interview_status}
+              </span>
+            )}
             <div className="form-group mt-5">
               <label
                 htmlFor="interview_date"

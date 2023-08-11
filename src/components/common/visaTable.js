@@ -7,6 +7,7 @@ import Pagination from "../common/pagination";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
+import { toast } from "react-toastify";
 export default function VisaTable(props) {
     /*Show modal states */
     let [apiCall, setApiCall] = useState(false);
@@ -16,7 +17,7 @@ export default function VisaTable(props) {
     /*data and id states */
     const [employeeData, setemployeeData] = useState([]);
     let [employeeId, setemployeeId] = useState();
-    let [lmiaStatus, setLmiaStatus] = useState();
+    // let [lmiaStatus, setLmiaStatus] = useState();
     /*Pagination states */
     const [totalData, setTotalData] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -27,31 +28,39 @@ export default function VisaTable(props) {
     /* Function to get Employee visa data*/
     const EmpData = async () => {
         setIsLoading(true);
-        const userData = await GetEmployeeVisaList(
-            props.search,
-            props.VisStatusFilterValue,
-            props.VisaCountryFilterValue,
-            props.IntrestedFilterValue,
-            (sortOrder ||
-                props.search ||
-                props.VisStatusFilterValue ||
-                props.VisaCountryFilterValue ||
-                props.IntrestedFilterValue)
-                ? 1
-                : currentPage,
-            recordsPerPage,
-            columnName,
-            sortOrder,
-            props.employee_id
-        );
-        // console.log(userData.data)
-        if (userData.data.data.length === 0) {
-            setemployeeData([]);
-            setIsLoading(false);
-        } else {
-            setemployeeData(userData.data.data);
-            setTotalData(userData.data.total_rows);
-            setIsLoading(false);
+        try {
+            const userData = await GetEmployeeVisaList(
+                props.search,
+                props.VisStatusFilterValue,
+                props.VisaCountryFilterValue,
+                props.IntrestedFilterValue,
+                    props.search ||
+                    props.VisStatusFilterValue ||
+                    props.VisaCountryFilterValue ||
+                    props.IntrestedFilterValue
+                    ? 1
+                    :
+                     currentPage,
+                recordsPerPage,
+                columnName,
+                sortOrder,
+                props.employee_id
+            );
+            // console.log(userData.data)
+            if (userData.data.data.length === 0) {
+                setemployeeData([]);
+                setIsLoading(false);
+            } else {
+                setemployeeData(userData.data.data);
+                setTotalData(userData.data.total_rows);
+                setIsLoading(false);
+            }
+        } catch (err) {
+            toast.error("Something went wrong", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+            });
+            setIsLoading(false)
         }
     };
 
@@ -84,9 +93,8 @@ export default function VisaTable(props) {
     /*Function to open add Document up modal */
     const AddDoucument = (e) => {
         setDocumentModal(true);
-        console.log(e)
         setemployeeId(e.employee_id);
-        setLmiaStatus(e.lmia_status)
+        // setLmiaStatus(e.lmia_status)
     };
 
     /*Pagination Calculation */
@@ -96,6 +104,7 @@ export default function VisaTable(props) {
     const handleSort = (columnName) => {
         setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
         setcolumnName(columnName);
+        setCurrentPage(1)
     };
 
     return (
@@ -116,7 +125,7 @@ export default function VisaTable(props) {
                     close={() => setDocumentModal(false)}
                     employee_id={employeeId}
                     job={"no"}
-                    lmia={lmiaStatus}
+                    // lmia={lmiaStatus}
                 />
             ) : null}
             <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -325,44 +334,44 @@ export default function VisaTable(props) {
                                                             )}
                                                         </div>
                                                     </div>
-                                                 
-                                                        <div
-                                                            title="Employee Details"
-                                                        >
-                                                            {empdata.name === null ? (
-                                                                <div className="font-size-3 mb-0 text-capitalize">
-                                                                    Unavailable
-                                                                </div>
-                                                            ) : (
-                                                                <div className=" mb-0">
-                                                                    <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                                                        {empdata.name}
-                                                                    </p>
-                                                                    <p className="text-gray font-size-2 m-0 text-capitalize">
-                                                                    {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
-                                                                        {empdata.marital_status + ", "}
-                                                                        {/*Calculation of age from date of birth*/}
-                                                                        {moment().diff(
-                                                                            empdata.date_of_birth,
-                                                                            "years"
-                                                                        )}
-                                                                        Y)
-                                                                        {empdata.is_featured === "1" ? (
-                                                                            <span className="bg-orange text-white featured_tag">
 
-                                                                                Featured
-                                                                            </span>
-                                                                        ) : null}
-                                                                        {empdata.created_by_admin === "0" ? (
-                                                                            <span className="bg-info text-white web_tag">
-                                                                                Web
-                                                                            </span>
-                                                                        ) : null}
-                                                                    </p>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                   
+                                                    <div
+                                                        title="Employee Details"
+                                                    >
+                                                        {empdata.name === null ? (
+                                                            <div className="font-size-3 mb-0 text-capitalize">
+                                                                Unavailable
+                                                            </div>
+                                                        ) : (
+                                                            <div className=" mb-0">
+                                                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                                                    {empdata.name}
+                                                                </p>
+                                                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                                                    {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
+                                                                    {empdata.marital_status + ", "}
+                                                                    {/*Calculation of age from date of birth*/}
+                                                                    {moment().diff(
+                                                                        empdata.date_of_birth,
+                                                                        "years"
+                                                                    )}
+                                                                    Y)
+                                                                    {empdata.is_featured === "1" ? (
+                                                                        <span className="bg-orange text-white featured_tag">
+
+                                                                            Featured
+                                                                        </span>
+                                                                    ) : null}
+                                                                    {empdata.created_by_admin === "0" ? (
+                                                                        <span className="bg-info text-white web_tag">
+                                                                            Web
+                                                                        </span>
+                                                                    ) : null}
+                                                                </p>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
                                                 </div>
                                             </td>
                                             <td className="py-5 ">
@@ -421,7 +430,7 @@ export default function VisaTable(props) {
                                                 ""
                                             ) : (
                                                 <td className=" py-5">
-                                                    {empdata.visa_country === null ? (
+                                                    {empdata.visa_country === null || empdata.visa_country === "" ? (
                                                         <p className="font-size-3  mb-0">Unavailable</p>
                                                     ) : (
                                                         <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
@@ -530,6 +539,7 @@ export default function VisaTable(props) {
                     )}
                 </div>
                 <div className="pt-2">
+                   
                     <Pagination
                         nPages={nPages}
                         currentPage={currentPage}

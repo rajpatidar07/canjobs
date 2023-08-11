@@ -790,7 +790,7 @@ function PersonalDetails(props) {
                   {(FilterJson.experience || []).map((ex, i) => (
                     <option value={ex} key={i}>
                       {ex}
-                      {ex === "Fresher" || ex === "Other" ? "" : "Years"}
+                      {ex === "fresher" || ex === "Other" ? "" : "Years"}
                     </option>
                   ))}
                 </select>

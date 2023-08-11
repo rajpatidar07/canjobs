@@ -295,7 +295,7 @@ function Education(props) {
                 </div>
               ))}
             </div>
-            <h4>{state.qualification ? "Update Education" : "Add Education"} </h4>
+            <h4>{state.education_id ? "Update Education" : "Add Education"} </h4>
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label

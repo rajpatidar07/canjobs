@@ -4,11 +4,11 @@ import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
-import Loader  from '../common/loader';
+import Loader from '../common/loader';
 
 function ManageJobs() {
   /*Data and modal states */
@@ -22,14 +22,21 @@ function ManageJobs() {
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [jobLocation, setJobLocation] = useState("");
-  
+
   /* Function to get the JSON data*/
   const FilterData = async () => {
-    const Json = await GetFilter();
-    if (Json.length === 0) {
-      SetFilter([]);
-    } else {
-      SetFilter(Json.data.data);
+    try {
+      const Json = await GetFilter();
+      if (Json.length === 0) {
+        SetFilter([]);
+      } else {
+        SetFilter(Json.data.data);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -84,7 +91,7 @@ function ManageJobs() {
                           }
                           className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
-                           <option value="">Select Job Category</option>
+                          <option value="">Select Job Category</option>
                           {(filter.Category || []).map((cat) => (
                             <option key={cat.id} value={cat.id}>
                               {cat.value}
@@ -102,7 +109,7 @@ function ManageJobs() {
                           className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
                           <option data-display="Salary Range" value={""}>
-                           Select Job Skills
+                            Select Job Skills
                           </option>
                           {(FilterJson.keyskill || []).map((data, i) => {
                             return (
@@ -125,7 +132,7 @@ function ManageJobs() {
                           className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
                           <option data-display="Experience Level " value={""}>
-                           Select Job type
+                            Select Job type
                           </option>
                           {(FilterJson.job_type || []).map((job_type) => (
                             <option key={job_type} value={job_type}>
@@ -169,8 +176,8 @@ function ManageJobs() {
                 </form>
                 <div>
                 </div>
-                 {/*<-- Add job Modal -->*/}
-               {showAddJobModal ? <AddJobModal
+                {/*<-- Add job Modal -->*/}
+                {showAddJobModal ? <AddJobModal
                   show={showAddJobModal}
                   jobData={jobId}
                   close={() => setShowAddJobModal(false)}
@@ -188,19 +195,19 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    { <JobBox/> ?
+                    {<JobBox /> ?
                       <div className="mb-8 p-0 w-100 active nav-link">
-                      {/* <!-- Single Featured Job --> */}
-                      <JobBox
-                        categoryFilterValue={categoryFilterValue}
-                        SkillFilterValue={SkillFilterValue}
-                        jobSwapFilterValue={jobSwapFilterValue}
-                        showAddJobModal={showAddJobModal}
-                        jobLocation={jobLocation}
-                        apiCall={apiCall}
-                      />
-                      {/* <!-- End Single Featured Job --> */}
-                    </div>: <div className="table-responsive main_table_div"><Loader/></div>}
+                        {/* <!-- Single Featured Job --> */}
+                        <JobBox
+                          categoryFilterValue={categoryFilterValue}
+                          SkillFilterValue={SkillFilterValue}
+                          jobSwapFilterValue={jobSwapFilterValue}
+                          showAddJobModal={showAddJobModal}
+                          jobLocation={jobLocation}
+                          apiCall={apiCall}
+                        />
+                        {/* <!-- End Single Featured Job --> */}
+                      </div> : <div className="table-responsive main_table_div"><Loader /></div>}
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">

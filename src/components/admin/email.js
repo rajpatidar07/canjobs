@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { GetAllEmailTemplate } from "../../api/api";
 import ManageEmail from "../forms/admin/manageemail";
 import TestMail from "../forms/admin/testMail";
@@ -13,8 +13,15 @@ function EmailTemplate() {
 
   let userData = "";
   const GetAllEmail = async () => {
-    userData = await GetAllEmailTemplate();
-    setEmailData(userData.Data.data);
+    try {
+      userData = await GetAllEmailTemplate();
+      setEmailData(userData.Data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   useEffect(() => {
     GetAllEmail();
@@ -25,11 +32,11 @@ function EmailTemplate() {
     setEmail(e || "");
   };
 
-    /*Function to open form to test email template */
-    const TestEmailTemplate = (e) => {
-      setTestEmail(true);
-      setEmail(e || "");
-    };
+  /*Function to open form to test email template */
+  const TestEmailTemplate = (e) => {
+    setTestEmail(true);
+    setEmail(e || "");
+  };
   return (
     <>
       {showAddTamplateModal ? (
@@ -157,9 +164,9 @@ function EmailTemplate() {
                               <button
                                 className="btn btn-outline-info action_btn"
                                 title="Test"
-                                onClick={() =>TestEmailTemplate(email.id)}
+                                onClick={() => TestEmailTemplate(email.id)}
                               >
-                                  Test Mail
+                                Test Mail
                               </button>
                             </div>
                           </td>

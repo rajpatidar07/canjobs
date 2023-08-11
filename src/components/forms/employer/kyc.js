@@ -42,10 +42,10 @@ function KycComplianceDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "PAN card name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "PAN name  be of 2  or more letters"
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "PAN name  be of 2  or more letters"
+              : "",
     ],
 
     pincode: [
@@ -53,20 +53,20 @@ function KycComplianceDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Pincode is required"
           : value.length < 6
-          ? "Pincode should be of 6 digits"
-          : "",
+            ? "Pincode should be of 6 digits"
+            : "",
     ],
     pan_no: [
       (value) =>
         value === "" || value === null
           ? "PAN no is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 10 || value.length > 10
-          ? "PAN no should be of 10 digits"
-          : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
-          ? "PAN no should be of 6 alphabte and 4 digits"
-          : "",
+            ? "Cannot use special character "
+            : value.length < 10 || value.length > 10
+              ? "PAN no should be of 10 digits"
+              : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
+                ? "PAN no should be of 6 alphabte and 4 digits"
+                : "",
     ],
     pan_date: [
       (value) =>
@@ -79,40 +79,40 @@ function KycComplianceDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Address is required"
           : value.length < 5
-          ? "Address should be of 5  or more letters"
-          : "",
+            ? "Address should be of 5  or more letters"
+            : "",
     ],
     city: [
       (value) =>
         value === "" || value === null
           ? "City is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Cannot use special character "
+            : "",
     ],
     state: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "State is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Cannot use special character "
+            : "",
     ],
     gstin: [
       (value) =>
         value === "" || value === null
           ? ""
           : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
-          ? "Invalid GSTIN"
-          : "",
+            ? "Invalid GSTIN"
+            : "",
     ],
     tan_number: [
       (value) =>
         value === "" || value === null
           ? ""
           : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
-          ? "Invalid TAN"
-          : "",
+            ? "Invalid TAN"
+            : "",
     ],
     country: [
       (value) =>
@@ -125,8 +125,8 @@ function KycComplianceDetails(props) {
         value === "" || value === null
           ? ""
           : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
-          ? "Invalid Fax"
-          : "",
+            ? "Invalid Fax"
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -134,17 +134,24 @@ function KycComplianceDetails(props) {
     useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    if (
-      userData.data.kyc_detail.length === 0 ||
-      userData.data.kyc_detail === undefined ||
-      userData.data.kyc_detail === "0" ||
-      userData.data.kyc_detail === [] ||
-      userData.data.kyc_detail === null
-    ) {
-      setState(initialFormState);
-    } else {
-      setState(userData.data.kyc_detail[0]);
+    try {
+      let userData = await EmployerDetails(props.employerId);
+      if (
+        userData.data.kyc_detail.length === 0 ||
+        userData.data.kyc_detail === undefined ||
+        userData.data.kyc_detail === "0" ||
+        userData.data.kyc_detail === [] ||
+        userData.data.kyc_detail === null
+      ) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data.kyc_detail[0]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -158,22 +165,29 @@ function KycComplianceDetails(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(false);
-      let responseData = await AddKyc(state, props.employerId);
-      if (responseData.message === "Employee data inserted successfully") {
-        toast.success("Kyc Added successfully", {
+      try {
+        let responseData = await AddKyc(state, props.employerId);
+        if (responseData.message === "Employee data inserted successfully") {
+          toast.success("Kyc Added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        if (responseData.message === "Employee data updated successfully") {
+          toast.success("Kyc Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
-      }
-      if (responseData.message === "Employee data updated successfully") {
-        toast.success("Kyc Updated successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setApiCall(true);
-        return close();
       }
     } else {
       setLoading(false);

@@ -37,34 +37,34 @@ function ContactInfo(props) {
         value === "" || value === null || value.trim() === ""
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Comapny name should have 2 or more letter"
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Comapny name should have 2 or more letter"
+              : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Phone no is required"
           : value.length < 10
-          ? "Mobile no should be of 10 digits"
-          : "",
+            ? "Mobile no should be of 10 digits"
+            : "",
     ],
     designation: [
       (value) =>
         value === "" || value === null
           ? "Designation is required"
           : value.length < 2
-          ? "Designation should have 2 or more letter"
-          : "",
+            ? "Designation should have 2 or more letter"
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -72,15 +72,22 @@ function ContactInfo(props) {
     useValidation(initialFormState, validators);
   // API CALL
   const EmployerData = async () => {
-    let userData = await EmployerDetails(props.employerId);
-    if (
-      userData.data.company_detail === undefined ||
-      userData.data.company_detail === [] ||
-      userData.data.company_detail === 0
-    ) {
-      setState(initialFormState);
-    } else {
-      setState(userData.data.company_detail[0]);
+    try {
+      let userData = await EmployerDetails(props.employerId);
+      if (
+        userData.data.company_detail === undefined ||
+        userData.data.company_detail === [] ||
+        userData.data.company_detail === 0
+      ) {
+        setState(initialFormState);
+      } else {
+        setState(userData.data.company_detail[0]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   useEffect(() => {
@@ -94,14 +101,22 @@ function ContactInfo(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      let responseData = await AddContact(state);
-      if (responseData.message === "contact data updated successfully") {
-        toast.success("Contact Updated successfully", {
+      try {
+        let responseData = await AddContact(state);
+        if (responseData.message === "contact data updated successfully") {
+          toast.success("Contact Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+      } catch (err) {
+        toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        return close();
+        setLoading(false)
       }
     } else {
       setLoading(false);

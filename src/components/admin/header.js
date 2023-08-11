@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
-import { getAllAdminNotification , ReadNotification} from "../../api/api";
+import { getAllAdminNotification, ReadNotification } from "../../api/api";
 
 const AdminHeader = (props) => {
   /*States */
@@ -16,13 +16,20 @@ const AdminHeader = (props) => {
 
   /*Function to Call Notification Api */
   const Notiication = async () => {
-    let Response = await getAllAdminNotification();
-    setNotiication(Response.Data.data);
+    try {
+      let Response = await getAllAdminNotification();
+      setNotiication(Response.Data.data);
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
   };
   /*Render Mewthod to get Notification */
   useEffect(() => {
     Notiication();
-    if(apicall === true){
+    if (apicall === true) {
       setApicall(false)
     }
   }, [apicall]);
@@ -108,7 +115,7 @@ const AdminHeader = (props) => {
               <i className="fas fa-bell heading-default-color"></i>
               {notification.length > 0 ? (
                 <span className="font-size-1 count text-white bg-primary circle-18 border border-width-1 border border-white">
-                  {notification.length >= 10 ? "9+": notification.length >= 100 ? "99+" : notification.length}
+                  {notification.length >= 10 ? "9+" : notification.length >= 100 ? "99+" : notification.length}
                 </span>
               ) : null}
             </Link>
@@ -119,17 +126,24 @@ const AdminHeader = (props) => {
               {(notification || []).map((data, i) =>
                 i >= 10 ? null : (
                   <React.Fragment key={data.id}>
-                  <li
-                    title={data.message}
-                    className={data.is_read === "1" ? "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize" : "font-weight-bold dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"}
-                  >
-                      <Link to={data.subject === "added_new_job"  ? "/job" : data.subject === "applied_on_job" ? "/responses" : data.subject === "interview_scheduled" ? "/interview" : ""}
-                      onClick={() => {ReadNotification(data.id);
-                                      setApicall(true)}} 
-                      className="text-truncate-2 text-dark">
+                    <li
+                      title={data.message}
+                      className={data.is_read === "1" ? "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize" : "font-weight-bold dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"}
+                    >
+                      <Link to={data.subject === "added_new_job" ? "/job" : data.subject === "applied_on_job" ? "/responses" : data.subject === "interview_scheduled" ? "/interview" : ""}
+                        onClick={() => {
+                          try { ReadNotification(data.id); } catch (err) {
+                            toast.error("Something went wrong", {
+                              position: toast.POSITION.TOP_RIGHT,
+                              autoClose: 1000,
+                            });
+                          }
+                          setApicall(true)
+                        }}
+                        className="text-truncate-2 text-dark">
                         {data.message}
                       </Link>
-                  </li>
+                    </li>
                   </React.Fragment>
                 )
               )}
