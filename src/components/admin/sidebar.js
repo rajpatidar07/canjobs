@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+let view_as_admin_type = localStorage.getItem("view_as_token_admin_type")
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
@@ -138,7 +138,7 @@ const AdminSidebar = (props) => {
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
             <Link
               to="/adminprofile"
-              className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
+              className={view_as_admin_type === "manager"?"d-none":"px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"}
             >
               <i className="fas fa-user mr-5"></i>Manage Admin
             </Link>

@@ -662,7 +662,7 @@ export const GetAllJobs = async (
   job,
   page,
   limit,
-  column_name, 
+  column_name,
   sort_order,
   company,
   time,
@@ -689,7 +689,7 @@ export const GetAllJobs = async (
       // filter_company_name: company,
       filter_applied_by_self: selfValue,
       filter_applied_by_admin: adminValue,
-      filter_reserved_employee:reserved
+      filter_reserved_employee: reserved
       // employee_skills: employeeSkill,
     },
     {
@@ -1418,12 +1418,40 @@ export const TestEmail = async (props) => {
 };
 
 /*Api to get the job filterd by employee id if it is applied or not */
-export const GetEmployeeFilterJob = async (id, skill) => {
+export const GetEmployeeFilterJob = async (id,/* skill*/
+  search,
+  location,
+  category,
+  skill,
+  job,
+  page,
+  limit,
+  column_name,
+  sort_order,
+  company) => {
+    console.log(search,
+      location,
+      category,
+      skill,
+      job,
+      page,
+      limit,
+      column_name,
+      sort_order,
+      company)
   const response = await axios.post(
     `${API_URL}admin/getAllJobsViewAdmin`,
     {
       employee_id: id,
       filter_keyskill: skill,
+      filter_category_id: category,
+      filter_job_swap: job,
+      filter_location: location,
+      page: page,
+      search: search ? search : company,
+      limit: limit,
+      column_name: column_name,
+      sort_order: sort_order,
     },
     {
       headers: {

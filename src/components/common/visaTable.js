@@ -470,13 +470,13 @@ export default function VisaTable(props) {
                                                 <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                                     {empdata.visa_status === "pending" ? (
                                                         <span
-                                                            className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill"
+                                                            className="p-1 bg-warning text-white text-center w-100 border rounded-pill"
 
                                                         >
                                                             Pending
                                                         </span>
                                                     ) : empdata.visa_status === "reject" ? (
-                                                        <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                                        <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
 
                                                             Reject
                                                         </span>

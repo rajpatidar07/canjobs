@@ -48,6 +48,25 @@ export default function JobTable(props) {
         userData = await GetEmployeeFilterJob(
           props.employee_id,
           // props.SkillFilterValue
+          props.search,
+          props.locationFilterValue,
+          props.categoryFilterValue,
+          props.SkillFilterValue,
+          props.jobSwapFilterValue,
+          props.company ||
+            props.search ||
+            props.locationFilterValue ||
+            props.categoryFilterValue ||
+            props.SkillFilterValue ||
+            props.jobSwapFilterValue ||
+            props.filter_by_time ||
+            sortOrder
+            ? 1
+            : currentPage,
+          recordsPerPage,
+          columnName,
+          sortOrder,
+          props.company,
         );
       } else {
         userData = await GetAllJobs(

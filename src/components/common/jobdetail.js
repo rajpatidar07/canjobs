@@ -84,6 +84,7 @@ function JobDetailPage(props) {
       });
     }
   };
+  console.log("job id =>",jobId ,"skill =>",skill)
   return (
     <>
       <div className="table-responsive main_table_div">
@@ -244,12 +245,12 @@ function JobDetailPage(props) {
                       <p className="font-size-4 text-black-2 mb-7">
                         {jobDetatilsData.your_duties}
                       </p> </> : ""}
-                    {jobDetatilsData.about ? <>
+                    {jobDetatilsData.requirement ? <>
                       <span className="font-size-4 font-weight-semibold text-black-2 mb-7">
                         What you will be doing:
                       </span>
                       <p className="font-size-4 text-black-2 mb-7">
-                        {jobDetatilsData.about}
+                        {jobDetatilsData.requirement}
                       </p> </> : ""}
                   </div>
                 </div>

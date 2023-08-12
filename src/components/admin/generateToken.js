@@ -7,6 +7,7 @@ export default function GenerateToken(props) {
   /*States */
   let [allAdmin, setAllAdmin] = useState([]);
   let [AdminId, setAdminId] = useState("");
+  let [AdminType, setAdminType] = useState("");
   const [state, setState] = useState([]);
   let [Unauthorized, setUnauthorized] = useState("")
 
@@ -42,12 +43,13 @@ export default function GenerateToken(props) {
 
   // GENERATE ADMIN TOKEN UPDATE SUBMIT BUTTON
   const onSelectChange = (option) => {
-    setAdminId(option.value);
+    setAdminId(option.value.admin_id);
+    setAdminType(option.value.admin_type)
   };
   /*Render function to set data in search select box */
   useEffect(() => {
     const options = allAdmin.map((option) => ({
-      value: option.admin_id,
+      value: option,
       label: option.name + " - " + option.admin_type,
     }));
     setState(options);
@@ -59,6 +61,7 @@ export default function GenerateToken(props) {
     try {
       const responseData = await GetAdminToken(AdminId);
       if (responseData.message === "successful") {
+        localStorage.setItem("view_as_token_admin_type", AdminType);
         localStorage.setItem("view_as_token", responseData.token);
         toast.success("Token Generated successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -80,6 +83,7 @@ export default function GenerateToken(props) {
   /*Function to reset the token */
   const onRest = () => {
     localStorage.setItem("view_as_token", "");
+    localStorage.setItem("view_as_token_admin_type", "");
     toast.success("Token Reset successfully", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,

@@ -153,7 +153,7 @@ function JobBox({
                 <Link
                   to={token && (user_type === "user" || user_type === "company") ? "/jobdetail" : ""}
                   onClick={
-                    token && user_type === "user"
+                    token && (user_type === "user" || user_type === "company")
                       // ? job.is_applied === "0"
                       ? () => {
                         localStorage.setItem("jobId", job.job_id);
