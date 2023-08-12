@@ -259,11 +259,11 @@ function JobDetailPage(props) {
             <div className="pt-5 pl-sm-9 pl-6 pb-10 light-mode-texts border-top border-width-1 border-default-color">
               <div className="tags">
                 <p className="font-size-4 text-gray mb-0"> Skill</p>
-
-                <ul className="list-unstyled d-flex align-items-center flex-wrap row">
+                <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
                   {(skill || []).map((skill) => (
+                     skill === "" ? null :
                     <li key={skill}>
-                      <span className="bg-polar text-black-2  mr-6 px-7 font-size-3 rounded-3 min-height-32 d-flex align-items-center text-capitalize">
+                      <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1">
                         {skill}
                       </span>
                     </li>

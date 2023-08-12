@@ -18,7 +18,7 @@ function JobModal(props) {
             >
                 <i className="fas fa-times"></i>
             </button>
-            <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+            <div className="bg-white rounded h-100 px-md-11 px-6 pt-7 overflow-y-hidden">
                 <h5 className='text-center mt-5'>Relevant job  </h5>
                     <Job
                         skill={"props.data.skill"}

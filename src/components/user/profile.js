@@ -412,7 +412,7 @@ const UserProfile = (props) => {
                     </li>
                     <li className="tab-menu-items nav-item pr-12">
                       {user_type === "user" || user_type === "company" ? <CustomButton
-                        className=" font-size-4 rounded-3 btn-primary border-0"
+                        className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
                       >{user_type === "user" ? "Add Document" : "Documents"} </CustomButton> : null}
                     </li>

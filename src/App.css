@@ -396,6 +396,16 @@ header.site-header.admin_header {
     gap: 15px;
     justify-content: center;
   }
+
+  .edit_profile_icon span {
+    position: absolute;
+    bottom: 0;
+  }
+
+  .edit_profile_icon {
+    bottom: 0;
+    right: 0;
+  }
 }
 
 @media (max-width: 767px) {
@@ -644,7 +654,7 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
 
 .container.document_container.bg-white.p-7 {
   height: calc(100vh - 98px);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .doc_preview_box {
@@ -853,4 +863,10 @@ select.form-control.select_document_type {
 
 .arrow-steps .step.current:after {
   border-left: 17px solid #23468c;
+}
+
+@media (max-width: 568px) {
+  .doc_upload_row .btn {
+    min-width: 118px;
+  }
 }

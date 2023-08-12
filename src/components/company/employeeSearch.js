@@ -56,7 +56,7 @@ function EmployeeSearch() {
         <div className="container">
           <div className="col-12 col-lg-10 col-xl-12 text-center">
             <form className="mb-8" action="/">
-              <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
+              <div className="search-filter from-group row job_search_filter">
                 <div className="col-md-3 col-lg-3 mb-5">
                   <select
                     name="skill"
@@ -133,7 +133,7 @@ function EmployeeSearch() {
 
                   </select>
                 </div>
-                <div className="col-md-3 col-lg-3 mb-5">
+                <div className="col-12 text-right">
                   <CustomButton
                     className="font-size-3 rounded-3 btn btn-primary border-0"
                     onClick={() => onReset()}

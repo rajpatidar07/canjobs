@@ -264,6 +264,7 @@ function JobBox({
                   <div className="col-md-8">
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                       {(skill || []).map((item, index) =>
+                      item === "" ? null :
                         <li key={index}>
                           <span
                             to={""}

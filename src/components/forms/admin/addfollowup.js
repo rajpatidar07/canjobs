@@ -122,7 +122,7 @@ function Addfollowup(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+        <div className="bg-white rounded h-100 px-md-11 px-6 pt-7 overflow-y-hidden">
           <h5 className="text-center pt-2 mb-7">Follow Ups</h5>
           <form onSubmit={onAminFollowClick}>
             <div className="form-group col px-0 pr-3">

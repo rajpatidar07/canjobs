@@ -337,7 +337,7 @@ export default function EmployerDocumrentContainer(props) {
   return (
     <div className="container document_container bg-white p-7 mb-10">
       <div className="row mb-11 ">
-        <div className="col-4">
+        <div className="col-12 col-md-4">
           <h5>Document List</h5>
           {/* Documents type list */}
           <ListGroup defaultActiveKey="#link1">
@@ -389,7 +389,7 @@ export default function EmployerDocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        <div className="col-8">
+        <div className="col-12 col-md-8">
           <div className="row p-5 doc_upload_row">
             {showMoreDocType ? (
               <div className="doc_upload_col">

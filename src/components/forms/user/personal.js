@@ -333,7 +333,7 @@ function PersonalDetails(props) {
                   height={"100px"}
                 />
                 <label
-                  className="mt-lg-20 mx-lg-35 bg-transparent"
+                  className="mt-lg-20 mx-lg-35 bg-transparent edit_profile_icon"
                   htmlFor="profile_photo"
                 >
                   <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-14 mt-lg-3 "></span>

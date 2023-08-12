@@ -79,8 +79,8 @@ function ManageJobs() {
                 {/*<-- Job filter -->*/}
                 <form className="mb-8">
                   <div className="d-flex align-items-center justify-content-space-between">
-                    <div className="search-filter from-group d-flex align-items-center ">
-                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
+                    <div className=" search-filter from-group row">
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <select
                           name="category"
                           id="category"
@@ -99,7 +99,7 @@ function ManageJobs() {
                           ))}
                         </select>
                       </div>
-                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <select
                           name="skill"
                           id="skill"
@@ -120,7 +120,7 @@ function ManageJobs() {
                           })}
                         </select>
                       </div>
-                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <select
                           name="job_type"
                           id="job_type"
@@ -141,7 +141,7 @@ function ManageJobs() {
                           ))}
                         </select>
                       </div>
-                      <div className="col-md-3 col-lg-3 mb-5 filter_input_div">
+                      <div className="col-md-3 col-6 mb-5 filter_input_div">
                         <select
                           name="job_location"
                           id="job_location"
@@ -162,16 +162,17 @@ function ManageJobs() {
                           ))}
                         </select>
                       </div>
-                    </div>
-                    <div className=" mx-2 float-left pb-5">
+                      <div className="col-12 mb-5 filter_input_div text-right">
                       <button
                         onClick={() => editJob("0")}
-                        className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3 mr-4  "
+                        className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3"
                         type="button"
                       >
                         Add jobs
                       </button>
                     </div>
+                    </div>
+                  
                   </div>
                 </form>
                 <div>

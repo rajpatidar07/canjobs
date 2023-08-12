@@ -247,7 +247,7 @@ function CompanyDetails(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        <div className="bg-white rounded h-100 px-11 pt-7">
+        <div className="bg-white rounded h-100 px-md-11 px-6 pt-7">
           <form onSubmit={onCompanyDetailClick}>
             <h5 className="text-center pt-2 mb-7">{user_type === "company" ? "Company Details" : "Employer Details"}</h5>
             <input type="hidden" value={state.company_id || ""} />

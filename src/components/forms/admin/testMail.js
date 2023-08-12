@@ -83,7 +83,7 @@ function TestMail(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+        <div className="bg-white rounded h-100 px-md-11 px-6 pt-7 overflow-y-hidden">
           <form onSubmit={onTestMailClick}>
               <h5 className="text-center mb-7 pt-2">Test</h5>
             <div className="form-group row mb-0 ">

@@ -250,7 +250,7 @@ function AddJobModal(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+        <div className="bg-white rounded h-100 px-md-11 px-6 pt-7 overflow-y-hidden">
           <form onSubmit={onAddJobsClick}>
             {props.jobdata === "0" ? (
               <h5 className="text-center pt-2 mb-7">Add Jobs</h5>
