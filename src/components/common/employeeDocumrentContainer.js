@@ -460,7 +460,7 @@ export default function DocumrentContainer(props) {
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "user" && showMoreDocType) || user_type === "admin" ? "btn btn-light" : "d-none"}
+                className={(user_type === "user" && (showMoreDocType||otherDoc)) || user_type === "admin" ? "btn btn-light" : "d-none"}
                 onClick={() => {
                   document.querySelector('input[type="file"]').click()
                   setHide(true)
