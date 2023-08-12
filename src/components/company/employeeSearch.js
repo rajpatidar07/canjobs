@@ -7,6 +7,7 @@ import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 function EmployeeSearch() {
   /*Filter states */
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -224,13 +225,14 @@ function EmployeeSearch() {
                   </div>
                 </div>
                 <div className="text-center pt-5 pt-lg-13">
-                  <a
+                  <Link
+                  href="#"
                     className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
                    
                   >
                     Load More{" "}
                     <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
               {/* <!-- form end --> */}
@@ -251,7 +253,8 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- media start --> */}
                           <div className="media align-items-center company_box col-md-6 p-0">
-                            <a
+                            <Link
+                            href="#"
                               className="text_box text-left"
                              
                             >
@@ -260,8 +263,9 @@ function EmployeeSearch() {
                                 src="image/logo-main-black.png"
                                 alt=""
                               />
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                            href="#"
                               className="text_box text-left w-100"
                              
                             >
@@ -274,7 +278,7 @@ function EmployeeSearch() {
                               <h3 className="mb-0 font-size-6 heading-dark-color">
                                 UI/UX Designer
                               </h3>
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- media end --> */}
                         </div>
@@ -359,44 +363,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Editing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   XD
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   User Persona
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Sketch
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -478,12 +482,13 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                              
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -529,19 +534,21 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
                              
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                            href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
                               <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -626,44 +633,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Visual Design
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   XD
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   User Persona
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Sketch
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -745,12 +752,13 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                              
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -796,19 +804,21 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
                              
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                            href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
                               <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -893,44 +903,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Swift{" "}
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Objective C
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   X Code
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   WooCommerce
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Coding
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1012,12 +1022,13 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                              
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -1063,19 +1074,21 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
                              
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                            href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
                               <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -1160,44 +1173,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Agile
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Prototyping
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Slack
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Director
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1279,12 +1292,13 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                              
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -1330,19 +1344,21 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
                              
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                            href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
                               <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -1427,44 +1443,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   C++
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Java Scprit
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   React JS
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Vue
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Angular
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1546,12 +1562,13 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                              
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -1597,19 +1614,21 @@ function EmployeeSearch() {
                         <div className="col-12">
                           {/* <!-- card-btn-group start --> */}
                           <div className="card-btn-group">
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"
                              
                             >
                               Connect
-                            </a>
-                            <a
+                            </Link>
+                            <Link
+                            href="#"
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
                               <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
                               Save job
-                            </a>
+                            </Link>
                           </div>
                           {/* <!-- card-btn-group end --> */}
                         </div>
@@ -1694,44 +1713,44 @@ function EmployeeSearch() {
                             </p>
                             <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Agile
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Wire-framing
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Prototyping
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   User Persona
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a
+                                <Link to=""
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
                                   Sketch
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>
@@ -1813,12 +1832,13 @@ function EmployeeSearch() {
                                 Ship a TON of product improvements and features
                               </li>
                             </ul>
-                            <a
+                            <Link
+                            href="#"
                               className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 mt-6"
                              
                             >
                               Connect
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>

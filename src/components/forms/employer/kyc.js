@@ -230,7 +230,7 @@ function KycComplianceDetails(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        <div className="bg-white rounded h-100 px-md-11 px-6 pt-7">
+        <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onKycInfoClick}>
             <h5 className="text-center pt-2 mb-7">KYC Compliance Details</h5>
             <div className="row">

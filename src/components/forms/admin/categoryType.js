@@ -110,7 +110,7 @@ function AddCategoryType(props) {
         >
           <i className="fas fa-times"></i>
         </button>
-        <div className="bg-white rounded h-100 px-md-11 px-6 pt-7 overflow-y-hidden">
+        <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onAdminCategoryClick}>
             {props.jobCategoryData === "0" ? (
               <h5 className="text-center mb-7 pt-2">Add Category Type</h5>
