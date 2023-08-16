@@ -8,7 +8,11 @@ import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import Loader from '../common/loader';
-
+import { LiaEdit } from "react-icons/lia"
+import { RiDeleteBin5Line } from "react-icons/ri"
+import { PiAddressBookLight } from "react-icons/pi"
+import { PiBriefcaseLight } from "react-icons/pi"
+import { AiOutlineFileZip } from "react-icons/ai"
 export default function EmployerTable(props) {
   /*show modal and data , id state */
   let [apiCall, setApiCall] = useState(false);
@@ -425,7 +429,8 @@ export default function EmployerTable(props) {
                               }
                               title="Contact"
                             >
-                              <span className="fa fa-address-book text-gray px-1"></span>
+                              <span className="text-gray px-1"><PiAddressBookLight /></span>
+                              {/* <span className="fa fa-address-book text-gray px-1"></span> */}
                             </button>
                             <button
                               className="btn btn-outline-info action_btn"
@@ -436,7 +441,9 @@ export default function EmployerTable(props) {
                                 state={{ company_name: empdata.company_name }}
                                 title="Jobs"
                               >
-                                <span className="fas fa-briefcase text-gray  "></span>
+                                <span className="text-gray px-1"><PiBriefcaseLight />
+                                </span>
+                                {/* <span className="fas fa-briefcase text-gray  "></span> */}
                               </Link>
                             </button>
                             <button
@@ -444,21 +451,28 @@ export default function EmployerTable(props) {
                               onClick={() => editEmployerKyc(empdata.company_id)}
                               title="KYC"
                             >
-                              <span className="fa fa-file text-gray px-1 "></span>
+                              <span className="text-gray px-1">
+                                <AiOutlineFileZip />
+                              </span>
+                              {/* <span className="fa fa-file text-gray px-1 "></span> */}
                             </button>
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => editEmployer(empdata.company_id)}
                               title="Edit Employer"
                             >
-                              <span className=" fas fa-edit text-gray px-1"></span>
+                              <span className="text-gray px-1"><LiaEdit /></span>
+                              {/* <span className=" fas fa-edit text-gray px-1"></span> */}
                             </button>
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => ShowDeleteAlert(empdata)}
                               title="Delete"
                             >
-                              <span className="fa fa-trash text-danger px-1"></span>
+                              <span className="text-danger px-1">
+                                <RiDeleteBin5Line />
+                              </span>
+                              {/* <span className="fa fa-trash text-danger px-1"></span> */}
                             </button>
                           </div>
                         </th>

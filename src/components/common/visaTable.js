@@ -8,6 +8,8 @@ import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
 import { toast } from "react-toastify";
+import { LiaCcVisa } from "react-icons/lia"
+import { GrDocumentUser } from "react-icons/gr"
 export default function VisaTable(props) {
     /*Show modal states */
     let [apiCall, setApiCall] = useState(false);
@@ -34,13 +36,13 @@ export default function VisaTable(props) {
                 props.VisStatusFilterValue,
                 props.VisaCountryFilterValue,
                 props.IntrestedFilterValue,
-                    props.search ||
+                props.search ||
                     props.VisStatusFilterValue ||
                     props.VisaCountryFilterValue ||
                     props.IntrestedFilterValue
                     ? 1
                     :
-                     currentPage,
+                    currentPage,
                 recordsPerPage,
                 columnName,
                 sortOrder,
@@ -125,7 +127,7 @@ export default function VisaTable(props) {
                     close={() => setDocumentModal(false)}
                     employee_id={employeeId}
                     job={"no"}
-                    // lmia={lmiaStatus}
+                // lmia={lmiaStatus}
                 />
             ) : null}
             <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -515,7 +517,8 @@ export default function VisaTable(props) {
                                                         onClick={() => editVisa(empdata)}
                                                         title="Update Visa status"
                                                     >
-                                                        <span className="fab fa-cc-visa text-gray px-2"></span>
+                                                        <span className="text-gray px-2"><LiaCcVisa /></span>
+                                                        {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}
                                                     </button>
 
                                                     <button
@@ -526,7 +529,8 @@ export default function VisaTable(props) {
                                                         title="Documents"
                                                     >
 
-                                                        <span className="fas fa-file text-gray"></span>
+                                                        <span className="text-gray"><GrDocumentUser /></span>
+                                                        {/* <span className="fas fa-file text-gray"></span> */}
                                                     </button>
                                                 </div>
                                             </td>
@@ -539,7 +543,7 @@ export default function VisaTable(props) {
                     )}
                 </div>
                 <div className="pt-2">
-                   
+
                     <Pagination
                         nPages={nPages}
                         currentPage={currentPage}

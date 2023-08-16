@@ -10,7 +10,8 @@ import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import Loader from '../common/loader';
-
+import { RiDeleteBin5Line } from "react-icons/ri"
+import { LiaUserEditSolid } from "react-icons/lia"
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
@@ -316,7 +317,8 @@ function ManageAdmin() {
                                       onClick={() => editAdmin(admin.admin_id)}
                                       title="Edit Admin"
                                     >
-                                      <span className=" fas fa-edit text-gray"></span>
+                                      <span className="text-gray"><LiaUserEditSolid /></span>
+                                      {/* <span className=" fas fa-edit text-gray"></span> */}
                                     </button>
                                     <button
                                       className="btn btn-outline-info action_btn"
@@ -324,7 +326,8 @@ function ManageAdmin() {
                                       title="Delete"
                                     >
                                       <span className=" text-danger">
-                                        <i className="fa fa-trash"></i>
+                                        <RiDeleteBin5Line />
+                                        {/* <i className="fa fa-trash"></i> */}
                                       </span>
                                     </button>
                                   </div>

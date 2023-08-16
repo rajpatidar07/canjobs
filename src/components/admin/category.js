@@ -11,6 +11,8 @@ import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import AddCategoryType from "../forms/admin/categoryType";
 import Loader from '../common/loader';
+import { RiDeleteBin5Line } from "react-icons/ri"
+import { LiaEdit } from "react-icons/lia"
 function Category() {
   /*Modal and Data states */
   let [isLoading, setIsLoading] = useState(true);
@@ -382,7 +384,10 @@ function Category() {
                                         onClick={() => editJobCategory(catdata)}
                                         title="Edit Category"
                                       >
-                                        <span className=" fas fa-edit text-gray"></span>
+                                        <span className="text-gray">
+                                          <LiaEdit />
+                                        </span>
+                                        {/* <span className=" fas fa-edit text-gray"></span> */}
                                       </button>
                                       <button
                                         className="btn btn-outline-info action_btn"
@@ -390,7 +395,8 @@ function Category() {
                                         title="Delete"
                                       >
                                         <span className=" text-danger">
-                                          <i className="fa fa-trash"></i>
+                                          <RiDeleteBin5Line />
+                                          {/* <i className="fa fa-trash"></i> */}
                                         </span>
                                       </button>
                                     </div>
@@ -458,7 +464,10 @@ function Category() {
                                       onClick={() => editJobCategoryType(catdata)}
                                       title="Edit Category"
                                     >
-                                      <span className=" fas fa-edit text-gray"></span>
+                                      <span className="text-gray">
+                                        <LiaEdit />
+                                      </span>
+                                      {/* <span className=" fas fa-edit text-gray"></span> */}
                                     </button>
                                   </div>
                                 </th>

@@ -14,6 +14,10 @@ import Loader from "../common/loader";
 import EmployeeModal from "../admin/Modal/employeeModal";
 import JobResponse from "../admin/response";
 import LmiaStatus from "../forms/admin/lmiastatus";
+import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia"
+import { BsArrow90DegRight } from "react-icons/bs"
+import { RiDeleteBin5Line } from "react-icons/ri"
+import { MdFormatListBulletedAdd } from "react-icons/md"
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -496,27 +500,27 @@ export default function JobTable(props) {
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.education ?job.education:"N/A"}
+                              {job.education ? job.education : "N/A"}
                             </h3>
                           </th>
                         )}
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {job.keyskill ? job.keyskill :"N/A"}
+                              {job.keyskill ? job.keyskill : "N/A"}
                             </h3>
                           </th>
                         )}
                         {props.heading === "Dashboard" ? null : (
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {job.language?job.language:"N/A"}
+                              {job.language ? job.language : "N/A"}
                             </h3>
                           </th>
                         )}
                         <th className="py-5 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.salary?job.salary:"N/A"}
+                            {job.salary ? job.salary : "N/A"}
                           </h3>
                         </th>
                         <th className="py-5 ">
@@ -655,17 +659,22 @@ export default function JobTable(props) {
                                         }
                                         title="Job Response"
                                       >
-                                        <i className="fa fa-list"></i>
+                                        <span className="text-gray px-2">
+                                          <MdFormatListBulletedAdd />
+                                        </span>
+                                        {/* <i className="fa fa-list"></i> */}
                                       </button>
                                     </div>
                                     {props.selfJob === "yes" ? null :
                                       <>
                                         <button
-                                          className="btn btn-outline-info action_btn"
+                                          className="btn btn-outline-info action_btn "
                                           onClick={() => updateLima(job)}
                                           title="Update LIMA"
                                         >
-                                          LMIA
+                                          <span className="text-gray px-2">
+                                            LMIA
+                                          </span>
                                         </button>
                                         <button
                                           className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
@@ -677,29 +686,35 @@ export default function JobTable(props) {
                                         //     : false
                                         // }
                                         >
-                                          <span className="fas fa-user-tie text-gray"></span>
+                                          <span className="text-gray px-2">
+                                            <LiaUserTieSolid /></span>
+                                          {/* <span className="fas fa-user-tie text-gray"></span> */}
                                         </button>
                                         <button
                                           className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
                                           onClick={() => editJob(job.job_id)}
                                           title="Edit Job"
                                         >
-                                          <span className=" fas fa-edit text-gray"></span>
+                                          <span className="text-gray px-1"><LiaUserEditSolid /></span>
+                                          {/* <span className=" fas fa-edit text-gray"></span> */}
                                         </button>
                                         <button
                                           className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
                                           onClick={() => ShowDeleteAlert(job)}
                                           title="Delete"
                                         >
-                                          <span className=" text-danger">
-                                            <i className="fa fa-trash"></i>
+                                          <span className=" text-danger px-1">
+                                            <RiDeleteBin5Line />
+                                            {/* <i className="fa fa-trash"></i> */}
                                           </span>
                                         </button>
                                         <button
                                           className={props.response === "response" && location.pathname === "/job" ? "btn btn-outline-info action_btn" : "d-none"}
                                           title="Job LMIA"><Link to="/lmia"
                                             className="text-dark" state={{ id: job.job_id }}>
-                                            <span className="fas fa-arrow-left text-gray px-2"></span></Link></button>
+                                            <span className="text-gray px-2"><BsArrow90DegRight /></span>
+                                            {/* <span className="fas fa-arrow-left text-gray px-2"></span> */}
+                                          </Link></button>
                                       </>}
                                   </>
                                 )

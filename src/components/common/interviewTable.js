@@ -6,7 +6,7 @@ import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
 import Loader from '../common/loader';
 import { ToastContainer, toast } from "react-toastify";
-
+import { ImCalendar } from "react-icons/im"
 function Interview(props) {
   let search = props.search;
   let [isLoading, setIsLoading] = useState(true);
@@ -251,7 +251,7 @@ function Interview(props) {
                         ) : (
                           <th scope="row" className="py-5 ">
                             <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              {data.skill ? data.skill :"N/A"}
+                              {data.skill ? data.skill : "N/A"}
                             </div>
                           </th>
                         )}
@@ -281,7 +281,8 @@ function Interview(props) {
                               title=" Reschedule Interview"
                               disabled={data.status === "complete" ? true : false}
                             >
-                              <i className="fa fa-calendar"></i>
+                              <ImCalendar />
+                              {/* <i className="fa fa-calendar"></i> */}
                             </button>
                           </div>
                         </th>

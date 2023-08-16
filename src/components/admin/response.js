@@ -15,6 +15,11 @@ import Loader from '../common/loader';
 import VisaStatus from "../forms/user/visaStatus";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { BsArrow90DegRight } from "react-icons/bs"
+import { RiChatFollowUpLine } from "react-icons/ri"
+import { LiaCcVisa } from "react-icons/lia"
+import { PiBriefcaseLight } from "react-icons/pi"
+import { ImCalendar } from "react-icons/im"
+import { GrDocumentUser } from "react-icons/gr"
 function JobResponse(props) {
   /*show modal and data states */
   let [documentModal, setDocumentModal] = useState(false);
@@ -823,7 +828,10 @@ function JobResponse(props) {
                                     onClick={() => editVisa(res)}
                                     title="Update Visa status"
                                   >
-                                    <span className="fab fa-cc-visa text-gray px-2"></span>
+                                    <span className="text-gray px-2">
+                                      <LiaCcVisa />
+                                    </span>
+                                    {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}
                                   </button>
                                   <button
                                     className={res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
@@ -848,14 +856,16 @@ function JobResponse(props) {
                                     }
                                     title="Documents"
                                   >
-                                    <span className="fas fa-file text-gray"></span>
+                                    <span className="text-gray px-2"><GrDocumentUser /></span>
+                                    {/* <span className="fas fa-file text-gray"></span> */}
                                   </button>
                                   <button
                                     className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
                                     onClick={() => addFollow(res)}
                                     title=" Add Follow Up"
                                   >
-                                    <i className=" fas fa-plus text-gray px-2"></i>
+                                    <span className="text-gray px-2"><RiChatFollowUpLine /></span>
+                                    {/* <i className=" fas fa-plus text-gray px-2"></i> */}
                                   </button>
                                   <button
                                     className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
@@ -863,7 +873,8 @@ function JobResponse(props) {
                                     title=" Add Interview"
                                     disabled={res.status === "complete" ? true : false}
                                   >
-                                    <i className="fa fa-calendar text-gray px-2"></i>
+                                    <span className="text-gray px-2">  <ImCalendar /></span>
+                                    {/* <i className="fa fa-calendar text-gray px-2"></i> */}
                                   </button>
                                   <button
                                     className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
@@ -871,7 +882,8 @@ function JobResponse(props) {
                                     title="Change Job"
                                     disabled={props.total_applicants >= props.role_category ? true : false}
                                   >
-                                    <i className="fas fa-briefcase"></i>
+                                    <PiBriefcaseLight />
+                                    {/* <i className="fas fa-briefcase"></i> */}
                                   </button>
                                 </div>
                               </th>

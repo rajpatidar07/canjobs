@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Loader from '../common/loader';
 import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
+import { PiPencilDuotone } from "react-icons/pi"
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
@@ -104,9 +105,9 @@ function CompanyProfile(props) {
                     title="Edit KYC Details"
                   >
                     <CustomButton
-                      className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                      onClick={() => setShowKycComplainDetailsModal(true)}
-                    />
+                      className="font-size-3 rounded-3 btn-primary border-0"
+                      onClick={() => setShowKycComplainDetailsModal(true)}>
+                      <PiPencilDuotone /></CustomButton>
                   </div>
                   <CustomButton
                     className=" font-size-4 rounded-3 btn-primary border-0"
@@ -172,9 +173,9 @@ function CompanyProfile(props) {
                     <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                       <span>About {employerData.company_name}</span>
                       <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                        className="font-size-3 rounded-3 btn-primary border-0"
                         onClick={() => setShowCompanyInfoModal(true)}
-                      ></CustomButton>
+                      ><PiPencilDuotone /></CustomButton>
                     </h4>
                     <div className="pt-5 text-left">
                       {employerData.about ? <p className="font-size-4 mb-8">{employerData.about}</p> : <p className="font-size-4 mb-8 text-center">No data Found</p>}

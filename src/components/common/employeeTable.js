@@ -15,6 +15,13 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
+import { MdOutlineCastForEducation } from "react-icons/md"
+import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia"
+import { GoTasklist } from "react-icons/go"
+import { GiSkills } from "react-icons/gi"
+import { AiOutlineFilePdf } from "react-icons/ai"
+import { RiDeleteBin5Line } from "react-icons/ri"
+import { PiBriefcaseLight } from "react-icons/pi"
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -794,7 +801,8 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Change status"
                                   >
-                                    <i className="fas fa-stream text-gray"></i>
+                                    <span className="text-gray px-2"><GoTasklist /></span>
+                                    {/* <i className="fas fa-stream text-gray"></i> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -803,7 +811,8 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Edit Employee"
                                   >
-                                    <span className=" fas fa-edit text-gray px-2"></span>
+                                    <span className="text-gray px-2"><LiaUserEditSolid /></span>
+                                    {/* <span className=" fas fa-edit text-gray px-2"></span> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -814,7 +823,10 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Education"
                                   >
-                                    <span className="	fas fa-graduation-cap text-gray px-2"></span>
+                                    <span className="text-gray px-2">
+                                      <MdOutlineCastForEducation />
+                                    </span>
+                                    {/* <span className="	fas fa-graduation-cap text-gray px-2"></span> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -823,7 +835,8 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Skills"
                                   >
-                                    <span className=" fa fa-cogs text-gray px-2"></span>
+                                    <span className="text-gray px-2"><GiSkills /></span>
+                                    {/* <span className=" fa fa-cogs text-gray px-2"></span> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -832,8 +845,9 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Edit Career"
                                   >
-                                    <span className="text-gray">
-                                      <i className="fas fa-user-tie"></i>
+                                    <span className="text-gray px-2">
+                                      <LiaUserTieSolid />
+                                      {/* <i className="fas fa-user-tie"></i> */}
                                     </span>
                                   </button>
                                   <button
@@ -843,7 +857,8 @@ export default function EmployeeTable(props) {
                                     }
                                     title="View Resume"
                                   >
-                                    <span className="fas fa-file text-gray"></span>
+                                    <span className="text-gray px-2"><AiOutlineFilePdf /></span>
+                                    {/* <span className="fas fa-file text-gray"></span> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
@@ -851,15 +866,17 @@ export default function EmployeeTable(props) {
                                     title="All jobs "
                                   // disabled={empdata.skill ? false : true}
                                   >
-                                    <i className="fas fa-briefcase"></i>
+                                    <span className="text-gray px-2"><PiBriefcaseLight /></span>
+                                    {/* <i className="fas fa-briefcase"></i> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() => ShowDeleteAlert(empdata)}
                                     title="Delete"
                                   >
-                                    <span className=" text-danger">
-                                      <i className="fa fa-trash "></i>
+                                    <span className="px-2 text-danger">
+                                      <RiDeleteBin5Line />
+                                      {/* <i className="fa fa-trash "></i> */}
                                     </span>
                                   </button>
                                 </>
@@ -889,7 +906,8 @@ export default function EmployeeTable(props) {
                             onClick={() => ChangeApplicantsStatus(empdata)}
                             title="Approve Applicant"
                           >
-                            <i className="fas fa-stream text-gray"></i>
+                            <span className="text-gray px-2"><GoTasklist /></span>
+                            {/* <i className="fas fa-stream text-gray"></i> */}
                           </button>
                         </td>
                       ) : (

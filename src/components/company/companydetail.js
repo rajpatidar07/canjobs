@@ -4,6 +4,7 @@ import ContactInfo from "../forms/employer/contactInfo";
 import { EmployerDetails } from "../../api/api";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { PiPencilDuotone } from "react-icons/pi"
 function CompanyDetailPage(props) {
   /*Show modal and data state */
   const [apiCall, setApiCall] = useState(false);
@@ -36,9 +37,9 @@ function CompanyDetailPage(props) {
       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
         <span>Contact Info</span>
         <CustomButton
-          className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+          className=" font-size-3 rounded-3 btn-primary border-0"
           onClick={() => setContactDetails(true)}
-        />
+        ><PiPencilDuotone /></CustomButton>
         {ContactDetails ? <ContactInfo
           employerId={props.employerId}
           show={ContactDetails}

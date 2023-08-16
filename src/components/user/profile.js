@@ -12,6 +12,7 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from '../common/loader';
 import DocumentModal from "../forms/admin/EmployeeDocumentModal"
+import { PiPencilDuotone } from "react-icons/pi"
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showDoc, setShowDoc] = useState(false);
@@ -155,7 +156,10 @@ const UserProfile = (props) => {
                             className="image_upload_btn m-0"
                             htmlFor="ImgUploadInput"
                           >
-                            <span className="fas fa-pen text-gray"> </span>
+                            <span className="text-gray">
+                              <PiPencilDuotone />
+                            </span>
+                            {/* <span className="fas fa-pen text-gray"> </span> */}
                           </label></> : ""}
                         <img
                           className="rounded-circle"
@@ -198,9 +202,9 @@ const UserProfile = (props) => {
 
                         {user_type === "company" || props.self === "yes" ? null : (
                           <CustomButton
-                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                            className="font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowPersonalDetails(true)}
-                          />
+                          ><PiPencilDuotone /></CustomButton>
                         )}
 
                         {showDoc ? (<DocumentModal
@@ -332,9 +336,9 @@ const UserProfile = (props) => {
                         <span>Skill</span>
                         {user_type === "company" || props.self === "yes" ? null : (
                           <CustomButton
-                            className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                            className="font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowItSkills(true)}
-                          />
+                          ><PiPencilDuotone /></CustomButton>
                         )}
                       </h4>
                       <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
@@ -449,9 +453,9 @@ const UserProfile = (props) => {
                           <span>Career Profile</span>
                           {user_type === "company" || props.self === "yes" ? null : (
                             <CustomButton
-                              className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                              className="font-size-3 rounded-3 btn-primary border-0"
                               onClick={() => setShowEmplyomentDetails(true)}
-                            />
+                            ><PiPencilDuotone /></CustomButton>
                           )}
                           {showEmplyomentDetails ? <EmployementDetails
                             show={showEmplyomentDetails}
@@ -527,9 +531,9 @@ const UserProfile = (props) => {
                           <span>Education</span>
                           {user_type === "company" || props.self === "yes" ? null : (
                             <CustomButton
-                              className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
+                              className="font-size-3 rounded-3 btn-primary border-0"
                               onClick={() => setShowEducation(true)}
-                            />
+                            ><PiPencilDuotone /></CustomButton>
                           )}
                           {showEducation ? <EducationDetails
                             show={showEducation}
