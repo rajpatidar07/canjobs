@@ -21,7 +21,7 @@ function AddInterview(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     interview_date: "",
-    interview_status: props.resData.status === "PENDING" || props.resData.status === "" ? "PENDING" : ""
+    interview_status: props.resData.status === "pending" || props.resData.status === "" ? "pending" : ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -136,7 +136,7 @@ function AddInterview(props) {
                 id="interview_status"
               >
                 <option value={""}>Select Status</option>
-                <option value={"pendimg"}>Schedule / Reschedule</option>
+                <option value={"pending"}>Schedule / Reschedule</option>
                 <option value={"complete"}>Complete</option>
               </select>
             </div>

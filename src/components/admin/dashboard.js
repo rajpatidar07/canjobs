@@ -10,7 +10,7 @@ import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 // import EmployerTable from "../common/employerTable";
 // import { getSummaryCount } from "../../api/api";
-import FollowUpDashBoard from "../common/followUpTableDashboard";
+// import FollowUpDashBoard from "../common/followUpTableDashboard";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   /*States */
@@ -21,7 +21,7 @@ const AdminDashboard = () => {
   // let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
   // let [response, setResponse] = useState("");
-  let [followup, setFollowUP] = useState("");
+  // let [followup, setFollowUP] = useState("");
   let [apiCall, setApiCall] = useState("");
   /*Function to get the summary count */
   // let AllCounts = async () => {
@@ -433,7 +433,7 @@ const AdminDashboard = () => {
                 />
               </div>
               {/* <!-- Recent Follow- --> */}
-              <div className="bg-white rounded dashboard_card mb-7">
+              {/* <div className="bg-white rounded dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">
                     Recently Added FollowUp
@@ -471,7 +471,7 @@ const AdminDashboard = () => {
                   heading={"Dashboard"}
                   filter_by_time={followup}
                 />
-              </div>
+              </div> */}
               {/* <!-- Recent Companies- --> */}
               {/* <div className="col-lg-6">
                 <div className="bg-white rounded dashboard_card mb-7">

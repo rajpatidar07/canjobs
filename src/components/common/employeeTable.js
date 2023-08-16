@@ -535,12 +535,12 @@ export default function EmployeeTable(props) {
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
                                 Y)
-                                {empdata.is_featured === "1" ? (
+                                {empdata.is_featured === ("1" || 1) ? (
                                   <span className="bg-orange text-white featured_tag">
                                     Featured
                                   </span>
                                 ) : null}
-                                {empdata.created_by_admin === "0" ? (
+                                {empdata.created_by_admin === ("0" || 0) ? (
                                   <span className="bg-info text-white web_tag">
                                     Web
                                   </span>
@@ -559,8 +559,20 @@ export default function EmployeeTable(props) {
                               title="Employee Details"
                             >
                               {empdata.name === null ? (
-                                <div className="font-size-3 mb-0 text-capitalize">
+                                <div className="mb-0 font-size-3 mb-0 text-capitalize">
                                   Unavailable
+                                  <p className="text-gray font-size-2 m-0 text-capitalize">
+                                    {empdata.is_featured === ("1" || 1) ? (
+                                      <span className="bg-orange text-white featured_tag">
+                                        Featured
+                                      </span>
+                                    ) : null}
+                                    {empdata.created_by_admin === ("0" || 0) ? (
+                                      <span className="bg-info text-white web_tag">
+                                        Web
+                                      </span>
+                                    ) : null}
+                                  </p>
                                 </div>
                               ) : (
                                 <div className=" mb-0">
@@ -576,13 +588,12 @@ export default function EmployeeTable(props) {
                                       "years"
                                     )}
                                     Y)
-                                    {empdata.is_featured === "1" ? (
+                                    {empdata.is_featured === ("1" || 1) ? (
                                       <span className="bg-orange text-white featured_tag">
-                                        {" "}
-                                        Featured{" "}
+                                        Featured
                                       </span>
                                     ) : null}
-                                    {empdata.created_by_admin === "0" ? (
+                                    {empdata.created_by_admin === ("0" || 0) ? (
                                       <span className="bg-info text-white web_tag">
                                         Web
                                       </span>

@@ -38,7 +38,7 @@ export default function Visa() {
   //  const [locationFilterValue, setLocationFilterValue] = useState("");
   //  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   //  const [company, setCompany] = useState("");
-  // let [Json, setJson] = useState([]);
+  // let [Json, setJson] = useStatuserTypee([]);
   let userType = localStorage.getItem("userType")
   /*Render function to get the job */
   // useEffect(() => {
@@ -47,9 +47,9 @@ export default function Visa() {
   //     setSearchError("");
   //   }
   // }, [
-    // VisStatusFilterValue,
-    // VisaCountryFilter,
-    // IntrestedFilterValue,
+  // VisStatusFilterValue,
+  // VisaCountryFilter,
+  // IntrestedFilterValue,
   //   //  categoryFilterValue,
   //   //  locationFilterValue,
   //   //  jobSwapFilterValue,
@@ -127,7 +127,7 @@ export default function Visa() {
                   <h3 className="font-size-6 mb-0">Visa of job</h3>
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
-                <div className="row m-0 align-items-center">
+                <div className={userType === "company" ? "d-none" : "row m-0 align-items-center"}>
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search Employee:</p>
                     <input
@@ -148,9 +148,10 @@ export default function Visa() {
                         name="experience"
                         value={VisaCountryFilter}
                         id="experience"
-                        onChange={(e) =>
-                          {setVisaCountryFilter(e.target.value)
-                            setEmpId("")}
+                        onChange={(e) => {
+                          setVisaCountryFilter(e.target.value)
+                          setEmpId("")
+                        }
                         }
                         className="text-capitalize form-control"
                       >
@@ -170,8 +171,10 @@ export default function Visa() {
                         name="status"
                         value={VisStatusFilterValue}
                         id="status"
-                        onChange={(e) => {setVisStatusFilterValue(e.target.value)
-                          setEmpId("")}}
+                        onChange={(e) => {
+                          setVisStatusFilterValue(e.target.value)
+                          setEmpId("")
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select visa status </option>
@@ -190,8 +193,10 @@ export default function Visa() {
                         name="intrested_in"
                         value={IntrestedFilterValue}
                         id="intrested_in"
-                        onChange={(e) => {setIntrestedFilterValue(e.target.value)
-                          setEmpId("")}}
+                        onChange={(e) => {
+                          setIntrestedFilterValue(e.target.value)
+                          setEmpId("")
+                        }}
                         className="text-capitalize form-control">
                         <option value="" data-display="Product Designer">
                           Select Interested in

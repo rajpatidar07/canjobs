@@ -1,7 +1,7 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { Link, useSearchParams , useNavigate} from "react-router-dom";
-import { EmployeeSignUp, SendOtp, LinkedSignup , SocialLogin} from "../../api/api";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { EmployeeSignUp, SendOtp, LinkedSignup, SocialLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import { useGoogleLogin } from '@react-oauth/google';
@@ -16,14 +16,15 @@ export default function EmployeeSignupModal(props) {
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
   let [facebook, setFacebook] = useState(false);
-  let i = 0;
   const [searchParams] = useSearchParams()
   let code = searchParams.get("code")
   let navigate = useNavigate();
-  if(props.show === true){
+  let i = 0;
+  let encoded;
+  if (props.show === true) {
     localStorage.setItem("linkedin", "employeeSignup");
-   }
-   const type = localStorage.getItem("linkedin");
+  }
+  const type = localStorage.getItem("linkedin");
   // USER SIGNUP VALIDATION
 
   // INITIAL STATE ASSIGNMENT
@@ -40,20 +41,22 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    resume: [],
+    resume: [
+      (value) => (value === "" || value === null ? "Resume is required" : null),
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, setErrors, errors, validate } =
@@ -68,17 +71,19 @@ export default function EmployeeSignupModal(props) {
       if (isChecked) {
         settermsErr("");
         setLoading(true);
-        try{const signUpData = await EmployeeSignUp(state);
-        if (signUpData.message === "Employee has been registered") {
-          setSingUpSuccess("success");
-          setLoading(false);
-        } else if (signUpData.message === "Email already exists") {
-          setLoading(false);
-          settermsErr("Email already exist");
-        } else if (signUpData.message === " incorrect otp ") {
-          setLoading(false);
-          setErrors({ ...errors, otp: "Invalid Otp" });
-        }}catch(err){
+        try {
+          const signUpData = await EmployeeSignUp(state);
+          if (signUpData.message === "Employee has been registered") {
+            setSingUpSuccess("success");
+            setLoading(false);
+          } else if (signUpData.message === "Email already exists") {
+            setLoading(false);
+            settermsErr("Email already exist");
+          } else if (signUpData.message === " incorrect otp ") {
+            setLoading(false);
+            setErrors({ ...errors, otp: "Invalid Otp" });
+          }
+        } catch (err) {
           toast.error("Something went wrong", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -92,15 +97,17 @@ export default function EmployeeSignupModal(props) {
     } else if (otpBox === false && validate()) {
       /*Api to get otp */
       setLoading(true);
-      try{const updatedTodo = await SendOtp(state);
-      if (updatedTodo.message === "successful") {
-        toast.success("Otp sent Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setOtpBox(true);
-        setLoading(false);
-      }}catch(err){
+      try {
+        const updatedTodo = await SendOtp(state);
+        if (updatedTodo.message === "successful") {
+          toast.success("Otp sent Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setOtpBox(true);
+          setLoading(false);
+        }
+      } catch (err) {
         toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
@@ -111,37 +118,38 @@ export default function EmployeeSignupModal(props) {
   };
   // END USER SIGNUP VALIDATION
 
-   /*Function to Sign Up with google */
-   const GoogleLogin = useGoogleLogin({
+  /*Function to Sign Up with google */
+  const GoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         let data = await axios("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: {  
+          headers: {
             "Authorization": `Bearer ${tokenResponse.access_token}`
           }
         });
         console.log(data.data);
-        if(data.data.email_verified === true){
-         try {
-          let res = await SocialLogin(data.data.sub,data.data.email,data.data.name,data.data.picture,"Google");
-          console.log(res,);
-          localStorage.setItem("token", res.token);
-          localStorage.setItem("userType", "user");
-          localStorage.setItem("employee_id", res.employee_id);
-          localStorage.setItem("profile_photo", res.profile_photo);
-          toast.success("Logged In Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.close();
-          navigate("/");
-          window.location.reload();
-        }catch(err){
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-        }}
+        if (data.data.email_verified === true) {
+          try {
+            let res = await SocialLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
+            console.log(res,);
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("userType", "user");
+            localStorage.setItem("employee_id", res.employee_id);
+            localStorage.setItem("profile_photo", res.profile_photo);
+            toast.success("Logged In Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.close();
+            navigate("/");
+            window.location.reload();
+          } catch (err) {
+            toast.error("Something went wrong", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
+        }
       } catch (err) {
         console.log(err);
       }
@@ -164,74 +172,97 @@ export default function EmployeeSignupModal(props) {
     const scope = 'r_liteprofile r_emailaddress w_member_social profile email openid';
 
     window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
-  
-    
+
+
   };
   // console.log(type,(code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 3 && type === "employeeSignup");
   useEffect(() => {
     i = i + 3
-    if((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 3 && type === "employeeSignup"){
-      const response =  LinkedSignup(code , type );
-        response.then((res) =>{
+    if ((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 3 && type === "employeeSignup") {
+      const response = LinkedSignup(code, type);
+      response.then((res) => {
         let decode = JSON.parse(res.data)
-        if(res.data.email_verified === true){
-         try{ let data =  SocialLogin(res.data.sub,res.data.email,res.data.name,res.data.picture,"Linkedin");
-          console.log(data);
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("userType", "user");
-          localStorage.setItem("employee_id", data.employee_id);
-          localStorage.setItem("profile_photo", data.profile_photo);
-          toast.success("Logged In Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.close();
-          navigate("/");
-          window.location.reload();
-        }catch(err){
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-        }
-        }if(res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"){
+        if (res.data.email_verified === true) {
+          try {
+            let data = SocialLogin(res.data.sub, res.data.email, res.data.name, res.data.picture, "Linkedin");
+            console.log(data);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userType", "user");
+            localStorage.setItem("employee_id", data.employee_id);
+            localStorage.setItem("profile_photo", data.profile_photo);
+            toast.success("Logged In Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.close();
+            navigate("/");
+            window.location.reload();
+          } catch (err) {
+            toast.error("Something went wrong", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
+        } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
           toast.error("Token Expired", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           navigate("/");
         }
-        }).catch((err)=>{
-          console.log(err.data);
-        })
-        } 
-      },[])
+      }).catch((err) => {
+        console.log(err.data);
+      })
+    }
+  }, [])
 
   /*FUnctiom to Sign Up with facebook */
   const responseFacebook = async (response) => {
     console.log(response);
-    if(response.graphDomain === "facebook"){
-    try{let data = await SocialLogin(response.userID,response.email,response.name,response.picture.data.url,"Facebook");
-      console.log(data); 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("userType", "user");
-      localStorage.setItem("employee_id", data.employee_id);
-      localStorage.setItem("profile_photo", data.profile_photo);
-      toast.success("Logged In Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      props.close();
-      navigate("/");
-      window.location.reload();
-    }catch(err){
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+    if (response.graphDomain === "facebook") {
+      try {
+        let data = await SocialLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
+        console.log(data);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userType", "user");
+        localStorage.setItem("employee_id", data.employee_id);
+        localStorage.setItem("profile_photo", data.profile_photo);
+        toast.success("Logged In Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.close();
+        navigate("/");
+        window.location.reload();
+      } catch (err) {
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
     }
-    }
-   }
+  }
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  /*Onchange function of Resume */
+  const handleUploadFile = async (e) => {
+    encoded = await convertToBase64(e.target.files[0]);
+    let base64Name = encoded.base64;
+    let finalBase = base64Name.split(",")[1];
+    setState({ ...state, resume: finalBase });
+  };
+
   return (
     <>
       {/* <!-- Sign Up Modal --> */}
@@ -305,50 +336,50 @@ export default function EmployeeSignupModal(props) {
                   <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
                     {/* SOCIAL MEDIA LINK BUTTONS */}
                     <div className="row">
-                    <div className="col-4 col-xs-12">
+                      <div className="col-4 col-xs-12">
 
-                      <button onClick={handleLinkedInLogin}
-                      className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"><i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                      <span className="d-none d-xs-block mx-5 px-3">
-                        Import from LinkedIn
-                      </span></button>
-                    </div>
-                    <div className="col-4 col-xs-12">
-                      <Link
-                        to="" onClick={GoogleLogin}
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                      >
-                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-3">
-                          Import from Google
-                        </span>
-                      </Link>
-                    </div>
-                    <div className="col-4 col-xs-12">
-                      <Link
-                        to="" onClick={()=>setFacebook(true)}
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                      >
-                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                        <span className="d-none d-xs-block mx-5 px-3">
-                          Import from Facebook
-                        </span>
-                      </Link>
-                      {facebook ? 
-                      <FacebookLogin
-                          appId="2170088543184291"
-                          autoLoad
-                          callback={responseFacebook}
-                          fields="name,email,picture"
-                          scope="public_profile,user_friends,email,user_actions.books"         
+                        <button onClick={handleLinkedInLogin}
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"><i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <span className="d-none d-xs-block mx-5 px-3">
+                            Import from LinkedIn
+                          </span></button>
+                      </div>
+                      <div className="col-4 col-xs-12">
+                        <Link
+                          to="" onClick={GoogleLogin}
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                        >
+                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <span className="d-none d-xs-block mx-5 px-3">
+                            Import from Google
+                          </span>
+                        </Link>
+                      </div>
+                      <div className="col-4 col-xs-12">
+                        <Link
+                          to="" onClick={() => setFacebook(true)}
                           className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                          render={renderProps => (
-                            <button onClick={renderProps.onClick} className="d-none">
+                        >
+                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <span className="d-none d-xs-block mx-5 px-3">
+                            Import from Facebook
+                          </span>
+                        </Link>
+                        {facebook ?
+                          <FacebookLogin
+                            appId="2170088543184291"
+                            autoLoad
+                            callback={responseFacebook}
+                            fields="name,email,picture"
+                            scope="public_profile,user_friends,email,user_actions.books"
+                            className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                            render={renderProps => (
+                              <button onClick={renderProps.onClick} className="d-none">
                               </button>
-                          )}
-                        />
-                        :null}
-                    </div>
+                            )}
+                          />
+                          : null}
+                      </div>
                     </div>
                     {/* END SOCIAL MEDIA LINK BUTTONS */}
                     <div className="or-devider">
@@ -435,9 +466,9 @@ export default function EmployeeSignupModal(props) {
                         <div className="position-relative">
                           <input
                             name="resume"
-                            value={state.resume || ""}
-                            onChange={onInputChange}
+                            onChange={handleUploadFile}
                             type="file"
+                            accept=".pdf,application/pdf"
                             className={
                               errors.resume
                                 ? "form-control border border-danger"

@@ -71,7 +71,7 @@ function ApplyBeforeform(props) {
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
-    console.log(state)
+    // console.log(state)
     if (validate()) {
       setLoading(true);
       try {

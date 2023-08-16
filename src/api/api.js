@@ -71,6 +71,7 @@ export const EmployeeSignUp = async (props) => {
   formData.append("email", props.email);
   formData.append("password", props.password);
   formData.append("otp", props.otp);
+  formData.append("resume", props.resume);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -1429,16 +1430,16 @@ export const GetEmployeeFilterJob = async (id,/* skill*/
   column_name,
   sort_order,
   company) => {
-    console.log(search,
-      location,
-      category,
-      skill,
-      job,
-      page,
-      limit,
-      column_name,
-      sort_order,
-      company)
+  console.log(search,
+    location,
+    category,
+    skill,
+    job,
+    page,
+    limit,
+    column_name,
+    sort_order,
+    company)
   const response = await axios.post(
     `${API_URL}admin/getAllJobsViewAdmin`,
     {

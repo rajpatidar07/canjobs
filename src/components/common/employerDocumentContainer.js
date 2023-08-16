@@ -425,7 +425,7 @@ export default function EmployerDocumrentContainer(props) {
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "company" && (showMoreDocType||otherDoc)) || user_type === "admin" ? "btn btn-light" : "d-none"}
+                className={(user_type === "company" && (showMoreDocType || otherDoc)) || user_type === "admin" ? "btn btn-light" : "d-none"}
                 onClick={() => {
                   document.querySelector('input[type="file"]').click()
                   setHide(true)
@@ -457,17 +457,17 @@ export default function EmployerDocumrentContainer(props) {
                 )}
               </div>
             ) : null}
-            {hide === false && docFile && user_type === "admin" ? 
-            <div className="doc_upload_col flex-end">
-              <button className="btn btn-gray mx-3" onClick={PrintDocument}
-                title="Print Document">
-                <i className="fa fa-print" aria-hidden="true"></i>
-              </button>
-              <button className="btn btn-regent"
-                onClick={DownloadDocument} title="Download Document">
-                <i className="fa fa-download" aria-hidden="true"></i>
-              </button>
-            </div> : null}
+            {hide === false && docFile && user_type === "admin" ?
+              <div className="doc_upload_col flex-end">
+                <button className="btn btn-gray mx-3" onClick={PrintDocument}
+                  title="Print Document">
+                  <i className="fa fa-print" aria-hidden="true"></i>
+                </button>
+                <button className="btn btn-regent"
+                  onClick={DownloadDocument} title="Download Document">
+                  <i className="fa fa-download" aria-hidden="true"></i>
+                </button>
+              </div> : null}
             {hide === true
               ? <div className="doc_upload_col">
                 <button className="btn btn-dark text-white" onClick={() => {

@@ -261,6 +261,7 @@ function PersonalDetails(props) {
     let finalBase = base64Name.split(",")[1];
     setState({ ...state, resume: finalBase });
   };
+
   /*Onchange function of profile */
   const handleFileChange = async (event) => {
     const file = event.target.files[0];

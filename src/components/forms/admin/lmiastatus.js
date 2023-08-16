@@ -56,7 +56,7 @@ function LmiaStatus(props) {
   // USER LIMIA UPDATE FILTER SUBMIT BUTTON
   const onAminProfileUpdateClick = async (event) => {
     event.preventDefault();
-    if (validate() && props.job === "yes" && location.pathname === "/job") {
+    if (validate() && props.job === "yes") {
       let data = {
         completion_time: state.completion_time,
         lmia_status: state.lmia_status,

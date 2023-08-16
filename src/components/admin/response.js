@@ -14,6 +14,7 @@ import ChangeJob from "../forms/admin/changeJobs";
 import Loader from '../common/loader';
 import VisaStatus from "../forms/user/visaStatus";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
+import { BsArrow90DegRight } from "react-icons/bs"
 function JobResponse(props) {
   /*show modal and data states */
   let [documentModal, setDocumentModal] = useState(false);
@@ -613,6 +614,11 @@ function JobResponse(props) {
                                         {res.name}
                                       </p>
                                       <p className="text-gray font-size-2 m-0 text-capitalize">
+                                        {res.is_featured === ("1" || 1) ? (
+                                          <span className="bg-orange text-white featured_tag">
+                                            Featured
+                                          </span>
+                                        ) : null}
                                         {res.gender === "female" ? "F" : res.gender === "male" ? "M" : "O"} ({res.marital_status + ", "}
                                         {/*Calculation of age from date of birth*/}
                                         {moment().diff(
@@ -768,21 +774,23 @@ function JobResponse(props) {
                                     <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
 
                                       Cancel
-                                    </span>) : 
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      NA
-                                    </span>}
+                                    </span>) :
+                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    NA
+                                  </span>}
                               </p>
                             </th>
                             <th className="  py-5 ">
                               <p className="font-size-3 font-weight-normal mb-0">
-                                {res.status === "COMPLETE" ? (
+                                {res.status === "complete" ? (
                                   <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Complete</span>
-                                ) : (
+                                ) : res.status === "pending" ? (
                                   <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                     Scheduled
                                   </span>
-                                )}
+                                ) : <span className="px-3 py-2 badge badge-pill bg-warning text-white">
+                                  Pending
+                                </span>}
                               </p>
                             </th>
                             {props.heading === "Dashboard" ||
@@ -822,15 +830,15 @@ function JobResponse(props) {
                                     title="Employee LMIA"
                                   >
                                     <Link to="/lmia" state={{ id: res.job_id, employee_id: res.employee_id }}>
-                                      <span className="fas fa-arrow-left text-gray px-2"></span>
+                                      <span className="text-gray px-2"><BsArrow90DegRight /></span>
                                     </Link>
                                   </button>
                                   <button
                                     className={res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
                                     title="Employee Visa"
                                   >
-                                    <Link to="/visa" state={{ id: res.employee_id }}>
-                                      <span className="fas fa-arrow-right text-gray px-2"></span>
+                                    <Link to="/visa" state={{ id: res.employee_id }} className="text-gray">
+                                      visa
                                     </Link>
                                   </button>
                                   <button
