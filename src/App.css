@@ -864,7 +864,14 @@ select.form-control.select_document_type {
 .arrow-steps .step.current:after {
   border-left: 17px solid #23468c;
 }
+.arrow-steps .step.sub-stage {
+  color: #fff;
+  background-color: #ed591e;
+}
 
+.arrow-steps .step.sub-stage:after {
+  border-left: 17px solid #ed591e;
+}
 @media (max-width: 568px) {
   .doc_upload_row .btn {
     min-width: 118px;

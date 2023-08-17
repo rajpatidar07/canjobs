@@ -846,7 +846,7 @@ function JobResponse(props) {
                                     title="Employee Visa"
                                   >
                                     <Link to="/visa" state={{ id: res.employee_id }} className="text-gray">
-                                      visa
+                                      VISA
                                     </Link>
                                   </button>
                                   <button

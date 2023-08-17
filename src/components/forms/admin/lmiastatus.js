@@ -179,7 +179,7 @@ function LmiaStatus(props) {
               >
                 <option value={""}>Select lmia status</option>
                 {(FilterJson.lmia_status || []).map((status, i) => (
-                  location.pathname === "/job" && props.job === "yes" ? (i <= 6 && (
+                  props.job === "yes" ? (i <= 6 && (
                     <option value={status} key={i}>
                       {status}
                     </option>

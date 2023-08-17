@@ -2167,6 +2167,11 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   transform: scaleY(1);
 }
 
+.dashboard-layout-sidebar li.active a svg.mr-5 {
+  width: 1.2em;
+  height: 1.2em
+}
+
 .sidebar-mobile-button {
   min-height: 30px;
   position: fixed;
@@ -9080,3 +9085,28 @@ html .ui-button.ui-state-disabled:active {
 }
 
 /*# sourceMappingURL=maps/main.css.map */
+/* CSS for the sub-stages container */
+.sub-stages-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px; /* Adjust as needed */
+}
+
+/* Styling for sub-stage items */
+.sub-stage {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Adjust as needed */
+  margin-bottom: 5px; /* Adjust as needed */
+  cursor: pointer;
+}
+
+/* Styling for selected sub-stage items */
+.sub-stage.selected {
+  background-color: #f0f0f0; /* Change to desired background color */
+}
+
+/* Styling for the checkbox input within sub-stage items */
+.sub-stage input[type="checkbox"] {
+  margin-left: 5px; /* Adjust as needed */
+}

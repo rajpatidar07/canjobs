@@ -321,7 +321,8 @@ const filterjson = {
     "pharmaceutical & biotechnology",
     "personal consumer services",
   ],
-  experience: ["fresher", "0-1 ", "1-3 ", "3-5 ", "5-7 ", "7+ ", "other"],
+  experience: ["fresher",
+    "0-1 ", "1-3 ", "3-5 ", "5-7 ", "7+ ", "other"],
   job_type: [
     "full-time",
     "permanent",
@@ -577,9 +578,46 @@ const filterjson = {
     "lmia approved",
     "limia rejected",
     "lmia partial",
-    "position approved"],
+    "position approved",
+    "on board",
+    "documentation",
+    "file preparation",
+    "file submission",
+    "file decision"
+  ],
   duration: ["last week", "last month", "last 3 months", "last year"],
   employee_status: ["new", "prospect", "lead", "reatined", "lost", "dead"],
-  interested: ["swep", "internship", "co-op", "part-time", "full-time", "contract","all"]
+  interested: ["swep", "internship", "co-op", "part-time", "full-time", "contract", "all"],
+  sub_stages: {
+    "on board": ["sending r a - invoice - document checklist"],
+    "documentation": [
+      "birth certificate",
+      "marriage certificate",
+      "education docs",
+      "p c c (all countries)",
+      "upfront Medica",
+      "employment ref letter",
+      "current employment",
+      "digital photo",
+      "passport",
+      "resume/cv",
+      "bank statement",
+      "payslips",
+      "i t r",
+      "i e l t s",
+      "any past refusal",
+      "proof of current immifration status",
+      "biometrics(is given)",
+      "lmia, job offer, job contact will be arrange by us"],
+    "file preparation": [
+      "reviewing documents",
+      "i m m 1295",
+      "i m m 5476",
+      "i m m 5645",
+      "representative submission letter"],
+    "file review": ["create account on authorized representative portal"],
+    "file Submission": [],
+    "file decision": [],
+  }
 };
 export default filterjson;

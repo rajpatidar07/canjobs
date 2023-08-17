@@ -92,7 +92,7 @@ const AdminSidebar = (props) => {
               className="px-8 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"
             >
               {/* <i className="far fa-address-card mr-5"></i> */}
-              <LiaAddressCardSolid className="mr-5" />Manage self Applied
+              <LiaAddressCardSolid className="mr-5" />Manage Self Applied
               Jobs
             </Link>
           </li>
