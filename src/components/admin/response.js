@@ -168,7 +168,7 @@ function JobResponse(props) {
           let VisaResponse = await AddUpdateVisa(e.employee_id, status)
           if (VisaResponse.data.message === "created successfully") {
             // Api call to set employee Limia
-            const lmia = { lmia_status: "payment done" };
+            const lmia = { lmia_status: "candidate placement" };
             try {
               let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
               if (LimiaResponse.message === 'Data added successfully') {

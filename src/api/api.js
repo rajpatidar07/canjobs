@@ -944,6 +944,36 @@ export const AddLimia = async (props, employee_id, job_id) => {
   );
   return response.data;
 };
+export const GetLimaSubStages = async (id) => {
+  const response = await axios.post(
+    `${API_URL}/getLmiaSubstages`,
+    {
+      lmia_id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*FUnction to add update lmia sub stage */
+export const AddUpdateLmiaSubStage = async (props) => {
+  const response = await axios.put(
+    `${API_URL}addUpdateLmiaSubstages`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
 
 /*Get Interview list api */
 export const getFollowupLastData = async (page, column, limit, sort, time) => {
