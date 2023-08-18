@@ -39,8 +39,8 @@ function LmiaStatus(props) {
         { status: status, subStage: subStage },
       ]);
     }
-    console.log(isSelected, selectedStatus)
   };
+  console.log("Sub Stages =>", selectedStatus)
   /* Functionality to close the modal */
   const close = () => {
     setState({ ...state, lmia_status: "" });

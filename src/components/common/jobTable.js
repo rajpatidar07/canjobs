@@ -549,37 +549,39 @@ export default function JobTable(props) {
                         </th>
                         <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.lmia_status === "advertisement running" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-danger">
-                                Advertisement running
-                              </span>
-                            ) : job.lmia_status === "application in review" ? (
-                              <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                Application in review
-                              </span>
-                            ) : job.lmia_status === "job bank requested" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-gray">
-                                Job bank requested
-                              </span>
-                            ) : job.lmia_status === "additional information required" ? (
-                              <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                Additional information required
-                              </span>
-                            ) : job.lmia_status === "need to start" ? (
+                            {job.lmia_status === "onboarding" ? (
                               <span className="px-3 py-2 badge badge-pill badge-warning">
-                                Need to start
+                                Onboarding
                               </span>
-                            ) : job.lmia_status === "working on it" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-dark">
-                                Working on it
+                            ) : job.lmia_status === "advertisements" ? (
+                              <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                Advertisements
                               </span>
-                            ) : (job.lmia_status === "application submitted" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-info">
-                                Application submitted
+                            ) : job.lmia_status === "documentation" ? (
+                              <span className="px-3 py-2 badge badge-pill badge-gray">
+                                Documentation
                               </span>
-                            ) :
-                              <span>NA</span>
-                            )}
+                            )
+                              // : job.lmia_status === "additional information required" ? (
+                              //   <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                              //     Additional information required
+                              //   </span>
+                              // ) : job.lmia_status === "need to start" ? (
+                              //   <span className="px-3 py-2 badge badge-pill badge-warning">
+                              //     Need to start
+                              //   </span>
+                              // ) : job.lmia_status === "working on it" ? (
+                              //   <span className="px-3 py-2 badge badge-pill badge-dark">
+                              //     Working on it
+                              //   </span>
+                              // ) : (job.lmia_status === "application submitted" ? (
+                              //   <span className="px-3 py-2 badge badge-pill badge-info">
+                              //     Application submitted
+                              //   </span>
+                              // ) 
+                              : (
+                                <span>NA</span>
+                              )}
 
                           </div>
                         </th>

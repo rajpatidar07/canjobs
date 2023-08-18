@@ -721,35 +721,25 @@ function JobResponse(props) {
                             <th className=" py-5">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 <Link to="/lmia" state={{ id: res.job_id }}>
-                                  {res.lmia_status === "limia rejected" ? (
-                                    <span className="px-3 py-2 badge badge-pill badge-danger">
-                                      Lmia Reject
-                                    </span>
-                                  ) : res.lmia_status === "lmia approved" ? (
-                                    <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                      Lmia Approved
-                                    </span>
-                                  ) : res.lmia_status === "lmia partial" ? (
-                                    <span className="px-3 py-2 badge badge-pill badge-gray">
-                                      Lmia partial
-                                    </span>
-                                  ) : res.lmia_status === "payment done" ? (
-                                    <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                      Payment done
-                                    </span>
-                                  ) : res.lmia_status === "interview done" ? (
+                                  {res.lmia_status === "candidate placement" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-warning">
-                                      Interview done
+                                      Candidate Placement
                                     </span>
-                                  ) : res.lmia_status === "position approved" ? (
-                                    <span className="px-3 py-2 badge badge-pill badge-dark">
-                                      Position approved
+                                  ) : res.lmia_status === "submission" ? (
+                                    <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                      Submission
                                     </span>
-                                  ) : (
-                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                      NA
+                                  ) : res.lmia_status === "decision" ? (
+                                    <span className="px-3 py-2 badge badge-pill badge-gray">
+                                      Decision
                                     </span>
-                                  )}</Link>
+                                  )
+                                    // 
+                                    : (
+                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                        NA
+                                      </span>
+                                    )}</Link>
                               </div>
                             </th>
                             <th className="  py-5 ">
