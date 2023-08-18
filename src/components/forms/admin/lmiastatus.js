@@ -11,13 +11,36 @@ import LmiaTime from "../../common/lmiaTime";
 
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [expandedStatus, setExpandedStatus] = useState();
   let employeeId =
     props.resData === undefined ? null : props.resData.employee_id;
   let lmia_status = props.resData.lmia_status
   let completion_time = props.resData.expected_time_of_completion
-  let jobId = props.resData.job_id;
   let location = useLocation()
-  const [company] = useState([]);
+  let jobId = props.resData.job_id;
+  // const [company] = useState([]);
+  // eslint-disable-next-line
+  let isExpanded = false
+  // Function to handle checkbox selection
+  const handleSubStageSelection = (status, subStage) => {
+    const isSelected = selectedStatus.some(
+      (item) => item.status === status && item.subStage === subStage
+    );
+    if (isSelected) {
+      setSelectedStatus(
+        selectedStatus.filter(
+          (item) => !(item.status === status && item.subStage === subStage)
+        )
+      );
+    } else {
+      setSelectedStatus([
+        ...selectedStatus,
+        { status: status, subStage: subStage },
+      ]);
+    }
+    console.log(isSelected, selectedStatus)
+  };
   /* Functionality to close the modal */
   const close = () => {
     setState({ ...state, lmia_status: "" });
@@ -50,15 +73,15 @@ function LmiaStatus(props) {
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, setErrors, onInputChange, errors, validate } =
+  const { state, setState, setErrors, /*onInputChange,*/ errors, validate } =
     useValidation(initialFormState, validators);
 
   // USER LIMIA UPDATE FILTER SUBMIT BUTTON
-  const onAminProfileUpdateClick = async (event) => {
+  const onLmiaUpdateClick = async (event) => {
     event.preventDefault();
     if (validate() && props.job === "yes") {
       let data = {
-        completion_time: state.completion_time,
+        // completion_time: state.completion_time,
         lmia_status: state.lmia_status,
         job_id: jobId
       }
@@ -156,7 +179,7 @@ function LmiaStatus(props) {
           <LmiaTime lmia={state.lmia_status}
             job={props.job}
             location={location.pathname} />
-          <form onSubmit={onAminProfileUpdateClick}>
+          <form onSubmit={onLmiaUpdateClick}>
             <div className="form-group ">
               <label
                 htmlFor="lmia_status"
@@ -172,23 +195,32 @@ function LmiaStatus(props) {
                     : "form-control text-capitalize"
                 }
                 value={state.lmia_status || ""}
-                onChange={onInputChange}
+                onChange={(e) => {
+                  setState({ ...state, lmia_status: e.target.value });
+                  setExpandedStatus(e.target.value);
+                }}
                 id="lmia_status"
                 name="lmia_status"
                 multiple={false}
               >
                 <option value={""}>Select lmia status</option>
-                {(FilterJson.lmia_status || []).map((status, i) => (
-                  props.job === "yes" ? (i <= 6 && (
-                    <option value={status} key={i}>
-                      {status}
-                    </option>
-                  )) : (i > 6 && (
-                    <option value={status} key={i}>
-                      {status}
-                    </option>
-                  ))
-                ))}
+                {(FilterJson.lmia_status || []).map((status, i) => {
+                  isExpanded = expandedStatus === status
+                  return (
+                    props.job === "yes" ? (i <= 2 && (
+                      <option value={status} key={i}
+                      >
+
+                        {status}
+                      </option>
+                    )) : (i > 2 && (
+                      <option value={status} key={i}
+                      >
+                        {status}
+                      </option>
+                    ))
+                  )
+                })}
               </select>
               {/*----ERROR MESSAGE FOR LIMA STATUS----*/}
               {errors.lmia_status && (
@@ -200,6 +232,38 @@ function LmiaStatus(props) {
                 </span>
               )}
             </div>
+            {expandedStatus && (
+              <div className='bg-white text-dark p-2 sub-stages-container'>
+                {(FilterJson.sub_stages[expandedStatus] || []).map((subStage, j) => (
+                  <div
+                    key={j}
+                    className={`sub-stage text-capitalize ${selectedStatus.some(
+                      (item) =>
+                        item.status === expandedStatus &&
+                        item.subStage === subStage
+                    )
+                      ? 'selected'
+                      : ''
+                      }`}
+                    onClick={() =>
+                      handleSubStageSelection(expandedStatus, subStage)
+                    }
+                  >
+
+                    <input
+                      type="checkbox"
+                      className='mx-2'
+                      checked={selectedStatus.some(
+                        (item) =>
+                          item.status === expandedStatus &&
+                          item.subStage === subStage
+                      )}
+                      readOnly
+                    />{subStage}
+                  </div>
+                ))}
+              </div>
+            )}
             {/* <div className="form-group mt-5">
               <label
                 htmlFor="completion_time"
@@ -231,7 +295,7 @@ function LmiaStatus(props) {
                 </span>
               )}
             </div> */}
-            {state.lmia_status === "complete" ? (
+            {/* {state.lmia_status === "complete" ? (
               <>
                 <div className="form-group">
                   <label
@@ -257,7 +321,7 @@ function LmiaStatus(props) {
                     <option value={"Yes"}>Yes</option>
                     <option value={"No"}>No</option>
                   </select>
-                  {/*----ERROR MESSAGE FOR LIMA STATUS----*/}
+                  ----ERROR MESSAGE FOR LIMA STATUS----
                   {errors.posted && (
                     <span
                       key={errors.posted}
@@ -295,7 +359,7 @@ function LmiaStatus(props) {
                       ))}
                     </select>
                   </div>
-                  {/*----ERROR MESSAGE FOR COMPANY----*/}
+                  ----ERROR MESSAGE FOR COMPANY----
                   {errors.posted_company_id && (
                     <span
                       key={errors.posted_company_id}
@@ -324,7 +388,7 @@ function LmiaStatus(props) {
                     id="date_of_posting"
                     name="date_of_posting"
                   />
-                  {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
+                  ----ERROR MESSAGE FOR COMPANY NAME----
                   {errors.date_of_posting && (
                     <span
                       key={errors.date_of_posting}
@@ -353,7 +417,7 @@ function LmiaStatus(props) {
                     id="designation"
                     name="designation"
                   />
-                  {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
+                  ----ERROR MESSAGE FOR COMPANY NAME----
                   {errors.designation && (
                     <span
                       key={errors.designation}
@@ -364,7 +428,7 @@ function LmiaStatus(props) {
                   )}
                 </div>
               </>
-            ) : null}
+            ) : null} */}
 
             <div className="form-group text-center">
               {loading === true ? (
@@ -382,7 +446,7 @@ function LmiaStatus(props) {
                 </button>
               ) : (
                 <button
-                  onClick={onAminProfileUpdateClick}
+                  onClick={onLmiaUpdateClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >

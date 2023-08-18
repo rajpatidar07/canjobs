@@ -300,7 +300,7 @@ function PersonalDetails(props) {
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
           data-dismiss="modal"
-          onClick={props.close}
+          onClick={close}
         >
           <i className="fas fa-times"></i>
         </button>
