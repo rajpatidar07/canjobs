@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
+import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal"
 import {
   GetAllJobs,
   DeleteJob,
@@ -18,15 +19,18 @@ import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia"
 import { BsArrow90DegRight } from "react-icons/bs"
 import { RiDeleteBin5Line } from "react-icons/ri"
 import { MdFormatListBulletedAdd } from "react-icons/md"
+import { GrDocumentUpload } from "react-icons/gr"
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
+  let [showAddCompanyDocModal, setShowAddCompanyDocModal] = useState(false);
   let [openLimia, setOpenLimia] = useState(false);
   let [showCandidateModal, setShowCandidateModal] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState();
+  const [CompanyId, setCompanyId] = useState();
   const [candidateSkill, setCandidateSkill] = useState();
   /*Delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -135,6 +139,7 @@ export default function JobTable(props) {
       setIsLoading(false)
     }
   };
+
   /*Render function to get the job */
   useEffect(() => {
     JobData();
@@ -172,6 +177,12 @@ export default function JobTable(props) {
     setShowAddJobsModal(true);
     setJobId(e);
   };
+
+  /**function to open document modal */
+  const OpenAddDocModal = (e) => {
+    setShowAddCompanyDocModal(true)
+    setCompanyId(e)
+  }
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_id);
@@ -717,6 +728,13 @@ export default function JobTable(props) {
                                             <span className="text-gray px-2"><BsArrow90DegRight /></span>
                                             {/* <span className="fas fa-arrow-left text-gray px-2"></span> */}
                                           </Link></button>
+                                        <button
+                                          className="btn btn-outline-info action_btn"
+                                          title="Company's document"
+                                          onClick={() => OpenAddDocModal(job.company_id)}>
+                                          <span className="text-gray px-2"><GrDocumentUpload /></span>
+                                        </button>
+
                                       </>}
                                   </>
                                 )
@@ -790,6 +808,12 @@ export default function JobTable(props) {
           </div>
         )}
       </div>
+      {showAddCompanyDocModal ?
+        <EmployerDocumentModal
+          employer_id={CompanyId}
+          show={showAddCompanyDocModal}
+          close={() => setShowAddCompanyDocModal(false)} />
+        : null}
       {showAddJobsModal ? (
         <AddJobModal
           show={showAddJobsModal}

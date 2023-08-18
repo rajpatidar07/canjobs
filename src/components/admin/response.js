@@ -844,7 +844,7 @@ function JobResponse(props) {
                                     onClick={() =>
                                       AddDoucument(res)
                                     }
-                                    title="Documents"
+                                    title="Applicant's documents"
                                   >
                                     <span className="text-gray px-2"><GrDocumentUser /></span>
                                     {/* <span className="fas fa-file text-gray"></span> */}

@@ -9087,16 +9087,11 @@ html .ui-button.ui-state-disabled:active {
 /*# sourceMappingURL=maps/main.css.map */
 /* CSS for the sub-stages container */
 .sub-stages-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px; /* Adjust as needed */
+  margin-top: 10px; 
 }
 
 /* Styling for sub-stage items */
 .sub-stage {
-  display: flex;
-  align-items: center;
-  margin-right: 10px; /* Adjust as needed */
   margin-bottom: 5px; /* Adjust as needed */
   cursor: pointer;
 }
@@ -9108,5 +9103,5 @@ html .ui-button.ui-state-disabled:active {
 
 /* Styling for the checkbox input within sub-stage items */
 .sub-stage input[type="checkbox"] {
-  margin-left: 5px; /* Adjust as needed */
+  margin-top: 5px; /* Adjust as needed */
 }
