@@ -199,6 +199,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
+          setApiCall(false)
           if (event === "status") {
             close()
           };
