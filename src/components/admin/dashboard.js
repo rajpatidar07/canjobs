@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // import EmployeeDetails from "../common/employeeDetail";
 import { ToastContainer/*,toast */ } from "react-toastify";
 import Interview from "../common/interviewTable";
+import LimiaStatusTable from "../common/limiaStatusTable";
 // import JobResponse from "./response";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
@@ -18,6 +19,7 @@ const AdminDashboard = () => {
   const [countData /* setCountData*/] = useState("");
   let [job, setJob] = useState("");
   let [employee, setEmployee] = useState("");
+  let [lima, setLima] = useState("");
   // let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
   // let [response, setResponse] = useState("");
@@ -316,6 +318,7 @@ const AdminDashboard = () => {
                   filter_by_time={job}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
+                  lmia="no"
                 />
               </div>
               {/* <!-- Recent Job Response- --> */}
@@ -430,6 +433,50 @@ const AdminDashboard = () => {
                 <EmployeeTable
                   heading={"Dashboard"}
                   filter_by_time={employee}
+                />
+              </div>
+              {/* <!-- Recent lima's- --> */}
+              <div className="bg-white rounded dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Lima
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="job"
+                        value={lima}
+                        id="job"
+                        onChange={(e) => setLima(e.target.value)}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      {" "}
+                      <Link
+                        className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/lmia"}
+                        title="View all Applicants"
+                      >
+                        View All
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <LimiaStatusTable
+                  heading={"Dashboard"}
+                  filter_by_time={lima}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
+                  lmia="yes"
+                  response={"lima"}
                 />
               </div>
               {/* <!-- Recent Follow- --> */}

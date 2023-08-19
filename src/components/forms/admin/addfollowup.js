@@ -228,10 +228,11 @@ function Addfollowup(props) {
                       <span className="text-dark"> Posted date: </span>
                       {moment(res.created_at).format("YYYY-MM-DD")}
                     </div>
-                    <div className="card-head font-size-3 text-dark card_right">
-                      <span className="text-dark"> Next date: </span>
-                      {moment(res.next_followup_date).format("YYYY-MM-DD")}
-                    </div>
+                    {res.next_followup_date === "0000-00-00" ? null :
+                      <div className="card-head font-size-3 text-dark card_right">
+                        <span className="text-dark"> Next date: </span>
+                        {moment(res.next_followup_date).format("YYYY-MM-DD")}
+                      </div>}
                   </div>
                   <div className="card-body p-3">{res.remark}</div>
                 </div>

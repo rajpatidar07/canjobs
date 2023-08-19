@@ -903,7 +903,7 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
 };
 
 /*Get lmia list Api */
-export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord) => {
+export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord, time) => {
   const response = await axios.post(
     `${API_URL}/company/getLmia`,
     {
@@ -913,7 +913,8 @@ export const GetEmployeeByLima = async (id, search, status, page, limit, col, or
       page: page,
       limit: limit,
       sort_order: ord,
-      column_name: col
+      column_name: col,
+      filter_by_time: time
     },
     {
       headers: {
@@ -944,9 +945,10 @@ export const AddLimia = async (props, employee_id, job_id) => {
   );
   return response.data;
 };
+/*Function get lima substage of empolyee */
 export const GetLimaSubStages = async (id) => {
   const response = await axios.post(
-    `${API_URL}/getLmiaSubstages`,
+    `${API_URL}/getLmiaSubstagesEmployee`,
     {
       lmia_id: id,
     },
@@ -960,10 +962,43 @@ export const GetLimaSubStages = async (id) => {
   return response.data;
 };
 
-/*FUnction to add update lmia sub stage */
-export const AddUpdateLmiaSubStage = async (props) => {
+/*Function get lima substage of empolyee */
+export const GetJobLimaSubStages = async (id, status) => {
+  const response = await axios.post(
+    `${API_URL}/getLmiaSubstagesjob`,
+    {
+      job_id: id,
+      lima_status: status
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*FUnction to add update lmia sub stage of employee */
+export const AddUpdateEmployeeLmiaSubStage = async (props) => {
   const response = await axios.put(
-    `${API_URL}addUpdateLmiaSubstages`,
+    `${API_URL}addUpdateLmiaSubstagesEmployee`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*FUnction to add update lmia sub stage  of job*/
+export const AddUpdateJobLmiaSubStage = async (props) => {
+  const response = await axios.put(
+    `${API_URL}addUpdateLmiaSubstagesJob`,
     props,
     {
       headers: {
@@ -1033,7 +1068,8 @@ export const UploadEmployerDocument = async (id, type, doc, docId) => {
     {
       company_id: id,
       type: type,
-      document_file: doc
+      document_file: doc,
+      is_varify: "0",
     },
     {
       headers: {

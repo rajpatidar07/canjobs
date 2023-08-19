@@ -533,7 +533,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
-                  disabled={state.currently_work_here}
+                  disabled={state.currently_work_here === 1 || state.currently_work_here === "1"}
                   value={moment(state.end_date).format("YYYY-MM-DD") || ""}
                   onChange={onInputChange}
                   nKeyDownCapture={(e) => e.preventDefault()}

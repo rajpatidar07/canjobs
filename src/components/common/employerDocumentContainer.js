@@ -313,6 +313,7 @@ export default function EmployerDocumrentContainer(props) {
     // Clean up the temporary URL
     URL.revokeObjectURL(url);
   };
+
   /*Function to Print Document  */
   const PrintDocument = () => {
     const printWindow = window.open('', '_blank');

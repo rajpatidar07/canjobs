@@ -109,7 +109,7 @@ export default function JobTable(props) {
         setresponseId()
         setIsLoading(false);
       } else {
-        if (props.heading === "Dashboard" || location.pathname === "/employee") {
+        if (props.heading === "Dashboard" || location.pathname === "/employee" || props.lima === "no") {
           setresponseId()
         } else {
           setresponseId(userData.data.data[0].job_id)
