@@ -199,7 +199,9 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
-          return close();
+          if (event === "status") {
+            close()
+          };
         }
       } catch (err) {
         toast.error("Something went wrong", {
