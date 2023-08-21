@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -15,13 +15,13 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-import { MdOutlineCastForEducation } from "react-icons/md"
-import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia"
-import { GoTasklist } from "react-icons/go"
-import { GiSkills } from "react-icons/gi"
-import { AiOutlineFilePdf } from "react-icons/ai"
-import { RiDeleteBin5Line } from "react-icons/ri"
-import { PiBriefcaseLight } from "react-icons/pi"
+import { MdOutlineCastForEducation } from "react-icons/md";
+import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
+import { GoTasklist } from "react-icons/go";
+import { GiSkills } from "react-icons/gi";
+import { AiOutlineFilePdf } from "react-icons/ai";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { PiBriefcaseLight } from "react-icons/pi";
 export default function EmployeeTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -52,6 +52,7 @@ export default function EmployeeTable(props) {
 
   /* Function to get Employee data*/
   const EmpData = async () => {
+    // const params = useParams();
     setIsLoading(true);
     try {
       const userData = await getallEmployeeData(
@@ -88,7 +89,7 @@ export default function EmployeeTable(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -100,7 +101,7 @@ export default function EmployeeTable(props) {
       setApiCall(false);
     }
     if (alredyApplied === true) {
-      setAlredyApplied(false)
+      setAlredyApplied(false);
     }
   }, [
     props.experienceFilterValue,
@@ -221,7 +222,7 @@ export default function EmployeeTable(props) {
           autoClose: 1000,
         });
         setApiCall(true);
-        props.setApiCall(true)
+        props.setApiCall(true);
       }
       if (responseData.message === "Job applied successfully") {
         toast.success("Applied successfully", {
@@ -229,8 +230,8 @@ export default function EmployeeTable(props) {
           autoClose: 1000,
         });
         props.setApiCall(true);
-        setApiCall(true)
-        setAlredyApplied(true)
+        setApiCall(true);
+        setAlredyApplied(true);
       }
     } catch (err) {
       toast.error("Something went wrong", {
@@ -506,7 +507,10 @@ export default function EmployeeTable(props) {
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata) => (
-                    <tr className="text-capitalize applicant_row" key={empdata.employee_id}>
+                    <tr
+                      className="text-capitalize applicant_row"
+                      key={empdata.employee_id}
+                    >
                       <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {empdata.employee_id}
@@ -537,8 +541,12 @@ export default function EmployeeTable(props) {
                                 {empdata.name}
                               </p>
                               <div className="text-gray font-size-2 m-0 text-capitalize">
-                                {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
-                                {empdata.marital_status + ", "}
+                                {empdata.gender === "female"
+                                  ? "F"
+                                  : empdata.gender === "male"
+                                  ? "M"
+                                  : "O"}{" "}
+                                ({empdata.marital_status + ", "}
                                 {/*Calculation of age from date of birth*/}
                                 {moment().diff(empdata.date_of_birth, "years")}
                                 Y)
@@ -553,16 +561,15 @@ export default function EmployeeTable(props) {
                                   </span>
                                 ) : null}
                               </div>
-
                             </div>
                           ) : (
                             <Link
-                              to={""}
-                              onClick={
-                                empdata.name !== null
-                                  ? () => employeeDetails(empdata.employee_id)
-                                  : null
-                              }
+                              to={`/${empdata.employee_id}`}
+                              // onClick={
+                              //   empdata.name !== null
+                              //     ? () => employeeDetails(empdata.employee_id)
+                              //     : null
+                              // }
                               title="Employee Details"
                             >
                               {empdata.name === null ? (
@@ -587,8 +594,12 @@ export default function EmployeeTable(props) {
                                     {empdata.name}
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
-                                    {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
-                                    {empdata.marital_status + ", "}
+                                    {empdata.gender === "female"
+                                      ? "F"
+                                      : empdata.gender === "male"
+                                      ? "M"
+                                      : "O"}{" "}
+                                    ({empdata.marital_status + ", "}
                                     {/*Calculation of age from date of birth*/}
                                     {moment().diff(
                                       empdata.date_of_birth,
@@ -745,12 +756,13 @@ export default function EmployeeTable(props) {
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                 {" "}
                                 Reserved{" "}
-                              </span>)
-                              : empdata.status === "0" ? (
-                                <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                  {" "}
-                                  New{" "}
-                                </span>) : null}
+                              </span>
+                            ) : empdata.status === "0" ? (
+                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                {" "}
+                                New{" "}
+                              </span>
+                            ) : null}
                           </p>
                         </td>
                       )}
@@ -771,7 +783,7 @@ export default function EmployeeTable(props) {
                             aria-label="Basic example"
                           >
                             {props.skill === null ||
-                              props.skill === undefined ? (
+                            props.skill === undefined ? (
                               <>
                                 {/* <button
                                   className="btn btn-outline-info action_btn"
@@ -801,7 +813,9 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Change status"
                                   >
-                                    <span className="text-gray px-2"><GoTasklist /></span>
+                                    <span className="text-gray px-2">
+                                      <GoTasklist />
+                                    </span>
                                     {/* <i className="fas fa-stream text-gray"></i> */}
                                   </button>
                                   <button
@@ -811,15 +825,15 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Edit Employee"
                                   >
-                                    <span className="text-gray px-2"><LiaUserEditSolid /></span>
+                                    <span className="text-gray px-2">
+                                      <LiaUserEditSolid />
+                                    </span>
                                     {/* <span className=" fas fa-edit text-gray px-2"></span> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>
-                                      editEmployeeEducation(
-                                        empdata.employee_id
-                                      )
+                                      editEmployeeEducation(empdata.employee_id)
                                     }
                                     title="Education"
                                   >
@@ -835,7 +849,9 @@ export default function EmployeeTable(props) {
                                     }
                                     title="Skills"
                                   >
-                                    <span className="text-gray px-2"><GiSkills /></span>
+                                    <span className="text-gray px-2">
+                                      <GiSkills />
+                                    </span>
                                     {/* <span className=" fa fa-cogs text-gray px-2"></span> */}
                                   </button>
                                   <button
@@ -857,16 +873,20 @@ export default function EmployeeTable(props) {
                                     }
                                     title="View Resume"
                                   >
-                                    <span className="text-gray px-2"><AiOutlineFilePdf /></span>
+                                    <span className="text-gray px-2">
+                                      <AiOutlineFilePdf />
+                                    </span>
                                     {/* <span className="fas fa-file text-gray"></span> */}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}
                                     title="All jobs "
-                                  // disabled={empdata.skill ? false : true}
+                                    // disabled={empdata.skill ? false : true}
                                   >
-                                    <span className="text-gray px-2"><PiBriefcaseLight /></span>
+                                    <span className="text-gray px-2">
+                                      <PiBriefcaseLight />
+                                    </span>
                                     {/* <i className="fas fa-briefcase"></i> */}
                                   </button>
                                   <button
@@ -891,9 +911,7 @@ export default function EmployeeTable(props) {
                                 }
                                 title="Apply For job"
                               >
-                                {alredyApplied
-                                  ? "Already Applied"
-                                  : "Apply"}
+                                {alredyApplied ? "Already Applied" : "Apply"}
                               </button>
                             )}
                           </div>
@@ -906,7 +924,9 @@ export default function EmployeeTable(props) {
                             onClick={() => ChangeApplicantsStatus(empdata)}
                             title="Approve Applicant"
                           >
-                            <span className="text-gray px-2"><GoTasklist /></span>
+                            <span className="text-gray px-2">
+                              <GoTasklist />
+                            </span>
                             {/* <i className="fas fa-stream text-gray"></i> */}
                           </button>
                         </td>

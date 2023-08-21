@@ -75,6 +75,7 @@ p {
 .brand-logo img,
 .footer-logo {
   max-height: 28px;
+  max-width: 100px;
 }
 
 .connect_btn {
@@ -139,8 +140,8 @@ button.btn.action_btn {
 }
 
 .dashboard-main-container>.container-fluid {
-  margin: 0 15px;
-  width: calc(100% - 30px);
+  margin: 0;
+  width: calc(100%);
   border-radius: 10px;
   /* background: #fff; */
   padding-bottom: 10px;
@@ -236,6 +237,12 @@ table.table.table-striped.main_data_table_inn tr {
   /* gap: 5px 0; */
 }
 
+.back_btn_profile {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+}
+
 .applicant_row,
 .job_row {
   position: relative;
@@ -262,7 +269,7 @@ span.web_tag {
 /* SIDEBAR */
 
 ul.list-unstyled.dashboard-layout-sidebar {
-  max-height: 80vh;
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
 }
 
@@ -273,10 +280,22 @@ ul.list-unstyled.dashboard-layout-sidebar {
 }
 
 header.site-header.admin_header {
-  max-width: calc(100% - 320px);
+  /* max-width: calc(100% - 155px);
   right: 0;
   left: auto;
-  margin: 5px 15px;
+  margin: 1px 20px 5px; */
+  max-width: calc(100% - 115px);
+  right: 0;
+  left: auto;
+  margin: 0;
+  border-radius: 0;
+  background: #992b32;
+  top: 0;
+  padding: 3px 5px 2px;
+}
+
+header.site-header.admin_header h3 {
+  color: #fff;
 }
 
 /* Drop-down css */
@@ -520,7 +539,18 @@ input[type="file" i].form-control {
 
 /* PROFILE PAGE */
 .personal_info_box {
-  gap: 10px 5px;
+  gap: 0;
+}
+
+.user_status_btn button.dropdown-toggle {
+  height: 20px;
+  min-width: unset;
+  line-height: 20px;
+  width: 100%;
+}
+
+.user_status_btn {
+  padding: 0;
 }
 
 label.image_upload_btn {
@@ -534,6 +564,20 @@ label.image_upload_btn {
   text-align: center;
   font-size: 12px;
   line-height: 24px;
+  cursor: pointer;
+}
+
+label.image_upload_btn_2 {
+  position: absolute;
+  bottom: -8px;
+  left: 16px;
+  background: #ccc;
+  width: 18px;
+  height: 18px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 18px;
   cursor: pointer;
 }
 
@@ -716,7 +760,7 @@ select.form-control.select_document_type {
     max-width: 100%;
     left: 0;
     margin: 0;
-    padding: 15px 0 !important;
+    /* padding: 15px 0 !important; */
   }
 
   nav.navbar.site-navbar.offcanvas-active.navbar-expand-lg {
@@ -782,7 +826,7 @@ select.form-control.select_document_type {
 
 .arrow-wrapper {
   display: table-cell;
-  height: 120px;
+  height: auto;
   vertical-align: middle;
 }
 
@@ -864,6 +908,7 @@ select.form-control.select_document_type {
 .arrow-steps .step.current:after {
   border-left: 17px solid #23468c;
 }
+
 .arrow-steps .step.sub-stage {
   color: #fff;
   background-color: #ed591e;
@@ -872,6 +917,7 @@ select.form-control.select_document_type {
 .arrow-steps .step.sub-stage:after {
   border-left: 17px solid #ed591e;
 }
+
 @media (max-width: 568px) {
   .doc_upload_row .btn {
     min-width: 118px;

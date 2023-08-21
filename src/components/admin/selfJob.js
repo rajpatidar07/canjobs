@@ -18,7 +18,9 @@ function SelfJob(props) {
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState(props ? props.skill : "");
+  const [SkillFilterValue, setSkillFilterValue] = useState(
+    props ? props.skill : ""
+  );
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
@@ -57,7 +59,6 @@ function SelfJob(props) {
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-
     setShowJobDetails(true);
     setJobId(e);
   };
@@ -83,38 +84,48 @@ function SelfJob(props) {
     } else {
       setSearchError("");
     }
-  }
+  };
   /*Skill Json for not having same data */
   const Skill = Json.Skill
     ? Json.Skill.filter(
-      (thing, index, self) =>
-        index === self.findIndex((t) => t.value === thing.value)
-    )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
     : [];
   return (
     <>
-      <div className={props.skill === null || props.skill === undefined ? "site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
-
-        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
-          <> {/* <!-- Header Area --> */}
+      <div
+        className={
+          props.skill === null || props.skill === undefined
+            ? "site-wrapper overflow-hidden bg-default-2"
+            : "site-wrapper overflow-hidden "
+        }
+      >
+        {props.skill === null ||
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
+          <>
+            {" "}
+            {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Self Jobs"} />
             {/* <!-- navbar- --> */}
             <AdminSidebar heading={"Manage Self Jobs"} />
-          </> :
-          null}
+          </>
+        ) : null}
         <ToastContainer />
         <div
           className={
             showJobDetails === false
-              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
-                ?
-                "dashboard-main-container mt-16" :
-                ""
+              ? props.skill === null ||
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-16"
+                : ""
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -122,7 +133,13 @@ function SelfJob(props) {
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 <div className="row m-0 align-items-center">
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -134,7 +151,13 @@ function SelfJob(props) {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>{" "}
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Company Name:</p>
                     <input
                       required
@@ -146,7 +169,13 @@ function SelfJob(props) {
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
@@ -167,7 +196,13 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
@@ -188,7 +223,13 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
@@ -209,7 +250,13 @@ function SelfJob(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select
@@ -266,9 +313,16 @@ function SelfJob(props) {
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className={props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
-            ? "dashboard-main-container mt-16 " : ""}>
-            <div className="container">
+          <div
+            className={
+              props.skill === null ||
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-16 "
+                : ""
+            }
+          >
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">

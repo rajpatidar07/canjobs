@@ -84,7 +84,7 @@ function FilterList() {
           <ToastContainer />
         </div>
         <div className="dashboard-main-container mt-16" id="dashboard-body">
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">

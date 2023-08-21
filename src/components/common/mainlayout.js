@@ -36,6 +36,7 @@ import EmployerLMIA from "../company/lmia";
 import SelfApplicat from "../admin/selfApplicat";
 import SelfJob from "../admin/selfJob";
 import LimaContainer from "../admin/lmiaContainer";
+import NewUserProfile from "../user/user_profile";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -113,6 +114,7 @@ function MainLayout() {
             <Route path="/selfemployee" element={<SelfApplicat />} />
             <Route path="/employer" element={<Employer />} />
             <Route path="/adminprofile" element={<ManageAdmin />} />
+            <Route path="/:eid" element={<NewUserProfile />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/filter" element={<FilterList />} />
             <Route path="/interview" element={<ManageInterview />} />

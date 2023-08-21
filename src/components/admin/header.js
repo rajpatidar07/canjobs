@@ -30,11 +30,11 @@ const AdminHeader = (props) => {
   useEffect(() => {
     Notiication();
     if (apicall === true) {
-      setApicall(false)
+      setApicall(false);
     }
   }, [apicall]);
   return (
-    <header className="site-header admin_header site-header--menu-right bg-default position-fixed py-2 site-header--absolute rounded-8">
+    <header className="site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute">
       <div className="container-fluid-fluid px-7">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Page Heading--> */}
@@ -52,11 +52,12 @@ const AdminHeader = (props) => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <div>
-                    {" "}
-                    <h6 className="m-0 text-capitalize">Hii ! {Admin}</h6>
+                  <div className="text-white">
+                    <h6 className="m-0 text-capitalize text-white">
+                      Hi, {Admin}
+                    </h6>
                   </div>
-                  <i className="fas fa-chevron-down heading-default-color px-3"></i>
+                  {/* <i className="fas fa-chevron-down heading-default-color px-3"></i> */}
                 </Link>
                 <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
@@ -110,12 +111,16 @@ const AdminHeader = (props) => {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              className="px-3 ml-7 font-size-4 notification-block flex-y-center position-relative"
+              className="px-3 ml-7 font-size-4 notification-block flex-y-center position-relative text-white"
             >
-              <i className="fas fa-bell heading-default-color"></i>
+              <i className="fas fa-bell "></i>
               {notification.length > 0 ? (
                 <span className="font-size-1 count text-white bg-primary circle-18 border border-width-1 border border-white">
-                  {notification.length >= 10 ? "9+" : notification.length >= 100 ? "99+" : notification.length}
+                  {notification.length >= 10
+                    ? "9+"
+                    : notification.length >= 100
+                    ? "99+"
+                    : notification.length}
                 </span>
               ) : null}
             </Link>
@@ -128,19 +133,35 @@ const AdminHeader = (props) => {
                   <React.Fragment key={data.id}>
                     <li
                       title={data.message}
-                      className={data.is_read === "1" ? "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize" : "font-weight-bold dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"}
+                      className={
+                        data.is_read === "1"
+                          ? "dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"
+                          : "font-weight-bold dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"
+                      }
                     >
-                      <Link to={data.subject === "added_new_job" ? "/job" : data.subject === "applied_on_job" ? "/responses" : data.subject === "interview_scheduled" ? "/interview" : ""}
+                      <Link
+                        to={
+                          data.subject === "added_new_job"
+                            ? "/job"
+                            : data.subject === "applied_on_job"
+                            ? "/responses"
+                            : data.subject === "interview_scheduled"
+                            ? "/interview"
+                            : ""
+                        }
                         onClick={() => {
-                          try { ReadNotification(data.id); } catch (err) {
+                          try {
+                            ReadNotification(data.id);
+                          } catch (err) {
                             toast.error("Something went wrong", {
                               position: toast.POSITION.TOP_RIGHT,
                               autoClose: 1000,
                             });
                           }
-                          setApicall(true)
+                          setApicall(true);
                         }}
-                        className="text-truncate-2 text-dark">
+                        className="text-truncate-2 text-dark"
+                      >
                         {data.message}
                       </Link>
                     </li>

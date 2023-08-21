@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AddJobModal from "../forms/employer/job";
-import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal"
+import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 import {
   GetAllJobs,
   DeleteJob,
@@ -15,11 +15,11 @@ import Loader from "../common/loader";
 import EmployeeModal from "../admin/Modal/employeeModal";
 import JobResponse from "../admin/response";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia"
-import { BsArrow90DegRight } from "react-icons/bs"
-import { RiDeleteBin5Line } from "react-icons/ri"
-import { MdFormatListBulletedAdd } from "react-icons/md"
-import { GrDocumentUpload } from "react-icons/gr"
+import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
+import { BsArrow90DegRight } from "react-icons/bs";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import { GrDocumentUpload } from "react-icons/gr";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -46,7 +46,7 @@ export default function JobTable(props) {
   /*Response states */
   const [responseId, setresponseId] = useState();
   const [responseDropDown, setresponseDropDown] = useState(false);
-  let location = useLocation()
+  let location = useLocation();
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -74,7 +74,7 @@ export default function JobTable(props) {
           recordsPerPage,
           columnName,
           sortOrder,
-          props.company,
+          props.company
         );
       } else {
         userData = await GetAllJobs(
@@ -104,21 +104,29 @@ export default function JobTable(props) {
           props.response === "lmia" ? "1" : "0"
         );
       }
-      if (userData.data.data.length === 0 || userData.data.length === 0 || userData.data.data === undefined) {
+      if (
+        userData.data.data.length === 0 ||
+        userData.data.length === 0 ||
+        userData.data.data === undefined
+      ) {
         setjobData([]);
-        setresponseId()
+        setresponseId();
         setIsLoading(false);
       } else {
-        if (props.heading === "Dashboard" || location.pathname === "/employee" || props.lima === "no") {
-          setresponseId()
+        if (
+          props.heading === "Dashboard" ||
+          location.pathname === "/employee" ||
+          props.lima === "no"
+        ) {
+          setresponseId();
         } else {
-          setresponseId(userData.data.data[0].job_id)
+          setresponseId(userData.data.data[0].job_id);
         }
         //condition for limia and visa page
         // if (props.response === "lmia" || props.response === "visa") {
         //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
         //   setIsLoading(false);
-        // } 
+        // }
         // //condition for Self job applied page
         // else if (props.response === "self") {
         //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0"));
@@ -129,14 +137,13 @@ export default function JobTable(props) {
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
-
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -180,9 +187,9 @@ export default function JobTable(props) {
 
   /**function to open document modal */
   const OpenAddDocModal = (e) => {
-    setShowAddCompanyDocModal(true)
-    setCompanyId(e)
-  }
+    setShowAddCompanyDocModal(true);
+    setCompanyId(e);
+  };
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_id);
@@ -401,7 +408,7 @@ export default function JobTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Vacancies/Responses
+                    Vacancies/ Responses
                   </th>
                   <th
                     scope="col"
@@ -448,7 +455,7 @@ export default function JobTable(props) {
                     <React.Fragment key={job.job_id}>
                       <tr
                         className={
-                          /*job.is_applied === "1" ? "d-none" : */"text-capitalize job_row"
+                          /*job.is_applied === "1" ? "d-none" : */ "text-capitalize job_row"
                         }
                       >
                         <th scope="row" className="py-5 ">
@@ -544,15 +551,17 @@ export default function JobTable(props) {
                         </th>
                         <th className="py-5 ">
                           <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            <Link onClick={() => {
-                              setresponseId(job.job_id);
-                              setresponseDropDown(
-                                responseDropDown === false
-                                  ? true
-                                  : false
-                              );
-                            }} className="text-dark">
-                              {job.role_category} / {props.selfJob === "yes"
+                            <Link
+                              onClick={() => {
+                                setresponseId(job.job_id);
+                                setresponseDropDown(
+                                  responseDropDown === false ? true : false
+                                );
+                              }}
+                              className="text-dark"
+                            >
+                              {job.role_category} /{" "}
+                              {props.selfJob === "yes"
                                 ? job.applied_by_self
                                 : job.applied_by_admin}
                             </Link>
@@ -572,7 +581,7 @@ export default function JobTable(props) {
                               <span className="px-3 py-2 badge badge-pill badge-gray">
                                 Documentation
                               </span>
-                            )
+                            ) : (
                               // : job.lmia_status === "additional information required" ? (
                               //   <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
                               //     Additional information required
@@ -589,11 +598,9 @@ export default function JobTable(props) {
                               //   <span className="px-3 py-2 badge badge-pill badge-info">
                               //     Application submitted
                               //   </span>
-                              // ) 
-                              : (
-                                <span>NA</span>
-                              )}
-
+                              // )
+                              <span>NA</span>
+                            )}
                           </div>
                         </th>
                         {props.heading === "Dashboard" ? null : (
@@ -623,7 +630,7 @@ export default function JobTable(props) {
                                 //     title="Job LMIA"
                                 //   >
                                 //     LMIA Responses
-                                //   </button> 
+                                //   </button>
                                 //   <button
                                 //             className="btn btn-outline-info action_btn"
                                 //             onClick={() => updateLima(job)}
@@ -653,12 +660,12 @@ export default function JobTable(props) {
                                 //       Visa Responses
                                 //     </button> :
                                 props.skill === null ||
-                                  props.skill === undefined ||
-                                  Object.keys(props.skill).length === 0 ? (
+                                props.skill === undefined ||
+                                Object.keys(props.skill).length === 0 ? (
                                   <>
                                     <div
                                       className="btn-group button_group"
-                                    // role="group"
+                                      // role="group"
                                     >
                                       <button
                                         className="btn btn-outline-info action_btn"
@@ -667,8 +674,12 @@ export default function JobTable(props) {
                                         }}
                                         disabled={
                                           props.selfJob === "yes"
-                                            ? job.applied_by_self > 0 ? false : true
-                                            : job.applied_by_admin > 0 ? false : true
+                                            ? job.applied_by_self > 0
+                                              ? false
+                                              : true
+                                            : job.applied_by_admin > 0
+                                            ? false
+                                            : true
                                         }
                                         title="Job Response"
                                       >
@@ -678,7 +689,7 @@ export default function JobTable(props) {
                                         {/* <i className="fa fa-list"></i> */}
                                       </button>
                                     </div>
-                                    {props.selfJob === "yes" ? null :
+                                    {props.selfJob === "yes" ? null : (
                                       <>
                                         <button
                                           className="btn btn-outline-info action_btn "
@@ -690,29 +701,49 @@ export default function JobTable(props) {
                                           </span>
                                         </button>
                                         <button
-                                          className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
-                                          onClick={() => matchingCandidates(job)}
+                                          className={
+                                            props.response === "lmia" ||
+                                            props.response === "visa"
+                                              ? "d-none"
+                                              : "btn btn-outline-info action_btn"
+                                          }
+                                          onClick={() =>
+                                            matchingCandidates(job)
+                                          }
                                           title="All candidates"
-                                        // disabled={
-                                        //   Number(job.applied_by_admin) >= Number(job.role_category)
-                                        //     ? true
-                                        //     : false
-                                        // }
+                                          // disabled={
+                                          //   Number(job.applied_by_admin) >= Number(job.role_category)
+                                          //     ? true
+                                          //     : false
+                                          // }
                                         >
                                           <span className="text-gray px-2">
-                                            <LiaUserTieSolid /></span>
+                                            <LiaUserTieSolid />
+                                          </span>
                                           {/* <span className="fas fa-user-tie text-gray"></span> */}
                                         </button>
                                         <button
-                                          className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
+                                          className={
+                                            props.response === "lmia" ||
+                                            props.response === "visa"
+                                              ? "d-none"
+                                              : "btn btn-outline-info action_btn"
+                                          }
                                           onClick={() => editJob(job.job_id)}
                                           title="Edit Job"
                                         >
-                                          <span className="text-gray px-1"><LiaUserEditSolid /></span>
+                                          <span className="text-gray px-1">
+                                            <LiaUserEditSolid />
+                                          </span>
                                           {/* <span className=" fas fa-edit text-gray"></span> */}
                                         </button>
                                         <button
-                                          className={props.response === "lmia" || props.response === "visa" ? "d-none" : "btn btn-outline-info action_btn"}
+                                          className={
+                                            props.response === "lmia" ||
+                                            props.response === "visa"
+                                              ? "d-none"
+                                              : "btn btn-outline-info action_btn"
+                                          }
                                           onClick={() => ShowDeleteAlert(job)}
                                           title="Delete"
                                         >
@@ -722,48 +753,65 @@ export default function JobTable(props) {
                                           </span>
                                         </button>
                                         <button
-                                          className={props.response === "response" && location.pathname === "/job" ? "btn btn-outline-info action_btn" : "d-none"}
-                                          title="Job LMIA"><Link to="/lmia"
-                                            className="text-dark" state={{ id: job.job_id }}>
-                                            <span className="text-gray px-2"><BsArrow90DegRight /></span>
+                                          className={
+                                            props.response === "response" &&
+                                            location.pathname === "/job"
+                                              ? "btn btn-outline-info action_btn"
+                                              : "d-none"
+                                          }
+                                          title="Job LMIA"
+                                        >
+                                          <Link
+                                            to="/lmia"
+                                            className="text-dark"
+                                            state={{ id: job.job_id }}
+                                          >
+                                            <span className="text-gray px-2">
+                                              <BsArrow90DegRight />
+                                            </span>
                                             {/* <span className="fas fa-arrow-left text-gray px-2"></span> */}
-                                          </Link></button>
+                                          </Link>
+                                        </button>
                                         <button
                                           className="btn btn-outline-info action_btn"
                                           title="Company's document"
-                                          onClick={() => OpenAddDocModal(job.company_id)}>
-                                          <span className="text-gray px-2"><GrDocumentUpload /></span>
+                                          onClick={() =>
+                                            OpenAddDocModal(job.company_id)
+                                          }
+                                        >
+                                          <span className="text-gray px-2">
+                                            <GrDocumentUpload />
+                                          </span>
                                         </button>
-
-                                      </>}
+                                      </>
+                                    )}
                                   </>
+                                ) : (
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    disabled={
+                                      job.is_applied === "1"
+                                        ? true
+                                        : false ||
+                                          Number(job.applied_by_admin) >=
+                                            Number(job.role_category)
+                                        ? true
+                                        : false
+                                    }
+                                    onClick={() => onChangeJobClick(job.job_id)}
+                                    title="Apply For job"
+                                  >
+                                    {job.is_applied === "1"
+                                      ? "Already Applied"
+                                      : "Apply"}
+                                  </button>
                                 )
-                                  :
-                                  (
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      disabled={
-                                        job.is_applied === "1"
-                                          ? true
-                                          : false ||
-                                            Number(job.applied_by_admin) >= Number(job.role_category)
-                                            ? true
-                                            : false
-                                      }
-                                      onClick={() => onChangeJobClick(job.job_id)}
-                                      title="Apply For job"
-                                    >
-                                      {job.is_applied === "1"
-                                        ? "Already Applied"
-                                        : "Apply"}
-                                    </button>
-                                  )}
+                              }
                             </div>
                           </th>
                         )}
                       </tr>
-                      {job.job_id === responseId &&
-                        job.total_applicants > 0 ? (
+                      {job.job_id === responseId && job.total_applicants > 0 ? (
                         <tr>
                           <td colSpan={11}>
                             {
@@ -777,14 +825,23 @@ export default function JobTable(props) {
                                   self={props.selfJob}
                                   total_applicants={job.total_applicants}
                                   role_category={job.role_category}
-                                  status={props.response === "response" || props.response === "visa" || props.response === "lmia" ? "1" : "0"}
+                                  status={
+                                    props.response === "response" ||
+                                    props.response === "visa" ||
+                                    props.response === "lmia"
+                                      ? "1"
+                                      : "0"
+                                  }
                                   response={props.response}
-                                  employee_id={location.state ?
-                                    location.state.employee_id ?
-                                      location.state.employee_id :
-                                      "" :
-                                    ""}
-                                /></>
+                                  employee_id={
+                                    location.state
+                                      ? location.state.employee_id
+                                        ? location.state.employee_id
+                                        : ""
+                                      : ""
+                                  }
+                                />
+                              </>
                             }
                           </td>
                         </tr>
@@ -808,12 +865,13 @@ export default function JobTable(props) {
           </div>
         )}
       </div>
-      {showAddCompanyDocModal ?
+      {showAddCompanyDocModal ? (
         <EmployerDocumentModal
           employer_id={CompanyId}
           show={showAddCompanyDocModal}
-          close={() => setShowAddCompanyDocModal(false)} />
-        : null}
+          close={() => setShowAddCompanyDocModal(false)}
+        />
+      ) : null}
       {showAddJobsModal ? (
         <AddJobModal
           show={showAddJobsModal}

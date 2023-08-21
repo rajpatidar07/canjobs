@@ -11,13 +11,13 @@ import "react-toastify/dist/ReactToastify.css";
 // import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
 // import JobTable from "../common/jobTable";
-// import JobDetailsBox from "../common/jobdetail" 
+// import JobDetailsBox from "../common/jobdetail"
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import VisaTable from "../common/visaTable";
 import { useLocation } from "react-router-dom";
 export default function Visa() {
-  let location = useLocation()
+  let location = useLocation();
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   //   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -39,7 +39,7 @@ export default function Visa() {
   //  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   //  const [company, setCompany] = useState("");
   // let [Json, setJson] = useStatuserTypee([]);
-  let userType = localStorage.getItem("userType")
+  let userType = localStorage.getItem("userType");
   /*Render function to get the job */
   // useEffect(() => {
   //   JsonData();
@@ -83,7 +83,7 @@ export default function Visa() {
 
   /*Function to search the employee */
   const onSearch = (e) => {
-    setEmpId("")
+    setEmpId("");
     const inputValue = e.target.value;
     setSearch(inputValue);
     if (inputValue.length > 0) {
@@ -97,37 +97,50 @@ export default function Visa() {
     } else {
       setSearchError("");
     }
-  }
+  };
   return (
     <>
-      <div className={userType === "company" ?
-        "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
-        : "site-wrapper overflow-hidden bg-default-2"}>
-        {userType === "company" ? <EmployeeHeader /> : <>
-          {/* <!-- Header Area --> */}
-          <AdminHeader heading={"Visa status"} />
-          {/* <!-- navbar- --> */}
-          <AdminSidebar heading={"Visa status"} />
-        </>}
+      <div
+        className={
+          userType === "company"
+            ? "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
+            : "site-wrapper overflow-hidden bg-default-2"
+        }
+      >
+        {userType === "company" ? (
+          <EmployeeHeader />
+        ) : (
+          <>
+            {/* <!-- Header Area --> */}
+            <AdminHeader heading={"Visa status"} />
+            {/* <!-- navbar- --> */}
+            <AdminSidebar heading={"Visa status"} />
+          </>
+        )}
 
         <ToastContainer />
         <div
           className={
             // showJobDetails === false?
-            userType === "company" ? "mt-16" :
-              "dashboard-main-container mt-16"
+            userType === "company" ? "mt-16" : "dashboard-main-container mt-16"
             // : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className={userType === "company" ? "" : "page___heading"}>
                   <h3 className="font-size-6 mb-0">Visa of job</h3>
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
-                <div className={userType === "company" ? "d-none" : "row m-0 align-items-center"}>
+                <div
+                  className={
+                    userType === "company"
+                      ? "d-none"
+                      : "row m-0 align-items-center"
+                  }
+                >
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search Employee:</p>
                     <input
@@ -139,7 +152,6 @@ export default function Visa() {
                       name={"Employee_name"}
                       onChange={(e) => onSearch(e)}
                     />
-
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Filter by Visa Country:</p>
@@ -149,10 +161,9 @@ export default function Visa() {
                         value={VisaCountryFilter}
                         id="experience"
                         onChange={(e) => {
-                          setVisaCountryFilter(e.target.value)
-                          setEmpId("")
-                        }
-                        }
+                          setVisaCountryFilter(e.target.value);
+                          setEmpId("");
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select Country</option>
@@ -172,8 +183,8 @@ export default function Visa() {
                         value={VisStatusFilterValue}
                         id="status"
                         onChange={(e) => {
-                          setVisStatusFilterValue(e.target.value)
-                          setEmpId("")
+                          setVisStatusFilterValue(e.target.value);
+                          setEmpId("");
                         }}
                         className="text-capitalize form-control"
                       >
@@ -194,10 +205,11 @@ export default function Visa() {
                         value={IntrestedFilterValue}
                         id="intrested_in"
                         onChange={(e) => {
-                          setIntrestedFilterValue(e.target.value)
-                          setEmpId("")
+                          setIntrestedFilterValue(e.target.value);
+                          setEmpId("");
                         }}
-                        className="text-capitalize form-control">
+                        className="text-capitalize form-control"
+                      >
                         <option value="" data-display="Product Designer">
                           Select Interested in
                         </option>
@@ -368,7 +380,7 @@ export default function Visa() {
         {/* <!-- Employee Details- --> */}
         {/* {showEmployeeProfile === true ? (
         <div className="dashboard-main-container mt-16">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">
                 <div className="mb-9">
@@ -395,7 +407,7 @@ export default function Visa() {
       {/*<-- Job Detail -->*/}
       {/* {showJobDetails === true ? (
           <div className={userType === "company" ?"mt-16":"dashboard-main-container mt-16"}>
-            <div className="container">
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">
@@ -419,6 +431,6 @@ export default function Visa() {
           </div>
         ) : null} */}
       {userType === "company" ? <EmployeeFooter /> : null}
-    </>)
+    </>
+  );
 }
-

@@ -3,7 +3,13 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
-import { AddLimia, ReservedEmployeeForJob, GetAllResponse, GetFilter, AddUpdateVisa } from "../../api/api";
+import {
+  AddLimia,
+  ReservedEmployeeForJob,
+  GetAllResponse,
+  GetFilter,
+  AddUpdateVisa,
+} from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -11,15 +17,15 @@ import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
 import { toast, ToastContainer } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
-import Loader from '../common/loader';
+import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
-import { BsArrow90DegRight } from "react-icons/bs"
-import { RiChatFollowUpLine } from "react-icons/ri"
-import { LiaCcVisa } from "react-icons/lia"
-import { PiBriefcaseLight } from "react-icons/pi"
-import { ImCalendar } from "react-icons/im"
-import { GrDocumentUser } from "react-icons/gr"
+import { BsArrow90DegRight } from "react-icons/bs";
+import { RiChatFollowUpLine } from "react-icons/ri";
+import { LiaCcVisa } from "react-icons/lia";
+import { PiBriefcaseLight } from "react-icons/pi";
+import { ImCalendar } from "react-icons/im";
+import { GrDocumentUser } from "react-icons/gr";
 function JobResponse(props) {
   /*show modal and data states */
   let [documentModal, setDocumentModal] = useState(false);
@@ -52,7 +58,7 @@ function JobResponse(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
-  let [changeJob, setChangeJob] = useState(false)
+  let [changeJob, setChangeJob] = useState(false);
 
   /*Function to get the jSon */
   const JsonData = async () => {
@@ -66,13 +72,18 @@ function JobResponse(props) {
       });
     }
   };
-  if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {
-    props.setApiCall(true)
+  if (
+    apiCall === true &&
+    showChangeJobModal === false &&
+    changeJob === true &&
+    props.setApiCall
+  ) {
+    props.setApiCall(true);
   }
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const userData = await GetAllResponse(
         props.heading === "Manage Jobs" || user_type === "company"
@@ -81,7 +92,13 @@ function JobResponse(props) {
         skillFilterValue,
         experienceTypeFilterValue,
         search,
-        props.filter_by_time || skillFilterValue || search || experienceTypeFilterValue || sortOrder ? 1 : currentPage,
+        props.filter_by_time ||
+          skillFilterValue ||
+          search ||
+          experienceTypeFilterValue ||
+          sortOrder
+          ? 1
+          : currentPage,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -94,7 +111,7 @@ function JobResponse(props) {
       if (userData.data.data.length === 0) {
         setResData([]);
         setResponseData([]);
-        setIsLoading(false)
+        setIsLoading(false);
       } else {
         // if (props.self === "yes") {
         //   setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
@@ -105,16 +122,16 @@ function JobResponse(props) {
         //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
         //   }
         // }
-        setResponseData(userData.data.data)
+        setResponseData(userData.data.data);
         setTotalData(userData.data.total_rows);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -124,7 +141,7 @@ function JobResponse(props) {
     JsonData();
     if (apiCall === true || changeJob === true) {
       setApiCall(false);
-      setChangeJob(false)
+      setChangeJob(false);
     }
   }, [
     skillFilterValue,
@@ -153,37 +170,36 @@ function JobResponse(props) {
     } else {
       setSearchError("");
     }
-  }
+  };
 
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
     // Api call to set employee reserved
     try {
-      let response = await ReservedEmployeeForJob(e.apply_id, "1")
-      console.log(response)
+      let response = await ReservedEmployeeForJob(e.apply_id, "1");
+      console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
-        let status = "pending"
+        let status = "pending";
         try {
-          let VisaResponse = await AddUpdateVisa(e.employee_id, status)
+          let VisaResponse = await AddUpdateVisa(e.employee_id, status);
           if (VisaResponse.data.message === "created successfully") {
             // Api call to set employee Limia
             const lmia = { lmia_status: "candidate placement" };
             try {
               let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
-              if (LimiaResponse.message === 'Data added successfully') {
+              if (LimiaResponse.message === "Data added successfully") {
                 toast.success("Employee Reserved successfully", {
                   position: toast.POSITION.TOP_RIGHT,
                   autoClose: 1000,
                 });
-                setApiCall(true)
+                setApiCall(true);
               }
             } catch (err) {
               toast.error("Something went wrong", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 1000,
               });
-
             }
           }
         } catch (err) {
@@ -238,7 +254,7 @@ function JobResponse(props) {
   const AddDoucument = (e) => {
     setDocumentModal(true);
     setemployeeId(e.employee_id);
-    setLmiaStatus(e.lmia_status)
+    setLmiaStatus(e.lmia_status);
   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -253,15 +269,15 @@ function JobResponse(props) {
     <div
       className={
         props.heading === "Response" ||
-          (props.heading === undefined && user_type === "admin")
+        (props.heading === undefined && user_type === "admin")
           ? "site-wrapper overflow-hidden bg-default-2  "
           : props.heading === "Dashboard"
-            ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-            : "response_main_div"
+          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+          : "response_main_div"
       }
     >
       {props.heading === "Response" ||
-        (props.heading === undefined && user_type === "admin") ? (
+      (props.heading === undefined && user_type === "admin") ? (
         <>
           {/* <!-- Header Area --> */}
           <AdminHeader heading={"Response"} />
@@ -274,21 +290,21 @@ function JobResponse(props) {
       <div
         className={
           props.heading === "Response" ||
-            (props.heading === undefined && user_type === "admin")
+          (props.heading === undefined && user_type === "admin")
             ? "dashboard-main-container mt-16"
             : props.heading === "Dashboard"
-              ? ""
-              : "response__container"
+            ? ""
+            : "response__container"
         }
       >
         <div
           className={
             props.heading === "Response" ||
-              (props.heading === undefined && user_type === "admin")
+            (props.heading === undefined && user_type === "admin")
               ? "container"
               : props.heading === "Dashboard"
-                ? ""
-                : "container"
+              ? ""
+              : "container"
           }
         >
           {props.heading === "Dashboard" ? (
@@ -304,9 +320,14 @@ function JobResponse(props) {
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Follow Up</h3>
               </div>
-              <div className={props.heading === "Response" ||
-                (props.heading === undefined && user_type === "admin") ?
-                "row m-0 align-items-center" : "d-none"}>
+              <div
+                className={
+                  props.heading === "Response" ||
+                  (props.heading === undefined && user_type === "admin")
+                    ? "row m-0 align-items-center"
+                    : "d-none"
+                }
+              >
                 {props.heading === "" ? null : (
                   <div className="col p-1 form_group mb-5 mt-4">
                     <p className="input_label">Search :</p>
@@ -319,7 +340,7 @@ function JobResponse(props) {
                       name={"category_name"}
                       onChange={(e) => {
                         onSearch(e);
-                        setCurrentPage(1)
+                        setCurrentPage(1);
                       }}
                     />
                   </div>
@@ -333,7 +354,7 @@ function JobResponse(props) {
                       value={skillFilterValue}
                       onChange={(e) => {
                         setSkillFilter(e.target.value);
-                        setCurrentPage(1)
+                        setCurrentPage(1);
                       }}
                       className="text-capitalize form-control"
                     >
@@ -355,7 +376,7 @@ function JobResponse(props) {
                       value={limiaFilterValue}
                       onChange={(e) => {
                         setLmiaFilter(e.target.value);
-                        setCurrentPage(1)
+                        setCurrentPage(1);
                       }}
                       className="text-capitalize form-control"
                     >
@@ -377,7 +398,7 @@ function JobResponse(props) {
                       value={experienceTypeFilterValue}
                       onChange={(e) => {
                         setExperienceTypeFilterValue(e.target.value);
-                        setCurrentPage(1)
+                        setCurrentPage(1);
                       }}
                       className="text-capitalize form-control"
                     >
@@ -400,16 +421,18 @@ function JobResponse(props) {
             <div
               className={
                 props.heading === "Response" ||
-                  (props.heading === undefined && user_type === "admin")
+                (props.heading === undefined && user_type === "admin")
                   ? ""
                   : props.heading === "Dashboard"
-                    ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                    : ""
+                  ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                  : ""
               }
             >
               <div className="table-responsive main_table_div">
-                {isLoading ?
-                  <Loader /> : <table
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <table
                     className={
                       props.heading === "Manage Jobs"
                         ? "table table-striped main_data_table_inn"
@@ -418,8 +441,10 @@ function JobResponse(props) {
                   >
                     <thead>
                       <tr>
-                        <th scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal">
+                        <th
+                          scope="col"
+                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                        >
                           EID
                         </th>
                         <th
@@ -430,7 +455,7 @@ function JobResponse(props) {
                             to={""}
                             onClick={() => {
                               handleSort("name");
-                              setCurrentPage(1)
+                              setCurrentPage(1);
                             }}
                             className="text-gray"
                             title="Sort by Name"
@@ -467,7 +492,7 @@ function JobResponse(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("contact_no");
-                                setCurrentPage(1)
+                                setCurrentPage(1);
                               }}
                               className="text-gray"
                               title="Sort by Contact"
@@ -487,7 +512,7 @@ function JobResponse(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("current_location");
-                                setCurrentPage(1)
+                                setCurrentPage(1);
                               }}
                               className="text-gray"
                               title="Sort by Address"
@@ -507,7 +532,7 @@ function JobResponse(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("experience");
-                                setCurrentPage(1)
+                                setCurrentPage(1);
                               }}
                               className="text-gray"
                               title="Sort by Experience"
@@ -524,7 +549,7 @@ function JobResponse(props) {
                             to={""}
                             onClick={() => {
                               handleSort("lmia_status");
-                              setCurrentPage(1)
+                              setCurrentPage(1);
                             }}
                             className="text-gray"
                             title="Sort by LIMIA Status"
@@ -545,7 +570,8 @@ function JobResponse(props) {
                           Interview
                         </th>
                         {props.heading === "Dashboard" ||
-                          user_type === "company" || props.self === "yes" ? (
+                        user_type === "company" ||
+                        props.self === "yes" ? (
                           ""
                         ) : (
                           <th
@@ -571,7 +597,9 @@ function JobResponse(props) {
                           {props.heading === "Dashboard" ? (
                             <th className="bg-white"></th>
                           ) : (
-                            <th className="bg-white text-center">No Data Found</th>
+                            <th className="bg-white text-center">
+                              No Data Found
+                            </th>
                           )}
                           <th className="bg-white"></th>
                           {props.heading === "Dashboard" ? (
@@ -588,10 +616,11 @@ function JobResponse(props) {
                         (response || []).map((res, i) => (
                           // ((props.response === "response") || (props.response === "self") ||
                           //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
-                          <tr className="text-capitalize position-relative" key={i}>
-                            <th className="py-5 ">
-                              {res.employee_id}
-                            </th>
+                          <tr
+                            className="text-capitalize position-relative"
+                            key={i}
+                          >
+                            <th className="py-5 ">{res.employee_id}</th>
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.name || res.gender || res.date_of_birth ? (
@@ -624,7 +653,12 @@ function JobResponse(props) {
                                             Featured
                                           </span>
                                         ) : null}
-                                        {res.gender === "female" ? "F" : res.gender === "male" ? "M" : "O"} ({res.marital_status + ", "}
+                                        {res.gender === "female"
+                                          ? "F"
+                                          : res.gender === "male"
+                                          ? "M"
+                                          : "O"}{" "}
+                                        ({res.marital_status + ", "}
                                         {/*Calculation of age from date of birth*/}
                                         {moment().diff(
                                           res.date_of_birth,
@@ -664,12 +698,18 @@ function JobResponse(props) {
                                   {res.contact_no || res.email ? (
                                     <>
                                       <p className="font-size-3 font-weight-normal m-0">
-                                        <Link className="text-dark" to={`tel:${res.contact_no}`}>
+                                        <Link
+                                          className="text-dark"
+                                          to={`tel:${res.contact_no}`}
+                                        >
                                           {`+${res.contact_no}`}
                                         </Link>
                                       </p>
                                       <p className="font-size-3 font-weight-normal m-0">
-                                        <Link className="text-dark" to={`mailto:${res.email}`}>
+                                        <Link
+                                          className="text-dark"
+                                          to={`mailto:${res.email}`}
+                                        >
                                           {res.email}
                                         </Link>
                                       </p>
@@ -688,7 +728,7 @@ function JobResponse(props) {
                               <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {res.current_location ||
-                                    res.currently_located_country ? (
+                                  res.currently_located_country ? (
                                     <>
                                       <span>{res.current_location}</span>
                                       <span className="px-1">
@@ -733,63 +773,64 @@ function JobResponse(props) {
                                     <span className="px-3 py-2 badge badge-pill badge-gray">
                                       Decision
                                     </span>
-                                  )
-                                    // 
-                                    : (
-                                      <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                        NA
-                                      </span>
-                                    )}</Link>
+                                  ) : (
+                                    //
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
+                                    </span>
+                                  )}
+                                </Link>
                               </div>
                             </th>
                             <th className="  py-5 ">
                               <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                 {res.visa_status === "pending" ? (
-                                  <span
-                                    className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill"
-
-                                  >
+                                  <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
                                     Pending
                                   </span>
                                 ) : res.visa_status === "reject" ? (
                                   <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-
                                     Reject
                                   </span>
                                 ) : res.visa_status === "experied" ? (
                                   <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
-
                                     Experied
                                   </span>
                                 ) : res.visa_status === "approved" ? (
                                   <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-
                                     Approved
-                                  </span>) : res.visa_status === "cancel" ? (
-                                    <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-
-                                      Cancel
-                                    </span>) :
+                                  </span>
+                                ) : res.visa_status === "cancel" ? (
+                                  <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
+                                    Cancel
+                                  </span>
+                                ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                     NA
-                                  </span>}
+                                  </span>
+                                )}
                               </p>
                             </th>
                             <th className="  py-5 ">
                               <p className="font-size-3 font-weight-normal mb-0">
                                 {res.status === "complete" ? (
-                                  <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">Complete</span>
+                                  <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                    Complete
+                                  </span>
                                 ) : res.status === "pending" ? (
                                   <span className="px-3 py-2 badge badge-pill bg-info text-white">
                                     Scheduled
                                   </span>
-                                ) : <span className="px-3 py-2 badge badge-pill bg-warning text-white">
-                                  Pending
-                                </span>}
+                                ) : (
+                                  <span className="px-3 py-2 badge badge-pill bg-warning text-white">
+                                    Pending
+                                  </span>
+                                )}
                               </p>
                             </th>
                             {props.heading === "Dashboard" ||
-                              user_type === "company" || props.self === "yes" ? (
+                            user_type === "company" ||
+                            props.self === "yes" ? (
                               ""
                             ) : (
                               <th className="py-5  min-width-px-100">
@@ -799,7 +840,11 @@ function JobResponse(props) {
                                   aria-label="Basic example"
                                 >
                                   <button
-                                    className={res.is_reserve === "0" ? "btn btn-outline-info action_btn" : " d-none"}
+                                    className={
+                                      res.is_reserve === "0"
+                                        ? "btn btn-outline-info action_btn"
+                                        : " d-none"
+                                    }
                                     onClick={() => ReservedEmployee(res)}
                                     title="Reserved Employee"
                                   >
@@ -807,14 +852,24 @@ function JobResponse(props) {
                                   </button>
 
                                   <button
-                                    className={props.response === "visa" || res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                    className={
+                                      props.response === "visa" ||
+                                      res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn text-gray"
+                                    }
                                     onClick={() => addLimia(res)}
                                     title="Update LMIA status"
                                   >
                                     LMIA
                                   </button>
                                   <button
-                                    className={props.response === "lmia" || res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    className={
+                                      props.response === "lmia" ||
+                                      res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
                                     onClick={() => editVisa(res)}
                                     title="Update Visa status"
                                   >
@@ -824,53 +879,106 @@ function JobResponse(props) {
                                     {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}
                                   </button>
                                   <button
-                                    className={res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    className={
+                                      res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
                                     title="Employee LMIA"
                                   >
-                                    <Link to="/lmia" state={{ id: res.job_id, employee_id: res.employee_id }}>
-                                      <span className="text-gray px-2"><BsArrow90DegRight /></span>
+                                    <Link
+                                      to="/lmia"
+                                      state={{
+                                        id: res.job_id,
+                                        employee_id: res.employee_id,
+                                      }}
+                                    >
+                                      <span className="text-gray px-2">
+                                        <BsArrow90DegRight />
+                                      </span>
                                     </Link>
                                   </button>
                                   <button
-                                    className={res.is_reserve === "0" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    className={
+                                      res.is_reserve === "0"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
                                     title="Employee Visa"
                                   >
-                                    <Link to="/visa" state={{ id: res.employee_id }} className="text-gray">
+                                    <Link
+                                      to="/visa"
+                                      state={{ id: res.employee_id }}
+                                      className="text-gray"
+                                    >
                                       VISA
                                     </Link>
                                   </button>
                                   <button
-                                    className={(props.response === "visa" || props.response === "lmia") && res.is_reserve === "1" ? "btn btn-outline-info action_btn" : "d-none"}
-                                    onClick={() =>
-                                      AddDoucument(res)
+                                    className={
+                                      (props.response === "visa" ||
+                                        props.response === "lmia") &&
+                                      res.is_reserve === "1"
+                                        ? "btn btn-outline-info action_btn"
+                                        : "d-none"
                                     }
+                                    onClick={() => AddDoucument(res)}
                                     title="Applicant's documents"
                                   >
-                                    <span className="text-gray px-2"><GrDocumentUser /></span>
+                                    <span className="text-gray px-2">
+                                      <GrDocumentUser />
+                                    </span>
                                     {/* <span className="fas fa-file text-gray"></span> */}
                                   </button>
                                   <button
-                                    className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    className={
+                                      props.response === "visa" ||
+                                      props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
                                     onClick={() => addFollow(res)}
                                     title=" Add Follow Up"
                                   >
-                                    <span className="text-gray px-2"><RiChatFollowUpLine /></span>
+                                    <span className="text-gray px-2">
+                                      <RiChatFollowUpLine />
+                                    </span>
                                     {/* <i className=" fas fa-plus text-gray px-2"></i> */}
                                   </button>
                                   <button
-                                    className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn"}
+                                    className={
+                                      props.response === "visa" ||
+                                      props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn"
+                                    }
                                     onClick={() => addnterview(res)}
                                     title=" Add Interview"
-                                    disabled={res.status === "complete" ? true : false}
+                                    disabled={
+                                      res.status === "complete" ? true : false
+                                    }
                                   >
-                                    <span className="text-gray px-2">  <ImCalendar /></span>
+                                    <span className="text-gray px-2">
+                                      {" "}
+                                      <ImCalendar />
+                                    </span>
                                     {/* <i className="fa fa-calendar text-gray px-2"></i> */}
                                   </button>
                                   <button
-                                    className={props.response === "visa" || props.response === "lmia" ? "d-none" : "btn btn-outline-info action_btn text-gray"}
+                                    className={
+                                      props.response === "visa" ||
+                                      props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn text-gray"
+                                    }
                                     onClick={() => editJob(res)}
                                     title="Change Job"
-                                    disabled={props.total_applicants >= props.role_category ? true : false}
+                                    disabled={
+                                      props.total_applicants >=
+                                      props.role_category
+                                        ? true
+                                        : false
+                                    }
                                   >
                                     <PiBriefcaseLight />
                                     {/* <i className="fas fa-briefcase"></i> */}
@@ -883,13 +991,16 @@ function JobResponse(props) {
                         ))
                       )}
                     </tbody>
-                  </table>}
+                  </table>
+                )}
               </div>
               <div className="pt-2">
                 <Pagination
                   nPages={nPages}
                   currentPage={currentPage}
-                  setCurrentPage={setCurrentPage} total={totalData} count={response.length}
+                  setCurrentPage={setCurrentPage}
+                  total={totalData}
+                  count={response.length}
                 />
               </div>
             </div>

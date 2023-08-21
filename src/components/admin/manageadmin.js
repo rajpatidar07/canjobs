@@ -9,9 +9,9 @@ import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
-import Loader from '../common/loader';
-import { RiDeleteBin5Line } from "react-icons/ri"
-import { LiaUserEditSolid } from "react-icons/lia"
+import Loader from "../common/loader";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { LiaUserEditSolid } from "react-icons/lia";
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
@@ -37,7 +37,7 @@ function ManageAdmin() {
   const [sortOrder, setSortOrder] = useState("DESC");
   /* Function to get the Amin data*/
   const AdminData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const userData = await getallAdminData(
         typeFilterValue,
@@ -49,8 +49,7 @@ function ManageAdmin() {
       );
       if (userData.data.length === 0) {
         setAdminData([]);
-        setIsLoading(false)
-
+        setIsLoading(false);
       } else {
         setAdminData(userData.data);
         setTotalData(userData.total_rows);
@@ -62,14 +61,14 @@ function ManageAdmin() {
             localStorage.setItem("admin", Admin_name[0].name);
           }
         }
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
   /*Render function to get the Admin*/
@@ -139,7 +138,7 @@ function ManageAdmin() {
     } else {
       setSearchError("");
     }
-  }
+  };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -173,7 +172,7 @@ function ManageAdmin() {
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -190,7 +189,10 @@ function ManageAdmin() {
                       placeholder={"Admin Name"}
                       value={search}
                       name={"Admin_name"}
-                      onChange={(e) => { onSearch(e); setCurrentPage(1) }}
+                      onChange={(e) => {
+                        onSearch(e);
+                        setCurrentPage(1);
+                      }}
                     />
                   </div>
                   <div className="col p-1 form_group mb-5 mt-4">
@@ -200,7 +202,10 @@ function ManageAdmin() {
                         name="type"
                         value={typeFilterValue}
                         id="type"
-                        onChange={(e) => { setTypeFilterValue(e.target.value); setCurrentPage(1) }}
+                        onChange={(e) => {
+                          setTypeFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
                         className=" form-control"
                       >
                         <option value="">Admin type</option>
@@ -227,9 +232,10 @@ function ManageAdmin() {
               {
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                   <div className="table-responsive main_table_div">
-                    {isLoading ?
+                    {isLoading ? (
                       <Loader />
-                      : <table className="table table-striped main_data_table">
+                    ) : (
+                      <table className="table table-striped main_data_table">
                         <thead>
                           <tr>
                             <th
@@ -283,13 +289,18 @@ function ManageAdmin() {
                           {totalData === 0 || adminData.length === 0 ? (
                             <tr>
                               <th className="bg-white"></th>
-                              <th className="bg-white text-center">No Data Found</th>
+                              <th className="bg-white text-center">
+                                No Data Found
+                              </th>
                               <th className="bg-white"></th>
                               <th className="bg-white"></th>
                             </tr>
                           ) : (
                             (adminData || []).map((admin) => (
-                              <tr className="text-capitalize" key={admin.admin_id}>
+                              <tr
+                                className="text-capitalize"
+                                key={admin.admin_id}
+                              >
                                 <th className=" py-5">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                                     {admin.name}
@@ -302,7 +313,10 @@ function ManageAdmin() {
                                 </th>
                                 <th className="py-5 ">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-lowercase">
-                                    <Link className="text-dark" to={`mailto:${admin.email}`}>
+                                    <Link
+                                      className="text-dark"
+                                      to={`mailto:${admin.email}`}
+                                    >
                                       {admin.email}
                                     </Link>
                                   </h3>
@@ -317,7 +331,9 @@ function ManageAdmin() {
                                       onClick={() => editAdmin(admin.admin_id)}
                                       title="Edit Admin"
                                     >
-                                      <span className="text-gray"><LiaUserEditSolid /></span>
+                                      <span className="text-gray">
+                                        <LiaUserEditSolid />
+                                      </span>
                                       {/* <span className=" fas fa-edit text-gray"></span> */}
                                     </button>
                                     <button
@@ -336,16 +352,20 @@ function ManageAdmin() {
                             ))
                           )}
                         </tbody>
-                      </table>}
+                      </table>
+                    )}
                   </div>
                   <div className="pt-2">
                     <Pagination
                       nPages={nPages}
                       currentPage={currentPage}
-                      setCurrentPage={setCurrentPage} total={totalData} count={adminData.length}
+                      setCurrentPage={setCurrentPage}
+                      total={totalData}
+                      count={adminData.length}
                     />
                   </div>
-                </div>}
+                </div>
+              }
             </div>
           </div>
         </div>

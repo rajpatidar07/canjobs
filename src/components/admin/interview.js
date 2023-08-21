@@ -10,9 +10,9 @@ export default function ManageInterview() {
   const [searcherror, setSearchError] = useState("");
   useEffect(() => {
     if ((search === "") === true) {
-      setSearchError("")
+      setSearchError("");
     }
-  }, [search])
+  }, [search]);
 
   /*Search Onchange function to Search Interview data */
   const onSearch = (e) => {
@@ -29,7 +29,7 @@ export default function ManageInterview() {
     } else {
       setSearchError("");
     }
-  }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -38,7 +38,7 @@ export default function ManageInterview() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Interview"} />
         <div className="dashboard-main-container mt-16" id="dashboard-body">
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -82,7 +82,8 @@ export default function ManageInterview() {
               <Interview
                 search={search}
                 statusFilterValue={statusFilterValue}
-                heading={"Interview"} />
+                heading={"Interview"}
+              />
             </div>
           </div>
         </div>

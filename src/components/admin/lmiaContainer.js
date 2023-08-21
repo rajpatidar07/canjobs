@@ -18,14 +18,16 @@ function LimaContainer(props) {
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState(props ? props.skill : "");
+  const [SkillFilterValue, setSkillFilterValue] = useState(
+    props ? props.skill : ""
+  );
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-  let userType = localStorage.getItem("userType")
+  let userType = localStorage.getItem("userType");
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
@@ -57,7 +59,6 @@ function LimaContainer(props) {
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-
     setShowJobDetails(true);
     setJobId(e);
   };
@@ -83,156 +84,169 @@ function LimaContainer(props) {
     } else {
       setSearchError("");
     }
-  }
+  };
   /*Skill Json for not having same data */
   const Skill = Json.Skill
     ? Json.Skill.filter(
-      (thing, index, self) =>
-        index === self.findIndex((t) => t.value === thing.value)
-    )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
     : [];
   return (
     <>
-      <div className={userType === "company" ?
-        "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
-        : "site-wrapper overflow-hidden bg-default-2"}>
-        {userType === "company" ? <EmployeeHeader /> : <>
-          {/* <!-- Header Area --> */}
-          <AdminHeader heading={"LIMIA status"} />
-          {/* <!-- navbar- --> */}
-          <AdminSidebar heading={"LIMIA status"} />
-        </>}
+      <div
+        className={
+          userType === "company"
+            ? "bg-default-1 pt-9 pb-10 pb-xl-30 pb-13 position-relative overflow-hidden"
+            : "site-wrapper overflow-hidden bg-default-2"
+        }
+      >
+        {userType === "company" ? (
+          <EmployeeHeader />
+        ) : (
+          <>
+            {/* <!-- Header Area --> */}
+            <AdminHeader heading={"LIMIA status"} />
+            {/* <!-- navbar- --> */}
+            <AdminSidebar heading={"LIMIA status"} />
+          </>
+        )}
 
         <ToastContainer />
         <div
           className={
             showJobDetails === false
-              ?
-              userType === "company" ?
-                "mt-16" :
-                "dashboard-main-container mt-16"
+              ? userType === "company"
+                ? "mt-16"
+                : "dashboard-main-container mt-16"
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className={userType === "company" ? "" : "page___heading"}>
                   <h3 className="font-size-6 mb-0">LMIA of Jobs </h3>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
-                {userType === "company" ? null : <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Search:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control w-100"
-                      placeholder={"Search Job"}
-                      value={search}
-                      name={"name"}
-                      onChange={(e) => onSearch(e)}
-                    />
-                    <small className="text-danger">{searcherror}</small>
-                  </div>{" "}
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Company Name:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control w-100"
-                      placeholder={"Company name"}
-                      value={company}
-                      name={"compnay_name"}
-                      onChange={(e) => setCompany(e.target.value)}
-                    />
-                  </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Category:</p>
-                    <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={categoryFilterValue}
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Category</option>
-                        {(Json.Category || []).map((data) => {
-                          return (
-                            <option value={data.id} key={data.id}>
-                              {data.value}
+                {userType === "company" ? null : (
+                  <div className="row m-0 align-items-center">
+                    <div className="col p-1 form_group mb-5 mt-4">
+                      <p className="input_label">Search:</p>
+                      <input
+                        required
+                        type="text"
+                        className="form-control w-100"
+                        placeholder={"Search Job"}
+                        value={search}
+                        name={"name"}
+                        onChange={(e) => onSearch(e)}
+                      />
+                      <small className="text-danger">{searcherror}</small>
+                    </div>{" "}
+                    <div className="col p-1 form_group mb-5 mt-4">
+                      <p className="input_label">Company Name:</p>
+                      <input
+                        required
+                        type="text"
+                        className="form-control w-100"
+                        placeholder={"Company name"}
+                        value={company}
+                        name={"compnay_name"}
+                        onChange={(e) => setCompany(e.target.value)}
+                      />
+                    </div>
+                    <div className="col p-1 form_group mb-5 mt-4">
+                      <p className="input_label">Filter by Job Category:</p>
+                      <div className="select_div">
+                        <select
+                          name="country"
+                          id="country"
+                          value={categoryFilterValue}
+                          onChange={(e) =>
+                            setCategoryFilterValue(e.target.value)
+                          }
+                          className="text-capitalize form-control"
+                        >
+                          <option value="">Job Category</option>
+                          {(Json.Category || []).map((data) => {
+                            return (
+                              <option value={data.id} key={data.id}>
+                                {data.value}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col p-1 form_group mb-5 mt-4">
+                      <p className="input_label">Filter by Job Type:</p>
+                      <div className="select_div">
+                        <select
+                          name="country"
+                          id="country"
+                          value={jobSwapFilterValue}
+                          onChange={(e) => {
+                            setJobSwapFilterValue(e.target.value);
+                          }}
+                          className="text-capitalize form-control"
+                        >
+                          <option value="">Job Type</option>
+                          {(FilterJson.job_type || []).map((job, i) => (
+                            <option key={i} value={job}>
+                              {job}
                             </option>
-                          );
-                        })}
-                      </select>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col p-1 form_group mb-5 mt-4">
+                      <p className="input_label">Filter by Job Skill:</p>
+                      <div className="select_div">
+                        <select
+                          name="country"
+                          id="country"
+                          value={SkillFilterValue}
+                          onChange={(e) => setSkillFilterValue(e.target.value)}
+                          className="text-capitalize form-control"
+                        >
+                          <option value="">Job Skill</option>
+                          {(Skill || []).map((data) => {
+                            return (
+                              <option value={data.value} key={data.id}>
+                                {data.value}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col p-1 form_group mb-5 mt-4">
+                      <p className="input_label">Filter by Job Location:</p>
+                      <div className="select_div">
+                        <select
+                          name="country"
+                          id="country"
+                          value={locationFilterValue}
+                          onChange={(e) =>
+                            setLocationFilterValue(e.target.value)
+                          }
+                          className="text-capitalize form-control"
+                        >
+                          <option value="">Job Location</option>
+                          {(FilterJson.location || []).map((data) => {
+                            return (
+                              <option value={data} key={data}>
+                                {data}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Type:</p>
-                    <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={jobSwapFilterValue}
-                        onChange={(e) => {
-                          setJobSwapFilterValue(e.target.value);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Type</option>
-                        {(FilterJson.job_type || []).map((job, i) => (
-                          <option key={i} value={job}>
-                            {job}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Skill:</p>
-                    <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={SkillFilterValue}
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Skill</option>
-                        {(Skill || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
-                    <p className="input_label">Filter by Job Location:</p>
-                    <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={locationFilterValue}
-                        onChange={(e) => setLocationFilterValue(e.target.value)}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Location</option>
-                        {(FilterJson.location || []).map((data) => {
-                          return (
-                            <option value={data} key={data}>
-                              {data}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                </div>}
+                )}
               </div>
               {/*<-- Job List Table -->*/}
               <JobTable
@@ -255,10 +269,14 @@ function LimaContainer(props) {
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className={userType === "company" ?
-            "mt-16"
-            : "dashboard-main-container mt-16"}>
-            <div className="container">
+          <div
+            className={
+              userType === "company"
+                ? "mt-16"
+                : "dashboard-main-container mt-16"
+            }
+          >
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">

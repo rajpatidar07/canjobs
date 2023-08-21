@@ -2069,12 +2069,13 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   01.Component -> { Sidebar } 
 ------------------------------*/
 .dashboard-sidebar-wrapper {
-  width: 290px;
+  width: 120;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
-  background: var(--bg);
+  /* background: var(--bg); */
+  background: #992b32;
   transform: translateX(-100%);
   transition: .4s transform;
   z-index: 800;
@@ -2091,9 +2092,20 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .dashboard-layout-sidebar li a {
-  color: #333;
+  color: #fff;
   position: relative;
   transition: .4s;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 120px;
+  font-size: 12px;
+  text-align: center;
+  gap: 3px;
+}
+
+.dashboard-layout-sidebar li a svg {
+  font-size: 24px;
 }
 
 [data-theme='dark'] .dashboard-layout-sidebar li a,
@@ -2151,7 +2163,8 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
 }
 
 .dashboard-layout-sidebar li.active a {
-  color: #fa474a;
+  color: #992b32;
+  background-color: #fff;
 }
 
 [data-theme='dark'] .dashboard-layout-sidebar li.active a,
@@ -8339,23 +8352,25 @@ a.hover-text-hitgray:hover {
 
 .tab-menu-items a {
   transition: 0.4s;
-  border-bottom: 2px solid transparent;
+  border-bottom: 0 solid transparent;
+
 }
 
 .tab-menu-items a:hover,
 .tab-menu-items a.active {
-  border-bottom: 2px solid #00b074;
-  color: #00b074;
+  border-bottom: 0 solid #992b32;
+  color: #fff;
+  background-color: #FA474A;
 }
 
 .pagination.page-link.active {
   background: transparent;
-  color: #00b074 !important;
+  color: #992b32 !important;
 }
 
 .pagination-hover-primary .page-link:hover {
   background: transparent;
-  color: #00b074 !important;
+  color: #992b32 !important;
 }
 
 /* ---------------------------
@@ -8891,7 +8906,7 @@ a.hover-text-hitgray:hover {
 /*/------ Dashboard Adjustment Styles ------/*/
 @media (min-width: 768px) {
   .dashboard-main-container {
-    padding-left: 290px;
+    padding-left: 120px;
     height: calc(100vh - 70px) !important;
     overflow: auto;
   }
@@ -8899,7 +8914,7 @@ a.hover-text-hitgray:hover {
 
 @media (min-width: 1600px) {
   .dashboard-main-container {
-    max-width: calc(100% - 290px);
+    max-width: calc(100% - 120px);
     margin-left: auto;
     padding-left: 75px;
     padding-right: 75px;
@@ -9051,11 +9066,11 @@ html .ui-button.ui-state-disabled:active {
 }
 
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #e5e5e5;
+  background-color: #fcb6b6;
   border-radius: 46px;
 }
 
@@ -9087,21 +9102,24 @@ html .ui-button.ui-state-disabled:active {
 /*# sourceMappingURL=maps/main.css.map */
 /* CSS for the sub-stages container */
 .sub-stages-container {
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 /* Styling for sub-stage items */
 .sub-stage {
-  margin-bottom: 5px; /* Adjust as needed */
+  margin-bottom: 5px;
+  /* Adjust as needed */
   cursor: pointer;
 }
 
 /* Styling for selected sub-stage items */
 .sub-stage.selected {
-  background-color: #f0f0f0; /* Change to desired background color */
+  background-color: #f0f0f0;
+  /* Change to desired background color */
 }
 
 /* Styling for the checkbox input within sub-stage items */
 .sub-stage input[type="checkbox"] {
-  margin-top: 5px; /* Adjust as needed */
+  margin-top: 5px;
+  /* Adjust as needed */
 }

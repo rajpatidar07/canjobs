@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
-import Loader from '../common/loader';
-import DocumentModal from "../forms/admin/EmployeeDocumentModal"
-import { PiPencilDuotone } from "react-icons/pi"
+import Loader from "../common/loader";
+import DocumentModal from "../forms/admin/EmployeeDocumentModal";
+import { PiPencilDuotone } from "react-icons/pi";
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showDoc, setShowDoc] = useState(false);
@@ -33,26 +33,34 @@ const UserProfile = (props) => {
   const UserData = async () => {
     try {
       const userData = await EmployeeDetails(employeeId);
-      if (userData.data === undefined ||
+      if (
+        userData.data === undefined ||
         userData.data.length === 0 ||
-        userData.data.employee.length === 0) {
+        userData.data.employee.length === 0
+      ) {
         setuserDetail([]);
         setPersonalDetail([]);
-        setIsLoading(false)
+        setIsLoading(false);
       } else {
         setuserDetail(userData.data);
         setPersonalDetail(userData.data.employee[0]);
-        localStorage.setItem("profile_photo", userData.data.employee[0].profile_photo)
-        localStorage.setItem("name", userData.data.employee[0].name)
-        localStorage.setItem("skill", userData.data.skill.map(obj => obj.skill).join(', '));
-        setIsLoading(false)
+        localStorage.setItem(
+          "profile_photo",
+          userData.data.employee[0].profile_photo
+        );
+        localStorage.setItem("name", userData.data.employee[0].name);
+        localStorage.setItem(
+          "skill",
+          userData.data.skill.map((obj) => obj.skill).join(", ")
+        );
+        setIsLoading(false);
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
   // console.log(userDetail)
@@ -61,10 +69,8 @@ const UserProfile = (props) => {
   const AppliedJob = async () => {
     try {
       const applied = await EmployeeAppliedJob(employeeId);
-      if (applied.data === undefined ||
-        applied.data.length === 0
-      ) {
-        setAppliedJob([])
+      if (applied.data === undefined || applied.data.length === 0) {
+        setAppliedJob([]);
       } else {
         setAppliedJob(applied.data);
       }
@@ -79,11 +85,11 @@ const UserProfile = (props) => {
   /*Render function to get user Data */
   useEffect(() => {
     if (appliedJob) {
-      AppliedJob()
+      AppliedJob();
     }
     UserData();
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
       // if (PersonalDetail.name !== (undefined || "undefined" || null || "null")
       //   || PersonalDetail.profile_photo !== (undefined || "undefined" || null || "null")) {
       //   localStorage.setItem("profile_photo", PersonalDetail.profile_photo)
@@ -95,7 +101,7 @@ const UserProfile = (props) => {
 
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
-    window.open(pdfUrl, '_blank');
+    window.open(pdfUrl, "_blank");
   };
   /*Function to calculate the time duration of two dates */
   const calculateDuration = (startDate, endDate) => {
@@ -106,61 +112,78 @@ const UserProfile = (props) => {
     const months = duration.months();
     const days = duration.days();
 
-    return `${years === 1 ? years + "year ," : years > 1 ? years + 'years ,' : ''} ${months === 1 ? months + "month ," : months > 1 ? months + 'months ,' : ''} ${days === 1 ? days + "day" : days !== 1 ? days + 'days' : ''}`;
+    return `${
+      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+    } ${
+      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
+    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
   };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden ">
-      {user_type === "admin" ? "" : <> <EmployeeHeader />
-        <ToastContainer />
-      </>}
+      {user_type === "admin" ? (
+        ""
+      ) : (
+        <>
+          {" "}
+          <EmployeeHeader />
+          <ToastContainer />
+        </>
+      )}
 
       <div className="bg-default-2 mt-5">
-        <div className="container p-0 pb-10">
-          {user_type === "admin" ? (
-            ""
-          ) : (
-            <div className="row justify-content-center mt-15">
-              <div className="col-12 dark-mode-texts">
-                <div className="mb-2">
-                  <Link to={user_type === "company" ? "/company" : "/"} className="d-flex align-items-center">
-                    <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                    <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                      Back
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
-          <h4>{name === null || name === "null" ? "Complete profile" : ""}</h4>
-          {isLoading ?
+        <div className="container-fluid p-0 pb-10">
+          {name === null || name === "null" ? "<h4>Complete profile</h4>" : ""}
+          {isLoading ? (
             <div className="table-responsive main_table_div">
-              <Loader /> </div> :
+              <Loader />{" "}
+            </div>
+          ) : (
             <div className="row text-left mt-5 pt-5">
               <div className="col-12 col-xxl-4 col-lg-4 col-md-5 mb-11 mb-lg-0 ">
                 <div className="p-0">
                   {/*----Slide Employee profile-----*/}
                   <div className="bg-white shadow-9 rounded-4">
+                    <Link
+                      to={""}
+                      onClick={() => props.setShowEmployeeProfile(false)}
+                      className="d-flex align-items-center back_btn_profile"
+                    >
+                      <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                        Back
+                      </span>
+                    </Link>
                     <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
                       <Link
                         className="mb-4 position-relative"
-                        onClick={user_type === "company" || props.self === "yes" ? null : () => setShowPersonalDetails(true)}
+                        onClick={
+                          user_type === "company" || props.self === "yes"
+                            ? null
+                            : () => setShowPersonalDetails(true)
+                        }
                       >
-                        {user_type === "admin" ? <>  <input
-                          type="file"
-                          id="ImgUploadInput"
-                          className="d-none"
-                        />
-                          <label
-                            className="image_upload_btn m-0"
-                            htmlFor="ImgUploadInput"
-                          >
-                            <span className="text-gray">
-                              <PiPencilDuotone />
-                            </span>
-                            {/* <span className="fas fa-pen text-gray"> </span> */}
-                          </label></> : ""}
+                        {user_type === "admin" ? (
+                          <>
+                            {" "}
+                            <input
+                              type="file"
+                              id="ImgUploadInput"
+                              className="d-none"
+                            />
+                            <label
+                              className="image_upload_btn m-0"
+                              htmlFor="ImgUploadInput"
+                            >
+                              <span className="text-gray">
+                                <PiPencilDuotone />
+                              </span>
+                              {/* <span className="fas fa-pen text-gray"> </span> */}
+                            </label>
+                          </>
+                        ) : (
+                          ""
+                        )}
                         <img
                           className="rounded-circle"
                           src={
@@ -181,10 +204,21 @@ const UserProfile = (props) => {
                         {PersonalDetail.name ? PersonalDetail.name : ""}
                         <br />
                         <span className="age_gender font-size-3 text-smoke">
-                          {PersonalDetail.gender || PersonalDetail.marital_status || PersonalDetail.marital_status || PersonalDetail.date_of_birth ? `(${PersonalDetail.gender === "female" ? "F" : PersonalDetail.gender === "male" ? "M" : "O"},
+                          {PersonalDetail.gender ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.date_of_birth
+                            ? `(${
+                                PersonalDetail.gender === "female"
+                                  ? "F"
+                                  : PersonalDetail.gender === "male"
+                                  ? "M"
+                                  : "O"
+                              },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
-                        Y)`: ""}
+                        Y)`
+                            : ""}
                         </span>
                         {/* </Link>
                       <Registration
@@ -200,29 +234,35 @@ const UserProfile = (props) => {
                       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                         <span>Personal Info</span>
 
-                        {user_type === "company" || props.self === "yes" ? null : (
+                        {user_type === "company" ||
+                        props.self === "yes" ? null : (
                           <CustomButton
                             className="font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowPersonalDetails(true)}
-                          ><PiPencilDuotone /></CustomButton>
+                          >
+                            <PiPencilDuotone />
+                          </CustomButton>
                         )}
 
-                        {showDoc ? (<DocumentModal
-                          show={showDoc}
-                          close={() => setShowDoc(false)}
-                          employee_id={employeeId}
-                        />
+                        {showDoc ? (
+                          <DocumentModal
+                            show={showDoc}
+                            close={() => setShowDoc(false)}
+                            employee_id={employeeId}
+                          />
                         ) : null}
-                        {showPersonalDetails ? <PersonalDetails
-                          show={showPersonalDetails}
-                          employeeId={employeeId}
-                          apiCall={apiCall}
-                          setApiCall={setApiCall}
-                          close={() => setShowPersonalDetails(false)}
-                        /> : null}
+                        {showPersonalDetails ? (
+                          <PersonalDetails
+                            show={showPersonalDetails}
+                            employeeId={employeeId}
+                            apiCall={apiCall}
+                            setApiCall={setApiCall}
+                            close={() => setShowPersonalDetails(false)}
+                          />
+                        ) : null}
                       </h4>
                       {PersonalDetail.email === "" ||
-                        PersonalDetail.length === 0 ? (
+                      PersonalDetail.length === 0 ? (
                         <div>
                           <p className="text-center">No Data Found</p>
                         </div>
@@ -236,14 +276,21 @@ const UserProfile = (props) => {
                                 src="image/icons/envelope.svg"
                                 alt="Email"
                               />
-                              {PersonalDetail.email ? <Link className="text-dark" to={`mailto:${PersonalDetail.email}`}>
-                                {PersonalDetail.email}
-                              </Link> : ""}
+                              {PersonalDetail.email ? (
+                                <Link
+                                  className="text-dark"
+                                  to={`mailto:${PersonalDetail.email}`}
+                                >
+                                  {PersonalDetail.email}
+                                </Link>
+                              ) : (
+                                ""
+                              )}
                             </span>
                           </div>
 
                           <div className="info_box text-left">
-                            {PersonalDetail.contact_no ?
+                            {PersonalDetail.contact_no ? (
                               <span className="font-size-3 text-smoke  mr-7">
                                 <img
                                   className="mr-1"
@@ -251,82 +298,125 @@ const UserProfile = (props) => {
                                   src="image/icons/mobile-button.svg"
                                   alt="Mobile Number"
                                 />
-                                <Link className="text-dark" to={`tel:${PersonalDetail.contact_no}`}>{PersonalDetail.contact_no}</Link>
-                              </span> : ""}
+                                <Link
+                                  className="text-dark"
+                                  to={`tel:${PersonalDetail.contact_no}`}
+                                >
+                                  {PersonalDetail.contact_no}
+                                </Link>
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </div>
                           <div className="info_box text-left text-capitalize">
-                            {PersonalDetail.current_location ? <span className="font-size-3 text-smoke  mr-7">
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/marker.svg"
-                                alt="Location"
-                              />
-                              {PersonalDetail.current_location}
-                            </span> : ""}
+                            {PersonalDetail.current_location ? (
+                              <span className="font-size-3 text-smoke  mr-7">
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/marker.svg"
+                                  alt="Location"
+                                />
+                                {PersonalDetail.current_location}
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </div>
                           <div className="info_box text-left text-capitalize">
-                            {PersonalDetail.language ? <span className="font-size-3 text-smoke  mr-7">
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/language.svg"
-                                alt="language"
-                              />
-                              {PersonalDetail.language}
-                            </span> : ""}
+                            {PersonalDetail.language ? (
+                              <span className="font-size-3 text-smoke  mr-7">
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/language.svg"
+                                  alt="language"
+                                />
+                                {PersonalDetail.language}
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </div>
                           <div className="info_box text-left text-capitalize">
-                            {PersonalDetail.currently_located_country ? <span className="font-size-3 text-smoke  mr-7">
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/address-book.svg"
-                                alt="Address"
-                              />
-                              {PersonalDetail.currently_located_country}
-                            </span> : ""}
+                            {PersonalDetail.currently_located_country ? (
+                              <span className="font-size-3 text-smoke  mr-7">
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/address-book.svg"
+                                  alt="Address"
+                                />
+                                {PersonalDetail.currently_located_country}
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </div>
                           <div className="info_box text-left text-capitalize">
-                            {PersonalDetail.experience ? <span className="font-size-3 text-smoke  mr-7">
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/envelope.svg"
-                                alt="Email"
-                              />
-                              {PersonalDetail.experience} Years
-                            </span> : ""}
+                            {PersonalDetail.experience ? (
+                              <span className="font-size-3 text-smoke  mr-7">
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/envelope.svg"
+                                  alt="Email"
+                                />
+                                {PersonalDetail.experience} Years
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </div>
                           {/* <div className="info_box text-left">
                           <span className="font-size-3 text-smoke  mr-7">
                             Religion: <b>{PersonalDetail.religion}</b>
                           </span>
                         </div> */}
-                          {PersonalDetail.nationality ? <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                              Nationality: <b> {PersonalDetail.nationality}</b>
-                            </span>
-                          </div> : null}
-                          {PersonalDetail.work_permit_canada ? <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                              Work Permit of Canada:
-                              <b> {PersonalDetail.work_permit_canada}</b>
-                            </span>
-                          </div> : null}
-                          {PersonalDetail.work_permit_other_country ? <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                              Work Permit of Other Country:
-                              <b> {PersonalDetail.work_permit_other_country}</b>
-                            </span>
-                          </div> : null}
+                          {PersonalDetail.nationality ? (
+                            <div className="info_box text-left">
+                              <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                Nationality:{" "}
+                                <b> {PersonalDetail.nationality}</b>
+                              </span>
+                            </div>
+                          ) : null}
+                          {PersonalDetail.work_permit_canada ? (
+                            <div className="info_box text-left">
+                              <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                Work Permit of Canada:
+                                <b> {PersonalDetail.work_permit_canada}</b>
+                              </span>
+                            </div>
+                          ) : null}
+                          {PersonalDetail.work_permit_other_country ? (
+                            <div className="info_box text-left">
+                              <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                Work Permit of Other Country:
+                                <b>
+                                  {" "}
+                                  {PersonalDetail.work_permit_other_country}
+                                </b>
+                              </span>
+                            </div>
+                          ) : null}
                           <div className="info_box text-left">
-                            {PersonalDetail.resume ? <span className="font-size-3 text-smoke  mr-7">
-                              Resume:
-
-                              <Link to={""} onClick={() => handleViewResume(PersonalDetail.resume)}>View Resume</Link>
-
-                            </span> : ""}
+                            {PersonalDetail.resume ? (
+                              <span className="font-size-3 text-smoke  mr-7">
+                                Resume:
+                                <Link
+                                  to={""}
+                                  onClick={() =>
+                                    handleViewResume(PersonalDetail.resume)
+                                  }
+                                >
+                                  View Resume
+                                </Link>
+                              </span>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       )}
@@ -334,37 +424,41 @@ const UserProfile = (props) => {
                     <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-10">
                       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                         <span>Skill</span>
-                        {user_type === "company" || props.self === "yes" ? null : (
+                        {user_type === "company" ||
+                        props.self === "yes" ? null : (
                           <CustomButton
                             className="font-size-3 rounded-3 btn-primary border-0"
                             onClick={() => setShowItSkills(true)}
-                          ><PiPencilDuotone /></CustomButton>
+                          >
+                            <PiPencilDuotone />
+                          </CustomButton>
                         )}
                       </h4>
                       <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
                         {/*----Employee's Skills----*/}
 
-                        {showItSkills ? <ItSkills
-                          show={showItSkills}
-                          employeeId={employeeId}
-                          apiCall={apiCall}
-                          setApiCall={setApiCall}
-                          close={() => setShowItSkills(false)}
-                        /> : null}
+                        {showItSkills ? (
+                          <ItSkills
+                            show={showItSkills}
+                            employeeId={employeeId}
+                            apiCall={apiCall}
+                            setApiCall={setApiCall}
+                            close={() => setShowItSkills(false)}
+                          />
+                        ) : null}
 
                         <ul className="list-unstyled d-flex align-items-start flex-wrap">
-                          {
-                            userDetail.skill === undefined ? (
-                              <li>No Data Found</li>
-                            ) : (
-                              (userDetail.skill || []).map((employeeSkills) => (
-                                <li key={employeeSkills.skill_id}>
-                                  <span className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                    {employeeSkills.skill}
-                                  </span>
-                                </li>
-                              ))
-                            )}
+                          {userDetail.skill === undefined ? (
+                            <li>No Data Found</li>
+                          ) : (
+                            (userDetail.skill || []).map((employeeSkills) => (
+                              <li key={employeeSkills.skill_id}>
+                                <span className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                  {employeeSkills.skill}
+                                </span>
+                              </li>
+                            ))
+                          )}
                         </ul>
                       </div>
                     </div>
@@ -415,10 +509,14 @@ const UserProfile = (props) => {
                       </Link>
                     </li>
                     <li className="tab-menu-items nav-item pr-12">
-                      {user_type === "user" || user_type === "company" ? <CustomButton
-                        className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
-                        onClick={() => setShowDoc(true)}
-                      >{user_type === "user" ? "Add Document" : "Documents"} </CustomButton> : null}
+                      {user_type === "user" || user_type === "company" ? (
+                        <CustomButton
+                          className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
+                          onClick={() => setShowDoc(true)}
+                        >
+                          {user_type === "user" ? "Add Document" : "Documents"}{" "}
+                        </CustomButton>
+                      ) : null}
                     </li>
                   </ul>
                   {/*---Profile Details----*/}
@@ -438,7 +536,6 @@ const UserProfile = (props) => {
                       <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5 px-9">
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold d-flex align-items-center justify-content-space-between">
                           <span>About</span>
-
                         </h4>
                         <p className="font-size-4 mb-8 text-break">
                           {PersonalDetail.description}
@@ -451,30 +548,39 @@ const UserProfile = (props) => {
                       >
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                           <span>Career Profile</span>
-                          {user_type === "company" || props.self === "yes" ? null : (
+                          {user_type === "company" ||
+                          props.self === "yes" ? null : (
                             <CustomButton
                               className="font-size-3 rounded-3 btn-primary border-0"
                               onClick={() => setShowEmplyomentDetails(true)}
-                            ><PiPencilDuotone /></CustomButton>
+                            >
+                              <PiPencilDuotone />
+                            </CustomButton>
                           )}
-                          {showEmplyomentDetails ? <EmployementDetails
-                            show={showEmplyomentDetails}
-                            employeeId={employeeId}
-                            apiCall={apiCall}
-                            setApiCall={setApiCall}
-                            close={() => setShowEmplyomentDetails(false)}
-                          /> : null}
+                          {showEmplyomentDetails ? (
+                            <EmployementDetails
+                              show={showEmplyomentDetails}
+                              employeeId={employeeId}
+                              apiCall={apiCall}
+                              setApiCall={setApiCall}
+                              close={() => setShowEmplyomentDetails(false)}
+                            />
+                          ) : null}
                         </h4>
                         {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                        {userDetail.career === undefined || userDetail.career.length === 0 ? (
+                        {userDetail.career === undefined ||
+                        userDetail.career.length === 0 ? (
                           <div>
                             <p className="text-center">No Data Found</p>
                           </div>
                         ) : (
                           (userDetail.career || []).map((CareerDetails) => (
-                            <div className="w-100" key={CareerDetails.career_id}>
+                            <div
+                              className="w-100"
+                              key={CareerDetails.career_id}
+                            >
                               <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
                                 <div className="media align-items-center company_box col-md-6 p-0">
                                   <div className="text_box text-left w-100 mt-n2 text-capitalize">
@@ -501,7 +607,10 @@ const UserProfile = (props) => {
                                   {moment(CareerDetails.end_date).format(
                                     "YYYY-MM-DD"
                                   )} */}
-                                    {calculateDuration(CareerDetails.start_date, CareerDetails.end_date)}
+                                    {calculateDuration(
+                                      CareerDetails.start_date,
+                                      CareerDetails.end_date
+                                    )}
                                   </span>
                                   <span className="font-size-3 text-gray w-100">
                                     <span
@@ -529,21 +638,27 @@ const UserProfile = (props) => {
                       >
                         <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                           <span>Education</span>
-                          {user_type === "company" || props.self === "yes" ? null : (
+                          {user_type === "company" ||
+                          props.self === "yes" ? null : (
                             <CustomButton
                               className="font-size-3 rounded-3 btn-primary border-0"
                               onClick={() => setShowEducation(true)}
-                            ><PiPencilDuotone /></CustomButton>
+                            >
+                              <PiPencilDuotone />
+                            </CustomButton>
                           )}
-                          {showEducation ? <EducationDetails
-                            show={showEducation}
-                            employeeId={employeeId}
-                            apiCall={apiCall}
-                            setApiCall={setApiCall}
-                            close={() => setShowEducation(false)}
-                          /> : null}
+                          {showEducation ? (
+                            <EducationDetails
+                              show={showEducation}
+                              employeeId={employeeId}
+                              apiCall={apiCall}
+                              setApiCall={setApiCall}
+                              close={() => setShowEducation(false)}
+                            />
+                          ) : null}
                         </h4>
-                        {userDetail.education === undefined || userDetail.education.length === 0 ? (
+                        {userDetail.education === undefined ||
+                        userDetail.education.length === 0 ? (
                           <div>
                             <p className="text-center">No Data Found</p>
                           </div>
@@ -690,19 +805,39 @@ const UserProfile = (props) => {
                   <div className="mb-5">
                     <h4 className="font-size-7 mb-9 mt-5">Applied Jobs</h4>
                     <div className="row justify-content-center">
-                      {appliedJob === undefined || appliedJob.length === 0 ?
-                        <div className="text-center text-dark" >No Data Found</div>
-                        : (appliedJob || []).map((data, i) => {
+                      {appliedJob === undefined || appliedJob.length === 0 ? (
+                        <div className="text-center text-dark">
+                          No Data Found
+                        </div>
+                      ) : (
+                        (appliedJob || []).map((data, i) => {
                           return (
-                            <Link to={user_type === "admin" ? "/job" : user_type === "user" ? "/jobs" : "/managejobs"} className="col-lg-6 col-sm-11 mb-9" key={i}>
+                            <Link
+                              to={
+                                user_type === "admin"
+                                  ? "/job"
+                                  : user_type === "user"
+                                  ? "/jobs"
+                                  : "/managejobs"
+                              }
+                              className="col-lg-6 col-sm-11 mb-9"
+                              key={i}
+                            >
                               {/* <!-- Single Featured Job --> */}
                               <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
                                 <div className="media align-items-center">
                                   <div className="square-52 mr-8 rounded">
-                                    <img src={data.logo ? data.logo : "image/l3/png/fimize.png"} alt=""
-                                      width={100} />
+                                    <img
+                                      src={
+                                        data.logo
+                                          ? data.logo
+                                          : "image/l3/png/fimize.png"
+                                      }
+                                      alt=""
+                                      width={100}
+                                    />
                                   </div>
-                                  <div className=" mx-5 text-capitalize" >
+                                  <div className=" mx-5 text-capitalize">
                                     <span
                                       to=""
                                       className="font-size-3 text-default-color line-height-2"
@@ -718,11 +853,12 @@ const UserProfile = (props) => {
                                       </span>
                                     </h3>
                                   </div>
-
                                 </div>
-                                <div className="pt-5"><span className="font-size-3 text-gray  mr-7">
-                                  Resume:<b>{data.employee_lmia_status}</b>
-                                </span></div>
+                                <div className="pt-5">
+                                  <span className="font-size-3 text-gray  mr-7">
+                                    Resume:<b>{data.employee_lmia_status}</b>
+                                  </span>
+                                </div>
 
                                 <div className="d-flex pt-10">
                                   <ul className="list-unstyled mb-1 d-flex flex-wrap text-capitalize">
@@ -759,7 +895,9 @@ const UserProfile = (props) => {
                                         className="bg-regent-opacity-15 text-gray font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                                       >
                                         <i className="text-gray fa fa-clock mr-2 font-weight-bold"></i>
-                                        {moment(data.created_at).format("YYYY-MM-DD")}
+                                        {moment(data.created_at).format(
+                                          "YYYY-MM-DD"
+                                        )}
                                       </span>
                                     </li>
 
@@ -781,131 +919,15 @@ const UserProfile = (props) => {
                               </div>
                               {/* <!-- End Single Featured Job --> */}
                             </Link>
-                          )
-                        })}
+                          );
+                        })
+                      )}
                     </div>
                   </div>
-                  {/* <!-- Top End --> */}
-                  {/* <!-- Bottom Start --> */}
-                  {/* <div className="">
-                  <h4 className="font-size-7 mb-9">Saved Jobs</h4>
-                  <div className="row justify-content-center">
-                    <div className="col-lg-6 col-sm-11 mb-9"> */}
-                  {/* <!-- Single Featured Job --> */}
-                  {/* <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
-                        <div className="media align-items-center">
-                          <div className="square-52 bg-orange-2 mr-8 rounded">
-                            <Link to="">
-                              <img src="image/svg/icon-thunder.svg" alt="" />
-                            </Link>
-                          </div>
-                          <div>
-                            <Link
-                              to=""
-                              className="font-size-3 text-default-color line-height-2"
-                            >
-                              Thunder
-                            </Link>
-                            <h3 className="font-size-5 mb-0">
-                              <Link
-                                className="heading-default-color font-weight-semibold"
-                                to=""
-                              >
-                                Product Manager
-                              </Link>
-                            </h3>
-                          </div>
-                        </div>
-                        <div className="d-flex pt-17">
-                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
-                                New York
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
-                                Part-time
-                              </Link>
-                            </li>
-                          </ul>
-                          <Link
-                            to=""
-                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                          ></Link>
-                        </div>
-                      </div> */}
-                  {/* <!-- End Single Featured Job --> */}
-                  {/* </div>
-                    <div className="col-lg-6 col-sm-11 mb-9"> */}
-                  {/* <!-- Single Featured Job --> */}
-                  {/* <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3">
-                        <div className="media align-items-center">
-                          <div className="square-52 bg-helio mr-8 rounded">
-                            <Link to="">
-                              <img src="image/l3/png/asios.png" alt="" />
-                            </Link>
-                          </div>
-                          <div>
-                            <Link
-                              to=""
-                              className="font-size-3 text-default-color line-height-2"
-                            >
-                              Shark
-                            </Link>
-                            <h3 className="font-size-5 mb-0">
-                              <Link
-                                className="heading-default-color font-weight-semibold"
-                                to=""
-                              >
-                                Front-end Developer
-                              </Link>
-                            </h3>
-                          </div>
-                        </div>
-                        <div className="d-flex pt-17">
-                          <ul className="list-unstyled mb-1 d-flex flex-wrap">
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
-                                Alabama
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                to=""
-                                className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
-                              >
-                                <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
-                                Full-time
-                              </Link>
-                            </li>
-                          </ul>
-                          <Link
-                            to=""
-                            className="bookmark-button toggle-item font-size-6 ml-auto line-height-reset px-0 mt-6 text-default-color  "
-                          ></Link>
-                        </div>
-                      </div> */}
-                  {/* <!-- End Single Featured Job --> */}
-                  {/* </div>
-                  </div>
-                </div> */}
-                  {/* <!-- Bottom End --> */}
                 </div>
               </div>
-            </div>}
+            </div>
+          )}
         </div>
       </div>
       {user_type === "admin" ? "" : <EmployeeFooter />}

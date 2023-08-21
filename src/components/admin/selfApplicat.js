@@ -7,7 +7,7 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import { GetFilter } from "../../api/api"
+import { GetFilter } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
 function SelfApplicat(props) {
@@ -19,33 +19,35 @@ function SelfApplicat(props) {
   let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
-  const [skillFilterValue, setSkillFilterValue] = useState(props ? props.skill : "");
+  const [skillFilterValue, setSkillFilterValue] = useState(
+    props ? props.skill : ""
+  );
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [SkillList, setSkillList] = useState([])
-  let [EducationList, setEducationList] = useState([])
+  let [SkillList, setSkillList] = useState([]);
+  let [EducationList, setEducationList] = useState([]);
 
   /*Function to get thejSon */
   const JsonData = async () => {
     try {
-      let Json = await GetFilter()
-      setSkillList(Json.data.data.Skill)
-      setEducationList(Json.data.data.Education)
+      let Json = await GetFilter();
+      setSkillList(Json.data.data.Skill);
+      setEducationList(Json.data.data.Education);
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
     }
-  }
+  };
   /*Render method to get the json*/
   useEffect(() => {
-    JsonData()
+    JsonData();
     if ((search === "") === true) {
-      setSearchError("")
+      setSearchError("");
     }
-  }, [skillFilterValue, educationFilterValue])
+  }, [skillFilterValue, educationFilterValue]);
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
     setShowEmployeeProfile(true);
@@ -71,16 +73,27 @@ function SelfApplicat(props) {
     } else {
       setSearchError("");
     }
-  }
+  };
   return (
     <>
-      <div className={props.skill === null || props.skill === undefined ? "site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
-        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? <>      {/* <!-- Header Area --> */}
-          <AdminHeader heading={"Manage Self Applicants"} />
-          {/* <!-- navbar- --> */}
-          <AdminSidebar heading={"Manage Self Applicants"} />
-        </>
-          : null}
+      <div
+        className={
+          props.skill === null || props.skill === undefined
+            ? "site-wrapper overflow-hidden bg-default-2"
+            : "site-wrapper overflow-hidden "
+        }
+      >
+        {props.skill === null ||
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
+          <>
+            {" "}
+            {/* <!-- Header Area --> */}
+            <AdminHeader heading={"Manage Self Applicants"} />
+            {/* <!-- navbar- --> */}
+            <AdminSidebar heading={"Manage Self Applicants"} />
+          </>
+        ) : null}
         <ToastContainer />
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
@@ -95,14 +108,16 @@ function SelfApplicat(props) {
         <div
           className={
             showEmployeeProfile === false
-              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
-                "dashboard-main-container mt-16"
+              ? props.skill === null ||
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-16"
                 : ""
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -110,7 +125,13 @@ function SelfApplicat(props) {
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
                 <div className="row m-0 align-items-center">
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Search Employee:</p>
                     <input
                       required
@@ -121,9 +142,14 @@ function SelfApplicat(props) {
                       name={"Employee_name"}
                       onChange={(e) => onSearch(e)}
                     />
-
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Experience:</p>
                     <div className="select_div">
                       <select
@@ -145,7 +171,13 @@ function SelfApplicat(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Skill:</p>
                     <div className="select_div">
                       <select
@@ -166,15 +198,24 @@ function SelfApplicat(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Education:</p>
                     <div className="select_div">
                       <select
                         name="education"
                         value={educationFilterValue}
                         id="education"
-                        onChange={(e) => setEducationFilterValue(e.target.value)}
-                        className="text-capitalize form-control">
+                        onChange={(e) =>
+                          setEducationFilterValue(e.target.value)
+                        }
+                        className="text-capitalize form-control"
+                      >
                         <option value="" data-display="Product Designer">
                           Select Education
                         </option>
@@ -220,9 +261,16 @@ function SelfApplicat(props) {
         </div>
         {/* <!-- Employee Details- --> */}
         {showEmployeeProfile === true ? (
-          <div className={props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
-            ? "dashboard-main-container mt-16" : ""}>
-            <div className="container">
+          <div
+            className={
+              props.skill === null ||
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-16"
+                : ""
+            }
+          >
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">

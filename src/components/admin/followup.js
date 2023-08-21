@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
-import Loader from '../common/loader';
+import Loader from "../common/loader";
 import { toast } from "react-toastify";
 function Followup() {
   /*show Modal and props state */
@@ -50,7 +50,7 @@ function Followup() {
 
   /* Function to get Job data*/
   const JobData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const userData = await GetAllJobs(
         search,
@@ -66,20 +66,20 @@ function Followup() {
       if (userData.data.data.length === 0) {
         setJobId([]);
         setresponseId();
-        setIsLoading(false)
-        setjobData([])
+        setIsLoading(false);
+        setjobData([]);
       } else {
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setresponseId(userData.data.data[0].job_id);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -136,7 +136,7 @@ function Followup() {
     } else {
       setSearchError("");
     }
-  }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -153,7 +153,7 @@ function Followup() {
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -170,7 +170,10 @@ function Followup() {
                       placeholder={"Search Job"}
                       value={search}
                       name={"category_name"}
-                      onChange={(e) => { onSearch(e); setCurrentPage(1) }}
+                      onChange={(e) => {
+                        onSearch(e);
+                        setCurrentPage(1);
+                      }}
                       maxLength={30}
                     />
                   </div>
@@ -184,7 +187,7 @@ function Followup() {
                         onChange={(e) => {
                           setCategoryFilterValue(e.target.value);
                           setCatApiCall(true);
-                          setCurrentPage(1)
+                          setCurrentPage(1);
                         }}
                         className="text-capitalize form-control"
                       >
@@ -206,7 +209,10 @@ function Followup() {
                         name="country"
                         id="country"
                         value={jobSwapFilterValue}
-                        onChange={(e) => { setJobSwapFilterValue(e.target.value); setCurrentPage(1) }}
+                        onChange={(e) => {
+                          setJobSwapFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Select Job Type</option>
@@ -225,7 +231,10 @@ function Followup() {
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={(e) => { setSkillFilterValue(e.target.value); setCurrentPage(1) }}
+                        onChange={(e) => {
+                          setSkillFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
@@ -246,7 +255,10 @@ function Followup() {
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={(e) => { setLocationFilterValue(e.target.value); setCurrentPage(1) }}
+                        onChange={(e) => {
+                          setLocationFilterValue(e.target.value);
+                          setCurrentPage(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Select Location</option>
@@ -265,9 +277,10 @@ function Followup() {
               </div>
               <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
                 <div className="table-responsive main_table_div">
-                  {isLoading ?
+                  {isLoading ? (
                     <Loader />
-                    : <table className="table table-striped main_data_table">
+                  ) : (
+                    <table className="table table-striped main_data_table">
                       <thead>
                         <tr>
                           <th
@@ -275,7 +288,10 @@ function Followup() {
                             className=" border-0 font-size-4 font-weight-normal"
                           >
                             <Link
-                              onClick={() => { handleSort("job_title"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("job_title");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Industry"
                             >
@@ -288,7 +304,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("job_type"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("job_type");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Job"
                             >
@@ -301,7 +320,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("location"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("location");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Address"
                             >
@@ -314,7 +336,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("education"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("education");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Education"
                             >
@@ -327,7 +352,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("keyskill"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("keyskill");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Skills"
                             >
@@ -340,7 +368,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("language"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("language");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Language"
                             >
@@ -353,7 +384,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("salary"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("salary");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Salary"
                             >
@@ -366,7 +400,10 @@ function Followup() {
                           >
                             <Link
                               to=""
-                              onClick={() => { handleSort("experience_required"); setCurrentPage(1) }}
+                              onClick={() => {
+                                handleSort("experience_required");
+                                setCurrentPage(1);
+                              }}
                               className="text-gray"
                               title="Sort by Experience"
                             >
@@ -395,7 +432,9 @@ function Followup() {
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
-                            <th className="bg-white text-center">No Data Found</th>
+                            <th className="bg-white text-center">
+                              No Data Found
+                            </th>
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
                             <th className="bg-white"></th>
@@ -438,12 +477,18 @@ function Followup() {
                                   </h3>
                                 </td>
                                 <td className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate" title={job.education}>
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={job.education}
+                                  >
                                     {job.education}
                                   </h3>
                                 </td>
                                 <td className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate" title={job.keyskill}>
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                    title={job.keyskill}
+                                  >
                                     {job.keyskill}
                                   </h3>
                                 </td>
@@ -471,13 +516,17 @@ function Followup() {
                                   {job.total_applicants > 0 ? (
                                     <div
                                       className="btn-group button_group"
-                                    // role="group"
+                                      // role="group"
                                     >
                                       <button
                                         className="btn btn-outline-info action_btn"
                                         onClick={() => {
                                           setresponseId(job.job_id);
-                                          setresponseDropDown(responseDropDown === false ? true : false)
+                                          setresponseDropDown(
+                                            responseDropDown === false
+                                              ? true
+                                              : false
+                                          );
                                         }}
                                         title="Job Response"
                                       >
@@ -488,7 +537,8 @@ function Followup() {
                                 </td>
                               </tr>
                               {job.job_id === responseId &&
-                                job.total_applicants > 0 && responseDropDown === true ? (
+                              job.total_applicants > 0 &&
+                              responseDropDown === true ? (
                                 <tr>
                                   <td colSpan={10}>
                                     {/* <!-- Job Responses --> */}
@@ -505,14 +555,17 @@ function Followup() {
                           ))
                         )}
                       </tbody>
-                    </table>}
+                    </table>
+                  )}
                 </div>
                 {/* <!-- Follow up Pagination --> */}
                 <div className="pt-2">
                   <Pagination
                     nPages={nPages}
                     currentPage={currentPage}
-                    setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
+                    setCurrentPage={setCurrentPage}
+                    total={totalData}
+                    count={jobData.length}
                   />
                 </div>
               </div>
@@ -522,7 +575,7 @@ function Followup() {
         {/* <!-- Job Details --> */}
         {showJobDetails === true ? (
           <div className="dashboard-main-container mt-16 ">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">

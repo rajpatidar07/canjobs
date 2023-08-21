@@ -60,7 +60,7 @@ function EmailTemplate() {
         <AdminSidebar heading={"Manage Email Template"} />
         <ToastContainer />
         <div className="dashboard-main-container mt-16" id="dashboard-body">
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -86,10 +86,7 @@ function EmailTemplate() {
                           scope="col"
                           className="border-0 font-size-4 font-weight-normal"
                         >
-                          <span
-                            className="text-gray"
-                            to={""}
-                          >
+                          <span className="text-gray" to={""}>
                             Id
                           </span>
                         </th>
@@ -97,10 +94,7 @@ function EmailTemplate() {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          <span
-                            className="text-gray"
-                            to={""}
-                          >
+                          <span className="text-gray" to={""}>
                             Email Type
                           </span>
                         </th>
@@ -108,10 +102,7 @@ function EmailTemplate() {
                           scope="col"
                           className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
-                          <span
-                            className="text-gray"
-                            to={""}
-                          >
+                          <span className="text-gray" to={""}>
                             Subject
                           </span>
                         </th>

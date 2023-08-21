@@ -19,35 +19,35 @@ function Employer() {
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [Json, setJson] = useState([])
+  let [Json, setJson] = useState([]);
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
-      let Json = await GetFilter()
-      setJson(Json.data.data)
+      let Json = await GetFilter();
+      setJson(Json.data.data);
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
     }
-  }
+  };
   /*Function to Search employer */
   const onSearch = (e) => {
     setSearch(e.target.value);
     if (/[^a-zA-Z0-9]/g.test(search)) {
-      setSearchError("Cannot use special character")
+      setSearchError("Cannot use special character");
     } else if (search === "") {
-      setSearchError("")
+      setSearchError("");
     }
-  }
+  };
   /*Render method to get the json*/
   useEffect(() => {
-    JsonData()
+    JsonData();
     if ((search === "") === true) {
-      setSearchError("")
+      setSearchError("");
     }
-  }, [industryFilterValue, corporationFilterValue])
+  }, [industryFilterValue, corporationFilterValue]);
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
     // e.preventDefault();
@@ -61,13 +61,19 @@ function Employer() {
     setEmployerID(e);
   };
   /*Corporation Json for not having same data */
-  const Corporation = Json.Corporation ? Json.Corporation.filter((thing, index, self) =>
-    index === self.findIndex((t) => t.value === thing.value)
-  ) : [];
+  const Corporation = Json.Corporation
+    ? Json.Corporation.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
+    : [];
   /*Industry Json for not having same data */
-  const Industry = Json.Industry ? Json.Industry.filter((thing, index, self) =>
-    index === self.findIndex((t) => t.value === thing.value)
-  ) : [];
+  const Industry = Json.Industry
+    ? Json.Industry.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
+    : [];
 
   return (
     <>
@@ -78,13 +84,15 @@ function Employer() {
         <AdminSidebar heading={"Manage Companies"} />
         <ToastContainer />
         {/* <!-- Add Company Details Modal --> */}
-        {showAddEmployerModal ? <CompanyDetails
-          show={showAddEmployerModal}
-          employerId={employerId}
-          apiCall={apiCall}
-          setApiCall={setApiCall}
-          close={() => setShowEmployerMOdal(false)}
-        /> : null}
+        {showAddEmployerModal ? (
+          <CompanyDetails
+            show={showAddEmployerModal}
+            employerId={employerId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => setShowEmployerMOdal(false)}
+          />
+        ) : null}
         <div
           className={
             showEmployerDetails === false
@@ -93,7 +101,7 @@ function Employer() {
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -127,13 +135,14 @@ function Employer() {
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Corporation</option>
-                        {(Corporation || []).map(
-                          (corporation) => (
-                            <option key={corporation.id} value={corporation.value}>
-                              {corporation.value}
-                            </option>
-                          )
-                        )}
+                        {(Corporation || []).map((corporation) => (
+                          <option
+                            key={corporation.id}
+                            value={corporation.value}
+                          >
+                            {corporation.value}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -184,7 +193,7 @@ function Employer() {
         {/* <!-- Employer Details- --> */}
         {showEmployerDetails === true ? (
           <div className="dashboard-main-container mt-16">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">

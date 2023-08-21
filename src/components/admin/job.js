@@ -18,14 +18,16 @@ function Job(props) {
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState(/*props ? props.skill : */"");
+  const [SkillFilterValue, setSkillFilterValue] = useState(
+    /*props ? props.skill : */ ""
+  );
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-  let location = useLocation()
+  let location = useLocation();
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
@@ -46,7 +48,7 @@ function Job(props) {
       setSearchError("");
     }
     if (location.state) {
-      setCompany(location.state.company_name)
+      setCompany(location.state.company_name);
     }
   }, [
     categoryFilterValue,
@@ -60,7 +62,6 @@ function Job(props) {
 
   /* Function to show the Job detail data */
   const JobDetail = (e) => {
-
     setShowJobDetails(true);
     setJobId(e);
   };
@@ -86,38 +87,48 @@ function Job(props) {
     } else {
       setSearchError("");
     }
-  }
+  };
   /*Skill Json for not having same data */
   const Skill = Json.Skill
     ? Json.Skill.filter(
-      (thing, index, self) =>
-        index === self.findIndex((t) => t.value === thing.value)
-    )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
     : [];
   return (
     <>
-      <div className={props.skill === null || props.skill === undefined ? "site-wrapper overflow-hidden bg-default-2" : "site-wrapper overflow-hidden "}>
-
-        {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
-          <> {/* <!-- Header Area --> */}
+      <div
+        className={
+          props.skill === null || props.skill === undefined
+            ? "site-wrapper overflow-hidden bg-default-2"
+            : "site-wrapper overflow-hidden "
+        }
+      >
+        {props.skill === null ||
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
+          <>
+            {" "}
+            {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Jobs"} />
             {/* <!-- navbar- --> */}
             <AdminSidebar heading={"Manage Jobs"} />
-          </> :
-          null}
+          </>
+        ) : null}
         <ToastContainer />
         <div
           className={
             showJobDetails === false
-              ? props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
-                ?
-                "dashboard-main-container mt-16" :
-                ""
+              ? props.skill === null ||
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-16"
+                : ""
               : "d-none"
           }
           id="dashboard-body"
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
@@ -125,7 +136,13 @@ function Job(props) {
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 <div className="row m-0 align-items-center">
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -137,7 +154,13 @@ function Job(props) {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>{" "}
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Company Name:</p>
                     <input
                       required
@@ -149,7 +172,13 @@ function Job(props) {
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
@@ -170,7 +199,13 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
@@ -191,7 +226,13 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
@@ -212,7 +253,13 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
-                  <div className={props.skill === null || props.skill === undefined ? "col p-1 form_group mb-5 mt-4" : "col p-1 form_group"}>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-5 mt-4"
+                        : "col p-1 form_group"
+                    }
+                  >
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select
@@ -233,7 +280,9 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
-                  {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ?
+                  {props.skill === null ||
+                  props.skill === undefined ||
+                  Object.keys(props.skill).length === 0 ? (
                     <div className="text-end col-xl-12">
                       <div className="float-md-right">
                         <CustomButton
@@ -246,9 +295,8 @@ function Job(props) {
                         {/*<-- Add Job Modal -->*/}
                       </div>
                       <small className="text-danger">{searcherror}</small>
-                    </div> :
-                    null
-                  }
+                    </div>
+                  ) : null}
                 </div>
               </div>
               {/*<-- Job List Table -->*/}
@@ -272,9 +320,16 @@ function Job(props) {
         </div>
         {/*<-- Job Detail -->*/}
         {showJobDetails === true ? (
-          <div className={props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0
-            ? "dashboard-main-container mt-16 " : ""}>
-            <div className="container">
+          <div
+            className={
+              props.skill === null ||
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
+                ? "dashboard-main-container mt-16 "
+                : ""
+            }
+          >
+            <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">
