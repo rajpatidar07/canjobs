@@ -828,7 +828,8 @@ export default function JobTable(props) {
                                   status={
                                     props.response === "response" ||
                                     props.response === "visa" ||
-                                    props.response === "lmia"
+                                    props.response === "lmia" || 
+                                    props.response === "companyprofile"
                                       ? "1"
                                       : "0"
                                   }
