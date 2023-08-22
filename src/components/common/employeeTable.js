@@ -538,7 +538,10 @@ export default function EmployeeTable(props) {
                           {props.heading === "Dashboard" ? (
                             <div className=" mb-0">
                               <p className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate">
+                                <Link to={`/${empdata.employee_id}`}
+                                    className="text-dark">
                                 {empdata.name}
+                                </Link>
                               </p>
                               <div className="text-gray font-size-2 m-0 text-capitalize">
                                 {empdata.gender === "female"
@@ -591,7 +594,10 @@ export default function EmployeeTable(props) {
                               ) : (
                                 <div className=" mb-0">
                                   <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                    <Link to={`/${empdata.employee_id}`}
+                                    className="text-dark">
                                     {empdata.name}
+                                    </Link>
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
                                     {empdata.gender === "female"

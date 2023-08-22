@@ -9103,6 +9103,7 @@ html .ui-button.ui-state-disabled:active {
 /* CSS for the sub-stages container */
 .sub-stages-container {
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* Styling for sub-stage items */

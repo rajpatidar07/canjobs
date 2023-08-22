@@ -27,16 +27,15 @@ function Addfollowup(props) {
         // props.job_id
       );
       if (
-        userData.data.followup.length === 0 ||
+        // userData.data.length === 0 ||
         props.employee_id === "" ||
         props.employee_id === undefined
       ) {
         setResponseData([]);
       } else {
-        setResponseData(userData.data.followup);
+        setResponseData(userData.data);
       }
     } catch (err) {
-      console.log("get error", err);
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -56,6 +55,8 @@ function Addfollowup(props) {
   const initialFormState = {
     remark: "",
     next_followup_date: "",
+    subject:"",
+    employee_id:employId
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -78,7 +79,7 @@ function Addfollowup(props) {
     if (validate()) {
       setLoading(true);
       try {
-        let responseData = await AddFollowup({ state, employId /*,jobId*/ });
+        let responseData = await AddFollowup( state);
         if (responseData.message === "follow up updated successfully") {
           toast.success("Followup Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -123,9 +124,10 @@ function Addfollowup(props) {
           <div className="activity_container pr-10 col-md-8 border-right">
             {(response || []).map((res) => (
               <div className="single_note mb-5" key={res.id}>
-                <small>
-                  Created on: {moment(res.created_at).format("YYYY-MM-DD")}
-                </small>
+                 <div className="d-flex justify-content-between">
+                <small>Created on: {moment(res.created_at).format("DD-MM-YYYY")}</small>
+                <small>Subject: {res.subject}</small>
+                </div>
                 <div className="card p-5">{res.remark}</div>
               </div>
               // <div className="card mt-5 mb-5" key={res.id}>
@@ -146,6 +148,35 @@ function Addfollowup(props) {
           </div>
           <div className="px-10 py-5 col-md-4">
             <form>
+            <div className="form-group col px-0 pr-3">
+                <label
+                  htmlFor="subject"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Subject: <span className="text-danger">*</span>
+                </label>
+                <div className="position-relative">
+                <input
+                  maxLength={20}
+                  name="subject"
+                  value={state.subject || ""}
+                  onChange={onInputChange}
+                  type="text"
+                  className={
+                    errors.subject
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="subject"
+                  id="subject"
+                /></div>
+                {/*----ERROR MESSAGE FOR name----*/}
+                {errors.subject && (
+                  <span key={errors.subject} className="text-danger font-size-3">
+                    {errors.subject}
+                  </span>
+                )}
+              </div>
               <div className="form-group col px-0 pr-3">
                 <label
                   htmlFor="remark"
@@ -187,7 +218,7 @@ function Addfollowup(props) {
                   )}
                 </div>
               </div>
-              {/* <div className="form-group ">
+               <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="next_followup_date"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -210,7 +241,7 @@ function Addfollowup(props) {
                       : "form-control coustam_datepicker"
                   }
                 />
-                {/*----ERROR MESSAGE FOR next_followup_date----
+                {/*----ERROR MESSAGE FOR next_followup_date----*/}
                 {errors.next_followup_date && (
                   <span
                     key={errors.next_followup_date}
@@ -220,7 +251,7 @@ function Addfollowup(props) {
                   </span>
                 )}
               </div>
-            </div> */}
+            </div> 
               <div className="form-group text-center">
                 {loading === true ? (
                   <button

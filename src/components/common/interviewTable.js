@@ -36,7 +36,8 @@ function Interview(props) {
         recordsPerPage,
         sortOrder,
         props.filter_by_time,
-        props.statusFilterValue
+        props.statusFilterValue,
+        props.company_id
       );
       if (userData.data.length === 0) {
         setInterviewData([]);
@@ -102,7 +103,7 @@ function Interview(props) {
       <div className="mb-18">
         <div className="mb-4 align-items-center">
           <div className="page___heading">
-            <h3 className="font-size-6 mb-0">Interview</h3>
+            <h3 className="font-size-6 mb-0">Interview </h3>
           </div>
         </div>
         <div
@@ -122,7 +123,7 @@ function Interview(props) {
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      EID
+                      EID{props.company_id}
                     </th>
                     <th
                       scope="col"
@@ -233,7 +234,9 @@ function Interview(props) {
                         </th>
                         <th scope="row" className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {data.name}
+                            <Link
+                              className="text-dark"
+                              to={`/${data.employee_id}`}>{data.name}</Link>
                           </div>
                         </th>
                         <th scope="row" className="py-5 ">

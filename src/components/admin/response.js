@@ -645,7 +645,10 @@ function JobResponse(props) {
 
                                     <div className=" mb-0">
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                        <Link 
+                                        className="text-dark"to={`/${res.employee_id}`}>
                                         {res.name}
+                                        </Link>
                                       </p>
                                       <p className="text-gray font-size-2 m-0 text-capitalize">
                                         {res.is_featured === ("1" || 1) ? (

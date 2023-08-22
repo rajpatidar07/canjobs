@@ -257,7 +257,7 @@ function Employee(props) {
                 skill={props.skill}
                 job_id={props.job_id}
                 self={"no"}
-                status={"1"}
+                status={"-1"}
               />
             </div>
           </div>

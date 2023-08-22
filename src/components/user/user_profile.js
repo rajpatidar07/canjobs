@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import {
   EmployeeDetails,
   EmployeeAppliedJob,
-  AddEmployeeDetails,
+  AddEmployeeDetails, GetEmployeeByLima
 } from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
@@ -38,7 +38,7 @@ const NewUserProfile = (props) => {
   const { eid } = useParams();
   // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
-  const [showDoc, setShowDoc] = useState(false);
+  const [lima, setLmia] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -53,7 +53,6 @@ const NewUserProfile = (props) => {
   const name = localStorage.getItem("name");
   const employeeId = user_type === "admin" ? eid : id;
 
-  console.log(showPersonalDetails);
   /*Function to get user Data */
   const UserData = async () => {
     try {
@@ -90,7 +89,21 @@ const NewUserProfile = (props) => {
     }
   };
   // console.log(userDetail)
-
+  /*FUnction to get Lmia */
+  const getLimaOfuser = async () => {
+    try {
+      let response = await GetEmployeeByLima("", "", "", "1", "10", null, null, "", eid);
+      if (response.message === "successful") {
+        setLmia(response.data)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setIsLoading(false);
+    }
+  }
   /*Function to Geyt applied job data */
   const AppliedJob = async () => {
     try {
@@ -114,6 +127,7 @@ const NewUserProfile = (props) => {
       AppliedJob();
     }
     UserData();
+    getLimaOfuser()
     if (apiCall === true) {
       setApiCall(false);
       // if (PersonalDetail.name !== (undefined || "undefined" || null || "null")
@@ -139,11 +153,9 @@ const NewUserProfile = (props) => {
     const months = duration.months();
     const days = duration.days();
 
-    return `${
-      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
-    } ${
-      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
-    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
+    return `${years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+      } ${months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
+      } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
   };
   const [status, setStatus] = useState("");
   /*function to change applicants status */
@@ -245,16 +257,15 @@ const NewUserProfile = (props) => {
                       </h4>
                       <p className="m-0 age_gender font-size-3 d-flex align-items-center">
                         {PersonalDetail.gender ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.date_of_birth
-                          ? `(${
-                              PersonalDetail.gender === "female"
-                                ? "F"
-                                : PersonalDetail.gender === "male"
-                                ? "M"
-                                : "O"
-                            },
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.date_of_birth
+                          ? `(${PersonalDetail.gender === "female"
+                            ? "F"
+                            : PersonalDetail.gender === "male"
+                              ? "M"
+                              : "O"
+                          },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
@@ -280,20 +291,20 @@ const NewUserProfile = (props) => {
                             status === "1"
                               ? "New"
                               : status === "2"
-                              ? "Prospect"
-                              : status === "3"
-                              ? "Lead"
-                              : status === "4"
-                              ? "Reatined"
-                              : status === "5"
-                              ? "Lost"
-                              : status === "6"
-                              ? "Dead"
-                              : // ) : status === "7" ? (
-                              //   "Reserved"
-                              status === "0"
-                              ? "New"
-                              : "status"
+                                ? "Prospect"
+                                : status === "3"
+                                  ? "Lead"
+                                  : status === "4"
+                                    ? "Reatined"
+                                    : status === "5"
+                                      ? "Lost"
+                                      : status === "6"
+                                        ? "Dead"
+                                        : // ) : status === "7" ? (
+                                        //   "Reserved"
+                                        status === "0"
+                                          ? "New"
+                                          : "status"
                           }
                           size="sm"
                           className="user_status_btn btn-primary text-white ml-1"
@@ -332,7 +343,7 @@ const NewUserProfile = (props) => {
                           <CustomButton
                             title={"Send Custom Email"}
                             className="font-size-4 rounded-3 btn-primary py-0"
-                            /*Functionalities have to be done. */
+                          /*Functionalities have to be done. */
                           >
                             <RiMailSendLine />
                           </CustomButton>
@@ -351,7 +362,7 @@ const NewUserProfile = (props) => {
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                    PersonalDetail.length === 0 ? (
+                      PersonalDetail.length === 0 ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -494,6 +505,142 @@ const NewUserProfile = (props) => {
 
               <div className="col-12 order-2 order-xl-1">
                 <div className="bg-white">
+                  {/* LMIA */}
+                  <ul
+                    className="nav border-bottom border-bottom border-mercury user_profile_tab"
+                    id="myTab"
+                    role="tablist"
+                  >
+                    <div className="arrow-wrapper">
+                    <h5 className="mt-2">LMIA status</h5>
+                      <div className="arrow-steps clearfix p-2">
+                        {(lima || []).map((status, i) => {
+                          return (
+
+                            <div
+                              key={i}
+                              className={`step m-2 current text-capitalize`}
+                            >
+                              {/* <Link
+                      to=""
+                      className={isDone ? 'text-white' : 'text-gray'}
+                      onClick={doc === 'yes' ? () =>
+                        setExpandedStatus(isExpanded ? null : status) : null
+                      }
+                    >
+                      {status}
+                    </Link> */}
+                              <span>{status.lmia_status}</span>
+                            </div>
+
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {/* <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "profile"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="home-tab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                        onClick={() => setTabActive("profile")}
+                      >
+                        Overview
+                      </Link>
+                    </li>
+                    <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "jobs"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="appliedJobs"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="appliedJobs"
+                        aria-selected="true"
+                        onClick={() => setTabActive("jobs")}
+                      >
+                        Applied Jobs
+                      </Link>
+                    </li>
+                    <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "documents"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("documents")}
+                      >
+                        Documents
+                      </Link>
+                    </li>
+                    <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "visa"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="visaTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="visaTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("visa")}
+                      >
+                        Visa
+                      </Link>
+                    </li>
+                    <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "notes"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="notesTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="notesTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("notes")}
+                      >
+                        Notes
+                      </Link>
+                    </li>
+                    <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "activity"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="activityTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="activityTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("activity")}
+                      >
+                        Activity History
+                      </Link>
+                    </li> */}
+
+                  </ul>
                   {/*----Profile Header----*/}
                   <ul
                     className="nav border-bottom border-bottom border-mercury user_profile_tab"
@@ -664,7 +811,7 @@ const NewUserProfile = (props) => {
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEmplyomentDetails(true)}
@@ -686,7 +833,7 @@ const NewUserProfile = (props) => {
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
                           {userDetail.career === undefined ||
-                          userDetail.career.length === 0 ? (
+                            userDetail.career.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -750,7 +897,7 @@ const NewUserProfile = (props) => {
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Skill</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowItSkills(true)}
@@ -796,7 +943,7 @@ const NewUserProfile = (props) => {
                           <h4 className="w-100 font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEducation(true)}
@@ -815,7 +962,7 @@ const NewUserProfile = (props) => {
                             ) : null}
                           </h4>
                           {userDetail.education === undefined ||
-                          userDetail.education.length === 0 ? (
+                            userDetail.education.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>

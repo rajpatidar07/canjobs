@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import useValidation from "../../common/useValidation";
+import useValidation from "../common/useValidation";
 // import { Modal } from "react-bootstrap";
-import { getSingleFollowup, AddFollowup } from "../../../api/api";
+import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,21 +22,20 @@ function AddCompanyfollowup(props) {
   /* Function to get the Response data*/
   const ResponseData = async () => {
     try {
-      const userData = await getSingleFollowup(
+      const userData = await getSingleCompanyFollowup(
         props.company_id,
         // props.job_id
       );
       if (
-        userData.data.followup.length === 0 ||
+        userData.data.length === 0 ||
         props.company_id === "" ||
         props.company_id === undefined
       ) {
         setResponseData([]);
       } else {
-        setResponseData(userData.data.followup);
+        setResponseData(userData.data);
       }
     } catch (err) {
-      console.log("get error", err)
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -56,6 +55,9 @@ function AddCompanyfollowup(props) {
   const initialFormState = {
     remark: "",
     next_followup_date: "",
+    company_id:cid,
+     subject:""
+    
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -67,6 +69,14 @@ function AddCompanyfollowup(props) {
             ? "Discription should have 2 or more letters."
             : "",
     ],
+    subject:[
+        (value)=>
+        value === "" || value === null || value.trim() === ""
+        ? "Subject required"
+        : value.length < 2
+          ? "Subject should have 2 or more letters."
+          : "",
+    ]
   };
   // CUSTOM VALIDATIONS IMPORT
   const {
@@ -84,7 +94,7 @@ function AddCompanyfollowup(props) {
     if (validate()) {
       setLoading(true);
       try {
-        let responseData = await AddFollowup({ state, cid/*,jobId*/ });
+        let responseData = await AddCompanyFollowup( state);
         if (responseData.message === "follow up updated successfully") {
           toast.success("Followup Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -129,7 +139,10 @@ function AddCompanyfollowup(props) {
           <div className="p-10 activity_container col-md-8">
             {(response || []).map((res) => (
               <div className="single_note mb-5" key={res.id}>
-                <small>Created on: {moment(res.created_at).format("YYYY-MM-DD")}</small>
+                <div className="d-flex justify-content-between">
+                <small>Created on: {moment(res.created_at).format("DD-MM-YYYY")}</small>
+                <small>Subject: {res.subject}</small>
+                </div>
                 <div className="card p-5">
                   {res.remark}
                 </div>
@@ -151,44 +164,77 @@ function AddCompanyfollowup(props) {
             ))}
           </div>
           <form className="p-10 col-md-4">
-            <div className="form-group col px-0 pr-3">
-              <label
-                htmlFor="remark"
-                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-              >
-                Discription: <span className="text-danger">*</span>
-              </label>
-              <div className="position-relative">
-                <div
-                  sm="6"
-                  className={
-                    errors.remark
-                      ? "border border-danger rounded overflow-hidden"
-                      : "border rounded overflow-hidden"
-                  }
+          <div className="form-group col px-0 pr-3">
+                <label
+                  htmlFor="subject"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                 >
-                  <textarea
-                    name="remark"
-                    value={state.remark}
-                    onChange={onInputChange}
-                    className={
-                      errors.remark
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    id="remark"
-                    placeholder="Description"
-                  ></textarea>
-                </div>
-                {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {errors.remark && (
-                  <span key={errors.remark} className="text-danger font-size-3">
-                    {errors.remark}
+                  Subject: <span className="text-danger">*</span>
+                </label>
+                <div className="position-relative">
+                <input
+                  maxLength={20}
+                  name="subject"
+                  value={state.subject || ""}
+                  onChange={onInputChange}
+                  type="text"
+                  className={
+                    errors.subject
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="subject"
+                  id="subject"
+                /></div>
+                {/*----ERROR MESSAGE FOR name----*/}
+                {errors.subject && (
+                  <span key={errors.subject} className="text-danger font-size-3">
+                    {errors.subject}
                   </span>
                 )}
               </div>
-            </div>
-            {/* <div className="form-group ">
+              <div className="form-group col px-0 pr-3">
+                <label
+                  htmlFor="remark"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Add New Note: <span className="text-danger">*</span>
+                </label>
+                <div className="position-relative">
+                  <div
+                    className={
+                      errors.remark
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    <textarea
+                      name="remark"
+                      value={state.remark}
+                      onChange={onInputChange}
+                      rows={8}
+                      style={{ height: "140px" }}
+                      className={
+                        errors.remark
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="remark"
+                      placeholder="Add Note here"
+                    ></textarea>
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.remark && (
+                    <span
+                      key={errors.remark}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.remark}
+                    </span>
+                  )}
+                </div>
+              </div>
+            <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="next_followup_date"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -211,7 +257,7 @@ function AddCompanyfollowup(props) {
                       : "form-control coustam_datepicker"
                   }
                 />
-                {/*----ERROR MESSAGE FOR next_followup_date----
+                {/*----ERROR MESSAGE FOR next_followup_date----*/}
                 {errors.next_followup_date && (
                   <span
                     key={errors.next_followup_date}
@@ -221,7 +267,7 @@ function AddCompanyfollowup(props) {
                   </span>
                 )}
               </div>
-            </div> */}
+            </div> 
             <div className="form-group text-center">
               {loading === true ? (
                 <button

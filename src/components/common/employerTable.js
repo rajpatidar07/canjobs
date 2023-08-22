@@ -311,9 +311,9 @@ export default function EmployerTable(props) {
                             props.heading === "Dashboard" ? (
                               ""
                             ) : <Link
-                              to={""}
+                              to={`/company_detail`}
                               title="Company Details"
-                              onClick={() => EmployerDetail(empdata.company_id)}
+                              onClick={() => localStorage.setItem("company_id",empdata.company_id)}
                             >
                               <div className="company_profile">
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">

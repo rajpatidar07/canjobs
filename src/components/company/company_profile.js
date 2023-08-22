@@ -17,10 +17,11 @@ import AdminSidebar from "../admin/sidebar";
 import JobTable from "../common/jobTable";
 import DocumrentContainer from "..//common/employerDocumentContainer"
 import Interview from "../common/interviewTable";
+import AddCompanyfollowup from "../common/companyFollowUp";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
-  let cid = 2;
+  let cid = company_id;
   /*Show modal and data state */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -404,7 +405,7 @@ function CompanyProfileDetail(props) {
               aria-labelledby="appliedJobs"
             >
               {TabActive === "jobs" ? <JobTable
-                company={employerData.company_name}
+                company_id={cid}
                 heading={"companyprofile"}
                 response={"companyprofile"}
               /> : null}
@@ -452,28 +453,29 @@ function CompanyProfileDetail(props) {
               }
             >
               {TabActive === "notes" ?
-                // <Addfollowup employee_id={eid}
-                //   setApiCall={setApiCall} /> 
-               <div className="p-10 notes_container">
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                    </div> : null}
+                <AddCompanyfollowup company_id={cid}
+                  setApiCall={setApiCall} /> 
+              //  <div className="p-10 notes_container">
+              //         <div className="single_note mb-5">
+              //           <small>Created on: 2023-08-03 17:10:53</small>
+              //           <div className="card p-5">
+              //             This is some text within a card body.
+              //           </div>
+              //         </div>
+              //         <div className="single_note mb-5">
+              //           <small>Created on: 2023-08-03 17:10:53</small>
+              //           <div className="card p-5">
+              //             This is some text within a card body.
+              //           </div>
+              //         </div>
+              //         <div className="single_note mb-5">
+              //           <small>Created on: 2023-08-03 17:10:53</small>
+              //           <div className="card p-5">
+              //             This is some text within a card body.
+              //           </div>
+              //         </div>
+              //       </div>
+                     : null}
             </div>
             <div
               className={

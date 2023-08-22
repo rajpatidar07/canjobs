@@ -314,7 +314,10 @@ export default function VisaTable(props) {
                                         <tr className="applicant_row" key={empdata.employee_id}>
                                             <td className=" py-5">
                                                 <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                                    <Link 
+                                                    className="text-dark" to={`/${empdata.employee_id}`}>
                                                     {empdata.employee_id}
+                                                    </Link>
                                                 </p>
                                             </td>
                                             <td className=" py-5">
@@ -347,7 +350,12 @@ export default function VisaTable(props) {
                                                         ) : (
                                                             <div className=" mb-0">
                                                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                                                    {empdata.name}
+                                                                   
+                                                                   <Link
+                                                                   className="text-dark"
+                                                                    to={`/${empdata.employee_id}`}> 
+                                                                   {empdata.name}
+                                                                   </Link>
                                                                 </p>
                                                                 <p className="text-gray font-size-2 m-0 text-capitalize">
                                                                     {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (

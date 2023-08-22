@@ -670,8 +670,9 @@ export const GetAllJobs = async (
   id,
   selfValue,
   adminValue,
-  reserved
-  // employeeSkill
+  reserved,
+  // employeeSkill,
+  cid
 ) => {
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
@@ -690,8 +691,9 @@ export const GetAllJobs = async (
       // filter_company_name: company,
       filter_applied_by_self: selfValue,
       filter_applied_by_admin: adminValue,
-      filter_reserved_employee: reserved
+      filter_reserved_employee: reserved,
       // employee_skills: employeeSkill,
+      filter_company_id :cid
     },
     {
       headers: {
@@ -855,7 +857,8 @@ export const getInterview = async (
   limit,
   sort,
   time,
-  status
+  status,
+  cid
 ) => {
   const response = await axios.post(
     `${API_URL}admin/getInterview`,
@@ -869,6 +872,7 @@ export const getInterview = async (
       employee_id: employee_id,
       filter_by_time: time,
       filter_by_status: status,
+      filter_company_id:cid
     },
     {
       headers: {
@@ -903,7 +907,7 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
 };
 
 /*Get lmia list Api */
-export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord, time) => {
+export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord, time,employee_id) => {
   const response = await axios.post(
     `${API_URL}/company/getLmia`,
     {
@@ -914,7 +918,8 @@ export const GetEmployeeByLima = async (id, search, status, page, limit, col, or
       limit: limit,
       sort_order: ord,
       column_name: col,
-      filter_by_time: time
+      filter_by_time: time,
+      employee_id:employee_id
     },
     {
       headers: {
@@ -1381,16 +1386,17 @@ export const DeleteAdmin = async (props) => {
   return response.data;
 };
 
-/*Add Followup Api */
+/*Add Aplicant's Followup Api */
 export const AddFollowup = async (props) => {
   const response = await axios.post(
-    `${API_URL}admin/addFollowup`,
+    `${API_URL}admin/addFollowUpEmployee`,
     {
       admin_id: admin_id,
       // job_id: props.jobId,
-      employee_id: props.employId,
-      remark: props.state.remark,
-      next_date: props.state.next_followup_date,
+      employee_id: props.employee_id,
+      remark: props.remark,
+      next_date: props.next_followup_date,
+      subject:props.subject
     },
     {
       headers: {
@@ -1405,7 +1411,7 @@ export const AddFollowup = async (props) => {
 /*get Followup single data Api */
 export const getSingleFollowup = async (employee_id /*, job_id*/) => {
   const response = await axios.post(
-    `${API_URL}admin/getFollowup`,
+    `${API_URL}admin/getFollowUpEmployee`,
     { /*job_id: job_id,*/ employee_id: employee_id },
     {
       headers: {
@@ -1415,6 +1421,44 @@ export const getSingleFollowup = async (employee_id /*, job_id*/) => {
     }
   );
 
+  return response.data;
+};
+/*get Followup single data Api */
+export const getSingleCompanyFollowup = async (company_id) => {
+  const response = await axios.post(
+    `${API_URL}admin/getFollowUpEmployer`,
+    {  company_id: company_id },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+/*Add Comapany's Followup Api */
+export const AddCompanyFollowup = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/addFollowUpEmployer`,
+    {
+     // "admin_id":"2",
+     // "job_id":"1",
+     "company_id":props.company_id,
+     "remark":props.remark,
+     "next_date":props.next_date,
+     "subject":props.subject
+      
+      },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 
