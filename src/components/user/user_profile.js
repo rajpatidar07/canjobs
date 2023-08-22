@@ -8,7 +8,11 @@ import ItSkills from "../forms/user/skills";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import { Link, useParams } from "react-router-dom";
-import { EmployeeDetails, EmployeeAppliedJob, AddEmployeeDetails } from "../../api/api";
+import {
+  EmployeeDetails,
+  EmployeeAppliedJob,
+  AddEmployeeDetails,
+} from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
 import { ToastContainer, toast } from "react-toastify";
@@ -29,6 +33,7 @@ import VisaTable from "../common/visaTable";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { RiMailSendLine } from "react-icons/ri";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   // console.log(eid, "PARATATATA");
@@ -48,7 +53,7 @@ const NewUserProfile = (props) => {
   const name = localStorage.getItem("name");
   const employeeId = user_type === "admin" ? eid : id;
 
-  console.log(showPersonalDetails)
+  console.log(showPersonalDetails);
   /*Function to get user Data */
   const UserData = async () => {
     try {
@@ -63,7 +68,7 @@ const NewUserProfile = (props) => {
         setIsLoading(false);
       } else {
         setuserDetail(userData.data);
-        setStatus(userData.data.employee[0].status)
+        setStatus(userData.data.employee[0].status);
         setPersonalDetail(userData.data.employee[0]);
         localStorage.setItem(
           "profile_photo",
@@ -134,27 +139,29 @@ const NewUserProfile = (props) => {
     const months = duration.months();
     const days = duration.days();
 
-    return `${years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
-      } ${months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
-      } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
+    return `${
+      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+    } ${
+      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
+    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
   };
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState("");
   /*function to change applicants status */
   const OnStatusChange = async (e) => {
     // e.preventDefault()
-    setStatus(e)
+    setStatus(e);
     let data = {
       employee_id: eid,
       status: e,
-    }
+    };
     try {
-      let response = await AddEmployeeDetails(data)
-      if (response.message === 'Employee data updated successfully') {
+      let response = await AddEmployeeDetails(data);
+      if (response.message === "Employee data updated successfully") {
         toast.success("Employee status changes successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setApiCall(true)
+        setApiCall(true);
       }
     } catch (err) {
       toast.error("Something went wrong", {
@@ -162,7 +169,7 @@ const NewUserProfile = (props) => {
         autoClose: 1000,
       });
     }
-  }
+  };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -238,15 +245,16 @@ const NewUserProfile = (props) => {
                       </h4>
                       <p className="m-0 age_gender font-size-3 d-flex align-items-center">
                         {PersonalDetail.gender ||
-                          PersonalDetail.marital_status ||
-                          PersonalDetail.marital_status ||
-                          PersonalDetail.date_of_birth
-                          ? `(${PersonalDetail.gender === "female"
-                            ? "F"
-                            : PersonalDetail.gender === "male"
-                              ? "M"
-                              : "O"
-                          },
+                        PersonalDetail.marital_status ||
+                        PersonalDetail.marital_status ||
+                        PersonalDetail.date_of_birth
+                          ? `(${
+                              PersonalDetail.gender === "female"
+                                ? "F"
+                                : PersonalDetail.gender === "male"
+                                ? "M"
+                                : "O"
+                            },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
@@ -268,33 +276,42 @@ const NewUserProfile = (props) => {
                         </DropdownButton> */}
                         <DropdownButton
                           as={ButtonGroup}
-                          title={status === "1" ? ("New"
-                          ) : status === "2" ? (
-                            "Prospect"
-                          ) : status === "3" ? (
-                            "Lead"
-                          ) : status === "4" ? (
-                            "Reatined"
-                          ) : status === "5" ? (
-                            "Lost"
-                          ) : status === "6" ? (
-                            "Dead"
-                            // ) : status === "7" ? (
-                            //   "Reserved"
-                          ) : status === "0" ? (
-                            "New"
-                          ) : "status"}
+                          title={
+                            status === "1"
+                              ? "New"
+                              : status === "2"
+                              ? "Prospect"
+                              : status === "3"
+                              ? "Lead"
+                              : status === "4"
+                              ? "Reatined"
+                              : status === "5"
+                              ? "Lost"
+                              : status === "6"
+                              ? "Dead"
+                              : // ) : status === "7" ? (
+                              //   "Reserved"
+                              status === "0"
+                              ? "New"
+                              : "status"
+                          }
                           size="sm"
-                          variant={status ? status : ""}
-                          className="user_status_btn ml-1"
+                          className="user_status_btn btn-primary text-white ml-1"
                           onSelect={OnStatusChange}
                         >
-                          <Dropdown.Item value="" eventKey="0">Select Status</Dropdown.Item>
-                          {(FilterJson.employee_status || []).map((item, index) => (
-                            <Dropdown.Item key={index} value={index + 1} eventKey={index + 1}>{item}</Dropdown.Item>
-                          ))}
+                          {(FilterJson.employee_status || []).map(
+                            (item, index) => (
+                              <Dropdown.Item
+                                key={index}
+                                value={index + 1}
+                                eventKey={index + 1}
+                                className="text-capitalize"
+                              >
+                                {item}
+                              </Dropdown.Item>
+                            )
+                          )}
                         </DropdownButton>
-
                       </p>
                     </div>
                     {/* <p className="mb-8 text-gray font-size-4">
@@ -303,21 +320,24 @@ const NewUserProfile = (props) => {
                   </div>
                   {PersonalDetail.email ? (
                     <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
-                      <Link
-                        className="text-dark font-size-5 w-100 text-break"
-                        to={`mailto:${PersonalDetail.email}`}
-                      >
-                        <BsEnvelope className="text-primary font-size-5 " />{" "}
-                        {PersonalDetail.email}
-                      </Link>
-                      {user_type === "admin" || props.self === "no" ? (
-                        <CustomButton
-                          className="font-size-3 rounded-3 btn-primary border-0"
-/*Functionalities have to be done. */                      >
-                          send mail
-
-                        </CustomButton>
-                      ) : null}
+                      <div className="d-flex justify-content-between align-items-center">
+                        <Link
+                          className="text-dark font-size-5 w-100 text-break"
+                          to={`mailto:${PersonalDetail.email}`}
+                        >
+                          <BsEnvelope className="text-primary font-size-5 " />{" "}
+                          {PersonalDetail.email}
+                        </Link>
+                        {user_type === "admin" || props.self === "no" ? (
+                          <CustomButton
+                            title={"Send Custom Email"}
+                            className="font-size-4 rounded-3 btn-primary py-0"
+                            /*Functionalities have to be done. */
+                          >
+                            <RiMailSendLine />
+                          </CustomButton>
+                        ) : null}
+                      </div>
                       <Link
                         className="text-dark font-size-5 w-100"
                         to={`tel:${PersonalDetail.contact_no}`}
@@ -331,7 +351,7 @@ const NewUserProfile = (props) => {
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                      PersonalDetail.length === 0 ? (
+                    PersonalDetail.length === 0 ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -644,7 +664,7 @@ const NewUserProfile = (props) => {
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
                             {user_type === "company" ||
-                              props.self === "yes" ? null : (
+                            props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEmplyomentDetails(true)}
@@ -666,7 +686,7 @@ const NewUserProfile = (props) => {
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
                           {userDetail.career === undefined ||
-                            userDetail.career.length === 0 ? (
+                          userDetail.career.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -730,7 +750,7 @@ const NewUserProfile = (props) => {
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Skill</span>
                             {user_type === "company" ||
-                              props.self === "yes" ? null : (
+                            props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowItSkills(true)}
@@ -776,7 +796,7 @@ const NewUserProfile = (props) => {
                           <h4 className="w-100 font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
                             {user_type === "company" ||
-                              props.self === "yes" ? null : (
+                            props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEducation(true)}
@@ -795,7 +815,7 @@ const NewUserProfile = (props) => {
                             ) : null}
                           </h4>
                           {userDetail.education === undefined ||
-                            userDetail.education.length === 0 ? (
+                          userDetail.education.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -939,10 +959,12 @@ const NewUserProfile = (props) => {
                     aria-labelledby="appliedJobs"
                   >
                     {/* <EmployeeTable /> */}
-                    {TabActive === "jobs" ? <JobProfileResponse
-                      employee_id={eid}
-                      heading={"userprofile"}
-                    /> : null}
+                    {TabActive === "jobs" ? (
+                      <JobProfileResponse
+                        employee_id={eid}
+                        heading={"userprofile"}
+                      />
+                    ) : null}
                     {/* <!-- Top Start --> */}
                     {/* <div className="mb-5">
                       <h4 className="font-size-7 mb-9 mt-5">Applied Jobs</h4>
@@ -1077,10 +1099,9 @@ const NewUserProfile = (props) => {
                       // location={location.pathname}
                       doc="yes"
                     /> */}
-                    {TabActive === "documents" ?
-                      <DocumrentContainer
-                        employee_id={eid}
-                      /> : null}
+                    {TabActive === "documents" ? (
+                      <DocumrentContainer employee_id={eid} />
+                    ) : null}
                   </div>
                   <div
                     className={
@@ -1089,11 +1110,13 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    {TabActive === "visa" ?
+                    {TabActive === "visa" ? (
                       <VisaTable
                         employee_id={eid}
                         setApiCall={setApiCall}
-                        page={"user_profile"} /> : null}
+                        page={"user_profile"}
+                      />
+                    ) : null}
                   </div>
                   <div
                     className={
@@ -1102,9 +1125,9 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    {TabActive === "notes" ?
-                      <Addfollowup employee_id={eid}
-                        setApiCall={setApiCall} /> : null}
+                    {TabActive === "notes" ? (
+                      <Addfollowup employee_id={eid} setApiCall={setApiCall} />
+                    ) : null}
                     {/* <div className="p-10 notes_container">
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
@@ -1133,27 +1156,28 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    {TabActive === "activity" ? <div className="p-10 activity_container">
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
+                    {TabActive === "activity" ? (
+                      <div className="p-10 activity_container">
+                        <div className="single_note mb-5">
+                          <small>Created on: 2023-08-03 17:10:53</small>
+                          <div className="card p-5">
+                            This is some text within a card body.
+                          </div>
+                        </div>
+                        <div className="single_note mb-5">
+                          <small>Created on: 2023-08-03 17:10:53</small>
+                          <div className="card p-5">
+                            This is some text within a card body.
+                          </div>
+                        </div>
+                        <div className="single_note mb-5">
+                          <small>Created on: 2023-08-03 17:10:53</small>
+                          <div className="card p-5">
+                            This is some text within a card body.
+                          </div>
                         </div>
                       </div>
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                    </div>
-                      : null}
+                    ) : null}
                   </div>
                 </div>
               </div>

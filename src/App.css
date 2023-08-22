@@ -547,10 +547,13 @@ input[type="file" i].form-control {
   min-width: unset;
   line-height: 20px;
   width: 100%;
+  color: #fff;
+  font-weight: 400;
 }
 
 .user_status_btn {
   padding: 0;
+
 }
 
 label.image_upload_btn {
