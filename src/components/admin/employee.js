@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
-import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

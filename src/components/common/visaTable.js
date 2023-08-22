@@ -522,7 +522,7 @@ export default function VisaTable(props) {
                                                     </button>
 
                                                     <button
-                                                        className="btn btn-outline-info action_btn"
+                                                        className={props.page === "user_profile" ? "d-none" : "btn btn-outline-info action_btn"}
                                                         onClick={() =>
                                                             AddDoucument(empdata)
                                                         }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useValidation from "../../common/useValidation";
-import { Modal } from "react-bootstrap";
+// import { Modal } from "react-bootstrap";
 import { getSingleFollowup, AddFollowup } from "../../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,14 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
-  let employId = props.resData.employee_id;
-  let jobId = props.job_id;
+  let employId = props.employee_id;
+  // le/*tjobId*/ = props.job_id;
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
     setErrors("");
     setLoading(false);
-    props.close();
+    // props.close();
   };
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
@@ -23,19 +23,20 @@ function Addfollowup(props) {
   const ResponseData = async () => {
     try {
       const userData = await getSingleFollowup(
-        props.resData.employee_id,
-        props.job_id
+        props.employee_id,
+        // props.job_id
       );
       if (
         userData.data.followup.length === 0 ||
-        props.resData.employee_id === "" ||
-        props.resData.employee_id === undefined
+        props.employee_id === "" ||
+        props.employee_id === undefined
       ) {
         setResponseData([]);
       } else {
         setResponseData(userData.data.followup);
       }
     } catch (err) {
+      console.log("get error", err)
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -45,7 +46,7 @@ function Addfollowup(props) {
 
   /*Render function to get the Response*/
   useEffect(() => {
-    if (props.resData.employee_id === undefined || props.job_id === undefined) {
+    if (props.employee_id === undefined /*|| props.job_id === undefined*/) {
     } else {
       ResponseData();
     }
@@ -83,7 +84,7 @@ function Addfollowup(props) {
     if (validate()) {
       setLoading(true);
       try {
-        let responseData = await AddFollowup({ state, employId, jobId });
+        let responseData = await AddFollowup({ state, employId/*,jobId*/ });
         if (responseData.message === "follow up updated successfully") {
           toast.success("Followup Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -108,12 +109,12 @@ function Addfollowup(props) {
   return (
     <>
       <ToastContainer />
-      <Modal
+      {/* <Modal
         show={props.show}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-      >
+      > 
         <button
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
@@ -121,10 +122,35 @@ function Addfollowup(props) {
           onClick={close}
         >
           <i className="fas fa-times"></i>
-        </button>
-        <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-          <h5 className="text-center pt-2 mb-7">Follow Ups</h5>
-          <form onSubmit={onAminFollowClick}>
+        </button>*/}
+      <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+        {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
+        <div className="row">
+          <div className="p-10 activity_container col-md-8">
+            {(response || []).map((res) => (
+              <div className="single_note mb-5" key={res.id}>
+                <small>Created on: {moment(res.created_at).format("YYYY-MM-DD")}</small>
+                <div className="card p-5">
+                  {res.remark}
+                </div>
+              </div>
+              // <div className="card mt-5 mb-5" key={res.id}>
+              //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
+              //     <div className="card-head font-size-3 text-dark card_left">
+              //       <span className="text-dark"> Posted date: </span>
+              //       {moment(res.created_at).format("YYYY-MM-DD")}
+              //     </div>
+              //     {res.next_followup_date === "0000-00-00" ? null :
+              //       <div className="card-head font-size-3 text-dark card_right">
+              //         <span className="text-dark"> Next date: </span>
+              //         {moment(res.next_followup_date).format("YYYY-MM-DD")}
+              //       </div>}
+              //   </div>
+              //   <div className="card-body p-3">{res.remark}</div>
+              // </div>
+            ))}
+          </div>
+          <form className="p-10 col-md-4">
             <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="remark"
@@ -162,7 +188,7 @@ function Addfollowup(props) {
                 )}
               </div>
             </div>
-            <div className="form-group ">
+            {/* <div className="form-group ">
               <label
                 htmlFor="next_followup_date"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -185,7 +211,7 @@ function Addfollowup(props) {
                       : "form-control coustam_datepicker"
                   }
                 />
-                {/*----ERROR MESSAGE FOR next_followup_date----*/}
+                {/*----ERROR MESSAGE FOR next_followup_date----
                 {errors.next_followup_date && (
                   <span
                     key={errors.next_followup_date}
@@ -195,7 +221,7 @@ function Addfollowup(props) {
                   </span>
                 )}
               </div>
-            </div>
+            </div> */}
             <div className="form-group text-center">
               {loading === true ? (
                 <button
@@ -212,35 +238,19 @@ function Addfollowup(props) {
                 </button>
               ) : (
                 <button
-                  onClick={onAminFollowClick}
+                  onClick={(e) => onAminFollowClick(e)}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                  type="submit"
+                  type="button"
                 >
                   Submit
                 </button>
               )}
             </div>
-            <div className=" col pb-5 mb-5">
-              {(response || []).map((res) => (
-                <div className="card mt-5 mb-5" key={res.id}>
-                  <div className="card-header d-flex justify-content-space-between px-3 py-1">
-                    <div className="card-head font-size-3 text-dark card_left">
-                      <span className="text-dark"> Posted date: </span>
-                      {moment(res.created_at).format("YYYY-MM-DD")}
-                    </div>
-                    {res.next_followup_date === "0000-00-00" ? null :
-                      <div className="card-head font-size-3 text-dark card_right">
-                        <span className="text-dark"> Next date: </span>
-                        {moment(res.next_followup_date).format("YYYY-MM-DD")}
-                      </div>}
-                  </div>
-                  <div className="card-body p-3">{res.remark}</div>
-                </div>
-              ))}
-            </div>
+
           </form>
         </div>
-      </Modal>
+      </div>
+      {/* </Modal> */}
     </>
   );
 }

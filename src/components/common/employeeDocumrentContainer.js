@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useRef } from "react";
 import { ListGroup, Form } from "react-bootstrap";
 import {
   UploadDocument,
@@ -24,6 +24,7 @@ export default function DocumrentContainer(props) {
   const [hide, setHide] = useState(false);
   let encoded;
   let user_type = localStorage.getItem("userType")
+  const fileInputRef = useRef(null);
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
@@ -457,15 +458,19 @@ export default function DocumrentContainer(props) {
                 type="file"
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                 style={{ display: "none" }}
+                id="EmployeeDoc"
+                ref={fileInputRef}
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
                 className={(user_type === "user" && (showMoreDocType||otherDoc)) || user_type === "admin" ? "btn btn-light" : "d-none"}
                 onClick={() => {
-                  document.querySelector('input[type="file"]').click()
-                  setHide(true)
+                  fileInputRef.current.click();
+                  // document.querySelector('input[type="file"]').click();
+                  setHide(true);
                 }
-                }
+              }
+              htmlFor="EmployeeDoc"
               >
                 {docTypData.id ? "Update Document" : "Upload Document"}
               </button>

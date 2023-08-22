@@ -1387,7 +1387,7 @@ export const AddFollowup = async (props) => {
     `${API_URL}admin/addFollowup`,
     {
       admin_id: admin_id,
-      job_id: props.jobId,
+      // job_id: props.jobId,
       employee_id: props.employId,
       remark: props.state.remark,
       next_date: props.state.next_followup_date,
@@ -1403,10 +1403,10 @@ export const AddFollowup = async (props) => {
 };
 
 /*get Followup single data Api */
-export const getSingleFollowup = async (employee_id, job_id) => {
+export const getSingleFollowup = async (employee_id /*, job_id*/) => {
   const response = await axios.post(
     `${API_URL}admin/getFollowup`,
-    { job_id: job_id, employee_id: employee_id },
+    { /*job_id: job_id,*/ employee_id: employee_id },
     {
       headers: {
         "Content-Type": "application/json",

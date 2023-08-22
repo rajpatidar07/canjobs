@@ -5,10 +5,12 @@ import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
 import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
+import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import { Link, useParams } from "react-router-dom";
-import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
+import { EmployeeDetails, EmployeeAppliedJob, AddEmployeeDetails } from "../../api/api";
 import moment from "moment";
+import Addfollowup from "../forms/admin/addfollowup";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
@@ -29,7 +31,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
-  console.log(eid, "PARATATATA");
+  // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
   const [showDoc, setShowDoc] = useState(false);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
@@ -45,6 +47,8 @@ const NewUserProfile = (props) => {
   let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
   const employeeId = user_type === "admin" ? eid : id;
+
+  console.log(showPersonalDetails)
   /*Function to get user Data */
   const UserData = async () => {
     try {
@@ -59,6 +63,7 @@ const NewUserProfile = (props) => {
         setIsLoading(false);
       } else {
         setuserDetail(userData.data);
+        setStatus(userData.data.employee[0].status)
         setPersonalDetail(userData.data.employee[0]);
         localStorage.setItem(
           "profile_photo",
@@ -119,6 +124,7 @@ const NewUserProfile = (props) => {
   const handleViewResume = (pdfUrl) => {
     window.open(pdfUrl, "_blank");
   };
+
   /*Function to calculate the time duration of two dates */
   const calculateDuration = (startDate, endDate) => {
     const start = moment(startDate);
@@ -128,12 +134,35 @@ const NewUserProfile = (props) => {
     const months = duration.months();
     const days = duration.days();
 
-    return `${
-      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
-    } ${
-      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
-    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
+    return `${years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+      } ${months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
+      } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
   };
+  const [status, setStatus] = useState("")
+  /*function to change applicants status */
+  const OnStatusChange = async (e) => {
+    // e.preventDefault()
+    setStatus(e)
+    let data = {
+      employee_id: eid,
+      status: e,
+    }
+    try {
+      let response = await AddEmployeeDetails(data)
+      if (response.message === 'Employee data updated successfully') {
+        toast.success("Employee status changes successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true)
+      }
+    } catch (err) {
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  }
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -209,37 +238,63 @@ const NewUserProfile = (props) => {
                       </h4>
                       <p className="m-0 age_gender font-size-3 d-flex align-items-center">
                         {PersonalDetail.gender ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.date_of_birth
-                          ? `(${
-                              PersonalDetail.gender === "female"
-                                ? "F"
-                                : PersonalDetail.gender === "male"
-                                ? "M"
-                                : "O"
-                            },
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.date_of_birth
+                          ? `(${PersonalDetail.gender === "female"
+                            ? "F"
+                            : PersonalDetail.gender === "male"
+                              ? "M"
+                              : "O"
+                          },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
                           : ""}
-                        <DropdownButton
+                        {/* <DropdownButton
                           as={ButtonGroup}
                           title={"Variant"}
                           size={"sm"}
+                          value={status || ""}
                           className="user_status_btn ml-1"
+                          onChange={(e) => OnStatusChange(e)}
                         >
-                          <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-                          <Dropdown.Item eventKey="2">
-                            Another action
-                          </Dropdown.Item>
-                          <Dropdown.Item eventKey="3" active>
-                            Active Item
-                          </Dropdown.Item>
-                          <Dropdown.Item eventKey="4">
-                            Separated link
-                          </Dropdown.Item>
+                          <Dropdown.Item value="" eventKey="0">Selectstatus</Dropdown.Item>
+                          {(FilterJson.employee_status || []).map((item, index) => {
+                            return (
+                              <Dropdown.Item value={index + 1} eventKey={index + 1}>{item}</Dropdown.Item>
+                            )
+                          })}
+                        </DropdownButton> */}
+                        <DropdownButton
+                          as={ButtonGroup}
+                          title={status === "1" ? ("New"
+                          ) : status === "2" ? (
+                            "Prospect"
+                          ) : status === "3" ? (
+                            "Lead"
+                          ) : status === "4" ? (
+                            "Reatined"
+                          ) : status === "5" ? (
+                            "Lost"
+                          ) : status === "6" ? (
+                            "Dead"
+                            // ) : status === "7" ? (
+                            //   "Reserved"
+                          ) : status === "0" ? (
+                            "New"
+                          ) : "status"}
+                          size="sm"
+                          variant={status ? status : ""}
+                          className="user_status_btn ml-1"
+                          onSelect={OnStatusChange}
+                        >
+                          <Dropdown.Item value="" eventKey="0">Select Status</Dropdown.Item>
+                          {(FilterJson.employee_status || []).map((item, index) => (
+                            <Dropdown.Item key={index} value={index + 1} eventKey={index + 1}>{item}</Dropdown.Item>
+                          ))}
                         </DropdownButton>
+
                       </p>
                     </div>
                     {/* <p className="mb-8 text-gray font-size-4">
@@ -249,12 +304,20 @@ const NewUserProfile = (props) => {
                   {PersonalDetail.email ? (
                     <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
                       <Link
-                        className="text-dark font-size-5 w-100"
+                        className="text-dark font-size-5 w-100 text-break"
                         to={`mailto:${PersonalDetail.email}`}
                       >
-                        <BsEnvelope className="text-primary font-size-5" />{" "}
+                        <BsEnvelope className="text-primary font-size-5 " />{" "}
                         {PersonalDetail.email}
                       </Link>
+                      {user_type === "admin" || props.self === "no" ? (
+                        <CustomButton
+                          className="font-size-3 rounded-3 btn-primary border-0"
+/*Functionalities have to be done. */                      >
+                          send mail
+
+                        </CustomButton>
+                      ) : null}
                       <Link
                         className="text-dark font-size-5 w-100"
                         to={`tel:${PersonalDetail.contact_no}`}
@@ -268,7 +331,7 @@ const NewUserProfile = (props) => {
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                    PersonalDetail.length === 0 ? (
+                      PersonalDetail.length === 0 ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -543,7 +606,7 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
-                        <div className="col-md-4 p-10 border-right ">
+                        <div className="col-md-6 p-10 border-right ">
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>About</span>
                           </h4>
@@ -551,7 +614,7 @@ const NewUserProfile = (props) => {
                             {PersonalDetail.description}
                           </p>
                         </div>
-                        <div className="col-md-4 p-10 border-right border-mercury">
+                        {/* <div className="col-md-4 p-10 border-right border-mercury">
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Personal Info</span>
 
@@ -562,60 +625,17 @@ const NewUserProfile = (props) => {
                                 employee_id={employeeId}
                               />
                             ) : null}
-                            {showPersonalDetails ? (
-                              <PersonalDetails
-                                show={showPersonalDetails}
-                                employeeId={employeeId}
-                                apiCall={apiCall}
-                                setApiCall={setApiCall}
-                                close={() => setShowPersonalDetails(false)}
-                              />
-                            ) : null}
-                          </h4>
-                        </div>
-                        <div className="col-md-4 p-10">
-                          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                            <span>Skill</span>
-                            {user_type === "company" ||
-                            props.self === "yes" ? null : (
-                              <CustomButton
-                                className="font-size-3 rounded-3 btn-primary border-0"
-                                onClick={() => setShowItSkills(true)}
-                              >
-                                <PiPencilDuotone />
-                              </CustomButton>
-                            )}
-                          </h4>
-                          <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
-                            {/*----Employee's Skills----*/}
-
-                            {showItSkills ? (
-                              <ItSkills
-                                show={showItSkills}
-                                employeeId={employeeId}
-                                apiCall={apiCall}
-                                setApiCall={setApiCall}
-                                close={() => setShowItSkills(false)}
-                              />
-                            ) : null}
-
-                            <ul className="list-unstyled d-flex align-items-start flex-wrap">
-                              {userDetail.skill === undefined ? (
-                                <li>No Data Found</li>
-                              ) : (
-                                (userDetail.skill || []).map(
-                                  (employeeSkills) => (
-                                    <li key={employeeSkills.skill_id}>
-                                      <span className="bg-polar text-black-2 mr-3 mb-2 p-2 font-size-3 rounded-3 d-flex align-items-center">
-                                        {employeeSkills.skill}
-                                      </span>
-                                    </li>
-                                  )
-                                )
-                              )}
-                            </ul>
-                          </div>
-                        </div>
+                            </h4>
+                          </div> */}
+                        {showPersonalDetails ? (
+                          <PersonalDetails
+                            show={showPersonalDetails}
+                            employeeId={employeeId}
+                            apiCall={apiCall}
+                            setApiCall={setApiCall}
+                            close={() => setShowPersonalDetails(false)}
+                          />
+                        ) : null}
                         {/*----Employee's Education Profile----*/}
                         <div
                           id="Career_Profile"
@@ -624,7 +644,7 @@ const NewUserProfile = (props) => {
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEmplyomentDetails(true)}
@@ -646,7 +666,7 @@ const NewUserProfile = (props) => {
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
                           {userDetail.career === undefined ||
-                          userDetail.career.length === 0 ? (
+                            userDetail.career.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -705,15 +725,58 @@ const NewUserProfile = (props) => {
                             ))
                           )}
                         </div>
-                        {/*----Employee's Career Profile----*/}
+                        {/* Employee's Skills */}
+                        <div className="border-top p-10 col-md-6 border-right">
+                          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                            <span>Skill</span>
+                            {user_type === "company" ||
+                              props.self === "yes" ? null : (
+                              <CustomButton
+                                className="font-size-3 rounded-3 btn-primary border-0"
+                                onClick={() => setShowItSkills(true)}
+                              >
+                                <PiPencilDuotone />
+                              </CustomButton>
+                            )}
+                          </h4>
+                          <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
+                            {showItSkills ? (
+                              <ItSkills
+                                show={showItSkills}
+                                employeeId={employeeId}
+                                apiCall={apiCall}
+                                setApiCall={setApiCall}
+                                close={() => setShowItSkills(false)}
+                              />
+                            ) : null}
+
+                            <ul className="list-unstyled d-flex align-items-start flex-wrap">
+                              {userDetail.skill === undefined ? (
+                                <li>No Data Found</li>
+                              ) : (
+                                (userDetail.skill || []).map(
+                                  (employeeSkills) => (
+                                    <li key={employeeSkills.skill_id}>
+                                      <span className="bg-polar text-black-2 mr-3 mb-2 p-2 font-size-3 rounded-3 d-flex align-items-center">
+                                        {employeeSkills.skill}
+                                      </span>
+                                    </li>
+                                  )
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        </div>
+
+                        {/*----Employee's Education Profile----*/}
                         <div
-                          id="Career_Profile"
+                          id="Education_Profile"
                           className="border-top col-md-6 p-10"
                         >
                           <h4 className="w-100 font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEducation(true)}
@@ -732,7 +795,7 @@ const NewUserProfile = (props) => {
                             ) : null}
                           </h4>
                           {userDetail.education === undefined ||
-                          userDetail.education.length === 0 ? (
+                            userDetail.education.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -876,10 +939,10 @@ const NewUserProfile = (props) => {
                     aria-labelledby="appliedJobs"
                   >
                     {/* <EmployeeTable /> */}
-                    <JobProfileResponse
+                    {TabActive === "jobs" ? <JobProfileResponse
                       employee_id={eid}
                       heading={"userprofile"}
-                    />
+                    /> : null}
                     {/* <!-- Top Start --> */}
                     {/* <div className="mb-5">
                       <h4 className="font-size-7 mb-9 mt-5">Applied Jobs</h4>
@@ -1004,9 +1067,9 @@ const NewUserProfile = (props) => {
                         ? "justify-content-center"
                         : "d-none"
                     }
-                    id="appliedJobs"
+                    id="applieddocuments"
                     role="tabpanel"
-                    aria-labelledby="appliedJobs"
+                    aria-labelledby="applieddocuments"
                   >
                     {/* <LmiaTime
                       // lmia={props.lmia}
@@ -1014,9 +1077,10 @@ const NewUserProfile = (props) => {
                       // location={location.pathname}
                       doc="yes"
                     /> */}
-                    <DocumrentContainer
-                      employee_id={PersonalDetail.employee_id}
-                    />
+                    {TabActive === "documents" ?
+                      <DocumrentContainer
+                        employee_id={eid}
+                      /> : null}
                   </div>
                   <div
                     className={
@@ -1025,7 +1089,11 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    <VisaTable employee_id={eid} />
+                    {TabActive === "visa" ?
+                      <VisaTable
+                        employee_id={eid}
+                        setApiCall={setApiCall}
+                        page={"user_profile"} /> : null}
                   </div>
                   <div
                     className={
@@ -1034,26 +1102,29 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    <div className="p-10 notes_container">
+                    {TabActive === "notes" ?
+                      <Addfollowup employee_id={eid}
+                        setApiCall={setApiCall} /> : null}
+                    {/* <div className="p-10 notes_container">
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
-                        <div class="card p-5">
+                        <div className="card p-5">
                           This is some text within a card body.
                         </div>
                       </div>
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
-                        <div class="card p-5">
+                        <div className="card p-5">
                           This is some text within a card body.
                         </div>
                       </div>
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
-                        <div class="card p-5">
+                        <div className="card p-5">
                           This is some text within a card body.
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   <div
                     className={
@@ -1062,26 +1133,27 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    <div className="p-10 activity_container">
+                    {TabActive === "activity" ? <div className="p-10 activity_container">
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
-                        <div class="card p-5">
+                        <div className="card p-5">
                           This is some text within a card body.
                         </div>
                       </div>
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
-                        <div class="card p-5">
+                        <div className="card p-5">
                           This is some text within a card body.
                         </div>
                       </div>
                       <div className="single_note mb-5">
                         <small>Created on: 2023-08-03 17:10:53</small>
-                        <div class="card p-5">
+                        <div className="card p-5">
                           This is some text within a card body.
                         </div>
                       </div>
                     </div>
+                      : null}
                   </div>
                 </div>
               </div>

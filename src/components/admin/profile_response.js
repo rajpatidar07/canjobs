@@ -177,7 +177,7 @@ function JobProfileResponse(props) {
     // Api call to set employee reserved
     try {
       let response = await ReservedEmployeeForJob(e.apply_id, "1");
-      console.log(response);
+      // console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
         let status = "pending";
@@ -438,7 +438,16 @@ function JobProfileResponse(props) {
                       scope="col"
                       className="pl-4 border-0 font-size-4 font-weight-normal"
                     >
+                      <Link
+                      to=""
+                      onClick={() => {
+                        handleSort("company_name");
+                        setCurrentPage(1);
+                      }}
+                      className="text-gray"
+                      title="Sort by Job's Company">
                       Company
+                      </Link>
                     </th>
 
                     {/* {props.heading === "Dashboard" ? (
@@ -780,7 +789,7 @@ function JobProfileResponse(props) {
                               >
                                 LMIA
                               </button>
-                              <button
+                             {/* <button
                                 className={
                                   props.response === "lmia" ||
                                   res.is_reserve === "0"
@@ -793,9 +802,8 @@ function JobProfileResponse(props) {
                                 <span className="text-gray px-2">
                                   <LiaCcVisa />
                                 </span>
-                                {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}
                               </button>
-                              <button
+                               <button
                                 className={
                                   res.is_reserve === "0"
                                     ? "d-none"
@@ -845,7 +853,6 @@ function JobProfileResponse(props) {
                                 <span className="text-gray px-2">
                                   <GrDocumentUser />
                                 </span>
-                                {/* <span className="fas fa-file text-gray"></span> */}
                               </button>
                               <button
                                 className={
@@ -860,8 +867,7 @@ function JobProfileResponse(props) {
                                 <span className="text-gray px-2">
                                   <RiChatFollowUpLine />
                                 </span>
-                                {/* <i className=" fas fa-plus text-gray px-2"></i> */}
-                              </button>
+                              </button> */}
                               <button
                                 className={
                                   props.response === "visa" ||
