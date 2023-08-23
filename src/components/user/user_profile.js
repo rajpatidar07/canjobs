@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import EmployementDetails from "../forms/user/employement";
 import PersonalDetails from "../forms/user/personal";
@@ -7,7 +6,7 @@ import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   EmployeeDetails,
   EmployeeAppliedJob,
@@ -17,17 +16,12 @@ import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
-import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-import { Tab, Tabs } from "react-bootstrap";
 import DocumrentContainer from "../common/employeeDocumrentContainer";
-import LmiaTime from "../common/lmiaTime";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
-import EmployeeTable from "../common/employeeTable";
-import JobResponse from "../admin/response";
 import JobProfileResponse from "../admin/profile_response";
 import VisaTable from "../common/visaTable";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -36,6 +30,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { RiMailSendLine } from "react-icons/ri";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
+  let navigate = useNavigate()
+
   // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
   const [lima, setLmia] = useState(false);
@@ -201,6 +197,7 @@ const NewUserProfile = (props) => {
       >
         <ToastContainer />
         <div className="container-fluid">
+
           {name === null || name === "null" ? "<h4>Complete profile</h4>" : ""}
           {isLoading ? (
             <div className="table-responsive main_table_div">
@@ -208,7 +205,15 @@ const NewUserProfile = (props) => {
             </div>
           ) : (
             <div className="row text-left mt-5 pt-0">
-              <div className="col-12 mb-2">
+              <Link className="d-flex align-items-center back_btn_profile "
+                onClick={() => navigate(-1)}
+              >
+                <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                  Back
+                </span>
+              </Link>
+              <div className="col-12 mb-2 mt-10">
                 <div className="bg-white shadow-9 d-flex">
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
                     <Link
@@ -512,134 +517,23 @@ const NewUserProfile = (props) => {
                     role="tablist"
                   >
                     <div className="arrow-wrapper">
-                    <h5 className="mt-2">LMIA status</h5>
                       <div className="arrow-steps clearfix p-2">
                         {(lima || []).map((status, i) => {
                           return (
-
-                            <div
-                              key={i}
-                              className={`step m-2 current text-capitalize`}
-                            >
-                              {/* <Link
-                      to=""
-                      className={isDone ? 'text-white' : 'text-gray'}
-                      onClick={doc === 'yes' ? () =>
-                        setExpandedStatus(isExpanded ? null : status) : null
-                      }
-                    >
-                      {status}
-                    </Link> */}
-                              <span>{status.lmia_status}</span>
-                            </div>
-
-                          );
+                            status.lmia_status === "" ||
+                              status.lmia_status === null ||
+                              status.lmia_status === undefined ||
+                              status.lmia_status === "undefined" ?
+                              null :
+                              <div
+                                key={i}
+                                className={`step m-2 current text-capitalize`}>
+                                <span>{status.lmia_status}</span>
+                              </div>
+                          )
                         })}
                       </div>
                     </div>
-                    {/* <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "profile"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                        }
-                        id="home-tab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="home"
-                        aria-selected="true"
-                        onClick={() => setTabActive("profile")}
-                      >
-                        Overview
-                      </Link>
-                    </li>
-                    <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "jobs"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                        }
-                        id="appliedJobs"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="appliedJobs"
-                        aria-selected="true"
-                        onClick={() => setTabActive("jobs")}
-                      >
-                        Applied Jobs
-                      </Link>
-                    </li>
-                    <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "documents"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                        }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("documents")}
-                      >
-                        Documents
-                      </Link>
-                    </li>
-                    <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "visa"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                        }
-                        id="visaTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="visaTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("visa")}
-                      >
-                        Visa
-                      </Link>
-                    </li>
-                    <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "notes"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                        }
-                        id="notesTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="notesTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("notes")}
-                      >
-                        Notes
-                      </Link>
-                    </li>
-                    <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "activity"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                        }
-                        id="activityTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="activityTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("activity")}
-                      >
-                        Activity History
-                      </Link>
-                    </li> */}
-
                   </ul>
                   {/*----Profile Header----*/}
                   <ul

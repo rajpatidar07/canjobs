@@ -38,7 +38,7 @@ function CompanyDetailPage(props) {
   return (
     <div className="company_info">
       <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-        <span>Contact Info</span>
+        <span>{props.page === "company_profile"? null :"Contact Info"}</span>
         <CustomButton
           className=" font-size-3 rounded-3 btn-primary border-0"
           onClick={() => setContactDetails(true)}

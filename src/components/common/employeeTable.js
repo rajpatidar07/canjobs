@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -119,9 +119,9 @@ export default function EmployeeTable(props) {
   ]);
 
   /* Function to show the single data to update Employee*/
-  const employeeDetails = (e) => {
-    props.employeeDetails(e);
-  };
+  // const employeeDetails = (e) => {
+  //   props.employeeDetails(e);
+  // };
 
   /* Function to show the single data to update Employee Education*/
   const editEmployeeEducation = (e) => {
@@ -535,24 +535,38 @@ export default function EmployeeTable(props) {
                               )}
                             </div>
                           </div>
-                          {props.heading === "Dashboard" ? (
+
+                          <Link
+                            to={`/${empdata.employee_id}`}
+                            // onClick={
+                            //   empdata.name !== null
+                            //     ? () => employeeDetails(empdata.employee_id)
+                            //     : null
+                            // }
+                            title="Employee Details"
+                          >
+
                             <div className=" mb-0">
-                              <p className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate">
-                                <Link to={`/${empdata.employee_id}`}
-                                    className="text-dark">
-                                {empdata.name}
+                              {empdata.name === null ||
+                                empdata.name === undefined ||
+                                empdata.name === "undefined" ||
+                                empdata.name === "" ?
+                                <p className="font-size-3  mb-0">Unavailable</p> :
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize"><Link to={`/${empdata.employee_id}`}
+                                  className="text-dark">
+                                  {empdata.name}
                                 </Link>
-                              </p>
-                              <div className="text-gray font-size-2 m-0 text-capitalize">
+                                </p>
+                              }
+                              {empdata.gender || empdata.marital_status ? <p className="text-gray font-size-2 m-0 text-capitalize">
                                 {empdata.gender === "female"
                                   ? "F"
                                   : empdata.gender === "male"
-                                  ? "M"
-                                  : "O"}{" "}
-                                ({empdata.marital_status + ", "}
+                                    ? "M"
+                                    : "O"}
                                 {/*Calculation of age from date of birth*/}
-                                {moment().diff(empdata.date_of_birth, "years")}
-                                Y)
+                                ({empdata.marital_status || empdata.date_of_birth ? `${empdata.marital_status},${moment().diff(
+                                  empdata.date_of_birth, "years")} Y` : null})
                                 {empdata.is_featured === ("1" || 1) ? (
                                   <span className="bg-orange text-white featured_tag">
                                     Featured
@@ -563,75 +577,16 @@ export default function EmployeeTable(props) {
                                     Web
                                   </span>
                                 ) : null}
-                              </div>
+                              </p> : null}
                             </div>
-                          ) : (
-                            <Link
-                              to={`/${empdata.employee_id}`}
-                              // onClick={
-                              //   empdata.name !== null
-                              //     ? () => employeeDetails(empdata.employee_id)
-                              //     : null
-                              // }
-                              title="Employee Details"
-                            >
-                              {empdata.name === null ? (
-                                <div className="mb-0 font-size-3 mb-0 text-capitalize">
-                                  Unavailable
-                                  <p className="text-gray font-size-2 m-0 text-capitalize">
-                                    {empdata.is_featured === ("1" || 1) ? (
-                                      <span className="bg-orange text-white featured_tag">
-                                        Featured
-                                      </span>
-                                    ) : null}
-                                    {empdata.created_by_admin === ("0" || 0) ? (
-                                      <span className="bg-info text-white web_tag">
-                                        Web
-                                      </span>
-                                    ) : null}
-                                  </p>
-                                </div>
-                              ) : (
-                                <div className=" mb-0">
-                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                    <Link to={`/${empdata.employee_id}`}
-                                    className="text-dark">
-                                    {empdata.name}
-                                    </Link>
-                                  </p>
-                                  <p className="text-gray font-size-2 m-0 text-capitalize">
-                                    {empdata.gender === "female"
-                                      ? "F"
-                                      : empdata.gender === "male"
-                                      ? "M"
-                                      : "O"}{" "}
-                                    ({empdata.marital_status + ", "}
-                                    {/*Calculation of age from date of birth*/}
-                                    {moment().diff(
-                                      empdata.date_of_birth,
-                                      "years"
-                                    )}
-                                    Y)
-                                    {empdata.is_featured === ("1" || 1) ? (
-                                      <span className="bg-orange text-white featured_tag">
-                                        Featured
-                                      </span>
-                                    ) : null}
-                                    {empdata.created_by_admin === ("0" || 0) ? (
-                                      <span className="bg-info text-white web_tag">
-                                        Web
-                                      </span>
-                                    ) : null}
-                                  </p>
-                                </div>
-                              )}
-                            </Link>
-                          )}
+
+                          </Link>
+
                         </div>
                       </td>
                       <td className="py-5 ">
                         {empdata.contact_no === null ? (
-                          <p className="font-size-3 mb-0">Unavailable</p>
+                          null
                         ) : (
                           <p className="m-0">
                             +
@@ -772,7 +727,6 @@ export default function EmployeeTable(props) {
                           </p>
                         </td>
                       )}
-
                       {/* Calulation to get user is new or retained */}
                       {/* <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -789,7 +743,7 @@ export default function EmployeeTable(props) {
                             aria-label="Basic example"
                           >
                             {props.skill === null ||
-                            props.skill === undefined ? (
+                              props.skill === undefined ? (
                               <>
                                 {/* <button
                                   className="btn btn-outline-info action_btn"
@@ -888,7 +842,7 @@ export default function EmployeeTable(props) {
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}
                                     title="All jobs "
-                                    // disabled={empdata.skill ? false : true}
+                                  // disabled={empdata.skill ? false : true}
                                   >
                                     <span className="text-gray px-2">
                                       <PiBriefcaseLight />

@@ -9,7 +9,7 @@ import { EmployerDetails } from "../../api/api";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
@@ -22,14 +22,16 @@ function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   let cid = company_id;
+  let navigate = useNavigate()
   /*Show modal and data state */
+  const [lima, setLmia] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   let [showDoc, setShowDoc] = useState(false);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
-    const [TabActive, setTabActive] = useState("profile");
+  const [TabActive, setTabActive] = useState("profile");
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
 
@@ -88,7 +90,15 @@ function CompanyProfileDetail(props) {
         }
       >
         <div className="row text-left mt-5 pt-0">
-          <div className="col-12 mb-2">
+          <Link className="d-flex align-items-center back_btn_profile"
+            onClick={() => navigate(-1)}
+          >
+            <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+            <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+              Back
+            </span>
+          </Link>
+          <div className="col-12 mb-2 mt-10">
             <div className="row m-5 px-10 py-5 bg-white align-items-center justify-content-between mb-5 text-center text-xs-left">
               <div className="media align-items-start company_box col-md-4 col-sm-6 p-0 ">
                 <div className="text_box text-left">
@@ -103,6 +113,7 @@ function CompanyProfileDetail(props) {
                   />
                 </div>
                 <div className="text_box text-left w-100 text-capitalize">
+                  
                   <h3 className="mb-0 font-size-6 heading-dark-color">
                     {employerData.company_name}
                   </h3>
@@ -121,6 +132,7 @@ function CompanyProfileDetail(props) {
               <div className="col-md-6 col-sm-6 media align-items-center company_box">
                 <CompanyDetailPage
                   employerId={user_type === "company" ? company_id : cid}
+                  page={"company_profile"}
                 />
               </div>
               {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">
@@ -137,6 +149,29 @@ function CompanyProfileDetail(props) {
         </div>
         <div className="col-12 order-2 order-xl-1">
           <div className="bg-white">
+            {/* LMIA */}
+            <ul
+              className="nav border-bottom border-bottom border-mercury user_profile_tab"
+              id="myTab"
+              role="tablist"
+            >
+              <div className="arrow-wrapper">
+                <div className="arrow-steps clearfix p-2">
+                  {(lima || []).map((status, i) => {
+                    return (
+
+                      <div
+                        key={i}
+                        className={`step m-2 current text-capitalize`}
+                      >
+                        <span>{status.lmia_status}</span>
+                      </div>
+
+                    );
+                  })}
+                </div>
+              </div>
+            </ul>
             {/*----Profile Header----*/}
             <ul
               className="nav border-bottom border-bottom border-mercury user_profile_tab"
@@ -174,7 +209,7 @@ function CompanyProfileDetail(props) {
                   aria-selected="true"
                   onClick={() => setTabActive("jobs")}
                 >
-                 Jobs
+                  Jobs
                 </Link>
               </li>
               <li className="tab-menu-items nav-item">
@@ -404,11 +439,12 @@ function CompanyProfileDetail(props) {
               role="tabpanel"
               aria-labelledby="appliedJobs"
             >
-              {TabActive === "jobs" ? <JobTable
+              <JobTable
                 company_id={cid}
                 heading={"companyprofile"}
                 response={"companyprofile"}
-              /> : null}
+                setLmia={setLmia}
+              />
               {/* <!-- Top Start --> */}
 
             </div>
@@ -430,7 +466,7 @@ function CompanyProfileDetail(props) {
                     /> */}
               {TabActive === "documents" ?
                 <DocumrentContainer
-                  company_id={cid}
+                employer_id={cid}
                 /> : null}
             </div>
             <div
@@ -443,7 +479,7 @@ function CompanyProfileDetail(props) {
               {TabActive === "interview" ?
                 <Interview
                   company_id={cid}
-                  setApiCall={setApiCall}/> : null}
+                  setApiCall={setApiCall} /> : null}
             </div>
             <div
               className={
@@ -454,28 +490,28 @@ function CompanyProfileDetail(props) {
             >
               {TabActive === "notes" ?
                 <AddCompanyfollowup company_id={cid}
-                  setApiCall={setApiCall} /> 
-              //  <div className="p-10 notes_container">
-              //         <div className="single_note mb-5">
-              //           <small>Created on: 2023-08-03 17:10:53</small>
-              //           <div className="card p-5">
-              //             This is some text within a card body.
-              //           </div>
-              //         </div>
-              //         <div className="single_note mb-5">
-              //           <small>Created on: 2023-08-03 17:10:53</small>
-              //           <div className="card p-5">
-              //             This is some text within a card body.
-              //           </div>
-              //         </div>
-              //         <div className="single_note mb-5">
-              //           <small>Created on: 2023-08-03 17:10:53</small>
-              //           <div className="card p-5">
-              //             This is some text within a card body.
-              //           </div>
-              //         </div>
-              //       </div>
-                     : null}
+                  setApiCall={setApiCall} />
+                //  <div className="p-10 notes_container">
+                //         <div className="single_note mb-5">
+                //           <small>Created on: 2023-08-03 17:10:53</small>
+                //           <div className="card p-5">
+                //             This is some text within a card body.
+                //           </div>
+                //         </div>
+                //         <div className="single_note mb-5">
+                //           <small>Created on: 2023-08-03 17:10:53</small>
+                //           <div className="card p-5">
+                //             This is some text within a card body.
+                //           </div>
+                //         </div>
+                //         <div className="single_note mb-5">
+                //           <small>Created on: 2023-08-03 17:10:53</small>
+                //           <div className="card p-5">
+                //             This is some text within a card body.
+                //           </div>
+                //         </div>
+                //       </div>
+                : null}
             </div>
             <div
               className={

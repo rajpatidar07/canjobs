@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 import Addfollowup from "../forms/admin/addfollowup";
 import {
@@ -10,26 +8,21 @@ import {
   GetFilter,
   AddUpdateVisa,
 } from "../../api/api";
-import moment from "moment";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 import Loader from "../common/loader";
-import VisaStatus from "../forms/user/visaStatus";
-import DocumentModal from "../forms/admin/EmployeeDocumentModal";
-import { BsArrow90DegRight } from "react-icons/bs";
-import { RiChatFollowUpLine } from "react-icons/ri";
-import { LiaCcVisa } from "react-icons/lia";
+// import VisaStatus from "../forms/user/visaStatus";
+// import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiBriefcaseLight } from "react-icons/pi";
 import { ImCalendar } from "react-icons/im";
-import { GrDocumentUser } from "react-icons/gr";
 function JobProfileResponse(props) {
   /*show modal and data states */
-  let [documentModal, setDocumentModal] = useState(false);
-  let [showVisaModal, setVisaModal] = useState(false);
+  // let [documentModal, setDocumentModal] = useState(false);
+  // let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [apiCall, setApiCall] = useState(props.apiCall);
   let [followup, setFollowUp] = useState(false);
@@ -39,8 +32,8 @@ function JobProfileResponse(props) {
   let [resData, setResData] = useState("");
   let [searchError, setSearchError] = useState("");
   let [isLoading, setIsLoading] = useState(true);
-  let [employeeId, setemployeeId] = useState();
-  let [lmiaStatus, setLmiaStatus] = useState();
+  // let [employeeId, setemployeeId] = useState();
+  // let [lmiaStatus, setLmiaStatus] = useState();
 
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
@@ -113,15 +106,6 @@ function JobProfileResponse(props) {
         setResponseData([]);
         setIsLoading(false);
       } else {
-        // if (props.self === "yes") {
-        //   setResponseData(userData.data.data.filter((item) => item.employee_status === "0"));
-        // } else {
-        //   if (props.employee_id) {
-        //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0" && item.employee_id === props.employee_id));
-        //   } else {
-        //     setResponseData(userData.data.data.filter((item) => item.employee_status !== "0"));
-        //   }
-        // }
         setResponseData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
@@ -218,11 +202,11 @@ function JobProfileResponse(props) {
   };
 
   /*Function to open add follow up modal */
-  const addFollow = (e) => {
-    setFollowUp(true);
-    setResData(e);
-    setJobId(e.job_id);
-  };
+  // const addFollow = (e) => {
+  //   setFollowUp(true);
+  //   setResData(e);
+  //   setJobId(e.job_id);
+  // };
 
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
@@ -246,16 +230,16 @@ function JobProfileResponse(props) {
     setJobId(e.job_id);
   };
   /* Function to show the single data to update visa*/
-  const editVisa = (e) => {
-    setVisaModal(true);
-    setemployeeId(e);
-  };
+  // const editVisa = (e) => {
+  //   setVisaModal(true);
+  //   setemployeeId(e);
+  // };
   /*Function to open add Document up modal */
-  const AddDoucument = (e) => {
-    setDocumentModal(true);
-    setemployeeId(e.employee_id);
-    setLmiaStatus(e.lmia_status);
-  };
+  // const AddDoucument = (e) => {
+  //   setDocumentModal(true);
+  //   setemployeeId(e.employee_id);
+  //   setLmiaStatus(e.lmia_status);
+  // };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -557,27 +541,10 @@ function JobProfileResponse(props) {
                     <tr>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      {props.heading === "Dashboard" ? (
-                        <th className="bg-white">No Data Found</th>
-                      ) : (
-                        <th className="bg-white"></th>
-                      )}
-                      {props.heading === "Dashboard" ? (
-                        <th className="bg-white"></th>
-                      ) : (
                         <th className="bg-white text-center">No Data Found</th>
-                      )}
                       <th className="bg-white"></th>
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                          <th className="bg-white"></th>
-                        </>
-                      )}
+                        <th className="bg-white"></th>
+                      
                     </tr>
                   ) : (
                     (response || []).map((res, i) => (
@@ -779,7 +746,6 @@ function JobProfileResponse(props) {
 
                               <button
                                 className={
-                                  props.response === "visa" ||
                                   res.is_reserve === "0"
                                     ? "d-none"
                                     : "btn btn-outline-info action_btn text-gray"
@@ -928,7 +894,7 @@ function JobProfileResponse(props) {
           </div>
         </div>
       </div>
-      {documentModal ? (
+      {/* {documentModal ? (
         <DocumentModal
           show={documentModal}
           close={() => setDocumentModal(false)}
@@ -936,7 +902,7 @@ function JobProfileResponse(props) {
           job={"no"}
           lmia={lmiaStatus}
         />
-      ) : null}
+      ) : null} */}
       {followup ? (
         <Addfollowup
           show={followup}
@@ -950,7 +916,7 @@ function JobProfileResponse(props) {
           }}
         />
       ) : null}
-      {showVisaModal ? (
+      {/* {showVisaModal ? (
         <VisaStatus
           show={showVisaModal}
           employeeData={employeeId}
@@ -958,7 +924,7 @@ function JobProfileResponse(props) {
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
         />
-      ) : null}
+      ) : null} */}
       {interview ? (
         <AddInterview
           show={interview}

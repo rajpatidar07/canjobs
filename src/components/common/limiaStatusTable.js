@@ -550,7 +550,10 @@ export default function LimiaStatusTable(props) {
                                                                     <div className="d-flex profile_box gx-2">
                                                                         <div className="media  align-items-center">
                                                                             <div className="circle-36 mx-auto overflow-hidden">
-                                                                                {res.profile_photo === null ? (
+                                                                                {res.profile_photo ===  
+                                                                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                                                        NA
+                                                                    </span> ? (
                                                                                     <img
                                                                                         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                                                                         alt=""
@@ -568,7 +571,10 @@ export default function LimiaStatusTable(props) {
 
                                                                         <div className=" mb-0">
                                                                             <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                                                                {res.name}
+                                                                                <Link to={`/${res.employee_id}`}
+                                                                                    className="text-dark">
+                                                                                    {res.name}
+                                                                                </Link>
                                                                             </p>
                                                                             <p className="text-gray font-size-2 m-0 text-capitalize">
                                                                                 {res.gender === "female" ? "F" : "M"} ({res.marital_status + ", "}
@@ -618,7 +624,7 @@ export default function LimiaStatusTable(props) {
                                                                 {res.contact_no || res.email ? (
                                                                     <>
                                                                         <p className="font-size-3 font-weight-normal m-0">
-                                                                            +<Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no}</Link>
+                                                                            <Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no ?`+${res.contact_no}`:""}</Link>
                                                                         </p>
                                                                         <p className="font-size-3 font-weight-normal m-0">
                                                                             <Link className="text-dark" to={`mailto:${res.email}`}>

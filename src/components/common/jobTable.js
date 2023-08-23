@@ -134,7 +134,10 @@ export default function JobTable(props) {
         //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
         //   setIsLoading(false);
         // } else
-
+        if (location.pathname === "/company_detail") {
+          props.setLmia(userData.data.data.filter(
+            (item) => (item.lmia_status !== "")))
+        }
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
@@ -441,8 +444,8 @@ export default function JobTable(props) {
                     <th className="bg-white"></th>
                     {props.heading !== "Dashboard" ? (
                       <>
-                        <th className="bg-white text-center">No Data Found</th>
                         <th className="bg-white"></th>
+                        <th className="bg-white text-center">No Data Found</th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
@@ -661,12 +664,12 @@ export default function JobTable(props) {
                                 //       Visa Responses
                                 //     </button> :
                                 props.skill === null ||
-                                props.skill === undefined ||
-                                Object.keys(props.skill).length === 0 ? (
+                                  props.skill === undefined ||
+                                  Object.keys(props.skill).length === 0 ? (
                                   <>
                                     <div
                                       className="btn-group button_group"
-                                      // role="group"
+                                    // role="group"
                                     >
                                       <button
                                         className="btn btn-outline-info action_btn"
@@ -679,8 +682,8 @@ export default function JobTable(props) {
                                               ? false
                                               : true
                                             : job.applied_by_admin > 0
-                                            ? false
-                                            : true
+                                              ? false
+                                              : true
                                         }
                                         title="Job Response"
                                       >
@@ -704,7 +707,7 @@ export default function JobTable(props) {
                                         <button
                                           className={
                                             props.response === "lmia" ||
-                                            props.response === "visa"
+                                              props.response === "visa"
                                               ? "d-none"
                                               : "btn btn-outline-info action_btn"
                                           }
@@ -712,11 +715,11 @@ export default function JobTable(props) {
                                             matchingCandidates(job)
                                           }
                                           title="All candidates"
-                                          // disabled={
-                                          //   Number(job.applied_by_admin) >= Number(job.role_category)
-                                          //     ? true
-                                          //     : false
-                                          // }
+                                        // disabled={
+                                        //   Number(job.applied_by_admin) >= Number(job.role_category)
+                                        //     ? true
+                                        //     : false
+                                        // }
                                         >
                                           <span className="text-gray px-2">
                                             <LiaUserTieSolid />
@@ -726,7 +729,7 @@ export default function JobTable(props) {
                                         <button
                                           className={
                                             props.response === "lmia" ||
-                                            props.response === "visa"
+                                              props.response === "visa"
                                               ? "d-none"
                                               : "btn btn-outline-info action_btn"
                                           }
@@ -741,7 +744,7 @@ export default function JobTable(props) {
                                         <button
                                           className={
                                             props.response === "lmia" ||
-                                            props.response === "visa"
+                                              props.response === "visa"
                                               ? "d-none"
                                               : "btn btn-outline-info action_btn"
                                           }
@@ -756,7 +759,7 @@ export default function JobTable(props) {
                                         <button
                                           className={
                                             props.response === "response" &&
-                                            location.pathname === "/job"
+                                              location.pathname === "/job"
                                               ? "btn btn-outline-info action_btn"
                                               : "d-none"
                                           }
@@ -795,9 +798,9 @@ export default function JobTable(props) {
                                         ? true
                                         : false ||
                                           Number(job.applied_by_admin) >=
-                                            Number(job.role_category)
-                                        ? true
-                                        : false
+                                          Number(job.role_category)
+                                          ? true
+                                          : false
                                     }
                                     onClick={() => onChangeJobClick(job.job_id)}
                                     title="Apply For job"
@@ -828,9 +831,9 @@ export default function JobTable(props) {
                                   role_category={job.role_category}
                                   status={
                                     props.response === "response" ||
-                                    props.response === "visa" ||
-                                    props.response === "lmia" || 
-                                    props.response === "companyprofile"
+                                      props.response === "visa" ||
+                                      props.response === "lmia" ||
+                                      props.response === "companyprofile"
                                       ? "1"
                                       : "0"
                                   }

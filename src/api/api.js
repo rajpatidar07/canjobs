@@ -872,7 +872,7 @@ export const getInterview = async (
       employee_id: employee_id,
       filter_by_time: time,
       filter_by_status: status,
-      filter_company_id:cid
+      filter_by_company_id:cid
     },
     {
       headers: {

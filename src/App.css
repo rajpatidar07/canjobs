@@ -238,9 +238,9 @@ table.table.table-striped.main_data_table_inn tr {
 }
 
 .back_btn_profile {
-  position: absolute;
-  top: 10px;
-  left: 30px;
+  position: relative;
+  top: 10px !important;
+  left: 30px !important
 }
 
 .applicant_row,
