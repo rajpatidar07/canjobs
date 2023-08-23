@@ -134,10 +134,7 @@ export default function JobTable(props) {
         //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
         //   setIsLoading(false);
         // } else
-        if (location.pathname === "/company_detail") {
-          props.setLmia(userData.data.data.filter(
-            (item) => (item.lmia_status !== "")))
-        }
+        props.setLmia(userData.data.data)
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
