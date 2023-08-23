@@ -10,7 +10,8 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   EmployeeDetails,
   EmployeeAppliedJob,
-  AddEmployeeDetails, GetEmployeeByLima
+  AddEmployeeDetails,
+  GetEmployeeByLima,
 } from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
@@ -30,7 +31,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { RiMailSendLine } from "react-icons/ri";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
@@ -88,9 +89,19 @@ const NewUserProfile = (props) => {
   /*FUnction to get Lmia */
   const getLimaOfuser = async () => {
     try {
-      let response = await GetEmployeeByLima("", "", "", "1", "10", null, null, "", eid);
+      let response = await GetEmployeeByLima(
+        "",
+        "",
+        "",
+        "1",
+        "10",
+        null,
+        null,
+        "",
+        eid
+      );
       if (response.message === "successful") {
-        setLmia(response.data)
+        setLmia(response.data);
       }
     } catch (err) {
       toast.error("Something went wrong", {
@@ -99,7 +110,7 @@ const NewUserProfile = (props) => {
       });
       setIsLoading(false);
     }
-  }
+  };
   /*Function to Geyt applied job data */
   const AppliedJob = async () => {
     try {
@@ -123,7 +134,7 @@ const NewUserProfile = (props) => {
       AppliedJob();
     }
     UserData();
-    getLimaOfuser()
+    getLimaOfuser();
     if (apiCall === true) {
       setApiCall(false);
       // if (PersonalDetail.name !== (undefined || "undefined" || null || "null")
@@ -149,9 +160,11 @@ const NewUserProfile = (props) => {
     const months = duration.months();
     const days = duration.days();
 
-    return `${years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
-      } ${months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
-      } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
+    return `${
+      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+    } ${
+      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
+    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
   };
   const [status, setStatus] = useState("");
   /*function to change applicants status */
@@ -182,7 +195,19 @@ const NewUserProfile = (props) => {
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
-      <AdminHeader heading={"User Profile"} />
+      <AdminHeader
+        heading={
+          <Link
+            className="d-flex align-items-center "
+            onClick={() => navigate(-1)}
+          >
+            <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+            <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+              <h3 class="font-size-6 mb-0 text-capitalize">User Profile</h3>
+            </span>
+          </Link>
+        }
+      />
       {/* <!-- navbar- --> */}
       <AdminSidebar heading={"User Profile"} />
 
@@ -197,7 +222,6 @@ const NewUserProfile = (props) => {
       >
         <ToastContainer />
         <div className="container-fluid">
-
           {name === null || name === "null" ? "<h4>Complete profile</h4>" : ""}
           {isLoading ? (
             <div className="table-responsive main_table_div">
@@ -205,15 +229,7 @@ const NewUserProfile = (props) => {
             </div>
           ) : (
             <div className="row text-left mt-5 pt-0">
-              <Link className="d-flex align-items-center back_btn_profile "
-                onClick={() => navigate(-1)}
-              >
-                <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-                <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                  Back
-                </span>
-              </Link>
-              <div className="col-12 mb-2 mt-10">
+              <div className="col-12 mb-2">
                 <div className="bg-white shadow-9 d-flex">
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
                     <Link
@@ -262,15 +278,16 @@ const NewUserProfile = (props) => {
                       </h4>
                       <p className="m-0 age_gender font-size-3 d-flex align-items-center">
                         {PersonalDetail.gender ||
-                          PersonalDetail.marital_status ||
-                          PersonalDetail.marital_status ||
-                          PersonalDetail.date_of_birth
-                          ? `(${PersonalDetail.gender === "female"
-                            ? "F"
-                            : PersonalDetail.gender === "male"
-                              ? "M"
-                              : "O"
-                          },
+                        PersonalDetail.marital_status ||
+                        PersonalDetail.marital_status ||
+                        PersonalDetail.date_of_birth
+                          ? `(${
+                              PersonalDetail.gender === "female"
+                                ? "F"
+                                : PersonalDetail.gender === "male"
+                                ? "M"
+                                : "O"
+                            },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
@@ -296,20 +313,20 @@ const NewUserProfile = (props) => {
                             status === "1"
                               ? "New"
                               : status === "2"
-                                ? "Prospect"
-                                : status === "3"
-                                  ? "Lead"
-                                  : status === "4"
-                                    ? "Reatined"
-                                    : status === "5"
-                                      ? "Lost"
-                                      : status === "6"
-                                        ? "Dead"
-                                        : // ) : status === "7" ? (
-                                        //   "Reserved"
-                                        status === "0"
-                                          ? "New"
-                                          : "status"
+                              ? "Prospect"
+                              : status === "3"
+                              ? "Lead"
+                              : status === "4"
+                              ? "Reatined"
+                              : status === "5"
+                              ? "Lost"
+                              : status === "6"
+                              ? "Dead"
+                              : // ) : status === "7" ? (
+                              //   "Reserved"
+                              status === "0"
+                              ? "New"
+                              : "status"
                           }
                           size="sm"
                           className="user_status_btn btn-primary text-white ml-1"
@@ -348,7 +365,7 @@ const NewUserProfile = (props) => {
                           <CustomButton
                             title={"Send Custom Email"}
                             className="font-size-4 rounded-3 btn-primary py-0"
-                          /*Functionalities have to be done. */
+                            /*Functionalities have to be done. */
                           >
                             <RiMailSendLine />
                           </CustomButton>
@@ -367,7 +384,7 @@ const NewUserProfile = (props) => {
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                      PersonalDetail.length === 0 ? (
+                    PersonalDetail.length === 0 ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -516,23 +533,60 @@ const NewUserProfile = (props) => {
                     id="myTab"
                     role="tablist"
                   >
-                    <div className="arrow-wrapper">
-                      <div className="arrow-steps clearfix p-2">
-                        {(lima || []).map((status, i) => {
-                          return (
-                            status.lmia_status === "" ||
-                              status.lmia_status === null ||
-                              status.lmia_status === undefined ||
-                              status.lmia_status === "undefined" ?
-                              null :
+                    <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap">
+                      {(lima || []).map((status, i) => {
+                        return status.lmia_status === "" ||
+                          status.lmia_status === null ||
+                          status.lmia_status === undefined ||
+                          status.lmia_status === "undefined" ? null : (
+                          <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between">
+                            <div className="job_name text-dark">
+                              <span className="m-0 font-size-2 d-block mb-1">
+                                {status.job_title}
+                              </span>
+                              <span className="m-0 font-size-2 d-block">
+                                {status.company_name}
+                              </span>
+                            </div>
+                            <div>
                               <div
                                 key={i}
-                                className={`step m-2 current text-capitalize`}>
-                                <span>{status.lmia_status}</span>
+                                className={`step text-capitalize ${
+                                  status.lmia_status ===
+                                    "candidate placement" ||
+                                  status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                }`}
+                              >
+                                <span>candidate placement</span>
                               </div>
-                          )
-                        })}
-                      </div>
+                              <div
+                                key={i}
+                                className={`step text-capitalize ${
+                                  status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                }`}
+                              >
+                                <span>submission</span>
+                              </div>
+                              <div
+                                key={i}
+                                className={`step text-capitalize ${
+                                  status.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                }`}
+                              >
+                                <span>decision</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </ul>
                   {/*----Profile Header----*/}
@@ -705,7 +759,7 @@ const NewUserProfile = (props) => {
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
                             {user_type === "company" ||
-                              props.self === "yes" ? null : (
+                            props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEmplyomentDetails(true)}
@@ -727,7 +781,7 @@ const NewUserProfile = (props) => {
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
                           {userDetail.career === undefined ||
-                            userDetail.career.length === 0 ? (
+                          userDetail.career.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -791,7 +845,7 @@ const NewUserProfile = (props) => {
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Skill</span>
                             {user_type === "company" ||
-                              props.self === "yes" ? null : (
+                            props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowItSkills(true)}
@@ -837,7 +891,7 @@ const NewUserProfile = (props) => {
                           <h4 className="w-100 font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
                             {user_type === "company" ||
-                              props.self === "yes" ? null : (
+                            props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0"
                                 onClick={() => setShowEducation(true)}
@@ -856,7 +910,7 @@ const NewUserProfile = (props) => {
                             ) : null}
                           </h4>
                           {userDetail.education === undefined ||
-                            userDetail.education.length === 0 ? (
+                          userDetail.education.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>

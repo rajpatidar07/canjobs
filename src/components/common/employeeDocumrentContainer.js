@@ -1,4 +1,4 @@
-import React, { useState ,useRef } from "react";
+import React, { useState, useRef } from "react";
 import { ListGroup, Form } from "react-bootstrap";
 import {
   UploadDocument,
@@ -23,7 +23,7 @@ export default function DocumrentContainer(props) {
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   const [hide, setHide] = useState(false);
   let encoded;
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   const fileInputRef = useRef(null);
   /*Functo get Applicants Document */
   const GetDocument = async () => {
@@ -47,7 +47,7 @@ export default function DocumrentContainer(props) {
           setDocTypData(response.data.data[0]);
           setDocFile(
             response.data.data[0].document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
           setDocName(response.data.data[0].type);
         } else if (
@@ -65,7 +65,7 @@ export default function DocumrentContainer(props) {
             setDocFile(
               response.data.data.find((item) => item.type === docName)
                 .document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
           }
         }
@@ -132,8 +132,9 @@ export default function DocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
-        }`;
+      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+        base64Name.split(";")[1]
+      }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
@@ -203,7 +204,7 @@ export default function DocumrentContainer(props) {
         setDocId("");
         setShowSaveDoc(false);
         setApiCall(true);
-        setHide(false)
+        setHide(false);
       }
       if (response.data.message === "updated successfully") {
         toast.success("Document Updated Successfully", {
@@ -212,7 +213,7 @@ export default function DocumrentContainer(props) {
         });
         setShowMoreDocType(false);
         setApiCall(true);
-        setHide(false)
+        setHide(false);
         // console.log(docData.find((item)=>item.type === docName))
         setDocTypData(
           docData.find(
@@ -227,7 +228,7 @@ export default function DocumrentContainer(props) {
               item.type ===
               (docData[0] === docTypData ? docTypData.type : docName)
           ).document_url +
-          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
         );
       }
       if (response.data.message === "Invalid base64-encoded data !") {
@@ -236,14 +237,14 @@ export default function DocumrentContainer(props) {
           autoClose: 1000,
         });
         setApiCall(true);
-        setHide(false)
+        setHide(false);
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setHide(false)
+      setHide(false);
     }
   };
   /*Fuinction to render image */
@@ -257,8 +258,8 @@ export default function DocumrentContainer(props) {
             ? docFileExt
             : docTypData.extension_type ===
               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-              ? "docx"
-              : docTypData.extension_type
+            ? "docx"
+            : docTypData.extension_type
         }
         filePath={docFile}
         errorComponent={() => <div>Error loading document</div>}
@@ -327,7 +328,7 @@ export default function DocumrentContainer(props) {
       setShowMoreDocType(false);
       setDocTypData("");
       setDocId("");
-      setDocName("")
+      setDocName("");
     } else {
       setOtherDoc(false);
       setDocName(selectedValue);
@@ -339,7 +340,7 @@ export default function DocumrentContainer(props) {
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
     link.download = docFile + docFileExt;
     document.body.appendChild(link);
@@ -351,7 +352,7 @@ export default function DocumrentContainer(props) {
   };
   /*Function to Print Document  */
   const PrintDocument = () => {
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open("", "_blank");
     const content = `
       <html>
         <head>
@@ -371,7 +372,7 @@ export default function DocumrentContainer(props) {
     };
   };
   return (
-    <div className="container document_container bg-white p-7 mb-10">
+    <div className="container-fluid document_container bg-white p-7 mb-10">
       <div className="row mb-11 ">
         <div className="col-12 col-md-4">
           <h5>Document List</h5>
@@ -390,14 +391,14 @@ export default function DocumrentContainer(props) {
                 onClick={() => {
                   setShowMoreDocType(false);
                   setDocTypData(item);
-                  setHide(false)
+                  setHide(false);
                   setDocName(item.type);
                   setDocId(item.id);
-                  setOtherDoc(false)
-                  setShowSaveDoc(false)
+                  setOtherDoc(false);
+                  setShowSaveDoc(false);
                   setDocFile(
                     item.document_url +
-                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                      `?v=${new Date().getMinutes() + new Date().getSeconds()}`
                   );
                 }}
               >
@@ -410,15 +411,19 @@ export default function DocumrentContainer(props) {
               </ListGroup.Item>
             ))}
             <ListGroup.Item
-              className={user_type === "user" || user_type === "admin" ? "bg-secondary text-white" : "d-none"}
+              className={
+                user_type === "user" || user_type === "admin"
+                  ? "bg-secondary text-white"
+                  : "d-none"
+              }
               onClick={() => {
                 setShowMoreDocType(true);
                 setDocTypData("");
                 setDocId("");
                 setOtherDoc(false);
-                setDocFile("")
-                setHide(false)
-                setShowSaveDoc(false)
+                setDocFile("");
+                setHide(false);
+                setShowSaveDoc(false);
               }}
             >
               <b>+ Add New Documents</b>
@@ -443,16 +448,20 @@ export default function DocumrentContainer(props) {
                       </option>
                     );
                   })}
-                  <option value={"other"}>Other
-                  </option>
+                  <option value={"other"}>Other</option>
                 </Form.Select>
               </div>
             ) : null}
-            {otherDoc === true ?
+            {otherDoc === true ? (
               <div className="doc_upload_col">
-                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)}
-                  placeholder="Document Name" />
-              </div> : null}
+                <input
+                  className="form-control"
+                  value={docName}
+                  onChange={(e) => setDocName(e.target.value)}
+                  placeholder="Document Name"
+                />
+              </div>
+            ) : null}
             <div className="">
               <input
                 type="file"
@@ -463,14 +472,18 @@ export default function DocumrentContainer(props) {
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "user" && (showMoreDocType||otherDoc)) || user_type === "admin" ? "btn btn-light" : "d-none"}
+                className={
+                  (user_type === "user" && (showMoreDocType || otherDoc)) ||
+                  user_type === "admin"
+                    ? "btn btn-light"
+                    : "d-none"
+                }
                 onClick={() => {
                   fileInputRef.current.click();
                   // document.querySelector('input[type="file"]').click();
                   setHide(true);
-                }
-              }
-              htmlFor="EmployeeDoc"
+                }}
+                htmlFor="EmployeeDoc"
               >
                 {docTypData.id ? "Update Document" : "Upload Document"}
               </button>
@@ -498,28 +511,40 @@ export default function DocumrentContainer(props) {
                 )}
               </div>
             ) : null}
-            {hide === false && docFile && user_type === "admin" ? <div className="doc_upload_col flex-end">
-              <button className="btn btn-gray mx-3" onClick={PrintDocument}
-                title="Print Document">
-                <i className="fa fa-print" aria-hidden="true"></i>
-              </button>
-              <button className="btn btn-regent"
-                onClick={DownloadDocument} title="Download Document">
-                <i className="fa fa-download" aria-hidden="true"></i>
-              </button>
-            </div> : null}
-            {hide === true
-              ? <div className="doc_upload_col">
-                <button className="btn btn-dark text-white" onClick={() => {
-                  setHide(false)
-                  setApiCall(true)
-                  setShowSaveDoc(false)
-                  setDocFile("")
-                  setDocFileExt("")
-                }}>
+            {hide === false && docFile && user_type === "admin" ? (
+              <div className="doc_upload_col flex-end">
+                <button
+                  className="btn btn-gray mx-3"
+                  onClick={PrintDocument}
+                  title="Print Document"
+                >
+                  <i className="fa fa-print" aria-hidden="true"></i>
+                </button>
+                <button
+                  className="btn btn-regent"
+                  onClick={DownloadDocument}
+                  title="Download Document"
+                >
+                  <i className="fa fa-download" aria-hidden="true"></i>
+                </button>
+              </div>
+            ) : null}
+            {hide === true ? (
+              <div className="doc_upload_col">
+                <button
+                  className="btn btn-dark text-white"
+                  onClick={() => {
+                    setHide(false);
+                    setApiCall(true);
+                    setShowSaveDoc(false);
+                    setDocFile("");
+                    setDocFileExt("");
+                  }}
+                >
                   Cancel
                 </button>
-              </div> : null}
+              </div>
+            ) : null}
           </div>
           <div className="doc_preview_box  text-center p-5 bg-light rounded">
             {/* {docTypData ? ( */}

@@ -758,6 +758,32 @@ select.form-control.select_document_type {
   gap: 15px;
 }
 
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step {
+  font-size: 12px;
+  padding: 3px 5px 3px 16px;
+  min-width: auto;
+  margin-right: 0px;
+}
+
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step:after,
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step:before {
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step:after,
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step:before {
+  right: -12px;
+}
+
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step:before {
+  border-left: 12px solid #fff;
+}
+
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step.current:after {
+  border-left: 12px solid #fa474a;
+}
+
 @media (max-width: 767px) {
   header.site-header {
     max-width: 100%;
@@ -905,11 +931,11 @@ select.form-control.select_document_type {
 
 .arrow-steps .step.current {
   color: #fff;
-  background-color: #23468c;
+  background-color: #fa474a;
 }
 
 .arrow-steps .step.current:after {
-  border-left: 17px solid #23468c;
+  border-left: 17px solid #fa474a;
 }
 
 .arrow-steps .step.sub-stage {
