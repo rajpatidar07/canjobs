@@ -919,7 +919,7 @@ export const GetEmployeeByLima = async (id, search, status, page, limit, col, or
       sort_order: ord,
       column_name: col,
       filter_by_time: time,
-      employee_id:employee_id
+      filter_employee_id:employee_id
     },
     {
       headers: {
@@ -1075,6 +1075,7 @@ export const UploadEmployerDocument = async (id, type, doc, docId) => {
       type: type,
       document_file: doc,
       is_varify: "0",
+      id : docId
     },
     {
       headers: {

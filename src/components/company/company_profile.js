@@ -18,6 +18,9 @@ import JobTable from "../common/jobTable";
 import DocumrentContainer from "..//common/employerDocumentContainer"
 import Interview from "../common/interviewTable";
 import AddCompanyfollowup from "../common/companyFollowUp";
+import { BsEnvelope } from "react-icons/bs";
+import { RiMailSendLine } from "react-icons/ri";
+import { BiPhoneCall } from "react-icons/bi";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
@@ -85,10 +88,11 @@ function CompanyProfileDetail(props) {
       <div
         className={
           user_type === "admin"
-            ? "container-fluid dashboard-main-container bg-light mt-12"
+            ? "dashboard-main-container bg-light mt-12 mt-lg-12"
             : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"
         }
       >
+        <div className="container-fluid">
         <div className="row text-left mt-5 pt-0">
           <Link className="d-flex align-items-center back_btn_profile"
             onClick={() => navigate(-1)}
@@ -99,8 +103,8 @@ function CompanyProfileDetail(props) {
             </span>
           </Link>
           <div className="col-12 mb-2 mt-10">
-            <div className="row m-5 px-10 py-5 bg-white align-items-center justify-content-between mb-5 text-center text-xs-left">
-              <div className="media align-items-start company_box col-md-4 col-sm-6 p-0 ">
+            <div className="bg-white shadow-9 d-flex">
+              <div className="col-md-3 col-sm-6 media align-items-center company_box media ">
                 <div className="text_box text-left">
                   <img
                     className="company_logo"
@@ -128,8 +132,38 @@ function CompanyProfileDetail(props) {
                   <PiPencilDuotone />
                 </CustomButton>
               </div>
-
-              <div className="col-md-6 col-sm-6 media align-items-center company_box">
+              {employerData.email ? (
+                    <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <Link
+                          className="text-dark font-size-5 w-100 text-break"
+                          to={`mailto:${employerData.email}`}
+                        >
+                          <BsEnvelope className="text-primary font-size-5 " />{" "}
+                          {employerData.email}
+                        </Link>
+                        {user_type === "admin" || props.self === "no" ? (
+                          <CustomButton
+                            title={"Send Custom Email"}
+                            className="font-size-4 rounded-3 btn-primary py-0"
+                          /*Functionalities have to be done. */
+                          >
+                            <RiMailSendLine />
+                          </CustomButton>
+                        ) : null}
+                      </div>
+                      <Link
+                        className="text-dark font-size-5 w-100"
+                        to={`tel:${employerData.contact_no}`}
+                      >
+                        <BiPhoneCall className="text-primary font-size-5" />{" "}
+                        {employerData.contact_no}
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+              <div className="col px-5 pt-5 pb-5 d-flex border-right">
                 <CompanyDetailPage
                   employerId={user_type === "company" ? company_id : cid}
                   page={"company_profile"}
@@ -146,32 +180,34 @@ function CompanyProfileDetail(props) {
           </div> */}
             </div>
           </div>
-        </div>
-        <div className="col-12 order-2 order-xl-1">
+        
+          <div className="col-12 order-2 order-xl-1">
           <div className="bg-white">
             {/* LMIA */}
+            {(lima || []).map((status, i) => {
+                    return (
+            <div className="col-6"
+            key={i}>
             <ul
               className="nav border-bottom border-bottom border-mercury user_profile_tab"
               id="myTab"
               role="tablist"
             >
               <div className="arrow-wrapper">
+                <h5>{status.job_title}</h5>
                 <div className="arrow-steps clearfix p-2">
-                  {(lima || []).map((status, i) => {
-                    return (
-
                       <div
-                        key={i}
                         className={`step m-2 current text-capitalize`}
                       >
                         <span>{status.lmia_status}</span>
                       </div>
 
-                    );
-                  })}
                 </div>
               </div>
             </ul>
+            </div>
+               );
+              })}
             {/*----Profile Header----*/}
             <ul
               className="nav border-bottom border-bottom border-mercury user_profile_tab"
@@ -311,8 +347,8 @@ function CompanyProfileDetail(props) {
                   <div
                     className={
                       user_type === "admin"
-                        ? "row bg-white rounded-4 shadow-9 m-5 p-10"
-                        : "row bg-white rounded-4 shadow-9 m-5"
+                        ? "row m-0"
+                        : "row m-0"
                     }
                   >
                     {/* <!-- Company Profile --> */}
@@ -321,7 +357,7 @@ function CompanyProfileDetail(props) {
                       <div className="col-md-12 col-xl-12 col-lg-12 col-12">
                         <div>
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                            <span>Kyc Details</span>
+                            <span>{/*Kyc Details*/}</span>
                             <CustomButton
                               className="font-size-3 rounded-3 btn-primary border-0"
                               onClick={() => setShowKycComplainDetailsModal(true)}
@@ -439,12 +475,14 @@ function CompanyProfileDetail(props) {
               role="tabpanel"
               aria-labelledby="appliedJobs"
             >
+              <div className="response_main_div w-100">
               <JobTable
                 company_id={cid}
                 heading={"companyprofile"}
                 response={"companyprofile"}
                 setLmia={setLmia}
               />
+              </div>
               {/* <!-- Top Start --> */}
 
             </div>
@@ -467,6 +505,7 @@ function CompanyProfileDetail(props) {
               {TabActive === "documents" ?
                 <DocumrentContainer
                 employer_id={cid}
+                page={"company_profile"}
                 /> : null}
             </div>
             <div
@@ -543,6 +582,8 @@ function CompanyProfileDetail(props) {
                 : null}
             </div>
           </div>
+        </div>
+        </div>
         </div>
       </div>
       {user_type !== "admin" ? <EmployeeFooter /> : null}

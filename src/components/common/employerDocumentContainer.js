@@ -336,7 +336,7 @@ export default function EmployerDocumrentContainer(props) {
     };
   };
   return (
-    <div className="container document_container bg-white p-7 mb-10">
+    <div className={props.page ==="company_profile"?"document_container bg-white p-7 mb-10":"container document_container bg-white p-7 mb-10"}>
       <div className="row mb-11 ">
         <div className="col-12 col-md-4">
           <h5>Document List</h5>
