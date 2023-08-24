@@ -400,7 +400,11 @@ export default function EmployerDocumrentContainer(props) {
                   }
                 >
                   <td className="p-3"> {textReplaceFunction(item.type)}</td>
-                  <td className="p-3">{item.updated_by_name ?item.updated_by_name :item.created_by_name}</td>
+                  <td className="p-3">
+                    {item.updated_by_name
+                      ? item.updated_by_name
+                      : item.created_by_name}
+                  </td>
                   <td className="p-3">{item.updated_at}</td>
                   <td className="p-3">
                     {item.is_varify === "1"
@@ -467,7 +471,7 @@ export default function EmployerDocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup> */}
         </div>
-        <div className="col-12 col-md-8">
+        <div className="col-md-8">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
@@ -567,7 +571,7 @@ export default function EmployerDocumrentContainer(props) {
               </div>
             ) : null}
           </div>
-          <div className="doc_preview_box  p-5 bg-light rounded position-relative">
+          <div className="doc_preview_box p-5 bg-light rounded position-relative">
             {/* {docTypData ? ( */}
             <div className="doc_action_div">
               {hide === false && docTypData && user_type === "admin" ? (

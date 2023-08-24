@@ -581,7 +581,7 @@ const UserProfile = (props) => {
                               className="w-100"
                               key={CareerDetails.career_id}
                             >
-                              <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                              <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                 <div className="media align-items-center company_box col-md-6 p-0">
                                   <div className="text_box text-left w-100 mt-n2 text-capitalize">
                                     <h3 className="mb-0">
@@ -669,7 +669,7 @@ const UserProfile = (props) => {
                                 className="w-100"
                                 key={EducationDetails.education_id}
                               >
-                                <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                                <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                   <div className="media align-items-center company_box p-0">
                                     <div className="text_box text-left w-100 mt-n2 text-capitalize">
                                       <h3 className="mb-0">

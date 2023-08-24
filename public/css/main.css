@@ -8907,7 +8907,7 @@ a.hover-text-hitgray:hover {
 @media (min-width: 768px) {
   .dashboard-main-container {
     padding-left: 120px;
-    height: calc(100vh - 70px) !important;
+    height: calc(100vh - 45px) !important;
     overflow: auto;
   }
 }

@@ -293,7 +293,7 @@ function EmployeeDetails() {
                       // onClick={() => setShowCareerProfile(true)}
                     />
                     <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                      <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                         <div className="media align-items-center company_box col-md-6 p-0">
                           <Link className="text_box text-left" to="/">
                             <img
@@ -339,7 +339,7 @@ function EmployeeDetails() {
                       </div>
                     </div>
                     <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                      <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                         <div className="media align-items-center company_box col-md-6 p-0">
                           <Link className="text_box text-left" to="/">
                             <img
@@ -402,7 +402,7 @@ function EmployeeDetails() {
                       close={() => setShowEducation(false)}
                     />
                     <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                      <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                         <div className="media align-items-center company_box p-0">
                           <Link className="text_box text-left" to="/">
                             <img
@@ -448,7 +448,7 @@ function EmployeeDetails() {
                       </div>
                     </div>
                     <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                      <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                         <div className="media align-items-center company_box p-0">
                           <Link className="text_box text-left" to="/">
                             <img
@@ -536,9 +536,7 @@ function EmployeeDetails() {
                       <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left">
                         Projects
                       </h4>
-                      <CustomButton
-                        className="fas fa-pen font-size-3 rounded-3 btn-primary border-0"
-                      />
+                      <CustomButton className="fas fa-pen font-size-3 rounded-3 btn-primary border-0" />
                     </div>
 
                     <div className="w-100">

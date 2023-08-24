@@ -495,7 +495,7 @@ const NewUserProfile = (props) => {
                     )}
                     {user_type === "company" || props.self === "yes" ? null : (
                       <CustomButton
-                        className="font-size-3 rounded-3 btn-primary border-0"
+                        className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                         onClick={() => setShowPersonalDetails(true)}
                       >
                         <PiPencilDuotone />
@@ -760,12 +760,12 @@ const NewUserProfile = (props) => {
                           id="Career_Profile"
                           className="border-top p-10 col-md-6 border-right"
                         >
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
+                          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
                             {user_type === "company" ||
                             props.self === "yes" ? null : (
                               <CustomButton
-                                className="font-size-3 rounded-3 btn-primary border-0"
+                                className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                 onClick={() => setShowEmplyomentDetails(true)}
                               >
                                 <PiPencilDuotone />
@@ -795,7 +795,7 @@ const NewUserProfile = (props) => {
                                 className="w-100"
                                 key={CareerDetails.career_id}
                               >
-                                <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                                <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                   <div className="media align-items-center company_box col-md-6 p-0">
                                     <div className="text_box text-left w-100 mt-n2 text-capitalize">
                                       <h3 className="mb-0">
@@ -851,7 +851,7 @@ const NewUserProfile = (props) => {
                             {user_type === "company" ||
                             props.self === "yes" ? null : (
                               <CustomButton
-                                className="font-size-3 rounded-3 btn-primary border-0"
+                                className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                 onClick={() => setShowItSkills(true)}
                               >
                                 <PiPencilDuotone />
@@ -892,12 +892,12 @@ const NewUserProfile = (props) => {
                           id="Education_Profile"
                           className="border-top col-md-6 p-10"
                         >
-                          <h4 className="w-100 font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold text-left d-flex align-items-center justify-content-space-between">
+                          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
                             {user_type === "company" ||
                             props.self === "yes" ? null : (
                               <CustomButton
-                                className="font-size-3 rounded-3 btn-primary border-0"
+                                className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                 onClick={() => setShowEducation(true)}
                               >
                                 <PiPencilDuotone />
@@ -925,7 +925,7 @@ const NewUserProfile = (props) => {
                                   className="w-100"
                                   key={EducationDetails.education_id}
                                 >
-                                  <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap justify-content-md-between">
+                                  <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                     <div className="media align-items-center company_box p-0">
                                       <div className="text_box text-left w-100 mt-n2 text-capitalize">
                                         <h3 className="mb-0">
