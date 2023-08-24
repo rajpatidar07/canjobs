@@ -590,7 +590,7 @@ const filterjson = {
     "submission",
     "decision"
   ],
-  sub_stages: {
+  lima_sub_stages: {
     "onboarding": [
       "request email id",
       "contact number",
@@ -627,13 +627,7 @@ const filterjson = {
       "confirm status of candidates",
       "attain information on candidate",
       "employer's work permit plans"
-      // "reviewing documents",
-      // "i m m 1295",
-      // "i m m 5476",
-      // "i m m 5645",
-      // "representative submission letter"
     ],
-    // "file review": ["create account on authorized representative portal"],
     "submission": [
       "initiate  l m i a application on portal",
       "fill job details and docs from employer",
@@ -651,6 +645,45 @@ const filterjson = {
       "request extra docs if needed",
       "keep them updated on app status",
     ],
+  },
+  visa_status: [
+    "onboard",
+    "documentation",
+    "file preparation",
+    "file review",
+    "file submission",
+    "file decision"
+  ],
+  visa_sub_stages: {
+    "onboard": [
+      "sending a document checklist",
+      "ra invoice processing"],
+    "documentation": ["birthth certificate",
+      "marriage certificate",
+      "education docs",
+      "p c c (all countries)",
+      "upfront Medica",
+      "employment ref letter",
+      "current employment",
+      "digital photo",
+      "passport",
+      "resume/cv",
+      "bank statement",
+      "payslips",
+      "i t r",
+      "i e l t s",
+      "any past refusal",
+      "proof of current immifration status",
+      "biometrics(is given)",
+      "lmia, job offer, job contact will be arrange by us"],
+    "file preparation": [
+      "reviewing documents",
+      "i m m 1295",
+      "i m m 5476",
+      "i m m 5645",
+      "representative submission letter"
+    ],
+    "file review": ["create account on authorized representative portal"],
   }
 };
 export default filterjson;

@@ -196,9 +196,6 @@ function CompanyProfileDetail(props) {
                               <span className="m-0 font-size-2 d-block mb-1">
                                 {status.job_title}
                               </span>
-                              <span className="m-0 font-size-2 d-block">
-                                {status.company_name}
-                              </span>
                             </div>
                             <div>
                               <div
@@ -212,28 +209,28 @@ function CompanyProfileDetail(props) {
                                     : null
                                 }`}
                               >
-                                <span>candidate placement</span>
+                                <span>onboarding</span>
                               </div>
                               <div
                                 key={i}
                                 className={`step text-capitalize ${
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
+                                  status.lmia_status === "onboarding" ||
+                                  status.lmia_status === "advertisements"
                                     ? "current"
                                     : null
                                 }`}
                               >
-                                <span>submission</span>
+                                <span>advertisements</span>
                               </div>
                               <div
                                 key={i}
                                 className={`step text-capitalize ${
-                                  status.lmia_status === "decision"
+                                  status.lmia_status === "documentation"
                                     ? "current"
                                     : null
                                 }`}
                               >
-                                <span>decision</span>
+                                <span>documentation</span>
                               </div>
                             </div>
                           </div>

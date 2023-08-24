@@ -137,8 +137,8 @@ function AddCompanyfollowup(props) {
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
           <div className="p-10 activity_container col-md-8">
-            {(response || []).map((res) => (
-              <div className="single_note mb-5" key={res.id}>
+            {(response || []).map((res,index) => (
+              <div className="single_note mb-5" key={index}>
                 <div className="d-flex justify-content-between">
                 <small>Created on: {moment(res.created_at).format("DD-MM-YYYY")}</small>
                 <small>Subject: {res.subject}</small>

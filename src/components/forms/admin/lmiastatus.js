@@ -7,8 +7,7 @@ import { useLocation } from "react-router-dom"
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 import LmiaTime from "../../common/lmiaTime";
-// import moment from "moment";
-
+import LmiaSubStageSelector from "../../common/lmiaSubStage";
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
   let [apiCall, setApiCall] = useState(false);
@@ -276,36 +275,41 @@ function LmiaStatus(props) {
             location={location.pathname} />
           <form onSubmit={onLmiaUpdateClick}>
             {expandedStatus && (
-              <div className='bg-white text-dark p-2 sub-stages-container row'>
-                {(FilterJson.sub_stages[expandedStatus] || []).map((subStage, j) => (
-                  <div
-                    key={j}
-                    className={`sub-stage col-6 text-capitalize ${(selectedStatus || []).some(
-                      (item) =>
-                        // item.status === expandedStatus &&
-                        item.lmia_substage === subStage
-                    )
-                      ? 'selected'
-                      : ''
-                      }`}
-                    onClick={() =>
-                      handleSubStageSelection(expandedStatus, subStage)
-                    }
-                  >
+              // <div className='bg-white text-dark p-2 sub-stages-container row'>
+              //   {(FilterJson.lima_sub_stages[expandedStatus] || []).map((subStage, j) => (
+              //     <div
+              //       key={j}
+              //       className={`sub-stage col-6 text-capitalize ${(selectedStatus || []).some(
+              //         (item) =>
+              //           item.lmia_substage === subStage
+              //       )
+              //         ? 'selected'
+              //         : ''
+              //         }`}
+              //       onClick={() =>
+              //         handleSubStageSelection(expandedStatus, subStage)
+              //       }
+              //     >
 
-                    <input
-                      type="checkbox"
-                      className='mx-2'
-                      checked={(selectedStatus || []).some(
-                        (item) =>
-                          // item.lmia_status === expandedStatus &&
-                          item.lmia_substage === subStage
-                      )}
-                      readOnly
-                    />{subStage}
-                  </div>
-                ))}
-              </div>
+              //       <input
+              //         type="checkbox"
+              //         className='mx-2'
+              //         checked={(selectedStatus || []).some(
+              //           (item) =>
+              //             // item.lmia_status === expandedStatus &&
+              //             item.lmia_substage === subStage
+              //         )}
+              //         readOnly
+              //       />{subStage}
+              //     </div>
+              //   ))}
+              // </div>
+              <LmiaSubStageSelector
+              expandedStatus={expandedStatus}
+              selectedStatus={selectedStatus}
+              FilterJson={FilterJson}
+              handleSubStageSelection={handleSubStageSelection}
+            />
             )}
             <div className="form-group ">
               <label

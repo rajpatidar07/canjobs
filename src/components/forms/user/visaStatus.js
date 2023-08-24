@@ -6,6 +6,7 @@ import { AddUpdateVisa } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
+import VisaTimeLine from "../../common/visaTimeLine";
 export default function VisaStatus(props) {
   const [loading, setLoading] = useState(false);
   // USER PERSONAL DETAIL VALIDATION
@@ -59,7 +60,6 @@ export default function VisaStatus(props) {
       setLoading(true);
       try {
         const responseData = await AddUpdateVisa(props.employeeData.employee_id, state, props.employeeData.visa_id);
-        console.log(responseData)
         if (responseData.data.message === "created successfully") {
           toast.success("Visa created successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -107,6 +107,8 @@ export default function VisaStatus(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onVisaUpdateClick}>
             <h5 className="text-center pt-2 mb-7">Update Visa status</h5>
+            <VisaTimeLine
+              visa={state.status} />
             <div className="form-group col">
               <label
                 htmlFor="status"
@@ -126,11 +128,12 @@ export default function VisaStatus(props) {
                 id="status"
               >
                 <option value={""}>Select visa status </option>
-                <option value={"pending"}>Pending</option>
-                <option value={"approved"}>Approved</option>
-                <option value={"reject"}>Reject</option>
-                <option value={"experied"}>experied</option>
-                <option value={"cancel"}>Cancel</option>
+                {(FilterJson.visa_status || []).map((item, index) => {
+                  return (
+                    <option value={item} key={index}>{item}</option>
+                  )
+                })}
+
               </select>
               {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
               {errors.status && (

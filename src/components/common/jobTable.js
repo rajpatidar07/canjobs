@@ -123,6 +123,10 @@ export default function JobTable(props) {
         } else {
           setresponseId(userData.data.data[0].job_id);
         }
+        setjobData(userData.data.data);
+        props.setLmia(userData.data.data)
+        setTotalData(userData.data.total_rows);
+        setIsLoading(false);
         //condition for limia and visa page
         // if (props.response === "lmia" || props.response === "visa") {
         //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
@@ -134,10 +138,7 @@ export default function JobTable(props) {
         //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
         //   setIsLoading(false);
         // } else
-        props.setLmia(userData.data.data)
-        setjobData(userData.data.data);
-        setTotalData(userData.data.total_rows);
-        setIsLoading(false);
+
       }
     } catch (err) {
       toast.error("Something went wrong", {
@@ -428,6 +429,7 @@ export default function JobTable(props) {
                 </tr>
               </thead>
               <tbody>
+
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
