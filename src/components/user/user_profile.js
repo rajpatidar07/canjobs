@@ -229,7 +229,7 @@ const NewUserProfile = (props) => {
             </div>
           ) : (
             <div className="row text-left mt-5 pt-0">
-              <div className="col-12 mb-2">
+              <div className="col-12 mb-1">
                 <div className="bg-white shadow-9 d-flex">
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
                     <Link
@@ -524,74 +524,78 @@ const NewUserProfile = (props) => {
                   <div className="profile_email_mobile"></div> */}
                 </div>
               </div>
+              <div className="col-12">
+                <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                  <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                    {(lima || []).map((status, i) => {
+                      return status.lmia_status === "" ||
+                        status.lmia_status === null ||
+                        status.lmia_status === undefined ||
+                        status.lmia_status === "undefined" ? null : (
+                        <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between">
+                          <div className="job_name text-dark">
+                            <span className="m-0 font-size-2 d-block mb-1">
+                              {status.job_title}
+                            </span>
+                            <span className="m-0 font-size-2 d-block">
+                              {status.company_name}
+                            </span>
+                          </div>
+                          <div>
+                            <div
+                              key={i}
+                              className={`step text-capitalize ${
+                                status.lmia_status === "candidate placement" ||
+                                status.lmia_status === "submission" ||
+                                status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                              }`}
+                            >
+                              <span>candidate placement</span>
+                            </div>
+                            <div
+                              key={i}
+                              className={`step text-capitalize ${
+                                status.lmia_status === "submission" ||
+                                status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                              }`}
+                            >
+                              <span>submission</span>
+                            </div>
+                            <div
+                              key={i}
+                              className={`step text-capitalize ${
+                                status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                              }`}
+                            >
+                              <span>decision</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
 
               <div className="col-12 order-2 order-xl-1">
                 <div className="bg-white">
                   {/* LMIA */}
-                  <ul
+                  {/* <ul
                     className="nav border-bottom border-bottom border-mercury user_profile_tab"
                     id="myTab"
                     role="tablist"
                   >
-                    <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap">
-                      {(lima || []).map((status, i) => {
-                        return status.lmia_status === "" ||
-                          status.lmia_status === null ||
-                          status.lmia_status === undefined ||
-                          status.lmia_status === "undefined" ? null : (
-                          <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between">
-                            <div className="job_name text-dark">
-                              <span className="m-0 font-size-2 d-block mb-1">
-                                {status.job_title}
-                              </span>
-                              <span className="m-0 font-size-2 d-block">
-                                {status.company_name}
-                              </span>
-                            </div>
-                            <div>
-                              <div
-                                key={i}
-                                className={`step text-capitalize ${
-                                  status.lmia_status ===
-                                    "candidate placement" ||
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                }`}
-                              >
-                                <span>candidate placement</span>
-                              </div>
-                              <div
-                                key={i}
-                                className={`step text-capitalize ${
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                }`}
-                              >
-                                <span>submission</span>
-                              </div>
-                              <div
-                                key={i}
-                                className={`step text-capitalize ${
-                                  status.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                }`}
-                              >
-                                <span>decision</span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </ul>
+                    
+                  </ul> */}
                   {/*----Profile Header----*/}
                   <ul
-                    className="nav border-bottom border-bottom border-mercury user_profile_tab"
+                    className="nav border-top border-bottom border-mercury user_profile_tab"
                     id="myTab"
                     role="tablist"
                   >
