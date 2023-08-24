@@ -15,7 +15,7 @@ import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
 import JobTable from "../common/jobTable";
-import DocumrentContainer from "..//common/employerDocumentContainer"
+import DocumrentContainer from "..//common/employerDocumentContainer";
 import Interview from "../common/interviewTable";
 import AddCompanyfollowup from "../common/companyFollowUp";
 import { BsEnvelope } from "react-icons/bs";
@@ -25,7 +25,7 @@ function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   let cid = company_id;
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   /*Show modal and data state */
   const [lima, setLmia] = useState(false);
   let [apiCall, setApiCall] = useState(false);
@@ -81,7 +81,9 @@ function CompanyProfileDetail(props) {
 
   return (
     <div>
-      <AdminHeader heading={<Link
+      <AdminHeader
+        heading={
+          <Link
             className="d-flex align-items-center "
             onClick={() => navigate(-1)}
           >
@@ -89,7 +91,9 @@ function CompanyProfileDetail(props) {
             <span className="text-uppercase font-size-3 font-weight-bold text-gray">
               <h3 class="font-size-6 mb-0 text-capitalize">Company Profile</h3>
             </span>
-          </Link>} />
+          </Link>
+        }
+      />
       <AdminSidebar />
       <ToastContainer />
       {user_type !== "admin" ? <EmployeeHeader /> : null}
@@ -101,75 +105,74 @@ function CompanyProfileDetail(props) {
         }
       >
         <div className="container-fluid">
-        <div className="row text-left mt-5 pt-0">
-          <div className="col-12 mb-2">
-            <div className="bg-white shadow-9 d-flex">
-              <div className="col-md-3 col-sm-6 media align-items-center company_box media ">
-                <div className="text_box text-left">
-                  <img
-                    className="company_logo"
-                    src={
-                      employerData.logo === null
-                        ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                        : employerData.logo
-                    }
-                    alt=""
+          <div className="row text-left mt-5 pt-0">
+            <div className="col-12 mb-1">
+              <div className="bg-white shadow-9 d-flex">
+                <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
+                  <div className="text_box text-left">
+                    <img
+                      className="company_logo"
+                      src={
+                        employerData.logo === null
+                          ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                          : employerData.logo
+                      }
+                      alt=""
+                    />
+                  </div>
+                  <div className="text_box text-left w-100 text-capitalize">
+                    <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
+                      {employerData.company_name}{" "}
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                        onClick={() => setShowCompanyInfoModal(true)}
+                      >
+                        <PiPencilDuotone />
+                      </CustomButton>
+                    </h3>
+                    <p className="font-size-3 text-default-color line-height-2 m-0">
+                      {employerData.industry}
+                    </p>
+                  </div>
+                </div>
+                {employerData.email ? (
+                  <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Link
+                        className="text-dark font-size-5 w-100 text-break"
+                        to={`mailto:${employerData.email}`}
+                      >
+                        <BsEnvelope className="text-primary font-size-5 " />{" "}
+                        {employerData.email}
+                      </Link>
+                      {user_type === "admin" || props.self === "no" ? (
+                        <CustomButton
+                          title={"Send Custom Email"}
+                          className="font-size-4 rounded-3 btn-primary py-0"
+                          /*Functionalities have to be done. */
+                        >
+                          <RiMailSendLine />
+                        </CustomButton>
+                      ) : null}
+                    </div>
+                    <Link
+                      className="text-dark font-size-5 w-100"
+                      to={`tel:${employerData.contact_no}`}
+                    >
+                      <BiPhoneCall className="text-primary font-size-5" />{" "}
+                      {employerData.contact_no}
+                    </Link>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div className="col px-5 pt-5 pb-5  border-right position-relative">
+                  <CompanyDetailPage
+                    employerId={user_type === "company" ? company_id : cid}
+                    page={"company_profile"}
                   />
                 </div>
-                <div className="text_box text-left w-100 text-capitalize">
-                  
-                  <h3 className="mb-0 font-size-6 heading-dark-color">
-                    {employerData.company_name}
-                  </h3>
-                  <p className="font-size-3 text-default-color line-height-2 m-0">
-                    {employerData.industry}
-                  </p>
-                </div>
-                <CustomButton
-                  className="font-size-3 rounded-3 btn-primary border-0"
-                  onClick={() => setShowCompanyInfoModal(true)}
-                >
-                  <PiPencilDuotone />
-                </CustomButton>
-              </div>
-              {employerData.email ? (
-                    <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Link
-                          className="text-dark font-size-5 w-100 text-break"
-                          to={`mailto:${employerData.email}`}
-                        >
-                          <BsEnvelope className="text-primary font-size-5 " />{" "}
-                          {employerData.email}
-                        </Link>
-                        {user_type === "admin" || props.self === "no" ? (
-                          <CustomButton
-                            title={"Send Custom Email"}
-                            className="font-size-4 rounded-3 btn-primary py-0"
-                          /*Functionalities have to be done. */
-                          >
-                            <RiMailSendLine />
-                          </CustomButton>
-                        ) : null}
-                      </div>
-                      <Link
-                        className="text-dark font-size-5 w-100"
-                        to={`tel:${employerData.contact_no}`}
-                      >
-                        <BiPhoneCall className="text-primary font-size-5" />{" "}
-                        {employerData.contact_no}
-                      </Link>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-              <div className="col px-5 pt-5 pb-5 d-flex border-right">
-                <CompanyDetailPage
-                  employerId={user_type === "company" ? company_id : cid}
-                  page={"company_profile"}
-                />
-              </div>
-              {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">
+                {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">
            
             <CustomButton
               className=" font-size-4 rounded-3 btn-primary border-0"
@@ -178,175 +181,174 @@ function CompanyProfileDetail(props) {
               Add Document
             </CustomButton>
           </div> */}
+              </div>
             </div>
-          </div>
-        
-          <div className="col-12 order-2 order-xl-1">
-          <div className="bg-white">
-            {/* LMIA */}
-            <ul>
-            <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap">
-                      {(lima || []).map((status, i) => {
-                        return status.lmia_status === "" ||
-                          status.lmia_status === null ||
-                          status.lmia_status === undefined ||
-                          status.lmia_status === "undefined" ? null : (
-                          <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between">
-                            <div className="job_name text-dark">
-                              <span className="m-0 font-size-2 d-block mb-1">
-                                {status.job_title}
-                              </span>
-                            </div>
-                            <div>
-                              <div
-                                key={i}
-                                className={`step text-capitalize ${
-                                  status.lmia_status ===
-                                    "onboarding" ||
-                                  status.lmia_status === "advertisements" ||
-                                  status.lmia_status === "documentation"
-                                    ? "current"
-                                    : null
-                                }`}
-                              >
-                                <span>onboarding</span>
-                              </div>
-                              <div
-                                key={i}
-                                className={`step text-capitalize ${
-                                  status.lmia_status === "onboarding" ||
-                                  status.lmia_status === "advertisements"
-                                    ? "current"
-                                    : null
-                                }`}
-                              >
-                                <span>advertisements</span>
-                              </div>
-                              <div
-                                key={i}
-                                className={`step text-capitalize ${
-                                  status.lmia_status === "documentation"
-                                    ? "current"
-                                    : null
-                                }`}
-                              >
-                                <span>documentation</span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
+            <div className="col-12 order arrow-wrapper custome_arrow_wrapper ">
+              {(lima || []).map((status, i) => {
+                return status.lmia_status === "" ||
+                  status.lmia_status === null ||
+                  status.lmia_status === undefined ||
+                  status.lmia_status === "undefined" ? null : (
+                  <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                    <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between align-items-center">
+                      <div className="job_name text-dark d-flex align-items-center">
+                        <span className="m-0 font-size-3">
+                          {status.job_title}
+                        </span>
+                      </div>
+                      <div>
+                        <div
+                          key={i}
+                          className={`step text-capitalize ${
+                            status.lmia_status === "onboarding" ||
+                            status.lmia_status === "advertisements" ||
+                            status.lmia_status === "documentation"
+                              ? "current"
+                              : null
+                          }`}
+                        >
+                          <span>onboarding</span>
+                        </div>
+                        <div
+                          key={i}
+                          className={`step text-capitalize ${
+                            status.lmia_status === "onboarding" ||
+                            status.lmia_status === "advertisements"
+                              ? "current"
+                              : null
+                          }`}
+                        >
+                          <span>advertisements</span>
+                        </div>
+                        <div
+                          key={i}
+                          className={`step text-capitalize ${
+                            status.lmia_status === "documentation"
+                              ? "current"
+                              : null
+                          }`}
+                        >
+                          <span>documentation</span>
+                        </div>
+                      </div>
                     </div>
-                    </ul>
-            {/*----Profile Header----*/}
-            <ul
-              className="nav border-bottom border-bottom border-mercury user_profile_tab"
-              id="myTab"
-              role="tablist"
-            >
-              <li className="tab-menu-items nav-item">
-                <Link
-                  className={
-                    TabActive === "profile"
-                      ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                      : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                  }
-                  id="home-tab"
-                  data-toggle="tab"
-                  role="tab"
-                  aria-controls="home"
-                  aria-selected="true"
-                  onClick={() => setTabActive("profile")}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="col-12 order-2 order-xl-1">
+              {/* LMIA */}
+
+              <div className="bg-white">
+                {/*----Profile Header----*/}
+                <ul
+                  className="nav border-top border-bottom border-mercury user_profile_tab"
+                  id="myTab"
+                  role="tablist"
                 >
-                  Overview
-                </Link>
-              </li>
-              <li className="tab-menu-items nav-item">
-                <Link
-                  className={
-                    TabActive === "jobs"
-                      ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                      : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                  }
-                  id="appliedJobs"
-                  data-toggle="tab"
-                  role="tab"
-                  aria-controls="appliedJobs"
-                  aria-selected="true"
-                  onClick={() => setTabActive("jobs")}
-                >
-                  Jobs
-                </Link>
-              </li>
-              <li className="tab-menu-items nav-item">
-                <Link
-                  className={
-                    TabActive === "documents"
-                      ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                      : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                  }
-                  id="docTab"
-                  data-toggle="tab"
-                  role="tab"
-                  aria-controls="docTab"
-                  aria-selected="true"
-                  onClick={() => setTabActive("documents")}
-                >
-                  Documents
-                </Link>
-              </li>
-              <li className="tab-menu-items nav-item">
-                <Link
-                  className={
-                    TabActive === "interview"
-                      ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                      : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                  }
-                  id="interviewTab"
-                  data-toggle="tab"
-                  role="tab"
-                  aria-controls="interviewTab"
-                  aria-selected="true"
-                  onClick={() => setTabActive("interview")}
-                >
-                  Interview
-                </Link>
-              </li>
-              <li className="tab-menu-items nav-item">
-                <Link
-                  className={
-                    TabActive === "notes"
-                      ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                      : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                  }
-                  id="notesTab"
-                  data-toggle="tab"
-                  role="tab"
-                  aria-controls="notesTab"
-                  aria-selected="true"
-                  onClick={() => setTabActive("notes")}
-                >
-                  Notes
-                </Link>
-              </li>
-              <li className="tab-menu-items nav-item">
-                <Link
-                  className={
-                    TabActive === "activity"
-                      ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                      : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                  }
-                  id="activityTab"
-                  data-toggle="tab"
-                  role="tab"
-                  aria-controls="activityTab"
-                  aria-selected="true"
-                  onClick={() => setTabActive("activity")}
-                >
-                  Activity History
-                </Link>
-              </li>
-              {/* <li className="tab-menu-items nav-item pr-12">
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "profile"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="home-tab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="home"
+                      aria-selected="true"
+                      onClick={() => setTabActive("profile")}
+                    >
+                      Overview
+                    </Link>
+                  </li>
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "jobs"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="appliedJobs"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="appliedJobs"
+                      aria-selected="true"
+                      onClick={() => setTabActive("jobs")}
+                    >
+                      Jobs
+                    </Link>
+                  </li>
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "documents"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="docTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="docTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("documents")}
+                    >
+                      Documents
+                    </Link>
+                  </li>
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "interview"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="interviewTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="interviewTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("interview")}
+                    >
+                      Interview
+                    </Link>
+                  </li>
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "notes"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="notesTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="notesTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("notes")}
+                    >
+                      Notes
+                    </Link>
+                  </li>
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "activity"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="activityTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="activityTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("activity")}
+                    >
+                      Activity History
+                    </Link>
+                  </li>
+                  {/* <li className="tab-menu-items nav-item pr-12">
                       <CustomButton
                         className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
@@ -354,266 +356,298 @@ function CompanyProfileDetail(props) {
                         {user_type === "user" ? "Add Document" : "Documents"}{" "}
                       </CustomButton>
                     </li> */}
-            </ul>
-            {/*---Profile Details----*/}
-            <div
-              className={
-                TabActive === "profile" ? "tab-content" : "d-none"
-              }
-              id="myTabContent"
-            >
-              <div
-                className="tab-pane fade show active"
-                id="home"
-                role="tabpanel"
-                aria-labelledby="home-tab"
-              >
-                {/*----About Employee----*/}
-                {isLoading ? (
-                  <div className="table-responsive main_table_div">
-                    <Loader />{" "}
-                  </div>
-                ) : (
+                </ul>
+                {/*---Profile Details----*/}
+                <div
+                  className={TabActive === "profile" ? "tab-content" : "d-none"}
+                  id="myTabContent"
+                >
                   <div
-                    className={
-                      user_type === "admin"
-                        ? "row m-0"
-                        : "row m-0"
-                    }
+                    className="tab-pane fade show active"
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
                   >
-                    {/* <!-- Company Profile --> */}
-
-                    <div className="text-capitalize company_detail_box w-100  m-0">
-                      <div className="col-md-12 col-xl-12 col-lg-12 col-12">
-                        <div>
-                          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                            <span>{/*Kyc Details*/}</span>
-                            <CustomButton
-                              className="font-size-3 rounded-3 btn-primary border-0"
-                              onClick={() => setShowKycComplainDetailsModal(true)}
-                            >
-                              <PiPencilDuotone />
-                            </CustomButton>
-                          </h4>
-                        </div>
-                        <div className="pt-5 text-left row m-0">
-                          {employerData.industry ? (
-                            <div className="font-size-3 mb-4 mr-10" title="Industry">
-                              <i className="far fa-building mr-2"></i>
-                              {employerData.industry}
-                            </div>
-                          ) : null}
-
-                          {employerData.corporation ? (
-                            <div className="font-size-3 mb-4 mr-10" title="Business Type">
-                              <i className="fas fa-briefcase mr-2"></i>
-                              {employerData.corporation}
-                            </div>
-                          ) : null}
-                          {employerData.company_size ? (
-                            <div className="font-size-3 mb-4 mr-10" title="Company size">
-                              <i className="fas fa-user-friends mr-2"></i>
-                              {employerData.company_size}
-                            </div>
-                          ) : null}
-                          {employerData.company_start_date ? (
-                            <div className="font-size-3 mb-4 mr-10" title="Est. Since">
-                              <i className="fas fa-business-time mr-2"></i>
-                              {moment(employerData.company_start_date).format("YYYY")}
-                            </div>
-                          ) : null}
-                          {employerData.website_url ? (
-                            <div className="font-size-3 mb-4 mr-10" title="Website URL">
-                              <i className="fas fa-globe mr-2"></i>
-                              <Link
-                                className="text-dark"
-                                to={""}
-                              >
-                                {employerData.website_url}
-                              </Link>
-                            </div>
-                          ) : null}
-                          {employerData.vacancy_for_post ? (
-                            <div className="font-size-3 mb-4 mr-10" title="Hiring for">
-                              <i className="fas fa-bullhorn mr-2"></i>
-                              {employerData.vacancy_for_post}
-                            </div>
-                          ) : null}
-                          {employerKycData === "" ? null : (
-                            <>
-                              {employerKycData.pan_no ? (
-                                <div className="font-size-3 mb-4 mr-10" title="PAN">
-                                  <span className="mr-2 font-weight-bold">PAN</span>
-                                  {employerKycData.pan_no}
-                                </div>
-                              ) : null}
-                              {employerKycData.tan_number ? (
-                                <div className="font-size-3 mb-4 mr-10" title="TAN">
-                                  <span className="mr-2 font-weight-bold">TAN</span>
-                                  {employerKycData.tan_number}
-                                </div>
-                              ) : null}
-                              {employerKycData.gstin ? (
-                                <div className="font-size-3 mb-4 mr-10" title="GSTIN">
-                                  <span className="mr-2 font-weight-bold">GSTIN</span>
-                                  {employerKycData.gstin}
-                                </div>
-                              ) : null}
-                            </>
-                          )}
-                        </div>
+                    {/*----About Employee----*/}
+                    {isLoading ? (
+                      <div className="table-responsive main_table_div">
+                        <Loader />{" "}
                       </div>
-                    </div>
-                    {/* <!-- Middle Body Start --> */}
-                    <div className="w-100 row m-0 border-top">
-                      <div className="col-md-12 col-xl-12 col-lg-12 col-12 ">
-                        <div>
-                          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                            <span>About {employerData.company_name}</span>
-                            <CustomButton
-                              className="font-size-3 rounded-3 btn-primary border-0"
-                              onClick={() => setShowCompanyInfoModal(true)}
-                            >
-                              <PiPencilDuotone />
-                            </CustomButton>
-                          </h4>
-                          <div className="pt-5 text-left">
-                            {employerData.about ? (
-                              <p className="font-size-4 mb-8">{employerData.about}</p>
-                            ) : (
-                              <p className="font-size-4 mb-8 text-center">
-                                No data Found
-                              </p>
-                            )}
+                    ) : (
+                      <div
+                        className={
+                          user_type === "admin" ? "row m-0" : "row m-0"
+                        }
+                      >
+                        {/* <!-- Company Profile --> */}
+
+                        <div className="text-capitalize company_detail_box w-100 row m-0">
+                          <div className="col-md-6 col-lg-6 p-10 border-right">
+                            <div>
+                              <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>About {employerData.company_name}</span>
+                                <CustomButton
+                                  className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
+                                  onClick={() => setShowCompanyInfoModal(true)}
+                                >
+                                  <PiPencilDuotone />
+                                </CustomButton>
+                              </h4>
+                              <div className="pt-5 text-left">
+                                {employerData.about ? (
+                                  <p className="font-size-4 mb-8">
+                                    {employerData.about}
+                                  </p>
+                                ) : (
+                                  <p className="font-size-4 mb-8 text-center">
+                                    No data Found
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-md-6 col-lg-6 p-10">
+                            <div>
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>{/*Kyc Details*/}</span>
+                                <CustomButton
+                                  className="font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+                                  onClick={() =>
+                                    setShowKycComplainDetailsModal(true)
+                                  }
+                                >
+                                  <PiPencilDuotone />
+                                </CustomButton>
+                              </h4>
+                            </div>
+                            <div className="pt-5 text-left row m-0">
+                              {employerData.industry ? (
+                                <div
+                                  className="font-size-3 mb-4 mr-10"
+                                  title="Industry"
+                                >
+                                  <i className="far fa-building mr-2"></i>
+                                  {employerData.industry}
+                                </div>
+                              ) : null}
+
+                              {employerData.corporation ? (
+                                <div
+                                  className="font-size-3 mb-4 mr-10"
+                                  title="Business Type"
+                                >
+                                  <i className="fas fa-briefcase mr-2"></i>
+                                  {employerData.corporation}
+                                </div>
+                              ) : null}
+                              {employerData.company_size ? (
+                                <div
+                                  className="font-size-3 mb-4 mr-10"
+                                  title="Company size"
+                                >
+                                  <i className="fas fa-user-friends mr-2"></i>
+                                  {employerData.company_size}
+                                </div>
+                              ) : null}
+                              {employerData.company_start_date ? (
+                                <div
+                                  className="font-size-3 mb-4 mr-10"
+                                  title="Est. Since"
+                                >
+                                  <i className="fas fa-business-time mr-2"></i>
+                                  {moment(
+                                    employerData.company_start_date
+                                  ).format("YYYY")}
+                                </div>
+                              ) : null}
+                              {employerData.website_url ? (
+                                <div
+                                  className="font-size-3 mb-4 mr-10"
+                                  title="Website URL"
+                                >
+                                  <i className="fas fa-globe mr-2"></i>
+                                  <Link className="text-dark" to={""}>
+                                    {employerData.website_url}
+                                  </Link>
+                                </div>
+                              ) : null}
+                              {employerData.vacancy_for_post ? (
+                                <div
+                                  className="font-size-3 mb-4 mr-10"
+                                  title="Hiring for"
+                                >
+                                  <i className="fas fa-bullhorn mr-2"></i>
+                                  {employerData.vacancy_for_post}
+                                </div>
+                              ) : null}
+                              {employerKycData === "" ? null : (
+                                <>
+                                  {employerKycData.pan_no ? (
+                                    <div
+                                      className="font-size-3 mb-4 mr-10"
+                                      title="PAN"
+                                    >
+                                      <span className="mr-2 font-weight-bold">
+                                        PAN
+                                      </span>
+                                      {employerKycData.pan_no}
+                                    </div>
+                                  ) : null}
+                                  {employerKycData.tan_number ? (
+                                    <div
+                                      className="font-size-3 mb-4 mr-10"
+                                      title="TAN"
+                                    >
+                                      <span className="mr-2 font-weight-bold">
+                                        TAN
+                                      </span>
+                                      {employerKycData.tan_number}
+                                    </div>
+                                  ) : null}
+                                  {employerKycData.gstin ? (
+                                    <div
+                                      className="font-size-3 mb-4 mr-10"
+                                      title="GSTIN"
+                                    >
+                                      <span className="mr-2 font-weight-bold">
+                                        GSTIN
+                                      </span>
+                                      {employerKycData.gstin}
+                                    </div>
+                                  ) : null}
+                                </>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
-                )}
-              </div>
-
-            </div>
-            {/* <!-- Sidebar End --> */}
-            <div
-              className={
-                TabActive === "jobs"
-                  ? "row m-0  justify-content-center"
-                  : "d-none"
-              }
-              id="appliedJobs"
-              role="tabpanel"
-              aria-labelledby="appliedJobs"
-            >
-              <div className="response_main_div w-100">
-              <JobTable
-                company_id={cid}
-                heading={"companyprofile"}
-                response={"companyprofile"}
-                setLmia={setLmia}
-              />
-              </div>
-              {/* <!-- Top Start --> */}
-
-            </div>
-            <div
-              className={
-                TabActive === "documents"
-                  ? "justify-content-center"
-                  : "d-none"
-              }
-              id="applieddocuments"
-              role="tabpanel"
-              aria-labelledby="applieddocuments"
-            >
-              {/* <LmiaTime
+                </div>
+                {/* <!-- Sidebar End --> */}
+                <div
+                  className={
+                    TabActive === "jobs"
+                      ? "row m-0  justify-content-center"
+                      : "d-none"
+                  }
+                  id="appliedJobs"
+                  role="tabpanel"
+                  aria-labelledby="appliedJobs"
+                >
+                  <div className="response_main_div w-100">
+                    <JobTable
+                      company_id={cid}
+                      heading={"companyprofile"}
+                      response={"companyprofile"}
+                      setLmia={setLmia}
+                    />
+                  </div>
+                  {/* <!-- Top Start --> */}
+                </div>
+                <div
+                  className={
+                    TabActive === "documents"
+                      ? "justify-content-center"
+                      : "d-none"
+                  }
+                  id="applieddocuments"
+                  role="tabpanel"
+                  aria-labelledby="applieddocuments"
+                >
+                  {/* <LmiaTime
                       // lmia={props.lmia}
                       // job={props.job}
                       // location={location.pathname}
                       doc="yes"
                     /> */}
-              {TabActive === "documents" ?
-                <DocumrentContainer
-                employer_id={cid}
-                page={"company_profile"}
-                /> : null}
-            </div>
-            <div
-              className={
-                TabActive === "interview"
-                  ? "justify-content-center "
-                  : "d-none"
-              }
-            >
-              {TabActive === "interview" ?
-                <Interview
-                  company_id={cid}
-                  setApiCall={setApiCall} /> : null}
-            </div>
-            <div
-              className={
-                TabActive === "notes"
-                  ? "justify-content-center "
-                  : "d-none"
-              }
-            >
-              {TabActive === "notes" ?
-                <AddCompanyfollowup company_id={cid}
-                  setApiCall={setApiCall} />
-                //  <div className="p-10 notes_container">
-                //         <div className="single_note mb-5">
-                //           <small>Created on: 2023-08-03 17:10:53</small>
-                //           <div className="card p-5">
-                //             This is some text within a card body.
-                //           </div>
-                //         </div>
-                //         <div className="single_note mb-5">
-                //           <small>Created on: 2023-08-03 17:10:53</small>
-                //           <div className="card p-5">
-                //             This is some text within a card body.
-                //           </div>
-                //         </div>
-                //         <div className="single_note mb-5">
-                //           <small>Created on: 2023-08-03 17:10:53</small>
-                //           <div className="card p-5">
-                //             This is some text within a card body.
-                //           </div>
-                //         </div>
-                //       </div>
-                : null}
-            </div>
-            <div
-              className={
-                TabActive === "activity"
-                  ? "justify-content-center "
-                  : "d-none"
-              }
-            >
-              {TabActive === "activity" ? <div className="p-10 activity_container">
-                <div className="single_note mb-5">
-                  <small>Created on: 2023-08-03 17:10:53</small>
-                  <div className="card p-5">
-                    This is some text within a card body.
-                  </div>
+                  {TabActive === "documents" ? (
+                    <DocumrentContainer
+                      employer_id={cid}
+                      page={"company_profile"}
+                    />
+                  ) : null}
                 </div>
-                <div className="single_note mb-5">
-                  <small>Created on: 2023-08-03 17:10:53</small>
-                  <div className="card p-5">
-                    This is some text within a card body.
-                  </div>
+                <div
+                  className={
+                    TabActive === "interview"
+                      ? "justify-content-center "
+                      : "d-none"
+                  }
+                >
+                  {TabActive === "interview" ? (
+                    <Interview
+                      company_id={cid}
+                      setApiCall={setApiCall}
+                      heading={"userprofile"}
+                    />
+                  ) : null}
                 </div>
-                <div className="single_note mb-5">
-                  <small>Created on: 2023-08-03 17:10:53</small>
-                  <div className="card p-5">
-                    This is some text within a card body.
-                  </div>
+                <div
+                  className={
+                    TabActive === "notes" ? "justify-content-center " : "d-none"
+                  }
+                >
+                  {TabActive === "notes" ? (
+                    <AddCompanyfollowup
+                      company_id={cid}
+                      setApiCall={setApiCall}
+                    />
+                  ) : //  <div className="p-10 notes_container">
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //       </div>
+                  null}
+                </div>
+                <div
+                  className={
+                    TabActive === "activity"
+                      ? "justify-content-center "
+                      : "d-none"
+                  }
+                >
+                  {TabActive === "activity" ? (
+                    <div className="p-10 activity_container">
+                      <div className="single_note mb-5">
+                        <small>Created on: 2023-08-03 17:10:53</small>
+                        <div className="card p-5">
+                          This is some text within a card body.
+                        </div>
+                      </div>
+                      <div className="single_note mb-5">
+                        <small>Created on: 2023-08-03 17:10:53</small>
+                        <div className="card p-5">
+                          This is some text within a card body.
+                        </div>
+                      </div>
+                      <div className="single_note mb-5">
+                        <small>Created on: 2023-08-03 17:10:53</small>
+                        <div className="card p-5">
+                          This is some text within a card body.
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
-                : null}
             </div>
           </div>
-        </div>
-        </div>
         </div>
       </div>
       {user_type !== "admin" ? <EmployeeFooter /> : null}

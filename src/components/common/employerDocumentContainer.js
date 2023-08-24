@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
 import Verified from "../../media/verified.png";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 export default function EmployerDocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
@@ -23,7 +24,7 @@ export default function EmployerDocumrentContainer(props) {
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   const [hide, setHide] = useState(false);
   let encoded;
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
@@ -46,7 +47,7 @@ export default function EmployerDocumrentContainer(props) {
           setDocTypData(response.data.data[0]);
           setDocFile(
             response.data.data[0].document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
           setDocName(response.data.data[0].type);
         } else if (
@@ -64,7 +65,7 @@ export default function EmployerDocumrentContainer(props) {
             setDocFile(
               response.data.data.find((item) => item.type === docName)
                 .document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
           }
         }
@@ -131,8 +132,9 @@ export default function EmployerDocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
-        }`;
+      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+        base64Name.split(";")[1]
+      }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
@@ -163,7 +165,7 @@ export default function EmployerDocumrentContainer(props) {
         setDocId("");
         setShowSaveDoc(false);
         setApiCall(true);
-        setHide(false)
+        setHide(false);
       }
       if (response.data.message === "updated successfully") {
         toast.success("Document Updated Successfully", {
@@ -172,7 +174,7 @@ export default function EmployerDocumrentContainer(props) {
         });
         setShowMoreDocType(false);
         setApiCall(true);
-        setHide(false)
+        setHide(false);
         // console.log(docData.find((item)=>item.type === docName))
         setDocTypData(
           docData.find(
@@ -187,7 +189,7 @@ export default function EmployerDocumrentContainer(props) {
               item.type ===
               (docData[0] === docTypData ? docTypData.type : docName)
           ).document_url +
-          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
         );
       }
       if (response.data.message === "Invalid base64-encoded data !") {
@@ -196,14 +198,14 @@ export default function EmployerDocumrentContainer(props) {
           autoClose: 1000,
         });
         setApiCall(true);
-        setHide(false)
+        setHide(false);
       }
     } catch (err) {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setHide(false)
+      setHide(false);
     }
   };
 
@@ -218,8 +220,8 @@ export default function EmployerDocumrentContainer(props) {
             ? docFileExt
             : docTypData.extension_type ===
               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-              ? "docx"
-              : docTypData.extension_type
+            ? "docx"
+            : docTypData.extension_type
         }
         filePath={docFile}
         errorComponent={() => <div>Error loading document</div>}
@@ -290,7 +292,7 @@ export default function EmployerDocumrentContainer(props) {
       setShowMoreDocType(false);
       setDocTypData("");
       setDocId("");
-      setDocName("")
+      setDocName("");
     } else {
       setOtherDoc(false);
       setDocName(selectedValue);
@@ -303,7 +305,7 @@ export default function EmployerDocumrentContainer(props) {
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
     link.download = docFile + docFileExt;
     document.body.appendChild(link);
@@ -316,7 +318,7 @@ export default function EmployerDocumrentContainer(props) {
 
   /*Function to Print Document  */
   const PrintDocument = () => {
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open("", "_blank");
     const content = `
       <html>
         <head>
@@ -336,12 +338,83 @@ export default function EmployerDocumrentContainer(props) {
     };
   };
   return (
-    <div className={props.page ==="company_profile"?"document_container bg-white p-7 mb-10":"container document_container bg-white p-7 mb-10"}>
-      <div className="row mb-11 ">
-        <div className="col-12 col-md-4">
-          <h5>Document List</h5>
+    <div
+      className={
+        props.page === "company_profile"
+          ? "document_container bg-white py-7 mb-10"
+          : "container document_container bg-white p-5 mb-10"
+      }
+    >
+      <div className="row m-0">
+        <div className="col-md-4 p-0 border-right">
+          <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
+            Document List
+          </h5>
           {/* Documents type list */}
-          <ListGroup defaultActiveKey="#link1">
+          <table class="table font-size-3">
+            <thead>
+              <tr>
+                <th className="p-3" scope="col">
+                  Document
+                </th>
+                <th className="p-3" scope="col">
+                  Added By
+                </th>
+                <th className="p-3" scope="col">
+                  Date
+                </th>
+                <th className="p-3" scope="col">
+                  Verified
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {(docData || []).map((item, index) => (
+                <tr
+                  key={index}
+                  action
+                  // active={
+                  //   docTypData.type === item.type ||
+                  //   (showMoreDocType === false && item.type === docName)
+                  // }
+                  active={item.type === docName}
+                  onClick={() => {
+                    setShowMoreDocType(false);
+                    setDocTypData(item);
+                    setDocName(item.type);
+                    setDocId(item.id);
+                    setOtherDoc(false);
+                    setHide(false);
+                    setShowSaveDoc(false);
+                    setDocFile(
+                      item.document_url +
+                        `?v=${
+                          new Date().getMinutes() + new Date().getSeconds()
+                        }`
+                    );
+                  }}
+                  className={
+                    item.type === docName
+                      ? "text-capitalize bg-primary text-white"
+                      : "text-capitalize"
+                  }
+                >
+                  <td className="p-3"> {textReplaceFunction(item.type)}</td>
+                  <td className="p-3">{item.updated_by_name}</td>
+                  <td className="p-3">{item.updated_at}</td>
+                  <td className="p-3">
+                    {item.is_varify === "1"
+                      ? // <span className="verified_doc">
+                        //   <img className="w-100" src={Verified} alt="" />
+                        // </span>
+                        "Yes"
+                      : "No"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {/* <ListGroup defaultActiveKey="#link1">
             {(docData || []).map((item, index) => (
               <ListGroup.Item
                 key={index}
@@ -356,12 +429,12 @@ export default function EmployerDocumrentContainer(props) {
                   setDocTypData(item);
                   setDocName(item.type);
                   setDocId(item.id);
-                  setOtherDoc(false)
-                  setHide(false)
-                  setShowSaveDoc(false)
+                  setOtherDoc(false);
+                  setHide(false);
+                  setShowSaveDoc(false);
                   setDocFile(
                     item.document_url +
-                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                      `?v=${new Date().getMinutes() + new Date().getSeconds()}`
                   );
                 }}
                 className="text-capitalize"
@@ -375,23 +448,27 @@ export default function EmployerDocumrentContainer(props) {
               </ListGroup.Item>
             ))}
             <ListGroup.Item
-              className={user_type === "company" || user_type === "admin" ? "bg-secondary text-white" : "d-none"}
+              className={
+                user_type === "company" || user_type === "admin"
+                  ? "bg-secondary text-white"
+                  : "d-none"
+              }
               onClick={() => {
                 setShowMoreDocType(true);
                 setDocTypData("");
                 setDocId("");
                 setOtherDoc(false);
-                setDocFile("")
-                setHide(false)
-                setShowSaveDoc(false)
+                setDocFile("");
+                setHide(false);
+                setShowSaveDoc(false);
               }}
             >
               <b>+ Add New Documents</b>
             </ListGroup.Item>
-          </ListGroup>
+          </ListGroup> */}
         </div>
         <div className="col-12 col-md-8">
-          <div className="row p-5 doc_upload_row">
+          <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
                 <Form.Select
@@ -408,16 +485,39 @@ export default function EmployerDocumrentContainer(props) {
                       </option>
                     );
                   })}
-                  <option value={"other"}>Other
-                  </option>
+                  <option value={"other"}>Other</option>
                 </Form.Select>
               </div>
-            ) : null}
-            {otherDoc === true ?
+            ) : (
+              <button
+                className={
+                  user_type === "company" || user_type === "admin"
+                    ? "btn btn-secondary btn-sm text-white mr-0"
+                    : "d-none"
+                }
+                onClick={() => {
+                  setShowMoreDocType(true);
+                  setDocTypData("");
+                  setDocId("");
+                  setOtherDoc(false);
+                  setDocFile("");
+                  setHide(false);
+                  setShowSaveDoc(false);
+                }}
+              >
+                + Add New Documents
+              </button>
+            )}
+            {otherDoc === true ? (
               <div className="doc_upload_col">
-                <input className="form-control" value={docName} onChange={(e) => setDocName(e.target.value)}
-                  placeholder="Docuent Name" />
-              </div> : null}
+                <input
+                  className="form-control"
+                  value={docName}
+                  onChange={(e) => setDocName(e.target.value)}
+                  placeholder="Docuent Name"
+                />
+              </div>
+            ) : null}
             <div className="">
               <input
                 type="file"
@@ -426,14 +526,21 @@ export default function EmployerDocumrentContainer(props) {
                 onChange={(e) => handleFileChange(e, docTypData.id)}
               />
               <button
-                className={(user_type === "company" && (showMoreDocType || otherDoc)) || user_type === "admin" ? "btn btn-light" : "d-none"}
+                className={
+                  (user_type === "company" && (showMoreDocType || otherDoc)) ||
+                  user_type === "admin"
+                    ? "btn btn-light"
+                    : "d-none"
+                }
                 onClick={() => {
-                  document.querySelector('input[type="file"]').click()
-                  setHide(true)
-                }
-                }
+                  document.querySelector('input[type="file"]').click();
+                  setHide(true);
+                }}
               >
-                {docTypData.id ? "Update Document" : "Upload Document"}
+                <AiOutlineCloudUpload className="font-size-3 mr-2" />
+                {docTypData.id
+                  ? "Update Current Document"
+                  : "Upload New Document"}
               </button>
             </div>
             {showSaveDoc ? (
@@ -443,55 +550,66 @@ export default function EmployerDocumrentContainer(props) {
                 </button>
               </div>
             ) : null}
-            {hide === false && docTypData && user_type === "admin" ? (
+            {hide === true ? (
               <div className="doc_upload_col">
-                {docTypData.is_varify === "1" ? (
-                  <img className="verified_doc_img" src={Verified} alt="" />
-                ) : (
-                  <button
-                    className="btn btn-secondary"
-                    disabled={docTypData.is_varify === "0" ? false : true}
-                    onClick={() => onVerifyDocuments(docTypData.id, 1)}
-                  >
-                    Verify document
-                  </button>
-                )}
-              </div>
-            ) : null}
-            {hide === false && docFile && user_type === "admin" ?
-              <div className="doc_upload_col flex-end">
-                <button className="btn btn-gray mx-3" onClick={PrintDocument}
-                  title="Print Document">
-                  <i className="fa fa-print" aria-hidden="true"></i>
-                </button>
-                <button className="btn btn-regent"
-                  onClick={DownloadDocument} title="Download Document">
-                  <i className="fa fa-download" aria-hidden="true"></i>
-                </button>
-              </div> : null}
-            {hide === true
-              ? <div className="doc_upload_col">
-                <button className="btn btn-dark text-white" onClick={() => {
-                  setHide(false)
-                  setApiCall(true)
-                  setShowSaveDoc(false)
-                  setDocFile("")
-                  setDocFileExt("")
-                }}>
+                <button
+                  className="btn btn-light"
+                  onClick={() => {
+                    setHide(false);
+                    setApiCall(true);
+                    setShowSaveDoc(false);
+                    setDocFile("");
+                    setDocFileExt("");
+                  }}
+                >
                   Cancel
                 </button>
-              </div> : null}
+              </div>
+            ) : null}
           </div>
-          <div className="doc_preview_box  p-5 bg-light rounded">
-
+          <div className="doc_preview_box  p-5 bg-light rounded position-relative">
             {/* {docTypData ? ( */}
+            <div className="doc_action_div">
+              {hide === false && docTypData && user_type === "admin" ? (
+                <div className="doc_upload_col">
+                  {docTypData.is_varify === "1" ? (
+                    <img className="verified_doc_img" src={Verified} alt="" />
+                  ) : (
+                    <button
+                      className="btn btn-info"
+                      disabled={docTypData.is_varify === "0" ? false : true}
+                      onClick={() => onVerifyDocuments(docTypData.id, 1)}
+                    >
+                      Verify document
+                    </button>
+                  )}
+                </div>
+              ) : null}
+              {hide === false && docFile && user_type === "admin" ? (
+                <div className="doc_upload_col flex-end">
+                  <button
+                    className="p-1 rounded-3 btn-warning mx-3 w-auto"
+                    onClick={PrintDocument}
+                    title="Print Document"
+                  >
+                    <i className="fa fa-print" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    className="p-1 rounded-3 btn-info w-auto"
+                    onClick={DownloadDocument}
+                    title="Download Document"
+                  >
+                    <i className="fa fa-download" aria-hidden="true"></i>
+                  </button>
+                </div>
+              ) : null}
+            </div>
             <RenderNewDocFile />
             {/* ) : (
               <div className="text-center">
                 <h2> No Documents </h2>
               </div>
             )} */}
-
           </div>
         </div>
       </div>
