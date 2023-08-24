@@ -1,23 +1,49 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddUpdateVisa } from "../../../api/api";
+import { AddUpdateVisa ,GetVisaSubStages ,AddUpdateEmployeeVisaSubStage} from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 import VisaTimeLine from "../../common/visaTimeLine";
+import VisaSubStageSelector from "../../common/visaSubsStage";
 export default function VisaStatus(props) {
   const [loading, setLoading] = useState(false);
+  const [apiCall, setApiCall] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [expandedStatus, setExpandedStatus] = useState(props.employeeData.visa_status);
+  // eslint-disable-next-line
+  let isExpanded = false;
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
     status: props.employeeData.visa_status,
     country: props.employeeData.visa_country,
   };
+   /*Function to get Visa sub stage */
+   const GetVIsaSubSTage = async () => {
+    try {
+      let 
+        Response = await GetVisaSubStages(props.employeeData.visa_id,"visa")
+      setSelectedStatus(Response.data.data.data)
+    } catch (err) {
+      console.log(err)
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  }
+  useEffect(() => {
+    GetVIsaSubSTage()
+    if(apiCall === true){
+      setApiCall(false)
+    }
+  }, [apiCall])
+  
   /* Functionality to close the modal */
-
-  const close = () => {
+    const close = () => {
     setState(initialFormStateuser);
     setErrors("");
     setLoading(false);
@@ -53,9 +79,9 @@ export default function VisaStatus(props) {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [props]);
-  // USER PERSONAL DETAIL SUBMIT BUTTON
+  // VISA STATUS ADD / UPDATE BUTTON
   async function onVisaUpdateClick(event) {
-    event.preventDefault();
+    // event.preventDefault();
     if (validate()) {
       setLoading(true);
       try {
@@ -66,7 +92,9 @@ export default function VisaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          return close();
+          setApiCall(true)
+          setLoading(false)
+            close()
         }
         if (responseData.data.message === "updated successfully") {
           toast.success("Visa status Updated successfully", {
@@ -74,7 +102,9 @@ export default function VisaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          return close();
+          setApiCall(true)
+          setLoading(false)
+            close()
         }
       } catch (err) {
         toast.error("Something went wrong", {
@@ -87,6 +117,81 @@ export default function VisaStatus(props) {
       //   setLoading(false);
     }
   }
+  /*Function to add update visa sub stages */
+  const handleSubStageSelection = async (status, subStage) => {
+    const isSelected = selectedStatus.some(
+      (item) => item.status === status && item.substage === subStage
+    );
+    let data;
+    /*Condition to check the selected substages */
+    if (isSelected) {
+      setSelectedStatus(
+        selectedStatus.filter(
+          (item) => !(item.status === status && item.substage === subStage)
+        )
+      );
+      let RemoveSubStage = selectedStatus.filter(
+        (item) => (item.status === status && item.substage === subStage)
+      )[0]
+      data = {
+        id:RemoveSubStage.id,
+        misc_id:RemoveSubStage.misc_id,
+        type:"visa",
+        status:RemoveSubStage.status,
+        substage:"false"
+      }
+      console.log("id =>",data)
+    } else {
+      setSelectedStatus([
+        ...selectedStatus,
+        { status: status, substage: subStage },
+      ]);
+        /*Employee Visa sub stages */
+        data = {
+          misc_id:props.employeeData.visa_id,
+          type:"visa",
+          status:status,
+          substage:subStage
+        }
+    }
+    try {
+      let Response = await AddUpdateEmployeeVisaSubStage(data)
+      /*Removed sub stage response */
+      if (Response.message === "updated successfully") {
+        toast.success("visa Sub Stage Removed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        // if (state.status !== props.employeeData.status && status !== state.status) {
+        //   setState({ ...state, status: status })
+        //   if (typeof onVisaUpdateClick === 'function') {
+        //     onVisaUpdateClick("sub");
+        //   }
+        // }
+        setApiCall(true)
+      }
+      /*Added sub stage response */
+      if (Response.message === "created successfully") {
+        toast.success("visa Sub Stage Added successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        // if (state.status !== props.employeeData.status && status !== state.status) {
+        //   setState({ ...state, status: status })
+        //   if (typeof onVisaUpdateClick === 'function') {
+        //     onVisaUpdateClick("sub");
+        //   }
+        // }
+        setApiCall(true)
+      }
+    } catch (err) {
+      console.log(err)
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  };
   return (
     <>
       <Modal
@@ -105,10 +210,16 @@ export default function VisaStatus(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onVisaUpdateClick}>
+          <form >
             <h5 className="text-center pt-2 mb-7">Update Visa status</h5>
             <VisaTimeLine
               visa={state.status} />
+              {expandedStatus &&
+              <VisaSubStageSelector
+              expandedStatus={expandedStatus}
+              selectedStatus={selectedStatus}
+              FilterJson={FilterJson}
+              handleSubStageSelection={handleSubStageSelection}/>}
             <div className="form-group col">
               <label
                 htmlFor="status"
@@ -119,7 +230,11 @@ export default function VisaStatus(props) {
               <select
                 name="status"
                 value={state.status || ""}
-                onChange={onInputChange}
+                onChange={(e)=>{
+                  setState({...state , status :e.target.value})
+                  setExpandedStatus(e.target.value);
+                }}
+                multiple={false}
                 className={
                   errors.status
                     ? "form-control text-capitalize border border-danger"
@@ -129,6 +244,7 @@ export default function VisaStatus(props) {
               >
                 <option value={""}>Select visa status </option>
                 {(FilterJson.visa_status || []).map((item, index) => {
+                  isExpanded = expandedStatus === item
                   return (
                     <option value={item} key={index}>{item}</option>
                   )
@@ -147,7 +263,7 @@ export default function VisaStatus(props) {
             </div>
             <div className="form-group col">
               <label
-                htmlFor="status"
+                htmlFor="country"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Country :
@@ -182,7 +298,8 @@ export default function VisaStatus(props) {
               ) : (
                 <button
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                  type="submit"
+                  type="button"
+                  onClick={onVisaUpdateClick}
                 >
                   Submit
                 </button>

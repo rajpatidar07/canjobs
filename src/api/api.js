@@ -528,6 +528,39 @@ export const GetEmployeeVisaList = async (search, status, country, interested, p
   );
   return response;
 };
+/*Api to get Visa Sub stage List */
+export const GetVisaSubStages = async (misc_id,type,id) => {
+  const response = await axios.post(
+    `${API_URL}common/getMiscellaneousSubstage`,
+    {
+      "id":id,
+      "filter_by_misc_id":misc_id,
+      "filter_by_type":type
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Api to add update visa sub stage */
+export const AddUpdateEmployeeVisaSubStage = async (json) => {
+  const response = await axios.put(
+    `${API_URL}common/addUpdateMiscellaneousSubstage`,
+    json,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 // EMPLOYER'S API
 /*Employer sign up */
 export const EmployerSignUp = async (props) => {

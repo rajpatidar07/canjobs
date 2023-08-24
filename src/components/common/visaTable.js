@@ -314,9 +314,9 @@ export default function VisaTable(props) {
                                         <tr className="applicant_row" key={empdata.employee_id}>
                                             <td className=" py-5">
                                                 <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                                    <Link 
-                                                    className="text-dark" to={`/${empdata.employee_id}`}>
-                                                    {empdata.employee_id}
+                                                    <Link
+                                                        className="text-dark" to={`/${empdata.employee_id}`}>
+                                                        {empdata.employee_id}
                                                     </Link>
                                                 </p>
                                             </td>
@@ -350,12 +350,12 @@ export default function VisaTable(props) {
                                                         ) : (
                                                             <div className=" mb-0">
                                                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                                                   
-                                                                   <Link
-                                                                   className="text-dark"
-                                                                    to={`/${empdata.employee_id}`}> 
-                                                                   {empdata.name}
-                                                                   </Link>
+
+                                                                    <Link
+                                                                        className="text-dark"
+                                                                        to={`/${empdata.employee_id}`}>
+                                                                        {empdata.name}
+                                                                    </Link>
                                                                 </p>
                                                                 <p className="text-gray font-size-2 m-0 text-capitalize">
                                                                     {empdata.gender === "female" ? "F" : empdata.gender === "male" ? "M" : "O"} (
@@ -478,32 +478,35 @@ export default function VisaTable(props) {
 
                                             <td className="">
                                                 <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                                                    {empdata.visa_status === "pending" ? (
-                                                        <span
-                                                            className="p-1 bg-warning text-white text-center w-100 border rounded-pill"
-
-                                                        >
-                                                            Pending
-                                                        </span>
-                                                    ) : empdata.visa_status === "reject" ? (
+                                                    {empdata.visa_status === "onboard" ? (
                                                         <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-
-                                                            Reject
+                                                            On Board
                                                         </span>
-                                                    ) : empdata.visa_status === "experied" ? (
-                                                        <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
-
-                                                            Experied
+                                                    ) : empdata.visa_status === "documentation" ? (
+                                                        <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                                            Documentation
                                                         </span>
-                                                    ) : empdata.visa_status === "approved" ? (
+                                                    ) : empdata.visa_status === "file preparation" ? (
+                                                        <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                                            File Preparation
+                                                        </span>
+                                                    ) : empdata.visa_status === "file review" ? (
                                                         <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-
-                                                            Approved
-                                                        </span>) : empdata.visa_status === "cancel" ? (
-                                                            <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-
-                                                                Cancel
-                                                            </span>) : null}
+                                                            File Review
+                                                        </span>
+                                                    ) : empdata.visa_status === "file submission" ? (
+                                                        <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
+                                                            File Submission
+                                                        </span>
+                                                    ) : empdata.visa_status === "file decision" ? (
+                                                        <span className="p-1 bg-gray text-white text-center w-100 border rounded-pill">
+                                                            File Decision
+                                                        </span>
+                                                    ) : (
+                                                        <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                                            NA
+                                                        </span>
+                                                    )}
                                                 </p>
                                             </td>
 
