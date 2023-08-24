@@ -153,19 +153,29 @@ function FollowUpDashBoard(props) {
                           (followUpData || []).map((data) => (
                             <tr className="text-capitalize" key={data.id}>
                               <th scope="row" className="py-5 ">
+                                <Link to={`/${data.employee_id}`}>
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {data.name}
                                 </div>
+                                </Link>
                               </th>
                               <th scope="row" className="py-5 ">
+                                <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",data.job_id)
+                                }>
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {data.job_title}
                                 </div>
+                                </Link>
                               </th>
                               <th scope="row" className="py-5 ">
+                                <Link to={`/company_detail`}
+                              title="Company Details"
+                              onClick={() => localStorage.setItem("company_id",empdata.company_id)}>
                                 <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                                   {data.company_name}
                                 </div>
+                                </Link>
                               </th>
                               <th className=" py-5">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">

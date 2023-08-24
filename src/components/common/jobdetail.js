@@ -108,7 +108,10 @@ function JobDetailPage(props) {
                         alt=""
                       />
                     </Link>
-                    <Link className="text_box text-left w-100" to="">
+                    <Link className="text_box text-left w-100" to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",jobDetatilsData.job_id)
+                                }
+                    >
                       <p
                         href=""
                         className="font-size-3 text-default-color line-height-2 m-0 text-capitalize"

@@ -109,11 +109,11 @@ function Followup() {
   ]);
 
   /* Function to show the Job detail data */
-  const JobDetail = (e) => {
-    // e.preventDefault();
-    setShowJobDetails(true);
-    setJobId(e);
-  };
+  // const JobDetail = (e) => {
+  //   // e.preventDefault();
+  //   setShowJobDetails(true);
+  //   setJobId(e);
+  // };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   /*Sorting Function */
@@ -453,8 +453,8 @@ function Followup() {
                                 <td className="py-5 ">
                                   <div className="">
                                     <Link
-                                      to={""}
-                                      onClick={() => JobDetail(job.job_id)}
+                                      to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",job.job_id)}
                                       className="font-size-3 mb-0 font-weight-semibold text-black-2"
                                     >
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">

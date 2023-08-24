@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import CustomButton from "../common/button";
-import JobDetailsBox from "../common/jobdetail";
+// import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
@@ -319,7 +319,7 @@ function Job(props) {
           </div>
         </div>
         {/*<-- Job Detail -->*/}
-        {showJobDetails === true ? (
+        {/* {showJobDetails === true ? (
           <div
             className={
               props.skill === null ||
@@ -333,8 +333,7 @@ function Job(props) {
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">
                   <div className="mb-9">
-                    <Link
-                      to={""}
+                    <                      to={""}
                       onClick={() => setShowJobDetails(false)}
                       className="d-flex align-items-center ml-4"
                     >
@@ -342,7 +341,7 @@ function Job(props) {
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back
                       </span>
-                    </Link>
+                    </
                   </div>
                 </div>
               </div>
@@ -351,7 +350,7 @@ function Job(props) {
               </div>
             </div>
           </div>
-        ) : null}
+        ) : null} */}
       </div>
       {showAddJobsModal ? (
         <AddJobModal

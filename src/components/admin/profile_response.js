@@ -556,9 +556,12 @@ function JobProfileResponse(props) {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <div className="d-flex profile_box gx-2">
                               <div className=" mb-0">
+                                  <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",res.job_id)}>
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {res.job_title}
                                 </p>
+                                  </Link>
                               </div>
                             </div>
                           </h3>
@@ -567,9 +570,13 @@ function JobProfileResponse(props) {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <div className="d-flex profile_box gx-2">
                               <div className=" mb-0">
+                                <Link to={`/company_detail`}
+                              title="Company Details"
+                              onClick={() => localStorage.setItem("company_id",res.company_id)}>
                                 <p className="text-gray text-black-2 m-0 text-capitalize">
                                   {res.company_name}
                                 </p>
+                                </Link>
                               </div>
                             </div>
                           </h3>

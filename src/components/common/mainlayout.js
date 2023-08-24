@@ -38,6 +38,7 @@ import SelfJob from "../admin/selfJob";
 import LimaContainer from "../admin/lmiaContainer";
 import NewUserProfile from "../user/user_profile";
 import CompanyProfileDetail from "../company/company_profile";
+import JobDetailpageAdmim from "../admin/job_Detail_page";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -116,6 +117,7 @@ function MainLayout() {
             <Route path="/employer" element={<Employer />} />
             <Route path="/adminprofile" element={<ManageAdmin />} />
             <Route path="/:eid" element={<NewUserProfile />} />
+            <Route path="/jobdetailpage" element={<JobDetailpageAdmim />} />
             <Route path="/company_detail" element={<CompanyProfileDetail />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/filter" element={<FilterList />} />

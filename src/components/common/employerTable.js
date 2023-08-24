@@ -308,9 +308,7 @@ export default function EmployerTable(props) {
                               Unavailable
                             </p>
                           ) : (
-                            props.heading === "Dashboard" ? (
-                              ""
-                            ) : <Link
+                              <Link
                               to={`/company_detail`}
                               title="Company Details"
                               onClick={() => localStorage.setItem("company_id",empdata.company_id)}

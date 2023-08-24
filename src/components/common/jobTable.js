@@ -47,6 +47,7 @@ export default function JobTable(props) {
   const [responseId, setresponseId] = useState();
   const [responseDropDown, setresponseDropDown] = useState(false);
   let location = useLocation();
+  let job_id =  location.state ? location.state.id : location.pathname===  "/jobdetailpage"?localStorage.getItem("job_id"):"";
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -98,7 +99,7 @@ export default function JobTable(props) {
           sortOrder,
           props.company,
           props.filter_by_time,
-          location.state ? location.state.id : "",
+          job_id,
           props.response === "self" ? "1" : "0",
           props.response === "lmia" ? "1" : "0",
           props.response === "lmia" ? "1" : "0",
@@ -171,9 +172,9 @@ export default function JobTable(props) {
   ]);
 
   /* Function to show the Job detail data */
-  const JobDetail = (e) => {
-    props.JobDetail(e);
-  };
+  // const JobDetail = (e) => {
+  //   props.JobDetail(e);
+  // };
 
   /* Function to show the Table of the employee of perticular skill */
   const matchingCandidates = (e) => {
@@ -463,32 +464,23 @@ export default function JobTable(props) {
                       >
                         <th scope="row" className="py-5 ">
                           <div className="">
-                            {props.heading === "Dashboard" ? (
-                              <>
-                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                  {job.job_title}
-                                </p>
-                                <p className="text-gray font-size-2 m-0 text-capitalize">
-                                  {job.company_name} - {job.industry_type}
-                                  <br />
-                                  {job.is_featured === "1" ? (
-                                    <span className="bg-orange text-white featured_tag">
-                                      Featured
-                                    </span>
-                                  ) : null}
-                                </p>
-                              </>
-                            ) : (
+                             
                               <Link
                                 title="Job Details"
-                                to={""}
-                                onClick={() => JobDetail(job.job_id)}
+                                to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",job.job_id)
+                                  // JobDetail(job.job_id)
+                                }
                                 className="font-size-3 mb-0 font-weight-semibold text-black-2"
                               >
                                 <>
+                                <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",job.job_id)
+                                }>
                                   <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                     {job.job_title}
                                   </p>
+                                  </Link>
                                   <p className="text-gray font-size-2 m-0 text-capitalize">
                                     {job.company_name} - {job.industry_type}
                                     <br />
@@ -501,7 +493,7 @@ export default function JobTable(props) {
                                   </p>
                                 </>
                               </Link>
-                            )}
+                            
                           </div>
                         </th>
                         {props.heading === "Dashboard" ? null : (

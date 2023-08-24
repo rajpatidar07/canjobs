@@ -550,10 +550,10 @@ export default function LimiaStatusTable(props) {
                                                                     <div className="d-flex profile_box gx-2">
                                                                         <div className="media  align-items-center">
                                                                             <div className="circle-36 mx-auto overflow-hidden">
-                                                                                {res.profile_photo ===  
-                                                                                <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                                                        NA
-                                                                    </span> ? (
+                                                                                {res.profile_photo ===
+                                                                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                                                                        NA
+                                                                                    </span> ? (
                                                                                     <img
                                                                                         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                                                                         alt=""
@@ -624,7 +624,7 @@ export default function LimiaStatusTable(props) {
                                                                 {res.contact_no || res.email ? (
                                                                     <>
                                                                         <p className="font-size-3 font-weight-normal m-0">
-                                                                            <Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no ?`+${res.contact_no}`:""}</Link>
+                                                                            <Link className="text-dark" to={`tel:${res.contact_no}`}>{res.contact_no ? `+${res.contact_no}` : ""}</Link>
                                                                         </p>
                                                                         <p className="font-size-3 font-weight-normal m-0">
                                                                             <Link className="text-dark" to={`mailto:${res.email}`}>
@@ -685,12 +685,18 @@ export default function LimiaStatusTable(props) {
                                                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                                                 {
                                                                     res.job_title ? (<>
-                                                                        <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
-                                                                            {res.job_title}
-                                                                        </p>
-                                                                        <p className="font-size-3 font-weight-normal m-0 text-capitalize">
-                                                                            {res.company_name}
-                                                                        </p>
+                                                                        <Link to={`/jobdetailpage`}
+                                                                            onClick={() => localStorage.setItem("job_id", res.job_id)}>
+                                                                            <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
+                                                                                {res.job_title}
+                                                                            </p>
+                                                                        </Link>
+                                                                        <Link to={`/jobdetailpage`}
+                                                                            onClick={() => localStorage.setItem("job_id", res.job_id)}>
+                                                                            <p className="font-size-3 font-weight-normal m-0 text-capitalize">
+                                                                                {res.company_name}
+                                                                            </p>
+                                                                        </Link>
                                                                     </>
                                                                     ) : (
                                                                         <span className="font-size-3 font-weight-normal text-black-2 mb-0">

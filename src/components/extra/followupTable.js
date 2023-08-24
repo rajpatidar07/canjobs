@@ -269,9 +269,12 @@ function FollowupTable() {
                               onClick={() => JobDetail(job.job_id)}
                               className="font-size-3 mb-0 font-weight-semibold text-black-2"
                             >
+                              <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",job.job_id)}>
                               <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                 {job.job_title}
                               </p>
+                              </Link>
                               <p className="text-gray font-size-2 m-0 text-capitalize">
                                 {job.company_name} - {job.industry_type}
                               </p>

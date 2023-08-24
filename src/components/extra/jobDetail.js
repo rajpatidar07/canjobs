@@ -52,7 +52,8 @@ function JobDetail({ ids }) {
                         alt=""
                       />
                     </Link>
-                    <Link to={""} className="text_box text-left w-100">
+                    <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",jobData.job_id)} className="text_box text-left w-100">
                       <p className="font-size-3 text-default-color line-height-2 m-0">
                         {jobData.company_name}
                       </p>
