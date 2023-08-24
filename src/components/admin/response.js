@@ -180,7 +180,7 @@ function JobResponse(props) {
       console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
-        let status = "pending";
+        let status = "onboard";
         try {
           let VisaResponse = await AddUpdateVisa(e.employee_id, status);
           if (VisaResponse.data.message === "created successfully") {
@@ -787,27 +787,31 @@ function JobResponse(props) {
                             </th>
                             <th className="  py-5 ">
                               <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                                {res.visa_status === "pending" ? (
+                                {res.visa_status === "onboard" ? (
                                   <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                    Pending
+                                    On Board
                                   </span>
-                                ) : res.visa_status === "reject" ? (
+                                ) : res.visa_status === "documentation" ? (
                                   <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Reject
+                                    Documentation
                                   </span>
-                                ) : res.visa_status === "experied" ? (
-                                  <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
-                                    Experied
+                                ) : res.visa_status === "file preparation" ? (
+                                  <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                    File Preparation
                                   </span>
-                                ) : res.visa_status === "approved" ? (
+                                ) : res.visa_status === "file review" ? (
                                   <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                    Approved
+                                    File Review
                                   </span>
-                                ) : res.visa_status === "cancel" ? (
+                                ) : res.visa_status === "file submission" ? (
                                   <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                    Cancel
+                                    File Submission
                                   </span>
-                                ) : (
+                                ) : res.visa_status === "file decision" ? (
+                                  <span className="p-1 bg-gray text-white text-center w-100 border rounded-pill">
+                                    File Decision
+                                  </span>
+                                ):  (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                     NA
                                   </span>

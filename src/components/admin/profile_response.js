@@ -677,23 +677,23 @@ function JobProfileResponse(props) {
                         </th>
                         {/* <th className="  py-5 ">
                           <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                            {res.visa_status === "pending" ? (
+                            {res.visa_status === "onboard" ? (
                               <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
                                 Pending
                               </span>
-                            ) : res.visa_status === "reject" ? (
+                            ) : res.visa_status === "documentation" ? (
                               <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                                 Reject
                               </span>
-                            ) : res.visa_status === "experied" ? (
+                            ) : res.visa_status === "file preparation" ? (
                               <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
                                 Experied
                               </span>
-                            ) : res.visa_status === "approved" ? (
+                            ) : res.visa_status === "file review" ? (
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                 Approved
                               </span>
-                            ) : res.visa_status === "cancel" ? (
+                            ) : res.visa_status === "file submission" ? (
                               <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
                                 Cancel
                               </span>

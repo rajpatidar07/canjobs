@@ -109,12 +109,12 @@ function LmiaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (status !== props.resData.lmia_status) {
-          setState({ ...state, lmia_status: status })
-          if (typeof onLmiaUpdateClick === 'function') {
-            onLmiaUpdateClick("sub");
-          }
-        }
+        // if (status !== props.resData.lmia_status) {
+        //   setState({ ...state, lmia_status: status })
+        //   if (typeof onLmiaUpdateClick === 'function') {
+        //     onLmiaUpdateClick("sub");
+        //   }
+        // }
         setApiCall(true)
       }
       /*Added sub stage response */
@@ -123,12 +123,12 @@ function LmiaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (status !== props.resData.lmia_status) {
-          setState({ ...state, lmia_status: status })
-          if (typeof onLmiaUpdateClick === 'function') {
-            onLmiaUpdateClick("sub");
-          }
-        }
+        // if (status !== props.resData.lmia_status) {
+        //   setState({ ...state, lmia_status: status })
+        //   if (typeof onLmiaUpdateClick === 'function') {
+        //     onLmiaUpdateClick("sub");
+        //   }
+        // }
         setApiCall(true)
       }
     } catch (err) {
@@ -183,7 +183,7 @@ function LmiaStatus(props) {
 
   // USER LIMIA UPDATE FILTER SUBMIT BUTTON
   const onLmiaUpdateClick = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     if (validate() && props.job === "yes") {
       let data = {
         // completion_time: state.completion_time,
@@ -198,10 +198,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
-          setApiCall(false)
-          if (event === "status") {
             close()
-          };
         }
       } catch (err) {
         toast.error("Something went wrong", {
@@ -220,21 +217,15 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
-          setLoading(false);
-          if (event === "status") {
             close()
-          };
         }
         if (responseData.message === "Data updated successfully") {
           toast.success("Lmia Status Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setLoading(false);
           props.setApiCall(true)
-          if (event === "status") {
             close()
-          };
         }
       } catch (err) {
         toast.error("Something went wrong", {
@@ -545,7 +536,7 @@ function LmiaStatus(props) {
                 </button>
               ) : (
                 <button
-                  onClick={() => onLmiaUpdateClick("status")}
+                  onClick={onLmiaUpdateClick}
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="submit"
                 >
