@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ListGroup, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import {
   UploadEmployerDocument,
   GetEmployerDocumentList,
@@ -400,7 +400,7 @@ export default function EmployerDocumrentContainer(props) {
                   }
                 >
                   <td className="p-3"> {textReplaceFunction(item.type)}</td>
-                  <td className="p-3">{item.updated_by_name}</td>
+                  <td className="p-3">{item.updated_by_name ?item.updated_by_name :item.created_by_name}</td>
                   <td className="p-3">{item.updated_at}</td>
                   <td className="p-3">
                     {item.is_varify === "1"
