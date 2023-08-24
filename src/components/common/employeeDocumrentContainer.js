@@ -372,9 +372,9 @@ export default function DocumrentContainer(props) {
     };
   };
   return (
-    <div className="container-fluid document_container bg-white py-7">
+    <div className="container-fluid document_container bg-white py-7 px-0">
       <div className="row m-0">
-        <div className="col-md-4 p-0">
+        <div className="col-md-4 p-0 border-right">
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
