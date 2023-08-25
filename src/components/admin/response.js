@@ -66,7 +66,7 @@ function JobResponse(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   if (
@@ -124,7 +124,7 @@ function JobResponse(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setIsLoading(false);
     }
   };
@@ -204,7 +204,7 @@ function JobResponse(props) {
         }
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -320,7 +320,7 @@ function JobResponse(props) {
                 }
               >
                 {props.heading === "" ? null : (
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search :</p>
                     <input
                       required
@@ -336,7 +336,7 @@ function JobResponse(props) {
                     />
                   </div>
                 )}
-                <div className="col p-1 form_group mb-5 mt-4">
+                <div className="col p-1 form_group mb-3">
                   <p className="input_label">Filter by Skill:</p>
                   <div className="select_div">
                     <select
@@ -358,7 +358,7 @@ function JobResponse(props) {
                     </select>
                   </div>
                 </div>
-                <div className="col p-1 form_group mb-5 mt-4">
+                <div className="col p-1 form_group mb-3">
                   <p className="input_label">Filter by Skill:</p>
                   <div className="select_div">
                     <select
@@ -380,7 +380,7 @@ function JobResponse(props) {
                     </select>
                   </div>
                 </div>
-                <div className="col p-1 form_group mb-5 mt-4">
+                <div className="col p-1 form_group mb-3">
                   <p className="input_label">Filter by Experience:</p>
                   <div className="select_div">
                     <select
@@ -636,9 +636,11 @@ function JobResponse(props) {
 
                                     <div className=" mb-0">
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                        <Link 
-                                        className="text-dark"to={`/${res.employee_id}`}>
-                                        {res.name}
+                                        <Link
+                                          className="text-dark"
+                                          to={`/${res.employee_id}`}
+                                        >
+                                          {res.name}
                                         </Link>
                                       </p>
                                       <p className="text-gray font-size-2 m-0 text-capitalize">
@@ -802,7 +804,7 @@ function JobResponse(props) {
                                   <span className="p-1 bg-gray text-white text-center w-100 border rounded-pill">
                                     File Decision
                                   </span>
-                                ):  (
+                                ) : (
                                   <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                     NA
                                   </span>

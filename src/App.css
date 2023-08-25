@@ -250,20 +250,21 @@ table.table.table-striped.main_data_table_inn tr {
 
 span.featured_tag {
   position: absolute;
-  top: 0;
+  top: -2px;
   left: 0;
-  padding: 3px;
+  padding: 1px;
   font-size: 10px;
   font-weight: 400;
 }
 
 span.web_tag {
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
-  padding: 3px;
+  padding: 1px;
   font-size: 10px;
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 /* SIDEBAR */
@@ -618,7 +619,7 @@ label.image_upload_btn_2 {
 .dashboard_card {
   overflow: hidden;
   /* min-height: 100%; */
-  box-shadow: 6px 2px 8px #ccc;
+  /* box-shadow: 6px 2px 8px #ccc; */
   padding-bottom: 15px;
 }
 

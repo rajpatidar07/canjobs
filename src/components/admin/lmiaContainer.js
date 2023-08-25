@@ -34,7 +34,7 @@ function LimaContainer(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -129,7 +129,7 @@ function LimaContainer(props) {
                 {/*<-- Job Search and Filter -->*/}
                 {userType === "company" ? null : (
                   <div className="row m-0 align-items-center">
-                    <div className="col p-1 form_group mb-5 mt-4">
+                    <div className="col p-1 form_group mb-3">
                       <p className="input_label">Search:</p>
                       <input
                         required
@@ -142,7 +142,7 @@ function LimaContainer(props) {
                       />
                       <small className="text-danger">{searcherror}</small>
                     </div>{" "}
-                    <div className="col p-1 form_group mb-5 mt-4">
+                    <div className="col p-1 form_group mb-3">
                       <p className="input_label">Company Name:</p>
                       <input
                         required
@@ -154,7 +154,7 @@ function LimaContainer(props) {
                         onChange={(e) => setCompany(e.target.value)}
                       />
                     </div>
-                    <div className="col p-1 form_group mb-5 mt-4">
+                    <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Category:</p>
                       <div className="select_div">
                         <select
@@ -177,7 +177,7 @@ function LimaContainer(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col p-1 form_group mb-5 mt-4">
+                    <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Type:</p>
                       <div className="select_div">
                         <select
@@ -198,7 +198,7 @@ function LimaContainer(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col p-1 form_group mb-5 mt-4">
+                    <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Skill:</p>
                       <div className="select_div">
                         <select
@@ -219,7 +219,7 @@ function LimaContainer(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col p-1 form_group mb-5 mt-4">
+                    <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Location:</p>
                       <div className="select_div">
                         <select

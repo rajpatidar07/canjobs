@@ -34,7 +34,7 @@ function SelfJob(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -133,7 +133,7 @@ function SelfJob(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -151,7 +151,7 @@ function SelfJob(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -169,7 +169,7 @@ function SelfJob(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -196,7 +196,7 @@ function SelfJob(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -223,7 +223,7 @@ function SelfJob(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >

@@ -26,7 +26,7 @@ function Employer() {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   /*Function to Search employer */
@@ -106,7 +106,7 @@ function Employer() {
                 </div>
                 {/* <!-- Employer Search and Filter --> */}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -119,7 +119,7 @@ function Employer() {
                       maxLength={30}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Corporation:</p>
                     <div className="select_div">
                       <select
@@ -143,7 +143,7 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Industry:</p>
                     <div className="select_div">
                       <select

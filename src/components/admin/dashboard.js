@@ -64,13 +64,13 @@ const AdminDashboard = () => {
         className={
           // showEmployeeProfile === false
           //   ?
-          "dashboard-main-container mt-23 mt-lg-20"
+          "dashboard-main-container mt-12 mt-lg-12"
           //   :"dashboard-main-container mt-25 mt-lg-22 d-none"
         }
         id="dashboard-body"
       >
         <ToastContainer />
-        <div className="container-fluid">
+        <div className="container-fluid mt-5">
           {/* <!-- Summary count --> */}
           <div className="row mb-7 d-none">
             <div className="col-xxl-3 col-xl-4 col-md-5 col-6 col-sm-6">
@@ -281,7 +281,7 @@ const AdminDashboard = () => {
           <div className="row">
             <div className="col-md-6">
               {/* <!-- Recent Jobs- --> */}
-              <div className="bg-white rounded dashboard_card mb-7">
+              <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0 ">Recently Added Jobs</h3>
                   <div className="d-flex justify-content-between p-0">
@@ -322,7 +322,7 @@ const AdminDashboard = () => {
                 />
               </div>
               {/* <!-- Recent Job Response- --> */}
-              {/* <div className="bg-white rounded dashboard_card mb-7">
+              {/* <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
                     Recently Job Response
@@ -358,7 +358,7 @@ const AdminDashboard = () => {
                 <JobResponse heading={"Dashboard"} filter_by_time={response} />
               </div> */}
               {/* <!-- Recent Interviews- --> */}
-              <div className="bg-white rounded dashboard_card mb-7">
+              <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
                     Recently Added Interview
@@ -396,7 +396,7 @@ const AdminDashboard = () => {
             </div>
             <div className="col-md-6">
               {/* <!-- Recent Employees- --> */}
-              <div className="bg-white rounded dashboard_card mb-7">
+              <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
                     Recently Added Employee
@@ -436,7 +436,7 @@ const AdminDashboard = () => {
                 />
               </div>
               {/* <!-- Recent lima's- --> */}
-              <div className="bg-white rounded dashboard_card mb-7">
+              <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
                     Recently Added Lima
@@ -480,7 +480,7 @@ const AdminDashboard = () => {
                 />
               </div>
               {/* <!-- Recent Follow- --> */}
-              {/* <div className="bg-white rounded dashboard_card mb-7">
+              {/* <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">
                     Recently Added FollowUp
@@ -521,7 +521,7 @@ const AdminDashboard = () => {
               </div> */}
               {/* <!-- Recent Companies- --> */}
               {/* <div className="col-lg-6">
-                <div className="bg-white rounded dashboard_card mb-7">
+                <div className="bg-white dashboard_card mb-7">
                   <div className="d-flex justify-content-between p-5 align-items-center">
                     <h3 className="font-size-5 px-3 m-0  ">
                       Recently Added Companies

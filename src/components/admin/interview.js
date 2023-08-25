@@ -46,7 +46,7 @@ export default function ManageInterview() {
                 </div>
                 {/*<-- Search interview -->*/}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search by Applicant's Name:</p>
                     <input
                       required
@@ -59,7 +59,7 @@ export default function ManageInterview() {
                       maxLength={30}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Status:</p>
                     <div className="select_div">
                       <select

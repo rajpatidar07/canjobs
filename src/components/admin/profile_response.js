@@ -59,7 +59,7 @@ function JobProfileResponse(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   if (
@@ -108,7 +108,7 @@ function JobProfileResponse(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setIsLoading(false);
     }
   };
@@ -188,7 +188,7 @@ function JobProfileResponse(props) {
         }
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -264,7 +264,7 @@ function JobProfileResponse(props) {
             }
           >
             {props.heading === "" ? null : (
-              <div className="col p-1 form_group mb-5 mt-4">
+              <div className="col p-1 form_group mb-3">
                 <p className="input_label">Search :</p>
                 <input
                   required
@@ -280,7 +280,7 @@ function JobProfileResponse(props) {
                 />
               </div>
             )}
-            <div className="col p-1 form_group mb-5 mt-4">
+            <div className="col p-1 form_group mb-3">
               <p className="input_label">Filter by Skill:</p>
               <div className="select_div">
                 <select
@@ -302,7 +302,7 @@ function JobProfileResponse(props) {
                 </select>
               </div>
             </div>
-            <div className="col p-1 form_group mb-5 mt-4">
+            <div className="col p-1 form_group mb-3">
               <p className="input_label">Filter by Skill:</p>
               <div className="select_div">
                 <select
@@ -324,7 +324,7 @@ function JobProfileResponse(props) {
                 </select>
               </div>
             </div>
-            <div className="col p-1 form_group mb-5 mt-4">
+            <div className="col p-1 form_group mb-3">
               <p className="input_label">Filter by Experience:</p>
               <div className="select_div">
                 <select
@@ -548,8 +548,12 @@ function JobProfileResponse(props) {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <div className="d-flex profile_box gx-2">
                               <div className=" mb-0">
-                                <Link to={`/jobdetailpage`}
-                                  onClick={() => localStorage.setItem("job_id", res.job_id)}>
+                                <Link
+                                  to={`/jobdetailpage`}
+                                  onClick={() =>
+                                    localStorage.setItem("job_id", res.job_id)
+                                  }
+                                >
                                   <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                     {res.job_title}
                                   </p>

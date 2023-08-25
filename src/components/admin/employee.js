@@ -34,7 +34,7 @@ function Employee(props) {
       setSkillList(Json.data.data.Skill);
       setEducationList(Json.data.data.Education);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   /*Render method to get the json*/
@@ -124,7 +124,7 @@ function Employee(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -142,7 +142,7 @@ function Employee(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -170,7 +170,7 @@ function Employee(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -197,7 +197,7 @@ function Employee(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
