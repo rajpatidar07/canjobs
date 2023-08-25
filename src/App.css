@@ -618,7 +618,7 @@ label.image_upload_btn_2 {
 .dashboard_card {
   overflow: hidden;
   /* min-height: 100%; */
-  box-shadow: 6px 2px 8px #ccc;
+  /* box-shadow: 6px 2px 8px #ccc; */
   padding-bottom: 15px;
 }
 
