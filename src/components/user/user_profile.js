@@ -352,9 +352,10 @@ const NewUserProfile = (props) => {
                         {user_type === "admin" || props.self === "no" ? (
                           <CustomButton
                             title={"Send Custom Email"}
-                            className="font-size-4 rounded-3 btn-primary py-0"
+                            className="font-size-4 rounded-3 btn-primary py-0 d-none"
                             /*Functionalities have to be done. */
                           >
+                            {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                             <RiMailSendLine />
                           </CustomButton>
                         ) : null}
