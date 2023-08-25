@@ -9,7 +9,7 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
 import moment from "moment";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiPencilDuotone } from "react-icons/pi";
@@ -56,10 +56,7 @@ const UserProfile = (props) => {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false);
     }
   };
@@ -75,10 +72,7 @@ const UserProfile = (props) => {
         setAppliedJob(applied.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 

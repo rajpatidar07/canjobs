@@ -20,10 +20,7 @@ const AdminHeader = (props) => {
       let Response = await getAllAdminNotification();
       setNotiication(Response.Data.data);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render Mewthod to get Notification */

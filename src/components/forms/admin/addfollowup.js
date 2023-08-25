@@ -36,10 +36,7 @@ function Addfollowup(props) {
         setResponseData(userData.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -65,8 +62,8 @@ function Addfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-          ? "Discription should have 2 or more letters."
-          : "",
+            ? "Discription should have 2 or more letters."
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -122,36 +119,43 @@ function Addfollowup(props) {
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
           <div className="activity_container pr-10 col-md-8 border-right">
-            {(response || []).map((res) => (
-              <div className="single_note mb-5" key={res.id}>
-                <div className="d-flex justify-content-between">
-                  <i className="font-size-3">
-                    Created on:{" "}
-                    {moment(res.created_at).format("Do MMM YYYY, h:mm:ss a")}
-                  </i>
-                </div>
-                <div className="card p-5">
-                  <p className="font-size-4 m-0">
-                    <b>{res.subject}</b>
+            {response.length === 0 ?
+              <div className="single_note mb-5">
+                <div className="d-flex justify-content-center">
+                  <p className="text-italic font-size-3 m-0">
+                    No Data Found
                   </p>
-                  <p className="font-size-4 m-0">{res.remark}</p>
                 </div>
-              </div>
-              // <div className="card mt-5 mb-5" key={res.id}>
-              //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
-              //     <div className="card-head font-size-3 text-dark card_left">
-              //       <span className="text-dark"> Posted date: </span>
-              //       {moment(res.created_at).format("YYYY-MM-DD")}
-              //     </div>
-              //     {res.next_followup_date === "0000-00-00" ? null :
-              //       <div className="card-head font-size-3 text-dark card_right">
-              //         <span className="text-dark"> Next date: </span>
-              //         {moment(res.next_followup_date).format("YYYY-MM-DD")}
-              //       </div>}
-              //   </div>
-              //   <div className="card-body p-3">{res.remark}</div>
-              // </div>
-            ))}
+              </div> : (response || []).map((res) => (
+                <div className="single_note mb-5" key={res.id}>
+                  <div className="d-flex justify-content-between">
+                    <i className="font-size-3">
+                      Created on:{" "}
+                      {moment(res.created_at).format("Do MMM YYYY, h:mm:ss a")}
+                    </i>
+                  </div>
+                  <div className="card p-5">
+                    <p className="font-size-4 m-0">
+                      <b>{res.subject}</b>
+                    </p>
+                    <p className="font-size-4 m-0">{res.remark}</p>
+                  </div>
+                </div>
+                // <div className="card mt-5 mb-5" key={res.id}>
+                //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
+                //     <div className="card-head font-size-3 text-dark card_left">
+                //       <span className="text-dark"> Posted date: </span>
+                //       {moment(res.created_at).format("YYYY-MM-DD")}
+                //     </div>
+                //     {res.next_followup_date === "0000-00-00" ? null :
+                //       <div className="card-head font-size-3 text-dark card_right">
+                //         <span className="text-dark"> Next date: </span>
+                //         {moment(res.next_followup_date).format("YYYY-MM-DD")}
+                //       </div>}
+                //   </div>
+                //   <div className="card-body p-3">{res.remark}</div>
+                // </div>
+              ))}
           </div>
           <div className="px-10 py-5 col-md-4">
             <form>

@@ -78,10 +78,7 @@ const NewUserProfile = (props) => {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false);
     }
   };
@@ -104,10 +101,7 @@ const NewUserProfile = (props) => {
         setLmia(response.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false);
     }
   };
@@ -121,10 +115,7 @@ const NewUserProfile = (props) => {
         setAppliedJob(applied.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -185,10 +176,7 @@ const NewUserProfile = (props) => {
         setApiCall(true);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   return (
@@ -684,7 +672,7 @@ const NewUserProfile = (props) => {
                         Notes
                       </Link>
                     </li>
-                    <li className="tab-menu-items nav-item">
+                    <li className="tab-menu-items nav-item d-none">{/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
                       <Link
                         className={
                           TabActive === "activity"

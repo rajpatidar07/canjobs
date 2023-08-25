@@ -10,7 +10,7 @@ import { getJson } from "../../api/api";
 import { useEffect } from "react";
 import Loader from '../common/loader';
 import CustomButton from "../common/button";
-import { ToastContainer ,toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -22,10 +22,7 @@ function JobSearch() {
   const JsonData = async () => {
     try{let Json = await getJson();
     setJson(Json);}catch(err){
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render Method */

@@ -64,10 +64,7 @@ function ManageAdmin() {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false);
     }
   };
@@ -117,10 +114,7 @@ function ManageAdmin() {
         setDeleteAlert(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   /*Search Onchange function to filter the data */

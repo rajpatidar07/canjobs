@@ -47,7 +47,7 @@ export default function EmployerDocumrentContainer(props) {
           setDocTypData(response.data.data[0]);
           setDocFile(
             response.data.data[0].document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
           setDocName(response.data.data[0].type);
         } else if (
@@ -65,16 +65,13 @@ export default function EmployerDocumrentContainer(props) {
             setDocFile(
               response.data.data.find((item) => item.type === docName)
                 .document_url +
-                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
           }
         }
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -132,9 +129,8 @@ export default function EmployerDocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-        base64Name.split(";")[1]
-      }`;
+      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+        }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
@@ -189,7 +185,7 @@ export default function EmployerDocumrentContainer(props) {
               item.type ===
               (docData[0] === docTypData ? docTypData.type : docName)
           ).document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
         );
       }
       if (response.data.message === "Invalid base64-encoded data !") {
@@ -201,10 +197,7 @@ export default function EmployerDocumrentContainer(props) {
         setHide(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setHide(false);
     }
   };
@@ -220,8 +213,8 @@ export default function EmployerDocumrentContainer(props) {
             ? docFileExt
             : docTypData.extension_type ===
               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-            ? "docx"
-            : docTypData.extension_type
+              ? "docx"
+              : docTypData.extension_type
         }
         filePath={docFile}
         errorComponent={() => <div>Error loading document</div>}
@@ -245,10 +238,7 @@ export default function EmployerDocumrentContainer(props) {
         setApiCall(true);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -369,7 +359,14 @@ export default function EmployerDocumrentContainer(props) {
               </tr>
             </thead>
             <tbody>
-              {(docData || []).map((item, index) => (
+              {docData.length === 0 ? (
+                <tr>
+                  <th className="bg-white"></th>
+                  <th className="bg-white"></th>
+                  <th className="bg-white">No Data Found</th>
+                  <th className="bg-white"></th>
+                </tr>
+              ) : (docData || []).map((item, index) => (
                 <tr
                   key={index}
                   action
@@ -388,9 +385,8 @@ export default function EmployerDocumrentContainer(props) {
                     setShowSaveDoc(false);
                     setDocFile(
                       item.document_url +
-                        `?v=${
-                          new Date().getMinutes() + new Date().getSeconds()
-                        }`
+                      `?v=${new Date().getMinutes() + new Date().getSeconds()
+                      }`
                     );
                   }}
                   className={
@@ -409,9 +405,9 @@ export default function EmployerDocumrentContainer(props) {
                   <td className="p-3">
                     {item.is_varify === "1"
                       ? // <span className="verified_doc">
-                        //   <img className="w-100" src={Verified} alt="" />
-                        // </span>
-                        "Yes"
+                      //   <img className="w-100" src={Verified} alt="" />
+                      // </span>
+                      "Yes"
                       : "No"}
                   </td>
                 </tr>
@@ -532,7 +528,7 @@ export default function EmployerDocumrentContainer(props) {
               <button
                 className={
                   (user_type === "company" && (showMoreDocType || otherDoc)) ||
-                  user_type === "admin"
+                    user_type === "admin"
                     ? "btn btn-light"
                     : "d-none"
                 }

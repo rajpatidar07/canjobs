@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { ListGroup, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import {
   UploadDocument,
   GetEmployeeDocumentList,
@@ -47,7 +47,7 @@ export default function DocumrentContainer(props) {
           setDocTypData(response.data.data[0]);
           setDocFile(
             response.data.data[0].document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
           setDocName(response.data.data[0].type);
         } else if (
@@ -65,16 +65,13 @@ export default function DocumrentContainer(props) {
             setDocFile(
               response.data.data.find((item) => item.type === docName)
                 .document_url +
-                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
           }
         }
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -132,9 +129,8 @@ export default function DocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-        base64Name.split(";")[1]
-      }`;
+      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+        }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
@@ -228,7 +224,7 @@ export default function DocumrentContainer(props) {
               item.type ===
               (docData[0] === docTypData ? docTypData.type : docName)
           ).document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
         );
       }
       if (response.data.message === "Invalid base64-encoded data !") {
@@ -240,10 +236,7 @@ export default function DocumrentContainer(props) {
         setHide(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setHide(false);
     }
   };
@@ -258,8 +251,8 @@ export default function DocumrentContainer(props) {
             ? docFileExt
             : docTypData.extension_type ===
               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-            ? "docx"
-            : docTypData.extension_type
+              ? "docx"
+              : docTypData.extension_type
         }
         filePath={docFile}
         errorComponent={() => <div>Error loading document</div>}
@@ -282,10 +275,7 @@ export default function DocumrentContainer(props) {
         setApiCall(true);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -397,7 +387,14 @@ export default function DocumrentContainer(props) {
               </tr>
             </thead>
             <tbody>
-              {(docData || []).map((item, index) => (
+              {docData.length === 0 ? (
+                <tr>
+                  <th className="bg-white"></th>
+                  <th className="bg-white"></th>
+                  <th className="bg-white">No Data Found</th>
+                  <th className="bg-white"></th>
+                </tr>
+              ) : (docData || []).map((item, index) => (
                 <tr
                   key={index}
                   action
@@ -417,9 +414,8 @@ export default function DocumrentContainer(props) {
                     setShowSaveDoc(false);
                     setDocFile(
                       item.document_url +
-                        `?v=${
-                          new Date().getMinutes() + new Date().getSeconds()
-                        }`
+                      `?v=${new Date().getMinutes() + new Date().getSeconds()
+                      }`
                     );
                   }}
                 >
@@ -433,9 +429,9 @@ export default function DocumrentContainer(props) {
                   <td className="p-3">
                     {item.is_varify === "1"
                       ? // <span className="verified_doc">
-                        //   <img className="w-100" src={Verified} alt="" />
-                        // </span>
-                        "Yes"
+                      //   <img className="w-100" src={Verified} alt="" />
+                      // </span>
+                      "Yes"
                       : "No"}
                   </td>
                 </tr>
@@ -536,7 +532,7 @@ export default function DocumrentContainer(props) {
               <button
                 className={
                   (user_type === "user" && (showMoreDocType || otherDoc)) ||
-                  user_type === "admin"
+                    user_type === "admin"
                     ? "btn btn-light"
                     : "d-none"
                 }

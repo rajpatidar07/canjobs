@@ -56,10 +56,7 @@ function AddInterview(props) {
         }
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
     // console.log("state =>", state , "date =>" , props.resData.interview_date ,userData)
   };

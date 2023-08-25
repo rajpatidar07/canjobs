@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import PersonalDetails from "../forms/user/personal";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 import { GetFilter } from "../../api/api";
@@ -34,10 +34,7 @@ function Employee(props) {
       setSkillList(Json.data.data.Skill);
       setEducationList(Json.data.data.Education);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render method to get the json*/

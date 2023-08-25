@@ -20,10 +20,7 @@ function AddJobModal(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -150,10 +147,7 @@ function AddJobModal(props) {
         setState(userData.data.data[0]);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -167,10 +161,7 @@ function AddJobModal(props) {
         setCompany(userData.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   useEffect(() => {

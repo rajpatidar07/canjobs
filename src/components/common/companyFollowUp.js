@@ -36,10 +36,7 @@ function AddCompanyfollowup(props) {
         setResponseData(userData.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -130,7 +127,15 @@ function AddCompanyfollowup(props) {
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
           <div className="activity_container col-md-8 border-right p-10">
-            {(response || []).map((res, index) => (
+            {response.length === 0 ?
+              <div className="single_note mb-5">
+                <div className="d-flex justify-content-center">
+                  <p className="text-italic font-size-3 m-0">
+                    No Data Found
+                  </p>
+                </div>
+              </div> :
+            (response || []).map((res, index) => (
               <div className="single_note mb-5" key={index}>
                 <div className="d-flex justify-content-between">
                   <p className="text-italic font-size-3 m-0">

@@ -5,7 +5,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetFilter } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 import EmployeeHeader from "../common/header";
@@ -34,10 +34,7 @@ function LimaContainer(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 

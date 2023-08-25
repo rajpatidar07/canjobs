@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { GetAllJobs } from "../../api/api";
 import moment from "moment";
 import Response from "../admin/response";
-import { toast } from "react-toastify";
 function JobBoxResponse({
   categoryFilterValue,
   locationFilterValue,
@@ -31,10 +30,7 @@ function JobBoxResponse({
         setNoData(userData.data.total_rows);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*---- Function to Open response Table on Click ----*/

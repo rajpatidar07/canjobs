@@ -93,10 +93,7 @@ function Addadmin(props) {
         setState(userData.data[0]);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   useEffect(() => {

@@ -7,7 +7,7 @@ import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
 import moment from "moment";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Loader from '../common/loader';
 import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
@@ -51,10 +51,7 @@ function CompanyProfile(props) {
         setIsLoading(false)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render method to get employer data */

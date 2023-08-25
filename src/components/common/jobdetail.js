@@ -33,10 +33,7 @@ function JobDetailPage(props) {
         setIsLoading(false)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render method to get job detail data */
@@ -78,10 +75,7 @@ function JobDetailPage(props) {
         setApiCall(true)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   console.log("job id =>",jobId ,"skill =>",skill)

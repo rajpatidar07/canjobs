@@ -28,10 +28,7 @@ function EmployementDetails(props) {
       let Json = await GetFilter();
       setIndustryList(Json.data.data.Industry);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -130,10 +127,7 @@ function EmployementDetails(props) {
         setState(data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   useEffect(() => {
@@ -214,10 +208,7 @@ function EmployementDetails(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setLoading(false)
     }
   }

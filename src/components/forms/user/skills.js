@@ -75,10 +75,7 @@ function Skills(props) {
         SetSkillData(SkillDetails.data.skill);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render method to get the skill data */
@@ -176,10 +173,7 @@ function Skills(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   return (

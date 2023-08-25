@@ -62,10 +62,7 @@ export default function EmployerTable(props) {
         setIsLoading(false)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false)
     }
   };
@@ -132,10 +129,7 @@ export default function EmployerTable(props) {
         setApiCall(true)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   /*Pagination Calculation */
@@ -285,34 +279,35 @@ export default function EmployerTable(props) {
                   (employerData || []).map((empdata) => (
                     <tr className="text-capitalize" key={empdata.company_id}>
                       <th scope="row" className="pl-5 py-5 pr-0   ">
-                        <div className="d-flex profile_box gx-2">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto">
-                              {empdata.logo === null ? (
-                                <img
-                                  src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
-                                  alt=""
-                                  className="w-100"
-                                />
-                              ) : (
-                                <img
-                                  src={empdata.logo}
-                                  alt=""
-                                  className="w-100"
-                                />
-                              )}
+                        <Link
+                          to={`/company_detail`}
+                          title="Company Details"
+                          onClick={() => localStorage.setItem("company_id", empdata.company_id)}
+                        >
+                          <div className="d-flex profile_box gx-2">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto">
+                                {empdata.logo === null ? (
+                                  <img
+                                    src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                ) : (
+                                  <img
+                                    src={empdata.logo}
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                )}
+                              </div>
                             </div>
-                          </div>
-                          {empdata.company_name === null ? (
-                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                              Unavailable
-                            </p>
-                          ) : (
-                              <Link
-                              to={`/company_detail`}
-                              title="Company Details"
-                              onClick={() => localStorage.setItem("company_id",empdata.company_id)}
-                            >
+                            {empdata.company_name === null ? (
+                              <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                Unavailable
+                              </p>
+                            ) : (
+
                               <div className="company_profile">
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {empdata.company_name}
@@ -321,9 +316,10 @@ export default function EmployerTable(props) {
                                   {empdata.industry}
                                 </p>
                               </div>
-                            </Link>
-                          )}
-                        </div>
+
+                            )}
+                          </div>
+                        </Link>
                       </th>
                       {props.heading === "Dashboard" ? (
                         ""

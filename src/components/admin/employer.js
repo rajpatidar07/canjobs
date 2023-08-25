@@ -5,7 +5,7 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
 function Employer() {
@@ -26,10 +26,7 @@ function Employer() {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Function to Search employer */

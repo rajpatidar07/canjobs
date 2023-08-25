@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getallEmployeeData } from "../../api/api";
 import moment from "moment";
-import { toast } from "react-toastify";
 function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
   let [employeeData, setEmployeeData] = useState([]);
   let [totalData, setTotalData] = useState([]);
@@ -42,10 +41,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
         setTotalData(userData.totalData);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render Method*/

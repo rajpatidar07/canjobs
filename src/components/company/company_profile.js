@@ -7,7 +7,7 @@ import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
 import moment from "moment";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link, useNavigate } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
@@ -65,10 +65,7 @@ function CompanyProfileDetail(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render method to get employer data */
@@ -331,7 +328,7 @@ function CompanyProfileDetail(props) {
                       Notes
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li className="tab-menu-items nav-item d-none">{/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
                     <Link
                       className={
                         TabActive === "activity"

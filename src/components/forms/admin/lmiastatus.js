@@ -34,10 +34,7 @@ function LmiaStatus(props) {
       }
       setSelectedStatus(Response.data.data)
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
 
@@ -133,10 +130,7 @@ function LmiaStatus(props) {
       }
     } catch (err) {
       console.log(err)
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   // console.log("Sub Stages =>", selectedStatus)

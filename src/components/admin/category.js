@@ -49,10 +49,7 @@ function Category() {
       let Json = await GetFilter()
       setCateType(Json.data.data.Category_type)
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   /* Function to get the job category data*/
@@ -84,10 +81,7 @@ function Category() {
         setIsLoading(false)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false)
     }
   };
@@ -115,10 +109,7 @@ function Category() {
         setIsLoading2(false)
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render function to get the job category*/
@@ -192,10 +183,7 @@ function Category() {
         setApiCall(true);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   /*Search Onchange function to Search Category data */

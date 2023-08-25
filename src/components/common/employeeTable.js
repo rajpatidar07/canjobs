@@ -85,10 +85,7 @@ export default function EmployeeTable(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false);
     }
   };
@@ -190,10 +187,7 @@ export default function EmployeeTable(props) {
         setApiCall(true);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
 
@@ -234,10 +228,7 @@ export default function EmployeeTable(props) {
         setAlredyApplied(true);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -517,34 +508,34 @@ export default function EmployeeTable(props) {
                         </p>
                       </td>
                       <td className=" py-5">
-                        <div className="d-flex profile_box gx-2">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto overflow-hidden">
-                              {empdata.profile_photo === null ? (
-                                <img
-                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                  alt=""
-                                  className="w-100"
-                                />
-                              ) : (
-                                <img
-                                  src={empdata.profile_photo}
-                                  alt=""
-                                  className="w-100"
-                                />
-                              )}
+                        <Link
+                          to={`/${empdata.employee_id}`}
+                          // onClick={
+                          //   empdata.name !== null
+                          //     ? () => employeeDetails(empdata.employee_id)
+                          //     : null
+                          // }
+                          title="Employee Details"
+                        >
+                          <div className="d-flex profile_box gx-2">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto overflow-hidden">
+                                {empdata.profile_photo === null ? (
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                ) : (
+                                  <img
+                                    src={empdata.profile_photo}
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                )}
+                              </div>
                             </div>
-                          </div>
 
-                          <Link
-                            to={`/${empdata.employee_id}`}
-                            // onClick={
-                            //   empdata.name !== null
-                            //     ? () => employeeDetails(empdata.employee_id)
-                            //     : null
-                            // }
-                            title="Employee Details"
-                          >
 
                             <div className=" mb-0">
                               {empdata.name === null ||
@@ -552,10 +543,8 @@ export default function EmployeeTable(props) {
                                 empdata.name === "undefined" ||
                                 empdata.name === "" ?
                                 <p className="font-size-3  mb-0">Unavailable</p> :
-                                <p className="m-0 text-black-2 font-weight-bold text-capitalize"><Link to={`/${empdata.employee_id}`}
-                                  className="text-dark">
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {empdata.name}
-                                </Link>
                                 </p>
                               }
                               {empdata.gender || empdata.marital_status ? <p className="text-gray font-size-2 m-0 text-capitalize">
@@ -579,10 +568,8 @@ export default function EmployeeTable(props) {
                                 ) : null}
                               </p> : null}
                             </div>
-
-                          </Link>
-
-                        </div>
+                          </div>
+                        </Link>
                       </td>
                       <td className="py-5 ">
                         {empdata.contact_no === null ? (

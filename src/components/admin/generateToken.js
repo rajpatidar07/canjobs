@@ -22,10 +22,7 @@ export default function GenerateToken(props) {
         setAllAdmin(filteredData);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -74,10 +71,7 @@ export default function GenerateToken(props) {
         setUnauthorized("Unauthorized admin")
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Function to reset the token */

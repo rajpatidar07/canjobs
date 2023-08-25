@@ -26,10 +26,7 @@ export default function ApplicantsStatusModal(props) {
         props.close()
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setLoading(false)
     }
   }

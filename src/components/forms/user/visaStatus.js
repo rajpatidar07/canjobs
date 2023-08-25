@@ -29,10 +29,7 @@ export default function VisaStatus(props) {
       setSelectedStatus(Response.data.data.data)
     } catch (err) {
       console.log(err)
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   useEffect(() => {
@@ -186,10 +183,7 @@ export default function VisaStatus(props) {
       }
     } catch (err) {
       console.log(err)
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   return (

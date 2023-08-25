@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import Loader from '../common/loader';
-import { toast } from "react-toastify"
 function Response() {
   let [filter, SetFilter] = useState([]);
   /*Filter states */
@@ -26,10 +25,7 @@ function Response() {
         SetFilter(Json.data.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 

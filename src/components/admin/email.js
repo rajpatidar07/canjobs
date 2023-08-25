@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { GetAllEmailTemplate } from "../../api/api";
 import ManageEmail from "../forms/admin/manageemail";
 import TestMail from "../forms/admin/testMail";
@@ -17,10 +17,7 @@ function EmailTemplate() {
       userData = await GetAllEmailTemplate();
       setEmailData(userData.Data.data);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   useEffect(() => {

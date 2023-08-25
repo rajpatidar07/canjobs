@@ -45,10 +45,7 @@ function Education(props) {
       let Json = await GetFilter();
       setEducationList(Json.data.data.Education);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
   /*Render method to get the json*/
@@ -119,10 +116,7 @@ function Education(props) {
         setState(data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -212,10 +206,7 @@ function Education(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   }
   /*Code to get current year */

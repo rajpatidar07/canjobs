@@ -9,7 +9,6 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
 import Loader from "../common/loader";
-import { toast } from "react-toastify";
 function Followup() {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -41,10 +40,7 @@ function Followup() {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
@@ -75,10 +71,7 @@ function Followup() {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
       setIsLoading(false);
     }
   };

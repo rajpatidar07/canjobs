@@ -5,7 +5,7 @@ import moment from "moment";
 import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
 import Loader from "../common/loader";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { ImCalendar } from "react-icons/im";
 function Interview(props) {
   let search = props.search;
@@ -50,10 +50,7 @@ function Interview(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 

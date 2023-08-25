@@ -4,7 +4,7 @@ import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
@@ -33,10 +33,7 @@ function ManageJobs() {
         SetFilter(Json.data.data);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+      console.log(err)
     }
   };
 
