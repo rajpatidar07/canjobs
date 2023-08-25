@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 
 function EmployeeHeader() {
   const userType = localStorage.getItem("userType");
+  const employee_id = localStorage.getItem("employee_id");
+  const company_id = localStorage.getItem("company_id");
   let profile_photo = localStorage.getItem("profile_photo");
   // let name = localStorage.getItem("name");
   let navigate = useNavigate();
@@ -63,9 +65,9 @@ function EmployeeHeader() {
     // name = localStorage.getItem("name");
     // condition to remove the class from the body when we are not at the admin modual
     // eslint-disable-next-line 
-    if(window.location.pathname === "/" || window.location.pathname === "/jobs" && localStorage.getItem("userType") === "admin"){
-          document.body.classList.remove("admin_body");
-          }
+    if (window.location.pathname === "/" || window.location.pathname === "/jobs" && localStorage.getItem("userType") === "admin") {
+      document.body.classList.remove("admin_body");
+    }
   }, [localStorage.getItem("profile_photo")])
 
   return (
@@ -226,7 +228,7 @@ function EmployeeHeader() {
                   <div>
                     <img
                       className="rounded-circle"
-                      src={profile_photo === null || profile_photo === "null" || profile_photo ===  undefined|| profile_photo ===  "undefined" ?  "image/user.png":profile_photo}
+                      src={profile_photo === null || profile_photo === "null" || profile_photo === undefined || profile_photo === "undefined" ? "image/user.png" : profile_photo}
                       width={50}
                       height={50}
                       alt={""}
@@ -254,11 +256,12 @@ function EmployeeHeader() {
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to={
                       userType === "user"
-                        ? "/profile"
+                        ? `/${employee_id}`
                         : userType === "company"
-                          ? "/companyprofile"
+                          ? "/company_detail"
                           : null
                     }
+                    onClick={userType === "company" ? () => localStorage.setItem("company_id", company_id) : null}
                   >
                     Profile
                   </Link>

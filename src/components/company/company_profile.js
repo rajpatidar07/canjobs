@@ -78,6 +78,8 @@ function CompanyProfileDetail(props) {
 
   return (
     <div>
+      {user_type === "admin"&&
+      <>
       <AdminHeader
         heading={
           <Link
@@ -92,6 +94,7 @@ function CompanyProfileDetail(props) {
         }
       />
       <AdminSidebar />
+      </>}
       <ToastContainer />
       {user_type !== "admin" ? <EmployeeHeader /> : null}
       <div
@@ -121,7 +124,7 @@ function CompanyProfileDetail(props) {
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                       {employerData.company_name}{" "}
                       <CustomButton
-                        className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                        className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"}
                         onClick={() => setShowCompanyInfoModal(true)}
                       >
                         <PiPencilDuotone />
@@ -186,7 +189,7 @@ function CompanyProfileDetail(props) {
                   status.lmia_status === null ||
                   status.lmia_status === undefined ||
                   status.lmia_status === "undefined" ? null : (
-                  <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                  <div className="bg-white w-100 d-flex flex-wrap mb-1" key={i}>
                     <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between align-items-center">
                       <div className="job_name text-dark d-flex align-items-center">
                         <span className="m-0 font-size-3">
@@ -195,7 +198,7 @@ function CompanyProfileDetail(props) {
                       </div>
                       <div>
                         <div
-                          key={i}
+                          key={i +1}
                           className={`step text-capitalize ${
                             status.lmia_status === "onboarding" ||
                             status.lmia_status === "advertisements" ||
@@ -207,7 +210,7 @@ function CompanyProfileDetail(props) {
                           <span>onboarding</span>
                         </div>
                         <div
-                          key={i}
+                          key={i+2}
                           className={`step text-capitalize ${
                             status.lmia_status === "onboarding" ||
                             status.lmia_status === "advertisements"
@@ -294,7 +297,7 @@ function CompanyProfileDetail(props) {
                       Documents
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li className={user_type === "user"?"d-none":"tab-menu-items nav-item"}>
                     <Link
                       className={
                         TabActive === "interview"
@@ -311,7 +314,7 @@ function CompanyProfileDetail(props) {
                       Interview
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li className={user_type === "admin"?"tab-menu-items nav-item" : "d-none"}>
                     <Link
                       className={
                         TabActive === "notes"
@@ -383,12 +386,12 @@ function CompanyProfileDetail(props) {
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>About {employerData.company_name}</span>
-                                <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
+                                {/* <CustomButton
+                                  className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0  absolute_top_right"}
                                   onClick={() => setShowCompanyInfoModal(true)}
                                 >
                                   <PiPencilDuotone />
-                                </CustomButton>
+                                </CustomButton> */}
                               </h4>
                               <div className="pt-5 text-left">
                                 {employerData.about ? (
@@ -408,7 +411,7 @@ function CompanyProfileDetail(props) {
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>{/*Kyc Details*/}</span>
                                 <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+                                  className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
                                   onClick={() =>
                                     setShowKycComplainDetailsModal(true)
                                   }

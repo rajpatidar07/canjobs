@@ -21,7 +21,7 @@ function JobDetailpageAdmim(props) {
     const [lima, setLmia] = useState(false);
     let [apiCall, setApiCall] = useState(false);
     let [isLoading, setIsLoading] = useState(true);
-      const [showJobEditModal, setShowJobEditModal] = useState(false);
+    const [showJobEditModal, setShowJobEditModal] = useState(false);
     const [TabActive, setTabActive] = useState("detail");
     const [jobData, setJobData] = useState("");
     // const [employerKycData, setEmployrKycData] = useState("");
@@ -30,10 +30,13 @@ function JobDetailpageAdmim(props) {
     const JobData = async () => {
         try {
             let resJobData = await GetJobDetail(jid);
-            if (resJobData === null ||
-                resJobData === undefined ||
-                resJobData === "undefined") {
+            if (resJobData.data.data === null ||
+                resJobData.data.data === undefined ||
+                resJobData.data.data === "undefined" ||
+                resJobData.data.data.length === 0) {
                 setJobData([])
+                setIsLoading(false)
+
             } else {
                 setJobData(resJobData.data.data[0])
                 setIsLoading(false)
@@ -52,10 +55,9 @@ function JobDetailpageAdmim(props) {
             setApiCall(false);
         }
     }, [apiCall]);
-
     return (
         <div>
-            <AdminHeader
+            {user_type === "admin" && <><AdminHeader
                 heading={
                     <Link
                         className="d-flex align-items-center "
@@ -68,7 +70,8 @@ function JobDetailpageAdmim(props) {
                     </Link>
                 }
             />
-            <AdminSidebar />
+                <AdminSidebar />
+            </>}
             <ToastContainer />
             {user_type !== "admin" ? <EmployeeHeader /> : null}
             <div
@@ -98,11 +101,11 @@ function JobDetailpageAdmim(props) {
                                         <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                                             {jobData.job_title}{" "}
                                             <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
-                                  onClick={() => setShowJobEditModal(true)}
-                                >
-                                  <PiPencilDuotone />
-                                </CustomButton>
+                                                className={user_type === "user" ? "d-none" : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"}
+                                                onClick={() => setShowJobEditModal(true)}
+                                            >
+                                                <PiPencilDuotone />
+                                            </CustomButton>
                                         </h3>
                                         <p className="font-size-3 text-default-color line-height-2 m-0">
                                             {jobData.department}
@@ -208,7 +211,7 @@ function JobDetailpageAdmim(props) {
                                     status.lmia_status === null ||
                                     status.lmia_status === undefined ||
                                     status.lmia_status === "undefined" ? null : (
-                                    <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                                    <div className="bg-white w-100 d-flex flex-wrap mb-1" key={i}>
                                         <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between align-items-center">
                                             <div className="job_name text-dark d-flex align-items-center">
                                                 <span className="m-0 font-size-3">
@@ -220,7 +223,7 @@ function JobDetailpageAdmim(props) {
                                             </div>
                                             <div>
                                                 <div
-                                                    key={i}
+                                                    key={i+1}
                                                     className={`step text-capitalize ${status.lmia_status === "onboarding" ||
                                                         status.lmia_status === "advertisements" ||
                                                         status.lmia_status === "documentation"
@@ -231,7 +234,7 @@ function JobDetailpageAdmim(props) {
                                                     <span>onboarding</span>
                                                 </div>
                                                 <div
-                                                    key={i}
+                                                    key={i+2}
                                                     className={`step text-capitalize ${status.lmia_status === "onboarding" ||
                                                         status.lmia_status === "advertisements"
                                                         ? "current"
@@ -241,7 +244,7 @@ function JobDetailpageAdmim(props) {
                                                     <span>advertisements</span>
                                                 </div>
                                                 <div
-                                                    key={i}
+                                                    key={i+3}
                                                     className={`step text-capitalize ${status.lmia_status === "documentation"
                                                         ? "current"
                                                         : null
@@ -282,7 +285,7 @@ function JobDetailpageAdmim(props) {
                                             Overview
                                         </Link>
                                     </li>
-                                    <li className="tab-menu-items nav-item">
+                                    <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
                                         <Link
                                             className={
                                                 TabActive === "jobs"
@@ -528,15 +531,15 @@ function JobDetailpageAdmim(props) {
                 </div>
             </div>
             {/* {user_type !== "admin" ? <EmployeeFooter /> : null} */}
-            {showJobEditModal?
-             <AddJobModal
-             show={showJobEditModal}
-             jobdata={jid}
-             admin={"admin"}
-             setApiCall={setApiCall}
-             apiCall={apiCall}
-             close={() => setShowJobEditModal(false)}
-           />:null}
+            {showJobEditModal ?
+                <AddJobModal
+                    show={showJobEditModal}
+                    jobdata={jid}
+                    admin={"admin"}
+                    setApiCall={setApiCall}
+                    apiCall={apiCall}
+                    close={() => setShowJobEditModal(false)}
+                /> : null}
             {/* {showCompanyInfoModal ? (
         <CompanyDetails
           employerId={user_type === "company" ? company_id : cid}

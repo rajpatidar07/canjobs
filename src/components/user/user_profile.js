@@ -29,6 +29,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { RiMailSendLine } from "react-icons/ri";
+import EmployeeHeader from "../common/header";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   let navigate = useNavigate();
@@ -46,9 +47,9 @@ const NewUserProfile = (props) => {
   const [appliedJob, setAppliedJob] = useState([]);
   let [isLoading, setIsLoading] = useState(true);
   const user_type = localStorage.getItem("userType");
-  let id = localStorage.getItem("employee_id");
+  // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
-  const employeeId = user_type === "admin" ? eid : id;
+  const employeeId = eid 
 
   /*Function to get user Data */
   const UserData = async () => {
@@ -66,7 +67,7 @@ const NewUserProfile = (props) => {
         setuserDetail(userData.data);
         setStatus(userData.data.employee[0].status);
         setPersonalDetail(userData.data.employee[0]);
-        localStorage.setItem(
+       if(user_type === "user"){ localStorage.setItem(
           "profile_photo",
           userData.data.employee[0].profile_photo
         );
@@ -74,7 +75,7 @@ const NewUserProfile = (props) => {
         localStorage.setItem(
           "skill",
           userData.data.skill.map((obj) => obj.skill).join(", ")
-        );
+        );}
         setIsLoading(false);
       }
     } catch (err) {
@@ -151,11 +152,9 @@ const NewUserProfile = (props) => {
     const months = duration.months();
     const days = duration.days();
 
-    return `${
-      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
-    } ${
-      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
-    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
+    return `${years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+      } ${months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
+      } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
   };
   const [status, setStatus] = useState("");
   /*function to change applicants status */
@@ -183,34 +182,37 @@ const NewUserProfile = (props) => {
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
-      <AdminHeader
-        heading={
-          <Link
-            className="d-flex align-items-center "
-            onClick={() => navigate(-1)}
-          >
-            <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-            <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-              <h3 class="font-size-6 mb-0 text-capitalize">User Profile</h3>
-            </span>
-          </Link>
-        }
-      />
-      {/* <!-- navbar- --> */}
-      <AdminSidebar heading={"User Profile"} />
-
+      {user_type === "admin" ? <>
+        <AdminHeader
+          heading={
+            <Link
+              className="d-flex align-items-center "
+              onClick={() => navigate(-1)}
+            >
+              <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+              <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                <h3 class="font-size-6 mb-0 text-capitalize">User Profile</h3>
+              </span>
+            </Link>
+          }
+        />
+        {/* <!-- navbar- --> */}
+        <AdminSidebar heading={"User Profile"} />
+      </>
+        :
+        <EmployeeHeader/>}
       <div
         className={
-          // showEmployeeProfile === false
-          //   ?
+          user_type === "admin" ?
           "dashboard-main-container mt-12 mt-lg-12"
-          //   :"dashboard-main-container mt-25 mt-lg-22 d-none"
+          :
+          "mt-22 mt-lg-22"
         }
         id="dashboard-body"
       >
         <ToastContainer />
         <div className="container-fluid">
-          {name === null || name === "null" ? "<h4>Complete profile</h4>" : ""}
+          {name === null || name === "null" ? <h4>Complete profile</h4> : ""}
           {isLoading ? (
             <div className="table-responsive main_table_div">
               <Loader />
@@ -266,16 +268,15 @@ const NewUserProfile = (props) => {
                       </h4>
                       <p className="m-0 age_gender font-size-3 d-flex align-items-center">
                         {PersonalDetail.gender ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.date_of_birth
-                          ? `(${
-                              PersonalDetail.gender === "female"
-                                ? "F"
-                                : PersonalDetail.gender === "male"
-                                ? "M"
-                                : "O"
-                            },
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.date_of_birth
+                          ? `(${PersonalDetail.gender === "female"
+                            ? "F"
+                            : PersonalDetail.gender === "male"
+                              ? "M"
+                              : "O"
+                          },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
@@ -295,26 +296,26 @@ const NewUserProfile = (props) => {
                             )
                           })}
                         </DropdownButton> */}
-                        <DropdownButton
+                        {user_type === "admin" && <DropdownButton
                           as={ButtonGroup}
                           title={
                             status === "1"
                               ? "New"
                               : status === "2"
-                              ? "Prospect"
-                              : status === "3"
-                              ? "Lead"
-                              : status === "4"
-                              ? "Reatined"
-                              : status === "5"
-                              ? "Lost"
-                              : status === "6"
-                              ? "Dead"
-                              : // ) : status === "7" ? (
-                              //   "Reserved"
-                              status === "0"
-                              ? "New"
-                              : "status"
+                                ? "Prospect"
+                                : status === "3"
+                                  ? "Lead"
+                                  : status === "4"
+                                    ? "Reatined"
+                                    : status === "5"
+                                      ? "Lost"
+                                      : status === "6"
+                                        ? "Dead"
+                                        : // ) : status === "7" ? (
+                                        //   "Reserved"
+                                        status === "0"
+                                          ? "New"
+                                          : "status"
                           }
                           size="sm"
                           className="user_status_btn btn-primary text-white ml-1"
@@ -332,7 +333,7 @@ const NewUserProfile = (props) => {
                               </Dropdown.Item>
                             )
                           )}
-                        </DropdownButton>
+                        </DropdownButton>}
                       </p>
                     </div>
                     {/* <p className="mb-8 text-gray font-size-4">
@@ -353,7 +354,7 @@ const NewUserProfile = (props) => {
                           <CustomButton
                             title={"Send Custom Email"}
                             className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                            /*Functionalities have to be done. */
+                          /*Functionalities have to be done. */
                           >
                             {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                             <RiMailSendLine />
@@ -373,7 +374,7 @@ const NewUserProfile = (props) => {
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                    PersonalDetail.length === 0 ? (
+                      PersonalDetail.length === 0 ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -521,7 +522,7 @@ const NewUserProfile = (props) => {
                         status.lmia_status === null ||
                         status.lmia_status === undefined ||
                         status.lmia_status === "undefined" ? null : (
-                        <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between">
+                        <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between" key={i}>
                           <div className="job_name text-dark">
                             <span className="m-0 font-size-2 d-block mb-1">
                               {status.job_title}
@@ -532,35 +533,32 @@ const NewUserProfile = (props) => {
                           </div>
                           <div>
                             <div
-                              key={i}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "candidate placement" ||
+                              key={i+1}
+                              className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
                                 status.lmia_status === "submission" ||
                                 status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                              }`}
+                                ? "current"
+                                : null
+                                }`}
                             >
                               <span>candidate placement</span>
                             </div>
                             <div
-                              key={i}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "submission" ||
+                              key={i+2}
+                              className={`step text-capitalize ${status.lmia_status === "submission" ||
                                 status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                              }`}
+                                ? "current"
+                                : null
+                                }`}
                             >
                               <span>submission</span>
                             </div>
                             <div
-                              key={i}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                              }`}
+                              key={i+3}
+                              className={`step text-capitalize ${status.lmia_status === "decision"
+                                ? "current"
+                                : null
+                                }`}
                             >
                               <span>decision</span>
                             </div>
@@ -639,7 +637,7 @@ const NewUserProfile = (props) => {
                         Documents
                       </Link>
                     </li>
-                    <li className="tab-menu-items nav-item">
+                    <li className={user_type === "user"?"d-none":"tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "visa"
@@ -656,7 +654,7 @@ const NewUserProfile = (props) => {
                         Visa
                       </Link>
                     </li>
-                    <li className="tab-menu-items nav-item">
+                    <li className={user_type === "user"||user_type === "company"?"d-none":"tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "notes"
@@ -752,7 +750,7 @@ const NewUserProfile = (props) => {
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                 onClick={() => setShowEmplyomentDetails(true)}
@@ -774,7 +772,7 @@ const NewUserProfile = (props) => {
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
                           {userDetail.career === undefined ||
-                          userDetail.career.length === 0 ? (
+                            userDetail.career.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>
@@ -838,7 +836,7 @@ const NewUserProfile = (props) => {
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Skill</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                 onClick={() => setShowItSkills(true)}
@@ -884,7 +882,7 @@ const NewUserProfile = (props) => {
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
                             {user_type === "company" ||
-                            props.self === "yes" ? null : (
+                              props.self === "yes" ? null : (
                               <CustomButton
                                 className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                 onClick={() => setShowEducation(true)}
@@ -903,7 +901,7 @@ const NewUserProfile = (props) => {
                             ) : null}
                           </h4>
                           {userDetail.education === undefined ||
-                          userDetail.education.length === 0 ? (
+                            userDetail.education.length === 0 ? (
                             <div>
                               <p className="text-center">No Data Found</p>
                             </div>

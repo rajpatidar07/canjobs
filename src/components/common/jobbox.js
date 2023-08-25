@@ -145,12 +145,12 @@ function JobBox({
                 className="pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 my-5 hover-border-green main_job_box_"
               >
                 <Link
-                  to={token && (user_type === "user" || user_type === "company") ? "/jobdetail" : ""}
+                  to={token && (user_type === "user" || user_type === "company") ? "/jobdetailpage" : ""}
                   onClick={
                     token && (user_type === "user" || user_type === "company")
                       // ? job.is_applied === "0"
                       ? () => {
-                        localStorage.setItem("jobId", job.job_id);
+                        localStorage.setItem("job_id", job.job_id);
                         OnApplyClick(1, job.job_id);
                       }
                       // : null

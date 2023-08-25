@@ -150,7 +150,7 @@ export default function CompanyLogin(props) {
           console.log(res);
           localStorage.setItem("token", res.token);
           localStorage.setItem("userType", "company");
-          localStorage.setItem("employee_id", res.employer_id);
+          localStorage.setItem("company_id", res.company_id);
           localStorage.setItem("profile_photo", res.company_logo);
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -199,7 +199,7 @@ export default function CompanyLogin(props) {
           console.log(data);
           localStorage.setItem("token", data.token);
           localStorage.setItem("userType", "company");
-          localStorage.setItem("employee_id", data.employer_id);
+          localStorage.setItem("company_id", data.company_id);
           localStorage.setItem("profile_photo", data.company_logo);
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -233,7 +233,7 @@ export default function CompanyLogin(props) {
       // console.log(data); 
       localStorage.setItem("token", data.token);
       localStorage.setItem("userType", "company");
-      localStorage.setItem("employee_id", data.employer_id);
+      localStorage.setItem("company_id", data.company_id);
       localStorage.setItem("profile_photo", data.company_logo);
       toast.success("Logged In Successfully", {
         position: toast.POSITION.TOP_RIGHT,

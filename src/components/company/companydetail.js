@@ -10,7 +10,7 @@ function CompanyDetailPage(props) {
   const [apiCall, setApiCall] = useState(false);
   const [ContactDetails, setContactDetails] = useState(false);
   const [employerData, setEmployerData] = useState("");
-
+let user_type = localStorage.getItem("userType")
   /*Render method to get employer data */
   useEffect(() => {
     const EmployerData = async () => {
@@ -48,7 +48,7 @@ function CompanyDetailPage(props) {
           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
             <span>Contact Info</span>
             <CustomButton
-              className=" font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+              className={" font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
               onClick={() => setContactDetails(true)}
             >
               <PiPencilDuotone />
@@ -114,7 +114,7 @@ function CompanyDetailPage(props) {
       </div>
       {props.page === "company_profile" ? (
         <CustomButton
-          className=" font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+          className={user_type === "user"?"d-none":" font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
           onClick={() => setContactDetails(true)}
         >
           <PiPencilDuotone />
