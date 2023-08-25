@@ -141,7 +141,7 @@ export default function Visa() {
                       : "row m-0 align-items-center"
                   }
                 >
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search Employee:</p>
                     <input
                       required
@@ -153,7 +153,7 @@ export default function Visa() {
                       onChange={(e) => onSearch(e)}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Country:</p>
                     <div className="select_div">
                       <select
@@ -175,7 +175,7 @@ export default function Visa() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Status:</p>
                     <div className="select_div">
                       <select
@@ -197,7 +197,7 @@ export default function Visa() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Interested In:</p>
                     <div className="select_div">
                       <select
@@ -227,7 +227,7 @@ export default function Visa() {
                 {/*<-- Job Search and Filter -->*/}
                 {/* <div className={userType === "company" ? "d-none"
                 :"row m-0 align-items-center"}>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -240,7 +240,7 @@ export default function Visa() {
                     />
                     <small className="text-danger">{searcherror}</small>
                   </div>{" "}
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Company Name:</p>
                     <input
                       required
@@ -252,7 +252,7 @@ export default function Visa() {
                       onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
                       <select
@@ -273,7 +273,7 @@ export default function Visa() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
                       <select
@@ -294,7 +294,7 @@ export default function Visa() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
                       <select
@@ -315,7 +315,7 @@ export default function Visa() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
                       <select

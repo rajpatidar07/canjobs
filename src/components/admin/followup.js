@@ -40,7 +40,7 @@ function Followup() {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -71,7 +71,7 @@ function Followup() {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setIsLoading(false);
     }
   };
@@ -154,7 +154,7 @@ function Followup() {
                 </div>
                 {/* <!-- Follow up search and filter --> */}
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search by Job:</p>
                     <input
                       required
@@ -170,7 +170,7 @@ function Followup() {
                       maxLength={30}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Category:</p>
                     <div className="select_div">
                       <select
@@ -195,7 +195,7 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Job SWEP:</p>
                     <div className="select_div">
                       <select
@@ -217,7 +217,7 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Key Skill:</p>
                     <div className="select_div">
                       <select
@@ -241,7 +241,7 @@ function Followup() {
                       </select>
                     </div>
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Location:</p>
                     <div className="select_div">
                       <select
@@ -447,7 +447,12 @@ function Followup() {
                                   <div className="">
                                     <Link
                                       to={`/jobdetailpage`}
-                                onClick={() => localStorage.setItem("job_id",job.job_id)}
+                                      onClick={() =>
+                                        localStorage.setItem(
+                                          "job_id",
+                                          job.job_id
+                                        )
+                                      }
                                       className="font-size-3 mb-0 font-weight-semibold text-black-2"
                                     >
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">

@@ -64,7 +64,7 @@ function ManageAdmin() {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setIsLoading(false);
     }
   };
@@ -114,7 +114,7 @@ function ManageAdmin() {
         setDeleteAlert(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
   /*Search Onchange function to filter the data */
@@ -173,7 +173,7 @@ function ManageAdmin() {
                   <h3 className="font-size-6 mb-0">Admin</h3>
                 </div>
                 <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search:</p>
                     <input
                       required
@@ -189,7 +189,7 @@ function ManageAdmin() {
                       }}
                     />
                   </div>
-                  <div className="col p-1 form_group mb-5 mt-4">
+                  <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Admin:</p>
                     <div className="select_div">
                       <select

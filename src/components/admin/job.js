@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CustomButton from "../common/button";
 // import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
@@ -34,7 +34,7 @@ function Job(props) {
       let Json = await GetFilter();
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -136,7 +136,7 @@ function Job(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -154,7 +154,7 @@ function Job(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -172,7 +172,7 @@ function Job(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -199,7 +199,7 @@ function Job(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -226,7 +226,7 @@ function Job(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
@@ -253,7 +253,7 @@ function Job(props) {
                   <div
                     className={
                       props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-5 mt-4"
+                        ? "col p-1 form_group mb-3"
                         : "col p-1 form_group"
                     }
                   >
