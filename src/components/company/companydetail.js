@@ -53,15 +53,7 @@ let user_type = localStorage.getItem("userType")
             >
               <PiPencilDuotone />
             </CustomButton>
-            {ContactDetails ? (
-              <ContactInfo
-                employerId={props.employerId}
-                show={ContactDetails}
-                apiCall={apiCall}
-                setApiCall={setApiCall}
-                close={() => setContactDetails(false)}
-              />
-            ) : null}
+            
           </h4>
         )}
         <div className="pt-5 text-left row m-0">
@@ -120,6 +112,15 @@ let user_type = localStorage.getItem("userType")
           <PiPencilDuotone />
         </CustomButton>
       ) : null}
+      {ContactDetails ? (
+              <ContactInfo
+                employerId={props.employerId}
+                show={ContactDetails}
+                apiCall={apiCall}
+                setApiCall={setApiCall}
+                close={() => setContactDetails(false)}
+              />
+            ) : null}
     </>
   );
 }

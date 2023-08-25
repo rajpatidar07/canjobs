@@ -158,7 +158,7 @@ function JobProfileResponse(props) {
       // console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
-        let status = "pending";
+        let status = "onboard";
         try {
           let VisaResponse = await AddUpdateVisa(e.employee_id, status);
           if (VisaResponse.data.message === "created successfully") {

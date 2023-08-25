@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
-import Addfollowup from "../forms/admin/addfollowup";
+// import Addfollowup from "../forms/admin/addfollowup";
 import {
   AddLimia,
   ReservedEmployeeForJob,
@@ -21,7 +21,7 @@ import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { BsArrow90DegRight } from "react-icons/bs";
-import { RiChatFollowUpLine } from "react-icons/ri";
+// import { RiChatFollowUpLine } from "react-icons/ri";
 import { LiaCcVisa } from "react-icons/lia";
 import { PiBriefcaseLight } from "react-icons/pi";
 import { ImCalendar } from "react-icons/im";
@@ -32,7 +32,7 @@ function JobResponse(props) {
   let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [apiCall, setApiCall] = useState(props.apiCall);
-  let [followup, setFollowUp] = useState(false);
+  // let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
   let [lmia, setLimia] = useState(false);
   let [response, setResponseData] = useState([]);
@@ -171,7 +171,6 @@ function JobResponse(props) {
     // Api call to set employee reserved
     try {
       let response = await ReservedEmployeeForJob(e.apply_id, "1");
-      console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
         let status = "onboard";
@@ -209,11 +208,11 @@ function JobResponse(props) {
   };
 
   /*Function to open add follow up modal */
-  const addFollow = (e) => {
-    setFollowUp(true);
-    setResData(e);
-    setJobId(e.job_id);
-  };
+  // const addFollow = (e) => {
+  //   setFollowUp(true);
+  //   setResData(e);
+  //   setJobId(e.job_id);
+  // };
 
   /*Function to open add Interview up modal */
   const addnterview = (e) => {
@@ -930,7 +929,7 @@ function JobResponse(props) {
                                     </span>
                                     {/* <span className="fas fa-file text-gray"></span> */}
                                   </button>
-                                  <button
+                                  {/* <button
                                     className={
                                       props.response === "visa" ||
                                       props.response === "lmia"
@@ -943,8 +942,7 @@ function JobResponse(props) {
                                     <span className="text-gray px-2">
                                       <RiChatFollowUpLine />
                                     </span>
-                                    {/* <i className=" fas fa-plus text-gray px-2"></i> */}
-                                  </button>
+                                  </button> */}
                                   <button
                                     className={
                                       props.response === "visa" ||
@@ -1016,7 +1014,7 @@ function JobResponse(props) {
           lmia={lmiaStatus}
         />
       ) : null}
-      {followup ? (
+      {/* {followup ? (
         <Addfollowup
           show={followup}
           job_id={jobId}
@@ -1028,7 +1026,7 @@ function JobResponse(props) {
             setResData("");
           }}
         />
-      ) : null}
+      ) : null} */}
       {showVisaModal ? (
         <VisaStatus
           show={showVisaModal}

@@ -341,7 +341,7 @@ export default function EmployerDocumrentContainer(props) {
             Document List
           </h5>
           {/* Documents type list */}
-          <table class="table font-size-3">
+          <table className="table font-size-3">
             <thead>
               <tr>
                 <th className="p-3" scope="col">

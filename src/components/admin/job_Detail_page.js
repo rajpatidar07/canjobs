@@ -31,11 +31,13 @@ function JobDetailpageAdmim(props) {
     try {
       let resJobData = await GetJobDetail(jid);
       if (
-        resJobData === null ||
-        resJobData === undefined ||
-        resJobData === "undefined"
+        resJobData.data.data === null ||
+        resJobData.data.data === undefined ||
+        resJobData.data.data === "undefined"||
+        resJobData.data.data.length === 0
       ) {
         setJobData([]);
+        setIsLoading(false);
       } else {
         setJobData(resJobData.data.data[0]);
         setIsLoading(false);
@@ -65,7 +67,7 @@ function JobDetailpageAdmim(props) {
           >
             <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
             <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-              <h3 class="font-size-6 mb-0 text-capitalize">Job Details</h3>
+              <h3 className="font-size-6 mb-0 text-capitalize">Job Details</h3>
             </span>
           </Link>
         }
@@ -101,7 +103,7 @@ function JobDetailpageAdmim(props) {
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                       {jobData.job_title}{" "}
                       <CustomButton
-                        className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0  absolute_top_right"}
+                        className={user_type === "user" || jobData.length === 0 ?"d-none":"font-size-3 rounded-3 btn-primary border-0  absolute_top_right"}
                         onClick={() => setShowJobEditModal(true)}
                       >
                         <PiPencilDuotone />

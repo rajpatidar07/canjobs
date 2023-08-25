@@ -88,7 +88,7 @@ function CompanyProfileDetail(props) {
           >
             <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
             <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-              <h3 class="font-size-6 mb-0 text-capitalize">Company Profile</h3>
+              <h3 className="font-size-6 mb-0 text-capitalize">Company Profile</h3>
             </span>
           </Link>
         }
@@ -183,62 +183,59 @@ function CompanyProfileDetail(props) {
           </div> */}
               </div>
             </div>
-            <div className="col-12 order arrow-wrapper custome_arrow_wrapper ">
-              {(lima || []).map((status, i) => {
-                return status.lmia_status === "" ||
-                  status.lmia_status === null ||
-                  status.lmia_status === undefined ||
-                  status.lmia_status === "undefined" ? null : (
-                  <div className="bg-white w-100 d-flex flex-wrap mb-1" key={i}>
-                    <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between align-items-center">
-                      <div className="job_name text-dark d-flex align-items-center">
-                        <span className="m-0 font-size-3">
-                          {status.job_title}
-                        </span>
-                      </div>
-                      <div>
-                        <div
-                          key={i +1}
-                          className={`step text-capitalize ${
-                            status.lmia_status === "onboarding" ||
-                            status.lmia_status === "advertisements" ||
-                            status.lmia_status === "documentation"
-                              ? "current"
-                              : null
-                          }`}
-                        >
-                          <span>onboarding</span>
+               {/* LMIA */}
+            <div className="col-12">
+                <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                  <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                    {(lima || []).map((status, i) => {
+                      return status.lmia_status === "" ||
+                        status.lmia_status === null ||
+                        status.lmia_status === undefined ||
+                        status.lmia_status === "undefined" ? null : (
+                        <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between" key={i}>
+                          <div className="job_name text-dark">
+                            <span className="m-0 font-size-2 d-block mb-1">
+                              {status.job_title}
+                            </span>
+                          </div>
+                          <div>
+                            <div
+                              key={i+1}
+                              className={`step text-capitalize ${
+                                status.lmia_status === "onboarding"
+                                ? "current"
+                                : null
+                                }`}
+                            >
+                              <span>On Boarding</span>
+                            </div>
+                            <div
+                              key={i+2}
+                              className={`step text-capitalize ${
+                              status.lmia_status === "advertisements"
+                                ? "current"
+                                : null
+                                }`}
+                            >
+                              <span>Advertisements</span>
+                            </div>
+                            <div
+                              key={i+3}
+                              className={`step text-capitalize ${ status.lmia_status === "documentation"
+                                ? "current"
+                                : null
+                                }`}
+                            >
+                              <span>Documentation</span>
+                            </div>
+                          </div>
                         </div>
-                        <div
-                          key={i+2}
-                          className={`step text-capitalize ${
-                            status.lmia_status === "onboarding" ||
-                            status.lmia_status === "advertisements"
-                              ? "current"
-                              : null
-                          }`}
-                        >
-                          <span>advertisements</span>
-                        </div>
-                        <div
-                          key={i}
-                          className={`step text-capitalize ${
-                            status.lmia_status === "documentation"
-                              ? "current"
-                              : null
-                          }`}
-                        >
-                          <span>documentation</span>
-                        </div>
-                      </div>
-                    </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              </div>
             <div className="col-12 order-2 order-xl-1">
-              {/* LMIA */}
-
               <div className="bg-white">
                 {/*----Profile Header----*/}
                 <ul
@@ -541,6 +538,7 @@ function CompanyProfileDetail(props) {
                       heading={"companyprofile"}
                       response={"companyprofile"}
                       setLmia={setLmia}
+                      setApiCall={setApiCall}
                     />
                   </div>
                   {/* <!-- Top Start --> */}
