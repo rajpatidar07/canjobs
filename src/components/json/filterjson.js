@@ -639,11 +639,13 @@ const filterjson = {
     ],
     "decision": [
       "awaiting decision",
-      "maintain mature ads throughout the process",
-      "initiate app after ads mature",
-      "email employer for updates",
-      "request extra docs if needed",
-      "keep them updated on app status",
+      "approved",
+      "reject",
+      // "maintain mature ads throughout the process",
+      // "initiate app after ads mature",
+      // "email employer for updates",
+      // "request extra docs if needed",
+      // "keep them updated on app status",
     ],
   },
   visa_status: [

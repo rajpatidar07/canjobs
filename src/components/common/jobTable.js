@@ -411,7 +411,7 @@ export default function JobTable(props) {
                   >
                     LMIA status
                   </th>
-                  {props.heading === "Dashboard" || user_type === "user"||user_type === "company" ? null : (
+                  {props.heading === "Dashboard" || user_type === "user" ? null : (
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
@@ -586,7 +586,7 @@ export default function JobTable(props) {
                             )}
                           </div>
                         </th>
-                        {props.heading === "Dashboard" ||user_type === "user"||user_type === "company" ? null : (
+                        {props.heading === "Dashboard" ||user_type === "user" ? null : (
                           <th className="py-5 min-width-px-100">
                             <div
                               className="btn-group button_group"
@@ -707,7 +707,7 @@ export default function JobTable(props) {
                                         </button>
                                         <button
                                           className={
-                                            props.response === "lmia" ||
+                                           ( props.response === "lmia" && user_type === "admin")||
                                               props.response === "visa"
                                               ? "d-none"
                                               : "btn btn-outline-info action_btn"

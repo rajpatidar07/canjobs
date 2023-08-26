@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1692954697384,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693027793164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -410,9 +410,9 @@\n                     className=\" border-0 font-size-4 font-weight-normal\"\n                   >\n                     LMIA status\n                   </th>\n-                  {props.heading === \"Dashboard\" || user_type === \"user\"||user_type === \"company\" ? null : (\n+                  {props.heading === \"Dashboard\" || user_type === \"user\" ? null : (\n                     <th\n                       scope=\"col\"\n                       className=\" border-0 font-size-4 font-weight-normal\"\n                     >\n@@ -585,9 +585,9 @@\n                               <span>NA</span>\n                             )}\n                           </div>\n                         </th>\n-                        {props.heading === \"Dashboard\" ||user_type === \"user\"||user_type === \"company\" ? null : (\n+                        {props.heading === \"Dashboard\" ||user_type === \"user\" ? null : (\n                           <th className=\"py-5 min-width-px-100\">\n                             <div\n                               className=\"btn-group button_group\"\n                               role=\"group\"\n"
+                },
+                {
+                    "date": 1693027873786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -706,9 +706,9 @@\n                                           {/* <span className=\"fas fa-user-tie text-gray\"></span> */}\n                                         </button>\n                                         <button\n                                           className={\n-                                            props.response === \"lmia\" ||\n+                                           ( props.response === \"lmia\" && user_type === \"admin\")||\n                                               props.response === \"visa\"\n                                               ? \"d-none\"\n                                               : \"btn btn-outline-info action_btn\"\n                                           }\n"
                 }
             ],
             "date": 1692954697384,

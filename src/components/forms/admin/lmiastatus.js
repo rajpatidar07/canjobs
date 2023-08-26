@@ -191,7 +191,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
-            close()
+          close()
         }
       } catch (err) {
         toast.error("Something went wrong", {
@@ -210,7 +210,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
-            close()
+          close()
         }
         if (responseData.message === "Data updated successfully") {
           toast.success("Lmia Status Updated successfully", {
@@ -218,7 +218,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true)
-            close()
+          close()
         }
       } catch (err) {
         console.log(err)
@@ -286,11 +286,11 @@ function LmiaStatus(props) {
               //   ))}
               // </div>
               <LmiaSubStageSelector
-              expandedStatus={expandedStatus}
-              selectedStatus={selectedStatus}
-              FilterJson={FilterJson}
-              handleSubStageSelection={handleSubStageSelection}
-            />
+                expandedStatus={expandedStatus}
+                selectedStatus={selectedStatus}
+                FilterJson={FilterJson}
+                handleSubStageSelection={handleSubStageSelection}
+              />
             )}
             <div className="form-group ">
               <label

@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1692954496255,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693023835670,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -638,13 +638,15 @@\n       \"inform employer of payment and potential interview\",\n     ],\n     \"decision\": [\n       \"awaiting decision\",\n-      \"maintain mature ads throughout the process\",\n-      \"initiate app after ads mature\",\n-      \"email employer for updates\",\n-      \"request extra docs if needed\",\n-      \"keep them updated on app status\",\n+      \"approved\",\n+      \"reject\",\n+      // \"maintain mature ads throughout the process\",\n+      // \"initiate app after ads mature\",\n+      // \"email employer for updates\",\n+      // \"request extra docs if needed\",\n+      // \"keep them updated on app status\",\n     ],\n   },\n   visa_status: [\n     \"onboard\",\n"
                 }
             ],
             "date": 1692954496255,

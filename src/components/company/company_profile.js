@@ -78,23 +78,23 @@ function CompanyProfileDetail(props) {
 
   return (
     <div>
-      {user_type === "admin"&&
-      <>
-      <AdminHeader
-        heading={
-          <Link
-            className="d-flex align-items-center "
-            onClick={() => navigate(-1)}
-          >
-            <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
-            <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-              <h3 className="font-size-6 mb-0 text-capitalize">Company Profile</h3>
-            </span>
-          </Link>
-        }
-      />
-      <AdminSidebar />
-      </>}
+      {user_type === "admin" &&
+        <>
+          <AdminHeader
+            heading={
+              <Link
+                className="d-flex align-items-center "
+                onClick={() => navigate(-1)}
+              >
+                <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                  <h3 className="font-size-6 mb-0 text-capitalize">Company Profile</h3>
+                </span>
+              </Link>
+            }
+          />
+          <AdminSidebar />
+        </>}
       <ToastContainer />
       {user_type !== "admin" ? <EmployeeHeader /> : null}
       <div
@@ -124,7 +124,7 @@ function CompanyProfileDetail(props) {
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                       {employerData.company_name}{" "}
                       <CustomButton
-                        className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"}
+                        className={user_type === "user" ? "d-none" : "font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"}
                         onClick={() => setShowCompanyInfoModal(true)}
                       >
                         <PiPencilDuotone />
@@ -149,7 +149,7 @@ function CompanyProfileDetail(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
+                        /*Functionalities have to be done. */
                         >{/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
                         </CustomButton>
@@ -183,58 +183,58 @@ function CompanyProfileDetail(props) {
           </div> */}
               </div>
             </div>
-               {/* LMIA */}
+            {/* LMIA */}
             <div className="col-12">
-                <div className="bg-white w-100 d-flex flex-wrap mb-1">
-                  <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
-                    {(lima || []).map((status, i) => {
-                      return status.lmia_status === "" ||
-                        status.lmia_status === null ||
-                        status.lmia_status === undefined ||
-                        status.lmia_status === "undefined" ? null : (
-                        <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between" key={i}>
-                          <div className="job_name text-dark">
-                            <span className="m-0 font-size-2 d-block mb-1">
-                              {status.job_title}
-                            </span>
+              <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                  {(lima || []).map((status, i) => {
+                    return status.lmia_status === "" ||
+                      status.lmia_status === null ||
+                      status.lmia_status === undefined ||
+                      status.lmia_status === "undefined" ? null : (
+                      <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between" key={i}>
+                        <div className="job_name text-dark">
+                          <span className="m-0 font-size-2 d-block mb-1">
+                            {status.job_title}
+                          </span>
+                        </div>
+                        <div>
+                          <div
+                            key={i + 1}
+                            className={`step text-capitalize ${status.lmia_status === "onboarding" ||
+                                status.lmia_status === "advertisements" ||
+                                status.lmia_status === "documentation"
+                                ? "current"
+                                : null
+                              }`}
+                          >
+                            <span>On Boarding</span>
                           </div>
-                          <div>
-                            <div
-                              key={i+1}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "onboarding"
+                          <div
+                            key={i + 2}
+                            className={`step text-capitalize ${status.lmia_status === "advertisements" || status.lmia_status === "documentation"
                                 ? "current"
                                 : null
-                                }`}
-                            >
-                              <span>On Boarding</span>
-                            </div>
-                            <div
-                              key={i+2}
-                              className={`step text-capitalize ${
-                              status.lmia_status === "advertisements"
-                                ? "current"
-                                : null
-                                }`}
-                            >
-                              <span>Advertisements</span>
-                            </div>
-                            <div
-                              key={i+3}
-                              className={`step text-capitalize ${ status.lmia_status === "documentation"
-                                ? "current"
-                                : null
-                                }`}
-                            >
-                              <span>Documentation</span>
-                            </div>
+                              }`}
+                          >
+                            <span>Advertisements</span>
+                          </div>
+                          <div
+                            key={i + 3}
+                            className={`step text-capitalize ${status.lmia_status === "documentation"
+                              ? "current"
+                              : null
+                              }`}
+                          >
+                            <span>Documentation</span>
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
+            </div>
             <div className="col-12 order-2 order-xl-1">
               <div className="bg-white">
                 {/*----Profile Header----*/}
@@ -294,7 +294,7 @@ function CompanyProfileDetail(props) {
                       Documents
                     </Link>
                   </li>
-                  <li className={user_type === "user"?"d-none":"tab-menu-items nav-item"}>
+                  <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
                     <Link
                       className={
                         TabActive === "interview"
@@ -311,7 +311,7 @@ function CompanyProfileDetail(props) {
                       Interview
                     </Link>
                   </li>
-                  <li className={user_type === "admin"?"tab-menu-items nav-item" : "d-none"}>
+                  <li className={user_type === "admin" ? "tab-menu-items nav-item" : "d-none"}>
                     <Link
                       className={
                         TabActive === "notes"
@@ -408,7 +408,7 @@ function CompanyProfileDetail(props) {
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>{/*Kyc Details*/}</span>
                                 <CustomButton
-                                  className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
+                                  className={user_type === "user" ? "d-none" : "font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
                                   onClick={() =>
                                     setShowKycComplainDetailsModal(true)
                                   }
@@ -592,26 +592,26 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                     />
                   ) : //  <div className="p-10 notes_container">
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //       </div>
-                  null}
+                    //         <div className="single_note mb-5">
+                    //           <small>Created on: 2023-08-03 17:10:53</small>
+                    //           <div className="card p-5">
+                    //             This is some text within a card body.
+                    //           </div>
+                    //         </div>
+                    //         <div className="single_note mb-5">
+                    //           <small>Created on: 2023-08-03 17:10:53</small>
+                    //           <div className="card p-5">
+                    //             This is some text within a card body.
+                    //           </div>
+                    //         </div>
+                    //         <div className="single_note mb-5">
+                    //           <small>Created on: 2023-08-03 17:10:53</small>
+                    //           <div className="card p-5">
+                    //             This is some text within a card body.
+                    //           </div>
+                    //         </div>
+                    //       </div>
+                    null}
                 </div>
                 <div
                   className={

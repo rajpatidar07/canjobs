@@ -241,7 +241,7 @@ function JobDetailpageAdmim(props) {
                         <div
                           key={i}
                           className={`step text-capitalize ${
-                            status.lmia_status === "onboarding" ||
+                            status.lmia_status === "documentation" ||
                             status.lmia_status === "advertisements"
                               ? "current"
                               : null

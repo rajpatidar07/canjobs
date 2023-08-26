@@ -118,10 +118,10 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
                     className="btn btn-secondary text-uppercase font-size-3 connect_btn"
                     data-toggle="modal"
                     data-target="#signup"
-                    to={"/profile"}
-                    onClick={() =>
-                      localStorage.setItem("employee_id", empdata.employee_id)
-                    }
+                    to={`/${empdata.employee_id}`}// to={"/profile"}
+                    // onClick={() =>
+                    //   localStorage.setItem("employee_id", empdata.employee_id)
+                    // }
                   >
                     View
                   </Link>

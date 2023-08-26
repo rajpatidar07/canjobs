@@ -63,8 +63,10 @@ function JobBoxResponse({
       ) : (
         (jobData || []).map((job) => (
           <Link
-            to={"/jobdetail"}
-            onClick={() => localStorage.setItem("jobId", job.job_id)}
+            to={`/jobdetailpage`}
+            onClick={() => localStorage.setItem("job_id", job.job_id)}
+            // to={"/jobdetail"}
+            // onClick={() => localStorage.setItem("jobId", job.job_id)}
             className="my-5 pt-9 w-100 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 hover-border-green"
             key={job.job_id}
           >
