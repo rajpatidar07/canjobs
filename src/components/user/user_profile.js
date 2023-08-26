@@ -12,6 +12,7 @@ import {
   EmployeeAppliedJob,
   AddEmployeeDetails,
   GetEmployeeByLima,
+  GetLimaSubStages
 } from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
@@ -49,7 +50,7 @@ const NewUserProfile = (props) => {
   const user_type = localStorage.getItem("userType");
   // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
-  const employeeId = eid 
+  const employeeId = eid
 
   /*Function to get user Data */
   const UserData = async () => {
@@ -67,15 +68,17 @@ const NewUserProfile = (props) => {
         setuserDetail(userData.data);
         setStatus(userData.data.employee[0].status);
         setPersonalDetail(userData.data.employee[0]);
-       if(user_type === "user"){ localStorage.setItem(
-          "profile_photo",
-          userData.data.employee[0].profile_photo
-        );
-        localStorage.setItem("name", userData.data.employee[0].name);
-        localStorage.setItem(
-          "skill",
-          userData.data.skill.map((obj) => obj.skill).join(", ")
-        );}
+        if (user_type === "user") {
+          localStorage.setItem(
+            "profile_photo",
+            userData.data.employee[0].profile_photo
+          );
+          localStorage.setItem("name", userData.data.employee[0].name);
+          localStorage.setItem(
+            "skill",
+            userData.data.skill.map((obj) => obj.skill).join(", ")
+          );
+        }
         setIsLoading(false);
       }
     } catch (err) {
@@ -99,7 +102,22 @@ const NewUserProfile = (props) => {
         eid
       );
       if (response.message === "successful") {
-        setLmia(response.data);
+        /*Logic for finding reject substage of decision lima status */
+        if (response.data.filter((item) => item.lmia_status === "decision")) {
+          const filteredData = response.data.filter(item => item.lmia_status === "decision");
+          if (filteredData.length >= 0) {
+            for (let i = 0; i < filteredData.length; i++) {
+              const data = filteredData[i];
+              const subStageRes = await GetLimaSubStages(data.id, data.lmia_status);
+              if ((subStageRes.data.data.filter(
+                (item) => (item.lmia_status === "decision" && item.lmia_substage === "reject")).length > 0)) {
+                setLmia(response.data.filter((item) => item.job_id !== data.job_id))
+              } else {
+                setLmia(response.data)
+              }
+            }
+          }
+        }
       }
     } catch (err) {
       console.log(err)
@@ -200,13 +218,13 @@ const NewUserProfile = (props) => {
         <AdminSidebar heading={"User Profile"} />
       </>
         :
-        <EmployeeHeader/>}
+        <EmployeeHeader />}
       <div
         className={
           user_type === "admin" ?
-          "dashboard-main-container mt-12 mt-lg-12"
-          :
-          "mt-22 mt-lg-22"
+            "dashboard-main-container mt-12 mt-lg-12"
+            :
+            "mt-22 mt-lg-22"
         }
         id="dashboard-body"
       >
@@ -514,7 +532,9 @@ const NewUserProfile = (props) => {
                   <div className="profile_email_mobile"></div> */}
                 </div>
               </div>
-              <div className="col-12">
+              <div className={
+                // noLima==="1"?"d-none":
+                "col-12"}>
                 <div className="bg-white w-100 d-flex flex-wrap mb-1">
                   <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
                     {(lima || []).map((status, i) => {
@@ -533,7 +553,7 @@ const NewUserProfile = (props) => {
                           </div>
                           <div>
                             <div
-                              key={i+1}
+                              key={i + 1}
                               className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
                                 status.lmia_status === "submission" ||
                                 status.lmia_status === "decision"
@@ -544,7 +564,7 @@ const NewUserProfile = (props) => {
                               <span>candidate placement</span>
                             </div>
                             <div
-                              key={i+2}
+                              key={i + 2}
                               className={`step text-capitalize ${status.lmia_status === "submission" ||
                                 status.lmia_status === "decision"
                                 ? "current"
@@ -554,7 +574,7 @@ const NewUserProfile = (props) => {
                               <span>submission</span>
                             </div>
                             <div
-                              key={i+3}
+                              key={i + 3}
                               className={`step text-capitalize ${status.lmia_status === "decision"
                                 ? "current"
                                 : null
@@ -637,7 +657,7 @@ const NewUserProfile = (props) => {
                         Documents
                       </Link>
                     </li>
-                    <li className={user_type === "user"?"d-none":"tab-menu-items nav-item"}>
+                    <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "visa"
@@ -654,7 +674,7 @@ const NewUserProfile = (props) => {
                         Visa
                       </Link>
                     </li>
-                    <li className={user_type === "user"||user_type === "company"?"d-none":"tab-menu-items nav-item"}>
+                    <li className={user_type === "user" || user_type === "company" ? "d-none" : "tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "notes"

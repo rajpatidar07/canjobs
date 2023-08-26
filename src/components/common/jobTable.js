@@ -7,6 +7,7 @@ import {
   DeleteJob,
   ApplyJob,
   GetEmployeeFilterJob,
+  GetJobLimaSubStages,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
@@ -29,6 +30,7 @@ export default function JobTable(props) {
   let [showCandidateModal, setShowCandidateModal] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
+  const [lmiaStatus, setLmiaStatus] = useState([]);
   const [JobId, setJobId] = useState();
   const [CompanyId, setCompanyId] = useState();
   const [candidateSkill, setCandidateSkill] = useState();
@@ -47,8 +49,12 @@ export default function JobTable(props) {
   const [responseId, setresponseId] = useState();
   const [responseDropDown, setresponseDropDown] = useState(false);
   let location = useLocation();
-  let user_type = localStorage.getItem("userType")
-  let job_id =  location.state ? location.state.id : location.pathname===  "/jobdetailpage"?localStorage.getItem("job_id"):"";
+  let user_type = localStorage.getItem("userType");
+  let job_id = location.state
+    ? location.state.id
+    : location.pathname === "/jobdetailpage"
+      ? localStorage.getItem("job_id")
+      : "";
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -119,31 +125,60 @@ export default function JobTable(props) {
         if (
           props.heading === "Dashboard" ||
           location.pathname === "/employee" ||
-          props.lima === "no" || user_type === "user"
+          props.lima === "no" ||
+          user_type === "user"
         ) {
           setresponseId();
         } else {
           setresponseId(userData.data.data[0].job_id);
         }
         setjobData(userData.data.data);
-        props.setLmia(userData.data.data)
-        setTotalData(userData.data.total_rows);
-        setIsLoading(false);
-        //condition for limia and visa page
-        // if (props.response === "lmia" || props.response === "visa") {
-        //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
-        //   setIsLoading(false);
-        // }
-        // //condition for Self job applied page
-        // else if (props.response === "self") {
-        //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0"));
-        //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
-        //   setIsLoading(false);
-        // } else
 
+        /*Logic for finding reject substage of decision lima status */
+        if (userData.data.data.length >= 0) {
+          let LmiaData = userData.data.data
+          for (let i = 0; i < userData.data.data.length; i++) {
+            if (userData.data.data[i].lmia_status === "decision") {
+              const data = userData.data.data[i]
+              const subStageRes = await GetJobLimaSubStages(
+                data.job_id,
+                data.lmia_status
+              );
+              if (
+                subStageRes.data.data.filter(
+                  (item) =>
+                    item.lmia_substage === "reject"
+                ).length > 0
+              ) {
+                console.log(LmiaData.filter((item) => item.job_id !== data.job_id))
+                LmiaData = LmiaData.filter((item) => item.job_id !== data.job_id)
+              }
+            }
+          }
+          if (
+            props.detail === "company_detail" ||
+            props.detail === "job_detail"
+          ) { props.setLmia(LmiaData); }
+          console.log(LmiaData)
+          setLmiaStatus(LmiaData)
+        }
       }
+      setTotalData(userData.data.total_rows);
+      setIsLoading(false);
+      //condition for limia and visa page
+      // if (props.response === "lmia" || props.response === "visa") {
+      //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0" || item.applied_by_admin !== "0"));
+      //   setIsLoading(false);
+      // }
+      // //condition for Self job applied page
+      // else if (props.response === "self") {
+      //   setjobData(userData.data.data.filter((item) => item.applied_by_self !== "0"));
+      //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
+      //   setIsLoading(false);
+      // } else
+
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setIsLoading(false);
     }
   };
@@ -197,7 +232,9 @@ export default function JobTable(props) {
     setDeleteName(e.job_title);
     setDeleteAlert(true);
   };
-
+  const GetLimaSubStageReject = (id) => {
+    return console.log(id);
+  };
   /*To call Api to delete Job */
   async function deleteJob(e) {
     try {
@@ -211,7 +248,7 @@ export default function JobTable(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
   /*Pagination Calculation */
@@ -243,7 +280,7 @@ export default function JobTable(props) {
         setApiCall(true);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -411,7 +448,8 @@ export default function JobTable(props) {
                   >
                     LMIA status
                   </th>
-                  {props.heading === "Dashboard" || user_type === "user" ? null : (
+                  {props.heading === "Dashboard" ||
+                    user_type === "user" ? null : (
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
@@ -422,7 +460,98 @@ export default function JobTable(props) {
                 </tr>
               </thead>
               <tbody>
-
+                {/* <div className="col-12">
+                  <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                    <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                      {console.log(lmiaStatus)}
+                      {(lmiaStatus || []).map((status, i) => {
+                        return status.lmia_status === "" ||
+                          status.lmia_status === null ||
+                          status.lmia_status === undefined ||
+                          status.lmia_status === "undefined" ? null : (
+                          <div className="arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between" key={i}>
+                            <div className="job_name text-dark">
+                              <span className="m-0 font-size-2 d-block mb-1">
+                                {status.job_title}
+                              </span>
+                            </div>
+                            <div>
+                              <div
+                                key={i + 1}
+                                className={`step text-capitalize ${status.lmia_status === "onboarding" ||
+                                  status.lmia_status === "advertisements" ||
+                                  status.lmia_status === "documentation" ||
+                                  status.lmia_status === "candidate placement" ||
+                                  status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                                  }`}
+                              >
+                                <span>onboarding</span>
+                              </div>
+                              <div
+                                key={i + 2}
+                                className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                                  status.lmia_status === "advertisements" ||
+                                  status.lmia_status === "candidate placement" ||
+                                  status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                                  }`}
+                              >
+                                <span>advertisements</span>
+                              </div>
+                              <div
+                                key={i + 3}
+                                className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                                  status.lmia_status === "candidate placement" ||
+                                  status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                                  }`}
+                              >
+                                <span>documentation</span>
+                              </div>
+                              <div
+                                key={i + 4}
+                                className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
+                                  status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                                  }`}
+                              >
+                                <span>candidate placement</span>
+                              </div>
+                              <div
+                                key={i + 5}
+                                className={`step text-capitalize ${status.lmia_status === "submission" ||
+                                  status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                                  }`}
+                              >
+                                <span>submission</span>
+                              </div>
+                              <div
+                                key={i + 6}
+                                className={`step text-capitalize ${status.lmia_status === "decision"
+                                  ? "current"
+                                  : null
+                                  }`}
+                              >
+                                <span>decision</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div> */}
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
@@ -447,41 +576,127 @@ export default function JobTable(props) {
                     ) : null}
                   </tr>
                 ) : (
-                  (jobData || []).map((job) => (
+                  (jobData || []).map((job, i) =>{ 
+                  let LmiaStatusData = lmiaStatus.filter((item)=>item.job_id === job.job_id);
+                  return(
                     <React.Fragment key={job.job_id}>
+                      {/* <div className="col-12">
+                        {console.log(LmiaStatusData)}
+                        <div className="bg-white w-100 d-flex flex-wrap mb-1">
+                          <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                            <div className="arrow-steps p-1 px-7 col-12 d-flex border-right border-bottom justify-content-between" key={i}>
+                              <div className="job_name text-dark">
+                                <span className="m-0 font-size-2 d-block mb-1">
+                                  {LmiaStatusData.job_title}
+                                </span>
+                              </div>
+                              <div>
+                                <div
+                                  key={i + 1}
+                                  className={`step text-capitalize ${job.lmia_status === "onboarding" ||
+                                    job.lmia_status === "advertisements" ||
+                                    job.lmia_status === "documentation" ||
+                                    job.lmia_status === "candidate placement" ||
+                                    job.lmia_status === "submission" ||
+                                    job.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                    }`}
+                                >
+                                  <span>onboarding</span>
+                                </div>
+                                <div
+                                  key={i + 2}
+                                  className={`step text-capitalize ${job.lmia_status === "documentation" ||
+                                    job.lmia_status === "advertisements" ||
+                                    job.lmia_status === "candidate placement" ||
+                                    job.lmia_status === "submission" ||
+                                    job.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                    }`}
+                                >
+                                  <span>advertisements</span>
+                                </div>
+                                <div
+                                  key={i + 3}
+                                  className={`step text-capitalize ${job.lmia_status === "documentation" ||
+                                    job.lmia_status === "candidate placement" ||
+                                    job.lmia_status === "submission" ||
+                                    job.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                    }`}
+                                >
+                                  <span>documentation</span>
+                                </div>
+                                <div
+                                  key={i + 4}
+                                  className={`step text-capitalize ${job.lmia_status === "candidate placement" ||
+                                    job.lmia_status === "submission" ||
+                                    job.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                    }`}
+                                >
+                                  <span>candidate placement</span>
+                                </div>
+                                <div
+                                  key={i + 5}
+                                  className={`step text-capitalize ${job.lmia_status === "submission" ||
+                                    job.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                    }`}
+                                >
+                                  <span>submission</span>
+                                </div>
+                                <div
+                                  key={i + 6}
+                                  className={`step text-capitalize ${job.lmia_status === "decision"
+                                    ? "current"
+                                    : null
+                                    }`}
+                                >
+                                  <span>decision</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> */}
                       <tr
                         className={
-                          /*job.is_applied === "1" ? "d-none" : */ "text-capitalize job_row"
+                          /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                         }
                       >
                         <th scope="row" className="py-5 ">
                           <div className="">
-                             
-                              <Link
-                                title="Job Details"
-                                to={`/jobdetailpage`}
-                                onClick={() => localStorage.setItem("job_id",job.job_id)
-                                  // JobDetail(job.job_id)
-                                }
-                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                              >
-                                <>
-                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                    {job.job_title}
-                                  </p>
-                                  <p className="text-gray font-size-2 m-0 text-capitalize">
-                                    {job.company_name} - {job.industry_type}
-                                    <br />
-                                    {job.is_featured === "1" ? (
-                                      <span className="bg-orange text-white featured_tag">
-                                        {" "}
-                                        Featured{" "}
-                                      </span>
-                                    ) : null}
-                                  </p>
-                                </>
-                              </Link>
-                            
+                            <Link
+                              title="Job Details"
+                              to={`/jobdetailpage`}
+                              onClick={
+                                () => localStorage.setItem("job_id", job.job_id)
+                                // JobDetail(job.job_id)
+                              }
+                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                            >
+                              <>
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  {job.job_title}
+                                </p>
+                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                  {job.company_name} - {job.industry_type}
+                                  <br />
+                                  {job.is_featured === "1" ? (
+                                    <span className="bg-orange text-white featured_tag">
+                                      {" "}
+                                      Featured{" "}
+                                    </span>
+                                  ) : null}
+                                </p>
+                              </>
+                            </Link>
                           </div>
                         </th>
                         {props.heading === "Dashboard" ? null : (
@@ -586,7 +801,8 @@ export default function JobTable(props) {
                             )}
                           </div>
                         </th>
-                        {props.heading === "Dashboard" ||user_type === "user" ? null : (
+                        {props.heading === "Dashboard" ||
+                          user_type === "user" ? null : (
                           <th className="py-5 min-width-px-100">
                             <div
                               className="btn-group button_group"
@@ -675,7 +891,11 @@ export default function JobTable(props) {
                                     {props.selfJob === "yes" ? null : (
                                       <>
                                         <button
-                                          className={user_type === "admin"?"btn btn-outline-info action_btn ":"d-none"}
+                                          className={
+                                            user_type === "admin"
+                                              ? "btn btn-outline-info action_btn "
+                                              : "d-none"
+                                          }
                                           onClick={() => updateLima(job)}
                                           title="Update LIMA"
                                         >
@@ -707,7 +927,8 @@ export default function JobTable(props) {
                                         </button>
                                         <button
                                           className={
-                                           ( props.response === "lmia" && user_type === "admin")||
+                                            (props.response === "lmia" &&
+                                              user_type === "admin") ||
                                               props.response === "visa"
                                               ? "d-none"
                                               : "btn btn-outline-info action_btn"
@@ -831,7 +1052,7 @@ export default function JobTable(props) {
                         </tr>
                       ) : null}
                     </React.Fragment>
-                  ))
+                  )})
                 )}
               </tbody>
             </table>

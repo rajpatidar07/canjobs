@@ -192,43 +192,83 @@ function CompanyProfileDetail(props) {
                       status.lmia_status === null ||
                       status.lmia_status === undefined ||
                       status.lmia_status === "undefined" ? null : (
-                      <div className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between" key={i}>
+                      <div className={lima.length === 0 ?"arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between":lima.length === 1? "arrow-steps p-1 px-7 col-md-6 d-flex border-right border-bottom justify-content-between": "arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between"} key={i}>
                         <div className="job_name text-dark">
                           <span className="m-0 font-size-2 d-block mb-1">
                             {status.job_title}
                           </span>
                         </div>
                         <div>
-                          <div
-                            key={i + 1}
-                            className={`step text-capitalize ${status.lmia_status === "onboarding" ||
-                                status.lmia_status === "advertisements" ||
-                                status.lmia_status === "documentation"
-                                ? "current"
-                                : null
-                              }`}
-                          >
-                            <span>On Boarding</span>
-                          </div>
-                          <div
-                            key={i + 2}
-                            className={`step text-capitalize ${status.lmia_status === "advertisements" || status.lmia_status === "documentation"
-                                ? "current"
-                                : null
-                              }`}
-                          >
-                            <span>Advertisements</span>
-                          </div>
-                          <div
-                            key={i + 3}
-                            className={`step text-capitalize ${status.lmia_status === "documentation"
+                        <div
+                          key={i + 1}
+                          className={`step text-capitalize ${status.lmia_status === "onboarding" ||
+                              status.lmia_status === "advertisements" ||
+                              status.lmia_status === "documentation" ||
+                              status.lmia_status === "candidate placement" ||
+                              status.lmia_status === "submission" ||
+                              status.lmia_status === "decision"
                               ? "current"
                               : null
-                              }`}
-                          >
-                            <span>Documentation</span>
-                          </div>
+                            }`}
+                        >
+                          <span>onboarding</span>
                         </div>
+                        <div
+                          key={i + 2}
+                          className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                              status.lmia_status === "advertisements" ||
+                              status.lmia_status === "candidate placement" ||
+                              status.lmia_status === "submission" ||
+                              status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                            }`}
+                        >
+                          <span>advertisements</span>
+                        </div>
+                        <div
+                          key={i + 3}
+                          className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                              status.lmia_status === "candidate placement" ||
+                              status.lmia_status === "submission" ||
+                              status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                            }`}
+                        >
+                          <span>documentation</span>
+                        </div>
+                        <div
+                          key={i + 4}
+                          className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
+                              status.lmia_status === "submission" ||
+                              status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                            }`}
+                        >
+                          <span>candidate placement</span>
+                        </div>
+                        <div
+                          key={i + 5}
+                          className={`step text-capitalize ${status.lmia_status === "submission" ||
+                              status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                            }`}
+                        >
+                          <span>submission</span>
+                        </div>
+                        <div
+                          key={i + 6}
+                          className={`step text-capitalize ${status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                            }`}
+                        >
+                          <span>decision</span>
+                        </div>
+                      </div>
                       </div>
                     );
                   })}
@@ -537,6 +577,7 @@ function CompanyProfileDetail(props) {
                       company_id={cid}
                       heading={"companyprofile"}
                       response={"companyprofile"}
+                    detail={"company_detail"}
                       setLmia={setLmia}
                       setApiCall={setApiCall}
                     />

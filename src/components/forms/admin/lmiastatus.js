@@ -319,7 +319,7 @@ function LmiaStatus(props) {
                 {(FilterJson.lmia_status || []).map((status, i) => {
                   isExpanded = expandedStatus === status
                   return (
-                    props.job === "yes" ? (i <= 2 && (
+                    props.job === "yes" ? ( (
                       <option value={status} key={i}
                       >
 
