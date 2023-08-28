@@ -523,12 +523,12 @@ export default function VisaTable(props) {
 
                                             <td className=" py-5 min-width-px-100">
                                                 <div
-                                                    className={user_type === "company"?"d-none":"btn-group button_group"}
+                                                    className={"btn-group button_group"}
                                                     role="group"
                                                     aria-label="Basic example"
                                                 >
                                                     <button
-                                                        className="btn btn-outline-info action_btn"
+                                                        className={user_type === "company"?"d-none":"btn btn-outline-info action_btn"}
                                                         onClick={() => editVisa(empdata)}
                                                         title="Update Visa status"
                                                     >
