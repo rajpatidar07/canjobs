@@ -478,11 +478,11 @@ function PersonalDetails(props) {
                   Date Of Birth: <span className="text-danger">*</span>
                 </label>
                 <input
-                  max={moment().format("YYYY-MM-DD")}
+                  max={moment().format("DD-MM-YYYY")}
                   type="date"
                   placeholder="Date Of Birth "
                   name="date_of_birth"
-                  value={moment(state.date_of_birth).format("YYYY-MM-DD") || ""}
+                  value={moment(state.date_of_birth).format("DD-MM-YYYY") || ""}
                   onChange={onInputChange}
                   onKeyDownCapture={(e) => e.preventDefault()}
                   className={

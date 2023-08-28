@@ -57,7 +57,6 @@ export default function LimiaStatusTable(props) {
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
-    console.log(props.heading);
     setIsLoading(true);
     try {
       const userData = await GetEmployeeByLima(
@@ -470,22 +469,26 @@ export default function LimiaStatusTable(props) {
                           </Link>
                         </th>
 
-                        <th
-                          scope="col"
-                          className="pl-4 border-0 font-size-4 font-weight-normal"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => {
-                              handleSort("current_location");
-                              setCurrentPage(1);
-                            }}
-                            className="text-gray"
-                            title="Sort by Address"
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <th
+                            scope="col"
+                            className="pl-4 border-0 font-size-4 font-weight-normal"
                           >
-                            Address
-                          </Link>
-                        </th>
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("current_location");
+                                setCurrentPage(1);
+                              }}
+                              className="text-gray"
+                              title="Sort by Address"
+                            >
+                              Address
+                            </Link>
+                          </th>
+                        )}
 
                         <th
                           scope="col"
@@ -558,12 +561,12 @@ export default function LimiaStatusTable(props) {
                                   <div className="d-flex profile_box gx-2">
                                     <div className="media  align-items-center">
                                       <div className="circle-36 mx-auto overflow-hidden">
-                                        {res.profile_photo ===
-                                        (
-                                          <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                            NA
-                                          </span>
-                                        ) ? (
+                                        {/* {JSON.stringify(res.profile_photo)} */}
+                                        {res.profile_photo === null ||
+                                        res.profile_photo === undefined ||
+                                        res.profile_photo === "undefined" ||
+                                        res.profile_photo === "null" ||
+                                        res.profile_photo === "Null" ? (
                                           <img
                                             src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                             alt=""
@@ -662,23 +665,27 @@ export default function LimiaStatusTable(props) {
                               </h3>
                             </th>
 
-                            <th className="py-5 ">
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {res.current_location ||
-                                res.currently_located_country ? (
-                                  <>
-                                    <span>{res.current_location}</span>
-                                    <span className="px-1">
-                                      {res.currently_located_country}
+                            {props.heading === "Dashboard" ? (
+                              ""
+                            ) : (
+                              <th className="py-5 ">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  {res.current_location ||
+                                  res.currently_located_country ? (
+                                    <>
+                                      <span>{res.current_location}</span>
+                                      <span className="px-1">
+                                        {res.currently_located_country}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                      NA
                                     </span>
-                                  </>
-                                ) : (
-                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    NA
-                                  </span>
-                                )}
-                              </h3>
-                            </th>
+                                  )}
+                                </h3>
+                              </th>
+                            )}
 
                             <th className=" py-5">
                               <div className="font-size-3 font-weight-normal text-black-2 mb-0">

@@ -9,7 +9,7 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 // import JobResponse from "./response";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
-// import EmployerTable from "../common/employerTable";
+import EmployerTable from "../common/employerTable";
 // import { getSummaryCount } from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 const AdminDashboard = () => {
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   let [job, setJob] = useState("");
   let [employee, setEmployee] = useState("");
   let [lima, setLima] = useState("");
-  // let [employer, setEmployer] = useState("");
+  let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
   // let [response, setResponse] = useState("");
   // let [followup, setFollowUP] = useState("");
@@ -302,7 +302,7 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      {" "}
+                      
                       <Link
                         className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/job"}
@@ -321,6 +321,46 @@ const AdminDashboard = () => {
                   lmia="no"
                 />
               </div>
+              {/* <!-- Recent Companies- --> */}
+              <div className="bg-white dashboard_card mb-7">
+                  <div className="d-flex justify-content-between p-5 align-items-center">
+                    <h3 className="font-size-5 px-3 m-0  ">
+                      Recently Added Companies
+                    </h3>
+                    <div className="d-flex justify-content-between p-0">
+                      <div className="select_div mr-5">
+                        <select
+                          name="employer"
+                          value={employer}
+                          id="employer"
+                          onChange={(e) => setEmployer(e.target.value)}
+                          className="form-control-sm bg-white dashboard_select rounded-3"
+                        >
+                          <option value={""}>Select</option>
+                          <option value={"today"}>Today </option>
+                          <option value={"this_week"}>This Week </option>
+                          <option value={"last_week"}>Last Week</option>
+                          <option value={"last_month"}>Last Month</option>
+                          <option value={"current_month"}>Current Month</option>
+                        </select>
+                      </div>
+                      <div className="">
+                        
+                        <Link
+                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                          to={"/employer"}
+                          title="View All Companies"
+                        >
+                          View All
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                  <EmployerTable
+                    heading="Dashboard"
+                    filter_by_time={employer}
+                  />
+                </div>
               {/* <!-- Recent Job Response- --> */}
               {/* <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
@@ -419,7 +459,7 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      {" "}
+                      
                       <Link
                         className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/employee"}
@@ -459,7 +499,7 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      {" "}
+                      
                       <Link
                         className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/lmia"}
@@ -503,7 +543,7 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      {" "}
+                      
                       <Link
                         className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/followup"}
@@ -519,49 +559,9 @@ const AdminDashboard = () => {
                   filter_by_time={followup}
                 />
               </div> */}
-              {/* <!-- Recent Companies- --> */}
-              {/* <div className="col-lg-6">
-                <div className="bg-white dashboard_card mb-7">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Added Companies
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="employer"
-                          value={employer}
-                          id="employer"
-                          onChange={(e) => setEmployer(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        {" "}
-                        <Link
-                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/employer"}
-                          title="View All Companies"
-                        >
-                          View All
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <EmployerTable
-                    heading="Dashboard"
-                    filter_by_time={employer}
-                  />
-                </div>
-              </div> */}
+              
             </div>
+            
           </div>
         </div>
       </div>

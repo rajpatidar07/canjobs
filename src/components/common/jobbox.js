@@ -233,7 +233,7 @@ function JobBox({
                             <img src="image/svg/icon-clock.svg" alt="" />
                           </span>
                           <span className="font-weight-semibold">
-                            {moment(job.created_at).format("YYYY-MM-DD")}
+                            {moment(job.created_at).format("DD-MM-YYYY")}
                           </span>
                         </li>
                         <li

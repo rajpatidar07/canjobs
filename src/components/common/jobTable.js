@@ -53,8 +53,8 @@ export default function JobTable(props) {
   let job_id = location.state
     ? location.state.id
     : location.pathname === "/jobdetailpage"
-      ? localStorage.getItem("job_id")
-      : "";
+    ? localStorage.getItem("job_id")
+    : "";
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -136,31 +136,35 @@ export default function JobTable(props) {
 
         /*Logic for finding reject substage of decision lima status */
         if (userData.data.data.length >= 0) {
-          let LmiaData = userData.data.data
+          let LmiaData = userData.data.data;
           for (let i = 0; i < userData.data.data.length; i++) {
             if (userData.data.data[i].lmia_status === "decision") {
-              const data = userData.data.data[i]
+              const data = userData.data.data[i];
               const subStageRes = await GetJobLimaSubStages(
                 data.job_id,
                 data.lmia_status
               );
               if (
                 subStageRes.data.data.filter(
-                  (item) =>
-                    item.lmia_substage === "reject"
+                  (item) => item.lmia_substage === "reject"
                 ).length > 0
               ) {
-                console.log(LmiaData.filter((item) => item.job_id !== data.job_id))
-                LmiaData = LmiaData.filter((item) => item.job_id !== data.job_id)
+                console.log(
+                  LmiaData.filter((item) => item.job_id !== data.job_id)
+                );
+                LmiaData = LmiaData.filter(
+                  (item) => item.job_id !== data.job_id
+                );
               }
             }
           }
           if (
             props.detail === "company_detail" ||
             props.detail === "job_detail"
-          ) { props.setLmia(LmiaData); }
-          console.log(LmiaData)
-          setLmiaStatus(LmiaData)
+          ) {
+            props.setLmia(LmiaData);
+          }
+          setLmiaStatus(LmiaData);
         }
       }
       setTotalData(userData.data.total_rows);
@@ -176,7 +180,6 @@ export default function JobTable(props) {
       //   setresponseId(userData.data.data.filter((item) => item.applied_by_self !== "0")[0].job_id)
       //   setIsLoading(false);
       // } else
-
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -232,9 +235,9 @@ export default function JobTable(props) {
     setDeleteName(e.job_title);
     setDeleteAlert(true);
   };
-  const GetLimaSubStageReject = (id) => {
-    return console.log(id);
-  };
+  // const GetLimaSubStageReject = (id) => {
+  //   return console.log(id);
+  // };
   /*To call Api to delete Job */
   async function deleteJob(e) {
     try {
@@ -449,7 +452,7 @@ export default function JobTable(props) {
                     LMIA status
                   </th>
                   {props.heading === "Dashboard" ||
-                    user_type === "user" ? null : (
+                  user_type === "user" ? null : (
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
@@ -576,483 +579,513 @@ export default function JobTable(props) {
                     ) : null}
                   </tr>
                 ) : (
-                  (jobData || []).map((job, i) =>{ 
-                  let LmiaStatusData = lmiaStatus.filter((item)=>item.job_id === job.job_id);
-                  return(
-                    <React.Fragment key={job.job_id}>
-                      {/* <div className="col-12">
-                        {console.log(LmiaStatusData)}
-                        <div className="bg-white w-100 d-flex flex-wrap mb-1">
-                          <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
-                            <div className="arrow-steps p-1 px-7 col-12 d-flex border-right border-bottom justify-content-between" key={i}>
-                              <div className="job_name text-dark">
-                                <span className="m-0 font-size-2 d-block mb-1">
-                                  {LmiaStatusData.job_title}
-                                </span>
-                              </div>
-                              <div>
-                                <div
-                                  key={i + 1}
-                                  className={`step text-capitalize ${job.lmia_status === "onboarding" ||
-                                    job.lmia_status === "advertisements" ||
-                                    job.lmia_status === "documentation" ||
-                                    job.lmia_status === "candidate placement" ||
-                                    job.lmia_status === "submission" ||
-                                    job.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                    }`}
-                                >
-                                  <span>onboarding</span>
-                                </div>
-                                <div
-                                  key={i + 2}
-                                  className={`step text-capitalize ${job.lmia_status === "documentation" ||
-                                    job.lmia_status === "advertisements" ||
-                                    job.lmia_status === "candidate placement" ||
-                                    job.lmia_status === "submission" ||
-                                    job.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                    }`}
-                                >
-                                  <span>advertisements</span>
-                                </div>
-                                <div
-                                  key={i + 3}
-                                  className={`step text-capitalize ${job.lmia_status === "documentation" ||
-                                    job.lmia_status === "candidate placement" ||
-                                    job.lmia_status === "submission" ||
-                                    job.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                    }`}
-                                >
-                                  <span>documentation</span>
-                                </div>
-                                <div
-                                  key={i + 4}
-                                  className={`step text-capitalize ${job.lmia_status === "candidate placement" ||
-                                    job.lmia_status === "submission" ||
-                                    job.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                    }`}
-                                >
-                                  <span>candidate placement</span>
-                                </div>
-                                <div
-                                  key={i + 5}
-                                  className={`step text-capitalize ${job.lmia_status === "submission" ||
-                                    job.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                    }`}
-                                >
-                                  <span>submission</span>
-                                </div>
-                                <div
-                                  key={i + 6}
-                                  className={`step text-capitalize ${job.lmia_status === "decision"
-                                    ? "current"
-                                    : null
-                                    }`}
-                                >
-                                  <span>decision</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> */}
-                      <tr
-                        className={
-                          /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
-                        }
-                      >
-                        <th scope="row" className="py-5 ">
-                          <div className="">
-                            <Link
-                              title="Job Details"
-                              to={`/jobdetailpage`}
-                              onClick={
-                                () => localStorage.setItem("job_id", job.job_id)
-                                // JobDetail(job.job_id)
-                              }
-                              className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                            >
-                              <>
-                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                  {job.job_title}
-                                </p>
-                                <p className="text-gray font-size-2 m-0 text-capitalize">
-                                  {job.company_name} - {job.industry_type}
-                                  <br />
-                                  {job.is_featured === "1" ? (
-                                    <span className="bg-orange text-white featured_tag">
-                                      {" "}
-                                      Featured{" "}
+                  (jobData || []).map((job, i) => {
+                    let LmiaStatusData = lmiaStatus.filter(
+                      (item) => item.job_id === job.job_id
+                    );
+                    return (
+                      <React.Fragment key={job.job_id}>
+                        {props.heading === "Dashboard" ? null : (
+                          <tr
+                            className={
+                              props.heading === "Dashboard" ||
+                              props.skill === null ||
+                              props.skill === undefined ||
+                              Object.keys(props.skill).length === 0
+                                ? "col-12"
+                                : "d-none"
+                            }
+                          >
+                            <td colSpan="11" className="bg-white">
+                              <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                                <div className="arrow-steps" key={i}>
+                                  <div className="job_name text-dark">
+                                    <span className="m-0 font-size-2 d-block mb-1">
+                                      {LmiaStatusData.job_title}
                                     </span>
-                                  ) : null}
-                                </p>
-                              </>
-                            </Link>
-                          </div>
-                        </th>
-                        {props.heading === "Dashboard" ? null : (
+                                  </div>
+                                  <div>
+                                    <div
+                                      key={i + 1}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "onboarding" ||
+                                        job.lmia_status === "advertisements" ||
+                                        job.lmia_status === "documentation" ||
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "current"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>onboarding</span>
+                                    </div>
+                                    <div
+                                      key={i + 2}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "documentation" ||
+                                        job.lmia_status === "advertisements" ||
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "current"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>advertisements</span>
+                                    </div>
+                                    <div
+                                      key={i + 3}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "documentation" ||
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "current"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>documentation</span>
+                                    </div>
+                                    <div
+                                      key={i + 4}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "current"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>candidate placement</span>
+                                    </div>
+                                    <div
+                                      key={i + 5}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "current"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>submission</span>
+                                    </div>
+                                    <div
+                                      key={i + 6}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "decision"
+                                          ? "current"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>decision</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                        <tr
+                          className={
+                            /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
+                          }
+                        >
+                          <th scope="row" className="py-5 ">
+                            <div className="">
+                              <Link
+                                title="Job Details"
+                                to={`/jobdetailpage`}
+                                onClick={
+                                  () =>
+                                    localStorage.setItem("job_id", job.job_id)
+                                  // JobDetail(job.job_id)
+                                }
+                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              >
+                                <>
+                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                    {job.job_title}
+                                  </p>
+                                  <p className="text-gray font-size-2 m-0 text-capitalize">
+                                    {job.company_name} - {job.industry_type}
+                                    <br />
+                                    {job.is_featured === "1" ? (
+                                      <span className="bg-orange text-white featured_tag">
+                                        {" "}
+                                        Featured{" "}
+                                      </span>
+                                    ) : null}
+                                  </p>
+                                </>
+                              </Link>
+                            </div>
+                          </th>
+                          {props.heading === "Dashboard" ? null : (
+                            <th className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.employement} - {job.job_type}
+                              </h3>
+                            </th>
+                          )}
+                          {props.heading === "Dashboard" ? null : (
+                            <th className=" py-5">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.location}
+                              </h3>
+                            </th>
+                          )}
+                          {props.heading === "Dashboard" ? null : (
+                            <th className="py-5 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.education ? job.education : "N/A"}
+                              </h3>
+                            </th>
+                          )}
+                          {props.heading === "Dashboard" ? null : (
+                            <th className="py-5 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                                {job.keyskill ? job.keyskill : "N/A"}
+                              </h3>
+                            </th>
+                          )}
+                          {props.heading === "Dashboard" ? null : (
+                            <th className="py-5 ">
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                                {job.language ? job.language : "N/A"}
+                              </h3>
+                            </th>
+                          )}
+                          <th className="py-5 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {job.salary ? job.salary : "N/A"}
+                            </h3>
+                          </th>
+                          <th className="py-5 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {job.experience_required}
+                              {job.experience_required === "fresher"
+                                ? ""
+                                : "years"}
+                            </h3>
+                          </th>
+                          <th className="py-5 ">
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
+                              <Link
+                                onClick={() => {
+                                  setresponseId(job.job_id);
+                                  setresponseDropDown(
+                                    responseDropDown === false ? true : false
+                                  );
+                                }}
+                                className="text-dark"
+                              >
+                                {job.role_category} /{" "}
+                                {props.selfJob === "yes"
+                                  ? job.applied_by_self
+                                  : job.applied_by_admin}
+                              </Link>
+                            </h3>
+                          </th>
                           <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.employement} - {job.job_type}
-                            </h3>
-                          </th>
-                        )}
-                        {props.heading === "Dashboard" ? null : (
-                          <th className=" py-5">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.location}
-                            </h3>
-                          </th>
-                        )}
-                        {props.heading === "Dashboard" ? null : (
-                          <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.education ? job.education : "N/A"}
-                            </h3>
-                          </th>
-                        )}
-                        {props.heading === "Dashboard" ? null : (
-                          <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {job.keyskill ? job.keyskill : "N/A"}
-                            </h3>
-                          </th>
-                        )}
-                        {props.heading === "Dashboard" ? null : (
-                          <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {job.language ? job.language : "N/A"}
-                            </h3>
-                          </th>
-                        )}
-                        <th className="py-5 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.salary ? job.salary : "N/A"}
-                          </h3>
-                        </th>
-                        <th className="py-5 ">
-                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.experience_required}
-                            {job.experience_required === "fresher"
-                              ? ""
-                              : "years"}
-                          </h3>
-                        </th>
-                        <th className="py-5 ">
-                          <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                            <Link
-                              onClick={() => {
-                                setresponseId(job.job_id);
-                                setresponseDropDown(
-                                  responseDropDown === false ? true : false
-                                );
-                              }}
-                              className="text-dark"
-                            >
-                              {job.role_category} /{" "}
-                              {props.selfJob === "yes"
-                                ? job.applied_by_self
-                                : job.applied_by_admin}
-                            </Link>
-                          </h3>
-                        </th>
-                        <th className=" py-5">
-                          <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.lmia_status === "onboarding" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-warning">
-                                Onboarding
-                              </span>
-                            ) : job.lmia_status === "advertisements" ? (
-                              <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                Advertisements
-                              </span>
-                            ) : job.lmia_status === "documentation" ? (
-                              <span className="px-3 py-2 badge badge-pill badge-gray">
-                                Documentation
-                              </span>
-                            ) : (
-                              // : job.lmia_status === "additional information required" ? (
-                              //   <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                              //     Additional information required
-                              //   </span>
-                              // ) : job.lmia_status === "need to start" ? (
-                              //   <span className="px-3 py-2 badge badge-pill badge-warning">
-                              //     Need to start
-                              //   </span>
-                              // ) : job.lmia_status === "working on it" ? (
-                              //   <span className="px-3 py-2 badge badge-pill badge-dark">
-                              //     Working on it
-                              //   </span>
-                              // ) : (job.lmia_status === "application submitted" ? (
-                              //   <span className="px-3 py-2 badge badge-pill badge-info">
-                              //     Application submitted
-                              //   </span>
-                              // )
-                              <span>NA</span>
-                            )}
-                          </div>
-                        </th>
-                        {props.heading === "Dashboard" ||
-                          user_type === "user" ? null : (
-                          <th className="py-5 min-width-px-100">
-                            <div
-                              className="btn-group button_group"
-                              role="group"
-                            >
+                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {
-                                // props.response === "lmia" ?
-                                // <>
-                                //   <button
-                                //     className="btn btn-outline-info action_btn"
-                                //     onClick={() => {
-                                //       setresponseId(job.job_id);
-                                //       setresponseDropDown(
-                                //         responseDropDown === false
-                                //           ? true
-                                //           : false
-                                //       );
-                                //     }}
-                                //     disabled={
-                                //       props.selfJob === "yes"
-                                //         ? job.applied_by_self > 0 ? false : true
-                                //         : job.applied_by_admin > 0 ? false : true
-                                //     }
-                                //     title="Job LMIA"
-                                //   >
-                                //     LMIA Responses
-                                //   </button>
-                                //   <button
-                                //             className="btn btn-outline-info action_btn"
-                                //             onClick={() => updateLima(job)}
-                                //             title="Update LMIA for jobs"
-                                //           >
-                                //             LMIA
-                                //           </button>
-                                //           </>:
-                                //   props.response === "visa" ?
-                                //     <button
-                                //       className="btn btn-outline-info action_btn"
-                                //       onClick={() => {
-                                //         setresponseId(job.job_id);
-                                //         setresponseDropDown(
-                                //           responseDropDown === false
-                                //             ? true
-                                //             : false
-                                //         );
-                                //       }}
-                                //       disabled={
-                                //         props.selfJob === "yes"
-                                //           ? job.applied_by_self > 0 ? false : true
-                                //           : job.applied_by_admin > 0 ? false : true
-                                //       }
-                                //       title="Job visa"
-                                //     >
-                                //       Visa Responses
-                                //     </button> :
-                                props.skill === null ||
+                                job.lmia_status === "onboarding" ? (
+                                  <span className="px-3 py-2 badge badge-pill badge-shamrock">
+                                    Onboarding
+                                  </span>
+                                ) : job.lmia_status === "advertisements" ? (
+                                  <span className="px-3 py-2 badge badge-pill bg-info text-white">
+                                    Advertisements
+                                  </span>
+                                ) : job.lmia_status === "documentation" ? (
+                                  <span className="px-3 py-2 badge badge-pill badge-gray">
+                                    Documentation
+                                  </span>
+                                ) : job.lmia_status ===
+                                  "candidate placement" ? (
+                                  <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
+                                    Candidate Placement
+                                  </span>
+                                ) : job.lmia_status === "submission" ? (
+                                  <span className="px-3 py-2 badge badge-pill badge-warning">
+                                    Submission
+                                  </span>
+                                ) : job.lmia_status === "decision" ? (
+                                  <span className="px-3 py-2 badge badge-pill badge-dark">
+                                    Decision
+                                  </span>
+                                ) : (
+                                  <span>NA</span>
+                                )
+                                // ) : (job.lmia_status === "application submitted" ? (
+                                //   <span className="px-3 py-2 badge badge-pill badge-info">
+                                //     Application submitted
+                                //   </span>
+                                // )
+                              }
+                            </div>
+                          </th>
+                          {props.heading === "Dashboard" ||
+                          user_type === "user" ? null : (
+                            <th className="py-5 min-width-px-100">
+                              <div
+                                className="btn-group button_group"
+                                role="group"
+                              >
+                                {
+                                  // props.response === "lmia" ?
+                                  // <>
+                                  //   <button
+                                  //     className="btn btn-outline-info action_btn"
+                                  //     onClick={() => {
+                                  //       setresponseId(job.job_id);
+                                  //       setresponseDropDown(
+                                  //         responseDropDown === false
+                                  //           ? true
+                                  //           : false
+                                  //       );
+                                  //     }}
+                                  //     disabled={
+                                  //       props.selfJob === "yes"
+                                  //         ? job.applied_by_self > 0 ? false : true
+                                  //         : job.applied_by_admin > 0 ? false : true
+                                  //     }
+                                  //     title="Job LMIA"
+                                  //   >
+                                  //     LMIA Responses
+                                  //   </button>
+                                  //   <button
+                                  //             className="btn btn-outline-info action_btn"
+                                  //             onClick={() => updateLima(job)}
+                                  //             title="Update LMIA for jobs"
+                                  //           >
+                                  //             LMIA
+                                  //           </button>
+                                  //           </>:
+                                  //   props.response === "visa" ?
+                                  //     <button
+                                  //       className="btn btn-outline-info action_btn"
+                                  //       onClick={() => {
+                                  //         setresponseId(job.job_id);
+                                  //         setresponseDropDown(
+                                  //           responseDropDown === false
+                                  //             ? true
+                                  //             : false
+                                  //         );
+                                  //       }}
+                                  //       disabled={
+                                  //         props.selfJob === "yes"
+                                  //           ? job.applied_by_self > 0 ? false : true
+                                  //           : job.applied_by_admin > 0 ? false : true
+                                  //       }
+                                  //       title="Job visa"
+                                  //     >
+                                  //       Visa Responses
+                                  //     </button> :
+                                  props.skill === null ||
                                   props.skill === undefined ||
                                   Object.keys(props.skill).length === 0 ? (
-                                  <>
-                                    <div
-                                      className="btn-group button_group"
-                                    // role="group"
-                                    >
-                                      <button
-                                        className="btn btn-outline-info action_btn"
-                                        onClick={() => {
-                                          setresponseId(job.job_id);
-                                        }}
-                                        disabled={
-                                          props.selfJob === "yes"
-                                            ? job.applied_by_self > 0
-                                              ? false
-                                              : true
-                                            : job.applied_by_admin > 0
-                                              ? false
-                                              : true
-                                        }
-                                        title="Job Response"
+                                    <>
+                                      <div
+                                        className="btn-group button_group"
+                                        // role="group"
                                       >
-                                        <span className="text-gray px-2">
-                                          <MdFormatListBulletedAdd />
-                                        </span>
-                                        {/* <i className="fa fa-list"></i> */}
-                                      </button>
-                                    </div>
-                                    {props.selfJob === "yes" ? null : (
-                                      <>
-                                        <button
-                                          className={
-                                            user_type === "admin"
-                                              ? "btn btn-outline-info action_btn "
-                                              : "d-none"
-                                          }
-                                          onClick={() => updateLima(job)}
-                                          title="Update LIMA"
-                                        >
-                                          <span className="text-gray px-2">
-                                            LMIA
-                                          </span>
-                                        </button>
-                                        <button
-                                          className={
-                                            props.response === "lmia" ||
-                                              props.response === "visa"
-                                              ? "d-none"
-                                              : "btn btn-outline-info action_btn"
-                                          }
-                                          onClick={() =>
-                                            matchingCandidates(job)
-                                          }
-                                          title="All candidates"
-                                        // disabled={
-                                        //   Number(job.applied_by_admin) >= Number(job.role_category)
-                                        //     ? true
-                                        //     : false
-                                        // }
-                                        >
-                                          <span className="text-gray px-2">
-                                            <LiaUserTieSolid />
-                                          </span>
-                                          {/* <span className="fas fa-user-tie text-gray"></span> */}
-                                        </button>
-                                        <button
-                                          className={
-                                            (props.response === "lmia" &&
-                                              user_type === "admin") ||
-                                              props.response === "visa"
-                                              ? "d-none"
-                                              : "btn btn-outline-info action_btn"
-                                          }
-                                          onClick={() => editJob(job.job_id)}
-                                          title="Edit Job"
-                                        >
-                                          <span className="text-gray px-1">
-                                            <LiaUserEditSolid />
-                                          </span>
-                                          {/* <span className=" fas fa-edit text-gray"></span> */}
-                                        </button>
-                                        <button
-                                          className={
-                                            props.response === "lmia" ||
-                                              props.response === "visa"
-                                              ? "d-none"
-                                              : "btn btn-outline-info action_btn"
-                                          }
-                                          onClick={() => ShowDeleteAlert(job)}
-                                          title="Delete"
-                                        >
-                                          <span className=" text-danger px-1">
-                                            <RiDeleteBin5Line />
-                                            {/* <i className="fa fa-trash"></i> */}
-                                          </span>
-                                        </button>
-                                        <button
-                                          className={
-                                            props.response === "response" &&
-                                              location.pathname === "/job"
-                                              ? "btn btn-outline-info action_btn"
-                                              : "d-none"
-                                          }
-                                          title="Job LMIA"
-                                        >
-                                          <Link
-                                            to="/lmia"
-                                            className="text-dark"
-                                            state={{ id: job.job_id }}
-                                          >
-                                            <span className="text-gray px-2">
-                                              <BsArrow90DegRight />
-                                            </span>
-                                            {/* <span className="fas fa-arrow-left text-gray px-2"></span> */}
-                                          </Link>
-                                        </button>
                                         <button
                                           className="btn btn-outline-info action_btn"
-                                          title="Company's document"
-                                          onClick={() =>
-                                            OpenAddDocModal(job.company_id)
+                                          onClick={() => {
+                                            setresponseId(job.job_id);
+                                          }}
+                                          disabled={
+                                            props.selfJob === "yes"
+                                              ? job.applied_by_self > 0
+                                                ? false
+                                                : true
+                                              : job.applied_by_admin > 0
+                                              ? false
+                                              : true
                                           }
+                                          title="Job Response"
                                         >
                                           <span className="text-gray px-2">
-                                            <GrDocumentUpload />
+                                            <MdFormatListBulletedAdd />
                                           </span>
+                                          {/* <i className="fa fa-list"></i> */}
                                         </button>
-                                      </>
-                                    )}
-                                  </>
-                                ) : (
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    disabled={
-                                      job.is_applied === "1"
-                                        ? true
-                                        : false ||
-                                          Number(job.applied_by_admin) >=
-                                          Number(job.role_category)
+                                      </div>
+                                      {props.selfJob === "yes" ? null : (
+                                        <>
+                                          <button
+                                            className={
+                                              user_type === "admin"
+                                                ? "btn btn-outline-info action_btn "
+                                                : "d-none"
+                                            }
+                                            onClick={() => updateLima(job)}
+                                            title="Update LIMA"
+                                          >
+                                            <span className="text-gray px-2">
+                                              LMIA
+                                            </span>
+                                          </button>
+                                          <button
+                                            className={
+                                              props.response === "lmia" ||
+                                              props.response === "visa"
+                                                ? "d-none"
+                                                : "btn btn-outline-info action_btn"
+                                            }
+                                            onClick={() =>
+                                              matchingCandidates(job)
+                                            }
+                                            title="All candidates"
+                                            // disabled={
+                                            //   Number(job.applied_by_admin) >= Number(job.role_category)
+                                            //     ? true
+                                            //     : false
+                                            // }
+                                          >
+                                            <span className="text-gray px-2">
+                                              <LiaUserTieSolid />
+                                            </span>
+                                            {/* <span className="fas fa-user-tie text-gray"></span> */}
+                                          </button>
+                                          <button
+                                            className={
+                                              (props.response === "lmia" &&
+                                                user_type === "admin") ||
+                                              props.response === "visa"
+                                                ? "d-none"
+                                                : "btn btn-outline-info action_btn"
+                                            }
+                                            onClick={() => editJob(job.job_id)}
+                                            title="Edit Job"
+                                          >
+                                            <span className="text-gray px-1">
+                                              <LiaUserEditSolid />
+                                            </span>
+                                            {/* <span className=" fas fa-edit text-gray"></span> */}
+                                          </button>
+                                          <button
+                                            className={
+                                              props.response === "lmia" ||
+                                              props.response === "visa"
+                                                ? "d-none"
+                                                : "btn btn-outline-info action_btn"
+                                            }
+                                            onClick={() => ShowDeleteAlert(job)}
+                                            title="Delete"
+                                          >
+                                            <span className=" text-danger px-1">
+                                              <RiDeleteBin5Line />
+                                              {/* <i className="fa fa-trash"></i> */}
+                                            </span>
+                                          </button>
+                                          <button
+                                            className={
+                                              props.response === "response" &&
+                                              location.pathname === "/job"
+                                                ? "btn btn-outline-info action_btn"
+                                                : "d-none"
+                                            }
+                                            title="Job LMIA"
+                                          >
+                                            <Link
+                                              to="/lmia"
+                                              className="text-dark"
+                                              state={{ id: job.job_id }}
+                                            >
+                                              <span className="text-gray px-2">
+                                                <BsArrow90DegRight />
+                                              </span>
+                                              {/* <span className="fas fa-arrow-left text-gray px-2"></span> */}
+                                            </Link>
+                                          </button>
+                                          <button
+                                            className="btn btn-outline-info action_btn"
+                                            title="Company's document"
+                                            onClick={() =>
+                                              OpenAddDocModal(job.company_id)
+                                            }
+                                          >
+                                            <span className="text-gray px-2">
+                                              <GrDocumentUpload />
+                                            </span>
+                                          </button>
+                                        </>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      disabled={
+                                        job.is_applied === "1"
+                                          ? true
+                                          : false ||
+                                            Number(job.applied_by_admin) >=
+                                              Number(job.role_category)
                                           ? true
                                           : false
-                                    }
-                                    onClick={() => onChangeJobClick(job.job_id)}
-                                    title="Apply For job"
-                                  >
-                                    {job.is_applied === "1"
-                                      ? "Already Applied"
-                                      : "Apply"}
-                                  </button>
-                                )
-                              }
-                            </div>
-                          </th>
-                        )}
-                      </tr>
-                      {job.job_id === responseId && job.total_applicants > 0 ? (
-                        <tr>
-                          <td colSpan={11}>
-                            {
-                              <>
-                                {/* <!-- Job Responses --> */}
-                                <JobResponse
-                                  responseId={responseId}
-                                  apiCall={apiCall}
-                                  setApiCall={setApiCall}
-                                  heading={"Manage Jobs"}
-                                  self={props.selfJob}
-                                  total_applicants={job.total_applicants}
-                                  role_category={job.role_category}
-                                  status={
-                                    props.response === "response" ||
+                                      }
+                                      onClick={() =>
+                                        onChangeJobClick(job.job_id)
+                                      }
+                                      title="Apply For job"
+                                    >
+                                      {job.is_applied === "1"
+                                        ? "Already Applied"
+                                        : "Apply"}
+                                    </button>
+                                  )
+                                }
+                              </div>
+                            </th>
+                          )}
+                        </tr>
+                        {job.job_id === responseId &&
+                        job.total_applicants > 0 ? (
+                          <tr>
+                            <td colSpan={11}>
+                              {
+                                <>
+                                  {/* <!-- Job Responses --> */}
+                                  <JobResponse
+                                    responseId={responseId}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    heading={"Manage Jobs"}
+                                    self={props.selfJob}
+                                    total_applicants={job.total_applicants}
+                                    role_category={job.role_category}
+                                    status={
+                                      props.response === "response" ||
                                       props.response === "visa" ||
                                       props.response === "lmia" ||
                                       props.response === "companyprofile"
-                                      ? "1"
-                                      : "0"
-                                  }
-                                  response={props.response}
-                                  employee_id={
-                                    location.state
-                                      ? location.state.employee_id
+                                        ? "1"
+                                        : "0"
+                                    }
+                                    response={props.response}
+                                    employee_id={
+                                      location.state
                                         ? location.state.employee_id
+                                          ? location.state.employee_id
+                                          : ""
                                         : ""
-                                      : ""
-                                  }
-                                />
-                              </>
-                            }
-                          </td>
-                        </tr>
-                      ) : null}
-                    </React.Fragment>
-                  )})
+                                    }
+                                  />
+                                </>
+                              }
+                            </td>
+                          </tr>
+                        ) : null}
+                      </React.Fragment>
+                    );
+                  })
                 )}
               </tbody>
             </table>

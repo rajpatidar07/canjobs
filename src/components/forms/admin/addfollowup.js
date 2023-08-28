@@ -27,7 +27,12 @@ function Addfollowup(props) {
         // props.job_id
       );
       if (
-        // userData.data.length === 0 ||
+        userData.data === null ||
+        userData.data === undefined||
+        userData.data === "undefined"||
+        userData.data === ""||
+        userData.data === "null"||
+        userData.data.length === 0 ||
         props.employee_id === "" ||
         props.employee_id === undefined
       ) {
@@ -145,12 +150,12 @@ function Addfollowup(props) {
                 //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
                 //     <div className="card-head font-size-3 text-dark card_left">
                 //       <span className="text-dark"> Posted date: </span>
-                //       {moment(res.created_at).format("YYYY-MM-DD")}
+                //       {moment(res.created_at).format("DD-MM-YYYY")}
                 //     </div>
                 //     {res.next_followup_date === "0000-00-00" ? null :
                 //       <div className="card-head font-size-3 text-dark card_right">
                 //         <span className="text-dark"> Next date: </span>
-                //         {moment(res.next_followup_date).format("YYYY-MM-DD")}
+                //         {moment(res.next_followup_date).format("DD-MM-YYYY")}
                 //       </div>}
                 //   </div>
                 //   <div className="card-body p-3">{res.remark}</div>
@@ -246,9 +251,9 @@ function Addfollowup(props) {
                     placeholder="Next followup date"
                     id="next_followup_date"
                     name="next_followup_date"
-                    min={moment().format("YYYY-MM-DD")}
+                    min={moment().format("DD-MM-YYYY")}
                     value={moment(state.next_followup_date).format(
-                      "YYYY-MM-DD"
+                      "DD-MM-YYYY"
                     )}
                     onChange={onInputChange}
                     onKeyDownCapture={(e) => e.preventDefault()}

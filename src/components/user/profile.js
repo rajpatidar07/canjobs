@@ -595,11 +595,11 @@ const UserProfile = (props) => {
                                 <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
                                   <span className="font-size-4 text-gray w-100">
                                     {/* {moment(CareerDetails.start_date).format(
-                                    "YYYY-MM-DD"
+                                    "DD-MM-YYYY"
                                   )}
                                   -
                                   {moment(CareerDetails.end_date).format(
-                                    "YYYY-MM-DD"
+                                    "DD-MM-YYYY"
                                   )} */}
                                     {calculateDuration(
                                       CareerDetails.start_date,
@@ -890,7 +890,7 @@ const UserProfile = (props) => {
                                       >
                                         <i className="text-gray fa fa-clock mr-2 font-weight-bold"></i>
                                         {moment(data.created_at).format(
-                                          "YYYY-MM-DD"
+                                          "DD-MM-YYYY"
                                         )}
                                       </span>
                                     </li>

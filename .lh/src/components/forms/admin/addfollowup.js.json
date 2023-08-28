@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1692955359603,
@@ -16,6 +16,14 @@
                 {
                     "date": 1692955512072,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import React, { useState, useEffect } from \"react\";\n import useValidation from \"../../common/useValidation\";\n-import { Modal } from \"react-bootstrap\";\n+// import { Modal } from \"react-bootstrap\";\n import { getSingleFollowup, AddFollowup } from \"../../../api/api\";\n import { toast, ToastContainer } from \"react-toastify\";\n import \"react-toastify/dist/ReactToastify.css\";\n \n@@ -100,22 +100,22 @@\n   const moment = require(\"moment\");\n   return (\n     <>\n       <ToastContainer />\n-      <Modal\n+      {/* <Modal\n         show={props.show}\n         size=\"lg\"\n         aria-labelledby=\"contained-modal-title-vcenter\"\n         centered\n       > \n         <button\n           type=\"button\"\n-          className={props.show ?\"circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper \":\"d-none\"}\n+          className=\"circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper \"\n           data-dismiss=\"modal\"\n           onClick={close}\n         >\n           <i className=\"fas fa-times\"></i>\n-        </button>\n+        </button>*/}\n       <div className=\"bg-white rounded h-100 px-11 py-7 overflow-y-hidden\">\n         {/* <h5 className=\"text-center pt-2 mb-7\">Follow Ups</h5> */}\n         <div className=\"row\">\n           <div className=\"activity_container pr-10 col-md-8 border-right\">\n@@ -296,9 +296,9 @@\n             </form>\n           </div>\n         </div>\n       </div>\n-      </Modal>\n+      {/* </Modal> */}\n     </>\n   );\n }\n \n"
+                },
+                {
+                    "date": 1693200780922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,14 +144,14 @@\n                 // <div className=\"card mt-5 mb-5\" key={res.id}>\n                 //   <div className=\"card-header d-flex justify-content-space-between px-3 py-1\">\n                 //     <div className=\"card-head font-size-3 text-dark card_left\">\n                 //       <span className=\"text-dark\"> Posted date: </span>\n-                //       {moment(res.created_at).format(\"YYYY-MM-DD\")}\n+                //       {moment(res.created_at).format(\"DD-MM-YYYY\")}\n                 //     </div>\n                 //     {res.next_followup_date === \"0000-00-00\" ? null :\n                 //       <div className=\"card-head font-size-3 text-dark card_right\">\n                 //         <span className=\"text-dark\"> Next date: </span>\n-                //         {moment(res.next_followup_date).format(\"YYYY-MM-DD\")}\n+                //         {moment(res.next_followup_date).format(\"DD-MM-YYYY\")}\n                 //       </div>}\n                 //   </div>\n                 //   <div className=\"card-body p-3\">{res.remark}</div>\n                 // </div>\n@@ -245,11 +245,11 @@\n                     type=\"date\"\n                     placeholder=\"Next followup date\"\n                     id=\"next_followup_date\"\n                     name=\"next_followup_date\"\n-                    min={moment().format(\"YYYY-MM-DD\")}\n+                    min={moment().format(\"DD-MM-YYYY\")}\n                     value={moment(state.next_followup_date).format(\n-                      \"YYYY-MM-DD\"\n+                      \"DD-MM-YYYY\"\n                     )}\n                     onChange={onInputChange}\n                     onKeyDownCapture={(e) => e.preventDefault()}\n                     className={\n"
+                },
+                {
+                    "date": 1693201111887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,14 @@\n         props.employee_id\n         // props.job_id\n       );\n       if (\n-        // userData.data.length === 0 ||\n+        userData.data === null ||\n+        userData.data === undefined||\n+        userData.data === \"undefined\"||\n+        userData.data === \"\"||\n+        userData.data === \"null\"||\n+        userData.data.length === 0 ||\n         props.employee_id === \"\" ||\n         props.employee_id === undefined\n       ) {\n         setResponseData([]);\n"
                 }
             ],
             "date": 1692955359603,

@@ -55,6 +55,9 @@ export default function VisaTable(props) {
             } else {
                 setemployeeData(userData.data.data);
                 setTotalData(userData.data.total_rows);
+                if(props.page === "user_profile"){
+                    props.setVisaStatus(userData.data.data)
+                }
                 setIsLoading(false);
             }
         } catch (err) {

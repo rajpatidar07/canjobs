@@ -359,12 +359,12 @@ function LmiaStatus(props) {
                     ? "form-control coustam_datepicker border border-danger"
                     : "form-control coustam_datepicker"
                 }
-                value={moment(state.completion_time).format("YYYY-MM-DD") || ""}
+                value={moment(state.completion_time).format("DD-MM-YYYY") || ""}
                 onChange={onInputChange}
                 id="completion_time"
                 name="completion_time"
                 onKeyDownCapture={(e) => e.preventDefault()}
-                min={moment().format("YYYY-MM-DD")}
+                min={moment().format("DD-MM-YYYY")}
               />
               ----ERROR MESSAGE FOR Admin Name----
               {errors.completion_time && (

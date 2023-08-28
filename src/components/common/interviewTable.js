@@ -234,8 +234,10 @@ function Interview(props) {
                       {props.heading === "Dashboard" ? (
                         <th className="bg-white text-center">No Data Found</th>
                       ) : (
+                        <>
                         <th className="bg-white"></th>
-                      )}
+                      <th className="bg-white"></th>
+                      </>)}
                       {props.heading === "Dashboard" ? (
                         <th className="bg-white"></th>
                       ) : (

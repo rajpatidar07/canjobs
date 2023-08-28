@@ -159,14 +159,14 @@ function AddInterview(props) {
                     ? "form-control coustam_datepicker border border-danger"
                     : "form-control coustam_datepicker"
                 }
-                value={moment(state.interview_date).format("YYYY-MM-DD")}
+                value={moment(state.interview_date).format("DD-MM-YYYY")}
                 onChange={onInputChange}
                 id="interview_date"
                 name="interview_date"
                 type={"date"}
                 placeholder="Interview date"
                 onKeyDownCapture={(e) => e.preventDefault()}
-                min={moment().format("YYYY-MM-DD")}
+                min={moment().format("DD-MM-YYYY")}
               />
               {/*----ERROR MESSAGE FOR EMAIL----*/}
               {errors.interview_date && (

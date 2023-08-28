@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/App.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1693205585453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1693205585453,
+            "name": "Commit-0",
+            "content": "// import logo from './logo.svg';\nimport React from \"react\";\nimport \"./App.css\";\nimport MainLayout from \"./components/common/mainlayout\";\nfunction App() {\n  if (localStorage.getItem(\"userType\") === \"admin\" && window.location.pathname !== \"/userpdf\") {\n    document.body.classList.add(\"admin_body\");\n  }\n  return (\n    <div className=\"App\">\n      <MainLayout />\n    </div>\n  );\n}\n\nexport default App;\n"
+        }
+    ]
+}

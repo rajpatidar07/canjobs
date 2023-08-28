@@ -427,12 +427,12 @@ function CompanyDetails(props) {
                 </label>
 
                 <input
-                  max={moment().format("YYYY-MM-DD")}
+                  max={moment().format("DD-MM-YYYY")}
                   type="date"
                   name="company_start_date"
                   onKeyDownCapture={(e) => e.preventDefault()}
                   value={
-                    moment(state.company_start_date).format("YYYY-MM-DD") || ""
+                    moment(state.company_start_date).format("DD-MM-YYYY") || ""
                   }
                   onChange={onInputChange}
                   className={

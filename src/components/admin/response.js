@@ -173,14 +173,15 @@ function JobResponse(props) {
       let response = await ReservedEmployeeForJob(e.apply_id, "1");
       if (response.message === "Successfully") {
         // Api call to set employee Visa
-        let status = "onboard";
+        let state = { status: "onboard", country: e.location };
         try {
-          let VisaResponse = await AddUpdateVisa(e.employee_id, status);
-          if (VisaResponse.data.message === "created successfully") {
+          let VisaResponse = await AddUpdateVisa(e.employee_id, state);
+          if (VisaResponse.data.message === "visa inserted successfully") {
             // Api call to set employee Limia
             const lmia = { lmia_status: "candidate placement" };
             try {
               let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
+              console.log(LimiaResponse, "Add Lmia");
               if (LimiaResponse.message === "Data added successfully") {
                 toast.success("Employee Reserved successfully", {
                   position: toast.POSITION.TOP_RIGHT,

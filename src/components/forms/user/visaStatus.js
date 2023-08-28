@@ -29,7 +29,6 @@ export default function VisaStatus(props) {
       setSelectedStatus(Response.data.data.data)
     } catch (err) {
       console.log(err)
-      console.log(err)
     }
   }
   useEffect(() => {
@@ -83,7 +82,7 @@ export default function VisaStatus(props) {
       setLoading(true);
       try {
         const responseData = await AddUpdateVisa(props.employeeData.employee_id, state, props.employeeData.visa_id);
-        if (responseData.data.message === "created successfully") {
+        if (responseData.data.message === "visa inserted successfully") {
           toast.success("Visa created successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -93,7 +92,7 @@ export default function VisaStatus(props) {
           setLoading(false)
             close()
         }
-        if (responseData.data.message === "updated successfully") {
+        if (responseData.data.message === "visa updated successfully") {
           toast.success("Visa status Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -267,6 +266,7 @@ export default function VisaStatus(props) {
                 value={state.country || ""}
                 onChange={onInputChange}
                 className={"form-control text-capitalize"}
+                disabled={props.employeeData.visa_country}
                 id="country"
               >
                 <option value={""}>Select visa Country </option>
