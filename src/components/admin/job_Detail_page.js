@@ -160,150 +160,171 @@ function JobDetailpageAdmim(props) {
                 )}
                 <div className="col px-5 pt-5 pb-5  border-right position-relative">
                   <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                    <div className="info_box text-left text-capitalize">
-                      {jobData.location ? (
-                        <span
-                          className="font-size-3 text-smoke  mr-7"
-                          title="Current Location"
-                        >
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/marker.svg"
-                            alt="Location"
-                          />
-                          {jobData.location}
+                    {!jobData.location &&
+                    !jobData.language &&
+                    !jobData.address ? (
+                      <div className="info_box text-left text-capitalize">
+                        <span className="font-size-3 text-smoke  mr-7">
+                          No Data FOund
                         </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    <div className="info_box text-left text-capitalize">
-                      {jobData.language ? (
-                        <span
-                          className="font-size-3 text-smoke  mr-7"
-                          title="User Language"
-                        >
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/language.svg"
-                            alt="language"
-                          />
-                          {jobData.language}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    <div className="info_box text-left text-capitalize">
-                      {jobData.address ? (
-                        <span
-                          className="font-size-3 text-smoke  mr-7"
-                          title="Currently Located Country"
-                        >
-                          <img
-                            className="mr-1"
-                            height={"16px"}
-                            src="image/icons/address-book.svg"
-                            alt="Address"
-                          />
-                          {jobData.address}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="info_box text-left text-capitalize">
+                          {jobData.location ? (
+                            <span
+                              className="font-size-3 text-smoke  mr-7"
+                              title="Current Location"
+                            >
+                              <img
+                                className="mr-1"
+                                height={"16px"}
+                                src="image/icons/marker.svg"
+                                alt="Location"
+                              />
+                              {jobData.location}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="info_box text-left text-capitalize">
+                          {jobData.language ? (
+                            <span
+                              className="font-size-3 text-smoke  mr-7"
+                              title="User Language"
+                            >
+                              <img
+                                className="mr-1"
+                                height={"16px"}
+                                src="image/icons/language.svg"
+                                alt="language"
+                              />
+                              {jobData.language}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="info_box text-left text-capitalize">
+                          {jobData.address ? (
+                            <span
+                              className="font-size-3 text-smoke  mr-7"
+                              title="Currently Located Country"
+                            >
+                              <img
+                                className="mr-1"
+                                height={"16px"}
+                                src="image/icons/address-book.svg"
+                                alt="Address"
+                              />
+                              {jobData.address}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
             {/* LMIA */}
             <div className="col-12">
-              <div className="bg-white w-100 d-flex flex-wrap mb-1">
-                <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+              <div className="bg-white mb-1">
+                <div className="arrow-wrapper custome_arrow_wrapper mb-0">
                   {(lima || []).map((status, i) => {
                     return status.lmia_status === "" ||
                       status.lmia_status === null ||
                       status.lmia_status === undefined ||
                       status.lmia_status === "undefined" ? null : (
-                      <div className="arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between" key={i}>
+                      <div
+                        className="arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between"
+                        key={i}
+                      >
                         <div className="job_name text-dark">
                           <span className="m-0 font-size-2 d-block mb-1">
                             {status.job_title}
                           </span>
                         </div>
                         <div>
-                        <div
-                          key={i + 1}
-                          className={`step text-capitalize ${status.lmia_status === "onboarding" ||
+                          <div
+                            key={i + 1}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "onboarding" ||
                               status.lmia_status === "advertisements" ||
                               status.lmia_status === "documentation" ||
                               status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>onboarding</span>
-                        </div>
-                        <div
-                          key={i + 2}
-                          className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                          >
+                            <span>onboarding</span>
+                          </div>
+                          <div
+                            key={i + 2}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "documentation" ||
                               status.lmia_status === "advertisements" ||
                               status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>advertisements</span>
-                        </div>
-                        <div
-                          key={i + 3}
-                          className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                          >
+                            <span>advertisements</span>
+                          </div>
+                          <div
+                            key={i + 3}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "documentation" ||
                               status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>documentation</span>
-                        </div>
-                        <div
-                          key={i + 4}
-                          className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
+                          >
+                            <span>documentation</span>
+                          </div>
+                          <div
+                            key={i + 4}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>candidate placement</span>
-                        </div>
-                        <div
-                          key={i + 5}
-                          className={`step text-capitalize ${status.lmia_status === "submission" ||
+                          >
+                            <span>candidate placement</span>
+                          </div>
+                          <div
+                            key={i + 5}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>submission</span>
-                        </div>
-                        <div
-                          key={i + 6}
-                          className={`step text-capitalize ${status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                          >
+                            <span>submission</span>
+                          </div>
+                          <div
+                            key={i + 6}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "decision"
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>decision</span>
+                          >
+                            <span>decision</span>
+                          </div>
                         </div>
-                      </div>
                       </div>
                     );
                   })}
@@ -414,7 +435,20 @@ function JobDetailpageAdmim(props) {
                                 </CustomButton> */}
                               </h4>
                             </div>
-                            <div className="pt-5 text-left row m-0">
+                           {!jobData.industry &&
+                            !jobData.corporation &&
+                            !jobData.company_size &&
+                            !jobData.job_type &&
+                            !jobData.education &&
+                            !jobData.role_category &&
+                            !jobData.experience_required &&
+                            !jobData.industry_type  ? (
+                              <div className="pt-5 text-left row m-0">
+                                <div className="font-size-3 mb-4 mr-10">
+                                  No Data Found
+                                </div>
+                              </div>
+                            ) : <div className="pt-5 text-left row m-0">
                               {jobData.industry ? (
                                 <div
                                   className="font-size-3 mb-4 mr-10"
@@ -491,16 +525,6 @@ function JobDetailpageAdmim(props) {
                                   ""
                                 )}
                               </div>
-                              {jobData.corporation ? (
-                                <div
-                                  className="info_box text-left"
-                                  title="Corporation"
-                                >
-                                  <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                    <b>Corporation </b> {jobData.corporation}
-                                  </span>
-                                </div>
-                              ) : null}
                               {jobData.industry_type ? (
                                 <div className="info_box text-left">
                                   <span
@@ -512,7 +536,7 @@ function JobDetailpageAdmim(props) {
                                   </span>
                                 </div>
                               ) : null}
-                            </div>
+                            </div>}
                           </div>
                         </div>
                       </div>

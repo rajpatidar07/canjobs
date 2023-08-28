@@ -10,7 +10,7 @@ function CompanyDetailPage(props) {
   const [apiCall, setApiCall] = useState(false);
   const [ContactDetails, setContactDetails] = useState(false);
   const [employerData, setEmployerData] = useState("");
-let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   /*Render method to get employer data */
   useEffect(() => {
     const EmployerData = async () => {
@@ -48,79 +48,99 @@ let user_type = localStorage.getItem("userType")
           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
             <span>Contact Info</span>
             <CustomButton
-              className={" font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
+              className={
+                " font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+              }
               onClick={() => setContactDetails(true)}
             >
               <PiPencilDuotone />
             </CustomButton>
-            
           </h4>
         )}
-        <div className="pt-5 text-left row m-0">
-          {employerData.contact_person_name ? (
-            <div className="font-size-4 mr-7 mb-2" title="Contact Person Name">
-              <i className="fas fa-user mr-2"></i>
-              {employerData.contact_person_name}
-            </div>
-          ) : null}
-          {employerData.designation ? (
-            <div className="font-size-4 mr-7 mb-2" title="Designation">
-              <i className="fas fa-portrait mr-2"></i>{" "}
-              {employerData.designation}
-            </div>
-          ) : null}
-          {employerData.email && props.page !== "company_profile" ? (
-            <div className="font-size-4 mr-7 mb-2" title="Email">
-              <i className="fas fa-envelope mr-2"></i>
-              <Link className="text-dark" to={`mailto:${employerData.email}`}>
-                {employerData.email}
-              </Link>
-            </div>
-          ) : null}
-          {employerData.contact_no && props.page !== "company_profile" ? (
-            <div className="font-size-4 mr-7 mb-2" title="Contact No">
-              <i className="fas fa-phone-alt mr-2"></i>
-              <Link className="text-dark" to={`tel:${employerData.contact_no}`}>
-                {employerData.contact_no}
-              </Link>
-            </div>
-          ) : null}
-          {employerData.contact_no_other && props.page !== "company_profile" ? (
-            <div className="font-size-4 mr-7 mb-2" title="Contact No">
-              <i className="fas fa-phone-alt mr-2"></i>
-              <Link
-                className="text-dark"
-                to={`tel:${employerData.contact_no_other}`}
+        {employerData.contact_person_name === null ||
+        employerData.contact_person_name === undefined ||
+        employerData.contact_person_name === "undefined" ? (
+          <div className="pt-5 text-left row m-0">
+            <div className="font-size-4 mr-7 mb-2">No Data Found</div>
+          </div>
+        ) : (
+          <div className="pt-5 text-left row m-0">
+            {employerData.contact_person_name ? (
+              <div
+                className="font-size-4 mr-7 mb-2"
+                title="Contact Person Name"
               >
-                {employerData.contact_no_other}
-              </Link>
-            </div>
-          ) : null}
-          {employerData.address ? (
-            <div className="font-size-4 mr-7 mb-2" title="Address">
-              <i className="fas fa-map-marker-alt mr-2"></i>
-              {employerData.address}
-            </div>
-          ) : null}
-        </div>
+                <i className="fas fa-user mr-2"></i>
+                {employerData.contact_person_name}
+              </div>
+            ) : null}
+            {employerData.designation ? (
+              <div className="font-size-4 mr-7 mb-2" title="Designation">
+                <i className="fas fa-portrait mr-2"></i>{" "}
+                {employerData.designation}
+              </div>
+            ) : null}
+            {employerData.email && props.page !== "company_profile" ? (
+              <div className="font-size-4 mr-7 mb-2" title="Email">
+                <i className="fas fa-envelope mr-2"></i>
+                <Link className="text-dark" to={`mailto:${employerData.email}`}>
+                  {employerData.email}
+                </Link>
+              </div>
+            ) : null}
+            {employerData.contact_no && props.page !== "company_profile" ? (
+              <div className="font-size-4 mr-7 mb-2" title="Contact No">
+                <i className="fas fa-phone-alt mr-2"></i>
+                <Link
+                  className="text-dark"
+                  to={`tel:${employerData.contact_no}`}
+                >
+                  {employerData.contact_no}
+                </Link>
+              </div>
+            ) : null}
+            {employerData.contact_no_other &&
+            props.page !== "company_profile" ? (
+              <div className="font-size-4 mr-7 mb-2" title="Contact No">
+                <i className="fas fa-phone-alt mr-2"></i>
+                <Link
+                  className="text-dark"
+                  to={`tel:${employerData.contact_no_other}`}
+                >
+                  {employerData.contact_no_other}
+                </Link>
+              </div>
+            ) : null}
+            {employerData.address ? (
+              <div className="font-size-4 mr-7 mb-2" title="Address">
+                <i className="fas fa-map-marker-alt mr-2"></i>
+                {employerData.address}
+              </div>
+            ) : null}
+          </div>
+        )}
       </div>
       {props.page === "company_profile" ? (
         <CustomButton
-          className={user_type === "user"?"d-none":" font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
+          className={
+            user_type === "user"
+              ? "d-none"
+              : " font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+          }
           onClick={() => setContactDetails(true)}
         >
           <PiPencilDuotone />
         </CustomButton>
       ) : null}
       {ContactDetails ? (
-              <ContactInfo
-                employerId={props.employerId}
-                show={ContactDetails}
-                apiCall={apiCall}
-                setApiCall={setApiCall}
-                close={() => setContactDetails(false)}
-              />
-            ) : null}
+        <ContactInfo
+          employerId={props.employerId}
+          show={ContactDetails}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setContactDetails(false)}
+        />
+      ) : null}
     </>
   );
 }

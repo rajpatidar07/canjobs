@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1692954847861,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693218428221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,14 @@\n             </CustomButton>\n             \n           </h4>\n         )}\n+        {employerData.contact_person_name === null ||employerData.contact_person_name === undefined ||employerData.contact_person_name === \"undefined\"?\n         <div className=\"pt-5 text-left row m-0\">\n+          <div className=\"font-size-4 mr-7 mb-2\" >\n+              No Data Found\n+            </div>\n+        </div>:<div className=\"pt-5 text-left row m-0\">\n           {employerData.contact_person_name ? (\n             <div className=\"font-size-4 mr-7 mb-2\" title=\"Contact Person Name\">\n               <i className=\"fas fa-user mr-2\"></i>\n               {employerData.contact_person_name}\n@@ -101,9 +106,9 @@\n               <i className=\"fas fa-map-marker-alt mr-2\"></i>\n               {employerData.address}\n             </div>\n           ) : null}\n-        </div>\n+        </div>}\n       </div>\n       {props.page === \"company_profile\" ? (\n         <CustomButton\n           className={user_type === \"user\"?\"d-none\":\" font-size-3 rounded-3 btn-primary border-0 absolute_top_right\"}\n"
                 }
             ],
             "date": 1692954847861,

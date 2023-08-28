@@ -306,22 +306,25 @@ const NewUserProfile = (props) => {
                       <h4 className="mb-0 text-capitalize line-height-1">
                         {PersonalDetail.name ? PersonalDetail.name : ""}
                       </h4>
-                      <p className="m-0 age_gender font-size-3 d-flex align-items-center">
-                        {PersonalDetail.gender ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.marital_status ||
-                        PersonalDetail.date_of_birth
-                          ? `(${
-                              PersonalDetail.gender === "female"
-                                ? "F"
-                                : PersonalDetail.gender === "male"
-                                ? "M"
-                                : "O"
-                            },
+                      <div className="m-0 age_gender font-size-3 d-flex align-items-center">
+                        <p>
+                          {" "}
+                          {PersonalDetail.gender ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.date_of_birth
+                            ? `(${
+                                PersonalDetail.gender === "female"
+                                  ? "F"
+                                  : PersonalDetail.gender === "male"
+                                  ? "M"
+                                  : "O"
+                              },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
-                          : ""}
+                            : ""}
+                        </p>
                         {/* <DropdownButton
                           as={ButtonGroup}
                           title={"Variant"}
@@ -384,40 +387,26 @@ const NewUserProfile = (props) => {
                                 className="font-size-2 font-weight-normal text-black-2 mb-0"
                                 key={index}
                               >
-                                {item.visa_status === "onboard" ? (
-                                  <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                    On Board
-                                  </span>
-                                ) : item.visa_status === "documentation" ? (
-                                  <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Documentation
-                                  </span>
-                                ) : item.visa_status === "file preparation" ? (
-                                  <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                    File Preparation
-                                  </span>
-                                ) : item.visa_status === "file review" ? (
-                                  <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                    File Review
-                                  </span>
-                                ) : item.visa_status === "file submission" ? (
-                                  <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                    File Submission
-                                  </span>
-                                ) : item.visa_status === "file decision" ? (
-                                  <span className="p-1 bg-gray text-white text-center w-100 border rounded-pill">
-                                    File Decision
-                                  </span>
-                                ) : (
-                                  <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    NA
-                                  </span>
-                                )}
+                                <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
+                                  {item.visa_status === "onboard"
+                                    ? " On Board"
+                                    : item.visa_status === "documentation"
+                                    ? "Documentation"
+                                    : item.visa_status === "file preparation"
+                                    ? "File Preparation"
+                                    : item.visa_status === "file review"
+                                    ? "File Review"
+                                    : item.visa_status === "file submission"
+                                    ? "File Submission"
+                                    : item.visa_status === "file decision"
+                                    ? "File Decision"
+                                    : "NA"}
+                                </span>
                               </p>
                             );
                           })}
                         </div>
-                      </p>
+                      </div>
                     </div>
                     {/* <p className="mb-8 text-gray font-size-4">
                     {PersonalDetail.gender}
@@ -444,20 +433,30 @@ const NewUserProfile = (props) => {
                           </CustomButton>
                         ) : null}
                       </div>
-                      <Link
-                        className="text-dark font-size-5 w-100"
-                        to={`tel:${PersonalDetail.contact_no}`}
-                      >
-                        <BiPhoneCall className="text-primary font-size-5" />{" "}
-                        {PersonalDetail.contact_no}
-                      </Link>
+                      {PersonalDetail.contact_no && (
+                        <Link
+                          className="text-dark font-size-5 w-100"
+                          to={`tel:${PersonalDetail.contact_no}`}
+                        >
+                          <BiPhoneCall className="text-primary font-size-5" />{" "}
+                          {PersonalDetail.contact_no}
+                        </Link>
+                      )}
                     </div>
                   ) : (
                     ""
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                    PersonalDetail.length === 0 ? (
+                    PersonalDetail.length === 0 ||
+                    (!PersonalDetail.current_location &&
+                      !PersonalDetail.language &&
+                      !PersonalDetail.currently_located_country &&
+                      !PersonalDetail.experience &&
+                      !PersonalDetail.nationality &&
+                      !PersonalDetail.experience &&
+                      !PersonalDetail.work_permit_canada &&
+                      !PersonalDetail.work_permit_other_country) ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -841,7 +840,9 @@ const NewUserProfile = (props) => {
                             <span>About</span>
                           </h4>
                           <p className="text-break m-0">
-                            {PersonalDetail.description}
+                            {PersonalDetail.description
+                              ? PersonalDetail.description
+                              : "No Data Found"}
                           </p>
                         </div>
                         {/* <div className="col-md-4 p-10 border-right border-mercury">
@@ -901,58 +902,57 @@ const NewUserProfile = (props) => {
                               <p className="text-center">No Data Found</p>
                             </div>
                           ) : (
-                            (userDetail.career || []).map((CareerDetails) => (
-                              <div
-                                className="w-100"
-                                key={CareerDetails.career_id}
-                              >
-                                <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
-                                  <div className="media align-items-center company_box col-md-6 p-0">
-                                    <div className="text_box text-left w-100 mt-n2 text-capitalize">
-                                      <h3 className="mb-0">
-                                        <span className="font-size-6 text-black-2 font-weight-semibold">
-                                          {CareerDetails.designation} -
-                                          <span className="font-size-4">
-                                            {CareerDetails.functional_area}
+                            (userDetail.career || []).map(
+                              (CareerDetails, i) => (
+                                <div className="w-100" key={i}>
+                                  <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
+                                    <div className="media align-items-center company_box col-md-6 p-0">
+                                      <div className="text_box text-left w-100 mt-n2 text-capitalize">
+                                        <h3 className="mb-0">
+                                          <span className="font-size-6 text-black-2 font-weight-semibold">
+                                            {CareerDetails.designation} -
+                                            <span className="font-size-4">
+                                              {CareerDetails.functional_area}
+                                            </span>
                                           </span>
+                                        </h3>
+                                        <span className="font-size-4 text-default-color line-height-2">
+                                          {CareerDetails.company} (
+                                          {CareerDetails.industry})
                                         </span>
-                                      </h3>
-                                      <span className="font-size-4 text-default-color line-height-2">
-                                        {CareerDetails.company} (
-                                        {CareerDetails.industry})
-                                      </span>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
-                                    <span className="font-size-4 text-gray w-100">
-                                      {/* {moment(CareerDetails.start_date).format(
+                                    <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                      <span className="font-size-4 text-gray w-100">
+                                        {/* {moment(CareerDetails.start_date).format(
                                     "DD-MM-YYYY"
                                   )}
                                   -
                                   {moment(CareerDetails.end_date).format(
                                     "DD-MM-YYYY"
                                   )} */}
-                                      {calculateDuration(
-                                        CareerDetails.start_date,
-                                        CareerDetails.end_date
-                                      )}
-                                    </span>
-                                    <span className="font-size-3 text-gray w-100">
-                                      <span
-                                        className="mr-4"
-                                        style={{ marginTop: "-2px" }}
-                                      >
-                                        <img
-                                          src="image/svg/icon-loaction-pin-black.svg"
-                                          alt=""
-                                        />
+                                        {calculateDuration(
+                                          CareerDetails.start_date,
+                                          CareerDetails.end_date
+                                        )}
                                       </span>
-                                      {CareerDetails.company_location}
-                                    </span>
+                                      <span className="font-size-3 text-gray w-100">
+                                        <span
+                                          className="mr-4"
+                                          style={{ marginTop: "-2px" }}
+                                        >
+                                          <img
+                                            src="image/svg/icon-loaction-pin-black.svg"
+                                            alt=""
+                                          />
+                                        </span>
+                                        {CareerDetails.company_location}
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            ))
+                              )
+                            )
                           )}
                         </div>
                         {/* Employee's Skills */}
@@ -981,12 +981,13 @@ const NewUserProfile = (props) => {
                             ) : null}
 
                             <ul className="list-unstyled d-flex align-items-start flex-wrap">
-                              {userDetail.skill === undefined ? (
+                              {userDetail.skill === undefined ||
+                              userDetail.skill.length === 0 ? (
                                 <li>No Data Found</li>
                               ) : (
                                 (userDetail.skill || []).map(
-                                  (employeeSkills) => (
-                                    <li key={employeeSkills.skill_id}>
+                                  (employeeSkills, i) => (
+                                    <li key={i}>
                                       <span className="bg-polar text-black-2 mr-3 mb-2 p-2 font-size-3 rounded-3 d-flex align-items-center">
                                         {employeeSkills.skill}
                                       </span>
@@ -1032,10 +1033,7 @@ const NewUserProfile = (props) => {
                           ) : (
                             (userDetail.education || []).map(
                               (EducationDetails, index) => (
-                                <div
-                                  className="w-100"
-                                  key={EducationDetails.education_id}
-                                >
+                                <div className="w-100" key={index}>
                                   <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                     <div className="media align-items-center company_box p-0">
                                       <div className="text_box text-left w-100 mt-n2 text-capitalize">

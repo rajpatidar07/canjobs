@@ -65,7 +65,7 @@ function CompanyProfileDetail(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   /*Render method to get employer data */
@@ -78,7 +78,7 @@ function CompanyProfileDetail(props) {
 
   return (
     <div>
-      {user_type === "admin" &&
+      {user_type === "admin" && (
         <>
           <AdminHeader
             heading={
@@ -88,13 +88,16 @@ function CompanyProfileDetail(props) {
               >
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                  <h3 className="font-size-6 mb-0 text-capitalize">Company Profile</h3>
+                  <h3 className="font-size-6 mb-0 text-capitalize">
+                    Company Profile
+                  </h3>
                 </span>
               </Link>
             }
           />
           <AdminSidebar />
-        </>}
+        </>
+      )}
       <ToastContainer />
       {user_type !== "admin" ? <EmployeeHeader /> : null}
       <div
@@ -124,7 +127,11 @@ function CompanyProfileDetail(props) {
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                       {employerData.company_name}{" "}
                       <CustomButton
-                        className={user_type === "user" ? "d-none" : "font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"}
+                        className={
+                          user_type === "user"
+                            ? "d-none"
+                            : "font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                        }
                         onClick={() => setShowCompanyInfoModal(true)}
                       >
                         <PiPencilDuotone />
@@ -149,8 +156,9 @@ function CompanyProfileDetail(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                        /*Functionalities have to be done. */
-                        >{/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                          /*Functionalities have to be done. */
+                        >
+                          {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
                         </CustomButton>
                       ) : null}
@@ -192,83 +200,98 @@ function CompanyProfileDetail(props) {
                       status.lmia_status === null ||
                       status.lmia_status === undefined ||
                       status.lmia_status === "undefined" ? null : (
-                      <div className={lima.length === 0 ?"arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between":lima.length === 1? "arrow-steps p-1 px-7 col-md-6 d-flex border-right border-bottom justify-content-between": "arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between"} key={i}>
+                      <div
+                        className={
+                          lima.length === 0
+                            ? "arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between"
+                            : lima.length === 1
+                            ? "arrow-steps p-1 px-7 col-md-6 d-flex border-right border-bottom justify-content-between"
+                            : "arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between"
+                        }
+                        key={i}
+                      >
                         <div className="job_name text-dark">
                           <span className="m-0 font-size-2 d-block mb-1">
                             {status.job_title}
                           </span>
                         </div>
                         <div>
-                        <div
-                          key={i + 1}
-                          className={`step text-capitalize ${status.lmia_status === "onboarding" ||
+                          <div
+                            key={i + 1}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "onboarding" ||
                               status.lmia_status === "advertisements" ||
                               status.lmia_status === "documentation" ||
                               status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>onboarding</span>
-                        </div>
-                        <div
-                          key={i + 2}
-                          className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                          >
+                            <span>onboarding</span>
+                          </div>
+                          <div
+                            key={i + 2}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "documentation" ||
                               status.lmia_status === "advertisements" ||
                               status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>advertisements</span>
-                        </div>
-                        <div
-                          key={i + 3}
-                          className={`step text-capitalize ${status.lmia_status === "documentation" ||
+                          >
+                            <span>advertisements</span>
+                          </div>
+                          <div
+                            key={i + 3}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "documentation" ||
                               status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>documentation</span>
-                        </div>
-                        <div
-                          key={i + 4}
-                          className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
+                          >
+                            <span>documentation</span>
+                          </div>
+                          <div
+                            key={i + 4}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "candidate placement" ||
                               status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>candidate placement</span>
-                        </div>
-                        <div
-                          key={i + 5}
-                          className={`step text-capitalize ${status.lmia_status === "submission" ||
+                          >
+                            <span>candidate placement</span>
+                          </div>
+                          <div
+                            key={i + 5}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "submission" ||
                               status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>submission</span>
-                        </div>
-                        <div
-                          key={i + 6}
-                          className={`step text-capitalize ${status.lmia_status === "decision"
-                              ? "current"
-                              : null
+                          >
+                            <span>submission</span>
+                          </div>
+                          <div
+                            key={i + 6}
+                            className={`step text-capitalize ${
+                              status.lmia_status === "decision"
+                                ? "current"
+                                : null
                             }`}
-                        >
-                          <span>decision</span>
+                          >
+                            <span>decision</span>
+                          </div>
                         </div>
-                      </div>
                       </div>
                     );
                   })}
@@ -334,7 +357,13 @@ function CompanyProfileDetail(props) {
                       Documents
                     </Link>
                   </li>
-                  <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
+                  <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
                     <Link
                       className={
                         TabActive === "interview"
@@ -351,7 +380,13 @@ function CompanyProfileDetail(props) {
                       Interview
                     </Link>
                   </li>
-                  <li className={user_type === "admin" ? "tab-menu-items nav-item" : "d-none"}>
+                  <li
+                    className={
+                      user_type === "admin"
+                        ? "tab-menu-items nav-item"
+                        : "d-none"
+                    }
+                  >
                     <Link
                       className={
                         TabActive === "notes"
@@ -368,7 +403,8 @@ function CompanyProfileDetail(props) {
                       Notes
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item d-none">{/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
+                  <li className="tab-menu-items nav-item d-none">
+                    {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
                     <Link
                       className={
                         TabActive === "activity"
@@ -448,7 +484,11 @@ function CompanyProfileDetail(props) {
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>{/*Kyc Details*/}</span>
                                 <CustomButton
-                                  className={user_type === "user" ? "d-none" : "font-size-3 rounded-3 btn-primary border-0 absolute_top_right"}
+                                  className={
+                                    user_type === "user"
+                                      ? "d-none"
+                                      : "font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
+                                  }
                                   onClick={() =>
                                     setShowKycComplainDetailsModal(true)
                                   }
@@ -457,104 +497,119 @@ function CompanyProfileDetail(props) {
                                 </CustomButton>
                               </h4>
                             </div>
-                            <div className="pt-5 text-left row m-0">
-                              {employerData.industry ? (
-                                <div
-                                  className="font-size-3 mb-4 mr-10"
-                                  title="Industry"
-                                >
-                                  <i className="far fa-building mr-2"></i>
-                                  {employerData.industry}
+                            {!employerData.industry &&
+                            !employerData.corporation &&
+                            !employerData.company_size &&
+                            !employerData.company_start_date &&
+                            !employerData.website_url &&
+                            !employerData.vacancy_for_post &&
+                            !employerKycData.pan_no &&
+                            !employerKycData.tan_number &&
+                            !employerKycData.gstin ? (
+                              <div className="pt-5 text-left row m-0">
+                                <div className="font-size-3 mb-4 mr-10">
+                                  No Data Found
                                 </div>
-                              ) : null}
-
-                              {employerData.corporation ? (
-                                <div
-                                  className="font-size-3 mb-4 mr-10"
-                                  title="Business Type"
-                                >
-                                  <i className="fas fa-briefcase mr-2"></i>
-                                  {employerData.corporation}
-                                </div>
-                              ) : null}
-                              {employerData.company_size ? (
-                                <div
-                                  className="font-size-3 mb-4 mr-10"
-                                  title="Company size"
-                                >
-                                  <i className="fas fa-user-friends mr-2"></i>
-                                  {employerData.company_size}
-                                </div>
-                              ) : null}
-                              {employerData.company_start_date ? (
-                                <div
-                                  className="font-size-3 mb-4 mr-10"
-                                  title="Est. Since"
-                                >
-                                  <i className="fas fa-business-time mr-2"></i>
-                                  {moment(
-                                    employerData.company_start_date
-                                  ).format("YYYY")}
-                                </div>
-                              ) : null}
-                              {employerData.website_url ? (
-                                <div
-                                  className="font-size-3 mb-4 mr-10"
-                                  title="Website URL"
-                                >
-                                  <i className="fas fa-globe mr-2"></i>
-                                  <Link className="text-dark" to={""}>
-                                    {employerData.website_url}
-                                  </Link>
-                                </div>
-                              ) : null}
-                              {employerData.vacancy_for_post ? (
-                                <div
-                                  className="font-size-3 mb-4 mr-10"
-                                  title="Hiring for"
-                                >
-                                  <i className="fas fa-bullhorn mr-2"></i>
-                                  {employerData.vacancy_for_post}
-                                </div>
-                              ) : null}
-                              {employerKycData === "" ? null : (
-                                <>
-                                  {employerKycData.pan_no ? (
-                                    <div
-                                      className="font-size-3 mb-4 mr-10"
-                                      title="PAN"
-                                    >
-                                      <span className="mr-2 font-weight-bold">
-                                        PAN
-                                      </span>
-                                      {employerKycData.pan_no}
-                                    </div>
-                                  ) : null}
-                                  {employerKycData.tan_number ? (
-                                    <div
-                                      className="font-size-3 mb-4 mr-10"
-                                      title="TAN"
-                                    >
-                                      <span className="mr-2 font-weight-bold">
-                                        TAN
-                                      </span>
-                                      {employerKycData.tan_number}
-                                    </div>
-                                  ) : null}
-                                  {employerKycData.gstin ? (
-                                    <div
-                                      className="font-size-3 mb-4 mr-10"
-                                      title="GSTIN"
-                                    >
-                                      <span className="mr-2 font-weight-bold">
-                                        GSTIN
-                                      </span>
-                                      {employerKycData.gstin}
-                                    </div>
-                                  ) : null}
-                                </>
-                              )}
-                            </div>
+                              </div>
+                            ) : (
+                              <div className="pt-5 text-left row m-0">
+                                {employerData.industry ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Industry"
+                                  >
+                                    <i className="far fa-building mr-2"></i>
+                                    {employerData.industry}
+                                  </div>
+                                ) : null}
+                                {employerData.corporation ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Business Type"
+                                  >
+                                    <i className="fas fa-briefcase mr-2"></i>
+                                    {employerData.corporation}
+                                  </div>
+                                ) : null}
+                                {employerData.company_size ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Company size"
+                                  >
+                                    <i className="fas fa-user-friends mr-2"></i>
+                                    {employerData.company_size}
+                                  </div>
+                                ) : null}
+                                {employerData.company_start_date ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Est. Since"
+                                  >
+                                    <i className="fas fa-business-time mr-2"></i>
+                                    {moment(
+                                      employerData.company_start_date
+                                    ).format("YYYY")}
+                                  </div>
+                                ) : null}
+                                {employerData.website_url ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Website URL"
+                                  >
+                                    <i className="fas fa-globe mr-2"></i>
+                                    <Link className="text-dark" to={""}>
+                                      {employerData.website_url}
+                                    </Link>
+                                  </div>
+                                ) : null}
+                                {employerData.vacancy_for_post ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Hiring for"
+                                  >
+                                    <i className="fas fa-bullhorn mr-2"></i>
+                                    {employerData.vacancy_for_post}
+                                  </div>
+                                ) : null}
+                                {employerKycData === "" ? null : (
+                                  <>
+                                    {employerKycData.pan_no ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="PAN"
+                                      >
+                                        <span className="mr-2 font-weight-bold">
+                                          PAN
+                                        </span>
+                                        {employerKycData.pan_no}
+                                      </div>
+                                    ) : null}
+                                    {employerKycData.tan_number ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="TAN"
+                                      >
+                                        <span className="mr-2 font-weight-bold">
+                                          TAN
+                                        </span>
+                                        {employerKycData.tan_number}
+                                      </div>
+                                    ) : null}
+                                    {employerKycData.gstin ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="GSTIN"
+                                      >
+                                        <span className="mr-2 font-weight-bold">
+                                          GSTIN
+                                        </span>
+                                        {employerKycData.gstin}
+                                      </div>
+                                    ) : null}
+                                  </>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -577,7 +632,7 @@ function CompanyProfileDetail(props) {
                       company_id={cid}
                       heading={"companyprofile"}
                       response={"companyprofile"}
-                    detail={"company_detail"}
+                      detail={"company_detail"}
                       setLmia={setLmia}
                       setApiCall={setApiCall}
                     />
@@ -633,26 +688,26 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                     />
                   ) : //  <div className="p-10 notes_container">
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //       </div>
-                    null}
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //       </div>
+                  null}
                 </div>
                 <div
                   className={
