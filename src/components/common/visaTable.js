@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { LiaCcVisa } from "react-icons/lia"
 import { GrDocumentUser } from "react-icons/gr"
 export default function VisaTable(props) {
+    let user_type =localStorage.getItem("userType")
     /*Show modal states */
     let [apiCall, setApiCall] = useState(false);
     let [isLoading, setIsLoading] = useState(true);
@@ -522,7 +523,7 @@ export default function VisaTable(props) {
 
                                             <td className=" py-5 min-width-px-100">
                                                 <div
-                                                    className="btn-group button_group"
+                                                    className={user_type === "company"?"d-none":"btn-group button_group"}
                                                     role="group"
                                                     aria-label="Basic example"
                                                 >
