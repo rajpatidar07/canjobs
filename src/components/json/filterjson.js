@@ -640,7 +640,7 @@ const filterjson = {
     "decision": [
       "awaiting decision",
       "approved",
-      "reject",
+      "rejected",
       // "maintain mature ads throughout the process",
       // "initiate app after ads mature",
       // "email employer for updates",
@@ -686,6 +686,11 @@ const filterjson = {
       "representative submission letter"
     ],
     "file review": ["create account on authorized representative portal"],
+    "file decision":[
+      "awaiting decision",
+      "approved",
+      "rejected",
+    ]
   }
 };
 export default filterjson;

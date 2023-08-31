@@ -103,10 +103,7 @@ export default function VisaStatus(props) {
             close()
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false)
       }
     } else {
@@ -154,10 +151,10 @@ export default function VisaStatus(props) {
       let Response = await AddUpdateEmployeeVisaSubStage(data)
       /*Removed sub stage response */
       if (Response.message === "updated successfully") {
-        toast.success("visa Sub Stage Removed successfully", {
+        toast.success("visa Sub Stage Removed successfully",{
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        });
+        }); 
         // if (state.status !== props.employeeData.status && status !== state.status) {
         //   setState({ ...state, status: status })
         //   if (typeof onVisaUpdateClick === 'function') {

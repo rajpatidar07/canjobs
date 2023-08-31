@@ -3,7 +3,7 @@ import AddJobModal from "../forms/employer/job";
 import EmployeeHeader from "../common/header";
 import CustomButton from "../common/button";
 import { GetJobDetail } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link, useNavigate } from "react-router-dom";
 import { PiPencilDuotone } from "react-icons/pi";
@@ -13,12 +13,14 @@ import JobTable from "../common/jobTable";
 import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
+import LimaArrowProfile from "../common/LimaArrowProfile";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   let jid = localStorage.getItem("job_id");
   let navigate = useNavigate();
   /*Show modal and data state */
   const [lima, setLmia] = useState([]);
+  const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [showJobEditModal, setShowJobEditModal] = useState(false);
@@ -43,10 +45,7 @@ function JobDetailpageAdmim(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+     console.log(err) 
     }
   };
   /*Render method to get employer data */
@@ -91,7 +90,7 @@ function JobDetailpageAdmim(props) {
       >
         <div className="container-fluid">
           <div className="row text-left mt-5 pt-0">
-            <div className="col-12 mb-1">
+            <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
                 <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
@@ -232,104 +231,7 @@ function JobDetailpageAdmim(props) {
             </div>
             {/* LMIA */}
             <div className="col-12">
-              <div className="bg-white mb-1">
-                <div className="arrow-wrapper custome_arrow_wrapper mb-0">
-                  {(lima || []).map((status, i) => {
-                    return status.lmia_status === "" ||
-                      status.lmia_status === null ||
-                      status.lmia_status === undefined ||
-                      status.lmia_status === "undefined" ? null : (
-                      <div
-                        className="arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between"
-                        key={i}
-                      >
-                        <div className="job_name text-dark">
-                          <span className="m-0 font-size-2 d-block mb-1">
-                            {status.job_title}
-                          </span>
-                        </div>
-                        <div>
-                          <div
-                            key={i + 1}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "onboarding" ||
-                              status.lmia_status === "advertisements" ||
-                              status.lmia_status === "documentation" ||
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>onboarding</span>
-                          </div>
-                          <div
-                            key={i + 2}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "documentation" ||
-                              status.lmia_status === "advertisements" ||
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>advertisements</span>
-                          </div>
-                          <div
-                            key={i + 3}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "documentation" ||
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>documentation</span>
-                          </div>
-                          <div
-                            key={i + 4}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>candidate placement</span>
-                          </div>
-                          <div
-                            key={i + 5}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>submission</span>
-                          </div>
-                          <div
-                            key={i + 6}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>decision</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+            <LimaArrowProfile lmia={lima} lmiaStatusRejectComment={lmiaStatusRejectComment}/>
             </div>
             <div className="col-12 order-2 order-xl-1">
               <div className="bg-white">
@@ -353,7 +255,7 @@ function JobDetailpageAdmim(props) {
                       aria-selected="true"
                       onClick={() => setTabActive("detail")}
                     >
-                      Overview
+                      Details
                     </Link>
                   </li>
                   <li className="tab-menu-items nav-item">
@@ -399,6 +301,145 @@ function JobDetailpageAdmim(props) {
                         {/* <!-- Company Profile --> */}
 
                         <div className="text-capitalize company_detail_box w-100 row m-0">
+                        <div className="col-12 mb-1">
+              <div className="bg-white  d-flex">
+                <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
+                  <div className="text_box text-left">
+                    <img
+                      className="company_logo"
+                      src={
+                        jobData.logo === null
+                          ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                          : jobData.logo
+                      }
+                      alt=""
+                    />
+                  </div>
+                  <div className="text_box text-left w-100 text-capitalize">
+                    <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
+                      {jobData.job_title}{" "}
+                      <CustomButton
+                        className={
+                          user_type === "user" || jobData.length === 0
+                            ? "d-none"
+                            : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
+                        }
+                        onClick={() => setShowJobEditModal(true)}
+                      >
+                        <PiPencilDuotone />
+                      </CustomButton>
+                    </h3>
+                    <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
+                      {jobData.department}
+                    </p>
+                  </div>
+                </div>
+                {jobData.email ? (
+                  <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Link
+                        className="text-dark font-size-5 w-100 text-break"
+                        to={`mailto:${jobData.email}`}
+                      >
+                        <BsEnvelope className="text-primary font-size-5 " />{" "}
+                        {jobData.email}
+                      </Link>
+                      {user_type === "admin" || props.self === "no" ? (
+                        <CustomButton
+                          title={"Send Custom Email"}
+                          className="font-size-4 rounded-3 btn-primary py-0 d-none"
+                          /*Functionalities have to be done. */
+                        >
+                          {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                          <RiMailSendLine />
+                        </CustomButton>
+                      ) : null}
+                    </div>
+                    {jobData.contact_no_other && (
+                      <Link
+                        className="text-dark font-size-5 w-100"
+                        to={`tel:${jobData.contact_no_other}`}
+                      >
+                        <BiPhoneCall className="text-primary font-size-5" />{" "}
+                        {jobData.contact_no_other}
+                      </Link>
+                    )}
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div className="col px-5 pt-5 pb-5  border-right position-relative">
+                  <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                    {!jobData.location &&
+                    !jobData.language &&
+                    !jobData.address ? (
+                      <div className="info_box text-left text-capitalize">
+                        <span className="font-size-3 text-smoke  mr-7">
+                          No Data FOund
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="info_box text-left text-capitalize">
+                          {jobData.location ? (
+                            <span
+                              className="font-size-3 text-smoke  mr-7"
+                              title="Current Location"
+                            >
+                              <img
+                                className="mr-1"
+                                height={"16px"}
+                                src="image/icons/marker.svg"
+                                alt="Location"
+                              />
+                              {jobData.location}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="info_box text-left text-capitalize">
+                          {jobData.language ? (
+                            <span
+                              className="font-size-3 text-smoke  mr-7"
+                              title="User Language"
+                            >
+                              <img
+                                className="mr-1"
+                                height={"16px"}
+                                src="image/icons/language.svg"
+                                alt="language"
+                              />
+                              {jobData.language}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="info_box text-left text-capitalize">
+                          {jobData.address ? (
+                            <span
+                              className="font-size-3 text-smoke  mr-7"
+                              title="Currently Located Country"
+                            >
+                              <img
+                                className="mr-1"
+                                height={"16px"}
+                                src="image/icons/address-book.svg"
+                                alt="Address"
+                              />
+                              {jobData.address}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
                           <div className="col-md-6 col-lg-6 p-10 border-right">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between">
@@ -563,6 +604,7 @@ function JobDetailpageAdmim(props) {
                       setLmia={setLmia}
                       apiCall={apiCall}
                       setApiCall={setApiCall}
+                      setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}

@@ -6,6 +6,7 @@ import EducationDetails from "../forms/user/education";
 import ItSkills from "../forms/user/skills";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
+import LimaArrowProfile from "../common/LimaArrowProfile";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   EmployeeDetails,
@@ -31,6 +32,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { RiMailSendLine } from "react-icons/ri";
 import EmployeeHeader from "../common/header";
+import VisaArrowProfile from "../common/visaArrowProfile";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   let navigate = useNavigate();
@@ -38,6 +40,8 @@ const NewUserProfile = (props) => {
   // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
   const [lima, setLmia] = useState(false);
+  const [visaStatusRejectComment, setVisaStatusRejectComment] = useState([]);
+  const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showEmplyomentDetails, setShowEmplyomentDetails] = useState(false);
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
@@ -104,32 +108,31 @@ const NewUserProfile = (props) => {
       );
       if (response.message === "successful") {
         /*Logic for finding reject substage of decision lima status */
-        if (response.data.filter((item) => item.lmia_status === "decision")) {
-          const filteredData = response.data.filter(
-            (item) => item.lmia_status === "decision"
-          );
-          if (filteredData.length >= 0) {
-            for (let i = 0; i < filteredData.length; i++) {
-              const data = filteredData[i];
+        if (response.data.length >= 0) {
+          let LmiaData = response.data;
+          for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].lmia_status === "decision") {
+              const data = response.data[i];
               const subStageRes = await GetLimaSubStages(
-                data.id,
+                data.job_id,
                 data.lmia_status
               );
+              setLmiaStatusRejectComment(subStageRes.data.data)
               if (
                 subStageRes.data.data.filter(
-                  (item) =>
-                    item.lmia_status === "decision" &&
-                    item.lmia_substage === "reject"
+                  (item) => item.lmia_substage === "reject"
                 ).length > 0
               ) {
-                setLmia(
-                  response.data.filter((item) => item.job_id !== data.job_id)
+                console.log(
+                  LmiaData.filter((item) => item.job_id !== data.job_id)
                 );
-              } else {
-                setLmia(response.data);
+                LmiaData = LmiaData.filter(
+                  (item) => item.job_id !== data.job_id
+                );
               }
             }
           }
+          setLmia(LmiaData);
         }
       }
     } catch (err) {
@@ -259,7 +262,7 @@ const NewUserProfile = (props) => {
             </div>
           ) : (
             <div className="row text-left mt-5 pt-0">
-              <div className="col-12 mb-1">
+              <div className="col-12 mb-1 d-none">
                 <div className="bg-white shadow-9 d-flex">
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
                     <Link
@@ -380,7 +383,7 @@ const NewUserProfile = (props) => {
                             )}
                           </DropdownButton>
                         )}
-                        <div className="d-flex">
+                        {/* <div className="d-flex">
                           {(visaStatus || []).map((item, index) => {
                             return (
                               <p
@@ -405,7 +408,7 @@ const NewUserProfile = (props) => {
                               </p>
                             );
                           })}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     {/* <p className="mb-8 text-gray font-size-4">
@@ -602,65 +605,17 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                <div className="bg-white w-100 d-flex flex-wrap mb-1">
-                  <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
-                    {(lima || []).map((status, i) => {
-                      return status.lmia_status === "" ||
-                        status.lmia_status === null ||
-                        status.lmia_status === undefined ||
-                        status.lmia_status === "undefined" ? null : (
-                        <div
-                          className="arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between"
-                          key={i}
-                        >
-                          <div className="job_name text-dark">
-                            <span className="m-0 font-size-2 d-block mb-1">
-                              {status.job_title}
-                            </span>
-                            <span className="m-0 font-size-2 d-block">
-                              {status.company_name}
-                            </span>
-                          </div>
-                          <div>
-                            <div
-                              key={i + 1}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "candidate placement" ||
-                                status.lmia_status === "submission" ||
-                                status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                              }`}
-                            >
-                              <span>candidate placement</span>
-                            </div>
-                            <div
-                              key={i + 2}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "submission" ||
-                                status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                              }`}
-                            >
-                              <span>submission</span>
-                            </div>
-                            <div
-                              key={i + 3}
-                              className={`step text-capitalize ${
-                                status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                              }`}
-                            >
-                              <span>decision</span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
+                     <LimaArrowProfile lmia={lima} lmiaStatusRejectComment={lmiaStatusRejectComment}/>
+
+              </div>
+              <div
+                className={
+                  // noLima==="1"?"d-none":
+                  "col-12"
+                }
+              >
+                     <VisaArrowProfile visaStatus={visaStatus} visaStatusRejectComment={visaStatusRejectComment}/>
+
               </div>
 
               <div className="col-12 order-2 order-xl-1">
@@ -693,7 +648,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("profile")}
                       >
-                        Overview
+                        Profile
                       </Link>
                     </li>
                     <li className="tab-menu-items nav-item">
@@ -835,6 +790,364 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
+                        <div className="col-12 mb-1">
+                          <div className="bg-white  d-flex">
+                            <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
+                              <Link
+                                className="position-relative text-white"
+                                onClick={
+                                  user_type === "company" ||
+                                  props.self === "yes"
+                                    ? null
+                                    : () => setShowPersonalDetails(true)
+                                }
+                              >
+                                {user_type === "admin" ? (
+                                  <>
+                                    <input
+                                      type="file"
+                                      id="ImgUploadInput"
+                                      className="d-none"
+                                    />
+                                    <label
+                                      className="image_upload_btn image_upload_btn_2 m-0 bg-warning"
+                                      htmlFor="ImgUploadInput"
+                                    >
+                                      <span className="text-">
+                                        <PiPencilDuotone />
+                                      </span>
+                                      {/* <span className="fas fa-pen text-gray"> </span> */}
+                                    </label>
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+                                <img
+                                  className="rounded-circle"
+                                  src={
+                                    PersonalDetail.profile_photo
+                                      ? PersonalDetail.profile_photo
+                                      : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                                  }
+                                  alt=""
+                                  width={"50px"}
+                                  height={"50px"}
+                                />
+                              </Link>
+                              <div className="ml-2">
+                                <h4 className="mb-0 text-capitalize line-height-1 text-break">
+                                  {PersonalDetail.name
+                                    ? PersonalDetail.name
+                                    : ""}
+                                </h4>
+                                <div className="m-0 age_gender font-size-3 d-flex align-items-center">
+                                  <p>
+                                    {" "}
+                                    {PersonalDetail.gender ||
+                                    PersonalDetail.marital_status ||
+                                    PersonalDetail.marital_status ||
+                                    PersonalDetail.date_of_birth
+                                      ? `(${
+                                          PersonalDetail.gender === "female"
+                                            ? "F"
+                                            : PersonalDetail.gender === "male"
+                                            ? "M"
+                                            : "O"
+                                        },
+                        ${PersonalDetail.marital_status},
+                        ${moment().diff(PersonalDetail.date_of_birth, "years")}
+                        Y)`
+                                      : ""}
+                                  </p>
+                                  {/* <DropdownButton
+                          as={ButtonGroup}
+                          title={"Variant"}
+                          size={"sm"}
+                          value={status || ""}
+                          className="user_status_btn ml-1"
+                          onChange={(e) => OnStatusChange(e)}
+                        >
+                          <Dropdown.Item value="" eventKey="0">Selectstatus</Dropdown.Item>
+                          {(FilterJson.employee_status || []).map((item, index) => {
+                            return (
+                              <Dropdown.Item value={index + 1} eventKey={index + 1}>{item}</Dropdown.Item>
+                            )
+                          })}
+                        </DropdownButton> */}
+                                  {user_type === "admin" && (
+                                    <DropdownButton
+                                      as={ButtonGroup}
+                                      title={
+                                        status === "1"
+                                          ? "New"
+                                          : status === "2"
+                                          ? "Prospect"
+                                          : status === "3"
+                                          ? "Lead"
+                                          : status === "4"
+                                          ? "Reatined"
+                                          : status === "5"
+                                          ? "Lost"
+                                          : status === "6"
+                                          ? "Dead"
+                                          : // ) : status === "7" ? (
+                                          //   "Reserved"
+                                          status === "0"
+                                          ? "New"
+                                          : "status"
+                                      }
+                                      size="sm"
+                                      className="user_status_btn btn-primary text-white ml-1"
+                                      onSelect={OnStatusChange}
+                                    >
+                                      {(FilterJson.employee_status || []).map(
+                                        (item, index) => (
+                                          <Dropdown.Item
+                                            key={index}
+                                            value={index + 1}
+                                            eventKey={index + 1}
+                                            className="text-capitalize"
+                                          >
+                                            {item}
+                                          </Dropdown.Item>
+                                        )
+                                      )}
+                                    </DropdownButton>
+                                  )}
+                                  {/* <div className="d-flex">
+                                    {(visaStatus || []).map((item, index) => {
+                                      return (
+                                        <p
+                                          className="font-size-2 font-weight-normal text-black-2 mb-0"
+                                          key={index}
+                                        >
+                                          <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
+                                            {item.visa_status === "onboard"
+                                              ? " On Board"
+                                              : item.visa_status ===
+                                                "documentation"
+                                              ? "Documentation"
+                                              : item.visa_status ===
+                                                "file preparation"
+                                              ? "File Preparation"
+                                              : item.visa_status ===
+                                                "file review"
+                                              ? "File Review"
+                                              : item.visa_status ===
+                                                "file submission"
+                                              ? "File Submission"
+                                              : item.visa_status ===
+                                                "file decision"
+                                              ? "File Decision"
+                                              : "NA"}
+                                          </span>
+                                        </p>
+                                      );
+                                    })}
+                                  </div> */}
+                                </div>
+                              </div>
+                              {/* <p className="mb-8 text-gray font-size-4">
+                    {PersonalDetail.gender}
+                    </p> */}
+                            </div>
+                            {PersonalDetail.email ? (
+                              <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <Link
+                                    className="text-dark font-size-5 w-100 text-break"
+                                    to={`mailto:${PersonalDetail.email}`}
+                                  >
+                                    <BsEnvelope className="text-primary font-size-5 " />{" "}
+                                    {PersonalDetail.email}
+                                  </Link>
+                                  {user_type === "admin" ||
+                                  props.self === "no" ? (
+                                    <CustomButton
+                                      title={"Send Custom Email"}
+                                      className="font-size-4 rounded-3 btn-primary py-0 d-none"
+                                      /*Functionalities have to be done. */
+                                    >
+                                      {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                                      <RiMailSendLine />
+                                    </CustomButton>
+                                  ) : null}
+                                </div>
+                                {PersonalDetail.contact_no && (
+                                  <Link
+                                    className="text-dark font-size-5 w-100"
+                                    to={`tel:${PersonalDetail.contact_no}`}
+                                  >
+                                    <BiPhoneCall className="text-primary font-size-5" />{" "}
+                                    {PersonalDetail.contact_no}
+                                  </Link>
+                                )}
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            <div className="col px-5 pt-5 pb-5 d-flex border-right">
+                              {PersonalDetail.email === "" ||
+                              PersonalDetail.length === 0 ||
+                              (!PersonalDetail.current_location &&
+                                !PersonalDetail.language &&
+                                !PersonalDetail.currently_located_country &&
+                                !PersonalDetail.experience &&
+                                !PersonalDetail.nationality &&
+                                !PersonalDetail.experience &&
+                                !PersonalDetail.work_permit_canada &&
+                                !PersonalDetail.work_permit_other_country) ? (
+                                <div>
+                                  <p className="text-center">No Data Found</p>
+                                </div>
+                              ) : (
+                                <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                                  <div className="info_box text-left text-capitalize">
+                                    {PersonalDetail.current_location ? (
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7"
+                                        title="Current Location"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/marker.svg"
+                                          alt="Location"
+                                        />
+                                        {PersonalDetail.current_location}
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                  <div className="info_box text-left text-capitalize">
+                                    {PersonalDetail.language ? (
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7"
+                                        title="User Language"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/language.svg"
+                                          alt="language"
+                                        />
+                                        {PersonalDetail.language}
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                  <div className="info_box text-left text-capitalize">
+                                    {PersonalDetail.currently_located_country ? (
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7"
+                                        title="Currently Located Country"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/address-book.svg"
+                                          alt="Address"
+                                        />
+                                        {
+                                          PersonalDetail.currently_located_country
+                                        }
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                  <div className="info_box text-left text-capitalize">
+                                    {PersonalDetail.experience ? (
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7"
+                                        title="Total Experience"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/envelope.svg"
+                                          alt="Email"
+                                        />
+                                        {PersonalDetail.experience} Years
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                  {PersonalDetail.nationality ? (
+                                    <div
+                                      className="info_box text-left"
+                                      title="Nationality"
+                                    >
+                                      <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                        Nationality:{" "}
+                                        <b> {PersonalDetail.nationality}</b>
+                                      </span>
+                                    </div>
+                                  ) : null}
+                                  {PersonalDetail.work_permit_canada ? (
+                                    <div className="info_box text-left">
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                        title="Canada Work Permit"
+                                      >
+                                        Canada Work Permit:
+                                        <b>
+                                          {" "}
+                                          {PersonalDetail.work_permit_canada}
+                                        </b>
+                                      </span>
+                                    </div>
+                                  ) : null}
+                                  {PersonalDetail.work_permit_other_country ? (
+                                    <div className="info_box text-left">
+                                      <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                        Work Permit of Other Country:
+                                        <b>
+                                          {" "}
+                                          {
+                                            PersonalDetail.work_permit_other_country
+                                          }
+                                        </b>
+                                      </span>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              )}
+                              {user_type === "company" ||
+                              props.self === "yes" ? null : (
+                                <CustomButton
+                                  className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                  onClick={() => setShowPersonalDetails(true)}
+                                >
+                                  <PiPencilDuotone />
+                                </CustomButton>
+                              )}
+                            </div>
+
+                            {PersonalDetail.resume ? (
+                              <div className="col-1 px-5 pt-5 pb-5 d-flex align-items-center">
+                                <span className="font-size-5">
+                                  <Link
+                                    to={""}
+                                    onClick={() =>
+                                      handleViewResume(PersonalDetail.resume)
+                                    }
+                                  >
+                                    Resume
+                                  </Link>
+                                </span>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+
+                            {/* <div className="col px-5 pt-5 pb-5 d-flex align-items-center border-right"></div>
+                  <div className="profile_email_mobile"></div> */}
+                          </div>
+                        </div>
                         <div className="col-md-6 p-10 border-right ">
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>About</span>
@@ -1323,6 +1636,7 @@ const NewUserProfile = (props) => {
                       setApiCall={setApiCall}
                       page={"user_profile"}
                       setVisaStatus={setVisaStatus}
+                      setVisaStatusRejectComment={setVisaStatusRejectComment}
                     />
                   </div>
                   <div

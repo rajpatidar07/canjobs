@@ -63,10 +63,7 @@ export default function ResetPassword() {
           }
         }
         catch (err) {
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+         console.log(err) 
           setLoading(false)
         }
       }
@@ -87,10 +84,7 @@ export default function ResetPassword() {
             window.location.reload();
           }
         } catch (err) {
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+         console.log(err) 
           setLoading(false)
         }
       }
@@ -111,10 +105,7 @@ export default function ResetPassword() {
             window.location.reload();
           }
         } catch (err) {
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+         console.log(err) 
           setLoading(false)
         }
       }

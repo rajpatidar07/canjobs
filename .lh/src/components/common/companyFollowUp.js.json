@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1693200781915,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693486849666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n           props.setApiCall(true);\r\n           return close();\r\n         }\r\n       } catch (err) {\r\n-        toast.error(\"Something went wrong\", {\r\n+       console.log(err) {\r\n           position: toast.POSITION.TOP_RIGHT,\r\n           autoClose: 1000,\r\n         });\r\n         setLoading(false);\r\n"
+                },
+                {
+                    "date": 1693486958314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,12 +93,9 @@\n           props.setApiCall(true);\r\n           return close();\r\n         }\r\n       } catch (err) {\r\n-       console.log(err) {\r\n-          position: toast.POSITION.TOP_RIGHT,\r\n-          autoClose: 1000,\r\n-        });\r\n+       console.log(err) \r\n         setLoading(false);\r\n       }\r\n     } else {\r\n       setLoading(false);\r\n"
                 }
             ],
             "date": 1693200781915,

@@ -91,10 +91,7 @@ function Addfollowup(props) {
           return close();
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false);
       }
     } else {

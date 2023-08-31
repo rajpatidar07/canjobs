@@ -112,11 +112,8 @@ export default  function EmployeeLoginModal(props) {
         setErrors({ ...errors, Credentials: ["No user found"] });
         //   handle form submission
       }}catch(err){
-        toast.success("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setLoading(false);
+console.log(err)        
+setLoading(false);
       }
     }
   };

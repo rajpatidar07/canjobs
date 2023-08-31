@@ -191,7 +191,7 @@ export default function Visa() {
                         <option value={""}>Select visa status </option>
                         <option value={"pending"}>Pending</option>
                         <option value={"approved"}>Approved</option>
-                        <option value={"reject"}>Reject</option>
+                        <option value={"reject"}>Rejected</option>
                         <option value={"experied"}>experied</option>
                         <option value={"cancel"}>Cancel</option>
                       </select>

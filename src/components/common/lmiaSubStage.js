@@ -5,6 +5,7 @@ const LmiaSubStageSelector = ({
     selectedStatus,
     FilterJson,
     handleSubStageSelection,
+    lmia_status
 }) => {
     return (
         <div className='bg-white text-dark p-2 sub-stages-container row'>
@@ -20,7 +21,7 @@ const LmiaSubStageSelector = ({
                     onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                 >
                     <input
-                        type="checkbox"
+                        type={lmia_status === "decision" ? "radio":"checkbox"}
                         className='mx-2'
                         checked={(selectedStatus || []).some(
                             (item) =>

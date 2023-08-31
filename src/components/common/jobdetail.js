@@ -61,10 +61,10 @@ function JobDetailPage(props) {
         setApiCall(true)
       }
       if (Response.message === "already applied on this job") {
-        toast.success("Already applied on this job", {
+        toast.success("Already applied on this job",{
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        });
+        }); 
         setApiCall(true)
       }
       if (Response.message === "Job saved successfully") {

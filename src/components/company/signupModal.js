@@ -117,10 +117,7 @@ export default function CompanySignUp(props) {
           setOtpBox(false);
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       }
     } else if (otpBox === false && validate()) {
       /*Api to get otp */
@@ -136,10 +133,7 @@ export default function CompanySignUp(props) {
           setLoading(false);
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false);
       }
     }
@@ -171,10 +165,7 @@ export default function CompanySignUp(props) {
             navigate("/company");
             window.location.reload();
           } catch (err) {
-            toast.error("Something went wrong", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+           console.log(err) ;
           }
         }
       } catch (err) {
@@ -224,10 +215,7 @@ export default function CompanySignUp(props) {
             navigate("/company");
             window.location.reload();
           } catch (err) {
-            toast.error("Something went wrong", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+           console.log(err) 
           }
         } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
           toast.error("Token Expired", {
@@ -253,18 +241,15 @@ export default function CompanySignUp(props) {
         localStorage.setItem("userType", "company");
         localStorage.setItem("employee_id", data.employer_id);
         localStorage.setItem("profile_photo", data.company_logo);
-        toast.success("Logged In Successfully", {
+        toast.success("Logged In Successfully",{
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        });
+        }); 
         props.close();
         navigate("/company");
         window.location.reload();
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       }
     }
   }

@@ -68,10 +68,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false)
       }
     }

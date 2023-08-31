@@ -797,6 +797,10 @@ select.form-control.select_document_type {
   border-left: 12px solid #fa474a;
 }
 
+.arrow-wrapper.custome_arrow_wrapper .arrow-steps .step.visa_current:after {
+  border-left: 12px solid #4743db;
+}
+
 .absolute_top_right {
   position: absolute;
   top: 10px;
@@ -955,6 +959,15 @@ select.form-control.select_document_type {
 
 .arrow-steps .step.current:after {
   border-left: 17px solid #fa474a;
+}
+
+.arrow-steps .step.visa_current {
+  color: #fff;
+  background-color: #4743db;
+}
+
+.arrow-steps .step.visa_current:after {
+  border-left: 17px solid #4743db;
 }
 
 .arrow-steps .step.sub-stage {

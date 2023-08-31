@@ -9,7 +9,6 @@ import Pagination from "./pagination";
 import FilterJson from "../json/filterjson";
 // import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { toast } from "react-toastify";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from "./loader";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
@@ -82,10 +81,7 @@ export default function LimiaStatusTable(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
+     console.log(err) 
       setIsLoading(false);
     }
   };

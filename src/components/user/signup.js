@@ -84,10 +84,7 @@ export default function EmployeeSignupModal(props) {
             setErrors({ ...errors, otp: "Invalid Otp" });
           }
         } catch (err) {
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+         console.log(err) 
           setLoading(false)
         }
       } else {
@@ -108,10 +105,7 @@ export default function EmployeeSignupModal(props) {
           setLoading(false);
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false);
       }
     }
@@ -144,10 +138,7 @@ export default function EmployeeSignupModal(props) {
             navigate("/");
             window.location.reload();
           } catch (err) {
-            toast.error("Something went wrong", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+           console.log(err)
           }
         }
       } catch (err) {
@@ -198,10 +189,7 @@ export default function EmployeeSignupModal(props) {
             navigate("/");
             window.location.reload();
           } catch (err) {
-            toast.error("Something went wrong", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+           console.log(err)
           }
         } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
           toast.error("Token Expired", {
@@ -235,10 +223,7 @@ export default function EmployeeSignupModal(props) {
         navigate("/");
         window.location.reload();
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       }
     }
   }

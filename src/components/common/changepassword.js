@@ -70,10 +70,7 @@ const ChangePassword = (props) => {
         }
       }
       catch(err){
-        toast.success("Something went Wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+        console.log(err) 
         setLoading(false);
       }
     }

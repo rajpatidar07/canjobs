@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1692954496255,
@@ -12,6 +12,14 @@
                 {
                     "date": 1693023835670,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -638,13 +638,15 @@\n       \"inform employer of payment and potential interview\",\n     ],\n     \"decision\": [\n       \"awaiting decision\",\n-      \"maintain mature ads throughout the process\",\n-      \"initiate app after ads mature\",\n-      \"email employer for updates\",\n-      \"request extra docs if needed\",\n-      \"keep them updated on app status\",\n+      \"approved\",\n+      \"reject\",\n+      // \"maintain mature ads throughout the process\",\n+      // \"initiate app after ads mature\",\n+      // \"email employer for updates\",\n+      // \"request extra docs if needed\",\n+      // \"keep them updated on app status\",\n     ],\n   },\n   visa_status: [\n     \"onboard\",\n"
+                },
+                {
+                    "date": 1693466475281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -639,9 +639,9 @@\n     ],\n     \"decision\": [\n       \"awaiting decision\",\n       \"approved\",\n-      \"reject\",\n+      \"rejected\",\n       // \"maintain mature ads throughout the process\",\n       // \"initiate app after ads mature\",\n       // \"email employer for updates\",\n       // \"request extra docs if needed\",\n"
+                },
+                {
+                    "date": 1693484486116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -685,7 +685,12 @@\n       \"i m m 5645\",\n       \"representative submission letter\"\n     ],\n     \"file review\": [\"create account on authorized representative portal\"],\n+    \"file decision\":[\n+      \"awaiting decision\",\n+      \"approved\",\n+      \"rejected\",\n+    ]\n   }\n };\n export default filterjson;\n"
                 }
             ],
             "date": 1692954496255,

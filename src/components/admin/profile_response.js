@@ -174,17 +174,11 @@ function JobProfileResponse(props) {
                 setApiCall(true);
               }
             } catch (err) {
-              toast.error("Something went wrong", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
-              });
+             console.log(err) 
             }
           }
         } catch (err) {
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+         console.log(err) 
         }
       }
     } catch (err) {

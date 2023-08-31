@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693200780899,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693486845967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -172,9 +172,9 @@\n           setErrors(\"\");\n           setLoading(false);\n         }\n       } catch (err) {\n-        toast.error(\"Something went wrong\", {\n+       console.log(err) {\n           position: toast.POSITION.TOP_RIGHT,\n           autoClose: 1000,\n         });\n         setLoading(false)\n"
+                },
+                {
+                    "date": 1693486958770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -172,12 +172,9 @@\n           setErrors(\"\");\n           setLoading(false);\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false)\n       }\n     } else {\n       setLoading(false);\n@@ -198,12 +195,9 @@\n   async function deleteEducation(e) {\n     try {\n       const responseData = await DeleteEmployeeCareer(e);\n       if (responseData.message === \"career details has been deleted\") {\n-        toast.error(\"Career deleted Successfully\", {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+        toast.error(\"Career deleted Successfully\", \n         props.setApiCall(true);\n         setApiCall(true);\n         setDeleteAlert(false);\n       }\n"
+                },
+                {
+                    "date": 1693487156866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,9 +195,12 @@\n   async function deleteEducation(e) {\n     try {\n       const responseData = await DeleteEmployeeCareer(e);\n       if (responseData.message === \"career details has been deleted\") {\n-        toast.error(\"Career deleted Successfully\", \n+        toast.error(\"Career deleted Successfully\", {\n+          position: toast.POSITION.TOP_RIGHT,\n+          autoClose: 1000,\n+        });\n         props.setApiCall(true);\n         setApiCall(true);\n         setDeleteAlert(false);\n       }\n"
                 }
             ],
             "date": 1693200780899,

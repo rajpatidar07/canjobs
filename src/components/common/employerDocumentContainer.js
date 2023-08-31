@@ -189,10 +189,10 @@ export default function EmployerDocumrentContainer(props) {
         );
       }
       if (response.data.message === "Invalid base64-encoded data !") {
-        toast.error("Document type is not valid", {
+        toast.error("Document type is not valid",{
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        });
+        }); 
         setApiCall(true);
         setHide(false);
       }
@@ -231,10 +231,10 @@ export default function EmployerDocumrentContainer(props) {
     try {
       let response = await VarifyEmployerDocument(id, verify);
       if (response.data.message === "successfully") {
-        toast.success("Document Verify Successfully", {
+        toast.success("Document Verify Successfully",{
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        });
+        }); 
         setApiCall(true);
       }
     } catch (err) {

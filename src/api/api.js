@@ -1032,12 +1032,43 @@ export const AddUpdateEmployeeLmiaSubStage = async (props) => {
   );
   return response.data;
 };
-
+/*FUnction to Delete lmia sub stage of employee */
+export const deleteLmiaSubstageEmployee = async (id) => {
+  const response = await axios.post(
+    `${API_URL}/deleteLmiaSubstageEmployee`,
+    {
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+}
 /*FUnction to add update lmia sub stage  of job*/
 export const AddUpdateJobLmiaSubStage = async (props) => {
   const response = await axios.put(
     `${API_URL}addUpdateLmiaSubstagesJob`,
     props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*FUction to delete lmiasub stage */
+export const deleteLmiaSubstageJob = async (id) => {
+  const response = await axios.post(
+    `${API_URL}/deleteLmiaSubstageJob`,
+    {
+      id: id,
+    },
     {
       headers: {
         "Content-Type": "application/json",

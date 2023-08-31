@@ -21,6 +21,7 @@ import AddCompanyfollowup from "../common/companyFollowUp";
 import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
+import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
@@ -31,6 +32,7 @@ function CompanyProfileDetail(props) {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   let [showDoc, setShowDoc] = useState(false);
+  const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
@@ -78,6 +80,7 @@ function CompanyProfileDetail(props) {
 
   return (
     <div>
+
       {user_type === "admin" && (
         <>
           <AdminHeader
@@ -109,7 +112,7 @@ function CompanyProfileDetail(props) {
       >
         <div className="container-fluid">
           <div className="row text-left mt-5 pt-0">
-            <div className="col-12 mb-1">
+            <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
                 <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
@@ -193,110 +196,7 @@ function CompanyProfileDetail(props) {
             </div>
             {/* LMIA */}
             <div className="col-12">
-              <div className="bg-white w-100 d-flex flex-wrap mb-1">
-                <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
-                  {(lima || []).map((status, i) => {
-                    return status.lmia_status === "" ||
-                      status.lmia_status === null ||
-                      status.lmia_status === undefined ||
-                      status.lmia_status === "undefined" ? null : (
-                      <div
-                        className={
-                          lima.length === 0
-                            ? "arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between"
-                            : lima.length === 1
-                            ? "arrow-steps p-1 px-7 col-md-6 d-flex border-right border-bottom justify-content-between"
-                            : "arrow-steps p-1 px-7 col-md-4 d-flex border-right border-bottom justify-content-between"
-                        }
-                        key={i}
-                      >
-                        <div className="job_name text-dark">
-                          <span className="m-0 font-size-2 d-block mb-1">
-                            {status.job_title}
-                          </span>
-                        </div>
-                        <div>
-                          <div
-                            key={i + 1}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "onboarding" ||
-                              status.lmia_status === "advertisements" ||
-                              status.lmia_status === "documentation" ||
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>onboarding</span>
-                          </div>
-                          <div
-                            key={i + 2}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "documentation" ||
-                              status.lmia_status === "advertisements" ||
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>advertisements</span>
-                          </div>
-                          <div
-                            key={i + 3}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "documentation" ||
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>documentation</span>
-                          </div>
-                          <div
-                            key={i + 4}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "candidate placement" ||
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>candidate placement</span>
-                          </div>
-                          <div
-                            key={i + 5}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "submission" ||
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>submission</span>
-                          </div>
-                          <div
-                            key={i + 6}
-                            className={`step text-capitalize ${
-                              status.lmia_status === "decision"
-                                ? "current"
-                                : null
-                            }`}
-                          >
-                            <span>decision</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <LimaArrowProfile lmia={lima} lmiaStatusRejectComment={lmiaStatusRejectComment}/>
             </div>
             <div className="col-12 order-2 order-xl-1">
               <div className="bg-white">
@@ -320,7 +220,7 @@ function CompanyProfileDetail(props) {
                       aria-selected="true"
                       onClick={() => setTabActive("profile")}
                     >
-                      Overview
+                      Profile
                     </Link>
                   </li>
                   <li className="tab-menu-items nav-item">
@@ -455,9 +355,94 @@ function CompanyProfileDetail(props) {
                         {/* <!-- Company Profile --> */}
 
                         <div className="text-capitalize company_detail_box w-100 row m-0">
+                          <div className="col-12 bg-white  d-flex">
+                            <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
+                              <div className="text_box text-left">
+                                <img
+                                  className="company_logo"
+                                  src={
+                                    employerData.logo === null
+                                      ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                                      : employerData.logo
+                                  }
+                                  alt=""
+                                />
+                              </div>
+                              <div className="text_box text-left w-100 text-capitalize">
+                                <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
+                                  {employerData.company_name}{" "}
+                                  <CustomButton
+                                    className={
+                                      user_type === "user"
+                                        ? "d-none"
+                                        : "font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    }
+                                    onClick={() =>
+                                      setShowCompanyInfoModal(true)
+                                    }
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                </h3>
+                                <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
+                                  {employerData.industry}
+                                </p>
+                              </div>
+                            </div>
+                            {employerData.email ? (
+                              <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <Link
+                                    className="text-dark font-size-5 w-100 text-break"
+                                    to={`mailto:${employerData.email}`}
+                                  >
+                                    <BsEnvelope className="text-primary font-size-5 " />{" "}
+                                    {employerData.email}
+                                  </Link>
+                                  {user_type === "admin" ||
+                                  props.self === "no" ? (
+                                    <CustomButton
+                                      title={"Send Custom Email"}
+                                      className="font-size-4 rounded-3 btn-primary py-0 d-none"
+                                      /*Functionalities have to be done. */
+                                    >
+                                      {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                                      <RiMailSendLine />
+                                    </CustomButton>
+                                  ) : null}
+                                </div>
+                                <Link
+                                  className="text-dark font-size-5 w-100 text-break"
+                                  to={`tel:${employerData.contact_no}`}
+                                >
+                                  <BiPhoneCall className="text-primary font-size-5" />{" "}
+                                  {employerData.contact_no}
+                                </Link>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            <div className="col px-5 pt-5 pb-5  border-right position-relative">
+                              <CompanyDetailPage
+                                employerId={
+                                  user_type === "company" ? company_id : cid
+                                }
+                                page={"company_profile"}
+                              />
+                            </div>
+                            {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">
+           
+            <CustomButton
+              className=" font-size-4 rounded-3 btn-primary border-0"
+              onClick={() => setShowDoc(true)}
+            >
+              Add Document
+            </CustomButton>
+          </div> */}
+                          </div>
                           <div className="col-md-6 col-lg-6 p-10 border-right">
                             <div>
-                              <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between">
+                              <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between text-break">
                                 <span>About {employerData.company_name}</span>
                                 {/* <CustomButton
                                   className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0  absolute_top_right"}
@@ -635,6 +620,7 @@ function CompanyProfileDetail(props) {
                       detail={"company_detail"}
                       setLmia={setLmia}
                       setApiCall={setApiCall}
+                      setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}

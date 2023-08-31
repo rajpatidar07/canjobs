@@ -146,15 +146,24 @@ export default function JobTable(props) {
               );
               if (
                 subStageRes.data.data.filter(
-                  (item) => item.lmia_substage === "reject"
+                  (item) => item.lmia_substage === "rejected"
                 ).length > 0
               ) {
-                console.log(
-                  LmiaData.filter((item) => item.job_id !== data.job_id)
-                );
                 LmiaData = LmiaData.filter(
                   (item) => item.job_id !== data.job_id
                 );
+              }
+              let x =[];
+              props.setLmiaStatusRejectComment(subStageRes.data.data);
+              for (let j = 0; j < subStageRes.data.data.length; j++) {
+                if (
+                  props.detail === "company_detail" ||
+                  props.detail === "job_detail"
+                ) {
+x[subStageRes.data.data[j].job_id] = subStageRes.data.data[j];
+                  //props.setLmiaStatusRejectComment(subStageRes.data.data);
+                  // console.log(subStageRes.data.data[j])
+                }
               }
             }
           }
@@ -162,6 +171,7 @@ export default function JobTable(props) {
             props.detail === "company_detail" ||
             props.detail === "job_detail"
           ) {
+            // props.setLmiaStatusRejectComment(lmiaStatusComment);
             props.setLmia(LmiaData);
           }
           setLmiaStatus(LmiaData);
@@ -585,7 +595,9 @@ export default function JobTable(props) {
                     );
                     return (
                       <React.Fragment key={job.job_id}>
-                        {props.heading === "Dashboard" ? null : (
+                        {props.heading === "Dashboard" ||
+                        props.detail === "company_detail" ||
+                        props.detail === "job_detail" ? null : (
                           <tr
                             className={
                               props.heading === "Dashboard" ||

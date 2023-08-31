@@ -96,10 +96,7 @@ export default function CompanyLogin(props) {
           // handle form submission
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false)
       }
     }
@@ -125,10 +122,7 @@ export default function CompanyLogin(props) {
           //   handle form submission
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false)
       }
     }
@@ -162,10 +156,7 @@ export default function CompanyLogin(props) {
         }
       } catch (err) {
         console.log(err);
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       }
     }
   });
@@ -217,10 +208,7 @@ export default function CompanyLogin(props) {
         }
       }).catch((err) => {
         console.log(err.data);
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       })
     }
   }, [])

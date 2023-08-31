@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1692955359603,
@@ -24,6 +24,14 @@
                 {
                     "date": 1693201111887,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,14 @@\n         props.employee_id\n         // props.job_id\n       );\n       if (\n-        // userData.data.length === 0 ||\n+        userData.data === null ||\n+        userData.data === undefined||\n+        userData.data === \"undefined\"||\n+        userData.data === \"\"||\n+        userData.data === \"null\"||\n+        userData.data.length === 0 ||\n         props.employee_id === \"\" ||\n         props.employee_id === undefined\n       ) {\n         setResponseData([]);\n"
+                },
+                {
+                    "date": 1693486845813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           props.setApiCall(true);\n           return close();\n         }\n       } catch (err) {\n-        toast.error(\"Something went wrong\", {\n+       console.log(err) {\n           position: toast.POSITION.TOP_RIGHT,\n           autoClose: 1000,\n         });\n         setLoading(false);\n"
+                },
+                {
+                    "date": 1693486958622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,12 +90,9 @@\n           props.setApiCall(true);\n           return close();\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false);\n       }\n     } else {\n       setLoading(false);\n"
                 }
             ],
             "date": 1692955359603,

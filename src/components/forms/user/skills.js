@@ -64,10 +64,7 @@ function Skills(props) {
         setSkillList(SkillList.data.data.Skill);
       }
       catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       }
       if (SkillDetails.data.skill.length === 0) {
         SetSkillData([]);
@@ -137,10 +134,7 @@ function Skills(props) {
           setApiCall(true)
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
         setLoading(false)
       }
     }

@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   //   } else {
   //     setCountData(Data);
   //   }}catch(err){
-  //     toast.error("Something went wrong", {
+  //    console.log(err) {
   //       position: toast.POSITION.TOP_RIGHT,
   //       autoClose: 1000,
   //     });

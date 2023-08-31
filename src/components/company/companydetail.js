@@ -3,7 +3,6 @@ import CustomButton from "../common/button";
 import ContactInfo from "../forms/employer/contactInfo";
 import { EmployerDetails } from "../../api/api";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { PiPencilDuotone } from "react-icons/pi";
 function CompanyDetailPage(props) {
   /*Show modal and data state */
@@ -25,10 +24,7 @@ function CompanyDetailPage(props) {
           setEmployerData(userData.data.company_detail[0]);
         }
       } catch (err) {
-        toast.error("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+       console.log(err) 
       }
     };
     if (props.employerId !== "0" || props.employerId !== undefined) {
