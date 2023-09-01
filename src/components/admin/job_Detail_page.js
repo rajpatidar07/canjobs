@@ -231,7 +231,7 @@ function JobDetailpageAdmim(props) {
             </div>
             {/* LMIA */}
             <div className="col-12">
-            <LimaArrowProfile lmia={lima} lmiaStatusRejectComment={lmiaStatusRejectComment}/>
+            {lima && user_type !=="user"?<LimaArrowProfile lmia={lima} lmiaStatusRejectComment={lmiaStatusRejectComment}/>:null}
             </div>
             <div className="col-12 order-2 order-xl-1">
               <div className="bg-white">

@@ -414,7 +414,7 @@ export const GetJob = async (props) => {
 
 /*single job Detail api */
 export const GetJobDetail = async (props) => {
-  // console.log(props);
+  // // console.log(props);
   const response = await axios.post(
     `${API_URL}admin/jobDetail`,
     { job_id: props },
@@ -486,7 +486,7 @@ export const VarifyDocument = async (id, verify) => {
 
 /*Api to Add update visa */
 export const AddUpdateVisa = async (employee_id, state, id) => {
-  console.log(employee_id, state, id)
+  // console.log(employee_id, state, id)
   const response = await axios.put(
     `${API_URL}addUpdateVisa `,
     {
@@ -919,7 +919,7 @@ export const getInterview = async (
 
 /*Add interview Shedual Api */
 export const AddInterviewSchedule = async (props, employee_id, job_id) => {
-  console.log(props.state, employee_id, job_id);
+  // console.log(props.state, employee_id, job_id);
   const response = await axios.post(
     `${API_URL}admin/addUpdateInterview`,
     {
@@ -1576,7 +1576,7 @@ export const AddUpdateEmailTemplate = async (props) => {
 };
 /*Api to Test email template */
 export const TestEmail = async (props) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.post(
     `${API_URL}/common/testEmail`,
     {
@@ -1605,16 +1605,16 @@ export const GetEmployeeFilterJob = async (id,/* skill*/
   column_name,
   sort_order,
   company) => {
-  console.log(search,
-    location,
-    category,
-    skill,
-    job,
-    page,
-    limit,
-    column_name,
-    sort_order,
-    company)
+  // console.log(search,
+    // location,
+    // category,
+    // skill,
+    // job,
+    // page,
+    // limit,
+    // column_name,
+    // sort_order,
+    // company)
   const response = await axios.post(
     `${API_URL}admin/getAllJobsViewAdmin`,
     {

@@ -1,8 +1,12 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddUpdateVisa ,GetVisaSubStages ,AddUpdateEmployeeVisaSubStage} from "../../../api/api";
+import {
+  AddUpdateVisa,
+  GetVisaSubStages,
+  AddUpdateEmployeeVisaSubStage,
+} from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
@@ -12,7 +16,9 @@ export default function VisaStatus(props) {
   const [loading, setLoading] = useState(false);
   const [apiCall, setApiCall] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState([]);
-  const [expandedStatus, setExpandedStatus] = useState(props.employeeData.visa_status);
+  const [expandedStatus, setExpandedStatus] = useState(
+    props.employeeData.visa_status
+  );
   // eslint-disable-next-line
   let isExpanded = false;
   // USER PERSONAL DETAIL VALIDATION
@@ -21,25 +27,24 @@ export default function VisaStatus(props) {
     status: props.employeeData.visa_status,
     country: props.employeeData.visa_country,
   };
-   /*Function to get Visa sub stage */
-   const GetVIsaSubSTage = async () => {
+  /*Function to get Visa sub stage */
+  const GetVIsaSubSTage = async () => {
     try {
-      let 
-        Response = await GetVisaSubStages(props.employeeData.visa_id,"visa")
-      setSelectedStatus(Response.data.data.data)
+      let Response = await GetVisaSubStages(props.employeeData.visa_id, "visa");
+      setSelectedStatus(Response.data.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
   useEffect(() => {
-    GetVIsaSubSTage()
-    if(apiCall === true){
-      setApiCall(false)
+    GetVIsaSubSTage();
+    if (apiCall === true) {
+      setApiCall(false);
     }
-  }, [apiCall])
-  
+  }, [apiCall]);
+
   /* Functionality to close the modal */
-    const close = () => {
+  const close = () => {
     setState(initialFormStateuser);
     setErrors("");
     setLoading(false);
@@ -50,8 +55,7 @@ export default function VisaStatus(props) {
 
   const validators = {
     status: [
-      (value) =>
-        value === "" || value === null ? "Visa is required" : null,
+      (value) => (value === "" || value === null ? "Visa is required" : null),
     ],
   };
 
@@ -81,16 +85,20 @@ export default function VisaStatus(props) {
     if (validate()) {
       setLoading(true);
       try {
-        const responseData = await AddUpdateVisa(props.employeeData.employee_id, state, props.employeeData.visa_id);
+        const responseData = await AddUpdateVisa(
+          props.employeeData.employee_id,
+          state,
+          props.employeeData.visa_id
+        );
         if (responseData.data.message === "visa inserted successfully") {
           toast.success("Visa created successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           props.setApiCall(true);
-          setApiCall(true)
-          setLoading(false)
-            close()
+          setApiCall(true);
+          setLoading(false);
+          close();
         }
         if (responseData.data.message === "visa updated successfully") {
           toast.success("Visa status Updated successfully", {
@@ -98,13 +106,13 @@ export default function VisaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          setApiCall(true)
-          setLoading(false)
-            close()
+          setApiCall(true);
+          setLoading(false);
+          close();
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     } else {
       //   setLoading(false);
@@ -124,44 +132,44 @@ export default function VisaStatus(props) {
         )
       );
       let RemoveSubStage = selectedStatus.filter(
-        (item) => (item.status === status && item.substage === subStage)
-      )[0]
+        (item) => item.status === status && item.substage === subStage
+      )[0];
       data = {
-        id:RemoveSubStage.id,
-        misc_id:RemoveSubStage.misc_id,
-        type:"visa",
-        status:RemoveSubStage.status,
-        substage:"false"
-      }
-      console.log("id =>",data)
+        id: RemoveSubStage.id,
+        misc_id: RemoveSubStage.misc_id,
+        type: "visa",
+        status: RemoveSubStage.status,
+        substage: "false",
+      };
+      console.log("id =>", data);
     } else {
       setSelectedStatus([
         ...selectedStatus,
         { status: status, substage: subStage },
       ]);
-        /*Employee Visa sub stages */
-        data = {
-          misc_id:props.employeeData.visa_id,
-          type:"visa",
-          status:status,
-          substage:subStage
-        }
+      /*Employee Visa sub stages */
+      data = {
+        misc_id: props.employeeData.visa_id,
+        type: "visa",
+        status: status,
+        substage: subStage,
+      };
     }
     try {
-      let Response = await AddUpdateEmployeeVisaSubStage(data)
+      let Response = await AddUpdateEmployeeVisaSubStage(data);
       /*Removed sub stage response */
       if (Response.message === "updated successfully") {
-        toast.success("visa Sub Stage Removed successfully",{
+        toast.success("visa Sub Stage Removed successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        }); 
+        });
         // if (state.status !== props.employeeData.status && status !== state.status) {
         //   setState({ ...state, status: status })
         //   if (typeof onVisaUpdateClick === 'function') {
         //     onVisaUpdateClick("sub");
         //   }
         // }
-        setApiCall(true)
+        setApiCall(true);
       }
       /*Added sub stage response */
       if (Response.message === "created successfully") {
@@ -175,11 +183,11 @@ export default function VisaStatus(props) {
         //     onVisaUpdateClick("sub");
         //   }
         // }
-        setApiCall(true)
+        setApiCall(true);
       }
     } catch (err) {
-      console.log(err)
-      console.log(err)
+      console.log(err);
+      console.log(err);
     }
   };
   return (
@@ -200,16 +208,18 @@ export default function VisaStatus(props) {
         </button>
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form >
+          <form>
             <h5 className="text-center pt-2 mb-7">Update Visa status</h5>
-            <VisaTimeLine
-              visa={state.status} />
-              {expandedStatus &&
+            <VisaTimeLine visa={state.status} />
+            {expandedStatus && (
               <VisaSubStageSelector
-              expandedStatus={expandedStatus}
-              selectedStatus={selectedStatus}
-              FilterJson={FilterJson}
-              handleSubStageSelection={handleSubStageSelection}/>}
+                expandedStatus={expandedStatus}
+                selectedStatus={selectedStatus}
+                FilterJson={FilterJson}
+                handleSubStageSelection={handleSubStageSelection}
+                mainstage={state.status}
+              />
+            )}
             <div className="form-group col">
               <label
                 htmlFor="status"
@@ -220,8 +230,8 @@ export default function VisaStatus(props) {
               <select
                 name="status"
                 value={state.status || ""}
-                onChange={(e)=>{
-                  setState({...state , status :e.target.value})
+                onChange={(e) => {
+                  setState({ ...state, status: e.target.value });
                   setExpandedStatus(e.target.value);
                 }}
                 multiple={false}
@@ -234,19 +244,17 @@ export default function VisaStatus(props) {
               >
                 <option value={""}>Select visa status </option>
                 {(FilterJson.visa_status || []).map((item, index) => {
-                  isExpanded = expandedStatus === item
+                  isExpanded = expandedStatus === item;
                   return (
-                    <option value={item} key={index}>{item}</option>
-                  )
+                    <option value={item} key={index}>
+                      {item}
+                    </option>
+                  );
                 })}
-
               </select>
               {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
               {errors.status && (
-                <span
-                  key={errors.status}
-                  className="text-danger font-size-3"
-                >
+                <span key={errors.status} className="text-danger font-size-3">
                   {errors.status}
                 </span>
               )}
@@ -268,7 +276,9 @@ export default function VisaStatus(props) {
               >
                 <option value={""}>Select visa Country </option>
                 {(FilterJson.location || []).map((item, index) => (
-                  <option value={item} key={index}>{item}</option>
+                  <option value={item} key={index}>
+                    {item}
+                  </option>
                 ))}
               </select>
             </div>
@@ -300,5 +310,6 @@ export default function VisaStatus(props) {
           {/* </div> */}
         </div>
       </Modal>
-    </>)
+    </>
+  );
 }

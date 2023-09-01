@@ -131,6 +131,7 @@ function JobProfileResponse(props) {
     sortOrder,
     props.filter_by_time,
     apiCall,
+    props.apiCall,
   ]);
 
   /*Search Onchange function to Search REsponse data */
@@ -158,10 +159,13 @@ function JobProfileResponse(props) {
       // console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
-        let status = "onboard";
+        let state = { status: "onboard" };
         try {
-          let VisaResponse = await AddUpdateVisa(e.employee_id, status);
-          if (VisaResponse.data.message === "created successfully") {
+          let VisaResponse = await AddUpdateVisa(e.employee_id, state);
+          if (
+            VisaResponse.data.message === "visa inserted successfully" ||
+            VisaResponse.data.message === "visa updated successfully"
+          ) {
             // Api call to set employee Limia
             const lmia = { lmia_status: "candidate placement" };
             try {
@@ -171,14 +175,15 @@ function JobProfileResponse(props) {
                   position: toast.POSITION.TOP_RIGHT,
                   autoClose: 1000,
                 });
+                props.setApiCall(true);
                 setApiCall(true);
               }
             } catch (err) {
-             console.log(err) 
+              console.log(err);
             }
           }
         } catch (err) {
-         console.log(err) 
+          console.log(err);
         }
       }
     } catch (err) {
@@ -252,7 +257,7 @@ function JobProfileResponse(props) {
           <div
             className={
               props.heading === "Response" ||
-                (props.heading === undefined && user_type === "admin")
+              (props.heading === undefined && user_type === "admin")
                 ? "row m-0 align-items-center"
                 : "d-none"
             }
@@ -350,11 +355,11 @@ function JobProfileResponse(props) {
         <div
           className={
             props.heading === "Response" ||
-              (props.heading === undefined && user_type === "admin")
+            (props.heading === undefined && user_type === "admin")
               ? ""
               : props.heading === "Dashboard"
-                ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                : ""
+              ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+              : ""
           }
         >
           <div className="table-responsive main_table_div">
@@ -414,7 +419,8 @@ function JobProfileResponse(props) {
                           setCurrentPage(1);
                         }}
                         className="text-gray"
-                        title="Sort by Job's Company">
+                        title="Sort by Job's Company"
+                      >
                         Company
                       </Link>
                     </th>
@@ -508,9 +514,9 @@ function JobProfileResponse(props) {
                       Interview
                     </th>
                     {props.heading === "Dashboard" ||
-                      user_type === "company" ||
-                      user_type === "user" ||
-                      props.self === "yes" ? (
+                    user_type === "company" ||
+                    user_type === "user" ||
+                    props.self === "yes" ? (
                       ""
                     ) : (
                       <th
@@ -530,7 +536,6 @@ function JobProfileResponse(props) {
                       <th className="bg-white text-center">No Data Found</th>
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
-
                     </tr>
                   ) : (
                     (response || []).map((res, i) => (
@@ -560,9 +565,16 @@ function JobProfileResponse(props) {
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <div className="d-flex profile_box gx-2">
                               <div className=" mb-0">
-                                <Link to={`/company_detail`}
+                                <Link
+                                  to={`/company_detail`}
                                   title="Company Details"
-                                  onClick={() => localStorage.setItem("company_id", res.company_id)}>
+                                  onClick={() =>
+                                    localStorage.setItem(
+                                      "company_id",
+                                      res.company_id
+                                    )
+                                  }
+                                >
                                   <p className="text-gray text-black-2 m-0 text-capitalize">
                                     {res.company_name}
                                   </p>
@@ -650,7 +662,14 @@ function JobProfileResponse(props) {
                         )} */}
                         <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            <Link to={user_type === "user" || user_type === "company" ? "" : "/lmia"} state={{ id: res.job_id }}>
+                            <Link
+                              to={
+                                user_type === "user" || user_type === "company"
+                                  ? ""
+                                  : "/lmia"
+                              }
+                              state={{ id: res.job_id }}
+                            >
                               {res.lmia_status === "candidate placement" ? (
                                 <span className="px-3 py-2 badge badge-pill badge-warning">
                                   Candidate Placement
@@ -718,9 +737,9 @@ function JobProfileResponse(props) {
                           </p>
                         </th>
                         {props.heading === "Dashboard" ||
-                          user_type === "company" ||
-                          user_type === "user" ||
-                          props.self === "yes" ? (
+                        user_type === "company" ||
+                        user_type === "user" ||
+                        props.self === "yes" ? (
                           ""
                         ) : (
                           <th className="py-5  min-width-px-100">
@@ -834,7 +853,7 @@ function JobProfileResponse(props) {
                               <button
                                 className={
                                   props.response === "visa" ||
-                                    props.response === "lmia"
+                                  props.response === "lmia"
                                     ? "d-none"
                                     : "btn btn-outline-info action_btn"
                                 }
@@ -853,7 +872,7 @@ function JobProfileResponse(props) {
                               <button
                                 className={
                                   props.response === "visa" ||
-                                    props.response === "lmia"
+                                  props.response === "lmia"
                                     ? "d-none"
                                     : "btn btn-outline-info action_btn text-gray"
                                 }

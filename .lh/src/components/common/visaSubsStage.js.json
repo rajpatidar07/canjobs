@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/common/visaSubsStage.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1693546321610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1693546321610,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\r\n\r\nconst VisaSubStageSelector = ({\r\n  expandedStatus,\r\n  selectedStatus,\r\n  FilterJson,\r\n  handleSubStageSelection,\r\n  mainstage,\r\n}) => {\r\n  return (\r\n    <div className=\"bg-white text-dark p-2 sub-stages-container row\">\r\n      {(FilterJson.visa_sub_stages[expandedStatus] || []).map((subStage, j) => (\r\n        <div\r\n          key={j}\r\n          className={`sub-stage col-6 text-capitalize ${\r\n            (selectedStatus || []).some((item) => item.substage === subStage)\r\n              ? \"selected\"\r\n              : \"\"\r\n          }`}\r\n          onClick={() => handleSubStageSelection(expandedStatus, subStage)}\r\n        >\r\n          <input\r\n            type={mainstage === \"file decision\" ? \"radio\" : \"checkbox\"}\r\n            className=\"mx-2\"\r\n            checked={(selectedStatus || []).some(\r\n              (item) => item.substage === subStage\r\n            )}\r\n            readOnly\r\n          />\r\n          {subStage}\r\n        </div>\r\n      ))}\r\n    </div>\r\n  );\r\n};\r\n\r\nexport default VisaSubStageSelector;\r\n"
+        }
+    ]
+}

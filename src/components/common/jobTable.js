@@ -137,13 +137,15 @@ export default function JobTable(props) {
         /*Logic for finding reject substage of decision lima status */
         if (userData.data.data.length >= 0) {
           let LmiaData = userData.data.data;
+          let LmiaCommentArray= []
           for (let i = 0; i < userData.data.data.length; i++) {
             if (userData.data.data[i].lmia_status === "decision") {
               const data = userData.data.data[i];
               const subStageRes = await GetJobLimaSubStages(
                 data.job_id,
                 data.lmia_status
-              );
+                );
+                LmiaCommentArray.push(subStageRes.data.data[0])
               if (
                 subStageRes.data.data.filter(
                   (item) => item.lmia_substage === "rejected"
@@ -153,25 +155,13 @@ export default function JobTable(props) {
                   (item) => item.job_id !== data.job_id
                 );
               }
-              let x =[];
-              props.setLmiaStatusRejectComment(subStageRes.data.data);
-              for (let j = 0; j < subStageRes.data.data.length; j++) {
-                if (
-                  props.detail === "company_detail" ||
-                  props.detail === "job_detail"
-                ) {
-x[subStageRes.data.data[j].job_id] = subStageRes.data.data[j];
-                  //props.setLmiaStatusRejectComment(subStageRes.data.data);
-                  // console.log(subStageRes.data.data[j])
-                }
-              }
             }
           }
           if (
             props.detail === "company_detail" ||
             props.detail === "job_detail"
           ) {
-            // props.setLmiaStatusRejectComment(lmiaStatusComment);
+            props.setLmiaStatusRejectComment(LmiaCommentArray)
             props.setLmia(LmiaData);
           }
           setLmiaStatus(LmiaData);

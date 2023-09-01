@@ -14,8 +14,7 @@ export default function LmiaTime({ lmia, location, job, doc }) {
           {(FilterJson.lmia_status || []).map((status, i) => {
             const isDone = currentIndex > -1 && i <= currentIndex;
             return (
-               job === 'yes' ? (
-                i <= 2 && (
+               job === 'yes' ? (  
                   <div
                     key={i}
                     className={`step m-2 ${isDone ?
@@ -24,7 +23,6 @@ export default function LmiaTime({ lmia, location, job, doc }) {
                   >
                     <span>{status}</span>
                   </div>
-                )
               ) : (
                 i > 2 && (
                   <div key={i}

@@ -75,6 +75,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           setApiCall(true);
+          props.setApiCall(true);
         }
       } else {
         /*employee lima sub stages */
@@ -85,6 +86,7 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           setApiCall(true);
+          props.setApiCall(true);
         }
       }
     } else {
@@ -117,12 +119,16 @@ function LmiaStatus(props) {
         Response = await AddUpdateEmployeeLmiaSubStage(data);
       }
       /*Added sub stage response */
-      if (Response.message === "insert successfully" ||Response.message === "updated successfully") {
+      if (
+        Response.message === "insert successfully" ||
+        Response.message === "updated successfully"
+      ) {
         toast.success("Lmia Sub Stage Added successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         setApiCall(true);
+        props.setApiCall(true);
       }
     } catch (err) {
       console.log(err);
@@ -191,7 +197,7 @@ function LmiaStatus(props) {
           close();
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
       }
     }
     if (validate()) {
@@ -208,6 +214,17 @@ function LmiaStatus(props) {
         }
         if (responseData.message === "Data updated successfully") {
           toast.success("Lmia Status Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          close();
+        }
+        if (
+          responseData.message ===
+          "Please provide different status, already exist"
+        ) {
+          toast.error("Lmia already exist", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });

@@ -110,28 +110,27 @@ const NewUserProfile = (props) => {
         /*Logic for finding reject substage of decision lima status */
         if (response.data.length >= 0) {
           let LmiaData = response.data;
+          let LmiaCommentArray = [];
           for (let i = 0; i < response.data.length; i++) {
             if (response.data[i].lmia_status === "decision") {
               const data = response.data[i];
               const subStageRes = await GetLimaSubStages(
-                data.job_id,
+                data.id,
                 data.lmia_status
               );
-              setLmiaStatusRejectComment(subStageRes.data.data)
+              LmiaCommentArray.push(subStageRes.data.data[0]);
               if (
                 subStageRes.data.data.filter(
                   (item) => item.lmia_substage === "reject"
                 ).length > 0
               ) {
-                console.log(
-                  LmiaData.filter((item) => item.job_id !== data.job_id)
-                );
                 LmiaData = LmiaData.filter(
                   (item) => item.job_id !== data.job_id
                 );
               }
             }
           }
+          setLmiaStatusRejectComment(LmiaCommentArray);
           setLmia(LmiaData);
         }
       }
@@ -605,8 +604,12 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                     <LimaArrowProfile lmia={lima} lmiaStatusRejectComment={lmiaStatusRejectComment}/>
-
+                {lima && user_type === "admin" ? (
+                  <LimaArrowProfile
+                    lmia={lima}
+                    lmiaStatusRejectComment={lmiaStatusRejectComment}
+                  />
+                ) : null}
               </div>
               <div
                 className={
@@ -614,8 +617,10 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                     <VisaArrowProfile visaStatus={visaStatus} visaStatusRejectComment={visaStatusRejectComment}/>
-
+                {visaStatus&&user_type==="admin"?<VisaArrowProfile
+                  visaStatus={visaStatus}
+                  visaStatusRejectComment={visaStatusRejectComment}
+                />:null}
               </div>
 
               <div className="col-12 order-2 order-xl-1">
@@ -1484,6 +1489,8 @@ const NewUserProfile = (props) => {
                       <JobProfileResponse
                         employee_id={eid}
                         heading={"userprofile"}
+                        setApiCall={setApiCall}
+                        apiCall={apiCall}
                       />
                     ) : null}
                     {/* <!-- Top Start --> */}

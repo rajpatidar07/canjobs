@@ -1,7 +1,8 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
-//   console.log(JSON.stringify(lmiaStatusRejectComment));
+  let location = useLocation();
   return (
     <div>
       <div className="bg-white w-100 d-flex flex-wrap mb-1">
@@ -25,42 +26,57 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                 <div>
                   <div
                     key={i + 1}
-                    className={`mt-2 step text-capitalize ${
-                      status.lmia_status === "onboarding" ||
-                      status.lmia_status === "advertisements" ||
-                      status.lmia_status === "documentation" ||
-                      status.lmia_status === "candidate placement" ||
-                      status.lmia_status === "submission" ||
-                      status.lmia_status === "decision"
-                        ? "current"
-                        : null
+                    className={`${
+                      location.pathname === `/company_detail` ||
+                      location.pathname === "/jobdetailpage"
+                        ? `mt-2 step text-capitalize ${
+                            status.lmia_status === "onboarding" ||
+                            status.lmia_status === "advertisements" ||
+                            status.lmia_status === "documentation" ||
+                            status.lmia_status === "candidate placement" ||
+                            status.lmia_status === "submission" ||
+                            status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                          }`
+                        : `d-none`
                     }`}
                   >
                     <span>onboarding</span>
                   </div>
                   <div
                     key={i + 2}
-                    className={`mt-2 step text-capitalize ${
-                      status.lmia_status === "documentation" ||
-                      status.lmia_status === "advertisements" ||
-                      status.lmia_status === "candidate placement" ||
-                      status.lmia_status === "submission" ||
-                      status.lmia_status === "decision"
-                        ? "current"
-                        : null
+                    className={`${
+                      location.pathname === `/company_detail` ||
+                      location.pathname === "/jobdetailpage"
+                        ? `mt-2 step text-capitalize ${
+                            status.lmia_status === "documentation" ||
+                            status.lmia_status === "advertisements" ||
+                            status.lmia_status === "candidate placement" ||
+                            status.lmia_status === "submission" ||
+                            status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                          }`
+                        : `d-none`
                     }`}
                   >
                     <span>advertisements</span>
                   </div>
                   <div
                     key={i + 3}
-                    className={`mt-2 step text-capitalize ${
-                      status.lmia_status === "documentation" ||
-                      status.lmia_status === "candidate placement" ||
-                      status.lmia_status === "submission" ||
-                      status.lmia_status === "decision"
-                        ? "current"
-                        : null
+                    className={`${
+                      location.pathname === `/company_detail` ||
+                      location.pathname === "/jobdetailpage"
+                        ? `mt-2 step text-capitalize ${
+                            status.lmia_status === "documentation" ||
+                            status.lmia_status === "candidate placement" ||
+                            status.lmia_status === "submission" ||
+                            status.lmia_status === "decision"
+                              ? "current"
+                              : null
+                          }`
+                        : `d-none`
                     }`}
                   >
                     <span>documentation</span>
@@ -97,35 +113,27 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                     <span>decision</span>
                   </div>
                 </div>
-                {/* {JSON.stringify(lmiaStatusRejectComment)} */}
-                {/* {lmiaStatusRejectComment[0] != undefined &&
-                lmiaStatusRejectComment[0] != "undefined" ? (
-                  <div>
-                    {(lmiaStatusRejectComment || []).map((item, index) => {
-                      return item.job_id;
-                    })}
-                    {JSON.stringify(lmiaStatusRejectComment)}  ==== {status.job_id}
-                  </div>
-                ) : (
-                  "________"
-                )} */}
-
+                {/*Comment for the decision status of the lima*/}
                 {status.lmia_status === "decision" &&
-                // lmiaStatusRejectComment[0].job_id === status.job_id &&
-                (lmiaStatusRejectComment[0] !== undefined) &&
-                (lmiaStatusRejectComment[0] !=="undefined") ? (
-                  <small className="mx-10">
-                    {lmiaStatusRejectComment[0].lmia_substage}
-                    {lmiaStatusRejectComment[0].lmia_substage === "approved"
-                      ? "Congratulation your Limia is Approved"
-                      : lmiaStatusRejectComment[0].lmia_substage ===
-                        "awaiting decision"
-                      ? "Your Limia status is in progress"
-                      : lmiaStatusRejectComment[0].lmia_substage === "reject"
-                      ? "Sorry to inform you your Limia got rejected."
-                      : ""}
-                  </small>
-                ) : null}
+                  lmiaStatusRejectComment[0] !== undefined &&
+                  (lmiaStatusRejectComment || []).map((item, i) => {
+                    return (
+                      location.pathname === "/company_detail" ||
+                      location.pathname === "/jobdetailpage"
+                        ? item.job_id === status.job_id
+                        : item.lmia_id === status.id
+                    ) ? (
+                      <small className="mx-10" key={i}>
+                        {item.lmia_substage === "approved"
+                          ? "Congratulation your Limia is Approved"
+                          : item.lmia_substage === "awaiting decision"
+                          ? "Your Limia status is in progress"
+                          : item.lmia_substage === "reject"
+                          ? "Sorry to inform you your Limia got rejected."
+                          : ""}
+                      </small>
+                    ) : null;
+                  })}
               </div>
             );
           })}
