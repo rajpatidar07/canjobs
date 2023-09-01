@@ -581,7 +581,7 @@ export default function JobTable(props) {
                 ) : (
                   (jobData || []).map((job, i) => {
                     let LmiaStatusData = lmiaStatus.filter(
-                      (item) => item.job_id === job.job_id
+                      (item) => item.job_id === job.job_id 
                     );
                     return (
                       <React.Fragment key={job.job_id}>
@@ -593,12 +593,12 @@ export default function JobTable(props) {
                               props.heading === "Dashboard" ||
                               props.skill === null ||
                               props.skill === undefined ||
-                              Object.keys(props.skill).length === 0
-                                ? "col-12"
+                              Object.keys(props.skill).length === 0 
+                                ? "col-12 "
                                 : "d-none"
                             }
                           >
-                            <td colSpan="11" className="bg-white">
+                            <td colSpan="11" className={job.lmia_status?"bg-white":"d-none"}>
                               <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
                                 <div className="arrow-steps" key={i}>
                                   <div className="job_name text-dark">
@@ -972,21 +972,7 @@ export default function JobTable(props) {
                                             </span>
                                             {/* <span className=" fas fa-edit text-gray"></span> */}
                                           </button>
-                                          <button
-                                            className={
-                                              props.response === "lmia" ||
-                                              props.response === "visa"
-                                                ? "d-none"
-                                                : "btn btn-outline-info action_btn"
-                                            }
-                                            onClick={() => ShowDeleteAlert(job)}
-                                            title="Delete"
-                                          >
-                                            <span className=" text-danger px-1">
-                                              <RiDeleteBin5Line />
-                                              {/* <i className="fa fa-trash"></i> */}
-                                            </span>
-                                          </button>
+                                          
                                           <button
                                             className={
                                               props.response === "response" &&
@@ -1016,6 +1002,21 @@ export default function JobTable(props) {
                                           >
                                             <span className="text-gray px-2">
                                               <GrDocumentUpload />
+                                            </span>
+                                          </button>
+                                          <button
+                                            className={
+                                              props.response === "lmia" ||
+                                              props.response === "visa"
+                                                ? "d-none"
+                                                : "btn btn-outline-info action_btn"
+                                            }
+                                            onClick={() => ShowDeleteAlert(job)}
+                                            title="Delete"
+                                          >
+                                            <span className=" text-danger px-1">
+                                              <RiDeleteBin5Line />
+                                              {/* <i className="fa fa-trash"></i> */}
                                             </span>
                                           </button>
                                         </>

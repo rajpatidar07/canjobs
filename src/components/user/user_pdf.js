@@ -14,6 +14,10 @@ const PDFViewer = () => {
     link.download = "resume.pdf";
     link.click();
   };
+  if (!pdfUrl) {
+    // Handle the case where pdfUrl is null or empty
+    return <div>No PDF URL provided.</div>;
+  }
   return (
     <div>
       <div className="d-flex justify-content-end mt-15 ">
@@ -27,11 +31,11 @@ const PDFViewer = () => {
       </div>
       <div className="d-flex justify-content-around text-center">
         <div className="w-100">
-          <FileViewer
+          {pdfUrl?<FileViewer
             fileType="pdf"
             filePath={decodeURIComponent(pdfUrl)}
             errorComponent={() => <div>Error loading document</div>}
-          />
+          />:<div>No PDF URL provided.</div>}
         </div>
       </div>
     </div>

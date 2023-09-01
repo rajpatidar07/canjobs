@@ -118,8 +118,13 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                   lmiaStatusRejectComment[0] !== undefined &&
                   (lmiaStatusRejectComment || []).map((item, i) => {
                     return (
-                      location.pathname === "/company_detail" ||
-                      location.pathname === "/jobdetailpage"
+                      item === undefined ||
+                      item === "undefined" ||
+                      item === null ||
+                      item === "null"
+                        ? null
+                        : location.pathname === "/company_detail" ||
+                        location.pathname === "/jobdetailpage"
                         ? item.job_id === status.job_id
                         : item.lmia_id === status.id
                     ) ? (

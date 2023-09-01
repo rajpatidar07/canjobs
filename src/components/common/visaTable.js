@@ -298,7 +298,7 @@ export default function VisaTable(props) {
                       Status
                     </th>
                   )}
-                  {props.heading === "Dashboard" ? (
+                  {props.heading === "Dashboard" || user_type === "company" ? (
                     ""
                   ) : (
                     <th
@@ -573,7 +573,7 @@ export default function VisaTable(props) {
 
                           <button
                             className={
-                              props.page === "user_profile"
+                               user_type === "company"
                                 ? "d-none"
                                 : "btn btn-outline-info action_btn"
                             }
