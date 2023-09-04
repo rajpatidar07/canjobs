@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1693486845049,
@@ -12,6 +12,10 @@
                 {
                     "date": 1693486959219,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,12 +95,9 @@\n           setErrors({ ...errors, Credentials: [\"Invalid Credentials\"] });\n           // handle form submission\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false)\n       }\n     }\n   };\n@@ -124,12 +121,9 @@\n           setErrors({ ...errors, Credentials: [\"No user found\"] });\n           //   handle form submission\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false)\n       }\n     }\n   };\n@@ -161,12 +155,9 @@\n           window.location.reload();\n         }\n       } catch (err) {\n         console.log(err);\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n       }\n     }\n   });\n \n@@ -216,12 +207,9 @@\n           Navigate(\"/company\");\n         }\n       }).catch((err) => {\n         console.log(err.data);\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n       })\n     }\n   }, [])\n \n"
+                },
+                {
+                    "date": 1693832705299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n   const close = () => {\n     setErrors(\"\");\n     setState(\"\");\n     setLoading(false);\n+    setShowCompanyForgotPassword(false)\n     props.close();\n   };\n   /*----USER LOGIN VALIDATION----*/\n   const initialFormState = {\n"
                 }
             ],
             "date": 1693486845049,

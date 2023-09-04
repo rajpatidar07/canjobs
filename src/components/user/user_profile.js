@@ -798,7 +798,7 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
-                        <div className="col-12 mb-1">
+                        <div className="col-12 mb-1 border-bottom">
                           <div className="bg-white  d-flex">
                             <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
                               <Link
@@ -1191,7 +1191,7 @@ const NewUserProfile = (props) => {
                         {/*----Employee's Education Profile----*/}
                         <div
                           id="Career_Profile"
-                          className="border-top p-10 col-md-6 border-right"
+                          className=" p-10 col-md-6 border-right"
                         >
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>

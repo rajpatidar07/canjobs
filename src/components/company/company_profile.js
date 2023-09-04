@@ -358,8 +358,8 @@ function CompanyProfileDetail(props) {
                       >
                         {/* <!-- Company Profile --> */}
 
-                        <div className="text-capitalize company_detail_box w-100 row m-0">
-                          <div className="col-12 bg-white  d-flex">
+                        <div className="text-capitalize company_detail_box w-100 row m-0 ">
+                          <div className="col-12 bg-white  d-flex border-bottom">
                             <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
                               <div className="text_box text-left">
                                 <img
@@ -426,7 +426,7 @@ function CompanyProfileDetail(props) {
                             ) : (
                               ""
                             )}
-                            <div className="col px-5 pt-5 pb-5  border-right position-relative">
+                            <div className="col px-5 pt-5 pb-5   position-relative">
                               <CompanyDetailPage
                                 employerId={
                                   user_type === "company" ? company_id : cid

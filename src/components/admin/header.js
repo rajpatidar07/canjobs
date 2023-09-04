@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ChangePassword from "../common/changepassword";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
@@ -13,7 +13,7 @@ const AdminHeader = (props) => {
   const [apicall, setApicall] = useState(false);
   let Admin = localStorage.getItem("admin");
   let AdminType = localStorage.getItem("admin_type");
-
+let navigate = useNavigate()
   /*Function to Call Notification Api */
   const Notiication = async () => {
     try {
@@ -28,6 +28,10 @@ const AdminHeader = (props) => {
     Notiication();
     if (apicall === true) {
       setApicall(false);
+    }
+    console.log(AdminType)
+    if(AdminType !== "admin"){
+      navigate("/")
     }
   }, [apicall]);
   return (

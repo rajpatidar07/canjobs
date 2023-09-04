@@ -27,6 +27,7 @@ export default function CompanyLogin(props) {
     setErrors("");
     setState("");
     setLoading(false);
+    setShowCompanyForgotPassword(false)
     props.close();
   };
   /*----USER LOGIN VALIDATION----*/
