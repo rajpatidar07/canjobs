@@ -33,24 +33,10 @@ export default function PayentForm() {
   return (
     <>
       <ToastContainer />
-      {/* <Modal
-      show={props.show}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    > 
-      <button
-        type="button"
-        className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
-        data-dismiss="modal"
-        onClick={close}
-      >
-        <i className="fas fa-times"></i>
-      </button>*/}
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
-          <div className="activity_container col-md-8 border-right p-10">
+          <div className="activity_container col-md-8 border-right">
             {/* {response.length === 0 ? */}
             {/* <div className="single_note mb-5">
               <div className="d-flex justify-content-center">
@@ -77,12 +63,11 @@ export default function PayentForm() {
           </div>
           <form className="col-md-4 p-10">
           <label
-                htmlFor="amount"
                 className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
               >
-                Payment method: <span className="text-danger">*</span>
+                Payment from: <span className="text-danger">*</span>
               </label>
-            <div className="row">
+             <div className="row">
             <div
               className={`col-6 text-capitalize`}
               //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
@@ -94,8 +79,9 @@ export default function PayentForm() {
                 //   (item) => item.substage === subStage
                 // )}
                 readOnly
+                name="nationality"
               />
-              Cash
+             Canada & US
             </div>
             <div
               className={`col-6 text-capitalize`}
@@ -104,6 +90,48 @@ export default function PayentForm() {
               <input
                 type="radio"
                 className="mx-2"
+                name="nationality"
+                // checked={(selectedStatus || []).some(
+                //   (item) => item.substage === subStage
+                // )}
+                readOnly
+              />
+              Outside Canada
+            </div>
+            </div>
+         {/* <label
+                htmlFor="amount"
+                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+              >
+                Payment method: <span className="text-danger">*</span>
+              </label>
+              <div className="row">
+                <div></div>
+              </div>
+             <div className="row">
+            <div
+              className={`col-6 text-capitalize`}
+              //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+            >
+              <input
+                type="radio"
+                className="mx-2"
+                // checked={(selectedStatus || []).some(
+                //   (item) => item.substage === subStage
+                // )}
+                readOnly
+                name="upi"
+              />
+             UPI
+            </div>
+            <div
+              className={`col-6 text-capitalize`}
+              //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+            >
+              <input
+                type="radio"
+                className="mx-2"
+                name="paypal"
                 // checked={(selectedStatus || []).some(
                 //   (item) => item.substage === subStage
                 // )}
@@ -111,7 +139,22 @@ export default function PayentForm() {
               />
               Paypal
             </div>
+            <div
+              className={`col-6 text-capitalize`}
+              //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+            >
+              <input
+                type="radio"
+                className="mx-2"
+                name="banking"
+                // checked={(selectedStatus || []).some(
+                //   (item) => item.substage === subStage
+                // )}
+                readOnly
+              />
+              Net bankink
             </div>
+            </div> */}
             <div className="m-3">
               <label
                 htmlFor="amount"
@@ -168,7 +211,7 @@ export default function PayentForm() {
                   className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                   type="button"
                 >
-                  Submit
+                  Pay
                 </button>
               )}
             </div>
