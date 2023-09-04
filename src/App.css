@@ -951,14 +951,31 @@ select.form-control.select_document_type {
   -ms-transition: opacity 0.3s ease 0.5s;
   transition: opacity 0.3s ease 0.5s;
 } */
+.arrow-steps .step.approved {
+  color: #fff;
+  background-color: #0b795d;
+}
 
-.arrow-steps .step.current {
+.arrow-steps .step.approved:after {
+  border-left: 13px solid #0b795d !important;
+}
+
+.arrow-steps .step.pending {
+  color: #fff;
+  background-color: #f57a08;
+}
+
+.arrow-steps .step.pending:after {
+  border-left: 13px solid #f57a08 !important;
+}
+
+.arrow-steps .step.reject {
   color: #fff;
   background-color: #fa474a;
 }
 
-.arrow-steps .step.current:after {
-  border-left: 17px solid #fa474a;
+.arrow-steps .step.reject:after {
+  border-left: 13px solid #fa474a !important;
 }
 
 .arrow-steps .step.visa_current {

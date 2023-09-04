@@ -31,6 +31,7 @@ export default function JobTable(props) {
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [lmiaStatus, setLmiaStatus] = useState([]);
+  const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [JobId, setJobId] = useState();
   const [CompanyId, setCompanyId] = useState();
   const [candidateSkill, setCandidateSkill] = useState();
@@ -137,15 +138,15 @@ export default function JobTable(props) {
         /*Logic for finding reject substage of decision lima status */
         if (userData.data.data.length >= 0) {
           let LmiaData = userData.data.data;
-          let LmiaCommentArray= []
+          let LmiaCommentArray = [];
           for (let i = 0; i < userData.data.data.length; i++) {
             if (userData.data.data[i].lmia_status === "decision") {
               const data = userData.data.data[i];
               const subStageRes = await GetJobLimaSubStages(
                 data.job_id,
                 data.lmia_status
-                );
-                LmiaCommentArray.push(subStageRes.data.data[0])
+              );
+              LmiaCommentArray.push(subStageRes.data.data[0]);
               if (
                 subStageRes.data.data.filter(
                   (item) => item.lmia_substage === "rejected"
@@ -161,10 +162,11 @@ export default function JobTable(props) {
             props.detail === "company_detail" ||
             props.detail === "job_detail"
           ) {
-            props.setLmiaStatusRejectComment(LmiaCommentArray)
+            props.setLmiaStatusRejectComment(LmiaCommentArray);
             props.setLmia(LmiaData);
           }
           setLmiaStatus(LmiaData);
+          setLmiaStatusRejectComment(LmiaCommentArray);
         }
       }
       setTotalData(userData.data.total_rows);
@@ -463,98 +465,6 @@ export default function JobTable(props) {
                 </tr>
               </thead>
               <tbody>
-                {/* <div className="col-12">
-                  <div className="bg-white w-100 d-flex flex-wrap mb-1">
-                    <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
-                      {console.log(lmiaStatus)}
-                      {(lmiaStatus || []).map((status, i) => {
-                        return status.lmia_status === "" ||
-                          status.lmia_status === null ||
-                          status.lmia_status === undefined ||
-                          status.lmia_status === "undefined" ? null : (
-                          <div className="arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom justify-content-between" key={i}>
-                            <div className="job_name text-dark">
-                              <span className="m-0 font-size-2 d-block mb-1">
-                                {status.job_title}
-                              </span>
-                            </div>
-                            <div>
-                              <div
-                                key={i + 1}
-                                className={`step text-capitalize ${status.lmia_status === "onboarding" ||
-                                  status.lmia_status === "advertisements" ||
-                                  status.lmia_status === "documentation" ||
-                                  status.lmia_status === "candidate placement" ||
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                                  }`}
-                              >
-                                <span>onboarding</span>
-                              </div>
-                              <div
-                                key={i + 2}
-                                className={`step text-capitalize ${status.lmia_status === "documentation" ||
-                                  status.lmia_status === "advertisements" ||
-                                  status.lmia_status === "candidate placement" ||
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                                  }`}
-                              >
-                                <span>advertisements</span>
-                              </div>
-                              <div
-                                key={i + 3}
-                                className={`step text-capitalize ${status.lmia_status === "documentation" ||
-                                  status.lmia_status === "candidate placement" ||
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                                  }`}
-                              >
-                                <span>documentation</span>
-                              </div>
-                              <div
-                                key={i + 4}
-                                className={`step text-capitalize ${status.lmia_status === "candidate placement" ||
-                                  status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                                  }`}
-                              >
-                                <span>candidate placement</span>
-                              </div>
-                              <div
-                                key={i + 5}
-                                className={`step text-capitalize ${status.lmia_status === "submission" ||
-                                  status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                                  }`}
-                              >
-                                <span>submission</span>
-                              </div>
-                              <div
-                                key={i + 6}
-                                className={`step text-capitalize ${status.lmia_status === "decision"
-                                  ? "current"
-                                  : null
-                                  }`}
-                              >
-                                <span>decision</span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div> */}
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
@@ -581,117 +491,10 @@ export default function JobTable(props) {
                 ) : (
                   (jobData || []).map((job, i) => {
                     let LmiaStatusData = lmiaStatus.filter(
-                      (item) => item.job_id === job.job_id 
+                      (item) => item.job_id === job.job_id
                     );
                     return (
                       <React.Fragment key={job.job_id}>
-                        {props.heading === "Dashboard" ||
-                        props.detail === "company_detail" ||
-                        props.detail === "job_detail" ? null : (
-                          <tr
-                            className={
-                              props.heading === "Dashboard" ||
-                              props.skill === null ||
-                              props.skill === undefined ||
-                              Object.keys(props.skill).length === 0 
-                                ? "col-12 "
-                                : "d-none"
-                            }
-                          >
-                            <td colSpan="11" className={job.lmia_status?"bg-white":"d-none"}>
-                              <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
-                                <div className="arrow-steps" key={i}>
-                                  <div className="job_name text-dark">
-                                    <span className="m-0 font-size-2 d-block mb-1">
-                                      {LmiaStatusData.job_title}
-                                    </span>
-                                  </div>
-                                  <div>
-                                    <div
-                                      key={i + 1}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "onboarding" ||
-                                        job.lmia_status === "advertisements" ||
-                                        job.lmia_status === "documentation" ||
-                                        job.lmia_status ===
-                                          "candidate placement" ||
-                                        job.lmia_status === "submission" ||
-                                        job.lmia_status === "decision"
-                                          ? "current"
-                                          : null
-                                      }`}
-                                    >
-                                      <span>onboarding</span>
-                                    </div>
-                                    <div
-                                      key={i + 2}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "documentation" ||
-                                        job.lmia_status === "advertisements" ||
-                                        job.lmia_status ===
-                                          "candidate placement" ||
-                                        job.lmia_status === "submission" ||
-                                        job.lmia_status === "decision"
-                                          ? "current"
-                                          : null
-                                      }`}
-                                    >
-                                      <span>advertisements</span>
-                                    </div>
-                                    <div
-                                      key={i + 3}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "documentation" ||
-                                        job.lmia_status ===
-                                          "candidate placement" ||
-                                        job.lmia_status === "submission" ||
-                                        job.lmia_status === "decision"
-                                          ? "current"
-                                          : null
-                                      }`}
-                                    >
-                                      <span>documentation</span>
-                                    </div>
-                                    <div
-                                      key={i + 4}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status ===
-                                          "candidate placement" ||
-                                        job.lmia_status === "submission" ||
-                                        job.lmia_status === "decision"
-                                          ? "current"
-                                          : null
-                                      }`}
-                                    >
-                                      <span>candidate placement</span>
-                                    </div>
-                                    <div
-                                      key={i + 5}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "submission" ||
-                                        job.lmia_status === "decision"
-                                          ? "current"
-                                          : null
-                                      }`}
-                                    >
-                                      <span>submission</span>
-                                    </div>
-                                    <div
-                                      key={i + 6}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "decision"
-                                          ? "current"
-                                          : null
-                                      }`}
-                                    >
-                                      <span>decision</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        )}
                         <tr
                           className={
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
@@ -972,7 +775,7 @@ export default function JobTable(props) {
                                             </span>
                                             {/* <span className=" fas fa-edit text-gray"></span> */}
                                           </button>
-                                          
+
                                           <button
                                             className={
                                               props.response === "response" &&
@@ -1049,6 +852,171 @@ export default function JobTable(props) {
                             </th>
                           )}
                         </tr>
+                        {props.heading === "Dashboard" ||
+                        props.detail === "company_detail" ||
+                        props.detail === "job_detail" ? null : (
+                          <tr
+                            className={
+                              props.heading === "Dashboard" ||
+                              props.skill === null ||
+                              props.skill === undefined ||
+                              Object.keys(props.skill).length === 0
+                                ? "col-12 "
+                                : "d-none"
+                            }
+                          >
+                            <td
+                              colSpan="11"
+                              className={
+                                job.lmia_status ? "bg-white" : "d-none"
+                              }
+                            >
+                              <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                                <div className="arrow-steps" key={i}>
+                                  <div className="job_name text-dark">
+                                    <span className="m-0 font-size-2 d-block mb-1">
+                                      {LmiaStatusData.job_title}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <div
+                                      key={i + 1}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "onboarding" ||
+                                        job.lmia_status === "advertisements" ||
+                                        job.lmia_status === "documentation" ||
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "approved"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>onboarding</span>
+                                    </div>
+                                    <div
+                                      key={i + 2}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "documentation" ||
+                                        job.lmia_status === "advertisements" ||
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "approved"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>advertisements</span>
+                                    </div>
+                                    <div
+                                      key={i + 3}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "documentation" ||
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "approved"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>documentation</span>
+                                    </div>
+                                    <div
+                                      key={i + 4}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status ===
+                                          "candidate placement" ||
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "approved"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>candidate placement</span>
+                                    </div>
+                                    <div
+                                      key={i + 5}
+                                      className={`step text-capitalize ${
+                                        job.lmia_status === "submission" ||
+                                        job.lmia_status === "decision"
+                                          ? "approved"
+                                          : null
+                                      }`}
+                                    >
+                                      <span>submission</span>
+                                    </div>
+                                    {job.lmia_status === "decision" &&
+                                    lmiaStatusRejectComment ? (
+                                      lmiaStatusRejectComment[0] !==
+                                        undefined &&
+                                      (lmiaStatusRejectComment || []).map(
+                                        (item, i) => {
+                                          return (
+                                            item === undefined ||
+                                            item === "undefined" ||
+                                            item === null ||
+                                            item === "null"
+                                              ? null
+                                              : item.job_id === job.job_id
+                                          ) ? (
+                                            <div
+                                              key={i + 6}
+                                              className={` step text-capitalize ${
+                                                job.lmia_status ===
+                                                  "decision" &&
+                                                item.lmia_substage ===
+                                                  "approved"
+                                                  ? "approved"
+                                                  : item.lmia_substage ===
+                                                    "awaiting decision"
+                                                  ? "pending"
+                                                  : item.lmia_substage ===
+                                                    "reject"
+                                                  ? "reject"
+                                                  : ""
+                                              }`}
+                                            >
+                                              <span>
+                                                {item.lmia_substage ===
+                                                "approved"
+                                                  ? "Approved"
+                                                  : item.lmia_substage ===
+                                                    "awaiting decision"
+                                                  ? "Awaiting Decision"
+                                                  : item.lmia_substage ===
+                                                    "reject"
+                                                  ? "Rejected."
+                                                  : "decision"}
+                                              </span>
+                                            </div>
+                                          ) : // <small className="mx-10" key={i}>
+                                          // {item.lmia_substage === "approved"
+                                          //   ? "Congratulation your Limia is Approved"
+                                          //   : item.lmia_substage === "awaiting decision"
+                                          //   ? "Your Limia status is in progress"
+                                          //   : item.lmia_substage === "reject"
+                                          //   ? "Sorry to inform you your Limia got rejected."
+                                          //   : ""}
+                                          // </small>
+                                          null;
+                                        }
+                                      )
+                                    ) : (
+                                      <div
+                                        className={`step text-capitalize`}
+                                      >
+                                        decision
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
                         {job.job_id === responseId &&
                         job.total_applicants > 0 ? (
                           <tr>

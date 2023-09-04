@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1693482522457,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693803509479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -950,15 +950,30 @@\n   -moz-transition: opacity 0.3s ease 0.5s;\n   -ms-transition: opacity 0.3s ease 0.5s;\n   transition: opacity 0.3s ease 0.5s;\n } */\n+.arrow-steps .step.approved {\n+  color: #fff;\n+  background-color: #065a45;\n+}\n \n-.arrow-steps .step.current {\n+.arrow-steps .step.approved:after {\n+  border-left: 17px solid #065a45;\n+}\n+.arrow-steps .step.pending {\n   color: #fff;\n+  background-color: #f57a08;\n+}\n+\n+.arrow-steps .step.pending:after {\n+  border-left: 17px solid #f57a08;\n+}\n+.arrow-steps .step.reject {\n+  color: #fff;\n   background-color: #fa474a;\n }\n \n-.arrow-steps .step.current:after {\n+.arrow-steps .step.reject:after {\n   border-left: 17px solid #fa474a;\n }\n \n .arrow-steps .step.visa_current {\n"
+                },
+                {
+                    "date": 1693803851475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -956,9 +956,9 @@\n   background-color: #065a45;\n }\n \n .arrow-steps .step.approved:after {\n-  border-left: 17px solid #065a45;\n+  border-left: 17px solid #0b795d;\n }\n \n .arrow-steps .step.pending {\n   color: #fff;\n"
                 }
             ],
             "date": 1693482522457,

@@ -36,7 +36,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                             status.lmia_status === "candidate placement" ||
                             status.lmia_status === "submission" ||
                             status.lmia_status === "decision"
-                              ? "current"
+                              ? "approved"
                               : null
                           }`
                         : `d-none`
@@ -55,7 +55,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                             status.lmia_status === "candidate placement" ||
                             status.lmia_status === "submission" ||
                             status.lmia_status === "decision"
-                              ? "current"
+                              ? "approved"
                               : null
                           }`
                         : `d-none`
@@ -73,7 +73,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                             status.lmia_status === "candidate placement" ||
                             status.lmia_status === "submission" ||
                             status.lmia_status === "decision"
-                              ? "current"
+                              ? "approved"
                               : null
                           }`
                         : `d-none`
@@ -87,7 +87,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                       status.lmia_status === "candidate placement" ||
                       status.lmia_status === "submission" ||
                       status.lmia_status === "decision"
-                        ? "current"
+                        ? "approved"
                         : null
                     }`}
                   >
@@ -98,47 +98,66 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                     className={`mt-2 step text-capitalize ${
                       status.lmia_status === "submission" ||
                       status.lmia_status === "decision"
-                        ? "current"
+                        ? "approved"
                         : null
                     }`}
                   >
                     <span>submission</span>
                   </div>
-                  <div
-                    key={i + 6}
-                    className={`mt-2 step text-capitalize ${
-                      status.lmia_status === "decision" ? "current" : null
-                    }`}
-                  >
-                    <span>decision</span>
-                  </div>
+                  {/*Comment for the decision status of the lima*/}
+                  {status.lmia_status === "decision" &&
+                  lmiaStatusRejectComment[0] ? (
+                    lmiaStatusRejectComment[0] !== undefined &&
+                    (lmiaStatusRejectComment || []).map((item, i) => {
+                      return (
+                        item === undefined ||
+                        item === "undefined" ||
+                        item === null ||
+                        item === "null"
+                          ? null
+                          : location.pathname === "/company_detail" ||
+                            location.pathname === "/jobdetailpage"
+                          ? item.job_id === status.job_id
+                          : item.lmia_id === status.id
+                      ) ? (
+                        <div
+                          key={i + 6}
+                          className={`mt-2 step text-capitalize ${
+                            status.lmia_status === "decision" &&
+                            item.lmia_substage === "approved"
+                              ? "approved"
+                              : item.lmia_substage === "awaiting decision"
+                              ? "pending"
+                              : item.lmia_substage === "reject"
+                              ? "reject"
+                              : ""
+                          }`}
+                        >
+                          <span>
+                            {item.lmia_substage === "approved"
+                              ? "Approved"
+                              : item.lmia_substage === "awaiting decision"
+                              ? "Awaiting Decision"
+                              : item.lmia_substage === "reject"
+                              ? "Rejected."
+                              : "decision"}
+                          </span>
+                        </div>
+                      ) : // <small className="mx-10" key={i}>
+                      // {item.lmia_substage === "approved"
+                      //   ? "Congratulation your Limia is Approved"
+                      //   : item.lmia_substage === "awaiting decision"
+                      //   ? "Your Limia status is in progress"
+                      //   : item.lmia_substage === "reject"
+                      //   ? "Sorry to inform you your Limia got rejected."
+                      //   : ""}
+                      // </small>
+                      null;
+                    })
+                  ) : (
+                    <div className={`mt-2 step text-capitalize`}>decision</div>
+                  )}
                 </div>
-                {/*Comment for the decision status of the lima*/}
-                {status.lmia_status === "decision" &&
-                  lmiaStatusRejectComment[0] !== undefined &&
-                  (lmiaStatusRejectComment || []).map((item, i) => {
-                    return (
-                      item === undefined ||
-                      item === "undefined" ||
-                      item === null ||
-                      item === "null"
-                        ? null
-                        : location.pathname === "/company_detail" ||
-                        location.pathname === "/jobdetailpage"
-                        ? item.job_id === status.job_id
-                        : item.lmia_id === status.id
-                    ) ? (
-                      <small className="mx-10" key={i}>
-                        {item.lmia_substage === "approved"
-                          ? "Congratulation your Limia is Approved"
-                          : item.lmia_substage === "awaiting decision"
-                          ? "Your Limia status is in progress"
-                          : item.lmia_substage === "reject"
-                          ? "Sorry to inform you your Limia got rejected."
-                          : ""}
-                      </small>
-                    ) : null;
-                  })}
               </div>
             );
           })}
