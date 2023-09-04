@@ -85,7 +85,7 @@ export default function EmployeeTable(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setIsLoading(false);
     }
   };
@@ -187,7 +187,7 @@ export default function EmployeeTable(props) {
         setApiCall(true);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -228,7 +228,7 @@ export default function EmployeeTable(props) {
         setAlredyApplied(true);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -536,45 +536,56 @@ export default function EmployeeTable(props) {
                               </div>
                             </div>
 
-
                             <div className=" mb-0">
                               {empdata.name === null ||
-                                empdata.name === undefined ||
-                                empdata.name === "undefined" ||
-                                empdata.name === "" ?
-                                <p className="font-size-3  mb-0">Unavailable</p> :
+                              empdata.name === undefined ||
+                              empdata.name === "undefined" ||
+                              empdata.name === "" ? (
+                                <p className="font-size-3  mb-0">Unavailable</p>
+                              ) : (
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {empdata.name}
                                 </p>
-                              }
-                              {empdata.gender || empdata.marital_status ? <p className="text-gray font-size-2 m-0 text-capitalize">
-                                {empdata.gender === "female"
-                                  ? "F"
-                                  : empdata.gender === "male"
+                              )}
+                              {empdata.gender || empdata.marital_status ? (
+                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                  {empdata.gender === "female"
+                                    ? "F"
+                                    : empdata.gender === "male"
                                     ? "M"
                                     : "O"}
-                                {/*Calculation of age from date of birth*/}
-                                ({empdata.marital_status || empdata.date_of_birth ? `${empdata.marital_status},${moment().diff(
-                                  empdata.date_of_birth, "years")} Y` : null})
-                                {empdata.is_featured === ("1" || 1) ? (
-                                  <span className="bg-orange text-white featured_tag">
-                                    Featured
-                                  </span>
-                                ) : null}
-                                {empdata.created_by_admin === ("0" || 0) ? (
-                                  <span className="bg-info text-white web_tag">
-                                    Web
-                                  </span>
-                                ) : null}
-                              </p> : null}
+                                  {/*Calculation of age from date of birth*/}(
+                                  {empdata.marital_status ||
+                                  empdata.date_of_birth
+                                    ? `${
+                                        empdata.marital_status
+                                      },${moment().diff(
+                                        empdata.date_of_birth,
+                                        "years"
+                                      )} Y`
+                                    : null}
+                                  )
+                                  
+                                </p>
+                              ) : null}
+                              {empdata.is_featured === "1" ||
+                                  empdata.is_featured === 1 ? (
+                                    <span className="bg-orange text-white featured_tag">
+                                      Featured
+                                    </span>
+                                  ) : null}
+                                  {empdata.created_by_admin === "0" ||
+                                  empdata.created_by_admin === 0 ? (
+                                    <span className="bg-info text-white web_tag">
+                                      Web
+                                    </span>
+                                  ) : null}
                             </div>
                           </div>
                         </Link>
                       </td>
                       <td className="py-5 ">
-                        {empdata.contact_no === null ? (
-                          null
-                        ) : (
+                        {empdata.contact_no === null ? null : (
                           <p className="m-0">
                             +
                             <Link
@@ -677,37 +688,30 @@ export default function EmployeeTable(props) {
                               </span>
                             ) : empdata.status === "2" ? (
                               <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                
                                 Prospect
                               </span>
                             ) : empdata.status === "3" ? (
                               <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                
                                 Lead
                               </span>
                             ) : empdata.status === "4" ? (
                               <span className="p-1 bg-secondary text-white text-center w-100 border rounded-pill">
-                                
                                 Reatined
                               </span>
                             ) : empdata.status === "5" ? (
                               <span className="p-1 bg-spray text-white text-center w-100 border rounded-pill">
-                                
                                 Lost
                               </span>
                             ) : empdata.status === "6" ? (
                               <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                
                                 Dead
                               </span>
                             ) : empdata.status === "7" ? (
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                
                                 Reserved
                               </span>
                             ) : empdata.status === "0" ? (
                               <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                
                                 New
                               </span>
                             ) : null}
@@ -730,7 +734,7 @@ export default function EmployeeTable(props) {
                             aria-label="Basic example"
                           >
                             {props.skill === null ||
-                              props.skill === undefined ? (
+                            props.skill === undefined ? (
                               <>
                                 {/* <button
                                   className="btn btn-outline-info action_btn"
@@ -829,7 +833,7 @@ export default function EmployeeTable(props) {
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}
                                     title="All jobs "
-                                  // disabled={empdata.skill ? false : true}
+                                    // disabled={empdata.skill ? false : true}
                                   >
                                     <span className="text-gray px-2">
                                       <PiBriefcaseLight />

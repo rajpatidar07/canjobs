@@ -159,7 +159,7 @@ export default function JobTable(props) {
             }
           }
           if (
-            props.detail === "company_detail" ||
+            // props.detail === "company_detail" ||
             props.detail === "job_detail"
           ) {
             props.setLmiaStatusRejectComment(LmiaCommentArray);
@@ -853,7 +853,6 @@ export default function JobTable(props) {
                           )}
                         </tr>
                         {props.heading === "Dashboard" ||
-                        props.detail === "company_detail" ||
                         props.detail === "job_detail" ? null : (
                           <tr
                             className={

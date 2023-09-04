@@ -21,18 +21,18 @@ import AddCompanyfollowup from "../common/companyFollowUp";
 import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
-import LimaArrowProfile from "../common/LimaArrowProfile";
+// import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   let cid = company_id;
   let navigate = useNavigate();
   /*Show modal and data state */
-  const [lima, setLmia] = useState(false);
+  // const [lima, setLmia] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   let [showDoc, setShowDoc] = useState(false);
-  const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
+  // const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
@@ -194,14 +194,14 @@ function CompanyProfileDetail(props) {
               </div>
             </div>
             {/* LMIA */}
-            <div className="col-12">
+            {/* <div className="col-12">
               {lima && user_type !== "user" ? (
                 <LimaArrowProfile
                   lmia={lima}
                   lmiaStatusRejectComment={lmiaStatusRejectComment}
                 />
               ) : null}
-            </div>
+            </div> */}
             <div className="col-12 order-2 order-xl-1">
               <div className="bg-white">
                 {/*----Profile Header----*/}
@@ -622,9 +622,9 @@ function CompanyProfileDetail(props) {
                       heading={"companyprofile"}
                       response={"companyprofile"}
                       detail={"company_detail"}
-                      setLmia={setLmia}
+                      // setLmia={setLmia}
                       setApiCall={setApiCall}
-                      setLmiaStatusRejectComment={setLmiaStatusRejectComment}
+                      // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}

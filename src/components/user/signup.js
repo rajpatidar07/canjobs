@@ -379,7 +379,7 @@ export default function EmployeeSignupModal(props) {
                           htmlFor="email"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
-                          E-mail<span className="text-danger"> *</span> :
+                          E-mail<span className="text-danger"> *</span>:
                         </label>
                         <input
                           name="email"
@@ -446,7 +446,7 @@ export default function EmployeeSignupModal(props) {
                           htmlFor="resume"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
-                          Upload Resume
+                          Upload Resume<span className="text-danger"> *</span>:
                         </label>
                         <div className="position-relative">
                           <input

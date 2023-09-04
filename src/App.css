@@ -250,7 +250,7 @@ table.table.table-striped.main_data_table_inn tr {
 
 span.featured_tag {
   position: absolute;
-  top: -2px;
+  top: 0;
   left: 0;
   padding: 1px;
   font-size: 10px;
@@ -259,7 +259,7 @@ span.featured_tag {
 
 span.web_tag {
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 0;
   padding: 1px;
   font-size: 10px;
@@ -906,7 +906,7 @@ select.form-control.select_document_type {
   content: " ";
   position: absolute;
   top: 0;
-  right: -17px;
+  right: -12px;
   width: 0;
   height: 0;
   border-top: 19px solid transparent;
