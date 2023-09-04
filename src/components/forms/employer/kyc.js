@@ -228,7 +228,7 @@ function KycComplianceDetails(props) {
           <form onSubmit={onKycInfoClick}>
             <h5 className="text-center pt-2 mb-7">KYC Compliance Details</h5>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pan_no"
@@ -353,7 +353,7 @@ function KycComplianceDetails(props) {
             </div>
 
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pincode"
@@ -472,7 +472,7 @@ function KycComplianceDetails(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="gstin"

@@ -246,7 +246,7 @@ function Registration(props) {
               )}
             </div>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="resume"

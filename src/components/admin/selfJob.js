@@ -102,7 +102,7 @@ function SelfJob(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            {" "}
+            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Self Jobs"} />
             {/* <!-- navbar- --> */}
@@ -147,7 +147,7 @@ function SelfJob(props) {
                       name={"name"}
                       onChange={(e) => onSearch(e)}
                     />
-                  </div>{" "}
+                  </div>
                   <div
                     className={
                       props.skill === null || props.skill === undefined

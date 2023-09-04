@@ -23,7 +23,7 @@ function Pagination({ nPages, currentPage, setCurrentPage , total , count}) {
         <>
         <nav aria-label="Page navigation example">
           <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
-            {/* To change page perivous page :- */}{" "}
+            {/* To change page perivous page :- */}
             <li className="page-item px-1">
               <Link
                 onClick={prevPage}

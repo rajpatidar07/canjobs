@@ -127,7 +127,7 @@ export default function GenerateToken(props) {
                 type="submit"
               >
                 View as
-              </button>{" "}
+              </button>
               <button
                 className="btn btn-primary rounded-5 text-uppercase mx-5"
                 onClick={onRest}

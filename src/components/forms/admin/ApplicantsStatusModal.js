@@ -47,7 +47,7 @@ export default function ApplicantsStatusModal(props) {
       {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
       <div className="bg-white rounded h-100 p-7">
         <form onSubmit={OnStatusChangesClick}>
-          <h5 className="text-center mb-7">Change Applicants Status</h5>{" "}
+          <h5 className="text-center mb-7">Change Applicants Status</h5>
           <div className="form-group d-flex mb-3 p-0">
             <label
               htmlFor="skill"

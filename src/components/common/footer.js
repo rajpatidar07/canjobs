@@ -188,7 +188,7 @@ function EmployeeFooter() {
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
-                        Features{" "}
+                        Features
                       </Link>
                     </li>
                     <li className="mb-6">

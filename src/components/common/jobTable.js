@@ -521,8 +521,8 @@ export default function JobTable(props) {
                                     <br />
                                     {job.is_featured === "1" ? (
                                       <span className="bg-orange text-white featured_tag">
-                                        {" "}
-                                        Featured{" "}
+                                        
+                                        Featured
                                       </span>
                                     ) : null}
                                   </p>
@@ -589,7 +589,7 @@ export default function JobTable(props) {
                                 }}
                                 className="text-dark"
                               >
-                                {job.role_category} /{" "}
+                                {job.role_category} /
                                 {props.selfJob === "yes"
                                   ? job.applied_by_self
                                   : job.applied_by_admin}

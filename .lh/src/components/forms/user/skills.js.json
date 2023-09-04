@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693486845044,
@@ -16,6 +16,10 @@
                 {
                     "date": 1693487044435,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -157,9 +157,12 @@\n   async function deleteSkill(e) {\n     try {\n       const responseData = await DeleteEmployeeSkill(e);\n       if (responseData.message === \"skill has been deleted\") {\n-        toast.error(\"Skill deleted Successfully\", \n+        toast.error(\"Skill deleted Successfully\", {\n+          position: toast.POSITION.TOP_RIGHT,\n+          autoClose: 1000,\n+        });\n         props.setApiCall(true);\n         setApiCall(true);\n         setDeleteAlert(false);\n       }\n"
+                },
+                {
+                    "date": 1693820064662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -188,9 +188,9 @@\n         </button>\n         {/* <div className=\"modal-dialog max-width-px-540 position-relative\"> */}\n         <div className=\"bg-white rounded h-100 p-7\">\n           <form onSubmit={onUserSkillsClick}>\n-            <h5 className=\"text-center mb-7\">Add It Skills </h5>{\" \"}\n+            <h5 className=\"text-center mb-7\">Add It Skills </h5>\n             <div className=\"form-group d-flex mb-3 p-0\">\n               <label\n                 htmlFor=\"skill\"\n                 className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -209,9 +209,9 @@\n                 id=\"skill\"\n                 name=\"skill\"\n                 value={state.skill}\n                 onChange={onInputChange}\n-              />{\" \"} */}\n+              /> */}\n               <Select\n                 options={\"\" || SkillOption.skill}\n                 name=\"skill\"\n                 id=\"skill\"\n@@ -241,9 +241,9 @@\n                 >\n                   +\n                 </button>\n               )}\n-            </div>{\" \"}\n+            </div>\n             {/*----ERROR MESSAGE FOR SKILLS----*/}\n             {errors.skill && (\n               <span key={errors.skill} className=\"text-danger font-size-3 mx-5\">\n                 {errors.skill}\n"
                 }
             ],
             "date": 1693486845044,

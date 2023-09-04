@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693466372882,
@@ -16,6 +16,10 @@
                 {
                     "date": 1693471465017,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,9 @@\n                       >\r\n                         <option value={\"\"}>Select visa status </option>\r\n                         <option value={\"pending\"}>Pending</option>\r\n                         <option value={\"approved\"}>Approved</option>\r\n-                        <option value={\"rejected\"}>Rejected</option>\r\n+                        <option value={\"reject\"}>Rejected</option>\r\n                         <option value={\"experied\"}>experied</option>\r\n                         <option value={\"cancel\"}>Cancel</option>\r\n                       </select>\r\n                     </div>\r\n"
+                },
+                {
+                    "date": 1693820064167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -238,9 +238,9 @@\n                       name={\"name\"}\r\n                       onChange={(e) => onSearch(e)}\r\n                     />\r\n                     <small className=\"text-danger\">{searcherror}</small>\r\n-                  </div>{\" \"}\r\n+                  </div>\r\n                   <div className=\"col p-1 form_group mb-3\">\r\n                     <p className=\"input_label\">Company Name:</p>\r\n                     <input\r\n                       required\r\n"
                 }
             ],
             "date": 1693466372882,

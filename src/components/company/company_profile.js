@@ -127,7 +127,7 @@ function CompanyProfileDetail(props) {
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
-                      {employerData.company_name}{" "}
+                      {employerData.company_name}
                       <CustomButton
                         className={
                           user_type === "user"
@@ -151,7 +151,7 @@ function CompanyProfileDetail(props) {
                         className="text-dark font-size-5 w-100 text-break"
                         to={`mailto:${employerData.email}`}
                       >
-                        <BsEnvelope className="text-primary font-size-5 " />{" "}
+                        <BsEnvelope className="text-primary font-size-5 " />
                         {employerData.email}
                       </Link>
                       {user_type === "admin" || props.self === "no" ? (
@@ -169,7 +169,7 @@ function CompanyProfileDetail(props) {
                       className="text-dark font-size-5 w-100"
                       to={`tel:${employerData.contact_no}`}
                     >
-                      <BiPhoneCall className="text-primary font-size-5" />{" "}
+                      <BiPhoneCall className="text-primary font-size-5" />
                       {employerData.contact_no}
                     </Link>
                   </div>
@@ -330,7 +330,7 @@ function CompanyProfileDetail(props) {
                         className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
                       >
-                        {user_type === "user" ? "Add Document" : "Documents"}{" "}
+                        {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
                 </ul>
@@ -348,7 +348,7 @@ function CompanyProfileDetail(props) {
                     {/*----About Employee----*/}
                     {isLoading ? (
                       <div className="table-responsive main_table_div">
-                        <Loader />{" "}
+                        <Loader />
                       </div>
                     ) : (
                       <div
@@ -374,7 +374,7 @@ function CompanyProfileDetail(props) {
                               </div>
                               <div className="text_box text-left w-100 text-capitalize">
                                 <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
-                                  {employerData.company_name}{" "}
+                                  {employerData.company_name}
                                   <CustomButton
                                     className={
                                       user_type === "user"
@@ -400,7 +400,7 @@ function CompanyProfileDetail(props) {
                                     className="text-dark font-size-5 w-100 text-break"
                                     to={`mailto:${employerData.email}`}
                                   >
-                                    <BsEnvelope className="text-primary font-size-5 " />{" "}
+                                    <BsEnvelope className="text-primary font-size-5 " />
                                     {employerData.email}
                                   </Link>
                                   {user_type === "admin" ||
@@ -419,7 +419,7 @@ function CompanyProfileDetail(props) {
                                   className="text-dark font-size-5 w-100 text-break"
                                   to={`tel:${employerData.contact_no}`}
                                 >
-                                  <BiPhoneCall className="text-primary font-size-5" />{" "}
+                                  <BiPhoneCall className="text-primary font-size-5" />
                                   {employerData.contact_no}
                                 </Link>
                               </div>

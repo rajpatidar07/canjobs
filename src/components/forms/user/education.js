@@ -241,7 +241,7 @@ function Education(props) {
                               className="font-size-6 text-black-2 font-weight-semibold"
                               onClick={() => EducationData(education)}
                             >
-                              {education.qualification}{" "}
+                              {education.qualification}
                               <span className="font-size-4 text-break">
                                 ({education.university_institute})
                               </span>

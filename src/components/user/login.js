@@ -301,7 +301,7 @@ setLoading(false);
                     <div className="col-4 col-xs-12">
                        <button onClick={handleLinkedInLogin}
                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0">
-                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                             <span className="d-none d-xs-block mx-5 px-3">
                               Import from LinkedIn
                             </span></button>
@@ -311,7 +311,7 @@ setLoading(false);
                         to="" onClick={GoogleLogin}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Google
                         </span>
@@ -322,7 +322,7 @@ setLoading(false);
                         to="" onClick={()=>setFacebook(true)}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
-                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                        <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from Facebook
                         </span>
@@ -409,7 +409,7 @@ setLoading(false);
                           }
                           placeholder="Enter password"
                           id="userpassword"
-                        />{" "}
+                        />
                         {/*----ERROR MESSAGE FOR PASSWORD----*/}
                         {errors.userpassword && (
                           <span>
@@ -485,12 +485,12 @@ setLoading(false);
                           className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase"
                           type="submit"
                         >
-                          Log in{" "}
+                          Log in
                         </button>
                       )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Don’t have an account?{" "}
+                      Don’t have an account?
                       <Link
                         className="text-primary"
                         to={""}
@@ -558,7 +558,7 @@ setLoading(false);
                       )}
                     </div>
                     <p className="font-size-4 text-center heading-default-color">
-                      Already have an account?{" "}
+                      Already have an account?
                       <Link
                         to=""
                         className="text-primary"

@@ -324,7 +324,7 @@ export default function EmployeeSignupModal(props) {
                       <div className="col-4 col-xs-12">
 
                         <button onClick={handleLinkedInLogin}
-                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"><i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"><i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from LinkedIn
                           </span></button>
@@ -334,7 +334,7 @@ export default function EmployeeSignupModal(props) {
                           to="" onClick={GoogleLogin}
                           className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                         >
-                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from Google
                           </span>
@@ -345,7 +345,7 @@ export default function EmployeeSignupModal(props) {
                           to="" onClick={() => setFacebook(true)}
                           className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                         >
-                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
+                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from Facebook
                           </span>
@@ -527,7 +527,7 @@ export default function EmployeeSignupModal(props) {
                             className="text-black-2 pt-5 mr-5"
                           />
                           <span className="font-size-3 mb-0 line-height-reset d-block">
-                            Agree to the{" "}
+                            Agree to the
                             <Link to="" className="text-primary">
                               Terms & Conditions
                             </Link>
@@ -572,7 +572,7 @@ export default function EmployeeSignupModal(props) {
                         )}
                       </div>
                       <p className="font-size-4 text-center heading-default-color">
-                        Already have an account?{" "}
+                        Already have an account?
                         <Link
                           to=""
                           className="text-primary"

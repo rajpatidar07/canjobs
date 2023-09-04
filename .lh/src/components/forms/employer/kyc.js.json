@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693200780900,
@@ -16,6 +16,10 @@
                 {
                     "date": 1693486958721,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -180,12 +180,9 @@\n           props.setApiCall(true);\n           return close();\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n       }\n     } else {\n       setLoading(false);\n     }\n"
+                },
+                {
+                    "date": 1693820064690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -227,9 +227,9 @@\n         <div className=\"bg-white rounded h-100 px-11 pt-7\">\n           <form onSubmit={onKycInfoClick}>\n             <h5 className=\"text-center pt-2 mb-7\">KYC Compliance Details</h5>\n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"pan_no\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -352,9 +352,9 @@\n               </div>\n             </div>\n \n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"pincode\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -471,9 +471,9 @@\n                 )}\n               </div>\n             </div>\n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"gstin\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n"
                 }
             ],
             "date": 1693200780900,

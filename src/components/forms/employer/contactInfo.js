@@ -137,7 +137,7 @@ function ContactInfo(props) {
           <form onSubmit={onCompanyContactClick}>
             <h5 className="text-center pt-2 mb-7">Contact Detail</h5>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="contact_person_name"
@@ -314,7 +314,7 @@ function ContactInfo(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="city"
@@ -341,7 +341,7 @@ function ContactInfo(props) {
                     {errors.city}
                   </span>
                 )}
-              </div>{" "}
+              </div>
               <div className="form-group col-md-6">
                 <label
                   htmlFor="state"

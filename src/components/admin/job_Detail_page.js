@@ -60,7 +60,7 @@ function JobDetailpageAdmim(props) {
     <div>
       {user_type === "admin" && (
         <>
-          {" "}
+          
           <AdminHeader
             heading={
               <Link
@@ -106,7 +106,7 @@ function JobDetailpageAdmim(props) {
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
-                      {jobData.job_title}{" "}
+                      {jobData.job_title}
                       <CustomButton
                         className={
                           user_type === "user" || jobData.length === 0
@@ -130,7 +130,7 @@ function JobDetailpageAdmim(props) {
                         className="text-dark font-size-5 w-100 text-break"
                         to={`mailto:${jobData.email}`}
                       >
-                        <BsEnvelope className="text-primary font-size-5 " />{" "}
+                        <BsEnvelope className="text-primary font-size-5 " />
                         {jobData.email}
                       </Link>
                       {user_type === "admin" || props.self === "no" ? (
@@ -149,7 +149,7 @@ function JobDetailpageAdmim(props) {
                         className="text-dark font-size-5 w-100"
                         to={`tel:${jobData.contact_no_other}`}
                       >
-                        <BiPhoneCall className="text-primary font-size-5" />{" "}
+                        <BiPhoneCall className="text-primary font-size-5" />
                         {jobData.contact_no_other}
                       </Link>
                     )}
@@ -290,7 +290,7 @@ function JobDetailpageAdmim(props) {
                     {/*----About Employee----*/}
                     {isLoading ? (
                       <div className="table-responsive main_table_div">
-                        <Loader />{" "}
+                        <Loader />
                       </div>
                     ) : (
                       <div
@@ -317,7 +317,7 @@ function JobDetailpageAdmim(props) {
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
-                      {jobData.job_title}{" "}
+                      {jobData.job_title}
                       <CustomButton
                         className={
                           user_type === "user" || jobData.length === 0
@@ -341,7 +341,7 @@ function JobDetailpageAdmim(props) {
                         className="text-dark font-size-5 w-100 text-break"
                         to={`mailto:${jobData.email}`}
                       >
-                        <BsEnvelope className="text-primary font-size-5 " />{" "}
+                        <BsEnvelope className="text-primary font-size-5 " />
                         {jobData.email}
                       </Link>
                       {user_type === "admin" || props.self === "no" ? (
@@ -360,7 +360,7 @@ function JobDetailpageAdmim(props) {
                         className="text-dark font-size-5 w-100"
                         to={`tel:${jobData.contact_no_other}`}
                       >
-                        <BiPhoneCall className="text-primary font-size-5" />{" "}
+                        <BiPhoneCall className="text-primary font-size-5" />
                         {jobData.contact_no_other}
                       </Link>
                     )}

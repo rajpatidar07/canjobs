@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1693200780899,
@@ -24,6 +24,10 @@
                 {
                     "date": 1693809348330,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -486,9 +486,9 @@\n                   max={moment().format(\"DD-MM-YYYY\")}\n                   type=\"date\"\n                   placeholder=\"Date Of Joining \"\n                   name=\"start_date\"\n-                  value={moment(state.start_date).format(\"DD-MM-YYYY\") || \"\"}\n+                  value={state.start_date || \"\"}\n                   onChange={onInputChange}\n                   onKeyDownCapture={(e) => e.preventDefault()}\n                   className={\n                     errors.start_date\n@@ -521,9 +521,9 @@\n                   type=\"date\"\n                   placeholder=\"Date Of Leaving \"\n                   name=\"end_date\"\n                   disabled={state.currently_work_here === 1 || state.currently_work_here === \"1\"}\n-                  value={moment(state.end_date).format(\"DD-MM-YYYY\") || \"\"}\n+                  value={state.end_date || \"\"}\n                   onChange={onInputChange}\n                   nKeyDownCapture={(e) => e.preventDefault()}\n                   className={\n                     errors.end_date\n"
+                },
+                {
+                    "date": 1693820064852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -253,9 +253,9 @@\n                     </div>\n                   </div>\n                   <div className=\"d-flex align-items-center justify-content-right flex-wrap text-right\">\n                     <span className=\"font-size-4 text-gray w-100\">\n-                      {moment(CareerDetails.start_date).format(\"DD-MM-YYYY\")} -{\" \"}\n+                      {moment(CareerDetails.start_date).format(\"DD-MM-YYYY\")} -\n                       {CareerDetails.currently_work_here === (\"1\" || 1) ? \"Currently working\" : moment(CareerDetails.end_date).format(\"DD-MM-YYYY\")}\n                     </span>\n                     <span className=\"font-size-3 text-gray w-100\">\n                       <span className=\"mr-4\" style={{ marginTop: \"-2px\" }}>\n@@ -306,9 +306,9 @@\n                   >\n                     {errors.company}\n                   </span>\n                 )}\n-              </div>{\" \"}\n+              </div>\n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"designation\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -440,9 +440,9 @@\n                       {errors.functional_area}\n                     </span>\n                   )}\n                 </div>\n-              </div>{\" \"}\n+              </div>\n               <div className=\"form-group col-md-6\">\n                 <label\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n                   htmlFor=\"work_level\"\n"
                 }
             ],
             "date": 1693200780899,

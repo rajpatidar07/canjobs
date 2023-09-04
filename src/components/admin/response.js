@@ -647,7 +647,7 @@ function JobResponse(props) {
                                           ? "F"
                                           : res.gender === "male"
                                           ? "M"
-                                          : "O"}{" "}
+                                          : "O"}
                                         ({res.marital_status + ", "}
                                         {/*Calculation of age from date of birth*/}
                                         {moment().diff(
@@ -952,7 +952,7 @@ function JobResponse(props) {
                                     }
                                   >
                                     <span className="text-gray px-2">
-                                      {" "}
+                                      
                                       <ImCalendar />
                                     </span>
                                     {/* <i className="fa fa-calendar text-gray px-2"></i> */}

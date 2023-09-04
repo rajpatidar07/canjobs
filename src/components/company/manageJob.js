@@ -209,7 +209,7 @@ function ManageJobs() {
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">
-                      Load More{" "}
+                      Load More
                       <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
                     </Link>
                   </div>

@@ -353,7 +353,7 @@ function AddJobModal(props) {
                     {errors.job_category_id}
                   </span>
                 )}
-              </div>{" "}
+              </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="industry_type"
@@ -429,7 +429,7 @@ function AddJobModal(props) {
                     </span>
                   )}
                 </div>
-              </div>{" "}
+              </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="salary"

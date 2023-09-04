@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1692954532187,
@@ -72,6 +72,10 @@
                 {
                     "date": 1693487129345,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,12 +189,9 @@\n                 });\n                 setApiCall(true);\n               }\n             } catch (err) {\n-             console.log(err) {\n-                position: toast.POSITION.TOP_RIGHT,\n-                autoClose: 1000,\n-              });\n+             console.log(err) \n             }\n           }\n         } catch (err) {\n          console.log(err) {\n"
+                },
+                {
+                    "date": 1693820065441,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,12 +193,9 @@\n              console.log(err) \n             }\n           }\n         } catch (err) {\n-         console.log(err) {\n-            position: toast.POSITION.TOP_RIGHT,\n-            autoClose: 1000,\n-          });\n+         console.log(err)\n         }\n       }\n     } catch (err) {\n       console.log(err);\n@@ -649,9 +646,9 @@\n                                         {res.gender === \"female\"\n                                           ? \"F\"\n                                           : res.gender === \"male\"\n                                           ? \"M\"\n-                                          : \"O\"}{\" \"}\n+                                          : \"O\"}\n                                         ({res.marital_status + \", \"}\n                                         {/*Calculation of age from date of birth*/}\n                                         {moment().diff(\n                                           res.date_of_birth,\n@@ -954,9 +951,9 @@\n                                       res.status === \"complete\" ? true : false\n                                     }\n                                   >\n                                     <span className=\"text-gray px-2\">\n-                                      {\" \"}\n+                                      \n                                       <ImCalendar />\n                                     </span>\n                                     {/* <i className=\"fa fa-calendar text-gray px-2\"></i> */}\n                                   </button>\n"
                 }
             ],
             "date": 1692954532187,

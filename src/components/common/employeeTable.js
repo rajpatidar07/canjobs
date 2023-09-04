@@ -677,38 +677,38 @@ export default function EmployeeTable(props) {
                               </span>
                             ) : empdata.status === "2" ? (
                               <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                Prospect{" "}
+                                
+                                Prospect
                               </span>
                             ) : empdata.status === "3" ? (
                               <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                Lead{" "}
+                                
+                                Lead
                               </span>
                             ) : empdata.status === "4" ? (
                               <span className="p-1 bg-secondary text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                Reatined{" "}
+                                
+                                Reatined
                               </span>
                             ) : empdata.status === "5" ? (
                               <span className="p-1 bg-spray text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                Lost{" "}
+                                
+                                Lost
                               </span>
                             ) : empdata.status === "6" ? (
                               <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                Dead{" "}
+                                
+                                Dead
                               </span>
                             ) : empdata.status === "7" ? (
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                Reserved{" "}
+                                
+                                Reserved
                               </span>
                             ) : empdata.status === "0" ? (
                               <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                {" "}
-                                New{" "}
+                                
+                                New
                               </span>
                             ) : null}
                           </p>

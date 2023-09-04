@@ -84,7 +84,7 @@ function SelfApplicat(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            {" "}
+            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Self Applicants"} />
             {/* <!-- navbar- --> */}

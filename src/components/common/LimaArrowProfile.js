@@ -128,7 +128,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                               ? "approved"
                               : item.lmia_substage === "awaiting decision"
                               ? "pending"
-                              : item.lmia_substage === "reject"
+                              : item.lmia_substage === "rejected"
                               ? "reject"
                               : ""
                           }`}
@@ -138,8 +138,8 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                               ? "Approved"
                               : item.lmia_substage === "awaiting decision"
                               ? "Awaiting Decision"
-                              : item.lmia_substage === "reject"
-                              ? "Rejected."
+                              : item.lmia_substage === "rejected"
+                              ? "Rejected"
                               : "decision"}
                           </span>
                         </div>

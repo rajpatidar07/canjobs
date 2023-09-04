@@ -3,7 +3,7 @@ import useValidation from "../../common/useValidation";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
 export default function PayentForm() {
-  const [loading, setLoading] = useState(false);
+  const [loading/*, setLoading*/] = useState(false);
 
   const initialFormState = {
     amount: "",
@@ -24,7 +24,7 @@ export default function PayentForm() {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
+  const { state/*, setState*/, onInputChange, errors,/* setErrors, validate*/ } =
     useValidation(initialFormState, validators);
   /*Function to made payment*/
   const onPayentClick = () => {
@@ -76,8 +76,15 @@ export default function PayentForm() {
             {/* //   ))} */}
           </div>
           <form className="col-md-4 p-10">
+          <label
+                htmlFor="amount"
+                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+              >
+                Payment method: <span className="text-danger">*</span>
+              </label>
+            <div className="row">
             <div
-              className={`sub-stage text-capitalize`}
+              className={`col-6 text-capitalize`}
               //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
             >
               <input
@@ -91,7 +98,7 @@ export default function PayentForm() {
               Cash
             </div>
             <div
-              className={`sub-stage text-capitalize`}
+              className={`col-6 text-capitalize`}
               //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
             >
               <input
@@ -103,6 +110,7 @@ export default function PayentForm() {
                 readOnly
               />
               Paypal
+            </div>
             </div>
             <div className="m-3">
               <label

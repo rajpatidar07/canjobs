@@ -367,7 +367,7 @@ function EmployerHome() {
                   {/* <!-- Category Content --> */}
                   <div className="">
                     <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                      Human Resource{" "}
+                      Human Resource
                     </h5>
                     <p className="font-size-4 font-weight-normal text-gray">
                       <span>415</span> Vacancy
@@ -406,7 +406,7 @@ function EmployerHome() {
                 <h2 className="mb-9 font-size-10">Quick career tips</h2>
                 <p className="text-default-color font-size-5">
                   Collaboratively administrate empowered markets via
-                  plug-and-play networks. Dynamically procrastinate{" "}
+                  plug-and-play networks. Dynamically procrastinate
                 </p>
               </div>
               {/* <!-- section-title end --> */}
@@ -436,7 +436,7 @@ function EmployerHome() {
                   </Link>
                   <h4>
                     <Link className="card-title font-size-7 mt-8 mb-6 heading-default-color">
-                      How to make a perfect CV that attracts the attention{" "}
+                      How to make a perfect CV that attracts the attention
                     </Link>
                   </h4>
                   <p className="card-text mb-9 font-size-4">

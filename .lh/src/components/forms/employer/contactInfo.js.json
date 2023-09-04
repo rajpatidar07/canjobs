@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1693486845044,
@@ -12,6 +12,10 @@
                 {
                     "date": 1693486872662,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,12 +108,9 @@\n           props.setApiCall(true);\n           return close();\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false)\n       }\n     } else {\n       setLoading(false);\n"
+                },
+                {
+                    "date": 1693820064911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -136,9 +136,9 @@\n         <div className=\"bg-white rounded h-100 px-11 pt-7\">\n           <form onSubmit={onCompanyContactClick}>\n             <h5 className=\"text-center pt-2 mb-7\">Contact Detail</h5>\n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"contact_person_name\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -313,9 +313,9 @@\n                 )}\n               </div>\n             </div>\n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"city\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -340,9 +340,9 @@\n                   <span key={errors.city} className=\"text-danger font-size-3\">\n                     {errors.city}\n                   </span>\n                 )}\n-              </div>{\" \"}\n+              </div>\n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"state\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n"
                 }
             ],
             "date": 1693486845044,

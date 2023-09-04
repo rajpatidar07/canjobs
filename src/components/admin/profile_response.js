@@ -24,7 +24,7 @@ function JobProfileResponse(props) {
   // let [documentModal, setDocumentModal] = useState(false);
   // let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
-  let [apiCall, setApiCall] = useState(props.apiCall);
+  let [apiCall, setApiCall] = useState(false);
   let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
   let [lmia, setLimia] = useState(false);
@@ -166,7 +166,6 @@ function JobProfileResponse(props) {
             VisaResponse.data.message === "visa inserted successfully" ||
             VisaResponse.data.message === "visa updated successfully"
           ) {
-            props.setApiCall(true)
             // Api call to set employee Limia
             const lmia = { lmia_status: "candidate placement" };
             try {
@@ -865,7 +864,7 @@ function JobProfileResponse(props) {
                                 }
                               >
                                 <span className="text-gray px-2">
-                                  {" "}
+                                  
                                   <ImCalendar />
                                 </span>
                                 {/* <i className="fa fa-calendar text-gray px-2"></i> */}
@@ -961,7 +960,9 @@ function JobProfileResponse(props) {
           resData={resData}
           apiCall={apiCall}
           setApiCall={setApiCall}
+          statusCall={props.setApiCall}
           job={"no"}
+          page={props.heading}
           close={() => {
             setLimia(false);
             setResData("");

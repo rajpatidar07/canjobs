@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693486845048,
@@ -16,6 +16,10 @@
                 {
                     "date": 1693487150873,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,9 +193,12 @@\n     //console.log((e);\n     try {\n       const responseData = await DeleteEmployeeEducation(e);\n       if (responseData.message === \"Education details has been deleted\") {\n-        toast.error(\"Education deleted Successfully\", \n+        toast.error(\"Education deleted Successfully\", {\n+          position: toast.POSITION.TOP_RIGHT,\n+          autoClose: 1000,\n+        });\n         setApiCall(true);\n         props.setApiCall(true);\n         setDeleteAlert(false);\n       }\n"
+                },
+                {
+                    "date": 1693820064797,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -240,9 +240,9 @@\n                             <span\n                               className=\"font-size-6 text-black-2 font-weight-semibold\"\n                               onClick={() => EducationData(education)}\n                             >\n-                              {education.qualification}{\" \"}\n+                              {education.qualification}\n                               <span className=\"font-size-4 text-break\">\n                                 ({education.university_institute})\n                               </span>\n                             </span>\n"
                 }
             ],
             "date": 1693486845048,

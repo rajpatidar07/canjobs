@@ -66,7 +66,8 @@ export default function VisaTable(props) {
                   data.visa_id,
                   "visa"
                 );
-                VisaCommentArray.push(subStageRes.data.data.data);
+                VisaCommentArray.push(subStageRes.data.data.data.filter((item)=>item.status ===
+                "file decision"));
                 if (
                   subStageRes.data.data.data.filter(
                     (item) => item.substage === "rejected"
@@ -110,7 +111,6 @@ export default function VisaTable(props) {
     sortOrder,
     props.apiCall,
     apiCall,
-    props.apiCall
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -138,7 +138,7 @@ export default function VisaTable(props) {
 
   return (
     <>
-      {" "}
+      
       {showVisaModal ? (
         <VisaStatus
           show={showVisaModal}
@@ -307,11 +307,11 @@ export default function VisaTable(props) {
                     >
                       Action
                     </th>
-                  )}{" "}
+                  )}
                 </tr>
               </thead>
               <tbody>
-                {" "}
+                
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
@@ -336,7 +336,7 @@ export default function VisaTable(props) {
                       </>
                     ) : (
                       ""
-                    )}{" "}
+                    )}
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata, i) => (
@@ -347,7 +347,7 @@ export default function VisaTable(props) {
                             className="text-dark"
                             to={`/${empdata.employee_id}`}
                           >
-                            {empdata.employee_id}{" "}
+                            {empdata.employee_id}
                           </Link>
                         </p>
                       </td>
@@ -367,7 +367,7 @@ export default function VisaTable(props) {
                                   alt=""
                                   className="w-100"
                                 />
-                              )}{" "}
+                              )}
                             </div>
                           </div>
 
@@ -383,7 +383,7 @@ export default function VisaTable(props) {
                                     className="text-dark"
                                     to={`/${empdata.employee_id}`}
                                   >
-                                    {empdata.name}{" "}
+                                    {empdata.name}
                                   </Link>
                                 </p>
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
@@ -398,7 +398,7 @@ export default function VisaTable(props) {
                                     empdata.date_of_birth,
                                     "years"
                                   )}
-                                  Y){" "}
+                                  Y)
                                   {empdata.is_featured === "1" ? (
                                     <span className="bg-orange text-white featured_tag">
                                       Featured
@@ -408,10 +408,10 @@ export default function VisaTable(props) {
                                     <span className="bg-info text-white web_tag">
                                       Web
                                     </span>
-                                  ) : null}{" "}
+                                  ) : null}
                                 </p>
                               </div>
-                            )}{" "}
+                            )}
                           </div>
                         </div>
                       </td>
@@ -425,7 +425,7 @@ export default function VisaTable(props) {
                               className="text-dark"
                               to={`tel:${empdata.contact_no}`}
                             >
-                              {empdata.contact_no}{" "}
+                              {empdata.contact_no}
                             </Link>
                           </p>
                         )}
@@ -435,7 +435,7 @@ export default function VisaTable(props) {
                               className="text-dark"
                               to={`mailto:${empdata.email}`}
                             >
-                              {empdata.email}{" "}
+                              {empdata.email}
                             </Link>
                           </p>
                         </h3>
@@ -449,9 +449,9 @@ export default function VisaTable(props) {
                             <p className="font-size-3  mb-0">Unavailable</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.language}{" "}
+                              {empdata.language}
                             </p>
-                          )}{" "}
+                          )}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -462,9 +462,9 @@ export default function VisaTable(props) {
                             <p className="font-size-3  mb-0">Unavailable</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {empdata.interested_in}{" "}
+                              {empdata.interested_in}
                             </p>
-                          )}{" "}
+                          )}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -476,9 +476,9 @@ export default function VisaTable(props) {
                             <p className="font-size-3  mb-0">Unavailable</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {empdata.visa_country}{" "}
+                              {empdata.visa_country}
                             </p>
-                          )}{" "}
+                          )}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -492,7 +492,7 @@ export default function VisaTable(props) {
                               {empdata.experience}
                               Years
                             </p>
-                          )}{" "}
+                          )}
                         </td>
                       )}
                       <td className=" py-5">
@@ -505,7 +505,7 @@ export default function VisaTable(props) {
                             <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                               Incompelete
                             </span>
-                          )}{" "}
+                          )}
                         </p>
                       </td>
 
@@ -539,7 +539,7 @@ export default function VisaTable(props) {
                             <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                               NA
                             </span>
-                          )}{" "}
+                          )}
                         </p>
                       </td>
 
@@ -568,7 +568,7 @@ export default function VisaTable(props) {
                             <span className="text-gray px-2">
                               <LiaCcVisa />
                             </span>
-                            {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}{" "}
+                            {/* <span className="fab fa-cc-visa text-gray px-2"></span> */}
                           </button>
 
                           <button
@@ -583,16 +583,16 @@ export default function VisaTable(props) {
                             <span className="text-gray">
                               <GrDocumentUser />
                             </span>
-                            {/* <span className="fas fa-file text-gray"></span> */}{" "}
+                            {/* <span className="fas fa-file text-gray"></span> */}
                           </button>
                         </div>
                       </td>
                     </tr>
                   ))
-                )}{" "}
+                )}
               </tbody>
             </table>
-          )}{" "}
+          )}
         </div>
         <div className="pt-2">
           <Pagination

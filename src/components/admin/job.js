@@ -105,7 +105,7 @@ function Job(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            {" "}
+            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Jobs"} />
             {/* <!-- navbar- --> */}
@@ -150,7 +150,7 @@ function Job(props) {
                       name={"name"}
                       onChange={(e) => onSearch(e)}
                     />
-                  </div>{" "}
+                  </div>
                   <div
                     className={
                       props.skill === null || props.skill === undefined

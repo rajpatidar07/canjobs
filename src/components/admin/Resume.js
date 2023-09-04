@@ -345,7 +345,7 @@ function ResumeGrerator(props) {
                                 ) + "M"
                               : null
                             : edu.start_date + "- Now"} */}
-                          {/* {edu.start_date}-{" "}
+                          {/* {edu.start_date}-
                         {edu.end_date || edu.currently_work_here} */}
                         {calculateDuration(edu.start_date, edu.end_date)}
                         </Text>

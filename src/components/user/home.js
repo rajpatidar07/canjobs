@@ -254,7 +254,7 @@ let token = localStorage.getItem("token")
                 {/* <!-- Category Content --> */}
                 <div className="text-left category_text_box">
                   <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Human Resource{" "}
+                    Human Resource
                   </h5>
                   <p className="font-size-4 font-weight-bold text-secondary">
                     <span>84</span> Vacancy
@@ -283,7 +283,7 @@ let token = localStorage.getItem("token")
                 <h2 className="mb-9 font-size-10">Quick career tips</h2>
                 <p className="text-default-color font-size-5">
                   Collaboratively administrate empowered markets via
-                  plug-and-play networks. Dynamically procrastinate{" "}
+                  plug-and-play networks. Dynamically procrastinate
                 </p>
               </div>
               {/* <!-- section-title end --> */}
@@ -319,7 +319,7 @@ let token = localStorage.getItem("token")
                       className="card-title font-size-7 mt-8 mb-6 heading-default-color"
                       href="http://localhost:3000/"
                     >
-                      How to make a perfect CV that attracts the attention{" "}
+                      How to make a perfect CV that attracts the attention
                     </a>
                   </h4>
                   <p className="card-text mb-9 font-size-4">

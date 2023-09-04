@@ -243,7 +243,7 @@ function CompanyDetails(props) {
             <h5 className="text-center pt-2 mb-7">{user_type === "company" ? "Company Details" : "Employer Details"}</h5>
             <input type="hidden" value={state.company_id || ""} />
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="company_name"
@@ -567,7 +567,7 @@ function CompanyDetails(props) {
               </div>
             </div>
             <div className="row">
-              {" "}
+              
               <div className="form-group col-md-12">
                 <label
                   htmlFor="about"

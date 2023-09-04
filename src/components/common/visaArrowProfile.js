@@ -20,6 +20,11 @@ export default function VisaArrowProfile({
                 }
                 key={i}
               >
+                <div className="mt-2 job_name text-dark">
+                  <span className="m-2 font-size-2 d-block mb-1">
+                    visa
+                  </span>
+                </div>
                 <div>
                   <div
                     key={i + 1}
@@ -30,7 +35,7 @@ export default function VisaArrowProfile({
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
-                        ? "visa_current"
+                        ? "approved"
                         : null
                     }`}
                   >
@@ -44,7 +49,7 @@ export default function VisaArrowProfile({
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
-                        ? "visa_current"
+                        ? "approved"
                         : null
                     }`}
                   >
@@ -57,7 +62,7 @@ export default function VisaArrowProfile({
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
-                        ? "visa_current"
+                        ? "approved"
                         : null
                     }`}
                   >
@@ -69,7 +74,7 @@ export default function VisaArrowProfile({
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
-                        ? "visa_current"
+                        ? "approved"
                         : null
                     }`}
                   >
@@ -80,39 +85,69 @@ export default function VisaArrowProfile({
                     className={`mt-2 step text-capitalize ${
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
-                        ? "visa_current"
+                        ? "approved"
                         : null
                     }`}
                   >
                     <span>file submission</span>
                   </div>
-                  <div
+                  {/* <div
                     key={i + 6}
                     className={`mt-2 step text-capitalize ${
                       item.visa_status === "file decision"
-                        ? "visa_current"
+                        ? "approved"
                         : null
                     }`}
                   >
                     <span>file decision</span>
-                  </div>
-                </div>
+                  </div> */}
                 {/*Comment for the decision status of the visa*/}
                 {item.visa_status === "file decision" &&
-                visaStatusRejectComment[0] !== undefined &&
-                  (visaStatusRejectComment[0] || []).map((subitem, i) => {
+                visaStatusRejectComment[i] !== undefined ?
+                  (visaStatusRejectComment[i] || []).map((subitem, i) => {
                     return subitem.misc_id === item.visa_id ? (
-                      <small className="mx-10" key={i}>
-                        {subitem.substage === "approved"
-                          ? "Congratulation your Visa is Approved"
+                      <div
+                    key={i }
+                    className={`mt-2 step text-capitalize ${
+                      subitem.substage === "approved"
+                          ? "approved"
                           : subitem.substage === "awaiting decision"
-                          ? "Your Visa is in progress"
+                          ? "pending"
                           : subitem.substage === "rejected"
-                          ? "Sorry to inform you your Visa got rejected."
-                          : ""}
-                      </small>
+                          ? "rejected"
+                          : ""
+                    }`}
+                  >
+                    <span>{subitem.substage === "approved"
+                          ? "Approved"
+                          : subitem.substage === "awaiting decision"
+                          ? "Pending"
+                          : subitem.substage === "rejected"
+                          ? "Rejected"
+                          : "file decision"}</span>
+                  </div>
+                      // <small className="mx-10" key={i}>
+                        // {subitem.substage === "approved"
+                        //   ? "Congratulation your Visa is Approved"
+                        //   : subitem.substage === "awaiting decision"
+                        //   ? "Your Visa is in progress"
+                        //   : subitem.substage === "rejected"
+                        //   ? "Sorry to inform you your Visa got rejected."
+                        //   : ""}
+                      // </small>
                     ) : null;
-                  })}
+                  }):
+                  <div
+                    key={i + 6}
+                    className={`mt-2 step text-capitalize ${
+                      item.visa_status === "file decision"
+                        ? "approved"
+                        : ""
+                    }`}
+                  >
+                    <span>file decision</span>
+                  </div>}
+                </div>
               </div>
             )
           );

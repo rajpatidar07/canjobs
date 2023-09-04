@@ -239,7 +239,7 @@ export default function Visa() {
                       onChange={(e) => onSearch(e)}
                     />
                     <small className="text-danger">{searcherror}</small>
-                  </div>{" "}
+                  </div>
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Company Name:</p>
                     <input

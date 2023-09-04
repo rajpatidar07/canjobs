@@ -129,6 +129,9 @@ function LmiaStatus(props) {
         });
         setApiCall(true);
         props.setApiCall(true);
+        if (props.page === "userprofile") {
+          props.statusCall(true);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -218,6 +221,9 @@ function LmiaStatus(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
+          if (props.page === "userprofile") {
+            props.statusCall(true);
+          }
           close();
         }
         if (
@@ -228,8 +234,11 @@ function LmiaStatus(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          props.setApiCall(true);
           close();
+          props.setApiCall(true);
+          if (props.page === "userprofile") {
+            props.statusCall(true);
+          }
         }
       } catch (err) {
         console.log(err);

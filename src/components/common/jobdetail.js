@@ -137,7 +137,7 @@ function JobDetailPage(props) {
                   onClick={() => OnApplyClick(3)}
                   className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                 >
-                  <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                  <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                   Save job
                 </button> */}
                     </div>
@@ -166,7 +166,7 @@ function JobDetailPage(props) {
                         </div>
                         <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
                           {jobDetatilsData.salary}
-                        </p>{" "}
+                        </p>
                       </>
                     </div>
                   </div>

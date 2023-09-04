@@ -41,7 +41,7 @@ function EmployeeDetails() {
                       className="text-black-2 font-size-6 font-weight-semibold"
                       onClick={() => setShowRegistration(true)}
                     >
-                      David Henricks{" "}
+                      David Henricks
                       <span className="age_gender font-size-3 text-smoke">
                         (Male 29)
                       </span>
@@ -687,7 +687,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                               London
                             </Link>
                           </li>
@@ -696,7 +696,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                               Full-time
                             </Link>
                           </li>
@@ -742,7 +742,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                               California
                             </Link>
                           </li>
@@ -751,7 +751,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                               Remote
                             </Link>
                           </li>
@@ -797,7 +797,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                               London
                             </Link>
                           </li>
@@ -806,7 +806,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                               Full-time
                             </Link>
                           </li>
@@ -852,7 +852,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                               Alabama
                             </Link>
                           </li>
@@ -861,7 +861,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                               Full-time
                             </Link>
                           </li>
@@ -914,7 +914,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                               New York
                             </Link>
                           </li>
@@ -923,7 +923,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                               Part-time
                             </Link>
                           </li>
@@ -969,7 +969,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-denim font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
+                              <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>
                               Alabama
                             </Link>
                           </li>
@@ -978,7 +978,7 @@ function EmployeeDetails() {
                               to="/"
                               className="bg-regent-opacity-15 text-orange font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                             >
-                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
+                              <i className="fa fa-briefcase mr-2 font-weight-bold"></i>
                               Full-time
                             </Link>
                           </li>

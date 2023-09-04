@@ -40,6 +40,7 @@ const NewUserProfile = (props) => {
 
   // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
+  const [statusCall, setStatusCall] = useState(false);
   const [lima, setLmia] = useState(false);
   const [visaStatusRejectComment, setVisaStatusRejectComment] = useState([]);
   const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
@@ -311,7 +312,7 @@ const NewUserProfile = (props) => {
                       </h4>
                       <div className="m-0 age_gender font-size-3 d-flex align-items-center">
                         <p>
-                          {" "}
+                          
                           {PersonalDetail.gender ||
                           PersonalDetail.marital_status ||
                           PersonalDetail.marital_status ||
@@ -422,7 +423,7 @@ const NewUserProfile = (props) => {
                           className="text-dark font-size-5 w-100 text-break"
                           to={`mailto:${PersonalDetail.email}`}
                         >
-                          <BsEnvelope className="text-primary font-size-5 " />{" "}
+                          <BsEnvelope className="text-primary font-size-5 " />
                           {PersonalDetail.email}
                         </Link>
                         {user_type === "admin" || props.self === "no" ? (
@@ -441,7 +442,7 @@ const NewUserProfile = (props) => {
                           className="text-dark font-size-5 w-100"
                           to={`tel:${PersonalDetail.contact_no}`}
                         >
-                          <BiPhoneCall className="text-primary font-size-5" />{" "}
+                          <BiPhoneCall className="text-primary font-size-5" />
                           {PersonalDetail.contact_no}
                         </Link>
                       )}
@@ -621,6 +622,7 @@ const NewUserProfile = (props) => {
                 {visaStatus&&user_type==="admin"?<VisaArrowProfile
                   visaStatus={visaStatus}
                   visaStatusRejectComment={visaStatusRejectComment}
+                  apiCall={apiCall}
                 />:null}
               </div>
 
@@ -777,7 +779,7 @@ const NewUserProfile = (props) => {
                         className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
                       >
-                        {user_type === "user" ? "Add Document" : "Documents"}{" "}
+                        {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
                   </ul>
@@ -848,7 +850,7 @@ const NewUserProfile = (props) => {
                                 </h4>
                                 <div className="m-0 age_gender font-size-3 d-flex align-items-center">
                                   <p>
-                                    {" "}
+                                    
                                     {PersonalDetail.gender ||
                                     PersonalDetail.marital_status ||
                                     PersonalDetail.marital_status ||
@@ -964,7 +966,7 @@ const NewUserProfile = (props) => {
                                     className="text-dark font-size-5 w-100 text-break"
                                     to={`mailto:${PersonalDetail.email}`}
                                   >
-                                    <BsEnvelope className="text-primary font-size-5 " />{" "}
+                                    <BsEnvelope className="text-primary font-size-5 " />
                                     {PersonalDetail.email}
                                   </Link>
                                   {user_type === "admin" ||
@@ -984,7 +986,7 @@ const NewUserProfile = (props) => {
                                     className="text-dark font-size-5 w-100"
                                     to={`tel:${PersonalDetail.contact_no}`}
                                   >
-                                    <BiPhoneCall className="text-primary font-size-5" />{" "}
+                                    <BiPhoneCall className="text-primary font-size-5" />
                                     {PersonalDetail.contact_no}
                                   </Link>
                                 )}
@@ -1088,7 +1090,7 @@ const NewUserProfile = (props) => {
                                       title="Nationality"
                                     >
                                       <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                        Nationality:{" "}
+                                        Nationality:
                                         <b> {PersonalDetail.nationality}</b>
                                       </span>
                                     </div>
@@ -1101,7 +1103,7 @@ const NewUserProfile = (props) => {
                                       >
                                         Canada Work Permit:
                                         <b>
-                                          {" "}
+                                          
                                           {PersonalDetail.work_permit_canada}
                                         </b>
                                       </span>
@@ -1112,7 +1114,7 @@ const NewUserProfile = (props) => {
                                       <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                                         Work Permit of Other Country:
                                         <b>
-                                          {" "}
+                                          
                                           {
                                             PersonalDetail.work_permit_other_country
                                           }
@@ -1492,6 +1494,8 @@ const NewUserProfile = (props) => {
                         heading={"userprofile"}
                         setApiCall={setApiCall}
                         apiCall={apiCall}
+                        statusCall={statusCall}
+                        setStatusCall={setStatusCall}
                       />
                     ) : null}
                     {/* <!-- Top Start --> */}
@@ -1642,6 +1646,7 @@ const NewUserProfile = (props) => {
                     <VisaTable
                       employee_id={eid}
                       setApiCall={setApiCall}
+                      apiCall={apiCall}
                       page={"user_profile"}
                       setVisaStatus={setVisaStatus}
                       setVisaStatusRejectComment={setVisaStatusRejectComment}

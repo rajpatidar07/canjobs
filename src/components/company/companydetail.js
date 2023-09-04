@@ -72,7 +72,7 @@ function CompanyDetailPage(props) {
             ) : null}
             {employerData.designation ? (
               <div className="font-size-4 mr-7 mb-2" title="Designation">
-                <i className="fas fa-portrait mr-2"></i>{" "}
+                <i className="fas fa-portrait mr-2"></i>
                 {employerData.designation}
               </div>
             ) : null}

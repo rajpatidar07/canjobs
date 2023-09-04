@@ -119,7 +119,7 @@ const UserProfile = (props) => {
         ""
       ) : (
         <>
-          {" "}
+          
           <EmployeeHeader />
           <ToastContainer />
         </>
@@ -130,7 +130,7 @@ const UserProfile = (props) => {
           {name === null || name === "null" ? "<h4>Complete profile</h4>" : ""}
           {isLoading ? (
             <div className="table-responsive main_table_div">
-              <Loader />{" "}
+              <Loader />
             </div>
           ) : (
             <div className="row text-left mt-5 pt-5">
@@ -159,7 +159,7 @@ const UserProfile = (props) => {
                       >
                         {user_type === "admin" ? (
                           <>
-                            {" "}
+                            
                             <input
                               type="file"
                               id="ImgUploadInput"
@@ -371,7 +371,7 @@ const UserProfile = (props) => {
                           {PersonalDetail.nationality ? (
                             <div className="info_box text-left">
                               <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                Nationality:{" "}
+                                Nationality:
                                 <b> {PersonalDetail.nationality}</b>
                               </span>
                             </div>
@@ -389,7 +389,7 @@ const UserProfile = (props) => {
                               <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                                 Work Permit of Other Country:
                                 <b>
-                                  {" "}
+                                  
                                   {PersonalDetail.work_permit_other_country}
                                 </b>
                               </span>
@@ -508,7 +508,7 @@ const UserProfile = (props) => {
                           className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                           onClick={() => setShowDoc(true)}
                         >
-                          {user_type === "user" ? "Add Document" : "Documents"}{" "}
+                          {user_type === "user" ? "Add Document" : "Documents"}
                         </CustomButton>
                       ) : null}
                     </li>

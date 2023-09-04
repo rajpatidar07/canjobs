@@ -254,7 +254,7 @@ function EmployementDetails(props) {
                   </div>
                   <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                     <span className="font-size-4 text-gray w-100">
-                      {moment(CareerDetails.start_date).format("DD-MM-YYYY")} -{" "}
+                      {moment(CareerDetails.start_date).format("DD-MM-YYYY")} -
                       {CareerDetails.currently_work_here === ("1" || 1) ? "Currently working" : moment(CareerDetails.end_date).format("DD-MM-YYYY")}
                     </span>
                     <span className="font-size-3 text-gray w-100">
@@ -307,7 +307,7 @@ function EmployementDetails(props) {
                     {errors.company}
                   </span>
                 )}
-              </div>{" "}
+              </div>
               <div className="form-group col-md-6">
                 <label
                   htmlFor="designation"
@@ -441,7 +441,7 @@ function EmployementDetails(props) {
                     </span>
                   )}
                 </div>
-              </div>{" "}
+              </div>
               <div className="form-group col-md-6">
                 <label
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

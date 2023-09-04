@@ -56,7 +56,7 @@ const AdminSidebar = (props) => {
             >
               <LiaUsersSolid className="sidebar_icon" />
               Admin Applicants
-              {/* <i className="far fa-user mr-5"></i>Manage Applicants{" "} */}
+              {/* <i className="far fa-user mr-5"></i>Manage Applicants */}
             </Link>
           </li>
           <li
@@ -70,7 +70,7 @@ const AdminSidebar = (props) => {
             >
               {/* <i className="far fa-user mr-5"></i> */}
               <LiaUsersSolid className="sidebar_icon" />
-              Other Applicants{" "}
+              Other Applicants
             </Link>
           </li>
           <li className={props.heading === "Manage Companies" ? "active" : ""}>

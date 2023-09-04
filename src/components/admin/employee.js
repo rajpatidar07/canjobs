@@ -83,7 +83,7 @@ function Employee(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            {" "}
+            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Applicants"} />
             {/* <!-- navbar- --> */}

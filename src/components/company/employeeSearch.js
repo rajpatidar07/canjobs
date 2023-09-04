@@ -226,7 +226,7 @@ function EmployeeSearch() {
                     className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
                    
                   >
-                    Load More{" "}
+                    Load More
                     <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
                   </Link>
                 </div>
@@ -542,7 +542,7 @@ function EmployeeSearch() {
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
                             </Link>
                           </div>
@@ -812,7 +812,7 @@ function EmployeeSearch() {
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
                             </Link>
                           </div>
@@ -903,7 +903,7 @@ function EmployeeSearch() {
                                   className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                  
                                 >
-                                  Swift{" "}
+                                  Swift
                                 </Link>
                               </li>
                               <li>
@@ -1055,7 +1055,7 @@ function EmployeeSearch() {
                             {/* <!-- media texts start --> */}
                             <div>
                               <h3 className="font-size-6 mb-0">
-                                Creative Director{" "}
+                                Creative Director
                               </h3>
                               <span className="font-size-3 text-gray line-height-2">
                                 Facebook
@@ -1082,7 +1082,7 @@ function EmployeeSearch() {
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
                             </Link>
                           </div>
@@ -1352,7 +1352,7 @@ function EmployeeSearch() {
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
                             </Link>
                           </div>
@@ -1622,7 +1622,7 @@ function EmployeeSearch() {
                               className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5"
                              
                             >
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
+                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>
                               Save job
                             </Link>
                           </div>

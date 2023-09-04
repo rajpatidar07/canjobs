@@ -199,7 +199,7 @@ function Employer() {
                       onClick={() => setShowEmployerDetails(false)}
                       className="d-flex align-items-center ml-4"
                     >
-                      {" "}
+                      
                       <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8 mt-10"></i>
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back

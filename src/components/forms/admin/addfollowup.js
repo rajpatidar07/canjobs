@@ -132,7 +132,7 @@ function Addfollowup(props) {
                 <div className="single_note mb-5" key={res.id}>
                   <div className="d-flex justify-content-between">
                     <i className="font-size-3">
-                      Created on:{" "}
+                      Created on:
                       {moment(res.created_at).format("Do MMM YYYY, h:mm:ss a")}
                     </i>
                   </div>

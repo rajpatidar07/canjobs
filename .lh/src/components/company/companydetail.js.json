@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1692954847861,
@@ -24,6 +24,10 @@
                 {
                     "date": 1693487403923,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n import CustomButton from \"../common/button\";\n import ContactInfo from \"../forms/employer/contactInfo\";\n import { EmployerDetails } from \"../../api/api\";\n import { Link } from \"react-router-dom\";\n-import { toast } from \"react-toastify\";\n import { PiPencilDuotone } from \"react-icons/pi\";\n function CompanyDetailPage(props) {\n   /*Show modal and data state */\n   const [apiCall, setApiCall] = useState(false);\n"
+                },
+                {
+                    "date": 1693820064958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,9 +71,9 @@\n               </div>\n             ) : null}\n             {employerData.designation ? (\n               <div className=\"font-size-4 mr-7 mb-2\" title=\"Designation\">\n-                <i className=\"fas fa-portrait mr-2\"></i>{\" \"}\n+                <i className=\"fas fa-portrait mr-2\"></i>\n                 {employerData.designation}\n               </div>\n             ) : null}\n             {employerData.email && props.page !== \"company_profile\" ? (\n"
                 }
             ],
             "date": 1692954847861,
