@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1693200780899,
@@ -20,6 +20,10 @@
                 {
                     "date": 1693487156866,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,9 +195,12 @@\n   async function deleteEducation(e) {\n     try {\n       const responseData = await DeleteEmployeeCareer(e);\n       if (responseData.message === \"career details has been deleted\") {\n-        toast.error(\"Career deleted Successfully\", \n+        toast.error(\"Career deleted Successfully\", {\n+          position: toast.POSITION.TOP_RIGHT,\n+          autoClose: 1000,\n+        });\n         props.setApiCall(true);\n         setApiCall(true);\n         setDeleteAlert(false);\n       }\n"
+                },
+                {
+                    "date": 1693809348330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -486,9 +486,9 @@\n                   max={moment().format(\"DD-MM-YYYY\")}\n                   type=\"date\"\n                   placeholder=\"Date Of Joining \"\n                   name=\"start_date\"\n-                  value={moment(state.start_date).format(\"DD-MM-YYYY\") || \"\"}\n+                  value={state.start_date || \"\"}\n                   onChange={onInputChange}\n                   onKeyDownCapture={(e) => e.preventDefault()}\n                   className={\n                     errors.start_date\n@@ -521,9 +521,9 @@\n                   type=\"date\"\n                   placeholder=\"Date Of Leaving \"\n                   name=\"end_date\"\n                   disabled={state.currently_work_here === 1 || state.currently_work_here === \"1\"}\n-                  value={moment(state.end_date).format(\"DD-MM-YYYY\") || \"\"}\n+                  value={state.end_date || \"\"}\n                   onChange={onInputChange}\n                   nKeyDownCapture={(e) => e.preventDefault()}\n                   className={\n                     errors.end_date\n"
                 }
             ],
             "date": 1693200780899,

@@ -156,7 +156,7 @@ function AddInterview(props) {
                     ? "form-control coustam_datepicker border border-danger"
                     : "form-control coustam_datepicker"
                 }
-                value={moment(state.interview_date).format("DD-MM-YYYY")}
+                value={state.interview_date}
                 onChange={onInputChange}
                 id="interview_date"
                 name="interview_date"

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1693200780899,
@@ -16,6 +16,14 @@
                 {
                     "date": 1693486959192,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -226,12 +226,9 @@\n           props.setApiCall(true);\n           return close();\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false)\n       }\n     } else {\n       setLoading(false);\n"
+                },
+                {
+                    "date": 1693816253573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -251,10 +251,11 @@\n   /*Onchange function of Resume */\n   const handleUploadFile = async (e) => {\n     encoded = await convertToBase64(e.target.files[0]);\n     let base64Name = encoded.base64;\n-    let finalBase = base64Name.split(\",\")[1];\n-    setState({ ...state, resume: finalBase });\n+    let finalBase = base64Name;\n+    console.log(finalBase)\n+    // setState({ ...state, resume: finalBase });\n   };\n \n   /*Onchange function of profile */\n   const handleFileChange = async (event) => {\n"
+                },
+                {
+                    "date": 1693816299113,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -253,9 +253,9 @@\n     encoded = await convertToBase64(e.target.files[0]);\n     let base64Name = encoded.base64;\n     let finalBase = base64Name;\n     console.log(finalBase)\n-    // setState({ ...state, resume: finalBase });\n+    setState({ ...state, resume: finalBase });\n   };\n \n   /*Onchange function of profile */\n   const handleFileChange = async (event) => {\n"
                 }
             ],
             "date": 1693200780899,

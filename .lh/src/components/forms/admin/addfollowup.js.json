@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1692955359603,
@@ -32,6 +32,10 @@
                 {
                     "date": 1693486958622,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,12 +90,9 @@\n           props.setApiCall(true);\n           return close();\n         }\n       } catch (err) {\n-       console.log(err) {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n+       console.log(err) \n         setLoading(false);\n       }\n     } else {\n       setLoading(false);\n"
+                },
+                {
+                    "date": 1693809677363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -248,11 +248,9 @@\n                     placeholder=\"Next followup date\"\n                     id=\"next_followup_date\"\n                     name=\"next_followup_date\"\n                     min={moment().format(\"DD-MM-YYYY\")}\n-                    value={moment(state.next_followup_date).format(\n-                      \"DD-MM-YYYY\"\n-                    )}\n+                    value={state.next_followup_date}\n                     onChange={onInputChange}\n                     onKeyDownCapture={(e) => e.preventDefault()}\n                     className={\n                       errors.next_followup_date\n"
                 }
             ],
             "date": 1692955359603,

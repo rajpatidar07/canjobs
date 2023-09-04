@@ -33,6 +33,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { RiMailSendLine } from "react-icons/ri";
 import EmployeeHeader from "../common/header";
 import VisaArrowProfile from "../common/visaArrowProfile";
+import PayentForm from "../forms/admin/payentForm";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   let navigate = useNavigate();
@@ -1716,11 +1717,8 @@ const NewUserProfile = (props) => {
                   >
                     {TabActive === "payment" ? (
                       <div className="p-10 activity_container">
-                        <div className="single_note mb-5">
-                          <small>Cash Payment</small>
-                          <div className="card p-5">500/-</div>
+                        <PayentForm/>
                         </div>
-                      </div>
                     ) : null}
                   </div>
                 </div>

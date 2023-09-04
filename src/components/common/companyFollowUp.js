@@ -246,7 +246,7 @@ function AddCompanyfollowup(props) {
                   id="next_followup_date"
                   name="next_followup_date"
                   min={moment().format("DD-MM-YYYY")}
-                  value={moment(state.next_followup_date).format("DD-MM-YYYY")}
+                  value={state.next_followup_date}
                   onChange={onInputChange}
                   onKeyDownCapture={(e) => e.preventDefault()}
                   className={

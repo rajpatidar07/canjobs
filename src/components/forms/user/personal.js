@@ -252,7 +252,8 @@ function PersonalDetails(props) {
   const handleUploadFile = async (e) => {
     encoded = await convertToBase64(e.target.files[0]);
     let base64Name = encoded.base64;
-    let finalBase = base64Name.split(",")[1];
+    let finalBase = base64Name;
+    console.log(finalBase)
     setState({ ...state, resume: finalBase });
   };
 
