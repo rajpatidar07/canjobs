@@ -303,7 +303,7 @@ function LmiaStatus(props) {
                 lmia_status={state.lmia_status}
               />
             )}
-            <div className="form-group ">
+            <div className="form-group mt-5">
               <label
                 htmlFor="lmia_status"
                 className="font-size-4 text-black-2  line-height-reset"

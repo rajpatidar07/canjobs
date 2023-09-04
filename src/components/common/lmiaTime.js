@@ -18,7 +18,7 @@ export default function LmiaTime({ lmia, location, job, doc }) {
                   <div
                     key={i}
                     className={`step m-2 ${isDone ?
-                      'current text-capitalize' :
+                      'approved text-capitalize' :
                       ''}`}
                   >
                     <span>{status}</span>
@@ -26,7 +26,7 @@ export default function LmiaTime({ lmia, location, job, doc }) {
               ) : (
                 i > 2 && (
                   <div key={i}
-                    className={`step m-2 ${isDone ? 'current text-capitalize' : 'text-capitalize'}`}> <span>{status}</span>
+                    className={`step m-2 ${isDone ? 'approved text-capitalize' : 'text-capitalize'}`}> <span>{status}</span>
                   </div>
                 )
               )

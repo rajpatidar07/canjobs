@@ -14,7 +14,7 @@ export default function VisaTimeLine({ visa}) {
                         const isDone = currentIndex > -1 && i <= currentIndex;
                         return (
                             <div key={i}
-                                className={`step m-2 ${isDone ? 'current text-capitalize' : 'text-capitalize'}`}> 
+                                className={`step m-2 ${isDone ? 'visa_current text-capitalize' : 'text-capitalize'}`}> 
                                 <span>{status}</span>
                             </div>
                         )

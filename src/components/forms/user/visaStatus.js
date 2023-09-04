@@ -187,14 +187,13 @@ export default function VisaStatus(props) {
       }
     } catch (err) {
       console.log(err);
-      console.log(err);
     }
   };
   return (
     <>
       <Modal
         show={props.show}
-        size="md"
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >

@@ -166,6 +166,7 @@ function JobProfileResponse(props) {
             VisaResponse.data.message === "visa inserted successfully" ||
             VisaResponse.data.message === "visa updated successfully"
           ) {
+            props.setApiCall(true)
             // Api call to set employee Limia
             const lmia = { lmia_status: "candidate placement" };
             try {
