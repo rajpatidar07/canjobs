@@ -19,7 +19,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                 key={i}
               >
                 <div className="mt-2 job_name text-dark">
-                  <span className="m-0 font-size-2 d-block mb-1">
+                  <span className="m-2 font-size-2 d-block mb-1">
                     {status.job_title}
                   </span>
                 </div>
