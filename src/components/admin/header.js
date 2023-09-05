@@ -13,14 +13,14 @@ const AdminHeader = (props) => {
   const [apicall, setApicall] = useState(false);
   let Admin = localStorage.getItem("admin");
   let AdminType = localStorage.getItem("admin_type");
-let navigate = useNavigate()
+  let navigate = useNavigate();
   /*Function to Call Notification Api */
   const Notiication = async () => {
     try {
       let Response = await getAllAdminNotification();
       setNotiication(Response.Data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   /*Render Mewthod to get Notification */
@@ -29,9 +29,16 @@ let navigate = useNavigate()
     if (apicall === true) {
       setApicall(false);
     }
-    console.log(AdminType)
-    if(AdminType !== "admin"){
-      navigate("/")
+    console.log(AdminType);
+    if (
+      AdminType === undefined ||
+      AdminType === "" ||
+      AdminType === null ||
+      AdminType === "undefined" ||
+      AdminType === "company" ||
+      AdminType === "user"
+    ) {
+      navigate("/");
     }
   }, [apicall]);
   return (
@@ -154,8 +161,7 @@ let navigate = useNavigate()
                           try {
                             ReadNotification(data.id);
                           } catch (err) {
-                           console.log(err) 
-                            
+                            console.log(err);
                           }
                           setApicall(true);
                         }}
