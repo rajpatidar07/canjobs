@@ -44,7 +44,7 @@ function JobProfileResponse(props) {
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
@@ -82,13 +82,7 @@ function JobProfileResponse(props) {
         skillFilterValue,
         experienceTypeFilterValue,
         search,
-        props.filter_by_time ||
-          skillFilterValue ||
-          search ||
-          experienceTypeFilterValue ||
-          sortOrder
-          ? 1
-          : currentPage,
+        props.pageNo,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -125,7 +119,7 @@ function JobProfileResponse(props) {
     skillFilterValue,
     experienceTypeFilterValue,
     search,
-    currentPage,
+    props.pageNo,
     recordsPerPage,
     columnName,
     sortOrder,
@@ -138,6 +132,7 @@ function JobProfileResponse(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    props.setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Category Name cannot start with a number.");
@@ -274,7 +269,7 @@ function JobProfileResponse(props) {
                   name={"category_name"}
                   onChange={(e) => {
                     onSearch(e);
-                    setCurrentPage(1);
+                    props.setpageNo(1);
                   }}
                 />
               </div>
@@ -288,7 +283,7 @@ function JobProfileResponse(props) {
                   value={skillFilterValue}
                   onChange={(e) => {
                     setSkillFilter(e.target.value);
-                    setCurrentPage(1);
+                    props.setpageNo(1);
                   }}
                   className="text-capitalize form-control"
                 >
@@ -310,7 +305,7 @@ function JobProfileResponse(props) {
                   value={limiaFilterValue}
                   onChange={(e) => {
                     setLmiaFilter(e.target.value);
-                    setCurrentPage(1);
+                    props.setpageNo(1);
                   }}
                   className="text-capitalize form-control"
                 >
@@ -332,7 +327,7 @@ function JobProfileResponse(props) {
                   value={experienceTypeFilterValue}
                   onChange={(e) => {
                     setExperienceTypeFilterValue(e.target.value);
-                    setCurrentPage(1);
+                    props.setpageNo(1);
                   }}
                   className="text-capitalize form-control"
                 >
@@ -383,7 +378,7 @@ function JobProfileResponse(props) {
                         to={""}
                         onClick={() => {
                           handleSort("name");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Name"
@@ -400,7 +395,7 @@ function JobProfileResponse(props) {
                         to={""}
                         onClick={() => {
                           handleSort("job_title");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Job"
@@ -416,7 +411,7 @@ function JobProfileResponse(props) {
                         to=""
                         onClick={() => {
                           handleSort("company_name");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Job's Company"
@@ -436,7 +431,7 @@ function JobProfileResponse(props) {
                           to={""}
                           onClick={() => {
                             handleSort("contact_no");
-                            setCurrentPage(1);
+                            props.setpageNo(1);
                           }}
                           className="text-gray"
                           title="Sort by Contact"
@@ -456,7 +451,7 @@ function JobProfileResponse(props) {
                           to={""}
                           onClick={() => {
                             handleSort("current_location");
-                            setCurrentPage(1);
+                            props.setpageNo(1);
                           }}
                           className="text-gray"
                           title="Sort by Address"
@@ -476,7 +471,7 @@ function JobProfileResponse(props) {
                           to={""}
                           onClick={() => {
                             handleSort("experience");
-                            setCurrentPage(1);
+                            props.setpageNo(1);
                           }}
                           className="text-gray"
                           title="Sort by Experience"
@@ -493,7 +488,7 @@ function JobProfileResponse(props) {
                         to={""}
                         onClick={() => {
                           handleSort("lmia_status");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by LIMIA Status"
@@ -864,7 +859,6 @@ function JobProfileResponse(props) {
                                 }
                               >
                                 <span className="text-gray px-2">
-                                  
                                   <ImCalendar />
                                 </span>
                                 {/* <i className="fa fa-calendar text-gray px-2"></i> */}
@@ -902,8 +896,8 @@ function JobProfileResponse(props) {
           <div className="pt-2">
             <Pagination
               nPages={nPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+              currentPage={props.pageNo}
+              setCurrentPage={props.setpageNo}
               total={totalData}
               count={response.length}
             />

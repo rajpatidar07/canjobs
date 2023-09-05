@@ -29,7 +29,6 @@ const AdminHeader = (props) => {
     if (apicall === true) {
       setApicall(false);
     }
-    console.log(AdminType);
     if (
       AdminType === undefined ||
       AdminType === "" ||

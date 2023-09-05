@@ -53,6 +53,7 @@ const NewUserProfile = (props) => {
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
   const [visaStatus, setVisaStatus] = useState([]);
+  const [pageNo, setpageNo] = useState([]);
   let [isLoading, setIsLoading] = useState(true);
   const user_type = localStorage.getItem("userType");
   // let id = localStorage.getItem("employee_id");
@@ -1496,6 +1497,8 @@ const NewUserProfile = (props) => {
                         apiCall={apiCall}
                         statusCall={statusCall}
                         setStatusCall={setStatusCall}
+                        pageNo={pageNo}
+                        setpageNo={setpageNo}
                       />
                     ) : null}
                     {/* <!-- Top Start --> */}

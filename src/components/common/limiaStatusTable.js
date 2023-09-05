@@ -34,7 +34,7 @@ export default function LimiaStatusTable(props) {
   const [search, setSearch] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
@@ -65,7 +65,7 @@ export default function LimiaStatusTable(props) {
         location.state === null ? jobId : location.state.id,
         search,
         limiaFilterValue,
-        limiaFilterValue || search || props.filter_by_time ? 1 : currentPage,
+         props.pageNo,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -75,6 +75,7 @@ export default function LimiaStatusTable(props) {
         setResData([]);
         setResponseData([]);
         setIsLoading(false);
+        setTotalData(0)
       } else {
         setResponseData(userData.data);
         setTotalData(userData.total_rows);
@@ -96,7 +97,7 @@ export default function LimiaStatusTable(props) {
     }
   }, [
     search,
-    currentPage,
+    props.pageNo,
     recordsPerPage,
     columnName,
     sortOrder,
@@ -109,6 +110,7 @@ export default function LimiaStatusTable(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    props.setpageNo(1)
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Category Name cannot start with a number.");
@@ -160,6 +162,7 @@ export default function LimiaStatusTable(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
+    props.setpageNo(1)
   };
 
   return (
@@ -299,7 +302,6 @@ export default function LimiaStatusTable(props) {
                       name={"category_name"}
                       onChange={(e) => {
                         onSearch(e);
-                        setCurrentPage(1);
                       }}
                     />
                   </div>
@@ -313,7 +315,7 @@ export default function LimiaStatusTable(props) {
                                             value={skillFilterValue}
                                             onChange={(e) => {
                                                 setSkillFilter(e.target.value);
-                                                setCurrentPage(1)
+                                                props.setpageNo(1)
                                             }}
                                             className=" form-control"
                                         >
@@ -335,7 +337,7 @@ export default function LimiaStatusTable(props) {
                                             value={experienceTypeFilterValue}
                                             onChange={(e) => {
                                                 setExperienceTypeFilterValue(e.target.value);
-                                                setCurrentPage(1)
+                                                props.setpageNo(1)
                                             }}
                                             className=" form-control"
                                         >
@@ -358,7 +360,7 @@ export default function LimiaStatusTable(props) {
                       value={limiaFilterValue}
                       onChange={(e) => {
                         setLimailter(e.target.value);
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-capitalize form-control"
                     >
@@ -403,7 +405,6 @@ export default function LimiaStatusTable(props) {
                             to={""}
                             onClick={() => {
                               handleSort("name");
-                              setCurrentPage(1);
                             }}
                             className="text-gray"
                             title="Sort by Name"
@@ -422,7 +423,6 @@ export default function LimiaStatusTable(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("experience");
-                                setCurrentPage(1);
                               }}
                               className="text-gray"
                               title="Sort by Experience"
@@ -439,7 +439,7 @@ export default function LimiaStatusTable(props) {
                                                         to={""}
                                                         onClick={() => {
                                                             handleSort("job_title");
-                                                            setCurrentPage(1)
+                                                            props.setpageNo(1)
                                                         }}
                                                         className="text-gray"
                                                         title="Sort by Job"
@@ -456,7 +456,6 @@ export default function LimiaStatusTable(props) {
                             to={""}
                             onClick={() => {
                               handleSort("contact_no");
-                              setCurrentPage(1);
                             }}
                             className="text-gray"
                             title="Sort by Contact"
@@ -476,7 +475,6 @@ export default function LimiaStatusTable(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("current_location");
-                                setCurrentPage(1);
                               }}
                               className="text-gray"
                               title="Sort by Address"
@@ -494,7 +492,6 @@ export default function LimiaStatusTable(props) {
                             to={""}
                             onClick={() => {
                               handleSort("lmia_status");
-                              setCurrentPage(1);
                             }}
                             className="text-gray"
                             title="Sort by LIMIA Status"
@@ -816,8 +813,8 @@ export default function LimiaStatusTable(props) {
               <div className="pt-2">
                 <Pagination
                   nPages={nPages}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
+                  currentPage={props.pageNo}
+                  setCurrentPage={props.setpageNo}
                   total={totalData}
                   count={response.length}
                 />

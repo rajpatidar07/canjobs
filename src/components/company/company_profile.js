@@ -39,6 +39,8 @@ function CompanyProfileDetail(props) {
   const [TabActive, setTabActive] = useState("profile");
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
+  const [jobPageNo, setJobPageNO] = useState(1);
+  const [interviewPageNo, setInterviewPageNO] = useState(1);
 
   /*Function to get employer data */
   const EmployerData = async () => {
@@ -624,6 +626,8 @@ function CompanyProfileDetail(props) {
                       detail={"company_detail"}
                       // setLmia={setLmia}
                       setApiCall={setApiCall}
+                      pageNo={jobPageNo}
+                      setpageNO={setJobPageNO}
                       // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
@@ -664,6 +668,8 @@ function CompanyProfileDetail(props) {
                       company_id={cid}
                       setApiCall={setApiCall}
                       heading={"userprofile"}
+                      pageNo={interviewPageNo}
+                      setpageNo={setInterviewPageNO}
                     />
                   ) : null}
                 </div>

@@ -300,7 +300,7 @@ function KycComplianceDetails(props) {
                     id="pan_date"
                     name="pan_date"
                     max={moment().format("DD-MM-YYYY")}
-                    value={moment(state.pan_date).format("DD-MM-YYYY") || ""}
+                    value={state.pan_date|| ""}
                     onChange={onInputChange}
                     onKeyDownCapture={(e) => e.preventDefault()}
                     className={

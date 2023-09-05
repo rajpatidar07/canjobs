@@ -29,27 +29,21 @@ export default function EmployerTable(props) {
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(props.pageNo);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("company_id");
   const [sortOrder, setSortOrder] = useState("");
-
   /* Function to get Employer data*/
   const EmployerData = async () => {
+   
     setIsLoading(true);
     try {
       const userData = await getAllEmployer(
         props.industryFilterValue,
         props.corporationFilterValue,
         props.search,
-        props.filter_by_time ||
-          props.industryFilterValue ||
-          props.corporationFilterValue ||
-          props.search ||
-          sortOrder
-          ? 1
-          : currentPage,
+         props.pageNo,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -82,7 +76,7 @@ export default function EmployerTable(props) {
     props.corporationFilterValue,
     props.search,
     deleteAlert,
-    currentPage,
+    props.pageNo,
     recordsPerPage,
     columnName,
     sortOrder,
@@ -165,7 +159,7 @@ export default function EmployerTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("company_name");
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Company Name"
@@ -184,7 +178,7 @@ export default function EmployerTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("contact_person_name");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Name"
@@ -204,7 +198,7 @@ export default function EmployerTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("address");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Location"
@@ -224,7 +218,7 @@ export default function EmployerTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("contact_no");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Contact"
@@ -241,7 +235,7 @@ export default function EmployerTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("vacancy_for_post");
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by jobs"
@@ -525,8 +519,8 @@ export default function EmployerTable(props) {
         <div className="pt-2">
           <Pagination
             nPages={nPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            currentPage={props.pageNo}
+            setCurrentPage={props.setpageNo}
             total={totalData}
             count={employerData.length}
           />

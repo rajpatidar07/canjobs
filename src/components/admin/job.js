@@ -26,6 +26,7 @@ function Job(props) {
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
+  const [pageNo, setpageNo] = useState(1);
   let [Json, setJson] = useState([]);
   let location = useLocation();
   /*Function to get the jSon */
@@ -73,6 +74,7 @@ function Job(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Job cannot start with a number.");
@@ -105,7 +107,6 @@ function Job(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Jobs"} />
             {/* <!-- navbar- --> */}
@@ -166,7 +167,10 @@ function Job(props) {
                       placeholder={"Company name"}
                       value={company}
                       name={"compnay_name"}
-                      onChange={(e) => setCompany(e.target.value)}
+                      onChange={(e) => {
+                        setCompany(e.target.value);
+                        setpageNo(1);
+                      }}
                     />
                   </div>
                   <div
@@ -182,7 +186,10 @@ function Job(props) {
                         name="country"
                         id="country"
                         value={categoryFilterValue}
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setCategoryFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Job Category</option>
@@ -211,6 +218,7 @@ function Job(props) {
                         value={jobSwapFilterValue}
                         onChange={(e) => {
                           setJobSwapFilterValue(e.target.value);
+                          setpageNo(1);
                         }}
                         className="text-capitalize form-control"
                       >
@@ -236,7 +244,10 @@ function Job(props) {
                         name="country"
                         id="country"
                         value={SkillFilterValue}
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setSkillFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Job Skill</option>
@@ -263,7 +274,10 @@ function Job(props) {
                         name="country"
                         id="country"
                         value={locationFilterValue}
-                        onChange={(e) => setLocationFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setLocationFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="">Job Location</option>
@@ -311,6 +325,8 @@ function Job(props) {
                 employee_id={props.employee_id}
                 selfJob={"no"}
                 response={"response"}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
               />
             </div>
           </div>

@@ -27,6 +27,7 @@ function SelfApplicat(props) {
   const [searcherror, setSearchError] = useState("");
   let [SkillList, setSkillList] = useState([]);
   let [EducationList, setEducationList] = useState([]);
+  let [pageNo, setpageNo] = useState(0);
 
   /*Function to get thejSon */
   const JsonData = async () => {
@@ -59,6 +60,7 @@ function SelfApplicat(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    setpageNo(1)
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Company Name cannot start with a number.");
@@ -154,7 +156,8 @@ function SelfApplicat(props) {
                         value={experienceFilterValue}
                         id="experience"
                         onChange={(e) =>
-                          setExperienceFilterValue(e.target.value)
+                          {setExperienceFilterValue(e.target.value)
+                            setpageNo(1)}
                         }
                         className="text-capitalize form-control"
                       >
@@ -181,7 +184,8 @@ function SelfApplicat(props) {
                         name="skill"
                         value={skillFilterValue}
                         id="Skill"
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        onChange={(e) => {setSkillFilterValue(e.target.value)
+                          setpageNo(1)}}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select Skill</option>
@@ -209,7 +213,8 @@ function SelfApplicat(props) {
                         value={educationFilterValue}
                         id="education"
                         onChange={(e) =>
-                          setEducationFilterValue(e.target.value)
+                          {setEducationFilterValue(e.target.value)
+                            setpageNo(1)}
                         }
                         className="text-capitalize form-control"
                       >
@@ -252,6 +257,8 @@ function SelfApplicat(props) {
                 job_id={props.job_id}
                 self={"yes"}
                 status={"0"}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
               />
             </div>
           </div>

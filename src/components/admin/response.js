@@ -88,14 +88,7 @@ function JobResponse(props) {
           : null,
         skillFilterValue,
         experienceTypeFilterValue,
-        search,
-        props.filter_by_time ||
-          skillFilterValue ||
-          search ||
-          experienceTypeFilterValue ||
-          sortOrder
-          ? 1
-          : currentPage,
+        search, currentPage,
         recordsPerPage,
         columnName,
         sortOrder,

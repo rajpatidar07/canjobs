@@ -18,7 +18,7 @@ function Interview(props) {
 
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("");
@@ -31,9 +31,7 @@ function Interview(props) {
         "",
         "",
         search,
-        search || props.filter_by_time || props.statusFilterValue || sortOrder
-          ? 1
-          : currentPage,
+        props.pageNo,
         columnName,
         recordsPerPage,
         sortOrder,
@@ -59,7 +57,7 @@ function Interview(props) {
     InterviewData();
   }, [
     search,
-    currentPage,
+    props.pageNo,
     columnName,
     recordsPerPage,
     sortOrder,
@@ -133,7 +131,7 @@ function Interview(props) {
                         to={""}
                         onClick={() => {
                           handleSort("name");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Name"
@@ -149,7 +147,7 @@ function Interview(props) {
                         to={""}
                         onClick={() => {
                           handleSort("job_title");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Job"
@@ -166,7 +164,7 @@ function Interview(props) {
                           to={""}
                           onClick={() => {
                             handleSort("company_name");
-                            setCurrentPage(1);
+                            props.setpageNo(1);
                           }}
                           className="text-gray"
                           title="Sort by Company"
@@ -184,7 +182,7 @@ function Interview(props) {
                           to={""}
                           onClick={() => {
                             handleSort("skill");
-                            setCurrentPage(1);
+                            props.setpageNo(1);
                           }}
                           className="text-gray"
                           title="Sort by Skill"
@@ -201,7 +199,7 @@ function Interview(props) {
                         to={""}
                         onClick={() => {
                           handleSort("interview_date");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Date"
@@ -343,8 +341,8 @@ function Interview(props) {
           <div className="pt-2">
             <Pagination
               nPages={nPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+              currentPage={props.pageNo}
+              setCurrentPage={props.setpageNo}
               total={totalData}
               count={interviewData.length}
             />

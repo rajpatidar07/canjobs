@@ -41,7 +41,7 @@ export default function JobTable(props) {
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(props.pageNo);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_id");
@@ -70,16 +70,7 @@ export default function JobTable(props) {
           props.categoryFilterValue,
           props.SkillFilterValue,
           props.jobSwapFilterValue,
-          props.company ||
-            props.search ||
-            props.locationFilterValue ||
-            props.categoryFilterValue ||
-            props.SkillFilterValue ||
-            props.jobSwapFilterValue ||
-            props.filter_by_time ||
-            sortOrder
-            ? 1
-            : currentPage,
+          props.pageNo,
           recordsPerPage,
           columnName,
           sortOrder,
@@ -92,15 +83,7 @@ export default function JobTable(props) {
           props.categoryFilterValue,
           props.SkillFilterValue,
           props.jobSwapFilterValue,
-          props.company ||
-            props.search ||
-            props.locationFilterValue ||
-            props.categoryFilterValue ||
-            props.SkillFilterValue ||
-            props.jobSwapFilterValue ||
-            props.filter_by_time 
-            ? 1
-            : currentPage,
+          props.pageNo,
           recordsPerPage,
           columnName,
           sortOrder,
@@ -200,7 +183,7 @@ export default function JobTable(props) {
     props.locationFilterValue,
     props.jobSwapFilterValue,
     props.search,
-    currentPage,
+    props.pageNo,
     sortOrder,
     props.company,
     props.filter_by_time,
@@ -262,7 +245,7 @@ export default function JobTable(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
-    setCurrentPage(1);
+    props.setpageNo(1);
     setApiCall(true);
   };
 
@@ -513,7 +496,6 @@ export default function JobTable(props) {
                                     <br />
                                     {job.is_featured === "1" ? (
                                       <span className="bg-orange text-white featured_tag">
-                                        
                                         Featured
                                       </span>
                                     ) : null}
@@ -996,9 +978,7 @@ export default function JobTable(props) {
                                         }
                                       )
                                     ) : (
-                                      <div
-                                        className={`step text-capitalize`}
-                                      >
+                                      <div className={`step text-capitalize`}>
                                         decision
                                       </div>
                                     )}
@@ -1057,14 +1037,15 @@ export default function JobTable(props) {
           <div className="pt-2">
             <Pagination
               nPages={nPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+              currentPage={props.pageNo}
+              setCurrentPage={props.setpageNo}
               total={totalData}
               count={jobData.length}
             />
           </div>
         )}
       </div>
+              
       {showAddCompanyDocModal ? (
         <EmployerDocumentModal
           employer_id={CompanyId}

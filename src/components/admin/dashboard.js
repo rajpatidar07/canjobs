@@ -25,6 +25,12 @@ const AdminDashboard = () => {
   // let [response, setResponse] = useState("");
   // let [followup, setFollowUP] = useState("");
   let [apiCall, setApiCall] = useState("");
+  const [employeepageNo, setEmployeePageNo] = useState(1);
+  const [employerpageNo, setEmployerPageNo] = useState(1);
+  const [jobPageNo, setJobPageNo] = useState(1);
+  const [lmiaPageNo, setLmiaPageNo] = useState(1);
+  const [interviewPageNo, setInterviewPageNo] = useState(1);
+
   /*Function to get the summary count */
   // let AllCounts = async () => {
   // try{  let Data = await getSummaryCount();
@@ -290,7 +296,10 @@ const AdminDashboard = () => {
                         name="job"
                         value={job}
                         id="job"
-                        onChange={(e) => setJob(e.target.value)}
+                        onChange={(e) => {
+                          setJob(e.target.value);
+                          setJobPageNo(1);
+                        }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
                         <option value={""}>Select</option>
@@ -302,7 +311,6 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      
                       <Link
                         className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/job"}
@@ -319,48 +327,54 @@ const AdminDashboard = () => {
                   apiCall={apiCall}
                   setApiCall={setApiCall}
                   lmia="no"
+                  setpageNo={setJobPageNo}
+                  pageNo={jobPageNo}
                 />
               </div>
               {/* <!-- Recent Companies- --> */}
               <div className="bg-white dashboard_card mb-7">
-                  <div className="d-flex justify-content-between p-5 align-items-center">
-                    <h3 className="font-size-5 px-3 m-0  ">
-                      Recently Added Companies
-                    </h3>
-                    <div className="d-flex justify-content-between p-0">
-                      <div className="select_div mr-5">
-                        <select
-                          name="employer"
-                          value={employer}
-                          id="employer"
-                          onChange={(e) => setEmployer(e.target.value)}
-                          className="form-control-sm bg-white dashboard_select rounded-3"
-                        >
-                          <option value={""}>Select</option>
-                          <option value={"today"}>Today </option>
-                          <option value={"this_week"}>This Week </option>
-                          <option value={"last_week"}>Last Week</option>
-                          <option value={"last_month"}>Last Month</option>
-                          <option value={"current_month"}>Current Month</option>
-                        </select>
-                      </div>
-                      <div className="">
-                        
-                        <Link
-                          className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                          to={"/employer"}
-                          title="View All Companies"
-                        >
-                          View All
-                        </Link>
-                      </div>
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Companies
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="employer"
+                        value={employer}
+                        id="employer"
+                        onChange={(e) => {
+                          setEmployer(e.target.value);
+                          setEmployerPageNo(1);
+                        }}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      <Link
+                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/employer"}
+                        title="View All Companies"
+                      >
+                        View All
+                      </Link>
                     </div>
                   </div>
-                  <EmployerTable
-                    heading="Dashboard"
-                    filter_by_time={employer}
-                  />
                 </div>
+                <EmployerTable
+                  heading="Dashboard"
+                  filter_by_time={employer}
+                  setpageNo={setEmployerPageNo}
+                  pageNo={employerpageNo}
+                />
+              </div>
               {/* <!-- Recent Job Response- --> */}
               {/* <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
@@ -409,7 +423,10 @@ const AdminDashboard = () => {
                         name="interview"
                         value={interview}
                         id="interview"
-                        onChange={(e) => setInterview(e.target.value)}
+                        onChange={(e) => {
+                          setInterview(e.target.value);
+                          setInterviewPageNo(1);
+                        }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
                         <option value={""}>Select</option>
@@ -431,7 +448,12 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
-                <Interview heading={"Dashboard"} filter_by_time={interview} />
+                <Interview
+                  heading={"Dashboard"}
+                  filter_by_time={interview}
+                  pageNo={interviewPageNo}
+                  setpageNo={setInterviewPageNo}
+                />
               </div>
             </div>
             <div className="col-md-6">
@@ -447,7 +469,10 @@ const AdminDashboard = () => {
                         name="employee"
                         value={employee}
                         id="employee"
-                        onChange={(e) => setEmployee(e.target.value)}
+                        onChange={(e) => {
+                          setEmployee(e.target.value);
+                          setEmployeePageNo(1);
+                        }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
                         <option value={""}>Select</option>
@@ -459,7 +484,6 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      
                       <Link
                         className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/employee"}
@@ -473,6 +497,8 @@ const AdminDashboard = () => {
                 <EmployeeTable
                   heading={"Dashboard"}
                   filter_by_time={employee}
+                  setpageNo={setEmployeePageNo}
+                  pageNo={employeepageNo}
                 />
               </div>
               {/* <!-- Recent lima's- --> */}
@@ -487,7 +513,10 @@ const AdminDashboard = () => {
                         name="job"
                         value={lima}
                         id="job"
-                        onChange={(e) => setLima(e.target.value)}
+                        onChange={(e) => {
+                          setLima(e.target.value);
+                          setLmiaPageNo(1);
+                        }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
                         <option value={""}>Select</option>
@@ -499,7 +528,6 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                     <div className="">
-                      
                       <Link
                         className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/lmia"}
@@ -517,6 +545,8 @@ const AdminDashboard = () => {
                   setApiCall={setApiCall}
                   lmia="yes"
                   response={"lima"}
+                  pageNo={lmiaPageNo}
+                  setpageNo={setLmiaPageNo}
                 />
               </div>
               {/* <!-- Recent Follow- --> */}
@@ -559,9 +589,7 @@ const AdminDashboard = () => {
                   filter_by_time={followup}
                 />
               </div> */}
-              
             </div>
-            
           </div>
         </div>
       </div>

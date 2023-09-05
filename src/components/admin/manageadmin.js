@@ -42,7 +42,7 @@ function ManageAdmin() {
       const userData = await getallAdminData(
         typeFilterValue,
         search,
-        typeFilterValue || search || sortOrder ? 1 : currentPage,
+        currentPage,
         recordsPerPage,
         columnName,
         sortOrder
@@ -121,6 +121,7 @@ function ManageAdmin() {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    setCurrentPage(1)
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Admin Name cannot start with a number.");
@@ -140,6 +141,7 @@ function ManageAdmin() {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
+    setCurrentPage(1)
   };
   return (
     <>
@@ -185,7 +187,6 @@ function ManageAdmin() {
                       name={"Admin_name"}
                       onChange={(e) => {
                         onSearch(e);
-                        setCurrentPage(1);
                       }}
                     />
                   </div>

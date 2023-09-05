@@ -16,6 +16,7 @@ function LimaContainer(props) {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
+  const [pageNo, setpageNo] = useState(1);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState(
@@ -70,6 +71,7 @@ function LimaContainer(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Job cannot start with a number.");
@@ -151,7 +153,10 @@ function LimaContainer(props) {
                         placeholder={"Company name"}
                         value={company}
                         name={"compnay_name"}
-                        onChange={(e) => setCompany(e.target.value)}
+                        onChange={(e) => {
+                          setCompany(e.target.value);
+                          setpageNo(1);
+                        }}
                       />
                     </div>
                     <div className="col p-1 form_group mb-3">
@@ -161,9 +166,10 @@ function LimaContainer(props) {
                           name="country"
                           id="country"
                           value={categoryFilterValue}
-                          onChange={(e) =>
-                            setCategoryFilterValue(e.target.value)
-                          }
+                          onChange={(e) => {
+                            setCategoryFilterValue(e.target.value);
+                            setpageNo(1);
+                          }}
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Category</option>
@@ -186,6 +192,7 @@ function LimaContainer(props) {
                           value={jobSwapFilterValue}
                           onChange={(e) => {
                             setJobSwapFilterValue(e.target.value);
+                            setpageNo(1);
                           }}
                           className="text-capitalize form-control"
                         >
@@ -205,7 +212,10 @@ function LimaContainer(props) {
                           name="country"
                           id="country"
                           value={SkillFilterValue}
-                          onChange={(e) => setSkillFilterValue(e.target.value)}
+                          onChange={(e) => {
+                            setSkillFilterValue(e.target.value);
+                            setpageNo(1);
+                          }}
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Skill</option>
@@ -226,9 +236,10 @@ function LimaContainer(props) {
                           name="country"
                           id="country"
                           value={locationFilterValue}
-                          onChange={(e) =>
-                            setLocationFilterValue(e.target.value)
-                          }
+                          onChange={(e) => {
+                            setLocationFilterValue(e.target.value);
+                            setpageNo(1);
+                          }}
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Location</option>
@@ -260,6 +271,8 @@ function LimaContainer(props) {
                 // employee_id={props.employee_id}
                 selfJob={"no"}
                 response="lmia"
+                pageNo={pageNo}
+                setpageNo={setpageNo}
               />
             </div>
           </div>

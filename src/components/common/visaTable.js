@@ -16,15 +16,15 @@ export default function VisaTable(props) {
   let [isLoading, setIsLoading] = useState(true);
   const [documentModal, setDocumentModal] = useState(false);
   let [showVisaModal, setVisaModal] = useState(false);
-  /*data and id states */
+  /* data and id states */
   const [employeeData, setemployeeData] = useState([]);
   let [employeeId, setemployeeId] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
-  /*Pagination states */
+  /* Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
-  /*Shorting states */
+  /* Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("DESC");
   /* Function to get Employee visa data*/
@@ -36,12 +36,7 @@ export default function VisaTable(props) {
         props.VisStatusFilterValue,
         props.VisaCountryFilterValue,
         props.IntrestedFilterValue,
-        props.search ||
-          props.VisStatusFilterValue ||
-          props.VisaCountryFilterValue ||
-          props.IntrestedFilterValue
-          ? 1
-          : currentPage,
+        props.pageNo,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -66,8 +61,11 @@ export default function VisaTable(props) {
                   data.visa_id,
                   "visa"
                 );
-                VisaCommentArray.push(subStageRes.data.data.data.filter((item)=>item.status ===
-                "file decision"));
+                VisaCommentArray.push(
+                  subStageRes.data.data.data.filter(
+                    (item) => item.status === "file decision"
+                  )
+                );
                 if (
                   subStageRes.data.data.data.filter(
                     (item) => item.substage === "rejected"
@@ -105,7 +103,7 @@ export default function VisaTable(props) {
     props.VisStatusFilterValue,
     props.VisaCountryFilterValue,
     props.IntrestedFilterValue,
-    currentPage,
+    props.pageNo,
     recordsPerPage,
     columnName,
     sortOrder,
@@ -133,12 +131,11 @@ export default function VisaTable(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
-    setCurrentPage(1);
+    props.setpageNo(1);
   };
 
   return (
     <>
-      
       {showVisaModal ? (
         <VisaStatus
           show={showVisaModal}
@@ -146,7 +143,6 @@ export default function VisaTable(props) {
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
-          
         />
       ) : null}
       {documentModal ? (
@@ -180,7 +176,7 @@ export default function VisaTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("name");
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Name"
@@ -196,7 +192,7 @@ export default function VisaTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("contact_no");
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Contact"
@@ -215,7 +211,7 @@ export default function VisaTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("language");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Languages"
@@ -235,7 +231,7 @@ export default function VisaTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("interested_in");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by interested in"
@@ -255,7 +251,7 @@ export default function VisaTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("visa_country");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by visa country"
@@ -275,7 +271,7 @@ export default function VisaTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("experience");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Experience"
@@ -311,7 +307,6 @@ export default function VisaTable(props) {
                 </tr>
               </thead>
               <tbody>
-                
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
@@ -573,7 +568,7 @@ export default function VisaTable(props) {
 
                           <button
                             className={
-                               user_type === "company"
+                              user_type === "company"
                                 ? "d-none"
                                 : "btn btn-outline-info action_btn"
                             }
@@ -597,8 +592,8 @@ export default function VisaTable(props) {
         <div className="pt-2">
           <Pagination
             nPages={nPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            currentPage={props.pageNo}
+            setCurrentPage={props.setpageNo}
             total={totalData}
             count={employeeData.length}
           />
