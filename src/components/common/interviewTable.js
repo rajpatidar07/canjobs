@@ -48,7 +48,7 @@ function Interview(props) {
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -230,18 +230,23 @@ function Interview(props) {
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                       {props.heading === "Dashboard" ? (
-                        <th className="bg-white text-center">No Data Found</th>
+                        <>
+                          <th className="bg-white"></th>
+                          <th className="bg-white text-center">
+                            No Data Found
+                          </th>
+                        </>
                       ) : (
                         <>
-                        <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      </>)}
-                      {props.heading === "Dashboard" ? (
-                        <th className="bg-white"></th>
-                      ) : (
-                        <th className="bg-white text-center">No Data Found</th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white text-center">
+                            No Data Found
+                          </th>
+                          <th className="bg-white"></th>
+                          <th className="bg-white"></th>
+                        </>
                       )}
-                      <th className="bg-white"></th>
+
                       <th className="bg-white"></th>
                       <th className="bg-white"></th>
                     </tr>
@@ -264,21 +269,28 @@ function Interview(props) {
                           </div>
                         </th>
                         <th scope="row" className="py-5 ">
-                          <Link to={`/jobdetailpage`}
-                                onClick={() => localStorage.setItem("job_id",data.job_id)
-                                }>
-                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {data.job_title}
-                          </div>
-                            </Link>
+                          <Link
+                            to={`/jobdetailpage`}
+                            onClick={() =>
+                              localStorage.setItem("job_id", data.job_id)
+                            }
+                          >
+                            <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              {data.job_title}
+                            </div>
+                          </Link>
                         </th>
                         {props.heading === "userprofile" ? null : (
                           <th scope="row" className="py-5 ">
-                            <Link to={`/jobdetailpage`}
-                                onClick={() => localStorage.setItem("job_id",data.job_id)}>
-                            <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                              {data.company_name}
-                            </div>
+                            <Link
+                              to={`/jobdetailpage`}
+                              onClick={() =>
+                                localStorage.setItem("job_id", data.job_id)
+                              }
+                            >
+                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                {data.company_name}
+                              </div>
                             </Link>
                           </th>
                         )}

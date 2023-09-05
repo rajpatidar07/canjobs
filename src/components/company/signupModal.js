@@ -4,17 +4,17 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import useValidation from "../common/useValidation";
 import { EmployerSignUp, SendOtp, LinkedInSignupEmployer, SocialCompanyLogin } from "../../api/api";
 import { toast } from "react-toastify";
-import { useGoogleLogin } from '@react-oauth/google';
-import axios from "axios";
+// import { useGoogleLogin } from '@react-oauth/google';
+// import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
 // import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 export default function CompanySignUp(props) {
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   const [otpErr, setotperr] = useState("");
-  let [facebook, setFacebook] = useState(false);
+  // let [facebook, setFacebook] = useState(false);
   let i = 0;
   let navigate = useNavigate();
   const [searchParams] = useSearchParams()
@@ -140,39 +140,39 @@ export default function CompanySignUp(props) {
   };
   // END USER SIGNUP VALIDATION
   /*Function to Sign Up with google */
-  const GoogleLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        let data = await axios("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: {
-            "Authorization": `Bearer ${tokenResponse.access_token}`
-          }
-        });
-        console.log("response =>", data.data);
-        if (data.data.email_verified === true) {
-          try {
-            let res = await SocialCompanyLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
-            console.log(res);
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("userType", "company");
-            localStorage.setItem("employee_id", res.employer_id);
-            localStorage.setItem("profile_photo", res.company_logo);
-            toast.success("Logged In Successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            props.close();
-            navigate("/company");
-            window.location.reload();
-          } catch (err) {
-           console.log(err) ;
-          }
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  });
+  // const GoogleLogin = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       let data = await axios("https://www.googleapis.com/oauth2/v3/userinfo", {
+  //         headers: {
+  //           "Authorization": `Bearer ${tokenResponse.access_token}`
+  //         }
+  //       });
+  //       console.log("response =>", data.data);
+  //       if (data.data.email_verified === true) {
+  //         try {
+  //           let res = await SocialCompanyLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
+  //           console.log(res);
+  //           localStorage.setItem("token", res.token);
+  //           localStorage.setItem("userType", "company");
+  //           localStorage.setItem("employee_id", res.employer_id);
+  //           localStorage.setItem("profile_photo", res.company_logo);
+  //           toast.success("Logged In Successfully", {
+  //             position: toast.POSITION.TOP_RIGHT,
+  //             autoClose: 1000,
+  //           });
+  //           props.close();
+  //           navigate("/company");
+  //           window.location.reload();
+  //         } catch (err) {
+  //          console.log(err) ;
+  //         }
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // });
 
   /*Function to Sign Up  with Linked in */
   /*Code to get access token */
@@ -231,28 +231,28 @@ export default function CompanySignUp(props) {
   }, [])
 
   /*FUnctiom to Sign Up with facebook */
-  const responseFacebook = async (response) => {
-    console.log(response);
-    if (response.graphDomain === "facebook") {
-      try {
-        let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userType", "company");
-        localStorage.setItem("employee_id", data.employer_id);
-        localStorage.setItem("profile_photo", data.company_logo);
-        toast.success("Logged In Successfully",{
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        }); 
-        props.close();
-        navigate("/company");
-        window.location.reload();
-      } catch (err) {
-       console.log(err) 
-      }
-    }
-  }
+  // const responseFacebook = async (response) => {
+  //   console.log(response);
+  //   if (response.graphDomain === "facebook") {
+  //     try {
+  //       let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
+  //       console.log(data);
+  //       localStorage.setItem("token", data.token);
+  //       localStorage.setItem("userType", "company");
+  //       localStorage.setItem("employee_id", data.employer_id);
+  //       localStorage.setItem("profile_photo", data.company_logo);
+  //       toast.success("Logged In Successfully",{
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       }); 
+  //       props.close();
+  //       navigate("/company");
+  //       window.location.reload();
+  //     } catch (err) {
+  //      console.log(err) 
+  //     }
+  //   }
+  // }
   return (
     <>
       {/* <!-- Sign Up Modal --> */}
@@ -328,7 +328,7 @@ export default function CompanySignUp(props) {
                             Import from LinkedIn
                           </span></button>
                       </div>
-                      <div className="col-4 col-xs-12">
+                      {/* <div className="col-4 col-xs-12">
                         <Link
                           to="" onClick={GoogleLogin}
                           className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
@@ -363,7 +363,7 @@ export default function CompanySignUp(props) {
                             )}
                           />
                           : null}
-                      </div>
+                      </div> */}
                     </div>
                     {/* END SOCIAL MEDIA LINK BUTTONS */}
                     <div className="or-devider">

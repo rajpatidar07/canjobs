@@ -9,16 +9,16 @@ import {
 } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+// import { useGoogleLogin } from "@react-oauth/google";
+// import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
 // import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
   let [loading, setLoading] = useState(false);
   let navigate = useNavigate();
-  let [facebook, setFacebook] = useState(false);
+  // let [facebook, setFacebook] = useState(false);
   let i = 0;
   const [searchParams] = useSearchParams();
   let code = searchParams.get("code");
@@ -98,10 +98,6 @@ export default function EmployeeLoginModal(props) {
           setErrors({ ...errors, email: "Invalid credentials !" });
         }
       } catch (err) {
-        toast.success("Something went wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
         setLoading(false);
       }
     }
@@ -133,53 +129,49 @@ export default function EmployeeLoginModal(props) {
     }
   };
   /*Function to login with google */
-  const GoogleLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        let data = await axios(
-          "https://www.googleapis.com/oauth2/v3/userinfo",
-          {
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-            },
-          }
-        );
-        try {
-          if (data.data.email_verified === true) {
-            let res = await SocialLogin(
-              data.data.sub,
-              data.data.email,
-              data.data.name,
-              data.data.picture,
-              "Google"
-            );
-            console.log(res);
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("email", res.email);
-            localStorage.setItem("userType", "user");
-            localStorage.setItem("employee_id", res.employee_id);
-            localStorage.setItem("profile_photo", res.profile_photo);
-            localStorage.setItem("skill", res.skill);
-            toast.success("Logged In Successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            Close();
-            navigate("/");
-            window.location.reload();
-          }
-        } catch (err) {
-          toast.success("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setLoading(false);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  });
+  // const GoogleLogin = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       let data = await axios(
+  //         "https://www.googleapis.com/oauth2/v3/userinfo",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${tokenResponse.access_token}`,
+  //           },
+  //         }
+  //       );
+  //       try {
+  //         if (data.data.email_verified === true) {
+  //           let res = await SocialLogin(
+  //             data.data.sub,
+  //             data.data.email,
+  //             data.data.name,
+  //             data.data.picture,
+  //             "Google"
+  //           );
+  //           console.log(res);
+  //           localStorage.setItem("token", res.token);
+  //           localStorage.setItem("email", res.email);
+  //           localStorage.setItem("userType", "user");
+  //           localStorage.setItem("employee_id", res.employee_id);
+  //           localStorage.setItem("profile_photo", res.profile_photo);
+  //           localStorage.setItem("skill", res.skill);
+  //           toast.success("Logged In Successfully", {
+  //             position: toast.POSITION.TOP_RIGHT,
+  //             autoClose: 1000,
+  //           });
+  //           Close();
+  //           navigate("/");
+  //           window.location.reload();
+  //         }
+  //       } catch (err) {
+  //         setLoading(false);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   },
+  // });
 
   /*Function to login in with Linked in */
   /*Code to get access token */
@@ -193,7 +185,7 @@ export default function EmployeeLoginModal(props) {
   // console.log(i , "code =>" , code);
   const handleLinkedInLogin = () => {
     const clientId = "78mhwjaumkvtbm";
-    const redirectUri = "http://localhost:3000/";
+    const redirectUri = "http://3.6.36.125:3000/";
     const scope =
       "r_liteprofile r_emailaddress w_member_social profile email openid";
 
@@ -254,49 +246,41 @@ export default function EmployeeLoginModal(props) {
           }
         })
         .catch((err) => {
-          console.log(err.data);
-          toast.success("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+          console.log(err.data)
           setLoading(false);
         });
     }
   }, []);
 
   /*Functiom to login with facebook */
-  const responseFacebook = async (response) => {
-    if (response.graphDomain === "facebook") {
-      try {
-        let data = await SocialLogin(
-          response.userID,
-          response.email,
-          response.name,
-          response.picture.data.url,
-          "Facebook"
-        );
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("userType", "user");
-        localStorage.setItem("employee_id", data.employee_id);
-        localStorage.setItem("profile_photo", data.profile_photo);
-        localStorage.setItem("skill", data.skill);
-        toast.success("Logged In Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        Close();
-        navigate("/");
-        window.location.reload();
-      } catch (err) {
-        toast.success("Something went Wrong", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setLoading(false);
-      }
-    }
-  };
+  // const responseFacebook = async (response) => {
+  //   if (response.graphDomain === "facebook") {
+  //     try {
+  //       let data = await SocialLogin(
+  //         response.userID,
+  //         response.email,
+  //         response.name,
+  //         response.picture.data.url,
+  //         "Facebook"
+  //       );
+  //       localStorage.setItem("token", data.token);
+  //       localStorage.setItem("email", data.email);
+  //       localStorage.setItem("userType", "user");
+  //       localStorage.setItem("employee_id", data.employee_id);
+  //       localStorage.setItem("profile_photo", data.profile_photo);
+  //       localStorage.setItem("skill", data.skill);
+  //       toast.success("Logged In Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       Close();
+  //       navigate("/");
+  //       window.location.reload();
+  //     } catch (err) {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -367,7 +351,7 @@ export default function EmployeeLoginModal(props) {
                         </span>
                       </button>
                     </div>
-                    <div className="col-4 col-xs-12">
+                    {/* <div className="col-4 col-xs-12">
                       <Link
                         to=""
                         onClick={GoogleLogin}
@@ -406,7 +390,7 @@ export default function EmployeeLoginModal(props) {
                           )}
                         />
                       ) : null}
-                    </div>
+                    </div> */}
                   </div>
                   <div
                     className={
