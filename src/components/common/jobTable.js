@@ -98,8 +98,7 @@ export default function JobTable(props) {
             props.categoryFilterValue ||
             props.SkillFilterValue ||
             props.jobSwapFilterValue ||
-            props.filter_by_time ||
-            sortOrder
+            props.filter_by_time 
             ? 1
             : currentPage,
           recordsPerPage,
@@ -263,6 +262,7 @@ export default function JobTable(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
+    setCurrentPage(1);
     setApiCall(true);
   };
 
@@ -311,7 +311,6 @@ export default function JobTable(props) {
                     <Link
                       onClick={() => {
                         handleSort("job_title");
-                        setCurrentPage(1);
                       }}
                       title="Sort by Industry"
                       className="text-gray"
@@ -328,7 +327,6 @@ export default function JobTable(props) {
                         to=""
                         onClick={() => {
                           handleSort("job_type");
-                          setCurrentPage(1);
                         }}
                         title="Sort by Job"
                         className="text-gray"
@@ -346,7 +344,6 @@ export default function JobTable(props) {
                         to=""
                         onClick={() => {
                           handleSort("location");
-                          setCurrentPage(1);
                         }}
                         className="text-gray"
                         title="Sort by Address"
@@ -364,7 +361,6 @@ export default function JobTable(props) {
                         to=""
                         onClick={() => {
                           handleSort("education");
-                          setCurrentPage(1);
                         }}
                         className="text-gray"
                         title="Sort by Education"
@@ -382,7 +378,6 @@ export default function JobTable(props) {
                         to=""
                         onClick={() => {
                           handleSort("keyskill");
-                          setCurrentPage(1);
                         }}
                         className="text-gray"
                         title="Sort by Skill"
@@ -400,7 +395,6 @@ export default function JobTable(props) {
                         to=""
                         onClick={() => {
                           handleSort("language");
-                          setCurrentPage(1);
                         }}
                         className="text-gray"
                         title="Sort by Language"
@@ -417,7 +411,6 @@ export default function JobTable(props) {
                       to=""
                       onClick={() => {
                         handleSort("salary");
-                        setCurrentPage(1);
                       }}
                       className="text-gray"
                       title="Sort by Salary"
@@ -433,7 +426,6 @@ export default function JobTable(props) {
                       to=""
                       onClick={() => {
                         handleSort("experience_required");
-                        setCurrentPage(1);
                       }}
                       className="text-gray"
                       title="Sort by Experience"

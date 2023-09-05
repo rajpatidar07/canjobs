@@ -79,6 +79,7 @@ export default function EmployeeTable(props) {
       if (userData.data.length === 0) {
         setemployeeData([]);
         setIsLoading(false);
+        setTotalData(0)
       } else {
         setemployeeData(userData.data);
         setTotalData(userData.total_rows);

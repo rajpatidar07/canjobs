@@ -7,12 +7,12 @@ import { getAllEmployer, DeleteEmployer } from "../../api/api";
 import { toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-import Loader from '../common/loader';
-import { LiaEdit } from "react-icons/lia"
-import { RiDeleteBin5Line } from "react-icons/ri"
-import { PiAddressBookLight } from "react-icons/pi"
-import { PiBriefcaseLight } from "react-icons/pi"
-import { AiOutlineFileZip } from "react-icons/ai"
+import Loader from "../common/loader";
+import { LiaEdit } from "react-icons/lia";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { PiAddressBookLight } from "react-icons/pi";
+import { PiBriefcaseLight } from "react-icons/pi";
+import { AiOutlineFileZip } from "react-icons/ai";
 export default function EmployerTable(props) {
   /*show modal and data , id state */
   let [apiCall, setApiCall] = useState(false);
@@ -37,7 +37,7 @@ export default function EmployerTable(props) {
 
   /* Function to get Employer data*/
   const EmployerData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const userData = await getAllEmployer(
         props.industryFilterValue,
@@ -47,7 +47,9 @@ export default function EmployerTable(props) {
           props.industryFilterValue ||
           props.corporationFilterValue ||
           props.search ||
-          sortOrder ? 1 : currentPage,
+          sortOrder
+          ? 1
+          : currentPage,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -55,15 +57,15 @@ export default function EmployerTable(props) {
       );
       if (userData.data.length === 0) {
         setemployerData([]);
-        setIsLoading(false)
+        setIsLoading(false);
       } else {
         setemployerData(userData.data);
         setTotalData(userData.total_rows);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } catch (err) {
-      console.log(err)
-      setIsLoading(false)
+      console.log(err);
+      setIsLoading(false);
     }
   };
 
@@ -71,8 +73,8 @@ export default function EmployerTable(props) {
   useEffect(() => {
     EmployerData();
     if (apiCall === true || props.apiCall === true) {
-      props.setApiCall(false)
-      setApiCall(false)
+      props.setApiCall(false);
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -87,7 +89,7 @@ export default function EmployerTable(props) {
     props.filter_by_time,
     apiCall,
     props.apiCall,
-    props.showEmployerDetails
+    props.showEmployerDetails,
   ]);
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {
@@ -126,10 +128,10 @@ export default function EmployerTable(props) {
           autoClose: 1000,
         });
         setDeleteAlert(false);
-        setApiCall(true)
+        setApiCall(true);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
   /*Pagination Calculation */
@@ -147,11 +149,12 @@ export default function EmployerTable(props) {
 
   return (
     <>
-
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
         <div className="table-responsive main_table_div">
-          {isLoading ?
-            <Loader /> : <table className="table table-striped main_data_table">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <table className="table table-striped main_data_table">
               <thead>
                 <tr>
                   <th
@@ -160,7 +163,10 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => { handleSort("company_name"); setCurrentPage(1) }}
+                      onClick={() => {
+                        handleSort("company_name");
+                        setCurrentPage(1);
+                      }}
                       className="text-gray"
                       title="Sort by Company Name"
                     >
@@ -176,7 +182,10 @@ export default function EmployerTable(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => { handleSort("contact_person_name"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("contact_person_name");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Name"
                       >
@@ -193,7 +202,10 @@ export default function EmployerTable(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => { handleSort("address"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("address");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Location"
                       >
@@ -210,7 +222,10 @@ export default function EmployerTable(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => { handleSort("contact_no"); setCurrentPage(1) }}
+                        onClick={() => {
+                          handleSort("contact_no");
+                          setCurrentPage(1);
+                        }}
                         className="text-gray"
                         title="Sort by Contact"
                       >
@@ -224,7 +239,10 @@ export default function EmployerTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => { handleSort("vacancy_for_post"); setCurrentPage(1) }}
+                      onClick={() => {
+                        handleSort("vacancy_for_post");
+                        setCurrentPage(1);
+                      }}
                       className="text-gray"
                       title="Sort by jobs"
                     >
@@ -257,22 +275,21 @@ export default function EmployerTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employerData.length === 0 ? (
                   <tr>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
                     {props.heading === "Dashboard" ? (
-                      <th className="bg-white">No Data Found</th>
+                      <>
+                        <th className="bg-white"></th>
+                        <th className="bg-white">No Data Found</th>
+                      </>
                     ) : (
-                      <th className="bg-white"></th>
-                    )}
-                    <th className="bg-white">No Data Found</th>
-                    <th className="bg-white"></th>
-                    {props.heading !== "Dashboard" ? (
                       <>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white">No Data Found</th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
                       </>
-                    ) : (
-                      ""
                     )}
                   </tr>
                 ) : (
@@ -282,7 +299,12 @@ export default function EmployerTable(props) {
                         <Link
                           to={`/company_detail`}
                           title="Company Details"
-                          onClick={() => localStorage.setItem("company_id", empdata.company_id)}
+                          onClick={() =>
+                            localStorage.setItem(
+                              "company_id",
+                              empdata.company_id
+                            )
+                          }
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
@@ -307,7 +329,6 @@ export default function EmployerTable(props) {
                                 Unavailable
                               </p>
                             ) : (
-
                               <div className="company_profile">
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {empdata.company_name}
@@ -316,7 +337,6 @@ export default function EmployerTable(props) {
                                   {empdata.industry}
                                 </p>
                               </div>
-
                             )}
                           </div>
                         </Link>
@@ -348,8 +368,9 @@ export default function EmployerTable(props) {
                             </p>
                           ) : (
                             <p className="font-size-3 font-weight-normal mb-0">
-                              {empdata.address} {empdata.city} ({empdata.pin_code}
-                              ) {empdata.state} {empdata.country}
+                              {empdata.address} {empdata.city} (
+                              {empdata.pin_code}) {empdata.state}
+                              {empdata.country}
                             </p>
                           )}
                         </th>
@@ -365,17 +386,35 @@ export default function EmployerTable(props) {
                           ) : (
                             <>
                               <div className="font-size-3 font-weight-normal mb-0">
-                                + <Link className="text-dark" to={`tel:${empdata.contact_no}`}>{empdata.contact_no}</Link>
+                                +
+                                <Link
+                                  className="text-dark"
+                                  to={`tel:${empdata.contact_no}`}
+                                >
+                                  {empdata.contact_no}
+                                </Link>
                               </div>
                               <div className="font-size-3 font-weight-normal mb-0">
                                 {empdata.contact_no_other === null ||
-                                  empdata.contact_no_other === undefined ||
-                                  empdata.contact_no_other === ""
-                                  ? ""
-                                  : <><Link className="text-dark" to={`tel:${empdata.contact_no_other}`}>{empdata.contact_no_other}</Link></>}
+                                empdata.contact_no_other === undefined ||
+                                empdata.contact_no_other === "" ? (
+                                  ""
+                                ) : (
+                                  <>
+                                    <Link
+                                      className="text-dark"
+                                      to={`tel:${empdata.contact_no_other}`}
+                                    >
+                                      {empdata.contact_no_other}
+                                    </Link>
+                                  </>
+                                )}
                               </div>
                               <p className="text-gray font-size-2 font-weight-normal m-0">
-                                <Link className="text-dark" to={`mailto:${empdata.email}`}>
+                                <Link
+                                  className="text-dark"
+                                  to={`mailto:${empdata.email}`}
+                                >
                                   {empdata.email}
                                 </Link>
                               </p>
@@ -399,16 +438,16 @@ export default function EmployerTable(props) {
                       ) : (
                         <th className="  py-5 ">
                           <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                            {empdata.profile_complete >= 99.00 ? (
+                            {empdata.profile_complete >= 99.0 ? (
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                 Complete
                               </span>
-
                             ) : (
                               <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                                 Incompelete
                               </span>
-                            )}</p>
+                            )}
+                          </p>
                         </th>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -423,26 +462,29 @@ export default function EmployerTable(props) {
                               }
                               title="Contact"
                             >
-                              <span className="text-gray px-1"><PiAddressBookLight /></span>
+                              <span className="text-gray px-1">
+                                <PiAddressBookLight />
+                              </span>
                               {/* <span className="fa fa-address-book text-gray px-1"></span> */}
                             </button>
-                            <button
-                              className="btn btn-outline-info action_btn"
-                            >
+                            <button className="btn btn-outline-info action_btn">
                               <Link
                                 // onClick={() => Joblist(empdata.company_name)}
                                 to="/job"
                                 state={{ company_name: empdata.company_name }}
                                 title="Jobs"
                               >
-                                <span className="text-gray px-1"><PiBriefcaseLight />
+                                <span className="text-gray px-1">
+                                  <PiBriefcaseLight />
                                 </span>
                                 {/* <span className="fas fa-briefcase text-gray  "></span> */}
                               </Link>
                             </button>
                             <button
                               className="btn btn-outline-info action_btn"
-                              onClick={() => editEmployerKyc(empdata.company_id)}
+                              onClick={() =>
+                                editEmployerKyc(empdata.company_id)
+                              }
                               title="KYC"
                             >
                               <span className="text-gray px-1">
@@ -455,7 +497,9 @@ export default function EmployerTable(props) {
                               onClick={() => editEmployer(empdata.company_id)}
                               title="Edit Employer"
                             >
-                              <span className="text-gray px-1"><LiaEdit /></span>
+                              <span className="text-gray px-1">
+                                <LiaEdit />
+                              </span>
                               {/* <span className=" fas fa-edit text-gray px-1"></span> */}
                             </button>
                             <button
@@ -475,37 +519,46 @@ export default function EmployerTable(props) {
                   ))
                 )}
               </tbody>
-            </table>}
+            </table>
+          )}
         </div>
         <div className="pt-2">
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage} total={totalData} count={employerData.length}
+            setCurrentPage={setCurrentPage}
+            total={totalData}
+            count={employerData.length}
           />
         </div>
       </div>
-      {showAddEmployerModal ? <CompanyDetails
-        show={showAddEmployerModal}
-        employerId={employerId}
-        setApiCall={setApiCall}
-        apiCall={apiCall}
-        close={() => setShowEmployerMOdal(false)}
-      /> : null}
-      {showContactModal ? <ContactInfo
-        show={showContactModal}
-        employerId={employerId}
-        setApiCall={setApiCall}
-        apiCall={apiCall}
-        close={() => setShowContactMOdal(false)}
-      /> : null}
-      {showKycModal ? <KycComplianceDetails
-        show={showKycModal}
-        employerId={employerId}
-        setApiCall={setApiCall}
-        apiCall={apiCall}
-        close={() => setShowkycMOdal(false)}
-      /> : null}
+      {showAddEmployerModal ? (
+        <CompanyDetails
+          show={showAddEmployerModal}
+          employerId={employerId}
+          setApiCall={setApiCall}
+          apiCall={apiCall}
+          close={() => setShowEmployerMOdal(false)}
+        />
+      ) : null}
+      {showContactModal ? (
+        <ContactInfo
+          show={showContactModal}
+          employerId={employerId}
+          setApiCall={setApiCall}
+          apiCall={apiCall}
+          close={() => setShowContactMOdal(false)}
+        />
+      ) : null}
+      {showKycModal ? (
+        <KycComplianceDetails
+          show={showKycModal}
+          employerId={employerId}
+          setApiCall={setApiCall}
+          apiCall={apiCall}
+          close={() => setShowkycMOdal(false)}
+        />
+      ) : null}
       <SAlert
         show={deleteAlert}
         title={deleteName}

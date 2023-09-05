@@ -1,6 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "http://13.126.18.37/canjobs/"
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -942,7 +943,7 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
 /*Get lmia list Api */
 export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord, time,employee_id) => {
   const response = await axios.post(
-    `${API_URL}/company/getLmia`,
+    `${API_URL}company/getLmia`,
     {
       lmia_status: status,
       search: search,
