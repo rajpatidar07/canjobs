@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1693483478850,
@@ -76,6 +76,10 @@
                 {
                     "date": 1693893618175,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-const API_URL = \"http://13.126.18.37/canjobs/\"\n+const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+// const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
+                },
+                {
+                    "date": 1693893870678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-// const API_URL = \"http://13.126.18.37/canjobs/\"\n+// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
                 }
             ],
             "date": 1693483478850,
