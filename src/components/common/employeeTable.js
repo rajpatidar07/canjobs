@@ -44,12 +44,10 @@ export default function EmployeeTable(props) {
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("employee_id");
   const [sortOrder, setSortOrder] = useState("");
-
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -60,14 +58,7 @@ export default function EmployeeTable(props) {
         props.experienceFilterValue,
         props.skillFilterValue,
         props.educationFilterValue,
-        sortOrder ||
-          props.filter_by_time ||
-          props.search ||
-          props.experienceFilterValue ||
-          props.skillFilterValue ||
-          props.educationFilterValue
-          ? 1
-          : currentPage,
+         props.pageNo,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -106,7 +97,7 @@ export default function EmployeeTable(props) {
     props.skillFilterValue,
     props.educationFilterValue,
     props.search,
-    currentPage,
+    props.pageNo,
     recordsPerPage,
     columnName,
     sortOrder,
@@ -340,7 +331,7 @@ export default function EmployeeTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("name");
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Name"
@@ -356,7 +347,7 @@ export default function EmployeeTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("contact_no");
-                        setCurrentPage(1);
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Contact"
@@ -375,7 +366,7 @@ export default function EmployeeTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("language");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Languages"
@@ -395,7 +386,7 @@ export default function EmployeeTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("education");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Education"
@@ -415,7 +406,7 @@ export default function EmployeeTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("skill");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Skill"
@@ -435,7 +426,7 @@ export default function EmployeeTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("experience");
-                          setCurrentPage(1);
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Experience"
@@ -895,8 +886,8 @@ export default function EmployeeTable(props) {
         <div className="pt-2">
           <Pagination
             nPages={nPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            currentPage={props.pageNo}
+            setCurrentPage={props.setpageNo}
             total={totalData}
             count={employeeData.length}
           />

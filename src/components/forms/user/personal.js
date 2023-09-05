@@ -12,7 +12,7 @@ function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -35,7 +35,7 @@ function PersonalDetails(props) {
     resume: "",
     profile_photo: "",
     is_featured: "",
-    status: props.employeeId === "0" ? "1" : ""
+    status: props.employeeId === "0" ? "1" : "",
   };
   /* Functionality to close the modal */
 
@@ -54,30 +54,30 @@ function PersonalDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 2
-              ? "Name should have 2 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Name can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 2
+          ? "Name should have 2 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Name can not have a number."
+          : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-            ? "Mobile number should be of 10 digits"
-            : value.length > 11
-              ? "Mobile number should not be more than 11 digits"
-              : "",
+          ? "Mobile number should be of 10 digits"
+          : value.length > 11
+          ? "Mobile number should not be more than 11 digits"
+          : "",
     ],
     // description: [
     //   (value) =>
@@ -101,24 +101,24 @@ function PersonalDetails(props) {
         value === "" || value === null
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 3
-              ? "Nationality should have 3 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Nationality can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 3
+          ? "Nationality should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Nationality can not have a number."
+          : "",
     ],
     current_location: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 3
-              ? "Location should have 3 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Location can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 3
+          ? "Location should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Location can not have a number."
+          : "",
     ],
     // currently_located_country: [
     //   (value) =>
@@ -189,8 +189,8 @@ function PersonalDetails(props) {
         setState(userData.data.employee[0]);
       }
     } catch (err) {
-      console.log(err)
-      setLoading(false)
+      console.log(err);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -227,8 +227,8 @@ function PersonalDetails(props) {
           return close();
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -253,7 +253,7 @@ function PersonalDetails(props) {
     encoded = await convertToBase64(e.target.files[0]);
     let base64Name = encoded.base64;
     let finalBase = base64Name;
-    console.log(finalBase)
+    console.log(finalBase);
     setState({ ...state, resume: finalBase });
   };
 
@@ -268,7 +268,7 @@ function PersonalDetails(props) {
         if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {
           setImgError("Image size can't be more then 100 kb");
         } else {
-          setImgError("")
+          setImgError("");
           setState({ ...state, profile_photo: event.target.result });
         }
       };
@@ -480,7 +480,7 @@ function PersonalDetails(props) {
                   type="date"
                   placeholder="Date Of Birth "
                   name="date_of_birth"
-                  value={moment(state.date_of_birth).format("DD-MM-YYYY") || ""}
+                  value={state.date_of_birth || ""}
                   onChange={onInputChange}
                   onKeyDownCapture={(e) => e.preventDefault()}
                   className={
@@ -746,10 +746,11 @@ function PersonalDetails(props) {
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
-                  {(filterjson.interested || []).map((interest) =>
+                  {(filterjson.interested || []).map((interest) => (
                     <option key={interest} value={interest}>
                       {interest}
-                    </option>)}
+                    </option>
+                  ))}
                   {/* <option value={"swap"}>SWEP</option>
                   <option value={"parttime"}>Part-time</option>
                   <option value={"all"}>All</option> */}
@@ -890,28 +891,33 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              {user_type === "admin" ? <div className="form-group col-md-4">
-                <label
-                  htmlFor="fetured"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Featured: <input
-                    type="checkbox"
-                    id="fetured"
-                    name="fetured"
-                    checked={state.is_featured === "1"}
-                    value={state.is_featured}
-                    onChange={(e) => setState(
-                      {
-                        ...state, is_featured:
-                          (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
-                      })}
-                  />
-                </label>
-
-
-              </div>
-                : null}
+              {user_type === "admin" ? (
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="fetured"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Featured:{" "}
+                    <input
+                      type="checkbox"
+                      id="fetured"
+                      name="fetured"
+                      checked={state.is_featured === "1"}
+                      value={state.is_featured}
+                      onChange={(e) =>
+                        setState({
+                          ...state,
+                          is_featured:
+                            state.is_featured === "" ||
+                            state.is_featured === "0"
+                              ? "1"
+                              : "0",
+                        })
+                      }
+                    />
+                  </label>
+                </div>
+              ) : null}
             </div>
             <div className="form-group text-center">
               {loading === true ? (

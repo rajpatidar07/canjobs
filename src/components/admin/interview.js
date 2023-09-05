@@ -8,6 +8,8 @@ export default function ManageInterview() {
   let [search, setSearch] = useState("");
   let [statusFilterValue, setStatusFilterValue] = useState("");
   const [searcherror, setSearchError] = useState("");
+  const [pageNo, setpageNo] = useState(1);
+  
   useEffect(() => {
     if ((search === "") === true) {
       setSearchError("");
@@ -18,6 +20,7 @@ export default function ManageInterview() {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    setpageNo(1)
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Applicant name cannot start with a number.");
@@ -66,7 +69,8 @@ export default function ManageInterview() {
                         name="type"
                         value={statusFilterValue}
                         id="type"
-                        onChange={(e) => setStatusFilterValue(e.target.value)}
+                        onChange={(e) => {setStatusFilterValue(e.target.value)
+                          setpageNo(1)}}
                         className=" form-control"
                       >
                         <option value="">Select Interview Status</option>
@@ -83,6 +87,8 @@ export default function ManageInterview() {
                 search={search}
                 statusFilterValue={statusFilterValue}
                 heading={"Interview"}
+                setpageNo={setpageNo}
+                pageNo={pageNo}
               />
             </div>
           </div>

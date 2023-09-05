@@ -3,7 +3,11 @@
     "activeCommit": 0,
     "commits": [
         {
+<<<<<<< HEAD
             "activePatchIndex": 18,
+=======
+            "activePatchIndex": 20,
+>>>>>>> 92b048694af6819e54728bb21572e0badcc169e0
             "patches": [
                 {
                     "date": 1693483478850,
@@ -78,8 +82,21 @@
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-const API_URL = \"http://13.126.18.37/canjobs/\"\n+const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+// const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
                 },
                 {
+<<<<<<< HEAD
                     "date": 1693893870678,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-// const API_URL = \"http://13.126.18.37/canjobs/\"\n+// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
+=======
+                    "date": 1693910957420,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-// const API_URL = \"http://13.126.18.37/canjobs/\"\n+// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
+                },
+                {
+                    "date": 1693911062092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-const API_URL = \"http://13.126.18.37/canjobs/\"\n+const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+// const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
+                },
+                {
+                    "date": 1693915043011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n // const API_URL = \"https://192.168.29.92/canjobs/\";\n-// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n-const API_URL = \"http://13.126.18.37/canjobs/\"\n+const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+// const API_URL = \"http://13.126.18.37/canjobs/\"\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n const user_id = localStorage.getItem(\"employee_id\");\n const employer_id = localStorage.getItem(\"company_id\");\n"
+>>>>>>> 92b048694af6819e54728bb21572e0badcc169e0
                 }
             ],
             "date": 1693483478850,

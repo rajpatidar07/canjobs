@@ -14,12 +14,14 @@ function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
   const [employerId, setEmployerID] = useState();
+  const [pageNo, setpageNo] = useState(1);
   /*Filter and search state */
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let [Json, setJson] = useState([]);
+
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
@@ -32,6 +34,7 @@ function Employer() {
   /*Function to Search employer */
   const onSearch = (e) => {
     setSearch(e.target.value);
+    setpageNo(1);
     if (/[^a-zA-Z0-9]/g.test(search)) {
       setSearchError("Cannot use special character");
     } else if (search === "") {
@@ -126,9 +129,10 @@ function Employer() {
                         name="corporation"
                         value={corporationFilterValue}
                         id="corporation"
-                        onChange={(e) =>
-                          setcorporationFilterValue(e.target.value)
-                        }
+                        onChange={(e) => {
+                          setcorporationFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Corporation</option>
@@ -150,7 +154,10 @@ function Employer() {
                         name="industry"
                         value={industryFilterValue}
                         id="industry"
-                        onChange={(e) => setIndutryFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setIndutryFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Company Industry</option>
@@ -183,6 +190,8 @@ function Employer() {
                 showEmployerDetails={showEmployerDetails}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
               />
             </div>
           </div>
@@ -199,7 +208,6 @@ function Employer() {
                       onClick={() => setShowEmployerDetails(false)}
                       className="d-flex align-items-center ml-4"
                     >
-                      
                       <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8 mt-10"></i>
                       <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                         Back

@@ -21,6 +21,7 @@ function Employee(props) {
   const [skillFilterValue, setSkillFilterValue] = useState(
     /*props ? props.skill : */ ""
   );
+  const [pageNo, setpageNo] = useState(1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -58,6 +59,7 @@ function Employee(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Company Name cannot start with a number.");
@@ -83,7 +85,6 @@ function Employee(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Applicants"} />
             {/* <!-- navbar- --> */}
@@ -152,9 +153,10 @@ function Employee(props) {
                         name="experience"
                         value={experienceFilterValue}
                         id="experience"
-                        onChange={(e) =>
-                          setExperienceFilterValue(e.target.value)
-                        }
+                        onChange={(e) => {
+                          setExperienceFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select Experience</option>
@@ -180,7 +182,10 @@ function Employee(props) {
                         name="skill"
                         value={skillFilterValue}
                         id="Skill"
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        onChange={(e) => {
+                          setSkillFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select Skill</option>
@@ -207,9 +212,10 @@ function Employee(props) {
                         name="education"
                         value={educationFilterValue}
                         id="education"
-                        onChange={(e) =>
-                          setEducationFilterValue(e.target.value)
-                        }
+                        onChange={(e) => {
+                          setEducationFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="" data-display="Product Designer">
@@ -255,6 +261,8 @@ function Employee(props) {
                 job_id={props.job_id}
                 self={"no"}
                 status={"-1"}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
               />
             </div>
           </div>
