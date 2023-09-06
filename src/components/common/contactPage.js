@@ -55,7 +55,7 @@ export default function ContactPage() {
           </div>
         </div>
         <div className="col">
-          <form className="col-md-4 p-10">
+          <form className=" p-10">
             <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="subject"
