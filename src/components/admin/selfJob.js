@@ -27,7 +27,7 @@ function SelfJob(props) {
   const [searcherror, setSearchError] = useState("");
   const [company, setCompany] = useState("");
   let [Json, setJson] = useState([]);
-  let [pageNo, setpageNo] = useState(0);
+  let [pageNo, setpageNo] = useState(1);
 
   /*Function to get the jSon */
   const JsonData = async () => {

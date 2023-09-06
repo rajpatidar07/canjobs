@@ -855,15 +855,15 @@ export default function JobTable(props) {
                                     <div
                                       key={i + 1}
                                       className={`step text-capitalize ${
-                                        job.lmia_status === "onboarding" ||
                                         job.lmia_status === "advertisements" ||
                                         job.lmia_status === "documentation" ||
-                                        job.lmia_status ===
-                                          "candidate placement" ||
+                                        job.lmia_status === "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
                                           ? "approved"
-                                          : null
+                                          : job.lmia_status === "onboarding"
+                                          ? "pending"
+                                          : ""
                                       }`}
                                     >
                                       <span>onboarding</span>
@@ -872,13 +872,13 @@ export default function JobTable(props) {
                                       key={i + 2}
                                       className={`step text-capitalize ${
                                         job.lmia_status === "documentation" ||
-                                        job.lmia_status === "advertisements" ||
-                                        job.lmia_status ===
-                                          "candidate placement" ||
+                                        job.lmia_status === "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
                                           ? "approved"
-                                          : null
+                                          : job.lmia_status === "advertisements"
+                                          ? "pending"
+                                          : ""
                                       }`}
                                     >
                                       <span>advertisements</span>
@@ -886,13 +886,13 @@ export default function JobTable(props) {
                                     <div
                                       key={i + 3}
                                       className={`step text-capitalize ${
-                                        job.lmia_status === "documentation" ||
-                                        job.lmia_status ===
-                                          "candidate placement" ||
+                                        job.lmia_status === "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
                                           ? "approved"
-                                          : null
+                                          : job.lmia_status === "documentation"
+                                          ? "pending"
+                                          : ""
                                       }`}
                                     >
                                       <span>documentation</span>
@@ -900,12 +900,12 @@ export default function JobTable(props) {
                                     <div
                                       key={i + 4}
                                       className={`step text-capitalize ${
-                                        job.lmia_status ===
-                                          "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
                                           ? "approved"
-                                          : null
+                                          : job.lmia_status === "candidate placement"
+                                          ? "pending"
+                                          : ""
                                       }`}
                                     >
                                       <span>candidate placement</span>
@@ -913,10 +913,11 @@ export default function JobTable(props) {
                                     <div
                                       key={i + 5}
                                       className={`step text-capitalize ${
-                                        job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
                                           ? "approved"
-                                          : null
+                                          : job.lmia_status === "submission"
+                                          ? "pending"
+                                          : ""
                                       }`}
                                     >
                                       <span>submission</span>
@@ -936,35 +937,24 @@ export default function JobTable(props) {
                                               : item.job_id === job.job_id
                                           ) ? (
                                             <div
-                                              key={i + 6}
-                                              className={` step text-capitalize ${
-                                                job.lmia_status ===
-                                                  "decision" &&
-                                                item.lmia_substage ===
-                                                  "approved"
-                                                  ? "approved"
-                                                  : item.lmia_substage ===
-                                                    "awaiting decision"
-                                                  ? "pending"
-                                                  : item.lmia_substage ===
-                                                    "reject"
-                                                  ? "reject"
-                                                  : ""
-                                              }`}
-                                            >
-                                              <span>
-                                                {item.lmia_substage ===
-                                                "approved"
-                                                  ? "Approved"
-                                                  : item.lmia_substage ===
-                                                    "awaiting decision"
-                                                  ? "Awaiting Decision"
-                                                  : item.lmia_substage ===
-                                                    "reject"
-                                                  ? "Rejected."
-                                                  : "decision"}
-                                              </span>
-                                            </div>
+                                            key={i + 6}
+                                            className={`step text-capitalize ${
+                                              job.lmia_status === "decision" &&
+                                              item.lmia_substage === "approved"
+                                                ? "approved"
+                                                : item.lmia_substage === "rejected"
+                                                ? "reject"
+                                                : "pending"
+                                            }`}
+                                          >
+                                            <span>
+                                              {item.lmia_substage === "approved"
+                                                ? "Approved"
+                                                : item.lmia_substage === "rejected"
+                                                ? "Rejected"
+                                                : "Awaiting Decision"}
+                                            </span>
+                                          </div>
                                           ) : // <small className="mx-10" key={i}>
                                           // {item.lmia_substage === "approved"
                                           //   ? "Congratulation your Limia is Approved"
@@ -978,9 +968,15 @@ export default function JobTable(props) {
                                         }
                                       )
                                     ) : (
-                                      <div className={`step text-capitalize`}>
-                                        decision
-                                      </div>
+                                      <div
+                                      className={`step text-capitalize${
+                                        job.lmia_status === "decision" ? "pending" : ""
+                                      } `}
+                                    >
+                                      {job.lmia_status === "decision"
+                                        ? " Awaiting Decision"
+                                        : "Decision"}
+                                    </div>
                                     )}
                                   </div>
                                 </div>

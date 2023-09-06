@@ -309,7 +309,6 @@ function LmiaStatus(props) {
                 selectedStatus={selectedStatus}
                 FilterJson={FilterJson}
                 handleSubStageSelection={handleSubStageSelection}
-                lmia_status={state.lmia_status}
               />
             )}
             <div className="form-group mt-5">

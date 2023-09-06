@@ -53,7 +53,7 @@ const NewUserProfile = (props) => {
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
   const [visaStatus, setVisaStatus] = useState([]);
-  const [pageNo, setpageNo] = useState([]);
+  const [pageNo, setpageNo] = useState(1);
   let [isLoading, setIsLoading] = useState(true);
   const user_type = localStorage.getItem("userType");
   // let id = localStorage.getItem("employee_id");

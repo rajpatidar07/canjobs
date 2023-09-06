@@ -959,12 +959,12 @@ function JobResponse(props) {
                                     }
                                     onClick={() => editJob(res)}
                                     title="Change Job"
-                                    disabled={
-                                      props.total_applicants >=
-                                      props.role_category
-                                        ? true
-                                        : false
-                                    }
+                                    // disabled={
+                                    //   props.total_applicants >=
+                                    //   props.role_category
+                                    //     ? true
+                                    //     : false
+                                    // }
                                   >
                                     <PiBriefcaseLight />
                                     {/* <i className="fas fa-briefcase"></i> */}

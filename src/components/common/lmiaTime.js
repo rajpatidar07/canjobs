@@ -1,13 +1,13 @@
 import React from 'react';
 import FilterJson from '../json/filterjson';
 
-export default function LmiaTime({ lmia, location, job, doc }) {
+export default function LmiaTime({ lmia, job, doc }) {
   /*function to get the stage of lmia */
   const currentIndex = FilterJson.lmia_status.findIndex(
     (status) => status === lmia
   );
   return (
-    <div className=''>
+    <div>
       <div className="arrow-wrapper">
         <h5 className={doc === 'yes' ? '' : 'd-none'}>LMIA status</h5>
         <div className="arrow-steps clearfix p-2">

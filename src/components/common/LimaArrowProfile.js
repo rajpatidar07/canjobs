@@ -18,7 +18,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                 }
                 key={i}
               >
-                <div className="mt-2 job_name text-dark">
+                <div className="job_name text-dark">
                   <span className="m-2 font-size-2 d-block mb-1">
                     {status.job_title}
                   </span>
@@ -29,15 +29,16 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                     className={`${
                       location.pathname === `/company_detail` ||
                       location.pathname === "/jobdetailpage"
-                        ? `mt-2 step text-capitalize ${
-                            status.lmia_status === "onboarding" ||
+                        ? `step text-capitalize ${
                             status.lmia_status === "advertisements" ||
                             status.lmia_status === "documentation" ||
                             status.lmia_status === "candidate placement" ||
                             status.lmia_status === "submission" ||
                             status.lmia_status === "decision"
                               ? "approved"
-                              : null
+                              : status.lmia_status === "onboarding"
+                              ? "pending"
+                              : ""
                           }`
                         : `d-none`
                     }`}
@@ -49,14 +50,15 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                     className={`${
                       location.pathname === `/company_detail` ||
                       location.pathname === "/jobdetailpage"
-                        ? `mt-2 step text-capitalize ${
+                        ? `step text-capitalize ${
                             status.lmia_status === "documentation" ||
-                            status.lmia_status === "advertisements" ||
                             status.lmia_status === "candidate placement" ||
                             status.lmia_status === "submission" ||
                             status.lmia_status === "decision"
                               ? "approved"
-                              : null
+                              : status.lmia_status === "advertisements"
+                              ? "pending"
+                              : ""
                           }`
                         : `d-none`
                     }`}
@@ -68,13 +70,14 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                     className={`${
                       location.pathname === `/company_detail` ||
                       location.pathname === "/jobdetailpage"
-                        ? `mt-2 step text-capitalize ${
-                            status.lmia_status === "documentation" ||
+                        ? `step text-capitalize ${
                             status.lmia_status === "candidate placement" ||
                             status.lmia_status === "submission" ||
                             status.lmia_status === "decision"
                               ? "approved"
-                              : null
+                              : status.lmia_status === "documentation"
+                              ? "pending"
+                              : ""
                           }`
                         : `d-none`
                     }`}
@@ -83,23 +86,25 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                   </div>
                   <div
                     key={i + 4}
-                    className={`mt-2 step text-capitalize ${
-                      status.lmia_status === "candidate placement" ||
+                    className={`step text-capitalize ${
                       status.lmia_status === "submission" ||
                       status.lmia_status === "decision"
                         ? "approved"
-                        : null
+                        : status.lmia_status === "candidate placement"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>candidate placement</span>
                   </div>
                   <div
                     key={i + 5}
-                    className={`mt-2 step text-capitalize ${
-                      status.lmia_status === "submission" ||
+                    className={`step text-capitalize ${
                       status.lmia_status === "decision"
                         ? "approved"
-                        : null
+                        : status.lmia_status === "submission"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>submission</span>
@@ -122,25 +127,21 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                       ) ? (
                         <div
                           key={i + 6}
-                          className={`mt-2 step text-capitalize ${
+                          className={`step text-capitalize ${
                             status.lmia_status === "decision" &&
                             item.lmia_substage === "approved"
                               ? "approved"
-                              : item.lmia_substage === "awaiting decision"
-                              ? "pending"
                               : item.lmia_substage === "rejected"
                               ? "reject"
-                              : ""
+                              : "pending"
                           }`}
                         >
                           <span>
                             {item.lmia_substage === "approved"
                               ? "Approved"
-                              : item.lmia_substage === "awaiting decision"
-                              ? "Awaiting Decision"
                               : item.lmia_substage === "rejected"
                               ? "Rejected"
-                              : "decision"}
+                              : "Awaiting Decision"}
                           </span>
                         </div>
                       ) : // <small className="mx-10" key={i}>
@@ -155,7 +156,15 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                       null;
                     })
                   ) : (
-                    <div className={`mt-2 step text-capitalize`}>decision</div>
+                    <div
+                      className={`step text-capitalize${
+                        status.lmia_status === "decision" ? "pending" : ""
+                      } `}
+                    >
+                      {status.lmia_status === "decision"
+                        ? " Awaiting Decision"
+                        : "Decision"}
+                    </div>
                   )}
                 </div>
               </div>
