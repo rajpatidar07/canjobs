@@ -216,7 +216,6 @@ export default function VisaStatus(props) {
                 selectedStatus={selectedStatus}
                 FilterJson={FilterJson}
                 handleSubStageSelection={handleSubStageSelection}
-                mainstage={state.status}
               />
             )}
             <div className="form-group col">

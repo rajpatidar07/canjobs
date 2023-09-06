@@ -16,7 +16,7 @@ export default function VisaArrowProfile({
               item.visa_status === "undefined" ? null : (
               <div
                 className={
-                  "arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom"
+                  "arrow-steps "
                 }
                 key={i}
               >

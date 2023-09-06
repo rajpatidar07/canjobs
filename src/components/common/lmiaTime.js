@@ -7,18 +7,18 @@ export default function LmiaTime({ lmia, job, doc }) {
     (status) => status === lmia
   );
   return (
-    <div>
-      <div className="arrow-wrapper">
+    <div className='bg-white'>
+      <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
         <h5 className={doc === 'yes' ? '' : 'd-none'}>LMIA status</h5>
-        <div className="arrow-steps clearfix p-2">
+        <div className="arrow-steps">
           {(FilterJson.lmia_status || []).map((status, i) => {
             const isDone = currentIndex > -1 && i <= currentIndex;
             return (
                job === 'yes' ? (  
                   <div
                     key={i}
-                    className={`step m-2 ${isDone ?
-                      'approved text-capitalize' :
+                    className={`step m-2 text-capitalize ${isDone ?
+                      'approved ' :
                       ''}`}
                   >
                     <span>{status}</span>

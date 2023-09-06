@@ -1641,12 +1641,30 @@ export const GetEmployeeFilterJob = async (id,/* skill*/
 };
 
 /*Api to Reserved employee for a job */
-export const ReservedEmployeeForJob = async (id, status) => {
+export const ReservedEmployeeForJob = async (id,employee_id, status) => {
   const response = await axios.put(
     `${API_URL}setEmployeeReserve`,
     {
       apply_id: id,
-      is_reserve: status
+      is_reserve: status,
+      employee_id:employee_id
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to Remove Reserved employee for a job */
+export const RemoveReservedEmployeeForJob = async (job_id, employee_id) => {
+  const response = await axios.post(
+    `${API_URL}removeEmployeeReserve`,
+    {
+      job_id:job_id,
+      employee_id:employee_id
     },
     {
       headers: {

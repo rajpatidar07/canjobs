@@ -9,6 +9,7 @@ import {
   GetAllResponse,
   GetFilter,
   AddUpdateVisa,
+  RemoveReservedEmployeeForJob,
 } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
@@ -88,7 +89,8 @@ function JobResponse(props) {
           : null,
         skillFilterValue,
         experienceTypeFilterValue,
-        search, currentPage,
+        search,
+        currentPage,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -163,13 +165,20 @@ function JobResponse(props) {
   const ReservedEmployee = async (e) => {
     // Api call to set employee reserved
     try {
-      let response = await ReservedEmployeeForJob(e.apply_id, "1");
+      let response = await ReservedEmployeeForJob(
+        e.apply_id,
+        e.employee_id,
+        "1"
+      );
       if (response.message === "Successfully") {
         // Api call to set employee Visa
         let state = { status: "onboard", country: e.location };
         try {
           let VisaResponse = await AddUpdateVisa(e.employee_id, state);
-          if (VisaResponse.data.message === "visa inserted successfully") {
+          if (
+            VisaResponse.data.message === "visa inserted successfully" ||
+            VisaResponse.data.message === "visa updated successfully"
+          ) {
             // Api call to set employee Limia
             const lmia = { lmia_status: "candidate placement" };
             try {
@@ -183,12 +192,31 @@ function JobResponse(props) {
                 setApiCall(true);
               }
             } catch (err) {
-             console.log(err) 
+              console.log(err);
             }
           }
         } catch (err) {
-         console.log(err)
+          console.log(err);
         }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*Function to removed reserved employee */
+  const OnRemoveReservedClick = async (e) => {
+    try {
+      let Response = await RemoveReservedEmployeeForJob(
+        e.job_id,
+        e.employee_id
+      );
+      if (Response.message === "successfully") {
+        toast.success("Employee Removed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
       }
     } catch (err) {
       console.log(err);
@@ -945,7 +973,6 @@ function JobResponse(props) {
                                     }
                                   >
                                     <span className="text-gray px-2">
-                                      
                                       <ImCalendar />
                                     </span>
                                     {/* <i className="fa fa-calendar text-gray px-2"></i> */}
@@ -968,6 +995,17 @@ function JobResponse(props) {
                                   >
                                     <PiBriefcaseLight />
                                     {/* <i className="fas fa-briefcase"></i> */}
+                                  </button>
+                                  <button
+                                    className={
+                                      res.is_reserve === "1"
+                                        ? "btn btn-outline-danger action_btn"
+                                        : " d-none"
+                                    }
+                                    onClick={() => OnRemoveReservedClick(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Remove Applicant
                                   </button>
                                 </div>
                               </th>
