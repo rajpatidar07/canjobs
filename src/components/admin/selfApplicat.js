@@ -27,7 +27,7 @@ function SelfApplicat(props) {
   const [searcherror, setSearchError] = useState("");
   let [SkillList, setSkillList] = useState([]);
   let [EducationList, setEducationList] = useState([]);
-  let [pageNo, setpageNo] = useState(0);
+  let [pageNo, setpageNo] = useState(1);
 
   /*Function to get thejSon */
   const JsonData = async () => {

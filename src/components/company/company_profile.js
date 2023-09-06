@@ -21,6 +21,7 @@ import AddCompanyfollowup from "../common/companyFollowUp";
 import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
+import ContactPage from "../common/contactPage";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -325,6 +326,24 @@ function CompanyProfileDetail(props) {
                       onClick={() => setTabActive("activity")}
                     >
                       Activity History
+                    </Link>
+                  </li>
+                  <li className="tab-menu-items nav-item ">
+                    {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
+                    <Link
+                      className={
+                        TabActive === "contact"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="activityTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="activityTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("contact")}
+                    >
+                      Contact
                     </Link>
                   </li>
                   {/* <li className="tab-menu-items nav-item pr-12">
@@ -733,6 +752,17 @@ function CompanyProfileDetail(props) {
                         </div>
                       </div>
                     </div>
+                  ) : null}
+                </div>
+                <div
+                  className={
+                    TabActive === "contact"
+                      ? "justify-content-center "
+                      : "d-none"
+                  }
+                >
+                  {TabActive === "contact" ? (
+                    <ContactPage/>
                   ) : null}
                 </div>
               </div>
