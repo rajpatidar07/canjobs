@@ -16,11 +16,11 @@ export default function VisaArrowProfile({
               item.visa_status === "undefined" ? null : (
               <div
                 className={
-                  "arrow-steps "
+                  "arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom "
                 }
                 key={i}
               >
-                <div className="mt-2 job_name text-dark">
+                <div className="job_name text-dark">
                   <span className="m-2 font-size-2 d-block mb-1">
                     visa
                   </span>
@@ -28,72 +28,67 @@ export default function VisaArrowProfile({
                 <div>
                   <div
                     key={i + 1}
-                    className={`mt-2 step text-capitalize ${
-                      item.visa_status === "onboard" ||
+                    className={` step text-capitalize ${
                       item.visa_status === "documentation" ||
                       item.visa_status === "file preparation" ||
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : null
+                        : item.visa_status === "onboard"  ? "pending" : ""
                     }`}
                   >
                     <span>onboard</span>
                   </div>
                   <div
                     key={i + 2}
-                    className={`mt-2 step text-capitalize ${
-                      item.visa_status === "documentation" ||
+                    className={` step text-capitalize ${
                       item.visa_status === "file preparation" ||
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : null
+                        : item.visa_status === "documentation"  ? "pending" : ""
                     }`}
                   >
                     <span>documentation</span>
                   </div>
                   <div
                     key={i + 3}
-                    className={`mt-2 step text-capitalize ${
-                      item.visa_status === "file preparation" ||
+                    className={` step text-capitalize ${
                       item.visa_status === "file review" ||
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : null
+                        : item.visa_status === "file preparation"  ? "pending" : ""
                     }`}
                   >
                     <span>file preparation</span>
                   </div>
                   <div
                     key={i + 4}
-                    className={`mt-2 step text-capitalize ${
-                      item.visa_status === "file review" ||
+                    className={` step text-capitalize ${
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : null
+                        : item.visa_status === "file review"? "pending" : ""
                     }`}
                   >
                     <span>file review</span>
                   </div>
                   <div
                     key={i + 5}
-                    className={`mt-2 step text-capitalize ${
-                      item.visa_status === "file submission" ||
+                    className={` step text-capitalize ${
                       item.visa_status === "file decision"
-                        ? "approved"
-                        : null
+                      ? "approved"
+                      : item.visa_status === "file submission" ? "pending" : ""
                     }`}
                   >
                     <span>file submission</span>
                   </div>
                   {/* <div
                     key={i + 6}
-                    className={`mt-2 step text-capitalize ${
+                    className={` step text-capitalize ${
                       item.visa_status === "file decision"
                         ? "approved"
                         : null
@@ -108,14 +103,12 @@ export default function VisaArrowProfile({
                     return subitem.misc_id === item.visa_id ? (
                       <div
                     key={i }
-                    className={`mt-2 step text-capitalize ${
+                    className={` step text-capitalize ${
                       subitem.substage === "approved"
                           ? "approved"
-                          : subitem.substage === "awaiting decision"
-                          ? "pending"
                           : subitem.substage === "rejected"
                           ? "rejected"
-                          : ""
+                          :  "pending"
                     }`}
                   >
                     <span>{subitem.substage === "approved"
@@ -124,7 +117,7 @@ export default function VisaArrowProfile({
                           ? "Pending"
                           : subitem.substage === "rejected"
                           ? "Rejected"
-                          : "file decision"}</span>
+                          : "awaiting decision"}</span>
                   </div>
                       // <small className="mx-10" key={i}>
                         // {subitem.substage === "approved"
@@ -139,13 +132,13 @@ export default function VisaArrowProfile({
                   }):
                   <div
                     key={i + 6}
-                    className={`mt-2 step text-capitalize ${
+                    className={` step text-capitalize ${
                       item.visa_status === "file decision"
-                        ? "approved"
+                        ? "pending"
                         : ""
                     }`}
                   >
-                    <span>file decision</span>
+                    <span>awaiting decision</span>
                   </div>}
                 </div>
               </div>

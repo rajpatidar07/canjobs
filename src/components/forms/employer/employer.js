@@ -134,6 +134,7 @@ function AddEmployer(props) {
                 </label>
                 <input
                   type="number"
+min={0}
                   className={
                     errors.vacancies
                       ? "form-control border border-danger"
@@ -258,6 +259,7 @@ function AddEmployer(props) {
                 </label>
                 <input
                   type="number"
+min={0}
                   className={
                     errors.contactpersonnumber
                       ? "form-control border border-danger"

@@ -363,6 +363,7 @@ function KycComplianceDetails(props) {
                 </label>
                 <input
                   type="number"
+min={0}
                   placeholder="Pincode"
                   id="pincode"
                   name="pincode"

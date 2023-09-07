@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693486845044,
@@ -16,6 +16,10 @@
                 {
                     "date": 1693820064911,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -136,9 +136,9 @@\n         <div className=\"bg-white rounded h-100 px-11 pt-7\">\n           <form onSubmit={onCompanyContactClick}>\n             <h5 className=\"text-center pt-2 mb-7\">Contact Detail</h5>\n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"contact_person_name\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -313,9 +313,9 @@\n                 )}\n               </div>\n             </div>\n             <div className=\"row\">\n-              {\" \"}\n+              \n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"city\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n@@ -340,9 +340,9 @@\n                   <span key={errors.city} className=\"text-danger font-size-3\">\n                     {errors.city}\n                   </span>\n                 )}\n-              </div>{\" \"}\n+              </div>\n               <div className=\"form-group col-md-6\">\n                 <label\n                   htmlFor=\"state\"\n                   className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n"
+                },
+                {
+                    "date": 1694064751985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,8 +212,9 @@\n                   name=\"contact_no\"\n                   value={state.contact_no || \"\"}\n                   onChange={onInputChange}\n                   type=\"number\"\n+min={0}\n                   className={\n                     errors.contact_no\n                       ? \"form-control border border-danger\"\n                       : \"form-control\"\n@@ -243,8 +244,9 @@\n                   name=\"contact_no_other\"\n                   value={state.contact_no_other || \"\"}\n                   onChange={onInputChange}\n                   type=\"number\"\n+min={0}\n                   className={\"form-control\"}\n                   placeholder=\"Other Contact No\"\n                   id=\"contact_no_other\"\n                 />\n@@ -293,8 +295,9 @@\n                   name=\"pin_code\"\n                   value={state.pin_code || \"\"}\n                   onChange={onInputChange}\n                   type=\"number\"\n+min={0}\n                   className={\n                     errors.pin_code\n                       ? \"form-control border border-danger\"\n                       : \"form-control\"\n"
                 }
             ],
             "date": 1693486845044,

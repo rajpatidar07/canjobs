@@ -175,6 +175,7 @@ export default function PayentForm() {
                     value={state.amount}
                     onChange={onInputChange}
                     type="number"
+min={0}
                     className={
                       errors.amount
                         ? "form-control border border-danger"

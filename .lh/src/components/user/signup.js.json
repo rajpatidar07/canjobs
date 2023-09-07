@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1693486845049,
@@ -52,6 +52,10 @@
                 {
                     "date": 1693915932785,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -204,30 +204,30 @@\n     }\n   }, [])\n \n   /*FUnctiom to Sign Up with facebook */\n-  const responseFacebook = async (response) => {\n-    console.log(response);\n-    if (response.graphDomain === \"facebook\") {\n-      try {\n-        let data = await SocialLogin(response.userID, response.email, response.name, response.picture.data.url, \"Facebook\");\n-        console.log(data);\n-        localStorage.setItem(\"token\", data.token);\n-        localStorage.setItem(\"userType\", \"user\");\n-        localStorage.setItem(\"employee_id\", data.employee_id);\n-        localStorage.setItem(\"profile_photo\", data.profile_photo);\n-        toast.success(\"Logged In Successfully\", {\n-          position: toast.POSITION.TOP_RIGHT,\n-          autoClose: 1000,\n-        });\n-        props.close();\n-        navigate(\"/\");\n-        window.location.reload();\n-      } catch (err) {\n-       console.log(err) \n-      }\n-    }\n-  }\n+  // const responseFacebook = async (response) => {\n+  //   console.log(response);\n+  //   if (response.graphDomain === \"facebook\") {\n+  //     try {\n+  //       let data = await SocialLogin(response.userID, response.email, response.name, response.picture.data.url, \"Facebook\");\n+  //       console.log(data);\n+  //       localStorage.setItem(\"token\", data.token);\n+  //       localStorage.setItem(\"userType\", \"user\");\n+  //       localStorage.setItem(\"employee_id\", data.employee_id);\n+  //       localStorage.setItem(\"profile_photo\", data.profile_photo);\n+  //       toast.success(\"Logged In Successfully\", {\n+  //         position: toast.POSITION.TOP_RIGHT,\n+  //         autoClose: 1000,\n+  //       });\n+  //       props.close();\n+  //       navigate(\"/\");\n+  //       window.location.reload();\n+  //     } catch (err) {\n+  //      console.log(err) \n+  //     }\n+  //   }\n+  // }\n   /*Function to convert file to base64 */\n   const convertToBase64 = (file) => {\n     return new Promise((resolve, reject) => {\n       const fileReader = new FileReader();\n"
+                },
+                {
+                    "date": 1694064751705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -487,8 +487,9 @@\n                           </label>\n                           <div className=\"position-relative\">\n                             <input\n                               type=\"number\"\n+min={0}\n                               value={state.otp || \"\"}\n                               onChange={onInputChange}\n                               maxLength={6}\n                               name=\"otp\"\n"
                 }
             ],
             "date": 1693486845049,

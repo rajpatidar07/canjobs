@@ -7,6 +7,7 @@ import ItSkills from "../forms/user/skills";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import LimaArrowProfile from "../common/LimaArrowProfile";
+import ContactPage from "../common/contactPage"
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   EmployeeDetails,
@@ -620,7 +621,7 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                {visaStatus&&user_type==="admin"?<VisaArrowProfile
+                {visaStatus && user_type==="admin"?<VisaArrowProfile
                   visaStatus={visaStatus}
                   visaStatusRejectComment={visaStatusRejectComment}
                   apiCall={apiCall}
@@ -783,6 +784,23 @@ const NewUserProfile = (props) => {
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
+                     <li className="tab-menu-items nav-item">
+                      <Link
+                        className={
+                          TabActive === "conatct"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("contact")}
+                      >
+                        Contact Us
+                      </Link>
+                    </li>
                   </ul>
                   {/*---Profile Details----*/}
                   <div
@@ -1729,6 +1747,18 @@ const NewUserProfile = (props) => {
                         </div>
                     ) : null}
                   </div>
+                  <div
+                  className={
+                    TabActive === "contact"
+                      ? "justify-content-center "
+                      : "d-none"
+                  }
+                >
+                  {TabActive === "contact" ? (
+                    <ContactPage
+                    email={PersonalDetail.email}/>
+                  ) : null}
+                </div>
                 </div>
               </div>
             </div>

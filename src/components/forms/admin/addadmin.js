@@ -4,6 +4,7 @@ import useValidation from "../../common/useValidation";
 import { AdminDetails, AddAdmin } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import filterjson from "../../json/filterjson";
 
 function Addadmin(props) {
   let [already, setAlready] = useState("");
@@ -40,6 +41,7 @@ function Addadmin(props) {
     email: "",
     password: "",
     admin_type: "",
+    contact_no: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -48,36 +50,44 @@ function Addadmin(props) {
         value === "" || value.trim() === ""
           ? "Admin name is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-            ? "Admin name can not have a number."
-            : value.length < 2
-              ? "Admin name should have 2 or more letters"
-              : /[^A-Za-z 0-9]/g.test(value)
-                ? "Cannot use special character "
-                : "",
+          ? "Admin name can not have a number."
+          : value.length < 2
+          ? "Admin name should have 2 or more letters"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
     ],
     email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     password: [
       (value) =>
         state.admin_id
           ? value === ""
           : value === ""
-            ? "Password is required"
-            : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+          ? "Password is required"
+          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
               value
             )
-              ? null
-              : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+          ? null
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     admin_type: [
       (value) =>
         value === "" || value.trim() === "" ? "Admin type is required" : null,
+    ],
+    contact_no: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Contact no is required"
+          : value.length < 10
+          ? "Contact no can not be more than 10 digit"
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -93,7 +103,7 @@ function Addadmin(props) {
         setState(userData.data[0]);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -132,7 +142,7 @@ function Addadmin(props) {
           setLoading(false);
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
         setLoading(false);
       }
     } else {
@@ -187,6 +197,35 @@ function Addadmin(props) {
               {errors.name && (
                 <span key={errors.name} className="text-danger font-size-3">
                   {errors.name}
+                </span>
+              )}
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="contact_no"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Contact no <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                className={
+                  errors.contact_no
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                value={state.contact_no}
+                onChange={onInputChange}
+                id="contact_no"
+                name="contact_no"
+              />
+              {/*----ERROR MESSAGE FOR Admin Name----*/}
+              {errors.contact_no && (
+                <span
+                  key={errors.contact_no}
+                  className="text-danger font-size-3"
+                >
+                  {errors.contact_no}
                 </span>
               )}
             </div>
@@ -264,7 +303,7 @@ function Addadmin(props) {
                 type={"text"}
                 className={
                   errors.admin_type
-                    ? "form-control border border-danger"
+                    ? "form-control border border-danger text-capitalize"
                     : "form-control"
                 }
                 value={state.admin_type}
@@ -274,9 +313,17 @@ function Addadmin(props) {
                 multiple={false}
               >
                 <option value={""}>Select</option>
-                <option value={"super-admin"}>Superadmin</option>
-                <option value={"admin"}>Admin</option>
-                <option value={"manager"}>Manager</option>
+                {(filterjson.admintype || []).map((item, index) => {
+                  return (
+                    <option
+                      value={item}
+                      key={index}
+                      className=" text-capitalize"
+                    >
+                      {item}
+                    </option>
+                  );
+                })}
               </select>
               {/*----ERROR MESSAGE FOR ADMIN TYPE----*/}
               {errors.admin_type && (

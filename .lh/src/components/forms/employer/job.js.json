@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1693486845045,
@@ -16,6 +16,10 @@
                 {
                     "date": 1693820064731,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -352,9 +352,9 @@\n                   <span className=\"text-danger font-size-3\">\n                     {errors.job_category_id}\n                   </span>\n                 )}\n-              </div>{\" \"}\n+              </div>\n               <div className=\"form-group col-md-4 px-0 pr-3\">\n                 <label\n                   htmlFor=\"industry_type\"\n                   className=\"font-size-4 text-black-2  line-height-reset\"\n@@ -428,9 +428,9 @@\n                       {errors.experience_required}\n                     </span>\n                   )}\n                 </div>\n-              </div>{\" \"}\n+              </div>\n               <div className=\"form-group col-md-4 px-0 pr-3\">\n                 <label\n                   htmlFor=\"salary\"\n                   className=\"font-size-4 text-black-2  line-height-reset\"\n"
+                },
+                {
+                    "date": 1694064752050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -442,8 +442,9 @@\n                   name=\"salary\"\n                   value={state.salary || \"\"}\n                   onChange={onInputChange}\n                   type=\"number\"\n+min={0}\n                   className={\n                     errors.salary\n                       ? \"form-control text-capitalize border border-danger\"\n                       : \"form-control text-capitalize\"\n@@ -546,8 +547,9 @@\n \n                 <div className=\"position-relative\">\n                   <input\n                     type=\"number\"\n+min={0}\n                     name=\"role_category\"\n                     value={state.role_category || \"\"}\n                     onChange={onInputChange}\n                     className={\n"
                 }
             ],
             "date": 1693486845045,

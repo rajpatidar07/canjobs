@@ -488,6 +488,7 @@ export default function EmployeeSignupModal(props) {
                           <div className="position-relative">
                             <input
                               type="number"
+min={0}
                               value={state.otp || ""}
                               onChange={onInputChange}
                               maxLength={6}

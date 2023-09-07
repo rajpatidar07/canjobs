@@ -141,7 +141,7 @@ export default function VisaStatus(props) {
         status: RemoveSubStage.status,
         substage: "false",
       };
-      console.log("id =>", data);
+      // console.log("id =>", data);
     } else {
       setSelectedStatus([
         ...selectedStatus,

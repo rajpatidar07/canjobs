@@ -565,7 +565,7 @@ const filterjson = {
     "yoruba",
     "zhuang, chuang",
   ],
-  admintype: ["super-admin", "admin", "manager", "operator"],
+  admintype: ["super-admin", "admin", "manager", "operator","executive"],
   duration: ["last week", "last month", "last 3 months", "last year"],
   employee_status: ["new", "prospect", "lead", "reatined", "lost", "dead"],
   interested: ["swep", "internship", "co-op", "part-time", "full-time", "contract", "all"],
