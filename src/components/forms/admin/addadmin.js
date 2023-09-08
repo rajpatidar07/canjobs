@@ -208,7 +208,7 @@ function Addadmin(props) {
                 Contact no <span className="text-danger">*</span>
               </label>
               <input
-                type="text"
+                type="number"
                 className={
                   errors.contact_no
                     ? "form-control border border-danger"
@@ -218,6 +218,8 @@ function Addadmin(props) {
                 onChange={onInputChange}
                 id="contact_no"
                 name="contact_no"
+                min={0}
+                placeholder="Enter contact no"
               />
               {/*----ERROR MESSAGE FOR Admin Name----*/}
               {errors.contact_no && (
