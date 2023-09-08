@@ -1,9 +1,10 @@
 import React, { /*useEffect,*/ useState } from "react";
 import useValidation from "./useValidation";
 import { Link } from "react-router-dom";
-import {TestEmail} from "../../api/api"
+import { SendEmail } from "../../api/api";
+import { toast } from "react-toastify";
 export default function ContactPage(props) {
-  const [loading ,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   /*Render function to get the Response*/
   // useEffect(() => {
@@ -13,30 +14,88 @@ export default function ContactPage(props) {
   const initialFormState = {
     subject: "",
     description: "",
-    email_id: props.email,
-    email_template_id: "1",
+    email: props.email,
   };
 
-  let validators = {};
+  /*Validation */
+  let validators = {
+    subject: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Subject is required"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Subject can not have a number."
+          : value.length < 2
+          ? "Subject should have 2 or more letters"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
+    ],
+    description: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Description is required"
+          : // : /[-]?\d+(\.\d+)?/.test(value)
+          // ? "Description can not have a number."
+          value.length < 5
+          ? "Description should have 2 or more letters"
+          : // : /[^A-Za-z 0-9]/g.test(value)
+            // ? "Cannot use special character "
+            "",
+    ],
+  };
   // CUSTOM VALIDATIONS IMPORT
-  const {
-    state /*, setState*/,
-    onInputChange,
-    errors /* setErrors, validate */,
-  } = useValidation(initialFormState, validators);
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
 
-  const onContactusClick =async () => {
-    let Response =await TestEmail(state)
-    console.log(Response);
-    if(Response){
-      setLoading(false)
+  /*Function to sent email*/
+  const onContactusClick = async () => {
+    if (validate()) {
+      try {
+        setLoading(true);
+        let Response = await SendEmail(state);
+        if (Response.message === "email sent successfully") {
+          toast.success("Email sent successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          setErrors("");
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
     }
   };
   return (
     <div className="p-10 activity_container">
       <div className="row">
         <div className="col">
-          <div className="card ">
+    <div className="card mx-auto" >
+    <h5 className="card-title text-center mt-3">LMIA Manager</h5>
+
+      <div className="row no-gutters">
+        <div className="col-md-4 ">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" 
+            className="card-img"
+            alt="Profile"
+          />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title text-center">John Doe<br/>
+            <small>(Web Developer)</small></h5>
+            <p className="card-text"><b>Address</b>: 123 Main St, City, Country</p>
+            <p className="card-text"><b>Phone</b>: 123-456-7890</p>
+            <p className="card-text"><b>Email</b>: john.doe@example.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+          {/* <div className="card ">
             <div className="card-body">
               <h5 className="card-title text-center">Visa Manager</h5>
               <p className="card-text">
@@ -50,10 +109,10 @@ export default function ContactPage(props) {
                 <Link className="text-dark">9658741230</Link>
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="col">
-        <div className="card ">
+          <div className="card ">
             <div className="card-body">
               <h5 className="card-title text-center">LMIA Manager</h5>
               <p className="card-text">
@@ -74,7 +133,8 @@ export default function ContactPage(props) {
             <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="subject"
-                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
+                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+              >
                 Subject: <span className="text-danger">*</span>
               </label>
               <div className="position-relative">
@@ -102,7 +162,7 @@ export default function ContactPage(props) {
             </div>
             <div className="form-group col px-0 pr-3">
               <label
-                htmlFor="remark"
+                htmlFor="description"
                 className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
               >
                 Description: <span className="text-danger">*</span>
@@ -110,30 +170,33 @@ export default function ContactPage(props) {
               <div className="position-relative">
                 <div
                   className={
-                    errors.remark
+                    errors.description
                       ? "border border-danger rounded overflow-hidden"
                       : "border rounded overflow-hidden"
                   }
                 >
                   <textarea
-                    name="remark"
-                    value={state.remark}
+                    name="description"
+                    value={state.description}
                     onChange={onInputChange}
                     rows={8}
                     style={{ height: "140px" }}
                     className={
-                      errors.remark
+                      errors.description
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    id="remark"
+                    id="description"
                     placeholder="Add Note here"
                   ></textarea>
                 </div>
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {errors.remark && (
-                  <span key={errors.remark} className="text-danger font-size-3">
-                    {errors.remark}
+                {errors.description && (
+                  <span
+                    key={errors.description}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.description}
                   </span>
                 )}
               </div>

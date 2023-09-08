@@ -12,7 +12,7 @@ import FilterJson from "../json/filterjson";
 import Loader from "../common/loader";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { LiaUserEditSolid } from "react-icons/lia";
-import { MdOutlineAddTask, MdPersonRemove } from "react-icons/md";
+import ExecutiveBox from "../common/executiveBox";
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
@@ -151,21 +151,15 @@ function ManageAdmin() {
   };
   /*Function to add team to the manager */
   const addTeam = async () => {
-    setAddTeamListShow(true ? false : true);
+    setAddTeamListShow(true);
     console.log("add team to manager");
   };
   /*Function o add task to the executive */
-  // const AddTask = async () => {console.log("add task to executive")};
-
-  /*Functo to remove assigned executive */
-  const RemoveAssined = async () => {
-    console.log("remove assigned executive");
+  const AddTask = async () => {
+    setAddTeamListShow(false);
+    console.log("add task to executive");
   };
-  const [activeIndex, setActiveIndex] = useState(null);
 
-  const handleToggle = (index) => {
-    setActiveIndex(index === activeIndex ? null : index);
-  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -410,22 +404,67 @@ function ManageAdmin() {
                   </div>
                 }
               </div>
-              <div className="col-6 mb-18">
+              <div className="card p-3 mt-2 col-6 mb-18 text-capitalize">
                 <div className="mb-4 align-items-center">
                   <div className="page___heading">
                     <h3 className="font-size-6 mb-0">Admin</h3>
                   </div>
                   <div className="row m-0 align-items-center">
-                    <div className="col p-1 form_group mb-3">
-                      <h4 className="">Ram</h4>
+                    <div className="col p-1 form_group mb-3 ">
+                      <div className="d-flex executive_box gx-2">
+                        <div className="media  align-items-center">
+                          <div className="circle-40 mx-auto overflow-hidden">
+                            {/* {empdata.profile_photo === null ? ( */}
+                            <img
+                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                              alt=""
+                              className="w-100"
+                            />
+                            {/* ) : (
+                                  <img
+                                    src={empdata.profile_photo}
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                )} */}
+                          </div>
+                        </div>
+
+                        <div className=" mb-0">
+                          {/* {empdata.name === null ||
+                              empdata.name === undefined ||
+                              empdata.name === "undefined" ||
+                              empdata.name === "" ? (
+                                <p className="font-size-3  mb-0">Unavailable</p>
+                              ) : ( */}
+                          <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
+                            ram <small className="text-gray font-size-3 m-0 text-capitalize">(manager)</small>
+                          </h5>
+                          {/* )} */}
+                          {/* {empdata.email || empdata.contact_no ? ( */}
+                          <p className="text-gray font-size-3 m-0 text-capitalize">
+                            ram@gmail.com
+                          </p>
+                          <p className="text-gray font-size-3 m-0 text-capitalize">
+                            987456321
+                          </p>
+                          {/* ) : null} */}
+                        </div>
+                      </div>
                     </div>
                     <div className="col px-1 form_group mt-4 text-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => addTeam()}
-                        title="Add Team"
+                        onClick={
+                          addTeamListShow === true
+                            ? () => AddTask()
+                            : () => addTeam()
+                        }
+                        title={
+                          addTeamListShow === true ? "Add Task" : "Add Team"
+                        }
                       >
-                        Add Team
+                        {addTeamListShow === true ? "Add Task" : "Add Team"}
                       </CustomButton>
                     </div>
                   </div>
@@ -440,173 +479,17 @@ function ManageAdmin() {
                         id="accordionFlushExample"
                       >
                         {(executiveData || []).map((item, index) => (
-                          <div className="accordion mt-2" key={index}>
-                            <div className="card">
-                              <div
-                                className="card-header bg-white"
-                                id={`headingOne${index}`}
-                              >
-                                <div className=" d-flex justify-content-between flex-row">
-                                  <div className=" d-flex flex-column ">
-                                    <div className="d-flex profile_box gx-2">
-                                      <div className="media  align-items-center">
-                                        <div className="circle-36 mx-auto overflow-hidden">
-                                          {/* {empdata.profile_photo === null ? ( */}
-                                          <img
-                                            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                            alt=""
-                                            className="w-100"
-                                          />
-                                          {/* ) : (
-                                  <img
-                                    src={empdata.profile_photo}
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                )} */}
-                                        </div>
-                                      </div>
-
-                                      <h5 className="mb-0">{item.name} </h5>
-                                    </div>
-                                    <Link to={""} className="text-dark">
-                                      {item.contact_no}
-                                    </Link>
-                                    <Link to={""} className="text-dark">
-                                      {item.email}
-                                    </Link>
-                                  </div>
-                                  <div className="btn-group button_group flex-shrink-1">
-                                    <button
-                                      // onClick={() => AddTask()}
-                                      title="Add task"
-                                      className={`btn btn-outline-info action_btn ${
-                                        index === activeIndex ? "" : "collapsed"
-                                      }`}
-                                      data-toggle="collapse"
-                                      data-target="#collapseOne"
-                                      aria-expanded="true"
-                                      aria-controls="collapseOne"
-                                      onClick={() => handleToggle(index)}
-                                    >
-                                      <span className="text-gray">
-                                        <MdOutlineAddTask />
-                                      </span>
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => RemoveAssined()}
-                                      title="Remove Assigned"
-                                    >
-                                      <span className=" text-danger">
-                                        <MdPersonRemove />
-                                      </span>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div
-                                id={`collapseOne${index}`}
-                                className={`collapse  ${
-                                  index === activeIndex ? "show" : ""
-                                }`}
-                                aria-labelledby={`headingOne${index}`}
-                                data-parent="#accordion"
-                              >
-                                <div className="card-body d-flex justify-content-between">
-                                  <div className="card-text d-flex flex-row">
-                                    <div
-                                      className={`sub-stage text-capitalize `}
-                                      // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        className="mx-2"
-                                        // checked={(selectedStatus || []).some(
-                                        //   (item) => item.substage === subStage
-                                        // )}
-                                        // readOnly
-                                      />
-                                      Lmia
-                                    </div>
-                                    <div
-                                      className={`sub-stage text-capitalize `}
-                                      // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        className="mx-2"
-                                        // checked={(selectedStatus || []).some(
-                                        //   (item) => item.substage === subStage
-                                        // )}
-                                        // readOnly
-                                      />
-                                      Visa
-                                    </div>
-                                    <div
-                                      className={`sub-stage text-capitalize `}
-                                      // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        className="mx-2"
-                                        // checked={(selectedStatus || []).some(
-                                        //   (item) => item.substage === subStage
-                                        // )}
-                                        // readOnly
-                                      />
-                                      Job
-                                    </div>
-                                    <div
-                                      className={`sub-stage text-capitalize `}
-                                      // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        className="mx-2"
-                                        // checked={(selectedStatus || []).some(
-                                        //   (item) => item.substage === subStage
-                                        // )}
-                                        // readOnly
-                                      />
-                                      Interview
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            {/* <h2 className="accordion-header" id={`flush-heading${index}`}>
-                              <button
-                                className={`accordion-button ${index === activeIndex ? '' : 'collapsed'}`}
-                                type="button"
-                                onClick={() => handleToggle(index)}
-                              >
-                                {item.name}
-                              </button>
-                            </h2>
-                            <div
-                              id={`flush-collapse${index}`}
-                              className={`accordion-collapse collapse ${index === activeIndex ? 'show' : ''}`}
-                              aria-labelledby={`flush-heading${index}`}
-                              data-bs-parent="#accordionFlushExample"
-                            >
-                              <div className="accordion-body">
-                                Placeholder content for this accordion, which is intended to demonstrate the{' '}
-                                <code>.accordion-flush</code> className. This is the first item's accordion body.
-                              </div>
-                            </div> */}
-                          </div>
+                          <ExecutiveBox data={item} index={index} key={index} />
                         ))}
                       </div>
                     ) : (
                       <div className="card-text">
                         <h5>Executive's List</h5>
-                        <div className="card-text d-flex flex-column">
+                        <div className="card-text d-flex flex-row">
                           {(executiveData || []).map((item, index) => {
                             return (
                               <div
-                                className={`sub-stage text-capitalize `}
+                                className={`sub-stage text-capitalize p-3`}
                                 // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                                 key={index}
                               >

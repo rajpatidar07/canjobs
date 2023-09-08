@@ -7190,6 +7190,17 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape,
   justify-content: center;
 }
 
+.circle-80 {
+  max-width: 100px;
+  min-width: 79px;
+  max-height: 141px;
+  min-height: 79px;
+  border-radius: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*~~~~~ Square Sizes ~~~~~*/
 .square-14 {
   max-width: 14px;
@@ -8371,6 +8382,15 @@ a.hover-text-hitgray:hover {
 .pagination-hover-primary .page-link:hover {
   background: transparent;
   color: #992b32 !important;
+}
+
+.profile_id_card .card-title {
+  font-size: 14px;
+}
+
+.profile_id_card .card-text p,
+.profile_id_card .card-text p b {
+  font-size: 12px;
 }
 
 /* ---------------------------

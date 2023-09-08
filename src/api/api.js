@@ -211,7 +211,7 @@ export const getallEmployeeData = async (
       filter_status: status,
       job_id: job_id,
       work_permit_canada: candian,
-      interested_in: inserted
+      interested_in: inserted,
     },
     {
       headers: {
@@ -494,7 +494,7 @@ export const AddUpdateVisa = async (employee_id, state, id) => {
       employee_id: employee_id,
       id: id,
       country: state.country,
-      status: state.status
+      status: state.status,
     },
     {
       headers: {
@@ -506,7 +506,17 @@ export const AddUpdateVisa = async (employee_id, state, id) => {
   return response;
 };
 /*Api to get Visa List */
-export const GetEmployeeVisaList = async (search, status, country, interested, page, limit, column, sort, id) => {
+export const GetEmployeeVisaList = async (
+  search,
+  status,
+  country,
+  interested,
+  page,
+  limit,
+  column,
+  sort,
+  id
+) => {
   const response = await axios.post(
     `${API_URL}getVisa`,
     {
@@ -530,13 +540,13 @@ export const GetEmployeeVisaList = async (search, status, country, interested, p
   return response;
 };
 /*Api to get Visa Sub stage List */
-export const GetVisaSubStages = async (misc_id,type,id) => {
+export const GetVisaSubStages = async (misc_id, type, id) => {
   const response = await axios.post(
     `${API_URL}common/getMiscellaneousSubstage`,
     {
-      "id":id,
-      "filter_by_misc_id":misc_id,
-      "filter_by_type":type
+      id: id,
+      filter_by_misc_id: misc_id,
+      filter_by_type: type,
     },
     {
       headers: {
@@ -676,7 +686,7 @@ export const GetAllResponse = async (
       filter_lmia_status: lima,
       filter_employee_status: status,
       filter_employee_id: employee_id,
-      filter_is_reserve: reserved_status
+      filter_is_reserve: reserved_status,
     },
     {
       headers: {
@@ -727,7 +737,7 @@ export const GetAllJobs = async (
       filter_applied_by_admin: adminValue,
       filter_reserved_employee: reserved,
       // employee_skills: employeeSkill,
-      filter_company_id :cid
+      filter_company_id: cid,
     },
     {
       headers: {
@@ -906,7 +916,7 @@ export const getInterview = async (
       employee_id: employee_id,
       filter_by_time: time,
       filter_by_status: status,
-      filter_by_company_id:cid
+      filter_by_company_id: cid,
     },
     {
       headers: {
@@ -941,7 +951,17 @@ export const AddInterviewSchedule = async (props, employee_id, job_id) => {
 };
 
 /*Get lmia list Api */
-export const GetEmployeeByLima = async (id, search, status, page, limit, col, ord, time,employee_id) => {
+export const GetEmployeeByLima = async (
+  id,
+  search,
+  status,
+  page,
+  limit,
+  col,
+  ord,
+  time,
+  employee_id
+) => {
   const response = await axios.post(
     `${API_URL}company/getLmia`,
     {
@@ -953,7 +973,7 @@ export const GetEmployeeByLima = async (id, search, status, page, limit, col, or
       sort_order: ord,
       column_name: col,
       filter_by_time: time,
-      filter_employee_id:employee_id
+      filter_employee_id: employee_id,
     },
     {
       headers: {
@@ -1007,7 +1027,7 @@ export const GetJobLimaSubStages = async (id, status) => {
     `${API_URL}/getLmiaSubstagesjob`,
     {
       job_id: id,
-      lima_status: status
+      lima_status: status,
     },
     {
       headers: {
@@ -1048,7 +1068,7 @@ export const deleteLmiaSubstageEmployee = async (id) => {
     }
   );
   return response.data;
-}
+};
 /*FUnction to add update lmia sub stage  of job*/
 export const AddUpdateJobLmiaSubStage = async (props) => {
   const response = await axios.put(
@@ -1140,7 +1160,7 @@ export const UploadEmployerDocument = async (id, type, doc, docId) => {
       type: type,
       document_file: doc,
       is_varify: "0",
-      id : docId
+      id: docId,
     },
     {
       headers: {
@@ -1462,7 +1482,7 @@ export const AddFollowup = async (props) => {
       employee_id: props.employee_id,
       remark: props.remark,
       next_date: props.next_followup_date,
-      subject:props.subject
+      subject: props.subject,
     },
     {
       headers: {
@@ -1493,7 +1513,7 @@ export const getSingleFollowup = async (employee_id /*, job_id*/) => {
 export const getSingleCompanyFollowup = async (company_id) => {
   const response = await axios.post(
     `${API_URL}admin/getFollowUpEmployer`,
-    {  company_id: company_id },
+    { company_id: company_id },
     {
       headers: {
         "Content-Type": "application/json",
@@ -1510,14 +1530,13 @@ export const AddCompanyFollowup = async (props) => {
   const response = await axios.post(
     `${API_URL}admin/addFollowUpEmployer`,
     {
-     // "admin_id":"2",
-     // "job_id":"1",
-     "company_id":props.company_id,
-     "remark":props.remark,
-     "next_date":props.next_date,
-     "subject":props.subject
-      
-      },
+      // "admin_id":"2",
+      // "job_id":"1",
+      company_id: props.company_id,
+      remark: props.remark,
+      next_date: props.next_date,
+      subject: props.subject,
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -1579,7 +1598,7 @@ export const AddUpdateEmailTemplate = async (props) => {
 export const TestEmail = async (props) => {
   // console.log(props);
   const response = await axios.post(
-    `${API_URL}/common/testEmail`,
+    `${API_URL}/common/emailTemplateTest`,
     {
       email_id: props.email_id,
       email_template_id: props.email_template_id,
@@ -1595,7 +1614,8 @@ export const TestEmail = async (props) => {
 };
 
 /*Api to get the job filterd by employee id if it is applied or not */
-export const GetEmployeeFilterJob = async (id,/* skill*/
+export const GetEmployeeFilterJob = async (
+  id /* skill*/,
   search,
   location,
   category,
@@ -1605,17 +1625,18 @@ export const GetEmployeeFilterJob = async (id,/* skill*/
   limit,
   column_name,
   sort_order,
-  company) => {
+  company
+) => {
   // console.log(search,
-    // location,
-    // category,
-    // skill,
-    // job,
-    // page,
-    // limit,
-    // column_name,
-    // sort_order,
-    // company)
+  // location,
+  // category,
+  // skill,
+  // job,
+  // page,
+  // limit,
+  // column_name,
+  // sort_order,
+  // company)
   const response = await axios.post(
     `${API_URL}admin/getAllJobsViewAdmin`,
     {
@@ -1641,13 +1662,13 @@ export const GetEmployeeFilterJob = async (id,/* skill*/
 };
 
 /*Api to Reserved employee for a job */
-export const ReservedEmployeeForJob = async (id,employee_id, status) => {
+export const ReservedEmployeeForJob = async (id, employee_id, status) => {
   const response = await axios.put(
     `${API_URL}setEmployeeReserve`,
     {
       apply_id: id,
       is_reserve: status,
-      employee_id:employee_id
+      employee_id: employee_id,
     },
     {
       headers: {
@@ -1663,8 +1684,27 @@ export const RemoveReservedEmployeeForJob = async (job_id, employee_id) => {
   const response = await axios.post(
     `${API_URL}removeEmployeeReserve`,
     {
-      job_id:job_id,
-      employee_id:employee_id
+      job_id: job_id,
+      employee_id: employee_id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to Send email to the user and company*/
+export const SendEmail = async (data) => {
+  console.log(data)
+  const response = await axios.post(
+    `${API_URL}sendEmailTest`,
+    {
+      to: data.email,
+      subject: data.subject,
+      body: data.description,
     },
     {
       headers: {

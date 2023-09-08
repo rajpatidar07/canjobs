@@ -635,7 +635,12 @@ label.image_upload_btn_2 {
 /* EMPLOYEE TABLE */
 .d-flex.profile_box {
   gap: 7px;
-  align-items: center;
+  align-items: center !important;
+}
+
+.d-flex.executive_box {
+  gap: 7px;
+  align-items: start !important;
 }
 
 .password-icon {
