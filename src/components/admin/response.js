@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
+import { RiDeleteBin5Line } from "react-icons/ri";
 // import Addfollowup from "../forms/admin/addfollowup";
 import {
   AddLimia,
@@ -10,6 +11,7 @@ import {
   GetFilter,
   AddUpdateVisa,
   RemoveReservedEmployeeForJob,
+  DeletRespone,
 } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
@@ -163,6 +165,7 @@ function JobResponse(props) {
 
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
+    console.log(e.employee_id, e.job_id);
     // Api call to set employee reserved
     try {
       let response = await ReservedEmployeeForJob(
@@ -175,14 +178,14 @@ function JobResponse(props) {
         let state = { status: "onboard", country: e.location };
         try {
           let VisaResponse = await AddUpdateVisa(e.employee_id, state);
-          if (
-            VisaResponse.data.message === "visa inserted successfully" ||
-            VisaResponse.data.message === "visa updated successfully"
-          ) {
+          if (VisaResponse.data.message === "visa inserted successfully") {
             // Api call to set employee Limia
-            const lmia = { lmia_status: "candidate placement" };
+            const lmia = {
+              lmia_status: "candidate placement",
+              apply_id: e.apply_id,
+            };
             try {
-              let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
+              let LimiaResponse = await AddLimia(lmia);
               console.log(LimiaResponse, "Add Lmia");
               if (LimiaResponse.message === "Data added successfully") {
                 toast.success("Employee Reserved successfully", {
@@ -198,6 +201,12 @@ function JobResponse(props) {
         } catch (err) {
           console.log(err);
         }
+      }
+      if (response.message === "already reserved") {
+        toast.error("Employee already reserved for another job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -223,6 +232,22 @@ function JobResponse(props) {
     }
   };
 
+  /*Function to remove Response */
+  const onResponseDelte = async (e) => {
+    try {
+      let response = await DeletRespone(e.apply_id);
+      if(response.message ==="successfully deleted"){
+        toast.success("Response Deleted successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*Function to open add follow up modal */
   // const addFollow = (e) => {
   //   setFollowUp(true);
@@ -1006,6 +1031,13 @@ function JobResponse(props) {
                                     title="Reserved Employee"
                                   >
                                     Remove Applicant
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-danger action_btn"
+                                    onClick={() => onResponseDelte(res)}
+                                    title="Delete Response"
+                                  >
+                                    <RiDeleteBin5Line />
                                   </button>
                                 </div>
                               </th>

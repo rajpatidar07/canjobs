@@ -104,9 +104,9 @@ export default function ExecutiveBox({ data, index }) {
             data-parent="#accordion"
           >
             <div className="card-body d-flex justify-content-between">
-              <div className="card-text d-flex flex-row">
+              <div className="card-text row">
                 <div
-                  className={`sub-stage text-capitalize `}
+                  className={`sub-stage text-capitalize col-md-6`}
                   // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                 >
                   <input
@@ -120,7 +120,7 @@ export default function ExecutiveBox({ data, index }) {
                   Lmia
                 </div>
                 <div
-                  className={`sub-stage text-capitalize `}
+                  className={`sub-stage text-capitalize col-md-6`}
                   // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                 >
                   <input
@@ -134,7 +134,7 @@ export default function ExecutiveBox({ data, index }) {
                   Visa
                 </div>
                 <div
-                  className={`sub-stage text-capitalize `}
+                  className={`sub-stage text-capitalize col-md-6`}
                   // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                 >
                   <input
@@ -148,7 +148,7 @@ export default function ExecutiveBox({ data, index }) {
                   Job
                 </div>
                 <div
-                  className={`sub-stage text-capitalize `}
+                  className={`sub-stage text-capitalize col-md-6`}
                   // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                 >
                   <input

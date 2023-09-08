@@ -1,6 +1,5 @@
 import React, { /*useEffect,*/ useState } from "react";
 import useValidation from "./useValidation";
-import { Link } from "react-router-dom";
 import { SendEmail } from "../../api/api";
 import { toast } from "react-toastify";
 export default function ContactPage(props) {
@@ -70,61 +69,69 @@ export default function ContactPage(props) {
     }
   };
   return (
-    <div className="p-10 activity_container">
+    <div className="p-10 activity_container profile_id_card">
       <div className="row">
         <div className="col">
-    <div className="card mx-auto" >
-    <h5 className="card-title text-center mt-3">LMIA Manager</h5>
+          <div className="card mx-auto">
+            <h5 className="card-title text-center mt-2">LMIA Manager</h5>
 
-      <div className="row no-gutters">
-        <div className="col-md-4 ">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" 
-            className="card-img"
-            alt="Profile"
-          />
-        </div>
-        <div className="col-md-8">
-          <div className="card-body">
-            <h5 className="card-title text-center">John Doe<br/>
-            <small>(Web Developer)</small></h5>
-            <p className="card-text"><b>Address</b>: 123 Main St, City, Country</p>
-            <p className="card-text"><b>Phone</b>: 123-456-7890</p>
-            <p className="card-text"><b>Email</b>: john.doe@example.com</p>
+            <div className="row no-gutters">
+              <div className="col-md-4 ">
+                <img
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  className="card-img mx-2 mb-2"
+                  alt="Profile"
+                />
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title ">
+                    John Doe
+                    <small>(Web Developer)</small>
+                  </h5>
+                  <p className="card-text">
+                    <b>Address</b>: 123 Main St, City, Country
+                  </p>
+                  <p className="card-text">
+                    <b>Phone</b>: 123-456-7890
+                  </p>
+                  <p className="card-text">
+                    <b>Email</b>: john.doe@example.com
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-          {/* <div className="card ">
-            <div className="card-body">
-              <h5 className="card-title text-center">Visa Manager</h5>
-              <p className="card-text">
-                <b>Name:</b> Jhon Thomas
-              </p>
-              <p className="card-text ">
-                <b>Email:</b> <Link className="text-dark">Jhon@gmail.com</Link>
-              </p>
-              <p className="card-text ">
-                <b>Contact no.:</b>
-                <Link className="text-dark">9658741230</Link>
-              </p>
-            </div>
-          </div> */}
-        </div>
         <div className="col">
-          <div className="card ">
-            <div className="card-body">
-              <h5 className="card-title text-center">LMIA Manager</h5>
-              <p className="card-text">
-                <b>Name:</b> Jhon Thomas
-              </p>
-              <p className="card-text ">
-                <b>Email:</b> <Link className="text-dark">Jhon@gmail.com</Link>
-              </p>
-              <p className="card-text ">
-                <b>Contact no.:</b>
-                <Link className="text-dark">9658741230</Link>
-              </p>
+          <div className="card mx-auto">
+            <h5 className="card-title text-center mt-2">Visa Manager</h5>
+
+            <div className="row no-gutters">
+              <div className="col-md-4 ">
+                <img
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  className="card-img mx-2 mb-2"
+                  alt="Profile"
+                />
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title ">
+                    John Doe
+                    <small>(Web Developer)</small>
+                  </h5>
+                  <p className="card-text">
+                    <b>Address</b>: 123 Main St, City, Country
+                  </p>
+                  <p className="card-text">
+                    <b>Phone</b>: 123-456-7890
+                  </p>
+                  <p className="card-text">
+                    <b>Email</b>: john.doe@example.com
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

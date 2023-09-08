@@ -36,6 +36,7 @@ function LmiaStatus(props) {
 
   /*Function to get lima sub stage */
   const GetSubSTage = async () => {
+    console.log(props.resData)
     try {
       let Response;
       if (props.job === "yes") {
@@ -43,7 +44,12 @@ function LmiaStatus(props) {
       } else {
         Response = await GetLimaSubStages(props.resData.id);
       }
-      setSelectedStatus(Response.data.data);
+      if(Response.data.data){
+        setSelectedStatus(Response.data.data);
+      }else(
+        setSelectedStatus([])
+      )
+      console.log(Response)
     } catch (err) {
       console.log(err);
     }
@@ -161,6 +167,7 @@ function LmiaStatus(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     lmia_status: "",
+    apply_id: props.resData.apply_id,
     // completion_time: "",
   };
   // VALIDATION CONDITIONS

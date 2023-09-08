@@ -697,6 +697,18 @@ export const GetAllResponse = async (
   );
   return response;
 };
+/*Delete Response api */
+export const DeletRespone = async (apply_id) => {
+  const response = await axios.post(`${API_URL}deleteApplyJob`, {
+    apply_id: apply_id,
+  },{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
 
 /*Api to get all job data */
 export const GetAllJobs = async (
@@ -987,12 +999,14 @@ export const GetEmployeeByLima = async (
 
 /*Add LIMA Api */
 export const AddLimia = async (props, employee_id, job_id) => {
+  console.log(props)
   const response = await axios.put(
     `${API_URL}admin/addUpdateLmia`,
     {
       job_id: job_id,
       employee_id: employee_id,
       lmia_status: props.lmia_status,
+      apply_id: props.apply_id,
       // completion_time: props.completion_time,
     },
     {
@@ -1698,7 +1712,7 @@ export const RemoveReservedEmployeeForJob = async (job_id, employee_id) => {
 };
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data) => {
-  console.log(data)
+  console.log(data);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
     {

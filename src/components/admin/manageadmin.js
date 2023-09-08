@@ -303,6 +303,7 @@ function ManageAdmin() {
                             {totalData === 0 || adminData.length === 0 ? (
                               <tr>
                                 <th className="bg-white"></th>
+                                <th className="bg-white"></th>
                                 <th className="bg-white text-center">
                                   No Data Found
                                 </th>
@@ -470,7 +471,7 @@ function ManageAdmin() {
                   </div>
                 </div>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                  <div className="table-responsive main_table_div">
+                  <div className="">
                     {isLoading ? (
                       <Loader />
                     ) : addTeamListShow === true ? (
@@ -485,11 +486,11 @@ function ManageAdmin() {
                     ) : (
                       <div className="card-text">
                         <h5>Executive's List</h5>
-                        <div className="card-text d-flex flex-row">
+                        <div className="card-text row">
                           {(executiveData || []).map((item, index) => {
                             return (
                               <div
-                                className={`sub-stage text-capitalize p-3`}
+                                className={`sub-stage text-capitalize col-md-6`}
                                 // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
                                 key={index}
                               >

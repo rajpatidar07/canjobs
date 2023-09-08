@@ -8388,9 +8388,9 @@ a.hover-text-hitgray:hover {
   font-size: 14px;
 }
 
-.profile_id_card .card-text p,
-.profile_id_card .card-text p b {
+.profile_id_card .card-text {
   font-size: 12px;
+  margin-bottom: 3px
 }
 
 /* ---------------------------

@@ -40,6 +40,7 @@ import NewUserProfile from "../user/user_profile";
 import CompanyProfileDetail from "../company/company_profile";
 import JobDetailpageAdmim from "../admin/job_Detail_page";
 import PDFViewer from "../user/user_pdf";
+import JobAssignedDashboard from "../admin/jobAssignedDashboard";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -117,6 +118,7 @@ function MainLayout() {
             <Route path="/selfemployee" element={<SelfApplicat />} />
             <Route path="/employer" element={<Employer />} />
             <Route path="/adminprofile" element={<ManageAdmin />} />
+            <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
             <Route path="/:eid" element={<NewUserProfile />} />
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/jobdetailpage" element={<JobDetailpageAdmim />} />
