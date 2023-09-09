@@ -698,9 +698,10 @@ export const GetAllResponse = async (
   return response;
 };
 /*Delete Response api */
-export const DeletRespone = async (apply_id) => {
+export const DeletRespone = async (apply_id,employee_id) => {
   const response = await axios.post(`${API_URL}deleteApplyJob`, {
     apply_id: apply_id,
+    employee_id: employee_id
   },{
     headers: {
       "Content-Type": "application/json",
@@ -1694,11 +1695,11 @@ export const ReservedEmployeeForJob = async (id, employee_id, status) => {
   return response.data;
 };
 /*Api to Remove Reserved employee for a job */
-export const RemoveReservedEmployeeForJob = async (job_id, employee_id) => {
+export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
   const response = await axios.post(
     `${API_URL}removeEmployeeReserve`,
     {
-      job_id: job_id,
+      apply_id: apply_id,
       employee_id: employee_id,
     },
     {

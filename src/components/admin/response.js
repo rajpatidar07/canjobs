@@ -217,7 +217,7 @@ function JobResponse(props) {
   const OnRemoveReservedClick = async (e) => {
     try {
       let Response = await RemoveReservedEmployeeForJob(
-        e.job_id,
+        e.apply_id,
         e.employee_id
       );
       if (Response.message === "successfully") {
@@ -235,7 +235,7 @@ function JobResponse(props) {
   /*Function to remove Response */
   const onResponseDelte = async (e) => {
     try {
-      let response = await DeletRespone(e.apply_id);
+      let response = await DeletRespone(e.apply_id,e.employee_id);
       if(response.message ==="successfully deleted"){
         toast.success("Response Deleted successfully", {
           position: toast.POSITION.TOP_RIGHT,

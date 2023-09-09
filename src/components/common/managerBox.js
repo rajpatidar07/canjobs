@@ -1,6 +1,15 @@
 import React from "react";
 import AssignedJobTable from "./assignedJobTable";
-export default function ManegerBox({ data }) {
+export default function ManegerBox({
+  data,
+  isLoading,
+  handleSort,
+  nPages,
+  currentPage,
+  setCurrentPage,
+  totalData,
+  allData
+}) {
   return (
     <div className="card col-md-6">
       <div className="col p-3 form_group mb-3 ">
@@ -51,16 +60,13 @@ export default function ManegerBox({ data }) {
       {/* <!--Assigned Job Table --> */}
       <AssignedJobTable
         heading={"Assigned Job's"}
-        // showAddEmployerModal={showAddEmployerModal}
-        // EmployerDetail={EmployerDetail}
-        // search={search}
-        // industryFilterValue={industryFilterValue}
-        // corporationFilterValue={corporationFilterValue}
-        // showEmployerDetails={showEmployerDetails}
-        // apiCall={apiCall}
-        // setApiCall={setApiCall}
-        // pageNo={pageNo}
-        // setpageNo={setpageNo}
+        data={allData}
+        isLoading={isLoading}
+        handleSort={handleSort}
+        nPages={nPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalData={totalData}
       />
     </div>
   );
