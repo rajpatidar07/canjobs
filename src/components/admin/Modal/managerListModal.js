@@ -6,7 +6,7 @@ export default function ManagerListModal(props) {
   return (
     <Modal
       show={props.show}
-      size="xl"
+      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

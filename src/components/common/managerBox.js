@@ -11,8 +11,9 @@ export default function ManegerBox({
   allData
 }) {
   return (
-    <div className="card col-md-6">
-      <div className="col p-3 form_group mb-3 ">
+    <div className="col-md-6">
+    <div className="card mb-4 p-4">
+      <div className="col form_group ">
         <div className="d-flex executive_box gx-2">
           <div className="media  align-items-center">
             <div className="circle-40 mx-auto overflow-hidden">
@@ -57,6 +58,7 @@ export default function ManegerBox({
           </div>
         </div>
       </div>
+      
       {/* <!--Assigned Job Table --> */}
       <AssignedJobTable
         heading={"Assigned Job's"}
@@ -68,6 +70,7 @@ export default function ManegerBox({
         setCurrentPage={setCurrentPage}
         totalData={totalData}
       />
+    </div>
     </div>
   );
 }

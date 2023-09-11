@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import filterjson from "../../json/filterjson";
 
 function Addadmin(props) {
+  let encoded;
+  const [imgError, setImgError] = useState("");
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -42,6 +44,7 @@ function Addadmin(props) {
     password: "",
     admin_type: "",
     contact_no: "",
+    profile_image: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -86,6 +89,8 @@ function Addadmin(props) {
         value === "" || value.trim() === ""
           ? "Contact no is required"
           : value.length < 10
+          ? "Contact no can not be less than 10 digit"
+          : value.length > 10
           ? "Contact no can not be more than 10 digit"
           : "",
     ],
@@ -93,6 +98,45 @@ function Addadmin(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
+
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  /*Onchange function of profile */
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {
+          setImgError("Image size can't be more then 100 kb");
+        } else {
+          setImgError("");
+          setState({ ...state, profile_image: event.target.result });
+        }
+      };
+      img.src = event.target.result;
+    };
+
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+    encoded = await convertToBase64(file);
+    let base64Name = encoded.base64;
+    setState({ ...state, profile_image: base64Name });
+  };
   /*Function to get admin detail */
   const AdminData = async () => {
     try {
@@ -173,6 +217,36 @@ function Addadmin(props) {
             <h5 className="text-center pt-2 mb-7">Update Admin</h5>
           )}
           <form onSubmit={onAminProfileUpdateClick}>
+            <div className="form-group mx-auto text-center">
+              <div className="mb-4 position-relative">
+                <input
+                  type={"file"}
+                  id="profile_image"
+                  accept="image/png,image/jpeg,image/jpg,image/gif"
+                  onChange={handleFileChange}
+                  className="d-none"
+                />
+                <img
+                  className="rounded-circle"
+                  src={
+                    state.profile_image
+                      ? state.profile_image
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  }
+                  alt=""
+                  width={"100px"}
+                  height={"100px"}
+                />
+                <label
+                  className="mt-lg-20 mx-lg-31
+                   bg-transparent edit_profile_icon"
+                  htmlFor="profile_image"
+                >
+                  <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-1 mt-lg-3 "></span>
+                </label>
+              </div>
+              <small className="text-danger">{imgError}</small>
+            </div>
             <div className="form-group">
               <label
                 htmlFor="name"

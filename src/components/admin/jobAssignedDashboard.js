@@ -22,7 +22,7 @@ export default function JobAssignedDashboard() {
     setIsLoading(true);
     try {
       const userData = await getallAdminData(
-        "",
+        "manager",
         search,
         currentPage,
         recordsPerPage,
@@ -34,9 +34,7 @@ export default function JobAssignedDashboard() {
         setTotalData([]);
         setIsLoading(false);
       } else {
-        setAdminData(
-          userData.data.filter((item) => item.admin_type === "manager")
-        );
+        setAdminData(userData.data);
         setTotalData(userData.total_rows);
         setIsLoading(false);
       }

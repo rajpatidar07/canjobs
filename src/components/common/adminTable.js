@@ -14,7 +14,10 @@ export default function AdminTable({
   currentPage,
   setCurrentPage,
   totalData,
-  page
+  page,
+  OnManagerDetailClick,
+  setAddTeamListShow,
+  setExecutiveApiCall,
 }) {
   return (
     <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
@@ -89,26 +92,39 @@ export default function AdminTable({
                       <div className="d-flex profile_box gx-2">
                         <div className="media  align-items-center">
                           <div className="circle-36 mx-auto overflow-hidden">
-                            {/* {admin.profile_photo === null ? ( */}
-                            <img
-                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                              alt=""
-                              className="w-100"
-                            />
-                            {/* ) : (
-                  <img
-                    src={admin.profile_photo}
-                    alt=""
-                    className="w-100"
-                  />
-                )} */}
+                            {admin.profile_image === null ? (
+                              <img
+                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                alt=""
+                                className="w-100"
+                              />
+                            ) : (
+                              <img
+                                src={admin.profile_image}
+                                alt=""
+                                className="w-100"
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
                     </th>
                     <th className=" py-5">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
-                        {admin.name}
+                        <Link
+                          className="text-gray"
+                          onClick={
+                            page === "admin page" &&
+                            admin.admin_type === "manager"
+                              ? () => {
+                                  OnManagerDetailClick(admin);
+                                  setAddTeamListShow(false);
+                                }
+                              : null
+                          }
+                        >
+                          {admin.name}
+                        </Link>
                       </h3>
                     </th>
                     <th className="py-5">
@@ -117,28 +133,28 @@ export default function AdminTable({
                       </h3>
                     </th>
                     <th className="py-5 ">
-                        {admin.contact_no === null ? null : (
-                          <p className="m-0">
-                            +
-                            <Link
-                              className="text-dark"
-                              to={`tel:${admin.contact_no}`}
-                            >
-                              {admin.contact_no}
-                            </Link>
-                          </p>
-                        )}
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          <p className="text-gray font-size-2 m-0">
-                            <Link
-                              className="text-dark"
-                              to={`mailto:${admin.email}`}
-                            >
-                              {admin.email}
-                            </Link>
-                          </p>
-                        </h3>
-                      </th>
+                      {admin.contact_no === null ? null : (
+                        <p className="m-0">
+                          +
+                          <Link
+                            className="text-dark"
+                            to={`tel:${admin.contact_no}`}
+                          >
+                            {admin.contact_no}
+                          </Link>
+                        </p>
+                      )}
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        <p className="text-gray font-size-2 m-0">
+                          <Link
+                            className="text-dark"
+                            to={`mailto:${admin.email}`}
+                          >
+                            {admin.email}
+                          </Link>
+                        </p>
+                      </h3>
+                    </th>
                     <th className="py-5 min-width-px-100">
                       {page === "admin page" ? (
                         <div className="btn-group button_group" role="group">

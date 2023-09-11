@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1694168733776,
@@ -80,6 +80,14 @@
                 {
                     "date": 1694239949612,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,8 @@\n export default function ManegerBox({\r\n   data,\r\n   isLoading,\r\n   handleSort,\r\n-  editAdmin,\r\n-  ShowDeleteAlert,\r\n   nPages,\r\n   currentPage,\r\n   setCurrentPage,\r\n   totalData,\r\n"
+                },
+                {
+                    "date": 1694414810154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,10 @@\n   totalData,\r\n   allData\r\n }) {\r\n   return (\r\n-    <div className=\"card col-md-6\">\r\n+    <div className=\"col-md-6\">\r\n+    <div className=\"card \">\r\n       <div className=\"col p-3 form_group mb-3 \">\r\n         <div className=\"d-flex executive_box gx-2\">\r\n           <div className=\"media  align-items-center\">\r\n             <div className=\"circle-40 mx-auto overflow-hidden\">\r\n@@ -56,8 +57,9 @@\n             {/* ) : null} */}\r\n           </div>\r\n         </div>\r\n       </div>\r\n+      </>\r\n       {/* <!--Assigned Job Table --> */}\r\n       <AssignedJobTable\r\n         heading={\"Assigned Job's\"}\r\n         data={allData}\r\n"
+                },
+                {
+                    "date": 1694414888964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,76 @@\n+import React from \"react\";\r\n+import AssignedJobTable from \"./assignedJobTable\";\r\n+export default function ManegerBox({\r\n+  data,\r\n+  isLoading,\r\n+  handleSort,\r\n+  nPages,\r\n+  currentPage,\r\n+  setCurrentPage,\r\n+  totalData,\r\n+  allData\r\n+}) {\r\n+  return (\r\n+    <div className=\"col-md-6\">\r\n+    <div className=\"card \">\r\n+      <div className=\"col form_group mb-3 \">\r\n+        <div className=\"d-flex executive_box gx-2\">\r\n+          <div className=\"media  align-items-center\">\r\n+            <div className=\"circle-40 mx-auto overflow-hidden\">\r\n+              {/* {empdata.profile_photo === null ? ( */}\r\n+              <img\r\n+                src=\"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png\"\r\n+                alt=\"\"\r\n+                className=\"w-100\"\r\n+              />\r\n+              {/* ) : (\r\n+                                  <img\r\n+                                    src={empdata.profile_photo}\r\n+                                    alt=\"\"\r\n+                                    className=\"w-100\"\r\n+                                  />\r\n+                                )} */}\r\n+            </div>\r\n+          </div>\r\n+\r\n+          <div className=\" mb-0\">\r\n+            {/* {empdata.name === null ||\r\n+                              empdata.name === undefined ||\r\n+                              empdata.name === \"undefined\" ||\r\n+                              empdata.name === \"\" ? (\r\n+                                <p className=\"font-size-3  mb-0\">Unavailable</p>\r\n+                              ) : ( */}\r\n+            <h5 className=\"m-0 text-black-3 font-weight-bold text-capitalize\">\r\n+              {data.name}{\" \"}\r\n+              <small className=\"text-gray font-size-3 m-0 text-capitalize\">\r\n+                ({data.admin_type})\r\n+              </small>\r\n+            </h5>\r\n+            {/* )} */}\r\n+            {/* {empdata.email || empdata.contact_no ? ( */}\r\n+            <p className=\"text-gray font-size-3 m-0 text-capitalize\">\r\n+              {data.email}\r\n+            </p>\r\n+            <p className=\"text-gray font-size-3 m-0 text-capitalize\">\r\n+              {data.contact_no}\r\n+            </p>\r\n+            {/* ) : null} */}\r\n+          </div>\r\n+        </div>\r\n+      </div>\r\n+      \r\n+      {/* <!--Assigned Job Table --> */}\r\n+      <AssignedJobTable\r\n+        heading={\"Assigned Job's\"}\r\n+        data={allData}\r\n+        isLoading={isLoading}\r\n+        handleSort={handleSort}\r\n+        nPages={nPages}\r\n+        currentPage={currentPage}\r\n+        setCurrentPage={setCurrentPage}\r\n+        totalData={totalData}\r\n+      />\r\n+    </div>\r\n+    </div>\r\n+  );\r\n+}\r\n"
                 }
             ],
             "date": 1694168733776,

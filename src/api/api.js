@@ -698,16 +698,20 @@ export const GetAllResponse = async (
   return response;
 };
 /*Delete Response api */
-export const DeletRespone = async (apply_id,employee_id) => {
-  const response = await axios.post(`${API_URL}deleteApplyJob`, {
-    apply_id: apply_id,
-    employee_id: employee_id
-  },{
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+export const DeletRespone = async (apply_id, employee_id) => {
+  const response = await axios.post(
+    `${API_URL}deleteApplyJob`,
+    {
+      apply_id: apply_id,
+      employee_id: employee_id,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 
@@ -1000,7 +1004,7 @@ export const GetEmployeeByLima = async (
 
 /*Add LIMA Api */
 export const AddLimia = async (props, employee_id, job_id) => {
-  console.log(props)
+  console.log(props);
   const response = await axios.put(
     `${API_URL}admin/addUpdateLmia`,
     {
@@ -1720,6 +1724,40 @@ export const SendEmail = async (data) => {
       to: data.email,
       subject: data.subject,
       body: data.description,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to get manager's team list*/
+export const GetManagerTeam = async (manager_id) => {
+  const response = await axios.post(
+    `${API_URL}manager/getTeam`,
+    {
+      manager_id:manager_id
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Api to Add executive to the manager*/
+export const AddExecutiveTeam = async (manager_id, executive_id) => {
+  const response = await axios.put(
+    `${API_URL}manager/addUpadateTeam`,
+    {
+      manager_id: manager_id,
+      executive_id: executive_id,
     },
     {
       headers: {
