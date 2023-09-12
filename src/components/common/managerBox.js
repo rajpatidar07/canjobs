@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState}from "react";
 import AssignedJobTable from "./assignedJobTable";
 export default function ManegerBox({
   data,
@@ -8,8 +8,11 @@ export default function ManegerBox({
   currentPage,
   setCurrentPage,
   totalData,
-  allData
+  allData,
+  setApiCall
 }) {
+  const [totalJobs, setTotalJobs] = useState()
+  
   return (
     <div className="col-md-6">
     <div className="card mb-4 p-4">
@@ -17,19 +20,19 @@ export default function ManegerBox({
         <div className="d-flex executive_box gx-2">
           <div className="media  align-items-center">
             <div className="circle-40 mx-auto overflow-hidden">
-              {/* {empdata.profile_photo === null ? ( */}
+              {data.profile_image === null ? (
               <img
                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                 alt=""
                 className="w-100"
               />
-              {/* ) : (
+             ) : (
                                   <img
-                                    src={empdata.profile_photo}
+                                    src={data.profile_image}
                                     alt=""
                                     className="w-100"
                                   />
-                                )} */}
+                                )} 
             </div>
           </div>
 
@@ -41,7 +44,7 @@ export default function ManegerBox({
                                 <p className="font-size-3  mb-0">Unavailable</p>
                               ) : ( */}
             <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
-              {data.name}{" "}
+               {data.name}{/*-({data.admin_id}) */}
               <small className="text-gray font-size-3 m-0 text-capitalize">
                 ({data.admin_type})
               </small>
@@ -56,9 +59,9 @@ export default function ManegerBox({
             </p>
             {/* ) : null} */}
           </div>
+      {totalJobs&&<div className="text-right w-100">Total jobs: {totalJobs}</div>}
         </div>
       </div>
-      
       {/* <!--Assigned Job Table --> */}
       <AssignedJobTable
         heading={"Assigned Job's"}
@@ -69,6 +72,9 @@ export default function ManegerBox({
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalData={totalData}
+        manager_id={data.admin_id}
+        setTotalJobs={setTotalJobs}
+        setApiCall={setApiCall}
       />
     </div>
     </div>

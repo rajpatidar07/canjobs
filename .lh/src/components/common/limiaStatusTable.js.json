@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1693195309533,
@@ -80,6 +80,14 @@
                 {
                     "date": 1693916747076,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n         setResponseData([]);\n         setIsLoading(false);\n         setTotalData(0)\n       } else {\n-        // setResponseData(userData.data);\n+        setResponseData(userData.data);\n         setTotalData(userData.total_rows);\n         setIsLoading(false);\n       }\n     } catch (err) {\n"
+                },
+                {
+                    "date": 1694514932539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,8 +47,13 @@\n \n   /*Function to get the jSon */\n   // const JsonData = async () => {\n   //     let Json = await GetFilter();\n+      if(Json.data.message ==='No data found'){\n+        setJson([])\n+      }else{\n+        setJson(Json.data.data);\n+      }\n   //     setJson(Json.data.data);\n   // };\n   //   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {\n   //     props.setApiCall(true)\n"
+                },
+                {
+                    "date": 1694515276547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,14 +47,13 @@\n \n   /*Function to get the jSon */\n   // const JsonData = async () => {\n   //     let Json = await GetFilter();\n-      if(Json.data.message ==='No data found'){\n-        setJson([])\n-      }else{\n-        setJson(Json.data.data);\n-      }\n-  //     setJson(Json.data.data);\n+      // if(Json.data.message ==='No data found'){\n+      //   setJson([])\n+      // }else{\n+      //   setJson(Json.data.data);\n+      // }\n   // };\n   //   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {\n   //     props.setApiCall(true)\n   //   }\n"
                 }
             ],
             "date": 1693195309533,

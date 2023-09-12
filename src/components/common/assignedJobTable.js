@@ -1,21 +1,94 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "./pagination";
-// import Loader from './loader';
+import Loader from "./loader";
 import { Link } from "react-router-dom";
 import ManagerListModal from "../admin/Modal/managerListModal";
+import { GetAllJobs } from "../../api/api";
+import moment from "moment";
 export default function AssignedJobTable(props) {
-  // const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [apiCall, setApiCall] = useState(false);
   const [openMangerListodal, setOpenMangerListodal] = useState(false);
+  const [jobData, setJobData] = useState([]);
+  const [jobId, setJobId] = useState([]);
+  /*Pagination states */
+  const [totalData, setTotalData] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(10);
+  /*Shorting states */
+  const [columnName, setcolumnName] = useState("job_id");
+  const [sortOrder, setSortOrder] = useState("");
+  /*Function to get job data */
+  const GetJobData = async () => {
+    try {
+      let Responses = await GetAllJobs(
+        "",
+        "",
+        "",
+        "",
+        "",
+        currentPage,
+        recordsPerPage,
+        columnName,
+        sortOrder,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        props.manager_id
+      );
+      if (Responses.data.message === "successful") {
+        setIsLoading(false);
+        if (
+          Responses.data.data.length === 0 ||
+          Responses.data.length === 0 ||
+          Responses.data.data === undefined
+        ) {
+          setJobData([]);
+          setTotalData([]);
+          setIsLoading(false);
+        } else {
+          setJobData(Responses.data.data);
+          setTotalData(Responses.data.total_rows);
+          props.setTotalJobs(Responses.data.total_rows)
+          setIsLoading(false);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    GetJobData();
+  }, [props.manager_id, apiCall]);
+
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
+
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
+    setCurrentPage(1);
+    setApiCall(true);
+  };
+  /* Function to open resign job to manager modal*/
+  const OnResignClick = (e) => {
+    setOpenMangerListodal(true);
+    setJobId(e.job_id);
+  };
   return (
     <>
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-11">
         <div className="table-responsive main_table_div">
-          {
-            // isLoading ? (
-            //   <Loader />
-            // ) :
-            //  (
+          {isLoading ? (
+            <Loader />
+          ) : (
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
@@ -24,135 +97,59 @@ export default function AssignedJobTable(props) {
                     className=" border-0 font-size-4 font-weight-normal"
                   >
                     <Link
-                      // onClick={() => {
-                      //   handleSort("job_title");
-                      // }}
+                      onClick={() => {
+                        handleSort("job_title");
+                      }}
                       title="Sort by Industry"
                       className="text-gray"
                     >
-                      Job title / Industry
+                      Job title
                     </Link>
                   </th>
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        //   onClick={() => {
-                        //     handleSort("job_type");
-                        //   }}
-                        title="Sort by Job"
-                        className="text-gray"
-                      >
-                        Job Type
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        //   onClick={() => {
-                        //     handleSort("location");
-                        //   }}
-                        className="text-gray"
-                        title="Sort by Address"
-                      >
-                        Address
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        //   onClick={() => {
-                        //     handleSort("education");
-                        //   }}
-                        className="text-gray"
-                        title="Sort by Education"
-                      >
-                        Education
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        //   onClick={() => {
-                        //     handleSort("keyskill");
-                        //   }}
-                        className="text-gray"
-                        title="Sort by Skill"
-                      >
-                        Skills
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th
-                      scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to=""
-                        //   onClick={() => {
-                        //     handleSort("language");
-                        //   }}
-                        className="text-gray"
-                        title="Sort by Language"
-                      >
-                        Language
-                      </Link>
-                    </th>
-                  )}
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
                     <Link
                       to=""
-                      // onClick={() => {
-                      //   handleSort("salary");
-                      // }}
+                      onClick={() => {
+                        handleSort("company_name");
+                      }}
+                      title="Sort by Job"
+                      className="text-gray"
+                    >
+                      Company
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to=""
+                      onClick={() => {
+                        handleSort("created_at");
+                      }}
+                      className="text-gray"
+                      title="Sort by Language"
+                    >
+                      Created at
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to=""
+                      onClick={() => {
+                        handleSort("total_applicants");
+                      }}
                       className="text-gray"
                       title="Sort by Salary"
                     >
-                      Salary
+                      Responses
                     </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to=""
-                      // onClick={() => {
-                      //   handleSort("experience_required");
-                      // }}
-                      className="text-gray"
-                      title="Sort by Experience"
-                    >
-                      Experience
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    LMIA status
                   </th>
                   {props.heading === "Dashboard" ? null : (
                     <th
@@ -166,181 +163,83 @@ export default function AssignedJobTable(props) {
               </thead>
               <tbody>
                 {/* Map function to show the data in the list*/}
-                {/* {totalData === 0 || jobData.length === 0 ? (
-                <tr>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  {props.heading === "Dashboard" ? (
-                    <th className="bg-white text-center">No Data Found</th>
-                  ) : (
+                {totalData === 0 || jobData.length === 0 ? (
+                  <tr>
                     <th className="bg-white"></th>
-                  )}
-                  <th className="bg-white"></th>
-                  {props.heading !== "Dashboard" ? (
-                    <>
-                      <th className="bg-white"></th>
-                      <th className="bg-white text-center">No Data Found</th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                    </>
-                  ) : null}
-                </tr>
-              ) : ( 
-                // (jobData || []).map((job, i) => {
-                //   let LmiaStatusData = lmiaStatus.filter(
-                //     (item) => item.job_id === job.job_id
-                //   );return */}
-                {/* ( */}
-                {/* <React.Fragmentkey={job.job_id}> */}
-                <tr
-                  className={
-                    /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
-                  }
-                >
-                  <th scope="row" className="py-5 ">
-                    <div className="">
-                      <Link
-                        title="Job Details"
-                        //   to={`/jobdetailpage`}
-                        //   onClick={
-                        //     () =>
-                        //       localStorage.setItem("job_id", job.job_id)
-                        //     // JobDetail(job.job_id)
-                        //   }
-                        className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                      >
-                        <>
-                          <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                            {/* {job.job_title} */}
-                            React Developer
-                          </p>
-                          <p className="text-gray font-size-2 m-0 text-capitalize">
-                            {/* {job.company_name} - {job.industry_type} */}
-                            We2code - Full-Time
-                            <br />
-                            {/* {job.is_featured === "1" ? (
-                                    <span className="bg-orange text-white featured_tag">
-                                      Featured
-                                    </span>
-                                  ) : null} */}
-                          </p>
-                        </>
-                      </Link>
-                    </div>
-                  </th>
-                  {props.heading === "Dashboard" ? null : (
-                    <th className=" py-5">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        {/* {job.employement} - {job.job_type} */}
-                        Full-Time
-                      </h3>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th className=" py-5">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        {/* {job.location} */}
-                        Indore
-                      </h3>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        {/* {job.education ? job.education : "N/A"} */}
-                        B.tech
-                      </h3>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                        {/* {job.keyskill ? job.keyskill : "N/A"} */}
-                        HTML,CSS,JAVA,C++
-                      </h3>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? null : (
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                        {/* {job.language ? job.language : "N/A"} */}
-                        English
-                      </h3>
-                    </th>
-                  )}
-                  <th className="py-5 ">
-                    <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                      {/* {job.salary ? job.salary : "N/A"} */}
-                      10k-1lac
-                    </h3>
-                  </th>
-                  <th className="py-5 ">
-                    <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                      {/* {job.experience_required}
-                            {job.experience_required === "fresher"
-                              ? ""
-                              : "years"} */}
-                      fresher
-                    </h3>
-                  </th>
-
-                  <th className=" py-5">
-                    <div className="font-size-3 font-weight-normal text-black-2 mb-0">
-                      {/* {
-                              job.lmia_status === "onboarding" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-shamrock">
-                                  Onboarding
-                                </span>
-                              ) : job.lmia_status === "advertisements" ? (
-                                <span className="px-3 py-2 badge badge-pill bg-info text-white">
-                                  Advertisements
-                                </span>
-                              ) : job.lmia_status === "documentation" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-gray">
-                                  Documentation
-                                </span>
-                              ) : job.lmia_status ===
-                                "candidate placement" ? (
-                                <span className="px-3 py-2 badge badge-pill bg-primary-opacity-9 text-white">
-                                  Candidate Placement
-                                </span>
-                              ) : job.lmia_status === "submission" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-warning">
-                                  Submission
-                                </span>
-                              ) : job.lmia_status === "decision" ? (
-                                <span className="px-3 py-2 badge badge-pill badge-dark">
-                                  Decision
-                                </span>
-                              ) : (
-                                <span>NA</span>
-                              )
-                            } */}
-                      <span className="px-3 py-2 badge badge-pill badge-info">
-                        On boarding
-                      </span>
-                    </div>
-                  </th>
-                  {props.heading === "Dashboard" ? null : (
-                    <th className="py-5 min-width-px-100">
-                      <div className="btn-group button_group" role="group">
-                        <button
-                          className="btn btn-outline-info action_btn"
-                          onClick={() => {
-                            setOpenMangerListodal(true);
-                          }}
-                          title="Reassign"
-                        >
-                          Reassign Manager
-                        </button>
-                      </div>
-                    </th>
-                  )}
-                </tr>
-                {/* {props.heading === "Dashboard" ||
+                    <th className="bg-white"></th>
+                    <th className="bg-white text-center">No Data Found</th>
+                    <th className="bg-white"></th>
+                    <th className="bg-white"></th>
+                  </tr>
+                ) : (
+                  (jobData || []).map((job, i) => {
+                    return (
+                      <React.Fragment key={i}>
+                        <tr className={"col-12 text-capitalize job_row"}>
+                          <th scope="row" className="py-5 ">
+                            <div className="">
+                              <Link
+                                title="Job Details"
+                                //   to={`/jobdetailpage`}
+                                //   onClick={
+                                //     () =>
+                                //       localStorage.setItem("job_id", job.job_id)
+                                //     // JobDetail(job.job_id)
+                                //   }
+                                className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                              >
+                                <>
+                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                    {job.job_title}
+                                  </p>
+                                </>
+                              </Link>
+                            </div>
+                          </th>
+                          <th className=" py-5">
+                            <Link
+                              to={`/company_detail`}
+                              title="Company Details"
+                              onClick={() =>
+                                localStorage.setItem(
+                                  "company_id",
+                                  job.company_id
+                                )
+                              }
+                            >
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {job.company_name}
+                              </h3>
+                            </Link>
+                          </th>
+                          <th className="py-5 ">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              {moment(job.created_at).format("DD-MM-YYYY")}
+                            </h3>
+                          </th>
+                          <th className="">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                              {job.total_applicants}
+                            </h3>
+                          </th>
+                          <th className="py-5 min-width-px-100">
+                            <div
+                              className="btn-group button_group"
+                              role="group"
+                            >
+                              <button
+                                className="btn btn-outline-info action_btn"
+                                onClick={() => {
+                                  OnResignClick(job);
+                                }}
+                                title="Reassign"
+                              >
+                                Reassign Manager
+                              </button>
+                            </div>
+                          </th>
+                        </tr>
+                        {/* {props.heading === "Dashboard" ||
                       props.detail === "job_detail" ? null : (
                         <tr
                           className={
@@ -497,8 +396,8 @@ export default function AssignedJobTable(props) {
                             </div>
                           </td>
                         </tr>
-                      )} */}
-                {/* {job.job_id === responseId &&
+                      )}  */}
+                        {/* {job.job_id === responseId &&
                       job.total_applicants > 0 ? (
                         <tr>
                           <td colSpan={11}>
@@ -534,23 +433,22 @@ export default function AssignedJobTable(props) {
                             }
                           </td>
                         </tr>
-                      ) : null} 
-                    </React.Fragment>*/}
-                {/* ); */}
-                {/* })
-              )} */}
+                          ) : null}  */}
+                      </React.Fragment>
+                    );
+                  })
+                )}
               </tbody>
             </table>
-            // )
-          }
+          )}
         </div>
         <div className="pt-2">
           <Pagination
-          //   nPages={nPages}
-          //   currentPage={props.pageNo}
-          //   setCurrentPage={props.setpageNo}
-          //   total={totalData}
-          //   count={employerData.length}
+            nPages={nPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            total={totalData}
+            count={jobData.length}
           />
         </div>
       </div>
@@ -565,6 +463,9 @@ export default function AssignedJobTable(props) {
           currentPage={props.currentPage}
           setCurrentPage={props.setCurrentPage}
           totalData={props.totalData}
+          jobId={jobId}
+          manager_id={props.manager_id}
+          setApiCall={props.setApiCall}
         />
       )}
       {/* <SAlert

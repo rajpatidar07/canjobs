@@ -18,6 +18,11 @@ function CompanyDetails(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
+      if(Json.data.message ==='No data found'){
+        setJson([])
+      }else{
+        setJson(Json.data.data);
+      }
       setJson(Json.data.data);
     } catch (err) {
       console.log(err)

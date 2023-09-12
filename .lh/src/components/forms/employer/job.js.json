@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1693486845045,
@@ -20,6 +20,14 @@
                 {
                     "date": 1694064752050,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -442,8 +442,9 @@\n                   name=\"salary\"\n                   value={state.salary || \"\"}\n                   onChange={onInputChange}\n                   type=\"number\"\n+min={0}\n                   className={\n                     errors.salary\n                       ? \"form-control text-capitalize border border-danger\"\n                       : \"form-control text-capitalize\"\n@@ -546,8 +547,9 @@\n \n                 <div className=\"position-relative\">\n                   <input\n                     type=\"number\"\n+min={0}\n                     name=\"role_category\"\n                     value={state.role_category || \"\"}\n                     onChange={onInputChange}\n                     className={\n"
+                },
+                {
+                    "date": 1694514932513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,13 @@\n   /*Function to get the jSon */\n   const JsonData = async () => {\n     try {\n       let Json = await GetFilter();\n+      if(Json.data.message ==='No data found'){\n+        setJson([])\n+      }else{\n+        setJson(Json.data.data);\n+      }\n       setJson(Json.data.data);\n     } catch (err) {\n       console.log(err)\n     }\n"
+                },
+                {
+                    "date": 1694520044886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -202,8 +202,17 @@\n           });\n           props.setApiCall(true);\n           return close();\n         }\n+        if (responseData.message === \"Failed to insert job data\") {\n+          toast.error(\"No Mangr found\", {\n+            position: toast.POSITION.TOP_RIGHT,\n+            autoClose: 1000,\n+          });\n+          props.setApiCall(true);\n+          return close();\n+        }\n+        \n         if (responseData.message === \"job data updated successfully\") {\n           toast.success(\"Job Updated successfully\", {\n             position: toast.POSITION.TOP_RIGHT,\n             autoClose: 1000,\n"
                 }
             ],
             "date": 1693486845045,

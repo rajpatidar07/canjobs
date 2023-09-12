@@ -26,9 +26,13 @@ function EmployementDetails(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      setIndustryList(Json.data.data.Industry);
+      if (Json.data.message === "No data found") {
+        setIndustryList([]);
+      } else {
+        setIndustryList(Json.data.Industry);
+      }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -61,24 +65,24 @@ function EmployementDetails(props) {
         value === "" || value.trim() === ""
           ? "Company name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            // : /[-]?\d+(\.\d+)?/.test(value)
-            // ? "Company name can not have a number."
-            : value.length < 2
-              ? "Company name should have 2 or more letters"
-              : "",
+          ? "Cannot use special character "
+          : // : /[-]?\d+(\.\d+)?/.test(value)
+          // ? "Company name can not have a number."
+          value.length < 2
+          ? "Company name should have 2 or more letters"
+          : "",
     ],
     designation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Designation is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : /[-]?\d+(\.\d+)?/.test(value)
-              ? "Designation can not have a number."
-              : value.length < 2
-                ? "Designation should have 2 or more letters"
-                : "",
+          ? "Cannot use special character "
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Designation can not have a number."
+          : value.length < 2
+          ? "Designation should have 2 or more letters"
+          : "",
     ],
     // company_location: [
     //   (value) =>
@@ -98,13 +102,14 @@ function EmployementDetails(props) {
       (value) =>
         value === "" || value.trim() === "" ? "Start Date is required" : null,
     ],
-    end_date:
-      [(value) => (
-        state.currently_work_here ?
-          null :
-          value === "" ?
-            "End Date is required" :
-            null)],
+    end_date: [
+      (value) =>
+        state.currently_work_here
+          ? null
+          : value === ""
+          ? "End Date is required"
+          : null,
+    ],
     // work_level: [
     //   (value) =>
     //     value === "" || value.trim() === "" ? "Work Level is required" : null,
@@ -127,7 +132,7 @@ function EmployementDetails(props) {
         setState(data);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -138,7 +143,7 @@ function EmployementDetails(props) {
     }
     JsonData();
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
@@ -173,8 +178,8 @@ function EmployementDetails(props) {
           setLoading(false);
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -205,8 +210,8 @@ function EmployementDetails(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      console.log(err)
-      setLoading(false)
+      console.log(err);
+      setLoading(false);
     }
   }
   return (
@@ -246,16 +251,19 @@ function EmployementDetails(props) {
                         </div>
                       </h3>
                       <span className="font-size-4 text-default-color line-height-2">
-                        {CareerDetails.company} {CareerDetails.industry ?
-                          `(${CareerDetails.industry})` :
-                          null}
+                        {CareerDetails.company}{" "}
+                        {CareerDetails.industry
+                          ? `(${CareerDetails.industry})`
+                          : null}
                       </span>
                     </div>
                   </div>
                   <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                     <span className="font-size-4 text-gray w-100">
                       {moment(CareerDetails.start_date).format("DD-MM-YYYY")} -
-                      {CareerDetails.currently_work_here === ("1" || 1) ? "Currently working" : moment(CareerDetails.end_date).format("DD-MM-YYYY")}
+                      {CareerDetails.currently_work_here === ("1" || 1)
+                        ? "Currently working"
+                        : moment(CareerDetails.end_date).format("DD-MM-YYYY")}
                     </span>
                     <span className="font-size-3 text-gray w-100">
                       <span className="mr-4" style={{ marginTop: "-2px" }}>
@@ -512,16 +520,20 @@ function EmployementDetails(props) {
                   htmlFor="end_date"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  End Date: {state.currently_work_here ?
-                    null :
-                    <span className="text-danger">*</span>}
+                  End Date:{" "}
+                  {state.currently_work_here ? null : (
+                    <span className="text-danger">*</span>
+                  )}
                 </label>
                 <input
                   min={state.start_date}
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
-                  disabled={state.currently_work_here === 1 || state.currently_work_here === "1"}
+                  disabled={
+                    state.currently_work_here === 1 ||
+                    state.currently_work_here === "1"
+                  }
                   value={state.end_date || ""}
                   onChange={onInputChange}
                   nKeyDownCapture={(e) => e.preventDefault()}
@@ -547,11 +559,16 @@ function EmployementDetails(props) {
                   type="checkbox"
                   name="currently_work_here"
                   checked={state.currently_work_here === "1"}
-                  onChange={(e) => setState(
-                    {
-                      ...state, currently_work_here:
-                        (state.currently_work_here === "" || state.currently_work_here === "0" ? "1" : "0")
-                    })}
+                  onChange={(e) =>
+                    setState({
+                      ...state,
+                      currently_work_here:
+                        state.currently_work_here === "" ||
+                        state.currently_work_here === "0"
+                          ? "1"
+                          : "0",
+                    })
+                  }
                   id="currently_work_here"
                 />
                 <label

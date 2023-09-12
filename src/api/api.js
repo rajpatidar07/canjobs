@@ -277,7 +277,7 @@ export const EmployeeSkillDetails = async (props) => {
   return response.data;
 };
 
-/*Add Employee Skill Api */
+/*Add Employee Career Api */
 export const AddEmployeement = async (props, id) => {
   const response = await axios.put(
     `${API_URL}employeeCareer_detail`,
@@ -733,7 +733,8 @@ export const GetAllJobs = async (
   adminValue,
   reserved,
   // employeeSkill,
-  cid
+  cid,
+  manager_id
 ) => {
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
@@ -755,6 +756,7 @@ export const GetAllJobs = async (
       filter_reserved_employee: reserved,
       // employee_skills: employeeSkill,
       filter_company_id: cid,
+      manager_id:manager_id
     },
     {
       headers: {
@@ -1758,6 +1760,24 @@ export const AddExecutiveTeam = async (manager_id, executive_id) => {
     {
       manager_id: manager_id,
       executive_id: executive_id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Api to Reasign job to manager*/
+export const ReassignJobTOManager = async (manager_id, job_id) => {
+  const response = await axios.put(
+    `${API_URL}admin/assignJobToManager`,
+    {
+      manager_id: manager_id,
+      job_id: job_id,
     },
     {
       headers: {

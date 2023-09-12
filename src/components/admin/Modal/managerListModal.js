@@ -23,7 +23,7 @@ export default function ManagerListModal(props) {
 
         <div>
           <AdminTable
-            data={props.data}
+            data={props.data.filter((item)=>item.admin_id !== props.manager_id)}
             isLoading={props.isLoading}
             handleSort={props.handleSort}
             nPages={props.nPages}
@@ -31,6 +31,8 @@ export default function ManagerListModal(props) {
             setCurrentPage={props.setCurrentPage}
             totalData={props.totalData}
             page={"manager list"}
+            jobId={props.jobId}
+            setApiCall={props.setApiCall}
           />
         </div>
       </div>

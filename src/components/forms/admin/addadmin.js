@@ -86,7 +86,7 @@ function Addadmin(props) {
     ],
     contact_no: [
       (value) =>
-        value === "" || value.trim() === ""
+        value === "" || value === null || value.trim() === ""
           ? "Contact no is required"
           : value.length < 10
           ? "Contact no can not be less than 10 digit"
@@ -121,7 +121,7 @@ function Addadmin(props) {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {
+        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024 )=== true) {
           setImgError("Image size can't be more then 100 kb");
         } else {
           setImgError("");

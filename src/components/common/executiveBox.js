@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { MdOutlineAddTask, MdPersonRemove } from "react-icons/md";
+import React from "react";
+// import { MdOutlineAddTask, MdPersonRemove } from "react-icons/md";
 import { Link } from "react-router-dom";
 export default function ExecutiveBox({ data, index }) {
-  const [activeIndex, setActiveIndex] = useState(null);
+  // const [activeIndex, setActiveIndex] = useState(null);
 
   /*Function to SHow hide the Tasks to assigned */
-  const handleToggle = (index) => {
-    setActiveIndex(index === activeIndex ? null : index);
-  };
+  // const handleToggle = (index) => {
+  //   setActiveIndex(index === activeIndex ? null : index);
+  // };
   /*Functo to remove assigned executive */
-  const RemoveAssined = async () => {
-    console.log("remove assigned executive");
-  };
+  // const RemoveAssined = async () => {
+  //   console.log("remove assigned executive");
+  // };
   return (
     <div>
       <div className="accordion mt-2">
@@ -67,7 +67,7 @@ export default function ExecutiveBox({ data, index }) {
                   </div>
                 </div>
               </div>
-              <div className="btn-group button_group flex-shrink-1">
+              {/* <div className="btn-group button_group flex-shrink-1">
                 <button
                   // onClick={() => AddTask()}
                   title="Add task"
@@ -93,13 +93,13 @@ export default function ExecutiveBox({ data, index }) {
                     <MdPersonRemove />
                   </span>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
 
           <div
             id={`collapseOne${index}`}
-            className={`collapse  ${index === activeIndex ? "show" : ""}`}
+            // className={`collapse  ${index === activeIndex ? "show" : ""}`}
             aria-labelledby={`headingOne${index}`}
             data-parent="#accordion"
           >

@@ -21,15 +21,17 @@ function FilterList() {
   const FilterData = async () => {
     try {
       let Data = await GetFilter();
-      if (Data.data.data.length === 0) {
+      if (
+        Data.data.message === "No data found" ||
+        Data.data.data.length === 0
+      ) {
         setFilterData([]);
       } else {
-        // setTotalData(Data.data);
         setFilterData(Data.data.data);
         setApiCall(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -64,7 +66,7 @@ function FilterList() {
         setDeleteAlert(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
   return (

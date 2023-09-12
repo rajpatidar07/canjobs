@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1692954532187,
@@ -152,6 +152,10 @@
                 {
                     "date": 1694235981037,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -234,9 +234,9 @@\n \n   /*Function to remove Response */\n   const onResponseDelte = async (e) => {\n     try {\n-      let response = await DeletRespone(e.apply_id);\n+      let response = await DeletRespone(e.apply_id,e.employee_id);\n       if(response.message ===\"successfully deleted\"){\n         toast.success(\"Response Deleted successfully\", {\n           position: toast.POSITION.TOP_RIGHT,\n           autoClose: 1000,\n"
+                },
+                {
+                    "date": 1694514932465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,13 @@\n   /*Function to get the jSon */\n   const JsonData = async () => {\n     try {\n       let Json = await GetFilter();\n+      if(Json.data.message ==='No data found'){\n+        setJson([])\n+      }else{\n+        setJson(Json.data.data);\n+      }\n       setJson(Json.data.data);\n     } catch (err) {\n       console.log(err);\n     }\n"
                 }
             ],
             "date": 1692954532187,

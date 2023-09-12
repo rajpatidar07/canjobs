@@ -33,7 +33,16 @@ function SelfJob(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      setJson(Json.data.data);
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -85,12 +94,13 @@ function SelfJob(props) {
     }
   };
   /*Skill Json for not having same data */
-  const Skill = Json.Skill
-    ? Json.Skill.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
-    : [];
+  const Skill =
+    Json && Json.Skill
+      ? Json.Skill.filter(
+          (thing, index, self) =>
+            index === self.findIndex((t) => t.value === thing.value)
+        )
+      : [];
   return (
     <>
       <div

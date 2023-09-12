@@ -43,9 +43,13 @@ function Education(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      setEducationList(Json.data.data.Education);
+      if (Json.data.message === "No data found") {
+        setEducationList([]);
+      } else {
+        setEducationList(Json.data.data.Education);
+      }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   /*Render method to get the json*/
@@ -65,10 +69,10 @@ function Education(props) {
         value === null || value.trim() === ""
           ? "University is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 2
-              ? "University should have 2 or more letters"
-              : null,
+          ? "Cannot use special character "
+          : value.length < 2
+          ? "University should have 2 or more letters"
+          : null,
     ],
     course: [
       (value) =>
@@ -88,12 +92,13 @@ function Education(props) {
     // ],
     passing_year: [
       (value) =>
-        value === "" || value === null ?
-          "Passing Year is required" :
-          !/^[0-9]+$/.test(value) ?
-            "Only numbers are allowed" :
-            !/^(?!0000)\d{4}$/.test(value) ?
-              "Please enter a valid year between 1000 and 9999." : null,
+        value === "" || value === null
+          ? "Passing Year is required"
+          : !/^[0-9]+$/.test(value)
+          ? "Only numbers are allowed"
+          : !/^(?!0000)\d{4}$/.test(value)
+          ? "Please enter a valid year between 1000 and 9999."
+          : null,
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -116,18 +121,18 @@ function Education(props) {
         setState(data);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   /*Render function to get education list */
   useEffect(() => {
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
     }
     if (
       props.employeeId === undefined ||
-      educationData === [] ||
+      educationData.length === 0 ||
       deleteAlert === true
     ) {
       setState(initialFormState);
@@ -152,7 +157,7 @@ function Education(props) {
           setState(initialFormState);
           setErrors("");
           setLoading(false);
-          setApiCall(true)
+          setApiCall(true);
           props.setApiCall(true);
         }
         if (responseData.message === "Employee data inserted successfully") {
@@ -163,13 +168,12 @@ function Education(props) {
           setState(initialFormState);
           setErrors("");
           setLoading(false);
-          setApiCall(true)
+          setApiCall(true);
           props.setApiCall(true);
         }
-      }
-      catch (err) {
-       console.log(err) 
-        setLoading(false)
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       } //"
       // handle form submission
     } else {
@@ -203,7 +207,7 @@ function Education(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
   /*Code to get current year */
@@ -283,7 +287,9 @@ function Education(props) {
                 </div>
               ))}
             </div>
-            <h4>{state.education_id ? "Update Education" : "Add Education"} </h4>
+            <h4>
+              {state.education_id ? "Update Education" : "Add Education"}{" "}
+            </h4>
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label

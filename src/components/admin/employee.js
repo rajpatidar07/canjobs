@@ -32,8 +32,13 @@ function Employee(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      setSkillList(Json.data.data.Skill);
-      setEducationList(Json.data.data.Education);
+      if (Json.data.message === "No data found") {
+        setSkillList([]);
+        setEducationList([]);
+      } else {
+        setSkillList(Json.data.data.Skill);
+        setEducationList(Json.data.data.Education);
+      }
     } catch (err) {
       console.log(err);
     }

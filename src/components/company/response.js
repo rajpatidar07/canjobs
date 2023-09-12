@@ -19,9 +19,9 @@ function Response() {
   const FilterData = async () => {
     try {
       const Json = await GetFilter();
-      if (Json.length === 0) {
-        SetFilter([]);
-      } else {
+      if(Json.data.message ==='No data found' ||Json.length === 0){
+        SetFilter([])
+      }else{
         SetFilter(Json.data.data);
       }
     } catch (err) {

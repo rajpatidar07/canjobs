@@ -26,6 +26,11 @@ function Employer() {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
+      if(Json.data.message ==='No data found'){
+        setJson([])
+      }else{
+        setJson(Json.data.data);
+      }
       setJson(Json.data.data);
     } catch (err) {
       console.log(err);
@@ -61,14 +66,14 @@ function Employer() {
     setEmployerID(e);
   };
   /*Corporation Json for not having same data */
-  const Corporation = Json.Corporation
-    ? Json.Corporation.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
-    : [];
+  const Corporation = Json && Json.Corporation
+  ? Json.Corporation.filter(
+      (thing, index, self) =>
+        index === self.findIndex((t) => t.value === thing.value)
+    )
+  : [];
   /*Industry Json for not having same data */
-  const Industry = Json.Industry
+  const Industry =  Json && Json.Industry
     ? Json.Industry.filter(
         (thing, index, self) =>
           index === self.findIndex((t) => t.value === thing.value)

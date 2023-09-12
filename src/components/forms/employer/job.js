@@ -18,6 +18,11 @@ function AddJobModal(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
+      if(Json.data.message ==='No data found'){
+        setJson([])
+      }else{
+        setJson(Json.data.data);
+      }
       setJson(Json.data.data);
     } catch (err) {
       console.log(err)
@@ -198,6 +203,15 @@ function AddJobModal(props) {
           props.setApiCall(true);
           return close();
         }
+        if (responseData.message === "Failed to insert job data") {
+          toast.error("No Mangr found", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
+        }
+        
         if (responseData.message === "job data updated successfully") {
           toast.success("Job Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,

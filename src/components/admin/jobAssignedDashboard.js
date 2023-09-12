@@ -7,6 +7,7 @@ import Loader from "../common/loader";
 import ManegerBox from "../common/managerBox";
 export default function JobAssignedDashboard() {
   const [isLoading, setIsLoading] = useState(true);
+  const [apiCall, setApiCall] = useState(false);
   let [adminData, setAdminData] = useState([]);
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -46,8 +47,11 @@ export default function JobAssignedDashboard() {
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
+    if(apiCall === true){
+      setApiCall(true)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [search,apiCall]);
 
   /*Function to Search employer */
   const onSearch = (e) => {
@@ -116,6 +120,7 @@ export default function JobAssignedDashboard() {
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
                         totalData={totalData}
+                        setApiCall={setApiCall}
                       />
                     );
                   })

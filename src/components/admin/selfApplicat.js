@@ -33,8 +33,13 @@ function SelfApplicat(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      setSkillList(Json.data.data.Skill);
-      setEducationList(Json.data.data.Education);
+      if (Json.data.message === "No data found") {
+        setSkillList([]);
+        setEducationList([]);
+      } else {
+        setSkillList(Json.data.data.Skill);
+        setEducationList(Json.data.data.Education);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -60,7 +65,7 @@ function SelfApplicat(props) {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1)
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Company Name cannot start with a number.");
@@ -86,7 +91,6 @@ function SelfApplicat(props) {
         props.skill === undefined ||
         Object.keys(props.skill).length === 0 ? (
           <>
-            
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Self Applicants"} />
             {/* <!-- navbar- --> */}
@@ -155,10 +159,10 @@ function SelfApplicat(props) {
                         name="experience"
                         value={experienceFilterValue}
                         id="experience"
-                        onChange={(e) =>
-                          {setExperienceFilterValue(e.target.value)
-                            setpageNo(1)}
-                        }
+                        onChange={(e) => {
+                          setExperienceFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select Experience</option>
@@ -184,8 +188,10 @@ function SelfApplicat(props) {
                         name="skill"
                         value={skillFilterValue}
                         id="Skill"
-                        onChange={(e) => {setSkillFilterValue(e.target.value)
-                          setpageNo(1)}}
+                        onChange={(e) => {
+                          setSkillFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select Skill</option>
@@ -212,10 +218,10 @@ function SelfApplicat(props) {
                         name="education"
                         value={educationFilterValue}
                         id="education"
-                        onChange={(e) =>
-                          {setEducationFilterValue(e.target.value)
-                            setpageNo(1)}
-                        }
+                        onChange={(e) => {
+                          setEducationFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
                         className="text-capitalize form-control"
                       >
                         <option value="" data-display="Product Designer">

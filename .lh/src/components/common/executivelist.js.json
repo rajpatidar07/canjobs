@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 42,
+            "activePatchIndex": 43,
             "patches": [
                 {
                     "date": 1694416896628,
@@ -176,6 +176,10 @@
                 {
                     "date": 1694431204807,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,8 @@\n             { admin_id: Eid },\r\n           ]);\r\n           setExecutiveApiCall(true);\r\n         }\r\n-        console.log(Response);\r\n       } catch (err) {\r\n         console.log(err);\r\n       }\r\n     }\r\n"
+                },
+                {
+                    "date": 1694509640125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,57 @@\n+import React, { useState } from \"react\";\r\n+import { AddExecutiveTeam } from \"../../api/api\";\r\n+import { toast } from \"react-toastify\";\r\n+export default function Executivelist({\r\n+  executiveData,\r\n+  selected,\r\n+  manager_id,\r\n+  setExecutiveApiCall,\r\n+}) {\r\n+  const [selectedStatus, setSelectedStatus] = useState(selected);\r\n+\r\n+  /*Function to asign memeber to the manager */\r\n+  const HandleAddexecutive = async (Eid, MId) => {\r\n+    const isSelected = executiveData.some((item) => item.admin_id === Eid);\r\n+    if (isSelected) {\r\n+      try {\r\n+        let Response = await AddExecutiveTeam(MId, Eid);\r\n+        if (Response.message === \"successfully\") {\r\n+          toast.success(\"Executive asigned successfully\", {\r\n+            position: toast.POSITION.TOP_RIGHT,\r\n+            autoClose: 1000,\r\n+          });\r\n+          setSelectedStatus([\r\n+            ...selectedStatus,\r\n+            { admin_id: Eid },\r\n+          ]);\r\n+          setExecutiveApiCall(true);\r\n+        }\r\n+      } catch (err) {\r\n+        console.log(err);\r\n+      }\r\n+    }\r\n+  };\r\n+  return (\r\n+    <div className=\"card-text row\">\r\n+      {(executiveData || []).map((data, index) => {\r\n+        return (\r\n+          <div\r\n+            className={`sub-stage text-capitalize col-md-6`}\r\n+            onClick={() => HandleAddexecutive(data.admin_id, manager_id)}\r\n+            key={index}\r\n+          >\r\n+            <input\r\n+              type=\"checkbox\"\r\n+              className=\"mx-2\"\r\n+              checked={(selectedStatus || []).some(\r\n+                (item) => item.admin_id === data.admin_id\r\n+              )}\r\n+              readOnly\r\n+            />\r\n+            {data.name}\r\n+          </div>\r\n+        );\r\n+      })}\r\n+    </div>\r\n+  );\r\n+}\r\n"
                 }
             ],
             "date": 1694416896628,

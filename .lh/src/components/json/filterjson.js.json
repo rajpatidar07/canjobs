@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1692954496255,
@@ -24,6 +24,10 @@
                 {
                     "date": 1694067830917,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -564,9 +564,9 @@\n     \"yiddish\",\n     \"yoruba\",\n     \"zhuang, chuang\",\n   ],\n-  admintype: [\"super-admin\", \"admin\", \"manager\", \"operator\"],\n+  admintype: [\"super-admin\", \"admin\", \"manager\", \"operator\",\"executive\"],\n   duration: [\"last week\", \"last month\", \"last 3 months\", \"last year\"],\n   employee_status: [\"new\", \"prospect\", \"lead\", \"reatined\", \"lost\", \"dead\"],\n   interested: [\"swep\", \"internship\", \"co-op\", \"part-time\", \"full-time\", \"contract\", \"all\"],\n   lmia_status: [\n"
+                },
+                {
+                    "date": 1694517561244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -564,9 +564,9 @@\n     \"yiddish\",\n     \"yoruba\",\n     \"zhuang, chuang\",\n   ],\n-  admintype: [\"super-admin\", \"admin\", \"manager\", \"operator\",\"executive\"],\n+  admintype: [\"super-admin\", \"admin\", \"manager\",\"executive\"],\n   duration: [\"last week\", \"last month\", \"last 3 months\", \"last year\"],\n   employee_status: [\"new\", \"prospect\", \"lead\", \"reatined\", \"lost\", \"dead\"],\n   interested: [\"swep\", \"internship\", \"co-op\", \"part-time\", \"full-time\", \"contract\", \"all\"],\n   lmia_status: [\n"
                 }
             ],
             "date": 1692954496255,

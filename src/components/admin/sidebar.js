@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   MdOutlineDashboardCustomize,
   MdOutlinePhotoFilter,
-  MdAssignmentAdd
+  MdAssignmentAdd,
 } from "react-icons/md";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
@@ -13,6 +13,7 @@ import { TbFilterPlus } from "react-icons/tb";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
+  let admin_type = localStorage.getItem("admin_type");
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
@@ -50,7 +51,11 @@ const AdminSidebar = (props) => {
               {/* <i className="fab fa-blackberry mr-5"></i>Dashboard */}
             </Link>
           </li>
-          <li className={props.heading === "Manage Applicants" ? "active" : ""}>
+          <li
+            className={`${admin_type === "manager" ? "d-none" : ""}${
+              props.heading === "Manage Applicants" ? "active" : ""
+            }`}
+          >
             <Link
               to="/employee"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -61,9 +66,9 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={
+            className={`${admin_type === "manager" ? "d-none" : ""}${
               props.heading === "Manage Self Applicants" ? "active" : ""
-            }
+            }`}
           >
             <Link
               to="/selfemployee"
@@ -74,7 +79,11 @@ const AdminSidebar = (props) => {
               Other Applicants
             </Link>
           </li>
-          <li className={props.heading === "Manage Companies" ? "active" : ""}>
+          <li
+            className={`${admin_type === "manager" ? "d-none" : ""}${
+              props.heading === "Manage Companies" ? "active" : ""
+            }`}
+          >s
             <Link
               to="/employer"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -171,7 +180,7 @@ const AdminSidebar = (props) => {
               Manage Admin
             </Link>
           </li>
-          
+
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
             <Link
               to="/adminprofile"

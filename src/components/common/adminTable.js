@@ -4,6 +4,8 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import Pagination from "./pagination";
 import Loader from "./loader";
+import { ReassignJobTOManager } from "../../api/api";
+import { toast } from "react-toastify";
 export default function AdminTable({
   data,
   isLoading,
@@ -17,8 +19,24 @@ export default function AdminTable({
   page,
   OnManagerDetailClick,
   setAddTeamListShow,
-  setExecutiveApiCall,
+  setApiCall,
+  jobId,
 }) {
+  /*FUnction to reasign job to manager */
+  const OnReasignManagerToJobClick = async (e) => {
+    try {
+      let Response = await ReassignJobTOManager(e, jobId);
+      if (Response.message === "successfully") {
+        toast.success("Job assigned successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
       <div className="table-responsive main_table_div">
@@ -155,9 +173,12 @@ export default function AdminTable({
                         </p>
                       </h3>
                     </th>
-                    <th className="py-5 min-width-px-100">
+                    <th className="">
                       {page === "admin page" ? (
-                        <div className="btn-group button_group" role="group">
+                        <div
+                          className="py-5 min-width-px-100 btn-group button_group"
+                          role="group"
+                        >
                           <button
                             className="btn btn-outline-info action_btn"
                             onClick={() => editAdmin(admin.admin_id)}
@@ -180,7 +201,14 @@ export default function AdminTable({
                           </button>
                         </div>
                       ) : (
-                        <input type="checkbox" name="manager" id="manager" />
+                        <div
+                          className="text-capitalize"
+                          onClick={() =>
+                            OnReasignManagerToJobClick(admin.admin_id)
+                          }
+                        >
+                          <input type="checkbox" name="manager" id="manager" />
+                        </div>
                       )}
                     </th>
                   </tr>

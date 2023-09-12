@@ -51,7 +51,11 @@ function Category() {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      setCateType(Json.data.data.Category_type);
+      if (Json.data.message === "No data found") {
+        setCateType([]);
+      } else {
+        setCateType(Json.data.data.Category_type);
+      }
     } catch (err) {
       console.log(err);
     }

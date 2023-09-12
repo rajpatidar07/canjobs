@@ -48,7 +48,11 @@ export default function LimiaStatusTable(props) {
   /*Function to get the jSon */
   // const JsonData = async () => {
   //     let Json = await GetFilter();
-  //     setJson(Json.data.data);
+      // if(Json.data.message ==='No data found'){
+      //   setJson([])
+      // }else{
+      //   setJson(Json.data.data);
+      // }
   // };
   //   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {
   //     props.setApiCall(true)

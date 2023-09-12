@@ -33,6 +33,11 @@ function Job(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
+      if (Json.data.message === "No data found") {
+        setJson([]);
+      } else {
+        setJson(Json.data.data);
+      }
       setJson(Json.data.data);
     } catch (err) {
       console.log(err);
@@ -88,12 +93,13 @@ function Job(props) {
     }
   };
   /*Skill Json for not having same data */
-  const Skill = Json.Skill
-    ? Json.Skill.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
-    : [];
+  const Skill =
+    Json && Json.Skill
+      ? Json.Skill.filter(
+          (thing, index, self) =>
+            index === self.findIndex((t) => t.value === thing.value)
+        )
+      : [];
   return (
     <>
       <div
@@ -193,13 +199,14 @@ function Job(props) {
                         className="text-capitalize form-control"
                       >
                         <option value="">Job Category</option>
-                        {(Json.Category || []).map((data) => {
-                          return (
-                            <option value={data.id} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
+                        {Json &&
+                          (Json.Category || []).map((data) => {
+                            return (
+                              <option value={data.id} key={data.id}>
+                                {data.value}
+                              </option>
+                            );
+                          })}
                       </select>
                     </div>
                   </div>

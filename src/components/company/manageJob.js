@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
-import Loader from '../common/loader';
+import Loader from "../common/loader";
 
 function ManageJobs() {
   /*Data and modal states */
@@ -27,13 +27,13 @@ function ManageJobs() {
   const FilterData = async () => {
     try {
       const Json = await GetFilter();
-      if (Json.length === 0) {
+      if (Json.data.message === "No data found" || Json.length === 0) {
         SetFilter([]);
       } else {
         SetFilter(Json.data.data);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -48,7 +48,6 @@ function ManageJobs() {
   useEffect(() => {
     FilterData();
   }, [showAddJobModal, jobId]);
-
 
   return (
     <>
@@ -144,9 +143,7 @@ function ManageJobs() {
                           id="job_location"
                           value={jobLocation}
                           /*Job Onchange function to filter the data */
-                          onChange={(e) =>
-                            setJobLocation(e.target.value)
-                          }
+                          onChange={(e) => setJobLocation(e.target.value)}
                           className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                         >
                           <option data-display="Experience Level " value={""}>
@@ -160,28 +157,28 @@ function ManageJobs() {
                         </select>
                       </div>
                       <div className="col-12 mb-5 filter_input_div text-right">
-                      <button
-                        onClick={() => editJob("0")}
-                        className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3"
-                        type="button"
-                      >
-                        Add jobs
-                      </button>
+                        <button
+                          onClick={() => editJob("0")}
+                          className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3"
+                          type="button"
+                        >
+                          Add jobs
+                        </button>
+                      </div>
                     </div>
-                    </div>
-                  
                   </div>
                 </form>
-                <div>
-                </div>
+                <div></div>
                 {/*<-- Add job Modal -->*/}
-                {showAddJobModal ? <AddJobModal
-                  show={showAddJobModal}
-                  jobData={jobId}
-                  close={() => setShowAddJobModal(false)}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                /> : null}
+                {showAddJobModal ? (
+                  <AddJobModal
+                    show={showAddJobModal}
+                    jobData={jobId}
+                    close={() => setShowAddJobModal(false)}
+                    apiCall={apiCall}
+                    setApiCall={setApiCall}
+                  />
+                ) : null}
               </div>
             </div>
             <div className="row justify-content-center position-static">
@@ -193,7 +190,7 @@ function ManageJobs() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    {<JobBox /> ?
+                    {<JobBox /> ? (
                       <div className="mb-8 p-0 w-100 active nav-link">
                         {/* <!-- Single Featured Job --> */}
                         <JobBox
@@ -205,7 +202,12 @@ function ManageJobs() {
                           apiCall={apiCall}
                         />
                         {/* <!-- End Single Featured Job --> */}
-                      </div> : <div className="table-responsive main_table_div"><Loader /></div>}
+                      </div>
+                    ) : (
+                      <div className="table-responsive main_table_div">
+                        <Loader />
+                      </div>
+                    )}
                   </div>
                   <div className="text-center pt-5 pt-lg-13">
                     <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">
