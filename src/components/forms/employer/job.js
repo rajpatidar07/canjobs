@@ -443,6 +443,7 @@ function AddJobModal(props) {
                   value={state.salary || ""}
                   onChange={onInputChange}
                   type="number"
+min={0}
                   className={
                     errors.salary
                       ? "form-control text-capitalize border border-danger"
@@ -547,6 +548,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <input
                     type="number"
+min={0}
                     name="role_category"
                     value={state.role_category || ""}
                     onChange={onInputChange}

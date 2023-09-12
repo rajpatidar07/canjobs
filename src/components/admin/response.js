@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
+import { RiDeleteBin5Line } from "react-icons/ri";
 // import Addfollowup from "../forms/admin/addfollowup";
 import {
   AddLimia,
@@ -9,6 +10,8 @@ import {
   GetAllResponse,
   GetFilter,
   AddUpdateVisa,
+  RemoveReservedEmployeeForJob,
+  DeletRespone,
 } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
@@ -88,7 +91,8 @@ function JobResponse(props) {
           : null,
         skillFilterValue,
         experienceTypeFilterValue,
-        search, currentPage,
+        search,
+        currentPage,
         recordsPerPage,
         columnName,
         sortOrder,
@@ -161,9 +165,14 @@ function JobResponse(props) {
 
   /*Function to Reserved Employee */
   const ReservedEmployee = async (e) => {
+    console.log(e.employee_id, e.job_id);
     // Api call to set employee reserved
     try {
-      let response = await ReservedEmployeeForJob(e.apply_id, "1");
+      let response = await ReservedEmployeeForJob(
+        e.apply_id,
+        e.employee_id,
+        "1"
+      );
       if (response.message === "Successfully") {
         // Api call to set employee Visa
         let state = { status: "onboard", country: e.location };
@@ -171,9 +180,12 @@ function JobResponse(props) {
           let VisaResponse = await AddUpdateVisa(e.employee_id, state);
           if (VisaResponse.data.message === "visa inserted successfully") {
             // Api call to set employee Limia
-            const lmia = { lmia_status: "candidate placement" };
+            const lmia = {
+              lmia_status: "candidate placement",
+              apply_id: e.apply_id,
+            };
             try {
-              let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
+              let LimiaResponse = await AddLimia(lmia);
               console.log(LimiaResponse, "Add Lmia");
               if (LimiaResponse.message === "Data added successfully") {
                 toast.success("Employee Reserved successfully", {
@@ -183,18 +195,59 @@ function JobResponse(props) {
                 setApiCall(true);
               }
             } catch (err) {
-             console.log(err) 
+              console.log(err);
             }
           }
         } catch (err) {
-         console.log(err)
+          console.log(err);
         }
+      }
+      if (response.message === "already reserved") {
+        toast.error("Employee already reserved for another job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
 
+  /*Function to removed reserved employee */
+  const OnRemoveReservedClick = async (e) => {
+    try {
+      let Response = await RemoveReservedEmployeeForJob(
+        e.apply_id,
+        e.employee_id
+      );
+      if (Response.message === "successfully") {
+        toast.success("Employee Removed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*Function to remove Response */
+  const onResponseDelte = async (e) => {
+    try {
+      let response = await DeletRespone(e.apply_id,e.employee_id);
+      if(response.message ==="successfully deleted"){
+        toast.success("Response Deleted successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        props.setApiCall(true)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*Function to open add follow up modal */
   // const addFollow = (e) => {
   //   setFollowUp(true);
@@ -945,7 +998,6 @@ function JobResponse(props) {
                                     }
                                   >
                                     <span className="text-gray px-2">
-                                      
                                       <ImCalendar />
                                     </span>
                                     {/* <i className="fa fa-calendar text-gray px-2"></i> */}
@@ -968,6 +1020,24 @@ function JobResponse(props) {
                                   >
                                     <PiBriefcaseLight />
                                     {/* <i className="fas fa-briefcase"></i> */}
+                                  </button>
+                                  <button
+                                    className={
+                                      res.is_reserve === "1"
+                                        ? "btn btn-outline-danger action_btn"
+                                        : " d-none"
+                                    }
+                                    onClick={() => OnRemoveReservedClick(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Remove Applicant
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-danger action_btn"
+                                    onClick={() => onResponseDelte(res)}
+                                    title="Delete Response"
+                                  >
+                                    <RiDeleteBin5Line />
                                   </button>
                                 </div>
                               </th>

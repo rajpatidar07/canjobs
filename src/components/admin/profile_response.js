@@ -7,6 +7,8 @@ import {
   GetAllResponse,
   GetFilter,
   AddUpdateVisa,
+  RemoveReservedEmployeeForJob,
+  DeletRespone
 } from "../../api/api";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
@@ -19,6 +21,7 @@ import Loader from "../common/loader";
 // import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiBriefcaseLight } from "react-icons/pi";
 import { ImCalendar } from "react-icons/im";
+import {RiDeleteBin5Line}from "react-icons/ri"
 function JobProfileResponse(props) {
   /*show modal and data states */
   // let [documentModal, setDocumentModal] = useState(false);
@@ -150,7 +153,7 @@ function JobProfileResponse(props) {
   const ReservedEmployee = async (e) => {
     // Api call to set employee reserved
     try {
-      let response = await ReservedEmployeeForJob(e.apply_id, "1");
+      let response = await ReservedEmployeeForJob(e.apply_id, e.employee_id, "1");
       // console.log(response);
       if (response.message === "Successfully") {
         // Api call to set employee Visa
@@ -158,13 +161,15 @@ function JobProfileResponse(props) {
         try {
           let VisaResponse = await AddUpdateVisa(e.employee_id, state);
           if (
-            VisaResponse.data.message === "visa inserted successfully" ||
-            VisaResponse.data.message === "visa updated successfully"
+            VisaResponse.data.message === "visa inserted successfully"
           ) {
             // Api call to set employee Limia
-            const lmia = { lmia_status: "candidate placement" };
+            const lmia = {
+              lmia_status: "candidate placement",
+              apply_id: e.apply_id,
+            };
             try {
-              let LimiaResponse = await AddLimia(lmia, e.employee_id, e.job_id);
+              let LimiaResponse = await AddLimia(lmia);
               if (LimiaResponse.message === "Data added successfully") {
                 toast.success("Employee Reserved successfully", {
                   position: toast.POSITION.TOP_RIGHT,
@@ -181,11 +186,52 @@ function JobProfileResponse(props) {
           console.log(err);
         }
       }
+      if(response.message === "already reserved"){
+        toast.error("Employee already reserved for another job", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
+  /*Function to removed reserved employee */
+  const OnRemoveReservedClick = async (e) => {
+    try {
+      let Response = await RemoveReservedEmployeeForJob(
+        e.apply_id,
+        e.employee_id
+      );
+      if (Response.message === "successfully") {
+        toast.success("Employee Removed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+    /*Function to remove Response */
+    const onResponseDelte = async (e) => {
+      try {
+        let response = await DeletRespone(e.apply_id,e.employee_id);
+        if(response.message ==="successfully deleted"){
+          toast.success("Response Deleted successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setApiCall(true);
+          props.setApiCall(true)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
   /*Function to open add follow up modal */
   // const addFollow = (e) => {
   //   setFollowUp(true);
@@ -881,6 +927,43 @@ function JobProfileResponse(props) {
                                 <PiBriefcaseLight />
                                 {/* <i className="fas fa-briefcase"></i> */}
                               </button>
+                              <button
+                                    className={
+                                      props.response === "visa" ||
+                                      props.response === "lmia"
+                                        ? "d-none"
+                                        : "btn btn-outline-info action_btn text-gray"
+                                    }
+                                    onClick={() => editJob(res)}
+                                    title="Change Job"
+                                    // disabled={
+                                    //   props.total_applicants >=
+                                    //   props.role_category
+                                    //     ? true
+                                    //     : false
+                                    // }
+                                  >
+                                    <PiBriefcaseLight />
+                                    {/* <i className="fas fa-briefcase"></i> */}
+                                  </button>
+                                  <button
+                                    className={
+                                      res.is_reserve === "1"
+                                        ? "btn btn-outline-danger action_btn"
+                                        : " d-none"
+                                    }
+                                    onClick={() => OnRemoveReservedClick(res)}
+                                    title="Reserved Employee"
+                                  >
+                                    Remove Applicant
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-danger action_btn"
+                                    onClick={() => onResponseDelte(res)}
+                                    title="Delete Response"
+                                  >
+                                    <RiDeleteBin5Line />
+                                  </button>
                             </div>
                           </th>
                         )}

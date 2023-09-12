@@ -343,7 +343,7 @@ function CompanyProfileDetail(props) {
                       aria-selected="true"
                       onClick={() => setTabActive("contact")}
                     >
-                      Contact
+                      Contact Us
                     </Link>
                   </li>
                   {/* <li className="tab-menu-items nav-item pr-12">
@@ -762,7 +762,8 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "contact" ? (
-                    <ContactPage/>
+                    <ContactPage
+                    email={employerData.email}/>
                   ) : null}
                 </div>
               </div>

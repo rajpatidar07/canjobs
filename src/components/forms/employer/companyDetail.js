@@ -428,8 +428,7 @@ function CompanyDetails(props) {
                   type="date"
                   name="company_start_date"
                   onKeyDownCapture={(e) => e.preventDefault()}
-                  value={
-                    moment(state.company_start_date).format("DD-MM-YYYY") || ""
+                  value={state.company_start_date|| ""
                   }
                   onChange={onInputChange}
                   className={

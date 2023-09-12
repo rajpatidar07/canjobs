@@ -213,6 +213,7 @@ function ContactInfo(props) {
                   value={state.contact_no || ""}
                   onChange={onInputChange}
                   type="number"
+min={0}
                   className={
                     errors.contact_no
                       ? "form-control border border-danger"
@@ -244,6 +245,7 @@ function ContactInfo(props) {
                   value={state.contact_no_other || ""}
                   onChange={onInputChange}
                   type="number"
+min={0}
                   className={"form-control"}
                   placeholder="Other Contact No"
                   id="contact_no_other"
@@ -294,6 +296,7 @@ function ContactInfo(props) {
                   value={state.pin_code || ""}
                   onChange={onInputChange}
                   type="number"
+min={0}
                   className={
                     errors.pin_code
                       ? "form-control border border-danger"

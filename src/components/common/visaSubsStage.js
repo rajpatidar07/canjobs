@@ -5,14 +5,13 @@ const VisaSubStageSelector = ({
   selectedStatus,
   FilterJson,
   handleSubStageSelection,
-  mainstage,
 }) => {
   return (
     <div className="bg-white text-dark p-2 sub-stages-container row">
       {(FilterJson.visa_sub_stages[expandedStatus] || []).map((subStage, j) => (
         <div
           key={j}
-          className={`sub-stage col-6 text-capitalize ${
+          className={`sub-stage text-capitalize ${expandedStatus === "file decision" ?"col-4" :"col-6"} ${
             (selectedStatus || []).some((item) => item.substage === subStage)
               ? "selected"
               : ""
@@ -20,7 +19,7 @@ const VisaSubStageSelector = ({
           onClick={() => handleSubStageSelection(expandedStatus, subStage)}
         >
           <input
-            type={mainstage === "file decision" ? "radio" : "checkbox"}
+            type={expandedStatus === "file decision" ? "radio" : "checkbox"}
             className="mx-2"
             checked={(selectedStatus || []).some(
               (item) => item.substage === subStage

@@ -4,8 +4,11 @@ import useValidation from "../../common/useValidation";
 import { AdminDetails, AddAdmin } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import filterjson from "../../json/filterjson";
 
 function Addadmin(props) {
+  let encoded;
+  const [imgError, setImgError] = useState("");
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -40,6 +43,8 @@ function Addadmin(props) {
     email: "",
     password: "",
     admin_type: "",
+    contact_no: "",
+    profile_image: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -48,41 +53,90 @@ function Addadmin(props) {
         value === "" || value.trim() === ""
           ? "Admin name is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-            ? "Admin name can not have a number."
-            : value.length < 2
-              ? "Admin name should have 2 or more letters"
-              : /[^A-Za-z 0-9]/g.test(value)
-                ? "Cannot use special character "
-                : "",
+          ? "Admin name can not have a number."
+          : value.length < 2
+          ? "Admin name should have 2 or more letters"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
     ],
     email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     password: [
       (value) =>
         state.admin_id
           ? value === ""
           : value === ""
-            ? "Password is required"
-            : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+          ? "Password is required"
+          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
               value
             )
-              ? null
-              : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+          ? null
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     admin_type: [
       (value) =>
         value === "" || value.trim() === "" ? "Admin type is required" : null,
     ],
+    contact_no: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Contact no is required"
+          : value.length < 10
+          ? "Contact no can not be less than 10 digit"
+          : value.length > 10
+          ? "Contact no can not be more than 10 digit"
+          : "",
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
+
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  /*Onchange function of profile */
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {
+          setImgError("Image size can't be more then 100 kb");
+        } else {
+          setImgError("");
+          setState({ ...state, profile_image: event.target.result });
+        }
+      };
+      img.src = event.target.result;
+    };
+
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+    encoded = await convertToBase64(file);
+    let base64Name = encoded.base64;
+    setState({ ...state, profile_image: base64Name });
+  };
   /*Function to get admin detail */
   const AdminData = async () => {
     try {
@@ -93,7 +147,7 @@ function Addadmin(props) {
         setState(userData.data[0]);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -132,7 +186,7 @@ function Addadmin(props) {
           setLoading(false);
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
         setLoading(false);
       }
     } else {
@@ -163,6 +217,36 @@ function Addadmin(props) {
             <h5 className="text-center pt-2 mb-7">Update Admin</h5>
           )}
           <form onSubmit={onAminProfileUpdateClick}>
+            <div className="form-group mx-auto text-center">
+              <div className="mb-4 position-relative">
+                <input
+                  type={"file"}
+                  id="profile_image"
+                  accept="image/png,image/jpeg,image/jpg,image/gif"
+                  onChange={handleFileChange}
+                  className="d-none"
+                />
+                <img
+                  className="rounded-circle"
+                  src={
+                    state.profile_image
+                      ? state.profile_image
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  }
+                  alt=""
+                  width={"100px"}
+                  height={"100px"}
+                />
+                <label
+                  className="mt-lg-20 mx-lg-31
+                   bg-transparent edit_profile_icon"
+                  htmlFor="profile_image"
+                >
+                  <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-1 mt-lg-3 "></span>
+                </label>
+              </div>
+              <small className="text-danger">{imgError}</small>
+            </div>
             <div className="form-group">
               <label
                 htmlFor="name"
@@ -187,6 +271,37 @@ function Addadmin(props) {
               {errors.name && (
                 <span key={errors.name} className="text-danger font-size-3">
                   {errors.name}
+                </span>
+              )}
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="contact_no"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Contact no <span className="text-danger">*</span>
+              </label>
+              <input
+                type="number"
+                className={
+                  errors.contact_no
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                value={state.contact_no}
+                onChange={onInputChange}
+                id="contact_no"
+                name="contact_no"
+                min={0}
+                placeholder="Enter contact no"
+              />
+              {/*----ERROR MESSAGE FOR Admin Name----*/}
+              {errors.contact_no && (
+                <span
+                  key={errors.contact_no}
+                  className="text-danger font-size-3"
+                >
+                  {errors.contact_no}
                 </span>
               )}
             </div>
@@ -264,7 +379,7 @@ function Addadmin(props) {
                 type={"text"}
                 className={
                   errors.admin_type
-                    ? "form-control border border-danger"
+                    ? "form-control border border-danger text-capitalize"
                     : "form-control"
                 }
                 value={state.admin_type}
@@ -274,9 +389,17 @@ function Addadmin(props) {
                 multiple={false}
               >
                 <option value={""}>Select</option>
-                <option value={"super-admin"}>Superadmin</option>
-                <option value={"admin"}>Admin</option>
-                <option value={"manager"}>Manager</option>
+                {(filterjson.admintype || []).map((item, index) => {
+                  return (
+                    <option
+                      value={item}
+                      key={index}
+                      className=" text-capitalize"
+                    >
+                      {item}
+                    </option>
+                  );
+                })}
               </select>
               {/*----ERROR MESSAGE FOR ADMIN TYPE----*/}
               {errors.admin_type && (

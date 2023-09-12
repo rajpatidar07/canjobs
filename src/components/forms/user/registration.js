@@ -191,6 +191,7 @@ function Registration(props) {
                 </label>
                 <input
                   type="number"
+min={0}
                   placeholder="Mobile Number"
                   name="usermobileno"
                   value={state.usermobileno}

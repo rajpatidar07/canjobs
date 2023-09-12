@@ -203,6 +203,7 @@ function ApplyBeforeform(props) {
                 </label>
                 <input
                   type="number"
+min={0}
                   placeholder="Mobile Number"
                   name="contact_no"
                   value={state.contact_no || ""}

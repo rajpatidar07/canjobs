@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1693200780899,
@@ -32,6 +32,10 @@
                 {
                     "date": 1693916234269,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -264,9 +264,9 @@\n \n     reader.onload = (event) => {\n       const img = new Image();\n       img.onload = () => {\n-        if (/*file.size > 1024 * 100*/ file.size > 100 * 1024 === true) {\n+        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {\n           setImgError(\"Image size can't be more then 100 kb\");\n         } else {\n           setImgError(\"\");\n           setState({ ...state, profile_photo: event.target.result });\n"
+                },
+                {
+                    "date": 1694064751799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -410,8 +410,9 @@\n                   Mobile Number: <span className=\"text-danger\">*</span>\n                 </label>\n                 <input\n                   type=\"number\"\n+min={0}\n                   placeholder=\"Mobile Number\"\n                   name=\"contact_no\"\n                   value={state.contact_no || \"\"}\n                   onChange={onInputChange}\n"
                 }
             ],
             "date": 1693200780899,

@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1693820063249,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1694064752001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,8 +190,9 @@\n                   Mobile Number<span className=\"text-danger\">*</span> :\n                 </label>\n                 <input\n                   type=\"number\"\n+min={0}\n                   placeholder=\"Mobile Number\"\n                   name=\"usermobileno\"\n                   value={state.usermobileno}\n                   onChange={onInputChange}\n"
                 }
             ],
             "date": 1693820063249,

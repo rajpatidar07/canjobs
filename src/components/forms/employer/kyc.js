@@ -42,10 +42,10 @@ function KycComplianceDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "PAN card name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 2
-              ? "PAN name  be of 2  or more letters"
-              : "",
+          ? "Cannot use special character "
+          : value.length < 2
+          ? "PAN name  be of 2  or more letters"
+          : "",
     ],
 
     pincode: [
@@ -53,20 +53,20 @@ function KycComplianceDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Pincode is required"
           : value.length < 6
-            ? "Pincode should be of 6 digits"
-            : "",
+          ? "Pincode should be of 6 digits"
+          : "",
     ],
     pan_no: [
       (value) =>
         value === "" || value === null
           ? "PAN no is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 10 || value.length > 10
-              ? "PAN no should be of 10 digits"
-              : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
-                ? "PAN no should be of 6 alphabte and 4 digits"
-                : "",
+          ? "Cannot use special character "
+          : value.length < 10 || value.length > 10
+          ? "PAN no should be of 10 digits"
+          : !/^([A-Z]){5}([0-9]){4}([A-Z]){1}$/.test(value)
+          ? "PAN no should be of 6 alphabte and 4 digits"
+          : "",
     ],
     pan_date: [
       (value) =>
@@ -79,40 +79,40 @@ function KycComplianceDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Address is required"
           : value.length < 5
-            ? "Address should be of 5  or more letters"
-            : "",
+          ? "Address should be of 5  or more letters"
+          : "",
     ],
     city: [
       (value) =>
         value === "" || value === null
           ? "City is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : "",
+          ? "Cannot use special character "
+          : "",
     ],
     state: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "State is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : "",
+          ? "Cannot use special character "
+          : "",
     ],
     gstin: [
       (value) =>
         value === "" || value === null
           ? ""
           : !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(value)
-            ? "Invalid GSTIN"
-            : "",
+          ? "Invalid GSTIN"
+          : "",
     ],
     tan_number: [
       (value) =>
         value === "" || value === null
           ? ""
           : !/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(value)
-            ? "Invalid TAN"
-            : "",
+          ? "Invalid TAN"
+          : "",
     ],
     country: [
       (value) =>
@@ -125,8 +125,8 @@ function KycComplianceDetails(props) {
         value === "" || value === null
           ? ""
           : !/^\+?\d{1,3}[- ]?\d{3,4}[- ]?\d{4}$/i.test(value)
-            ? "Invalid Fax"
-            : "",
+          ? "Invalid Fax"
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -148,7 +148,7 @@ function KycComplianceDetails(props) {
         setState(userData.data.kyc_detail[0]);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -181,7 +181,7 @@ function KycComplianceDetails(props) {
           return close();
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
       }
     } else {
       setLoading(false);
@@ -225,10 +225,9 @@ function KycComplianceDetails(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7">
-          <form onSubmit={onKycInfoClick}>
+          <form>
             <h5 className="text-center pt-2 mb-7">KYC Compliance Details</h5>
             <div className="row">
-              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pan_no"
@@ -300,7 +299,7 @@ function KycComplianceDetails(props) {
                     id="pan_date"
                     name="pan_date"
                     max={moment().format("DD-MM-YYYY")}
-                    value={state.pan_date|| ""}
+                    value={state.pan_date || ""}
                     onChange={onInputChange}
                     onKeyDownCapture={(e) => e.preventDefault()}
                     className={
@@ -351,9 +350,7 @@ function KycComplianceDetails(props) {
                 )}
               </div>
             </div>
-
             <div className="row">
-              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="pincode"
@@ -363,6 +360,7 @@ function KycComplianceDetails(props) {
                 </label>
                 <input
                   type="number"
+                  min={0}
                   placeholder="Pincode"
                   id="pincode"
                   name="pincode"
@@ -472,7 +470,6 @@ function KycComplianceDetails(props) {
               </div>
             </div>
             <div className="row">
-              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="gstin"
@@ -599,7 +596,10 @@ function KycComplianceDetails(props) {
                   <span className="sr-only">Loading...</span>
                 </button>
               ) : (
-                <button className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase">
+                <button 
+                type="button"
+                onClick={(e)=>onKycInfoClick(e)}
+                className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase">
                   Submit
                 </button>
               )}

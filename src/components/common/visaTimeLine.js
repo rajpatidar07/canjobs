@@ -8,13 +8,13 @@ export default function VisaTimeLine({ visa}) {
     );
     return (
         <div className=''>
-            <div className="arrow-wrapper">
-                <div className="arrow-steps clearfix p-2">
+            <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                <div className="arrow-steps ">
                     {(FilterJson.visa_status || []).map((status, i) => {
                         const isDone = currentIndex > -1 && i <= currentIndex;
                         return (
                             <div key={i}
-                                className={`step m-2 ${isDone ? 'approved text-capitalize' : 'text-capitalize'}`}> 
+                                className={`step m-2 text-capitalize ${isDone ? 'approved ' : 'text-capitalize'}`}> 
                                 <span>{status}</span>
                             </div>
                         )

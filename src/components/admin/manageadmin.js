@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
-import { getallAdminData, DeleteAdmin } from "../../api/api";
+import { getallAdminData, DeleteAdmin, GetManagerTeam } from "../../api/api";
 import { ToastContainer, toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
-import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import Loader from "../common/loader";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { LiaUserEditSolid } from "react-icons/lia";
+import ExecutiveBox from "../common/executiveBox";
+import AdminTable from "../common/adminTable";
+import Executivelist from "../common/executivelist";
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
+  let [executiveapiCall, setExecutiveApiCall] = useState(false);
   let [showAminDetails /*, setShowAminDetails*/] = useState(false);
   let [showAddAdminModal, setShowAdminModal] = useState(false);
   let [adminData, setAdminData] = useState([]);
+  let [executiveData, setexecutiveData] = useState([]);
+  let [managerData, setManagerData] = useState({});
+  let [managerExecutive, setManagerExecutive] = useState([]);
   let [adminId, setAdminID] = useState();
+  let [showManagerDetailBox, setShowManagerDetailBox] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
+  let [addTeamListShow, setAddTeamListShow] = useState(false);
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -35,6 +40,7 @@ function ManageAdmin() {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("admin_id");
   const [sortOrder, setSortOrder] = useState("DESC");
+
   /* Function to get the Amin data*/
   const AdminData = async () => {
     setIsLoading(true);
@@ -68,9 +74,35 @@ function ManageAdmin() {
       setIsLoading(false);
     }
   };
+
+  /*Get Executive data */
+  const ExecutiveData = async () => {
+    setIsLoading(true);
+    try {
+      const userData = await getallAdminData(
+        "executive",
+        "",
+        currentPage,
+        recordsPerPage,
+        columnName,
+        ""
+      );
+      if (userData.data.length === 0) {
+        setexecutiveData([]);
+        setIsLoading(false);
+      } else {
+        setexecutiveData(userData.data);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
+    ExecutiveData();
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -121,7 +153,7 @@ function ManageAdmin() {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setCurrentPage(1)
+    setCurrentPage(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Admin Name cannot start with a number.");
@@ -141,8 +173,34 @@ function ManageAdmin() {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
+
+  /*Function to open manager detail page */
+  const OnManagerDetailClick = async (data) => {
+    try {
+      let Response = await GetManagerTeam(data.admin_id);
+      if (Response.message === "Successfully") {
+        setManagerData(data);
+        setManagerExecutive(Response.data.data);
+        setShowManagerDetailBox(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    if (executiveapiCall === true) {
+      OnManagerDetailClick(managerData);
+      setExecutiveApiCall(false);
+    }
+  }, [executiveapiCall]);
+  /*Function o add task to the executive */
+  // const AddTask = async () => {
+  //   setAddTeamListShow(false);
+  //   console.log("add task to executive");
+  // };
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -169,198 +227,196 @@ function ManageAdmin() {
           id="dashboard-body"
         >
           <div className="container-fluid">
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
-                <div className="page___heading">
-                  <h3 className="font-size-6 mb-0">Admin</h3>
-                </div>
-                <div className="row m-0 align-items-center">
-                  <div className="col p-1 form_group mb-3">
-                    <p className="input_label">Search:</p>
-                    <input
-                      required
-                      maxLength={30}
-                      type="text"
-                      className="form-control "
-                      placeholder={"Admin Name"}
-                      value={search}
-                      name={"Admin_name"}
-                      onChange={(e) => {
-                        onSearch(e);
-                      }}
-                    />
+            <div className="row">
+              <div className="col-6 mb-18">
+                <div className="mb-4 align-items-center">
+                  <div className="page___heading">
+                    <h3 className="font-size-6 mb-0">Admin</h3>
                   </div>
-                  <div className="col p-1 form_group mb-3">
-                    <p className="input_label">Filter by Admin:</p>
-                    <div className="select_div">
-                      <select
-                        name="type"
-                        value={typeFilterValue}
-                        id="type"
+                  <div className="row m-0 align-items-center">
+                    <div className="col p-1 form_group mb-3">
+                      <p className="input_label">Search:</p>
+                      <input
+                        required
+                        maxLength={30}
+                        type="text"
+                        className="form-control "
+                        placeholder={"Admin Name"}
+                        value={search}
+                        name={"Admin_name"}
                         onChange={(e) => {
-                          setTypeFilterValue(e.target.value);
-                          setCurrentPage(1);
+                          onSearch(e);
                         }}
-                        className=" form-control"
+                      />
+                    </div>
+                    <div className="col p-1 form_group mb-3">
+                      <p className="input_label">Filter by Admin:</p>
+                      <div className="select_div">
+                        <select
+                          name="type"
+                          value={typeFilterValue}
+                          id="type"
+                          onChange={(e) => {
+                            setTypeFilterValue(e.target.value);
+                            setCurrentPage(1);
+                          }}
+                          className="text-capitalize form-control"
+                        >
+                          <option value="">Admin type</option>
+                          {(FilterJson.admintype || []).map((type, i) => (
+                            <option value={type} key={i}>
+                              {type}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col px-1 form_group mt-4 text-right">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editAdmin("0")}
+                        title="Add Admin"
                       >
-                        <option value="">Admin type</option>
-                        {(FilterJson.admintype || []).map((type, i) => (
-                          <option value={type} key={i}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
+                        Add Admin
+                      </CustomButton>
                     </div>
                   </div>
-                  <div className="col px-1 form_group mt-4 text-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editAdmin("0")}
-                      title="Add Admin"
-                    >
-                      Add Admin
-                    </CustomButton>
-                  </div>
+                  <small className="text-danger">{searcherror}</small>
                 </div>
-                <small className="text-danger">{searcherror}</small>
+                {
+                  <AdminTable
+                    data={adminData}
+                    isLoading={isLoading}
+                    handleSort={handleSort}
+                    editAdmin={editAdmin}
+                    ShowDeleteAlert={ShowDeleteAlert}
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalData={totalData}
+                    page={"admin page"}
+                    OnManagerDetailClick={OnManagerDetailClick}
+                    setAddTeamListShow={setAddTeamListShow}
+                    setExecutiveApiCall={setExecutiveApiCall}
+                  />
+                }
               </div>
-              {
-                <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-                  <div className="table-responsive main_table_div">
-                    {isLoading ? (
-                      <Loader />
-                    ) : (
-                      <table className="table table-striped main_data_table">
-                        <thead>
-                          <tr>
-                            <th
-                              scope="col"
-                              className="border-0 font-size-4 font-weight-normal"
-                            >
-                              <Link
-                                className="text-gray"
-                                to={""}
-                                onClick={() => handleSort("name")}
-                                title="Sort by Name"
-                              >
-                                Admin Name
-                              </Link>
-                            </th>
-                            <th
-                              scope="col"
-                              className="pl-4 border-0 font-size-4 font-weight-normal"
-                            >
-                              <Link
-                                className="text-gray"
-                                to={""}
-                                onClick={() => handleSort("admin_type")}
-                                title="Sort by Type"
-                              >
-                                Admin Type
-                              </Link>
-                            </th>
-                            <th
-                              scope="col"
-                              className="pl-4 border-0 font-size-4 font-weight-normal"
-                            >
-                              <Link
-                                className="text-gray"
-                                to={""}
-                                onClick={() => handleSort("email")}
-                                title="Sort by Email"
-                              >
-                                Email
-                              </Link>
-                            </th>
-                            <th
-                              scope="col"
-                              className="pl-4 border-0 font-size-4 font-weight-normal"
-                            >
-                              Action
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {totalData === 0 || adminData.length === 0 ? (
-                            <tr>
-                              <th className="bg-white"></th>
-                              <th className="bg-white text-center">
-                                No Data Found
-                              </th>
-                              <th className="bg-white"></th>
-                              <th className="bg-white"></th>
-                            </tr>
+              {showManagerDetailBox && (
+                <div className="card p-3 mt-2 col-6 mb-18 text-capitalize">
+                  <div className="mb-4 align-items-center">
+                    <div className="page___heading">
+                      <h3 className="font-size-6 mb-0">Admin</h3>
+                    </div>
+                    <div className="row m-0 align-items-center">
+                      <div className="col p-1 form_group mb-3 ">
+                        <div className="d-flex executive_box gx-2">
+                          <div className="media  align-items-center">
+                            <div className="circle-40 mx-auto overflow-hidden">
+                              {managerData.profile_image === null ? (
+                                <img
+                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  alt=""
+                                  className="w-100"
+                                />
+                              ) : (
+                                <img
+                                  src={managerData.profile_image}
+                                  alt=""
+                                  className="w-100"
+                                />
+                              )}
+                            </div>
+                          </div>
+
+                          <div className=" mb-0">
+                            {managerData.name === null ||
+                            managerData.name === undefined ||
+                            managerData.name === "undefined" ||
+                            managerData.name === "" ? (
+                              <p className="font-size-3  mb-0">Unavailable</p>
+                            ) : (
+                              <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
+                                {managerData.name}
+                                <small className="text-gray font-size-3 m-0 text-capitalize">
+                                  ({managerData.admin_type})
+                                </small>
+                              </h5>
+                            )}
+                            {managerData.email || managerData.contact_no ? (
+                              <>
+                                <p className="text-gray font-size-3 m-0 text-capitalize">
+                                  {managerData.email}
+                                </p>
+                                <p className="text-gray font-size-3 m-0 text-capitalize">
+                                  {`+${managerData.contact_no}`}
+                                </p>
+                              </>
+                            ) : null}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col px-1 form_group mt-4 text-right">
+                        <CustomButton
+                          className={
+                            addTeamListShow === true
+                              ? "font-size-3 rounded-3 btn btn-light border-0"
+                              : "font-size-3 rounded-3 btn btn-primary border-0"
+                          }
+                          onClick={
+                            addTeamListShow === true
+                              ? () => {
+                                  setAddTeamListShow(false);
+                                  setExecutiveApiCall(true);
+                                }
+                              : () => setAddTeamListShow(true)
+                          }
+                          title={
+                            addTeamListShow === true ? "Cancel" : "Add Team"
+                          }
+                        >
+                          {addTeamListShow === true ? "Cancel" : "Add Task"}
+                        </CustomButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+                    <div className="">
+                      {isLoading ? (
+                        <Loader />
+                      ) : addTeamListShow === true ? (
+                        <div className="card-text">
+                          <h5>Executive's List</h5>
+                          <Executivelist
+                            manager_id={managerData.admin_id}
+                            executiveData={executiveData}
+                            selected={managerExecutive}
+                            setExecutiveApiCall={setExecutiveApiCall}
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className="accordion accordion-flush"
+                          id="accordionFlushExample"
+                        >
+                          {managerExecutive.length === 0 ? (
+                            <div className="text-center">
+                              <h5>No Executive found</h5>
+                            </div>
                           ) : (
-                            (adminData || []).map((admin) => (
-                              <tr
-                                className="text-capitalize"
-                                key={admin.admin_id}
-                              >
-                                <th className=" py-5">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
-                                    {admin.name}
-                                  </h3>
-                                </th>
-                                <th className="py-5">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
-                                    {admin.admin_type}
-                                  </h3>
-                                </th>
-                                <th className="py-5 ">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-lowercase">
-                                    <Link
-                                      className="text-dark"
-                                      to={`mailto:${admin.email}`}
-                                    >
-                                      {admin.email}
-                                    </Link>
-                                  </h3>
-                                </th>
-                                <th className="py-5 min-width-px-100">
-                                  <div
-                                    className="btn-group button_group"
-                                    role="group"
-                                  >
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => editAdmin(admin.admin_id)}
-                                      title="Edit Admin"
-                                    >
-                                      <span className="text-gray">
-                                        <LiaUserEditSolid />
-                                      </span>
-                                      {/* <span className=" fas fa-edit text-gray"></span> */}
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => ShowDeleteAlert(admin)}
-                                      title="Delete"
-                                    >
-                                      <span className=" text-danger">
-                                        <RiDeleteBin5Line />
-                                        {/* <i className="fa fa-trash"></i> */}
-                                      </span>
-                                    </button>
-                                  </div>
-                                </th>
-                              </tr>
+                            (managerExecutive || []).map((item, index) => (
+                              <ExecutiveBox
+                                data={item}
+                                index={index}
+                                key={index}
+                              />
                             ))
                           )}
-                        </tbody>
-                      </table>
-                    )}
-                  </div>
-                  <div className="pt-2">
-                    <Pagination
-                      nPages={nPages}
-                      currentPage={currentPage}
-                      setCurrentPage={setCurrentPage}
-                      total={totalData}
-                      count={adminData.length}
-                    />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              }
+              )}
             </div>
           </div>
         </div>

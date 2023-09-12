@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   MdOutlineDashboardCustomize,
   MdOutlinePhotoFilter,
+  MdAssignmentAdd
 } from "react-icons/md";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
@@ -157,7 +158,20 @@ const AdminSidebar = (props) => {
               Manage Interview
             </Link>
           </li>
-
+          <li className={props.heading === "Assigned Job's" ? "active" : ""}>
+            <Link
+              to="/assignedjobs"
+              className={
+                view_as_admin_type === "manager"
+                  ? "d-none"
+                  : "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+              }
+            >
+              <MdAssignmentAdd className="sidebar_icon" />
+              Manage Admin
+            </Link>
+          </li>
+          
           <li className={props.heading === "Manage Admin" ? "active" : ""}>
             <Link
               to="/adminprofile"

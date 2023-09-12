@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1693203070070,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1694168185173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n import NewUserProfile from \"../user/user_profile\";\n import CompanyProfileDetail from \"../company/company_profile\";\n import JobDetailpageAdmim from \"../admin/job_Detail_page\";\n import PDFViewer from \"../user/user_pdf\";\n+import JobAssignedDashboard from \"../admin/jobAssignedDashboard\";\n // function CurrentRoute() {\n //   const location = useLocation();\n //   const path = location.pathname;\n \n@@ -116,8 +117,9 @@\n             <Route path=\"/employee\" element={<Employee />} />\n             <Route path=\"/selfemployee\" element={<SelfApplicat />} />\n             <Route path=\"/employer\" element={<Employer />} />\n             <Route path=\"/adminprofile\" element={<ManageAdmin />} />\n+            <Route path=\"/assignedjobs\" element={<JobAssignedDashboard />} />\n             <Route path=\"/:eid\" element={<NewUserProfile />} />\n             <Route path=\"/userpdf\" element={<PDFViewer />} />\n             <Route path=\"/jobdetailpage\" element={<JobDetailpageAdmim />} />\n             <Route path=\"/company_detail\" element={<CompanyProfileDetail />} />\n"
                 }
             ],
             "date": 1693203070070,

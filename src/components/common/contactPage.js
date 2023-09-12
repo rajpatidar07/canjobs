@@ -1,56 +1,137 @@
-import React,{/*useEffect,*/useState} from "react";
+import React, { /*useEffect,*/ useState } from "react";
 import useValidation from "./useValidation";
-export default function ContactPage() {
-    const [loading,/* setLoading*/] = useState(false)
-    
- 
-    /*Render function to get the Response*/
-    // useEffect(() => {
-    // }, []);
-  
-    // INITIAL STATE ASSIGNMENT
-    const initialFormState = {
+import { SendEmail } from "../../api/api";
+import { toast } from "react-toastify";
+export default function ContactPage(props) {
+  const [loading, setLoading] = useState(false);
 
-      subject: "",
-      description: "",
-    };
+  /*Render function to get the Response*/
+  // useEffect(() => {
+  // }, []);
 
-   let  validators= {}
-    // CUSTOM VALIDATIONS IMPORT
-    const { state/*, setState*/, onInputChange, errors,/* setErrors, validate */} =
-      useValidation(initialFormState, validators);
+  // INITIAL STATE ASSIGNMENT
+  const initialFormState = {
+    subject: "",
+    description: "",
+    email: props.email,
+  };
 
-      const onContactusClick= () => {
-        console.log("on click")
+  /*Validation */
+  let validators = {
+    subject: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Subject is required"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Subject can not have a number."
+          : value.length < 2
+          ? "Subject should have 2 or more letters"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
+    ],
+    description: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "Description is required"
+          : // : /[-]?\d+(\.\d+)?/.test(value)
+          // ? "Description can not have a number."
+          value.length < 5
+          ? "Description should have 2 or more letters"
+          : // : /[^A-Za-z 0-9]/g.test(value)
+            // ? "Cannot use special character "
+            "",
+    ],
+  };
+  // CUSTOM VALIDATIONS IMPORT
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
+
+  /*Function to sent email*/
+  const onContactusClick = async () => {
+    if (validate()) {
+      try {
+        setLoading(true);
+        let Response = await SendEmail(state);
+        if (Response.message === "email sent successfully") {
+          toast.success("Email sent successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          setErrors("");
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
     }
+  };
   return (
-    <div className="p-10 activity_container">
+    <div className="p-10 activity_container profile_id_card">
       <div className="row">
         <div className="col">
-          <div className="card text-center">
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                This card has a regular title and short paragraphy of text below
-                it.
-              </p>
-              <p className="card-text">
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </p>
+          <div className="card mx-auto">
+            <h5 className="card-title text-center mt-2">LMIA Manager</h5>
+
+            <div className="row no-gutters">
+              <div className="col-md-4 ">
+                <img
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  className="card-img mx-2 mb-2"
+                  alt="Profile"
+                />
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title ">
+                    John Doe
+                    <small>(Web Developer)</small>
+                  </h5>
+                  <p className="card-text">
+                    <b>Address</b>: 123 Main St, City, Country
+                  </p>
+                  <p className="card-text">
+                    <b>Phone</b>: 123-456-7890
+                  </p>
+                  <p className="card-text">
+                    <b>Email</b>: john.doe@example.com
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div className="col">
-          <div className="card text-center">
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">
-                This card has a regular title and short paragraphy of text below
-                it.
-              </p>
-              <p className="card-text">
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </p>
+          <div className="card mx-auto">
+            <h5 className="card-title text-center mt-2">Visa Manager</h5>
+
+            <div className="row no-gutters">
+              <div className="col-md-4 ">
+                <img
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                  className="card-img mx-2 mb-2"
+                  alt="Profile"
+                />
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title ">
+                    John Doe
+                    <small>(Web Developer)</small>
+                  </h5>
+                  <p className="card-text">
+                    <b>Address</b>: 123 Main St, City, Country
+                  </p>
+                  <p className="card-text">
+                    <b>Phone</b>: 123-456-7890
+                  </p>
+                  <p className="card-text">
+                    <b>Email</b>: john.doe@example.com
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -88,7 +169,7 @@ export default function ContactPage() {
             </div>
             <div className="form-group col px-0 pr-3">
               <label
-                htmlFor="remark"
+                htmlFor="description"
                 className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
               >
                 Description: <span className="text-danger">*</span>
@@ -96,30 +177,33 @@ export default function ContactPage() {
               <div className="position-relative">
                 <div
                   className={
-                    errors.remark
+                    errors.description
                       ? "border border-danger rounded overflow-hidden"
                       : "border rounded overflow-hidden"
                   }
                 >
                   <textarea
-                    name="remark"
-                    value={state.remark}
+                    name="description"
+                    value={state.description}
                     onChange={onInputChange}
                     rows={8}
                     style={{ height: "140px" }}
                     className={
-                      errors.remark
+                      errors.description
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    id="remark"
+                    id="description"
                     placeholder="Add Note here"
                   ></textarea>
                 </div>
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                {errors.remark && (
-                  <span key={errors.remark} className="text-danger font-size-3">
-                    {errors.remark}
+                {errors.description && (
+                  <span
+                    key={errors.description}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.description}
                   </span>
                 )}
               </div>

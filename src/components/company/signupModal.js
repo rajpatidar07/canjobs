@@ -421,6 +421,7 @@ export default function CompanySignUp(props) {
                           }
                           placeholder="Contact Number"
                           id="contact_no"
+                          min={0}
                         />
                         {/* ERROR MSG FOR Company no */}
                         {errors.contact_no && (
@@ -486,6 +487,7 @@ export default function CompanySignUp(props) {
                                   : "form-control"
                               }
                               placeholder="Otp"
+                              min={0}
                             />
                             {errors.otp && (
                               <span
