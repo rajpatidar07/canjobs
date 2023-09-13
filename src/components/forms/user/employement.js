@@ -29,7 +29,7 @@ function EmployementDetails(props) {
       if (Json.data.message === "No data found") {
         setIndustryList([]);
       } else {
-        setIndustryList(Json.data.Industry);
+        setIndustryList(Json.data.data.Industry);
       }
     } catch (err) {
       console.log(err);
@@ -104,9 +104,15 @@ function EmployementDetails(props) {
     ],
     end_date: [
       (value) =>
-        state.currently_work_here
+        state.currently_work_here === 1 || state.currently_work_here === "1"
           ? null
-          : value === ""
+          : (state.currently_work_here === 0 &&
+              (value === "" || value === null)) ||
+            (state.currently_work_here === "0" &&
+              (value === "" || value === null)) ||
+            value === "" ||
+            value === null ||
+            value === undefined
           ? "End Date is required"
           : null,
     ],
@@ -236,7 +242,7 @@ function EmployementDetails(props) {
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             {(employementData || []).map((CareerDetails) => (
               <div
-                className="w-100 border mb-3 rounded-5"
+                className="w-100 border mb-3 rounded-5 text-capitalize"
                 key={CareerDetails.career_id}
               >
                 <div className="d-flex align-items-center pr-11 mb-1 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
@@ -265,7 +271,11 @@ function EmployementDetails(props) {
                         ? "Currently working"
                         : moment(CareerDetails.end_date).format("DD-MM-YYYY")}
                     </span>
-                    <span className="font-size-3 text-gray w-100">
+                    <span
+                      className={`${
+                        CareerDetails.company_location === null ? "d-none" : ""
+                      } font-size-3 text-gray w-100`}
+                    >
                       <span className="mr-4" style={{ marginTop: "-2px" }}>
                         <img
                           src="image/svg/icon-loaction-pin-black.svg"
@@ -530,6 +540,7 @@ function EmployementDetails(props) {
                   type="date"
                   placeholder="Date Of Leaving "
                   name="end_date"
+                  max={moment().date(new Date())}
                   disabled={
                     state.currently_work_here === 1 ||
                     state.currently_work_here === "1"

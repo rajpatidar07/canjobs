@@ -293,7 +293,7 @@ function JobBox({
                         }
                         onClick={
                           // name === null ||
-                          // name === "null" ||
+                          // name === "" ||
                           // name === "" ||
                           // name === undefined ||
                           // name === "undefined" ?
@@ -302,7 +302,7 @@ function JobBox({
                             token && user_type === "user"
                               ?
                               name === null ||
-                                name === "null" ||
+                                name === "" ||
                                 name === "" ||
                                 name === undefined ||
                                 name === "undefined" ?

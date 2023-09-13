@@ -126,7 +126,7 @@ function JobDetailPage(props) {
                     <div className="card-btn-group">
                       <button
                         to={""}
-                        onClick={token && (name === null || name === "null") ? () => navigate("/profile") : () => OnApplyClick(0)}
+                        onClick={token && (name === null || name === "") ? () => navigate("/profile") : () => OnApplyClick(0)}
                         disabled={jobDetatilsData.is_applied === "0" ? false : true}
                         className={jobDetatilsData.is_applied === "0" ? "btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5" : "btn btn-info text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5"}
                       >

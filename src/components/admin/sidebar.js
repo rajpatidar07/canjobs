@@ -83,7 +83,7 @@ const AdminSidebar = (props) => {
             className={`${admin_type === "manager" ? "d-none" : ""}${
               props.heading === "Manage Companies" ? "active" : ""
             }`}
-          >s
+          >
             <Link
               to="/employer"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"

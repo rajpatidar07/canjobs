@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1693820063248,
@@ -36,6 +36,10 @@
                 {
                     "date": 1694582767650,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   const [pageNo, setpageNo] = useState(1);\r\n   /*Filter and search state */\r\n   const [categoryFilterValue, setCategoryFilterValue] = useState(\"\");\r\n   const [SkillFilterValue, setSkillFilterValue] = useState(\r\n-    props ? props.skill : \"\"\r\n+    props ? props.skill : \"null\"\r\n   );\r\n   const [locationFilterValue, setLocationFilterValue] = useState(\"\");\r\n   const [jobSwapFilterValue, setJobSwapFilterValue] = useState(\"\");\r\n   const [search, setSearch] = useState(\"\");\r\n"
+                },
+                {
+                    "date": 1694596424795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   const [pageNo, setpageNo] = useState(1);\r\n   /*Filter and search state */\r\n   const [categoryFilterValue, setCategoryFilterValue] = useState(\"\");\r\n   const [SkillFilterValue, setSkillFilterValue] = useState(\r\n-    props ? props.skill : \"null\"\r\n+    props ? props.skill : \"\"\r\n   );\r\n   const [locationFilterValue, setLocationFilterValue] = useState(\"\");\r\n   const [jobSwapFilterValue, setJobSwapFilterValue] = useState(\"\");\r\n   const [search, setSearch] = useState(\"\");\r\n"
                 }
             ],
             "date": 1693820063248,

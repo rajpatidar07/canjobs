@@ -118,7 +118,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                         item === undefined ||
                         item === "undefined" ||
                         item === null ||
-                        item === "null"
+                        item === ""
                           ? null
                           : location.pathname === "/company_detail" ||
                             location.pathname === "/jobdetailpage"

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
-import ChangePassword from "./changepassword";
 import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
+import Setting from "./setting";
 
 function EmployeeHeader() {
   const userType = localStorage.getItem("userType");
@@ -25,7 +25,7 @@ function EmployeeHeader() {
   // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);
   const [showSingUp, setShowSingUp] = useState(false);
-  const [showChangePass, setShowChangePass] = useState(false);
+  const [showSetting, setShowSetting] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /*-- Function to show menu on toggle button --*/
@@ -228,7 +228,7 @@ function EmployeeHeader() {
                   <div>
                     <img
                       className="rounded-circle"
-                      src={profile_photo === null || profile_photo === "null" || profile_photo === undefined || profile_photo === "undefined" ? "image/user.png" : profile_photo}
+                      src={profile_photo === null || profile_photo === "" || profile_photo === undefined || profile_photo === "undefined" ? "image/user.png" : profile_photo}
                       width={50}
                       height={50}
                       alt={""}
@@ -242,16 +242,15 @@ function EmployeeHeader() {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <Link
-                    onClick={() => setShowChangePass(true)}
+                    onClick={() => setShowSetting(true)}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to=""
                   >
                     Settings
                   </Link>
-                  <ChangePassword
-                    show={showChangePass}
-                    close={() => setShowChangePass(false)}
-                  />
+                  <Setting
+                  show={showSetting}
+                  close={()=>setShowSetting(false)}/>
                   <Link
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to={

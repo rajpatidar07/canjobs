@@ -12,7 +12,7 @@ function Response() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("null");
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
 
   /* Function to get the JSON data*/

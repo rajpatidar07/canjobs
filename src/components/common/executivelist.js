@@ -20,10 +20,7 @@ export default function Executivelist({
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setSelectedStatus([
-            ...selectedStatus,
-            { admin_id: Eid },
-          ]);
+          setSelectedStatus([...selectedStatus, { admin_id: Eid }]);
           setExecutiveApiCall(true);
         }
       } catch (err) {
@@ -31,27 +28,35 @@ export default function Executivelist({
       }
     }
   };
+  console.log(executiveData)
   return (
     <div className="card-text row">
-      {(executiveData || []).map((data, index) => {
-        return (
-          <div
-            className={`sub-stage text-capitalize col-md-6`}
-            onClick={() => HandleAddexecutive(data.admin_id, manager_id)}
-            key={index}
-          >
-            <input
-              type="checkbox"
-              className="mx-2"
-              checked={(selectedStatus || []).some(
-                (item) => item.admin_id === data.admin_id
-              )}
-              readOnly
-            />
-            {data.name}
-          </div>
-        );
-      })}
+      {executiveData.length === 0 ? 
+      (
+        <div className="sub-stage col-md-12">
+        <p className="text-center">No Executive Found</p>
+        </div>
+      ):(
+        (executiveData || []).map((data, index) => {
+          return (
+            <div
+              className={`sub-stage text-capitalize col-md-6`}
+              onClick={() => HandleAddexecutive(data.admin_id, manager_id)}
+              key={index}
+            >
+              <input
+                type="checkbox"
+                className="mx-2"
+                checked={(selectedStatus || []).some(
+                  (item) => item.admin_id === data.admin_id
+                )}
+                readOnly
+              />
+              {data.name}
+            </div>
+          );
+        })
+      )  }
     </div>
   );
 }

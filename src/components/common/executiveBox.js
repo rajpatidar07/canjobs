@@ -99,7 +99,8 @@ export default function ExecutiveBox({ data, index }) {
 
           <div
             id={`collapseOne${index}`}
-            // className={`collapse  ${index === activeIndex ? "show" : ""}`}
+            className={`collapse d-none`} 
+            // {/*index === activeIndex ? "show" : ""*/}
             aria-labelledby={`headingOne${index}`}
             data-parent="#accordion"
           >

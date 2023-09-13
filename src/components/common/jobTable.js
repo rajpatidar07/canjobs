@@ -932,7 +932,7 @@ export default function JobTable(props) {
                                             item === undefined ||
                                             item === "undefined" ||
                                             item === null ||
-                                            item === "null"
+                                            item === ""
                                               ? null
                                               : item.job_id === job.job_id
                                           ) ? (
