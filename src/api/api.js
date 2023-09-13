@@ -1791,9 +1791,7 @@ export const ReassignJobTOManager = async (manager_id, job_id) => {
 /*Api to get employee setting */
 export const GetEmployeeSetting = async () => {
   const response = await axios.post(
-    `${API_URL}employee/getEmployeeSetting`,
-
-    {
+    `${API_URL}employee/getEmployeeSetting`,{},{
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
@@ -1805,9 +1803,7 @@ export const GetEmployeeSetting = async () => {
 /*Api to get employer setting */
 export const GetEmployerSetting = async () => {
   const response = await axios.post(
-    `${API_URL}getEmployerSetting`,
-
-    {
+    `${API_URL}getEmployerSetting`,"",{
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
@@ -1817,12 +1813,9 @@ export const GetEmployerSetting = async () => {
   return response.data;
 };
 /*Api to Add permission to employeE*/
-export const EmployeEPermission = async (email) => {
+export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
-    `${API_URL}employee/updateEmployeeSetting`,
-    {
-      email_permission: email,
-    },
+    `${API_URL}employee/updateEmployeeSetting`,data,
     {
       headers: {
         "Content-Type": "application/json",
@@ -1834,12 +1827,10 @@ export const EmployeEPermission = async (email) => {
 };
 
 /*Api to Add permission to employer*/
-export const EmployerPermission = async (email) => {
+export const AddEmployerPermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employer/updateEmployerSetting`,
-    {
-      email_permission: email,
-    },
+    data,
     {
       headers: {
         "Content-Type": "application/json",
