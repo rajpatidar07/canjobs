@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1693820063248,
@@ -32,6 +32,10 @@
                 {
                     "date": 1694516192833,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,11 +32,11 @@\n   /*Function to get the jSon */\r\n   const JsonData = async () => {\r\n     try {\r\n       let Json = await GetFilter();\r\n-      if(Json.data.message ==='No data found'){\r\n-        setJson([])\r\n-      }else{\r\n+      if (Json.data.message === \"No data found\") {\r\n+        setJson([]);\r\n+      } else {\r\n         setJson(Json.data.data);\r\n       }\r\n       setJson(Json.data.data);\r\n     } catch (err) {\r\n@@ -89,14 +89,15 @@\n       setSearchError(\"\");\r\n     }\r\n   };\r\n   /*Skill Json for not having same data */\r\n-  const Skill = Json.Skill\r\n-    ? Json.Skill.filter(\r\n-        (thing, index, self) =>\r\n-          index === self.findIndex((t) => t.value === thing.value)\r\n-      )\r\n-    : [];\r\n+  const Skill =\r\n+    Json && Json.Skill\r\n+      ? Json.Skill.filter(\r\n+          (thing, index, self) =>\r\n+            index === self.findIndex((t) => t.value === thing.value)\r\n+        )\r\n+      : [];\r\n   return (\r\n     <>\r\n       <div\r\n         className={\r\n@@ -177,15 +178,16 @@\n                           }}\r\n                           className=\"text-capitalize form-control\"\r\n                         >\r\n                           <option value=\"\">Job Category</option>\r\n-                          {(Json.Category || []).map((data) => {\r\n-                            return (\r\n-                              <option value={data.id} key={data.id}>\r\n-                                {data.value}\r\n-                              </option>\r\n-                            );\r\n-                          })}\r\n+                          {Json &&\r\n+                            (Json.Category || []).map((data) => {\r\n+                              return (\r\n+                                <option value={data.id} key={data.id}>\r\n+                                  {data.value}\r\n+                                </option>\r\n+                              );\r\n+                            })}\r\n                         </select>\r\n                       </div>\r\n                     </div>\r\n                     <div className=\"col p-1 form_group mb-3\">\r\n"
+                },
+                {
+                    "date": 1694582767650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   const [pageNo, setpageNo] = useState(1);\r\n   /*Filter and search state */\r\n   const [categoryFilterValue, setCategoryFilterValue] = useState(\"\");\r\n   const [SkillFilterValue, setSkillFilterValue] = useState(\r\n-    props ? props.skill : \"\"\r\n+    props ? props.skill : \"null\"\r\n   );\r\n   const [locationFilterValue, setLocationFilterValue] = useState(\"\");\r\n   const [jobSwapFilterValue, setJobSwapFilterValue] = useState(\"\");\r\n   const [search, setSearch] = useState(\"\");\r\n"
                 }
             ],
             "date": 1693820063248,

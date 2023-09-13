@@ -25,7 +25,7 @@ export default function AssignedJobTable(props) {
         "",
         "",
         "",
-        "",
+        "null",
         "",
         currentPage,
         recordsPerPage,

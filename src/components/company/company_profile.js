@@ -58,7 +58,6 @@ function CompanyProfileDetail(props) {
         userData.data.kyc_detail.length === 0 ||
         userData.data.kyc_detail === undefined ||
         userData.data.kyc_detail === "0" ||
-        userData.data.kyc_detail === [] ||
         userData.data.kyc_detail === null
       ) {
         setEmployerKycData("");

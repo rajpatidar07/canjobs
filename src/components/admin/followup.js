@@ -19,7 +19,7 @@ function Followup() {
   const [JobId, setJobId] = useState([]);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
-  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState("null");
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [search, setSearch] = useState("");

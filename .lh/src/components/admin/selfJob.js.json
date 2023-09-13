@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1693820063247,
@@ -40,6 +40,10 @@
                 {
                     "date": 1694516089136,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n       setSearchError(\"\");\r\n     }\r\n   };\r\n   /*Skill Json for not having same data */\r\n-  const Skill = Json.Skill\r\n+  const Skill = Json &&Json.Skill\r\n     ? Json.Skill.filter(\r\n         (thing, index, self) =>\r\n           index === self.findIndex((t) => t.value === thing.value)\r\n       )\r\n"
+                },
+                {
+                    "date": 1694582777811,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   const [JobId, setJobId] = useState([]);\r\n   /*Filter and search state */\r\n   const [categoryFilterValue, setCategoryFilterValue] = useState(\"\");\r\n   const [SkillFilterValue, setSkillFilterValue] = useState(\r\n-    props ? props.skill : \"\"\r\n+    props ? props.skill : \"null\"\r\n   );\r\n   const [locationFilterValue, setLocationFilterValue] = useState(\"\");\r\n   const [jobSwapFilterValue, setJobSwapFilterValue] = useState(\"\");\r\n   const [search, setSearch] = useState(\"\");\r\n"
                 }
             ],
             "date": 1693820063247,
