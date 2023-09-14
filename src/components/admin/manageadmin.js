@@ -75,34 +75,9 @@ function ManageAdmin() {
     }
   };
 
-  /*Get Executive data */
-  const ExecutiveData = async () => {
-    setIsLoading(true);
-    try {
-      const userData = await getallAdminData(
-        "executive",
-        "",
-        currentPage,
-        recordsPerPage,
-        columnName,
-        ""
-      );
-      if (userData.data.length === 0) {
-        setexecutiveData([]);
-        setIsLoading(false);
-      } else {
-        setexecutiveData(userData.data);
-        setIsLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
-  };
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
-    ExecutiveData();
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -182,7 +157,8 @@ function ManageAdmin() {
       let Response = await GetManagerTeam(data.admin_id);
       if (Response.message === "Successfully") {
         setManagerData(data);
-        setManagerExecutive(Response.data.data);
+        setexecutiveData(Response.data.data.filter((item)=>item.parent_id === "0"));
+        setManagerExecutive(Response.data.data.filter((item)=>item.parent_id !== "0"));
         setShowManagerDetailBox(true);
       }
     } catch (err) {
