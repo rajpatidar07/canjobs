@@ -303,7 +303,7 @@ function JobBox({
                               ?
                               name === null ||
                                 name === "" ||
-                                name === "" ||
+                                name === "null" ||
                                 name === undefined ||
                                 name === "undefined" ?
                                 setShowDataForm(true) : OnApplyClick(0, job.job_id)

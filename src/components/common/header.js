@@ -235,6 +235,7 @@ function EmployeeHeader() {
                       src={
                         profile_photo === null ||
                         profile_photo === "" ||
+                        profile_photo === 'null' ||
                         profile_photo === undefined ||
                         profile_photo === "undefined"
                           ? "image/user.png"
@@ -244,7 +245,6 @@ function EmployeeHeader() {
                       height={50}
                       alt={""}
                     />
-                    {/* {name} */}
                   </div>
                   <i className="fas fa-chevron-down heading-default-color ml-6"></i>
                 </Link>

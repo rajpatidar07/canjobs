@@ -153,7 +153,6 @@ export default function Setting(props) {
               to=""
               onClick={() => {
                 setShowChangePass(true);
-                props.close();
               }}
               className="text-gray"
             >

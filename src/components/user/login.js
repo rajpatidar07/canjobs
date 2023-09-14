@@ -29,6 +29,7 @@ export default function EmployeeLoginModal(props) {
   const Close = () => {
     setShowForgotPassword(false);
     setLoading(false);
+    setErrors("");
     props.close();
   };
   const type = localStorage.getItem("linkedin");
@@ -246,7 +247,7 @@ export default function EmployeeLoginModal(props) {
           }
         })
         .catch((err) => {
-          console.log(err.data)
+          console.log(err.data);
           setLoading(false);
         });
     }
@@ -500,7 +501,10 @@ export default function EmployeeLoginModal(props) {
                       <Link
                         to={""}
                         className="font-size-3 text-dodger line-height-reset mb-3"
-                        onClick={() => setShowForgotPassword(true)}
+                        onClick={() => {
+                          setShowForgotPassword(true);
+                          setErrors("");
+                        }}
                       >
                         Forget Password
                       </Link>
@@ -582,6 +586,18 @@ export default function EmployeeLoginModal(props) {
                           ))}
                         </span>
                       )}
+                      {errors.Credentials && (
+                        <span>
+                          {errors.Credentials.map((error) => (
+                            <span
+                              key={error}
+                              className="text-danger font-size-3"
+                            >
+                              {error}
+                            </span>
+                          ))}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group text-center">
                       {loading === true ? (
@@ -611,7 +627,10 @@ export default function EmployeeLoginModal(props) {
                       <Link
                         to=""
                         className="text-primary"
-                        onClick={() => setShowForgotPassword(false)}
+                        onClick={() => {
+                          setShowForgotPassword(false);
+                          setErrors("");
+                        }}
                       >
                         Login
                       </Link>
