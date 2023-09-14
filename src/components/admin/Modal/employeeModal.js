@@ -19,7 +19,7 @@ export default function EmployeeModal(props) {
             <div className="bg-white rounded h-100 px-11  overflow-y-hidden">
                 <h5 className='text-center mt-5'>Matching Candidates</h5>
                 <Employee
-                    skill={props.data.keyskill}
+                    skill={"props.data.keyskill"}
                     job_id={props.data.job_id} />
             </div>
         </Modal>)

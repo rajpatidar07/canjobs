@@ -756,7 +756,7 @@ export const GetAllJobs = async (
       filter_reserved_employee: reserved,
       // employee_skills: employeeSkill,
       filter_company_id: cid,
-      manager_id:manager_id
+      manager_id: manager_id,
     },
     {
       headers: {
@@ -1741,7 +1741,7 @@ export const GetManagerTeam = async (manager_id) => {
   const response = await axios.post(
     `${API_URL}manager/getTeam`,
     {
-      manager_id:manager_id
+      manager_id: manager_id,
     },
     {
       headers: {
@@ -1791,7 +1791,9 @@ export const ReassignJobTOManager = async (manager_id, job_id) => {
 /*Api to get employee setting */
 export const GetEmployeeSetting = async () => {
   const response = await axios.post(
-    `${API_URL}employee/getEmployeeSetting`,{},{
+    `${API_URL}employee/getEmployeeSetting`,
+    {},
+    {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
@@ -1802,20 +1804,19 @@ export const GetEmployeeSetting = async () => {
 };
 /*Api to get employer setting */
 export const GetEmployerSetting = async () => {
-  const response = await axios.post(
-    `${API_URL}getEmployerSetting`,"",{
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.post(`${API_URL}getEmployerSetting`, "", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
 /*Api to Add permission to employeE*/
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
-    `${API_URL}employee/updateEmployeeSetting`,data,
+    `${API_URL}employee/updateEmployeeSetting`,
+    {email_permission : data},
     {
       headers: {
         "Content-Type": "application/json",
@@ -1830,7 +1831,7 @@ export const AddEmployeePermission = async (data) => {
 export const AddEmployerPermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employer/updateEmployerSetting`,
-    data,
+    {email_permission : data},
     {
       headers: {
         "Content-Type": "application/json",

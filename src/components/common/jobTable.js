@@ -563,7 +563,7 @@ export default function JobTable(props) {
                                 }}
                                 className="text-dark"
                               >
-                                {job.role_category} /{props.selfJob}
+                                {job.role_category} /
                                 {props.selfJob === "yes"
                                   ? job.applied_by_self
                                   : job.applied_by_admin}

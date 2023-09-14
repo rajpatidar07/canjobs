@@ -10,15 +10,15 @@ import {
   AddEmployerPermission,
 } from "../../api/api";
 import { toast } from "react-toastify";
+
 export default function Setting(props) {
   const [showChangePass, setShowChangePass] = useState(false);
-  // const [permission, setPermission] = useState([]);
   const [apiCall, setApiCall] = useState(false);
   const [lmia, setLmia] = useState(0);
   const [visa, setVisa] = useState(0);
   const [interview, setInterview] = useState(0);
   let userType = localStorage.getItem("userType");
-  /*Function to get permission */
+
   const GetPermissionData = async () => {
     try {
       let Response;
@@ -27,13 +27,14 @@ export default function Setting(props) {
       } else {
         Response = await GetEmployerSetting();
       }
-      console.log(Response.data);
+      setLmia(JSON.parse(Response.data.email_permission).lmia);
+      setVisa(JSON.parse(Response.data.email_permission).visa);
+      setInterview(JSON.parse(Response.data.email_permission).interview);
     } catch (err) {
       console.log(err);
     }
   };
 
-  /*Render method */
   useEffect(() => {
     GetPermissionData();
     if (apiCall === true) {
@@ -41,13 +42,12 @@ export default function Setting(props) {
     }
   }, [apiCall]);
 
-  /*Data to send in the api */
   let Data = {
     lmia: lmia,
     visa: visa,
     interview: interview,
   };
-  /*Function to give permisssion */
+
   const AllowPermission = async () => {
     try {
       let Response;
@@ -67,6 +67,7 @@ export default function Setting(props) {
       console.log(err);
     }
   };
+
   return (
     <Modal
       show={props.show}
@@ -85,66 +86,68 @@ export default function Setting(props) {
       <div className="bg-white rounded h-100 px-11 pt-5">
         <h5 className="text-center">Settings</h5>
         <ul className="list-unstyled">
-          <li className="px-2 py-3 font-size-4 font-weight-light flex-y-center">
+          <li className="px-2 py-3 font-size-3 font-weight-light ">
             <div className="custom-control custom-switch">
               <label
                 className="custom-control-label"
                 htmlFor="customSwitch1"
                 onClick={() => {
                   AllowPermission();
-                  setLmia(lmia === 0 ? 1 : 0);
+                  setLmia((prevLmia) => (prevLmia === 0 ? 1 : 0));
                 }}
               >
-                Lmia notification
+                Lmia notification {lmia}
               </label>
               <input
                 type="checkbox"
                 className="custom-control-input"
                 id="customSwitch1"
-                checked={lmia === 1} // Assuming lima is 0 or 1
-                // onChange={() => setLmia(lmia === 0 ? 1 : 0)}
+                checked={lmia === 1||lmia === '1'}
+                onChange={() => {}}
               />
             </div>
           </li>
-          <li className="px-2 py-3 font-size-4 font-weight-light flex-y-center">
+          <li className="px-2 py-3 font-size-3 font-weight-light ">
             <div className="custom-control custom-switch">
               <label
                 className="custom-control-label"
                 htmlFor="customSwitch2"
                 onClick={() => {
                   AllowPermission();
-                  setVisa(visa === 0 ? 1 : 0);
+                  setVisa((prevVisa) => (prevVisa === 0 ? 1 : 0));
                 }}
               >
-                Visa notification
+                Visa notification {visa}
               </label>
               <input
                 type="checkbox"
                 className="custom-control-input"
                 id="customSwitch2"
-                checked={visa === 1} // Assuming visa is 0 or 1
-                // onChange={() => setVisa(visa ===  0 ? 1 : 0)}
+                checked={visa === 1||visa === '1'}
+                onChange={() => {}}
               />
             </div>
           </li>
-          <li className="px-2 py-3 font-size-4 font-weight-light flex-y-center">
+          <li className="px-2 py-3 font-size-3 font-weight-light ">
             <div className="custom-control custom-switch">
               <label
                 className="custom-control-label"
                 htmlFor="customSwitch3"
                 onClick={() => {
                   AllowPermission();
-                  setInterview(interview === 0 ? 1 : 0);
+                  setInterview((prevInterview) =>
+                    prevInterview === 0 ? 1 : 0
+                  );
                 }}
               >
-                Interview notification
+                Interview notification {interview}
               </label>
               <input
                 type="checkbox"
                 className="custom-control-input"
                 id="customSwitch3"
-                checked={interview === 1} // Assuming interview is 0 or 1
-                // onChange={() => setInterview(interview ===  0 ? 1 : 0)}
+                checked={interview === 1||interview === '1'}
+                onChange={() => {}}
               />
             </div>
           </li>
