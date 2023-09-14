@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 import ChangePassword from "./changepassword";
 import { RiLockPasswordFill } from "react-icons/ri";
 import {
@@ -10,7 +9,7 @@ import {
   AddEmployerPermission,
 } from "../../api/api";
 import { toast } from "react-toastify";
-
+import { Link } from "react-router-dom";
 export default function Setting(props) {
   const [showChangePass, setShowChangePass] = useState(false);
   const [apiCall, setApiCall] = useState(false);
@@ -19,6 +18,7 @@ export default function Setting(props) {
   const [interview, setInterview] = useState(0);
   let userType = localStorage.getItem("userType");
 
+  /*Function to get the permision data */
   const GetPermissionData = async () => {
     try {
       let Response;
@@ -27,37 +27,64 @@ export default function Setting(props) {
       } else {
         Response = await GetEmployerSetting();
       }
-      setLmia(JSON.parse(Response.data.email_permission).lmia);
-      setVisa(JSON.parse(Response.data.email_permission).visa);
-      setInterview(JSON.parse(Response.data.email_permission).interview);
+      const permissions = JSON.parse(Response.data.email_permission);
+      setLmia(permissions.lmia);
+      setVisa(permissions.visa);
+      setInterview(permissions.interview);
     } catch (err) {
       console.log(err);
     }
   };
 
+  /*Render method */
   useEffect(() => {
     GetPermissionData();
-    if (apiCall === true) {
+    if (apiCall) {
       setApiCall(false);
     }
   }, [apiCall]);
 
-  let Data = {
-    lmia: lmia,
-    visa: visa,
-    interview: interview,
-  };
+  /*Function to grant the permission */
+  const togglePermission = async (permissionName) => {
+    //condition to switch the button accordingly
+    const updatedPermissions = {
+      lmia: permissionName === "lmia" ? (lmia === 0 ? 1 : 0) : lmia,
+      visa: permissionName === "visa" ? (visa === 0 ? 1 : 0) : visa,
+      interview:
+        permissionName === "interview" ? (interview === 0 ? 1 : 0) : interview,
+    };
 
-  const AllowPermission = async () => {
     try {
       let Response;
       if (userType === "user") {
-        Response = await AddEmployeePermission(Data);
+        Response = await AddEmployeePermission(updatedPermissions);
       } else {
-        Response = await AddEmployerPermission(Data);
+        Response = await AddEmployerPermission(updatedPermissions);
       }
-      if (Response.message === "successfully") {
+      // conditions for the reponse toaster message
+      if (
+        Response.message === "successfully" &&
+        (permissionName === "lmia"
+          ? updatedPermissions.lmia === 1
+          : permissionName === "visa"
+          ? updatedPermissions.visa === 1
+          : updatedPermissions.interview === 1)
+      ) {
         toast.success("Permission granted successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+      if (
+        Response.message === "successfully" &&
+        (permissionName === "lmia"
+          ? updatedPermissions.lmia === 0
+          : permissionName === "visa"
+          ? updatedPermissions.visa === 0
+          : updatedPermissions.interview === 0)
+      ) {
+        toast.error("Permission Denay successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -69,97 +96,67 @@ export default function Setting(props) {
   };
 
   return (
-    <Modal
-      show={props.show}
-      size="sm"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <button
-        type="button"
-        className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-        data-dismiss="modal"
+    <Modal show={props.show} size="md" centered>
+      <Button
+        variant="light"
+        className="bg-white circle-32 btn-reset pos-abs-tr mt-md-n6 mr-lg-n6 z-index-supper"
         onClick={props.close}
       >
         <i className="fas fa-times"></i>
-      </button>
-      <div className="bg-white rounded h-100 px-11 pt-5">
-        <h5 className="text-center">Settings</h5>
+      </Button>
+      <div className="bg-white rounded p-5">
+        <h4 className="text-center mb-4">Settings</h4>
+        <h6 className="text-start mt-4 text-grey">Email Preferences</h6>
         <ul className="list-unstyled">
-          <li className="px-2 py-3 font-size-3 font-weight-light ">
+          <li className="mb-3">
             <div className="custom-control custom-switch">
-              <label
-                className="custom-control-label"
-                htmlFor="customSwitch1"
-                onClick={() => {
-                  AllowPermission();
-                  setLmia((prevLmia) => (prevLmia === 0 ? 1 : 0));
-                }}
-              >
-                Lmia notification {lmia}
-              </label>
               <input
                 type="checkbox"
                 className="custom-control-input"
                 id="customSwitch1"
-                checked={lmia === 1||lmia === '1'}
-                onChange={() => {}}
+                checked={lmia === 0 ? false : true}
+                onChange={() => togglePermission("lmia")}
               />
+              <label className="custom-control-label" htmlFor="customSwitch1">
+                Lmia notification
+              </label>
             </div>
           </li>
-          <li className="px-2 py-3 font-size-3 font-weight-light ">
+          <li className="mb-3">
             <div className="custom-control custom-switch">
-              <label
-                className="custom-control-label"
-                htmlFor="customSwitch2"
-                onClick={() => {
-                  AllowPermission();
-                  setVisa((prevVisa) => (prevVisa === 0 ? 1 : 0));
-                }}
-              >
-                Visa notification {visa}
-              </label>
               <input
                 type="checkbox"
                 className="custom-control-input"
                 id="customSwitch2"
-                checked={visa === 1||visa === '1'}
-                onChange={() => {}}
+                checked={visa === 0 ? false : true}
+                onChange={() => togglePermission("visa")}
               />
+              <label className="custom-control-label" htmlFor="customSwitch2">
+                Visa notification
+              </label>
             </div>
           </li>
-          <li className="px-2 py-3 font-size-3 font-weight-light ">
+          <li className="mb-3">
             <div className="custom-control custom-switch">
-              <label
-                className="custom-control-label"
-                htmlFor="customSwitch3"
-                onClick={() => {
-                  AllowPermission();
-                  setInterview((prevInterview) =>
-                    prevInterview === 0 ? 1 : 0
-                  );
-                }}
-              >
-                Interview notification {interview}
-              </label>
               <input
                 type="checkbox"
                 className="custom-control-input"
                 id="customSwitch3"
-                checked={interview === 1||interview === '1'}
-                onChange={() => {}}
+                checked={interview === 0 ? false : true}
+                onChange={() => togglePermission("interview")}
               />
+              <label className="custom-control-label" htmlFor="customSwitch3">
+                Interview notification
+              </label>
             </div>
           </li>
-          <li className="px-2 py-3 font-size-4 font-weight-light flex-y-center">
+          <li>
             <Link
               to=""
-              onClick={() => {
-                setShowChangePass(true);
-              }}
-              className="text-gray"
+              onClick={() => setShowChangePass(true)}
+              className="btn btn-primary  d-flex align-items-center"
             >
-              <RiLockPasswordFill /> Change Password
+              <RiLockPasswordFill className="mr-2" /> Change Password
             </Link>
             {showChangePass && (
               <ChangePassword
