@@ -131,8 +131,7 @@ function Education(props) {
       setApiCall(false);
     }
     if (
-      props.employeeId === undefined ||
-      educationData.length === 0 ||
+      (props.employeeId === undefined && educationData.length === 0) ||
       deleteAlert === true
     ) {
       setState(initialFormState);
@@ -235,7 +234,10 @@ function Education(props) {
             <h5 className="text-center pt-2 mb-7">Education Details</h5>
             <div className="row mb-5">
               {(educationData || []).map((education) => (
-                <div className="col-12" key={education.education_id}>
+                <div
+                  className="col-12 text-capitalize"
+                  key={education.education_id}
+                >
                   <div className=" border m-1 rounded">
                     <div className="py-2 px-4 d-flex align-items-center flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box p-0">
@@ -261,7 +263,13 @@ function Education(props) {
                           <span className="font-size-4 text-gray w-100">
                             {education.passing_year}
                           </span>
-                          <span className="font-size-3 text-gray w-100">
+                          <span
+                            className={`${
+                              education.institute_location === null
+                                ? "d-none"
+                                : ""
+                            } font-size-3 text-gray w-100`}
+                          >
                             <span className="mr-4">
                               <img
                                 src="image/svg/icon-loaction-pin-black.svg"

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1693195309533,
@@ -88,6 +88,10 @@
                 {
                     "date": 1694515276547,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,14 +47,13 @@\n \n   /*Function to get the jSon */\n   // const JsonData = async () => {\n   //     let Json = await GetFilter();\n-      if(Json.data.message ==='No data found'){\n-        setJson([])\n-      }else{\n-        setJson(Json.data.data);\n-      }\n-  //     setJson(Json.data.data);\n+      // if(Json.data.message ==='No data found'){\n+      //   setJson([])\n+      // }else{\n+      //   setJson(Json.data.data);\n+      // }\n   // };\n   //   if (apiCall === true && showChangeJobModal === false && changeJob === true && props.setApiCall) {\n   //     props.setApiCall(true)\n   //   }\n"
+                },
+                {
+                    "date": 1694596424782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -563,9 +563,9 @@\n                                         {/* {JSON.stringify(res.profile_photo)} */}\n                                         {res.profile_photo === null ||\n                                         res.profile_photo === undefined ||\n                                         res.profile_photo === \"undefined\" ||\n-                                        res.profile_photo === \"null\" ||\n+                                        res.profile_photo === \"\" ||\n                                         res.profile_photo === \"Null\" ? (\n                                           <img\n                                             src=\"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png\"\n                                             alt=\"\"\n"
                 }
             ],
             "date": 1693195309533,

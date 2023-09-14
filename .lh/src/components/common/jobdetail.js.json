@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1693200571656,
@@ -24,6 +24,10 @@
                 {
                     "date": 1693820064402,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -136,9 +136,9 @@\n                   to={\"\"}\n                   onClick={() => OnApplyClick(3)}\n                   className=\"btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5\"\n                 >\n-                  <i className=\"icon icon-bookmark-2 font-weight-bold mr-4 font-size-4\"></i>{\" \"}\n+                  <i className=\"icon icon-bookmark-2 font-weight-bold mr-4 font-size-4\"></i>\n                   Save job\n                 </button> */}\n                     </div>\n                   </div>\n@@ -165,9 +165,9 @@\n                           <img src=\"image/svg/icon-dolor.svg\" alt=\"\" />\n                         </div>\n                         <p className=\"font-weight-semibold font-size-5 text-black-2 mb-0\">\n                           {jobDetatilsData.salary}\n-                        </p>{\" \"}\n+                        </p>\n                       </>\n                     </div>\n                   </div>\n                 ) : null}\n"
+                },
+                {
+                    "date": 1694596424786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -125,9 +125,9 @@\n                   <div className=\"col-12\">\n                     <div className=\"card-btn-group\">\n                       <button\n                         to={\"\"}\n-                        onClick={token && (name === null || name === \"null\") ? () => navigate(\"/profile\") : () => OnApplyClick(0)}\n+                        onClick={token && (name === null || name === \"\") ? () => navigate(\"/profile\") : () => OnApplyClick(0)}\n                         disabled={jobDetatilsData.is_applied === \"0\" ? false : true}\n                         className={jobDetatilsData.is_applied === \"0\" ? \"btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5\" : \"btn btn-info text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5\"}\n                       >\n                         {jobDetatilsData.is_applied === \"0\" ? \"Apply to this job\" : \"Already Applied\"}\n"
                 }
             ],
             "date": 1693200571656,

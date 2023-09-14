@@ -84,8 +84,8 @@ const UserProfile = (props) => {
     UserData();
     if (apiCall === true) {
       setApiCall(false);
-      // if (PersonalDetail.name !== (undefined || "undefined" || null || "null")
-      //   || PersonalDetail.profile_photo !== (undefined || "undefined" || null || "null")) {
+      // if (PersonalDetail.name !== (undefined || "undefined" || null || "")
+      //   || PersonalDetail.profile_photo !== (undefined || "undefined" || null || "")) {
       //   localStorage.setItem("profile_photo", PersonalDetail.profile_photo)
       //   localStorage.setItem("name", PersonalDetail.name)
       // }
@@ -127,7 +127,7 @@ const UserProfile = (props) => {
 
       <div className="bg-default-2 mt-5">
         <div className="container-fluid p-0 pb-10">
-          {name === null || name === "null" ? "<h4>Complete profile</h4>" : ""}
+          {name === null || name === "" ? "<h4>Complete profile</h4>" : ""}
           {isLoading ? (
             <div className="table-responsive main_table_div">
               <Loader />

@@ -166,8 +166,8 @@ const NewUserProfile = (props) => {
     getLimaOfuser();
     if (apiCall === true) {
       setApiCall(false);
-      // if (PersonalDetail.name !== (undefined || "undefined" || null || "null")
-      //   || PersonalDetail.profile_photo !== (undefined || "undefined" || null || "null")) {
+      // if (PersonalDetail.name !== (undefined || "undefined" || null || "")
+      //   || PersonalDetail.profile_photo !== (undefined || "undefined" || null || "")) {
       //   localStorage.setItem("profile_photo", PersonalDetail.profile_photo)
       //   localStorage.setItem("name", PersonalDetail.name)
       // }
@@ -254,7 +254,7 @@ const NewUserProfile = (props) => {
       >
         <ToastContainer />
         <div className="container-fluid">
-          {(name === null || name === "null") && user_type === "user" ? (
+          {(name === null || name === "") && user_type === "user" ? (
             <h4>Complete profile</h4>
           ) : (
             ""

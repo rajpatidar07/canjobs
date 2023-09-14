@@ -25,7 +25,7 @@ export default function AssignedJobTable(props) {
         "",
         "",
         "",
-        "null",
+        "",
         "",
         currentPage,
         recordsPerPage,
@@ -345,7 +345,7 @@ export default function AssignedJobTable(props) {
                                           item === undefined ||
                                           item === "undefined" ||
                                           item === null ||
-                                          item === "null"
+                                          item === ""
                                             ? null
                                             : item.job_id === job.job_id
                                         ) ? (

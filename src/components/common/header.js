@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
-import ChangePassword from "./changepassword";
 import EmployeeLoginModal from "../user/login";
 import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
+import Setting from "./setting";
 
 function EmployeeHeader() {
   const userType = localStorage.getItem("userType");
@@ -25,7 +25,7 @@ function EmployeeHeader() {
   // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);
   const [showSingUp, setShowSingUp] = useState(false);
-  const [showChangePass, setShowChangePass] = useState(false);
+  const [showSetting, setShowSetting] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   /*-- Function to show menu on toggle button --*/
@@ -64,11 +64,15 @@ function EmployeeHeader() {
     profile_photo = localStorage.getItem("profile_photo");
     // name = localStorage.getItem("name");
     // condition to remove the class from the body when we are not at the admin modual
-    // eslint-disable-next-line 
-    if (window.location.pathname === "/" || window.location.pathname === "/jobs" && localStorage.getItem("userType") === "admin") {
+    // eslint-disable-next-line
+    if (
+      window.location.pathname === "/" ||
+      (window.location.pathname === "/jobs" &&
+        localStorage.getItem("userType") === "admin")
+    ) {
       document.body.classList.remove("admin_body");
     }
-  }, [localStorage.getItem("profile_photo")])
+  }, [localStorage.getItem("profile_photo")]);
 
   return (
     <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
@@ -228,7 +232,14 @@ function EmployeeHeader() {
                   <div>
                     <img
                       className="rounded-circle"
-                      src={profile_photo === null || profile_photo === "null" || profile_photo === undefined || profile_photo === "undefined" ? "image/user.png" : profile_photo}
+                      src={
+                        profile_photo === null ||
+                        profile_photo === "" ||
+                        profile_photo === undefined ||
+                        profile_photo === "undefined"
+                          ? "image/user.png"
+                          : profile_photo
+                      }
                       width={50}
                       height={50}
                       alt={""}
@@ -242,26 +253,32 @@ function EmployeeHeader() {
                   aria-labelledby="dropdownMenuLink"
                 >
                   <Link
-                    onClick={() => setShowChangePass(true)}
+                    onClick={() => setShowSetting(true)}
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to=""
                   >
                     Settings
                   </Link>
-                  <ChangePassword
-                    show={showChangePass}
-                    close={() => setShowChangePass(false)}
-                  />
+                  {showSetting && (
+                    <Setting
+                      show={showSetting}
+                      close={() => setShowSetting(false)}
+                    />
+                  )}
                   <Link
                     className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                     to={
                       userType === "user"
                         ? `/${employee_id}`
                         : userType === "company"
-                          ? "/company_detail"
-                          : null
+                        ? "/company_detail"
+                        : null
                     }
-                    onClick={userType === "company" ? () => localStorage.setItem("company_id", company_id) : null}
+                    onClick={
+                      userType === "company"
+                        ? () => localStorage.setItem("company_id", company_id)
+                        : null
+                    }
                   >
                     Profile
                   </Link>

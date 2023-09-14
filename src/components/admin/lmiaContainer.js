@@ -20,7 +20,7 @@ function LimaContainer(props) {
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState(
-    props ? props.skill : "null"
+    props ? props.skill : ""
   );
   const [locationFilterValue, setLocationFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");

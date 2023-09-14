@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1693820063247,
@@ -44,6 +44,10 @@
                 {
                     "date": 1694582777811,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   const [JobId, setJobId] = useState([]);\r\n   /*Filter and search state */\r\n   const [categoryFilterValue, setCategoryFilterValue] = useState(\"\");\r\n   const [SkillFilterValue, setSkillFilterValue] = useState(\r\n-    props ? props.skill : \"\"\r\n+    props ? props.skill : \"null\"\r\n   );\r\n   const [locationFilterValue, setLocationFilterValue] = useState(\"\");\r\n   const [jobSwapFilterValue, setJobSwapFilterValue] = useState(\"\");\r\n   const [search, setSearch] = useState(\"\");\r\n"
+                },
+                {
+                    "date": 1694596424499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   const [JobId, setJobId] = useState([]);\r\n   /*Filter and search state */\r\n   const [categoryFilterValue, setCategoryFilterValue] = useState(\"\");\r\n   const [SkillFilterValue, setSkillFilterValue] = useState(\r\n-    props ? props.skill : \"null\"\r\n+    props ? props.skill : \"\"\r\n   );\r\n   const [locationFilterValue, setLocationFilterValue] = useState(\"\");\r\n   const [jobSwapFilterValue, setJobSwapFilterValue] = useState(\"\");\r\n   const [search, setSearch] = useState(\"\");\r\n@@ -32,16 +32,16 @@\n   /*Function to get the jSon */\r\n   const JsonData = async () => {\r\n     try {\r\n       let Json = await GetFilter();\r\n-      if(Json.data.message ==='No data found'){\r\n-        setJson([])\r\n-      }else{\r\n+      if (Json.data.message === \"No data found\") {\r\n+        setJson([]);\r\n+      } else {\r\n         setJson(Json.data.data);\r\n       }\r\n-      if(Json.data.message ==='No data found'){\r\n-        setJson([])\r\n-      }else{\r\n+      if (Json.data.message === \"No data found\") {\r\n+        setJson([]);\r\n+      } else {\r\n         setJson(Json.data.data);\r\n       }\r\n     } catch (err) {\r\n       console.log(err);\r\n@@ -93,14 +93,15 @@\n       setSearchError(\"\");\r\n     }\r\n   };\r\n   /*Skill Json for not having same data */\r\n-  const Skill = Json &&Json.Skill\r\n-    ? Json.Skill.filter(\r\n-        (thing, index, self) =>\r\n-          index === self.findIndex((t) => t.value === thing.value)\r\n-      )\r\n-    : [];\r\n+  const Skill =\r\n+    Json && Json.Skill\r\n+      ? Json.Skill.filter(\r\n+          (thing, index, self) =>\r\n+            index === self.findIndex((t) => t.value === thing.value)\r\n+        )\r\n+      : [];\r\n   return (\r\n     <>\r\n       <div\r\n         className={\r\n"
                 }
             ],
             "date": 1693820063247,

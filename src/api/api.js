@@ -1788,3 +1788,55 @@ export const ReassignJobTOManager = async (manager_id, job_id) => {
   );
   return response.data;
 };
+/*Api to get employee setting */
+export const GetEmployeeSetting = async () => {
+  const response = await axios.post(
+    `${API_URL}employee/getEmployeeSetting`,{},{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to get employer setting */
+export const GetEmployerSetting = async () => {
+  const response = await axios.post(
+    `${API_URL}getEmployerSetting`,"",{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to Add permission to employeE*/
+export const AddEmployeePermission = async (data) => {
+  const response = await axios.put(
+    `${API_URL}employee/updateEmployeeSetting`,data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Api to Add permission to employer*/
+export const AddEmployerPermission = async (data) => {
+  const response = await axios.put(
+    `${API_URL}employer/updateEmployerSetting`,
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};

@@ -31,7 +31,7 @@ function Addfollowup(props) {
         userData.data === undefined||
         userData.data === "undefined"||
         userData.data === ""||
-        userData.data === "null"||
+        userData.data === ""||
         userData.data.length === 0 ||
         props.employee_id === "" ||
         props.employee_id === undefined

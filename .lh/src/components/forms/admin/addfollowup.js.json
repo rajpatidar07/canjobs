@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1692955359603,
@@ -40,6 +40,10 @@
                 {
                     "date": 1693820064888,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -131,9 +131,9 @@\n               </div> : (response || []).map((res) => (\n                 <div className=\"single_note mb-5\" key={res.id}>\n                   <div className=\"d-flex justify-content-between\">\n                     <i className=\"font-size-3\">\n-                      Created on:{\" \"}\n+                      Created on:\n                       {moment(res.created_at).format(\"Do MMM YYYY, h:mm:ss a\")}\n                     </i>\n                   </div>\n                   <div className=\"card p-5\">\n"
+                },
+                {
+                    "date": 1694596424835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n         userData.data === null ||\n         userData.data === undefined||\n         userData.data === \"undefined\"||\n         userData.data === \"\"||\n-        userData.data === \"null\"||\n+        userData.data === \"\"||\n         userData.data.length === 0 ||\n         props.employee_id === \"\" ||\n         props.employee_id === undefined\n       ) {\n"
                 }
             ],
             "date": 1692955359603,
