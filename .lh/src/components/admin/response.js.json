@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 37,
+            "activePatchIndex": 38,
             "patches": [
                 {
                     "date": 1692954532187,
@@ -156,6 +156,10 @@
                 {
                     "date": 1694514932465,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,13 @@\n   /*Function to get the jSon */\n   const JsonData = async () => {\n     try {\n       let Json = await GetFilter();\n+      if(Json.data.message ==='No data found'){\n+        setJson([])\n+      }else{\n+        setJson(Json.data.data);\n+      }\n       setJson(Json.data.data);\n     } catch (err) {\n       console.log(err);\n     }\n"
+                },
+                {
+                    "date": 1694680487296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n         props.filter_by_time,\n         limiaFilterValue,\n         props.status,\n         props.employee_id,\n-        props.response === \"lmia\" ? \"1\" : \"\"\n+        props.response === \"lmia\" ? \"1\" : \"0\"\n       );\n       if (userData.data.data.length === 0) {\n         setResData([]);\n         setResponseData([]);\n"
                 }
             ],
             "date": 1692954532187,
