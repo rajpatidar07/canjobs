@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { EmployeeSignUp, SendOtp, LinkedSignup, SocialLogin } from "../../api/api";
+import {
+  EmployeeSignUp,
+  SendOtp,
+  LinkedSignup,
+  SocialLogin,
+} from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -16,8 +21,8 @@ export default function EmployeeSignupModal(props) {
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
   // let [facebook, setFacebook] = useState(false);
-  const [searchParams] = useSearchParams()
-  let code = searchParams.get("code")
+  const [searchParams] = useSearchParams();
+  let code = searchParams.get("code");
   let navigate = useNavigate();
   let i = 0;
   let encoded;
@@ -41,18 +46,18 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     password: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-            value
-          )
-            ? null
-            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              value
+            )
+          ? null
+          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     resume: [
       (value) => (value === "" || value === null ? "Resume is required" : null),
@@ -84,8 +89,8 @@ export default function EmployeeSignupModal(props) {
             setErrors({ ...errors, otp: "Invalid Otp" });
           }
         } catch (err) {
-         console.log(err) 
-          setLoading(false)
+          console.log(err);
+          setLoading(false);
         }
       } else {
         setLoading(false);
@@ -105,7 +110,7 @@ export default function EmployeeSignupModal(props) {
           setLoading(false);
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
         setLoading(false);
       }
     }
@@ -158,51 +163,73 @@ export default function EmployeeSignupModal(props) {
   // });
   // console.log(i , "code =>" , code);
   const handleLinkedInLogin = () => {
-    const clientId = '78mhwjaumkvtbm';
-    const redirectUri = 'http://localhost:3000/';
-    const scope = 'r_liteprofile r_emailaddress w_member_social profile email openid';
+    const clientId = "78mhwjaumkvtbm";
+    const redirectUri = "http://localhost:3000/";
+    const scope =
+      "r_liteprofile r_emailaddress w_member_social profile email openid";
 
-    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
-
-
+    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&scope=${encodeURIComponent(scope)}`;
   };
   // console.log(type,(code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 3 && type === "employeeSignup");
   useEffect(() => {
-    i = i + 3
-    if ((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 3 && type === "employeeSignup") {
+    i = i + 3;
+    if (
+      (code !== "" ||
+        code !== undefined ||
+        code !== "undefined" ||
+        code !== null) &&
+      i === 3 &&
+      type === "employeeSignup"
+    ) {
       const response = LinkedSignup(code, type);
-      response.then((res) => {
-        let decode = JSON.parse(res.data)
-        if (res.data.email_verified === true) {
-          try {
-            let data = SocialLogin(res.data.sub, res.data.email, res.data.name, res.data.picture, "Linkedin");
-            console.log(data);
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("userType", "user");
-            localStorage.setItem("employee_id", data.employee_id);
-            localStorage.setItem("profile_photo", data.profile_photo);
-            toast.success("Logged In Successfully", {
+      response
+        .then((res) => {
+          let decode = JSON.parse(res.data);
+          if (res.data.email_verified === true) {
+            try {
+              let data = SocialLogin(
+                res.data.sub,
+                res.data.email,
+                res.data.name,
+                res.data.picture,
+                "Linkedin"
+              );
+              console.log(data);
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("userType", "user");
+              localStorage.setItem("employee_id", data.employee_id);
+              localStorage.setItem("profile_photo", data.profile_photo);
+              toast.success("Logged In Successfully", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+              props.close();
+              navigate("/");
+              window.location.reload();
+            } catch (err) {
+              console.log(err);
+            }
+          }
+          if (
+            res.data.message ===
+              "The token used in the request has been revoked by the user" ||
+            decode.error_description ===
+              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+          ) {
+            toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            props.close();
             navigate("/");
-            window.location.reload();
-          } catch (err) {
-           console.log(err)
           }
-        } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
-          toast.error("Token Expired", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          navigate("/");
-        }
-      }).catch((err) => {
-        console.log(err.data);
-      })
+        })
+        .catch((err) => {
+          console.log(err.data);
+        });
     }
-  }, [])
+  }, []);
 
   /*FUnctiom to Sign Up with facebook */
   // const responseFacebook = async (response) => {
@@ -223,7 +250,7 @@ export default function EmployeeSignupModal(props) {
   //       navigate("/");
   //       window.location.reload();
   //     } catch (err) {
-  //      console.log(err) 
+  //      console.log(err)
   //     }
   //   }
   // }
@@ -268,6 +295,7 @@ export default function EmployeeSignupModal(props) {
               setState(initialFormState);
               setErrors("");
               props.close();
+              setSingUpSuccess()
             }}
           >
             <i className="fas fa-times"></i>
@@ -322,12 +350,15 @@ export default function EmployeeSignupModal(props) {
                     {/* SOCIAL MEDIA LINK BUTTONS */}
                     <div className="row">
                       <div className="col-4 col-xs-12">
-
-                        <button onClick={handleLinkedInLogin}
-                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"><i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
+                        <button
+                          onClick={handleLinkedInLogin}
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"
+                        >
+                          <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from LinkedIn
-                          </span></button>
+                          </span>
+                        </button>
                       </div>
                       {/* <div className="col-4 col-xs-12">
                         <Link
@@ -488,7 +519,7 @@ export default function EmployeeSignupModal(props) {
                           <div className="position-relative">
                             <input
                               type="number"
-min={0}
+                              min={0}
                               value={state.otp || ""}
                               onChange={onInputChange}
                               maxLength={6}
@@ -577,7 +608,10 @@ min={0}
                         <Link
                           to=""
                           className="text-primary"
-                          onClick={props.loginClick}
+                          onClick={() => {
+                            props.loginClick();
+                            setSingUpSuccess();
+                          }}
                         >
                           Login
                         </Link>

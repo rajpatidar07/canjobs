@@ -28,7 +28,6 @@ export default function Executivelist({
       }
     }
   };
-  console.log(executiveData)
   return (
     <div className="card-text row">
       {executiveData.length === 0 ? 

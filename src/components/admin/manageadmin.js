@@ -374,7 +374,7 @@ function ManageAdmin() {
                             addTeamListShow === true ? "Cancel" : "Add Team"
                           }
                         >
-                          {addTeamListShow === true ? "Cancel" : "Add Task"}
+                          {addTeamListShow === true ? "Cancel" : "Add Team"}
                         </CustomButton>
                       </div>
                     </div>

@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useValidation from "../common/useValidation";
-import { EmployerLogin, EmployerForgotPassword, LinkedInLoginEmployer, SocialCompanyLogin } from "../../api/api";
+import {
+  EmployerLogin,
+  EmployerForgotPassword,
+  LinkedInLoginEmployer,
+  SocialCompanyLogin,
+} from "../../api/api";
 import { toast } from "react-toastify";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
@@ -16,8 +21,8 @@ export default function CompanyLogin(props) {
   let Navigate = useNavigate();
   // let [facebook, setFacebook] = useState(false);
   let i = 0;
-  const [searchParams] = useSearchParams()
-  let code = searchParams.get("code")
+  const [searchParams] = useSearchParams();
+  let code = searchParams.get("code");
   if (props.show === true) {
     localStorage.setItem("linkedin", "employerLogin");
   }
@@ -27,7 +32,7 @@ export default function CompanyLogin(props) {
     setErrors("");
     setState("");
     setLoading(false);
-    setShowCompanyForgotPassword(false)
+    setShowCompanyForgotPassword(false);
     props.close();
   };
   /*----USER LOGIN VALIDATION----*/
@@ -45,8 +50,8 @@ export default function CompanyLogin(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -54,10 +59,10 @@ export default function CompanyLogin(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-            ? "Email is required"
-            : /\S+@\S+\.\S+/.test(value)
-              ? null
-              : "Email is invalid",
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -97,8 +102,8 @@ export default function CompanyLogin(props) {
           // handle form submission
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     }
   };
@@ -106,7 +111,7 @@ export default function CompanyLogin(props) {
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
 
-    console.log(state, "working", errors)
+    console.log(state, "working", errors);
     if (validate()) {
       setLoading(true);
       try {
@@ -123,8 +128,8 @@ export default function CompanyLogin(props) {
           //   handle form submission
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     }
   };
@@ -173,52 +178,76 @@ export default function CompanyLogin(props) {
   // console.log(i , "code =>" , code);
   // console.log(type , (code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 4 && type === "employerLogin");
   const handleLinkedInLogin = () => {
-    const clientId = '78mhwjaumkvtbm';
-    const redirectUri = 'http://3.6.36.125:3000/';
-    const scope = 'r_liteprofile r_emailaddress w_member_social profile email openid';
+    const clientId = "78mhwjaumkvtbm";
+    const redirectUri = "http://3.6.36.125:3000/";
+    const scope =
+      "r_liteprofile r_emailaddress w_member_social profile email openid";
 
-    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
-    i = i + 4
-    if ((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 4 && type === "employerLogin") {
+    i = i + 4;
+    if (
+      (code !== "" ||
+        code !== undefined ||
+        code !== "undefined" ||
+        code !== null) &&
+      i === 4 &&
+      type === "employerLogin"
+    ) {
       const response = LinkedInLoginEmployer(code, type);
-      response.then((res) => {
-        let decode = JSON.parse(res.data)
-        if (res.data.email_verified === true) {
-          let data = SocialCompanyLogin(res.data.sub, res.data.email, res.data.name, res.data.picture, "Linkedin");
-          console.log(data);
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("userType", "company");
-          localStorage.setItem("company_id", data.company_id);
-          localStorage.setItem("profile_photo", data.company_logo);
-          toast.success("Logged In Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.close();
-          Navigate("/company");
-          window.location.reload();
-        } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
-          toast.error("Token Expired", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          Navigate("/company");
-        }
-      }).catch((err) => {
-        console.log(err.data);
-       console.log(err) 
-      })
+      response
+        .then((res) => {
+          let decode = JSON.parse(res.data);
+          if (res.data.email_verified === true) {
+            let data = SocialCompanyLogin(
+              res.data.sub,
+              res.data.email,
+              res.data.name,
+              res.data.picture,
+              "Linkedin"
+            );
+            console.log(data);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userType", "company");
+            localStorage.setItem("company_id", data.company_id);
+            localStorage.setItem("profile_photo", data.company_logo);
+            toast.success("Logged In Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.close();
+            Navigate("/company");
+            window.location.reload();
+          }
+          if (
+            res.data.message ===
+              "The token used in the request has been revoked by the user" ||
+            decode.error_description ===
+              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+          ) {
+            toast.error("Token Expired", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            Navigate("/company");
+          }
+        })
+        .catch((err) => {
+          console.log(err.data);
+          console.log(err);
+        });
     }
-  }, [])
+  }, []);
 
   /*FUnctiom to login with facebook */
   // const responseFacebook = async (response) => {
   //   // console.log(response);
   //   if (response.graphDomain === "facebook") {
   //     let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
-  //     // console.log(data); 
+  //     // console.log(data);
   //     localStorage.setItem("token", data.token);
   //     localStorage.setItem("userType", "company");
   //     localStorage.setItem("company_id", data.company_id);
@@ -289,11 +318,15 @@ export default function CompanyLogin(props) {
               <div className="col-lg-7 col-md-6">
                 <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
                   <div
-                    className={showCompanyForgotPassword === false ? "row" : "d-none"}
+                    className={
+                      showCompanyForgotPassword === false ? "row" : "d-none"
+                    }
                   >
                     <div className="col-4 col-xs-12">
-                      <button onClick={handleLinkedInLogin}
-                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0">
+                      <button
+                        onClick={handleLinkedInLogin}
+                        className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"
+                      >
                         <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                         <span className="d-none d-xs-block mx-5 px-3">
                           Import from LinkedIn
@@ -454,7 +487,10 @@ export default function CompanyLogin(props) {
                       <Link
                         to="/"
                         className="font-size-3 text-dodger line-height-reset"
-                        onClick={() => setShowCompanyForgotPassword(true)}
+                        onClick={() => {
+                          setShowCompanyForgotPassword(true);
+                          setErrors("");
+                        }}
                       >
                         Forget Password
                       </Link>
@@ -604,7 +640,10 @@ export default function CompanyLogin(props) {
                       <Link
                         to=""
                         className="text-primary"
-                        onClick={() => setShowCompanyForgotPassword(false)}
+                        onClick={() => {
+                          setShowCompanyForgotPassword(false);
+                          setErrors("");
+                        }}
                       >
                         Login
                       </Link>

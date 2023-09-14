@@ -98,7 +98,7 @@ function JobProfileResponse(props) {
         limiaFilterValue,
         props.status,
         props.employee_id,
-        props.response === "lmia" ? "1" : ""
+        props.response === "lmia" ? "1" : "0"
       );
       if (userData.data.data.length === 0) {
         setResData([]);
