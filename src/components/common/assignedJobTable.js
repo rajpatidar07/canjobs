@@ -53,7 +53,7 @@ export default function AssignedJobTable(props) {
         } else {
           setJobData(Responses.data.data);
           setTotalData(Responses.data.total_rows);
-          props.setTotalJobs(Responses.data.total_rows)
+          props.setTotalJobs(Responses.data.total_rows);
           setIsLoading(false);
         }
       }
@@ -65,8 +65,10 @@ export default function AssignedJobTable(props) {
 
   useEffect(() => {
     GetJobData();
+    if (apiCall === true) {
+      setApiCall(false);
+    }
   }, [props.manager_id, apiCall]);
-
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 

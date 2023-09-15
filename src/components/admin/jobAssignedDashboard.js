@@ -47,11 +47,11 @@ export default function JobAssignedDashboard() {
   /*Render function to get the Admin*/
   useEffect(() => {
     AdminData();
-    if(apiCall === true){
-      setApiCall(true)
+    if (apiCall === true) {
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search,apiCall]);
+  }, [search, apiCall]);
 
   /*Function to Search employer */
   const onSearch = (e) => {

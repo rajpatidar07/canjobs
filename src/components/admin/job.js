@@ -334,6 +334,7 @@ function Job(props) {
                 response={"response"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
+                jobCall={props.jobCall}
               />
             </div>
           </div>

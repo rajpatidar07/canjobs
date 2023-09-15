@@ -268,6 +268,7 @@ function Employee(props) {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
+                EmployeeCall={props.EmployeeCall}
               />
             </div>
           </div>
