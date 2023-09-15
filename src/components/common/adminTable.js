@@ -106,18 +106,19 @@ export default function AdminTable({
               ) : (
                 (data || []).map((admin) => (
                   <tr className="text-capitalize" key={admin.admin_id}>
-                      <th>
-                    <Link
-                      className="text-gray"
-                      onClick={
-                        page === "admin page" && admin.admin_type === "manager"
-                          ? () => {
-                              OnManagerDetailClick(admin);
-                              setAddTeamListShow(false);
-                            }
-                          : null
-                      }
-                    >
+                    <th>
+                      <Link
+                        className="text-gray"
+                        onClick={
+                          page === "admin page" &&
+                          admin.admin_type === "manager"
+                            ? () => {
+                                OnManagerDetailClick(admin);
+                                setAddTeamListShow(false);
+                              }
+                            : null
+                        }
+                      >
                         <div className="d-flex profile_box gx-2">
                           <div className="media  align-items-center">
                             <div className="circle-36 mx-auto overflow-hidden">
@@ -137,8 +138,8 @@ export default function AdminTable({
                             </div>
                           </div>
                         </div>
-                    </Link>
-                      </th>
+                      </Link>
+                    </th>
                     <th className=" py-5">
                       <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                         <Link
@@ -157,35 +158,37 @@ export default function AdminTable({
                         </Link>
                       </h3>
                     </th>
-                      <th className="py-5">
-                    <Link
-                      className="text-gray"
-                      onClick={
-                        page === "admin page" && admin.admin_type === "manager"
-                          ? () => {
-                              OnManagerDetailClick(admin);
-                              setAddTeamListShow(false);
-                            }
-                          : null
-                      }
-                    >
+                    <th className="py-5">
+                      <Link
+                        className="text-gray"
+                        onClick={
+                          page === "admin page" &&
+                          admin.admin_type === "manager"
+                            ? () => {
+                                OnManagerDetailClick(admin);
+                                setAddTeamListShow(false);
+                              }
+                            : null
+                        }
+                      >
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                           {admin.admin_type}
                         </h3>
-                    </Link>
-                      </th>
-                      <th className="py-5 ">
-                    <Link
-                      className="text-gray"
-                      onClick={
-                        page === "admin page" && admin.admin_type === "manager"
-                          ? () => {
-                              OnManagerDetailClick(admin);
-                              setAddTeamListShow(false);
-                            }
-                          : null
-                      }
-                    >
+                      </Link>
+                    </th>
+                    <th className="py-5 ">
+                      <Link
+                        className="text-gray"
+                        onClick={
+                          page === "admin page" &&
+                          admin.admin_type === "manager"
+                            ? () => {
+                                OnManagerDetailClick(admin);
+                                setAddTeamListShow(false);
+                              }
+                            : null
+                        }
+                      >
                         {admin.contact_no === null ? null : (
                           <p className="m-0">
                             +
@@ -207,8 +210,8 @@ export default function AdminTable({
                             </Link>
                           </p>
                         </h3>
-                    </Link>
-                      </th>
+                      </Link>
+                    </th>
                     <th className="">
                       {page === "admin page" ? (
                         <div

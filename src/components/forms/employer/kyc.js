@@ -128,6 +128,12 @@ function KycComplianceDetails(props) {
           ? "Invalid Fax"
           : "",
     ],
+    document: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "Document is required"
+          : null,
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =
@@ -140,7 +146,6 @@ function KycComplianceDetails(props) {
         userData.data.kyc_detail.length === 0 ||
         userData.data.kyc_detail === undefined ||
         userData.data.kyc_detail === "0" ||
-        userData.data.kyc_detail === [] ||
         userData.data.kyc_detail === null
       ) {
         setState(initialFormState);
@@ -596,10 +601,11 @@ function KycComplianceDetails(props) {
                   <span className="sr-only">Loading...</span>
                 </button>
               ) : (
-                <button 
-                type="button"
-                onClick={(e)=>onKycInfoClick(e)}
-                className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase">
+                <button
+                  type="button"
+                  onClick={(e) => onKycInfoClick(e)}
+                  className="btn btn-primary btn-medium w-25 rounded-5 text-uppercase"
+                >
                   Submit
                 </button>
               )}

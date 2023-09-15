@@ -7,7 +7,6 @@ import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-import filterjson from "../../json/filterjson";
 function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
@@ -265,7 +264,7 @@ function PersonalDetails(props) {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (/*file.size > 1024 * 100*/ (file.size > 100 * 1024) === true) {
+        if (/*file.size > 1024 * 100*/ (file.size > 100) * 1024 === true) {
           setImgError("Image size can't be more then 100 kb");
         } else {
           setImgError("");
@@ -411,7 +410,7 @@ function PersonalDetails(props) {
                 </label>
                 <input
                   type="number"
-min={0}
+                  min={0}
                   placeholder="Mobile Number"
                   name="contact_no"
                   value={state.contact_no || ""}
@@ -747,7 +746,7 @@ min={0}
                   onChange={onInputChange}
                 >
                   <option value={""}>Select</option>
-                  {(filterjson.interested || []).map((interest) => (
+                  {(FilterJson.interested || []).map((interest) => (
                     <option key={interest} value={interest}>
                       {interest}
                     </option>

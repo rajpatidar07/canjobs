@@ -568,7 +568,8 @@ export default function VisaTable(props) {
 
                           <button
                             className={
-                              user_type === "company"
+                              user_type === "company" ||
+                              props.page === "user_profile"
                                 ? "d-none"
                                 : "btn btn-outline-info action_btn"
                             }

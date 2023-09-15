@@ -1006,7 +1006,7 @@ export const GetEmployeeByLima = async (
 
 /*Add LIMA Api */
 export const AddLimia = async (props, employee_id, job_id) => {
-  console.log(props);
+  // console.log(props);
   const response = await axios.put(
     `${API_URL}admin/addUpdateLmia`,
     {
@@ -1816,7 +1816,7 @@ export const GetEmployerSetting = async () => {
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employee/updateEmployeeSetting`,
-    {email_permission : data},
+    { email_permission: data },
     {
       headers: {
         "Content-Type": "application/json",
@@ -1831,7 +1831,7 @@ export const AddEmployeePermission = async (data) => {
 export const AddEmployerPermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employer/updateEmployerSetting`,
-    {email_permission : data},
+    { email_permission: data },
     {
       headers: {
         "Content-Type": "application/json",
