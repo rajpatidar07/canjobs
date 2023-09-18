@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
-const API_URL = "http://13.126.18.37/canjobs/";
+const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "http://13.126.18.37/canjobs/"
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
