@@ -1770,22 +1770,7 @@ export const AddExecutiveTeam = async (manager_id, executive_id) => {
   );
   return response.data;
 };
-/*Api to Remove executive to the manager*/
-export const RemoveExecutiveTeam = async (executive_id) => {
-  const response = await axios.put(
-    `${API_URL}manager/deleteTeamMember`,
-    {
-      executive_id: executive_id,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response.data;
-};
+
 /*Api to Reasign job to manager*/
 export const ReassignJobTOManager = async (manager_id, job_id) => {
   const response = await axios.put(

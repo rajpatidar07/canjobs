@@ -177,7 +177,7 @@ export default function AdminTable({
                       </Link>
                     </th>
                     <th className="py-5 ">
-                      <Link
+                      {/* <Link
                         className="text-gray"
                         onClick={
                           page === "admin page" &&
@@ -188,29 +188,29 @@ export default function AdminTable({
                               }
                             : null
                         }
-                      >
-                        {admin.contact_no === null ? null : (
-                          <p className="m-0">
-                            +
-                            <Link
-                              className="text-dark"
-                              to={`tel:${admin.contact_no}`}
-                            >
-                              {admin.contact_no}
-                            </Link>
-                          </p>
-                        )}
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          <p className="text-gray font-size-2 m-0">
-                            <Link
-                              className="text-dark"
-                              to={`mailto:${admin.email}`}
-                            >
-                              {admin.email}
-                            </Link>
-                          </p>
-                        </h3>
-                      </Link>
+                      > */}
+                      {admin.contact_no === null ? null : (
+                        <p className="m-0">
+                          +
+                          <Link
+                            className="text-dark"
+                            to={`tel:${admin.contact_no}`}
+                          >
+                            {admin.contact_no}
+                          </Link>
+                        </p>
+                      )}
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        <p className="text-gray font-size-2 m-0">
+                          <Link
+                            className="text-dark"
+                            to={`mailto:${admin.email}`}
+                          >
+                            {admin.email}
+                          </Link>
+                        </p>
+                      </h3>
+                      {/* </Link> */}
                     </th>
                     <th className="">
                       {page === "admin page" ? (
