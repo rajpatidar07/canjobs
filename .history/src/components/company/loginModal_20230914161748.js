@@ -111,7 +111,7 @@ export default function CompanyLogin(props) {
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
 
-    // console.log(state, "working", errors);
+    console.log(state, "working", errors);
     if (validate()) {
       setLoading(true);
       try {
@@ -533,10 +533,7 @@ export default function CompanyLogin(props) {
                       <Link
                         className="text-primary"
                         to={""}
-                        onClick={() => {
-                          props.CompanySignUpClick();
-                          setErrors("");
-                        }}
+                        onClick={props.CompanySignUpClick}
                       >
                         Create a free account
                       </Link>

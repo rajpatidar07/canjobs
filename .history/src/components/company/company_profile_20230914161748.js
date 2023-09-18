@@ -246,13 +246,7 @@ function CompanyProfileDetail(props) {
                       Jobs
                     </Link>
                   </li>
-                  <li
-                    className={
-                      user_type === "user"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                    }
-                  >
+                  <li className="tab-menu-items nav-item">
                     <Link
                       className={
                         TabActive === "documents"
@@ -522,7 +516,7 @@ function CompanyProfileDetail(props) {
                             !employerKycData.tan_number &&
                             !employerKycData.gstin ? (
                               <div className="pt-5 text-left row m-0">
-                                <div className="font-size-4 mb-8 text-center mr-10">
+                                <div className="font-size-3 mb-4 mr-10">
                                   No Data Found
                                 </div>
                               </div>
@@ -767,7 +761,8 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "contact" ? (
-                    <ContactPage email={employerData.email} />
+                    <ContactPage
+                    email={employerData.email}/>
                   ) : null}
                 </div>
               </div>

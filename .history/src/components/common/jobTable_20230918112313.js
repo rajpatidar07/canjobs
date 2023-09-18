@@ -128,6 +128,7 @@ export default function JobTable(props) {
           }
         }
         setjobData(userData.data.data);
+
         /*Logic for finding reject substage of decision lima status */
         if (userData.data.data.length >= 0) {
           let LmiaData = userData.data.data;
@@ -850,8 +851,7 @@ export default function JobTable(props) {
                           )}
                         </tr>
                         {props.heading === "Dashboard" ||
-                        props.detail === "job_detail" ||
-                        user_type === "user" ? null : (
+                        props.detail === "job_detail" ? null : (
                           <tr
                             className={
                               props.heading === "Dashboard" ||
@@ -1091,8 +1091,6 @@ export default function JobTable(props) {
           admin={"admin"}
           setApiCall={setApiCall}
           apiCall={apiCall}
-          setDetailApiCall={props.setApiCall}
-          job_page="job_detail"
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}

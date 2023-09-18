@@ -17,6 +17,7 @@ import LimaArrowProfile from "../common/LimaArrowProfile";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   let jid = localStorage.getItem("job_id");
+  let skill = [];
   let navigate = useNavigate();
   /*Show modal and data state */
   const [lima, setLmia] = useState([]);
@@ -57,6 +58,15 @@ function JobDetailpageAdmim(props) {
     }
   }, [apiCall]);
 
+  /*Set skill variable to array frm string */
+  if (jobData !== "") {
+    skill =
+      jobData.keyskill === null ||
+      jobData.keyskill === undefined ||
+      jobData.keyskill === "undefined"
+        ? []
+        : jobData.keyskill.split(",");
+  }
   return (
     <div>
       {user_type === "admin" && (
@@ -98,7 +108,7 @@ function JobDetailpageAdmim(props) {
                       className="company_logo"
                       src={
                         jobData.logo === null
-                          ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                          ? "image/logo-main-black.png"
                           : jobData.logo
                       }
                       alt=""
@@ -292,7 +302,7 @@ function JobDetailpageAdmim(props) {
                     role="tabpanel"
                     aria-labelledby="home-tab"
                   >
-                    {/*----About Employee----*/}
+                    {/*----About Job----*/}
                     {isLoading ? (
                       <div className="table-responsive main_table_div">
                         <Loader />
@@ -469,6 +479,31 @@ function JobDetailpageAdmim(props) {
                                   </p>
                                 )}
                               </div>
+                              <div className="pt-5 pl-sm-9 pl-6 pb-10 light-mode-texts border-top border-width-1 border-default-color">
+                                <div className="tags">
+                                  <p className="font-size-4 text-gray mb-0">
+                                    {" "}
+                                    Skill
+                                  </p>
+                                  {skill.length > 0 ? (
+                                    <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
+                                      {(skill || []).map((skill) =>
+                                        skill === "" ? null : (
+                                          <li key={skill}>
+                                            <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1">
+                                              {skill}
+                                            </span>
+                                          </li>
+                                        )
+                                      )}
+                                    </ul>
+                                  ) : (
+                                    <div className="text-center">
+                                      <b>No Skill's found</b>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="col-md-6 col-lg-6 p-10">
@@ -580,7 +615,7 @@ function JobDetailpageAdmim(props) {
                                       className="font-size-3 text-smoke  mr-7 text-capitalize"
                                       title="Industry Type"
                                     >
-                                      <b> Industry Type</b>
+                                      <b> Industry Type </b>
                                       {jobData.industry_type}
                                     </span>
                                   </div>
