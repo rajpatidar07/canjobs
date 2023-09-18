@@ -128,6 +128,7 @@ export default function JobTable(props) {
           }
         }
         setjobData(userData.data.data);
+
         /*Logic for finding reject substage of decision lima status */
         if (userData.data.data.length >= 0) {
           let LmiaData = userData.data.data;
@@ -429,13 +430,9 @@ export default function JobTable(props) {
                   </th>
                   <th
                     scope="col"
-                    className={
-                      user_type === "user"
-                        ? "d-none"
-                        : " border-0 font-size-4 font-weight-normal"
-                    }
+                    className={ user_type === "user" ? "d-none" :" border-0 font-size-4 font-weight-normal"}
                   >
-                    Vacancies / Responses
+                    Vacancies/ Responses
                   </th>
                   <th
                     scope="col"
@@ -468,8 +465,8 @@ export default function JobTable(props) {
                     <th className="bg-white"></th>
                     {props.heading !== "Dashboard" ? (
                       <>
-                        <th className="bg-white text-center">No Data Found</th>
                         <th className="bg-white"></th>
+                        <th className="bg-white text-center">No Data Found</th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
@@ -567,11 +564,7 @@ export default function JobTable(props) {
                                 : "years"}
                             </h3>
                           </th>
-                          <th
-                            className={
-                              user_type === "user" ? "d-none" : "py-5 "
-                            }
-                          >
+                          <th className={ user_type === "user" ? "d-none" :"py-5 "}>
                             <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
                               <Link
                                 onClick={() => {
@@ -850,8 +843,7 @@ export default function JobTable(props) {
                           )}
                         </tr>
                         {props.heading === "Dashboard" ||
-                        props.detail === "job_detail" ||
-                        user_type === "user" ? null : (
+                        props.detail === "job_detail" ? null : (
                           <tr
                             className={
                               props.heading === "Dashboard" ||
@@ -1091,8 +1083,6 @@ export default function JobTable(props) {
           admin={"admin"}
           setApiCall={setApiCall}
           apiCall={apiCall}
-          setDetailApiCall={props.setApiCall}
-          job_page="job_detail"
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}

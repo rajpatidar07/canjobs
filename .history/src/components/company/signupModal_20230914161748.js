@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import useValidation from "../common/useValidation";
-import {
-  EmployerSignUp,
-  SendOtp,
-  LinkedInSignupEmployer,
-  SocialCompanyLogin,
-} from "../../api/api";
+import { EmployerSignUp, SendOtp, LinkedInSignupEmployer, SocialCompanyLogin } from "../../api/api";
 import { toast } from "react-toastify";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
@@ -22,8 +17,8 @@ export default function CompanySignUp(props) {
   // let [facebook, setFacebook] = useState(false);
   let i = 0;
   let navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  let code = searchParams.get("code");
+  const [searchParams] = useSearchParams()
+  let code = searchParams.get("code")
   if (props.show === true) {
     localStorage.setItem("linkedin", "employerSignup");
   }
@@ -52,24 +47,23 @@ export default function CompanySignUp(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     contact_no: [
-      (value) =>
-        value.trim() === "" || value === "" || value === null
-          ? "Contact no is required"
-          : value.length < 10 || value.length > 11
+      (value) => value.trim() === "" || value === "" || value === null
+        ? "Contact no is required"
+        : value.length < 10 || value.length > 11
           ? "Contact no should be of 10 digits"
           : "",
     ],
@@ -78,8 +72,8 @@ export default function CompanySignUp(props) {
         otpBox === false
           ? ""
           : value === null || value === "" || value === false
-          ? "Please accept terms and conditions continue"
-          : "",
+            ? "Please accept terms and conditions continue"
+            : "",
     ],
     otp: [
       (value) =>
@@ -87,8 +81,8 @@ export default function CompanySignUp(props) {
           ? value === null || value === ""
             ? "Otp is requried"
             : otpErr === "Invalid Otp"
-            ? "Invalid Otp"
-            : ""
+              ? "Invalid Otp"
+              : ""
           : "",
     ],
   };
@@ -123,7 +117,7 @@ export default function CompanySignUp(props) {
           setOtpBox(false);
         }
       } catch (err) {
-        console.log(err);
+       console.log(err) 
       }
     } else if (otpBox === false && validate()) {
       /*Api to get otp */
@@ -139,7 +133,7 @@ export default function CompanySignUp(props) {
           setLoading(false);
         }
       } catch (err) {
-        console.log(err);
+       console.log(err) 
         setLoading(false);
       }
     }
@@ -191,73 +185,50 @@ export default function CompanySignUp(props) {
   // });
   // console.log(i , "code =>" , code);
   const handleLinkedInLogin = () => {
-    const clientId = "78mhwjaumkvtbm";
-    const redirectUri = "http://localhost:3000/";
-    const scope =
-      "r_liteprofile r_emailaddress w_member_social profile email openid";
+    const clientId = '78mhwjaumkvtbm';
+    const redirectUri = 'http://localhost:3000/';
+    const scope = 'r_liteprofile r_emailaddress w_member_social profile email openid';
 
-    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
-      redirectUri
-    )}&scope=${encodeURIComponent(scope)}`;
+    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+
   };
   // console.log(type ,(code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 2 && type === "employerSignup");
   useEffect(() => {
-    i = i + 2;
-    if (
-      (code !== "" ||
-        code !== undefined ||
-        code !== "undefined" ||
-        code !== null) &&
-      i === 2 &&
-      type === "employerSignup"
-    ) {
+    i = i + 2
+    if ((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 2 && type === "employerSignup") {
       const response = LinkedInSignupEmployer(code, type);
-      response
-        .then((res) => {
-          let decode = JSON.parse(res.data);
-          if (res.data.email_verified === true) {
-            try {
-              let data = SocialCompanyLogin(
-                res.data.sub,
-                res.data.email,
-                res.data.name,
-                res.data.picture,
-                "Linkedin"
-              );
-              console.log(data);
-              localStorage.setItem("token", data.token);
-              localStorage.setItem("userType", "company");
-              localStorage.setItem("employee_id", data.employer_id);
-              localStorage.setItem("profile_photo", data.company_logo);
-              toast.success("Logged In Successfully", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
-              });
-              props.close();
-              navigate("/company");
-              window.location.reload();
-            } catch (err) {
-              console.log(err);
-            }
-          }
-          if (
-            res.data.message ===
-              "The token used in the request has been revoked by the user" ||
-            decode.error_description ===
-              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
-          ) {
-            toast.error("Token Expired", {
+      response.then((res) => {
+        let decode = JSON.parse(res.data)
+        if (res.data.email_verified === true) {
+          try {
+            let data = SocialCompanyLogin(res.data.sub, res.data.email, res.data.name, res.data.picture, "Linkedin");
+            console.log(data);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userType", "company");
+            localStorage.setItem("employee_id", data.employer_id);
+            localStorage.setItem("profile_photo", data.company_logo);
+            toast.success("Logged In Successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
+            props.close();
             navigate("/company");
+            window.location.reload();
+          } catch (err) {
+           console.log(err) 
           }
-        })
-        .catch((err) => {
-          console.log(err.data);
-        });
+        } if (res.data.message === "The token used in the request has been revoked by the user" || decode.error_description === "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists") {
+          toast.error("Token Expired", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          navigate("/company");
+        }
+      }).catch((err) => {
+        console.log(err.data);
+      })
     }
-  }, []);
+  }, [])
 
   /*FUnctiom to Sign Up with facebook */
   // const responseFacebook = async (response) => {
@@ -273,12 +244,12 @@ export default function CompanySignUp(props) {
   //       toast.success("Logged In Successfully",{
   //         position: toast.POSITION.TOP_RIGHT,
   //         autoClose: 1000,
-  //       });
+  //       }); 
   //       props.close();
   //       navigate("/company");
   //       window.location.reload();
   //     } catch (err) {
-  //      console.log(err)
+  //      console.log(err) 
   //     }
   //   }
   // }
@@ -340,10 +311,7 @@ export default function CompanySignUp(props) {
                     <Link
                       to=""
                       className="btn btn-primary mt-12"
-                      onClick={() => {
-                        props.CompanyLoginClick();
-                        setErrors("");
-                      }}
+                      onClick={props.CompanyLoginClick}
                     >
                       Login
                     </Link>
@@ -353,15 +321,12 @@ export default function CompanySignUp(props) {
                     {/* SOCIAL MEDIA LINK BUTTONS */}
                     <div className="row">
                       <div className="col-4 col-xs-12">
-                        <button
-                          onClick={handleLinkedInLogin}
-                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0"
-                        >
+                        <button onClick={handleLinkedInLogin}
+                          className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4 border-0">
                           <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>
                           <span className="d-none d-xs-block mx-5 px-3">
                             Import from LinkedIn
-                          </span>
-                        </button>
+                          </span></button>
                       </div>
                       {/* <div className="col-4 col-xs-12">
                         <Link

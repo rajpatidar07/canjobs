@@ -327,7 +327,11 @@ export default function VisaTable(props) {
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
-                        <th className="bg-white"></th>
+                        <th
+                          className={
+                            user_type === "company" ? "d-none" : "bg-white"
+                          }
+                        ></th>
                       </>
                     ) : (
                       ""
@@ -545,7 +549,13 @@ export default function VisaTable(props) {
                           </p>
                       </td> */}
 
-                      <td className=" py-5 min-width-px-100">
+                      <td
+                        className={
+                          user_type === "company"
+                            ? "d-none"
+                            : " py-5 min-width-px-100"
+                        }
+                      >
                         <div
                           className={"btn-group button_group"}
                           role="group"

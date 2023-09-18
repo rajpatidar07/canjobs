@@ -522,7 +522,7 @@ function CompanyProfileDetail(props) {
                             !employerKycData.tan_number &&
                             !employerKycData.gstin ? (
                               <div className="pt-5 text-left row m-0">
-                                <div className="font-size-4 mb-8 text-center mr-10">
+                                <div className="font-size-3 mb-4 mr-10">
                                   No Data Found
                                 </div>
                               </div>

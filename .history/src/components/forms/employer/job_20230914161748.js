@@ -18,14 +18,14 @@ function AddJobModal(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      if (Json.data.message === "No data found") {
-        setJson([]);
-      } else {
+      if(Json.data.message ==='No data found'){
+        setJson([])
+      }else{
         setJson(Json.data.data);
       }
       setJson(Json.data.data);
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
 
@@ -90,10 +90,10 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Job Title is required"
           : value.length < 2
-          ? "Job Title should have 2 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Job Title can not have a number."
-          : "",
+            ? "Job Title should have 2 or more letters"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Job Title can not have a number."
+              : "",
     ],
     experience_required: [
       (value) => (value === "" ? "Experienceis required" : null),
@@ -107,12 +107,12 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Apply link is required"
           : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(
-              value
-            )
-          ? "Write the correct link"
-          : value.length < 3
-          ? "Apply link  should have 3 or more letters"
-          : null,
+            value
+          )
+            ? "Write the correct link"
+            : value.length < 3
+              ? "Apply link  should have 3 or more letters"
+              : null,
     ],
     job_type: [
       (value) =>
@@ -152,7 +152,7 @@ function AddJobModal(props) {
         setState(userData.data.data[0]);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
 
@@ -166,7 +166,7 @@ function AddJobModal(props) {
         setCompany(userData.data);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
   useEffect(() => {
@@ -186,6 +186,7 @@ function AddJobModal(props) {
     } else {
       JobData();
     }
+
   }, [props]);
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
@@ -200,9 +201,6 @@ function AddJobModal(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          if (props.job_page) {
-            props.setDetailApiCall(true);
-          }
           return close();
         }
         if (responseData.message === "Failed to insert job data") {
@@ -211,31 +209,26 @@ function AddJobModal(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          if (props.job_page) {
-            props.setDetailApiCall(true);
-          }
           return close();
         }
-
+        
         if (responseData.message === "job data updated successfully") {
           toast.success("Job Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           props.setApiCall(true);
-          if (props.job_page) {
-            props.setDetailApiCall(true);
-          }
           return close();
         }
       } catch (err) {
-        console.log(err);
-        setLoading(false);
+       console.log(err) 
+        setLoading(false)
       }
     } else {
       setLoading(false);
     }
   };
+
 
   // END ADD JOBS VALIDATION
   /*Company type array to filter*/
@@ -464,7 +457,7 @@ function AddJobModal(props) {
                   value={state.salary || ""}
                   onChange={onInputChange}
                   type="number"
-                  min={0}
+min={0}
                   className={
                     errors.salary
                       ? "form-control text-capitalize border border-danger"
@@ -569,7 +562,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <input
                     type="number"
-                    min={0}
+min={0}
                     name="role_category"
                     value={state.role_category || ""}
                     onChange={onInputChange}
@@ -858,6 +851,7 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
+
             </div>
             <div className="row">
               <div className="form-group col-md-4 px-0 pr-3">
@@ -974,35 +968,29 @@ function AddJobModal(props) {
                 )}
               </div>
             </div>
-            {user_type === "admin" ? (
-              <div className="row">
-                <div className="form-group col-md-4">
-                  <label
-                    htmlFor="fetured"
-                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                  >
-                    Featured:{" "}
-                    <input
-                      type="checkbox"
-                      id="fetured"
-                      name="fetured"
-                      checked={state.is_featured === "1"}
-                      value={state.is_featured}
-                      onChange={(e) =>
-                        setState({
-                          ...state,
-                          is_featured:
-                            state.is_featured === "" ||
-                            state.is_featured === "0"
-                              ? "1"
-                              : "0",
-                        })
-                      }
-                    />
-                  </label>
-                </div>
+            {user_type === "admin" ? <div className="row">
+              <div className="form-group col-md-4">
+                <label
+                  htmlFor="fetured"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Featured: <input
+                    type="checkbox"
+                    id="fetured"
+                    name="fetured"
+                    checked={state.is_featured === "1"}
+                    value={state.is_featured}
+                    onChange={(e) => setState(
+                      {
+                        ...state, is_featured:
+                          (state.is_featured === "" || state.is_featured === "0" ? "1" : "0")
+                      })}
+                  />
+                </label>
               </div>
-            ) : null}
+            </div>
+              : null}
+
 
             <div className="form-group text-center">
               {loading === true ? (

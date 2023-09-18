@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AddExecutiveTeam } from "../../api/api";
+import { AddExecutiveTeam, RemoveExecutiveTeam } from "../../api/api";
 import { toast } from "react-toastify";
 export default function Executivelist({
   executiveData,
@@ -28,19 +28,43 @@ export default function Executivelist({
       }
     }
   };
+  /*Function to remove asign memeber to the manager */
+  const HandleRemoveexecutive = async (Eid) => {
+    try {
+      let Response = await RemoveExecutiveTeam(Eid);
+      if (Response.message === "successfully") {
+        toast.success("Executive unassigned successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setSelectedStatus(
+          selectedStatus.filter((item) => item.admin_id !== Eid)
+        );
+        setExecutiveApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="card-text row">
-      {executiveData.length === 0 ? 
-      (
+      {executiveData.length === 0 ? (
         <div className="sub-stage col-md-12">
-        <p className="text-center">No Executive Found</p>
+          <p className="text-center">No Executive Found</p>
         </div>
-      ):(
+      ) : (
         (executiveData || []).map((data, index) => {
           return (
             <div
               className={`sub-stage text-capitalize col-md-6`}
-              onClick={() => HandleAddexecutive(data.admin_id, manager_id)}
+              onClick={() =>
+                (selectedStatus || []).some(
+                  (item) => item.admin_id === data.admin_id
+                )
+                  ? HandleRemoveexecutive(data.admin_id)
+                  : HandleAddexecutive(data.admin_id, manager_id)
+              }
               key={index}
             >
               <input
@@ -55,7 +79,7 @@ export default function Executivelist({
             </div>
           );
         })
-      )  }
+      )}
     </div>
   );
 }

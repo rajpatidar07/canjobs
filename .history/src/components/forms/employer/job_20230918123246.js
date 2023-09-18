@@ -200,9 +200,7 @@ function AddJobModal(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          if (props.job_page) {
-            props.setDetailApiCall(true);
-          }
+          props.setDetailApiCall(true);
           return close();
         }
         if (responseData.message === "Failed to insert job data") {
@@ -211,9 +209,7 @@ function AddJobModal(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          if (props.job_page) {
-            props.setDetailApiCall(true);
-          }
+          props.setDetailApiCall(true);
           return close();
         }
 
@@ -223,9 +219,7 @@ function AddJobModal(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          if (props.job_page) {
-            props.setDetailApiCall(true);
-          }
+          props.setDetailApiCall(true);
           return close();
         }
       } catch (err) {

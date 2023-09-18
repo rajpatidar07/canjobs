@@ -78,7 +78,7 @@ function JobDetailPage(props) {
       console.log(err)
     }
   };
-  // console.log("job id =>",jobId ,"skill =>",skill)
+  console.log("job id =>",jobId ,"skill =>",skill)
   return (
     <>
       <div className="table-responsive main_table_div">

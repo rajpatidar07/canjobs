@@ -127,7 +127,8 @@ export default function JobTable(props) {
             setresponseId(filteredItems[0].job_id);
           }
         }
-        setjobData(userData.data.data);
+        // setjobData(userData.data.data);
+
         /*Logic for finding reject substage of decision lima status */
         if (userData.data.data.length >= 0) {
           let LmiaData = userData.data.data;
@@ -435,7 +436,7 @@ export default function JobTable(props) {
                         : " border-0 font-size-4 font-weight-normal"
                     }
                   >
-                    Vacancies / Responses
+                    Vacancies/ Responses
                   </th>
                   <th
                     scope="col"
@@ -468,8 +469,8 @@ export default function JobTable(props) {
                     <th className="bg-white"></th>
                     {props.heading !== "Dashboard" ? (
                       <>
-                        <th className="bg-white text-center">No Data Found</th>
                         <th className="bg-white"></th>
+                        <th className="bg-white text-center">No Data Found</th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
                         <th className="bg-white"></th>
@@ -850,8 +851,7 @@ export default function JobTable(props) {
                           )}
                         </tr>
                         {props.heading === "Dashboard" ||
-                        props.detail === "job_detail" ||
-                        user_type === "user" ? null : (
+                        props.detail === "job_detail" ? null : (
                           <tr
                             className={
                               props.heading === "Dashboard" ||
@@ -1091,8 +1091,6 @@ export default function JobTable(props) {
           admin={"admin"}
           setApiCall={setApiCall}
           apiCall={apiCall}
-          setDetailApiCall={props.setApiCall}
-          job_page="job_detail"
           close={() => setShowAddJobsModal(false)}
         />
       ) : null}
