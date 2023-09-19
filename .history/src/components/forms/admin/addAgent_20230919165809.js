@@ -297,12 +297,12 @@ function AddAgent(props) {
               <small className="text-danger">{imgError}</small>
             </div>
             <div className="row">
-              <div className="form-group col-md-6">
+              <div className="form-group col">
                 <label
                   htmlFor="name"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Agent Name <span className="text-danger">*</span>
+                  agent Name <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"
@@ -324,7 +324,7 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-6">
+              <div className="form-group col">
                 <label
                   htmlFor="contact_no"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -355,7 +355,7 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="email"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -374,7 +374,6 @@ function AddAgent(props) {
                   name="email"
                   type={"email"}
                   disabled={props.agentId === "0" ? false : true}
-                  placeholder="Enter email address"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
                 {errors.email && (
@@ -384,7 +383,7 @@ function AddAgent(props) {
                 )}
               </div>
               {/* {state.agent_id ? null : (
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="password"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -419,7 +418,7 @@ function AddAgent(props) {
                 )}
               </div>
             )} */}
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -460,7 +459,7 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -478,7 +477,6 @@ function AddAgent(props) {
                   onChange={onInputChange}
                   id="address"
                   name="address"
-                  placeholder="Current Address"
                 />
 
                 {/*----ERROR MESSAGE FOR ADDRESS----*/}
@@ -491,7 +489,7 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -509,7 +507,6 @@ function AddAgent(props) {
                   onChange={onInputChange}
                   id="country"
                   name="country"
-                  placeholder="Current Country"
                 />
 
                 {/*----ERROR MESSAGE FOR COUNTRY----*/}
@@ -522,7 +519,7 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -540,7 +537,6 @@ function AddAgent(props) {
                   onChange={onInputChange}
                   id="state"
                   name="state"
-                  placeholder="Current state"
                 />
 
                 {/*----ERROR MESSAGE FOR STATE----*/}
@@ -550,7 +546,7 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-6 ">
+              <div className="form-group col ">
                 <label
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -568,7 +564,6 @@ function AddAgent(props) {
                   onChange={onInputChange}
                   id="city"
                   name="city"
-                  placeholder="Current city"
                 />
 
                 {/*----ERROR MESSAGE FOR City----*/}

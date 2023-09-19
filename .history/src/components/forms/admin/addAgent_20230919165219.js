@@ -1,7 +1,7 @@
 import React, { /*useEffect,*/ useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import filterjson from "../../json/filterjson";
 import { AddUpdateAgent } from "../../../api/api";
@@ -214,14 +214,14 @@ function AddAgent(props) {
       try {
         const responseData = await AddUpdateAgent(state);
         console.log(responseData);
-        if (responseData.message === "successfully") {
-          toast.success("Agent added successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.setApiCall(true);
-          return close();
-        }
+        // if (responseData.message === "agent added successfully") {
+        //   toast.success("agent added successfully", {
+        //     position: toast.POSITION.TOP_RIGHT,
+        //     autoClose: 1000,
+        //   });
+        //   props.setApiCall(true);
+        //   return close();
+        // }
         // if (responseData.message === "agent updated successfully") {
         //   toast.success("agent Updated successfully", {
         //     position: toast.POSITION.TOP_RIGHT,
@@ -296,95 +296,93 @@ function AddAgent(props) {
               </div>
               <small className="text-danger">{imgError}</small>
             </div>
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="name"
-                  className="font-size-4 text-black-2  line-height-reset"
+            <div className="form-group">
+              <label
+                htmlFor="name"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                agent Name <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                className={
+                  errors.name
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                value={state.name}
+                onChange={onInputChange}
+                id="name"
+                name="name"
+                placeholder="eg. Apple"
+              />
+              {/*----ERROR MESSAGE FOR agent Name----*/}
+              {errors.name && (
+                <span key={errors.name} className="text-danger font-size-3">
+                  {errors.name}
+                </span>
+              )}
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="contact_no"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Contact no <span className="text-danger">*</span>
+              </label>
+              <input
+                type="number"
+                className={
+                  errors.contact_no
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                value={state.contact_no}
+                onChange={onInputChange}
+                id="contact_no"
+                name="contact_no"
+                min={0}
+                placeholder="Enter contact no"
+              />
+              {/*----ERROR MESSAGE FOR agent Name----*/}
+              {errors.contact_no && (
+                <span
+                  key={errors.contact_no}
+                  className="text-danger font-size-3"
                 >
-                  Agent Name <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  className={
-                    errors.name
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  value={state.name}
-                  onChange={onInputChange}
-                  id="name"
-                  name="name"
-                  placeholder="eg. Apple"
-                />
-                {/*----ERROR MESSAGE FOR agent Name----*/}
-                {errors.name && (
-                  <span key={errors.name} className="text-danger font-size-3">
-                    {errors.name}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6">
-                <label
-                  htmlFor="contact_no"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Contact no <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="number"
-                  className={
-                    errors.contact_no
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  value={state.contact_no}
-                  onChange={onInputChange}
-                  id="contact_no"
-                  name="contact_no"
-                  min={0}
-                  placeholder="Enter contact no"
-                />
-                {/*----ERROR MESSAGE FOR agent Name----*/}
-                {errors.contact_no && (
-                  <span
-                    key={errors.contact_no}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.contact_no}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6 ">
-                <label
-                  htmlFor="email"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  E-mail <span className="text-danger">*</span> :
-                </label>
-                <input
-                  className={
-                    errors.email
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  value={state.email}
-                  onChange={onInputChange}
-                  id="email"
-                  name="email"
-                  type={"email"}
-                  disabled={props.agentId === "0" ? false : true}
-                  placeholder="Enter email address"
-                />
-                {/*----ERROR MESSAGE FOR EMAIL----*/}
-                {errors.email && (
-                  <span key={errors.email} className="text-danger font-size-3">
-                    {errors.email}
-                  </span>
-                )}
-              </div>
-              {/* {state.agent_id ? null : (
-              <div className="form-group col-md-6 ">
+                  {errors.contact_no}
+                </span>
+              )}
+            </div>
+            <div className="form-group ">
+              <label
+                htmlFor="email"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                E-mail <span className="text-danger">*</span> :
+              </label>
+              <input
+                className={
+                  errors.email
+                    ? "form-control border border-danger"
+                    : "form-control"
+                }
+                value={state.email}
+                onChange={onInputChange}
+                id="email"
+                name="email"
+                type={"email"}
+                disabled={props.agentId === "0" ? false : true}
+              />
+              {/*----ERROR MESSAGE FOR EMAIL----*/}
+              {errors.email && (
+                <span key={errors.email} className="text-danger font-size-3">
+                  {errors.email}
+                </span>
+              )}
+            </div>
+            {/* {state.agent_id ? null : (
+              <div className="form-group ">
                 <label
                   htmlFor="password"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -419,29 +417,29 @@ function AddAgent(props) {
                 )}
               </div>
             )} */}
-              <div className="form-group col-md-6 ">
-                <label
-                  htmlFor="type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Type <span className="text-danger">*</span> :
-                </label>
-                <select
-                  type={"text"}
-                  className={
-                    errors.type
-                      ? "form-control border border-danger text-capitalize"
-                      : "form-control"
-                  }
-                  value={state.type}
-                  onChange={onInputChange}
-                  id="type"
-                  name="type"
-                  multiple={false}
-                >
-                  <option value={""}>Select</option>
-                  <option value={"agent"}>Agent</option>
-                  {/* {(filterjson.agenttype || []).map((item, index) => {
+            <div className="form-group ">
+              <label
+                htmlFor="type"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Type <span className="text-danger">*</span> :
+              </label>
+              <select
+                type={"text"}
+                className={
+                  errors.type
+                    ? "form-control border border-danger text-capitalize"
+                    : "form-control"
+                }
+                value={state.type}
+                onChange={onInputChange}
+                id="type"
+                name="type"
+                multiple={false}
+              >
+                <option value={""}>Select</option>
+                <option value={"agent"}>Agent</option>
+                {/* {(filterjson.agenttype || []).map((item, index) => {
                   return (
                     <option
                       value={item}
@@ -452,132 +450,121 @@ function AddAgent(props) {
                     </option>
                   );
                 })} */}
-                </select>
-                {/*----ERROR MESSAGE FOR agent TYPE----*/}
-                {errors.type && (
-                  <span key={errors.type} className="text-danger font-size-3">
-                    {errors.type}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6 ">
-                <label
-                  htmlFor="type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Address <span className="text-danger">*</span> :
-                </label>
-                <input
-                  type={"text"}
-                  className={
-                    errors.address
-                      ? "form-control border border-danger text-capitalize"
-                      : "form-control"
-                  }
-                  value={state.address}
-                  onChange={onInputChange}
-                  id="address"
-                  name="address"
-                  placeholder="Current Address"
-                />
+              </select>
+              {/*----ERROR MESSAGE FOR agent TYPE----*/}
+              {errors.type && (
+                <span key={errors.type} className="text-danger font-size-3">
+                  {errors.type}
+                </span>
+              )}
+            </div>
+            <div className="form-group ">
+              <label
+                htmlFor="type"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Address <span className="text-danger">*</span> :
+              </label>
+              <input
+                type={"text"}
+                className={
+                  errors.address
+                    ? "form-control border border-danger text-capitalize"
+                    : "form-control"
+                }
+                value={state.address}
+                onChange={onInputChange}
+                id="address"
+                name="address"
+              />
 
-                {/*----ERROR MESSAGE FOR ADDRESS----*/}
-                {errors.address && (
-                  <span
-                    key={errors.address}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.address}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6 ">
-                <label
-                  htmlFor="type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Country <span className="text-danger">*</span> :
-                </label>
-                <input
-                  type={"text"}
-                  className={
-                    errors.country
-                      ? "form-control border border-danger text-capitalize"
-                      : "form-control"
-                  }
-                  value={state.country}
-                  onChange={onInputChange}
-                  id="country"
-                  name="country"
-                  placeholder="Current Country"
-                />
+              {/*----ERROR MESSAGE FOR ADDRESS----*/}
+              {errors.address && (
+                <span key={errors.address} className="text-danger font-size-3">
+                  {errors.address}
+                </span>
+              )}
+            </div>
+            <div className="form-group ">
+              <label
+                htmlFor="type"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Country <span className="text-danger">*</span> :
+              </label>
+              <input
+                type={"text"}
+                className={
+                  errors.country
+                    ? "form-control border border-danger text-capitalize"
+                    : "form-control"
+                }
+                value={state.country}
+                onChange={onInputChange}
+                id="country"
+                name="country"
+              />
 
-                {/*----ERROR MESSAGE FOR COUNTRY----*/}
-                {errors.country && (
-                  <span
-                    key={errors.country}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.country}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6 ">
-                <label
-                  htmlFor="type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  State <span className="text-danger">*</span> :
-                </label>
-                <input
-                  type={"text"}
-                  className={
-                    errors.state
-                      ? "form-control border border-danger text-capitalize"
-                      : "form-control"
-                  }
-                  value={state.state}
-                  onChange={onInputChange}
-                  id="state"
-                  name="state"
-                  placeholder="Current state"
-                />
+              {/*----ERROR MESSAGE FOR COUNTRY----*/}
+              {errors.country && (
+                <span key={errors.country} className="text-danger font-size-3">
+                  {errors.country}
+                </span>
+              )}
+            </div>
+            <div className="form-group ">
+              <label
+                htmlFor="type"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                State <span className="text-danger">*</span> :
+              </label>
+              <input
+                type={"text"}
+                className={
+                  errors.state
+                    ? "form-control border border-danger text-capitalize"
+                    : "form-control"
+                }
+                value={state.state}
+                onChange={onInputChange}
+                id="state"
+                name="state"
+              />
 
-                {/*----ERROR MESSAGE FOR STATE----*/}
-                {errors.state && (
-                  <span key={errors.state} className="text-danger font-size-3">
-                    {errors.state}
-                  </span>
-                )}
-              </div>
-              <div className="form-group col-md-6 ">
-                <label
-                  htmlFor="type"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  City <span className="text-danger">*</span> :
-                </label>
-                <input
-                  type={"text"}
-                  className={
-                    errors.city
-                      ? "form-control border border-danger text-capitalize"
-                      : "form-control"
-                  }
-                  value={state.city}
-                  onChange={onInputChange}
-                  id="city"
-                  name="city"
-                  placeholder="Current city"
-                />
+              {/*----ERROR MESSAGE FOR STATE----*/}
+              {errors.state && (
+                <span key={errors.state} className="text-danger font-size-3">
+                  {errors.state}
+                </span>
+              )}
+            </div>
+            <div className="form-group ">
+              <label
+                htmlFor="type"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                City <span className="text-danger">*</span> :
+              </label>
+              <input
+                type={"text"}
+                className={
+                  errors.city
+                    ? "form-control border border-danger text-capitalize"
+                    : "form-control"
+                }
+                value={state.city}
+                onChange={onInputChange}
+                id="city"
+                name="city"
+              />
 
-                {/*----ERROR MESSAGE FOR City----*/}
-                {errors.city && (
-                  <span key={errors.city} className="text-danger font-size-3">
-                    {errors.city}
-                  </span>
-                )}
-              </div>
+              {/*----ERROR MESSAGE FOR City----*/}
+              {errors.city && (
+                <span key={errors.city} className="text-danger font-size-3">
+                  {errors.city}
+                </span>
+              )}
             </div>
             <div className="form-group text-center">
               {loading === true ? (

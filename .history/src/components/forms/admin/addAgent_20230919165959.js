@@ -374,7 +374,6 @@ function AddAgent(props) {
                   name="email"
                   type={"email"}
                   disabled={props.agentId === "0" ? false : true}
-                  placeholder="Enter email address"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
                 {errors.email && (

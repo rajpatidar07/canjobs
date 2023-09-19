@@ -1856,14 +1856,3 @@ export const AddEmployerPermission = async (data) => {
   );
   return response.data;
 };
-
-/*Api to Add update agent*/
-export const AddUpdateAgent = async (data) => {
-  const response = await axios.put(`${API_URL}agent/addUpadateAgent`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
-  return response.data;
-};
