@@ -4,7 +4,6 @@ import {
   MdOutlineDashboardCustomize,
   MdOutlinePhotoFilter,
   MdAssignmentAdd,
-  MdRealEstateAgent,
 } from "react-icons/md";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
@@ -13,8 +12,8 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
-  // let admin_type = localStorage.getItem("admin_type");
+  let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
+  let admin_type = localStorage.getItem("admin_type");
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
@@ -53,7 +52,7 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={`${
+            className={`${admin_type === "manager" ? "d-none" : ""}${
               props.heading === "Manage Applicants" ? "active" : ""
             }`}
           >
@@ -67,7 +66,7 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={`${
+            className={`${admin_type === "manager" ? "d-none" : ""}${
               props.heading === "Manage Self Applicants" ? "active" : ""
             }`}
           >
@@ -81,7 +80,7 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={`${
+            className={`${admin_type === "manager" ? "d-none" : ""}${
               props.heading === "Manage Companies" ? "active" : ""
             }`}
           >
@@ -172,7 +171,9 @@ const AdminSidebar = (props) => {
             <Link
               to="/assignedjobs"
               className={
-                "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+                view_as_admin_type === "manager"
+                  ? "d-none"
+                  : "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
             >
               <MdAssignmentAdd className="sidebar_icon" />
@@ -184,7 +185,9 @@ const AdminSidebar = (props) => {
             <Link
               to="/adminprofile"
               className={
-                "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+                view_as_admin_type === "manager"
+                  ? "d-none"
+                  : "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
             >
               {/* <i className="fas fa-user mr-5"></i> */}
@@ -192,18 +195,6 @@ const AdminSidebar = (props) => {
               Manage Admin
             </Link>
           </li>
-          <li className={props.heading === "Manage Agent" ? "active" : ""}>
-            <Link
-              to="/agent"
-              className={
-                "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-              }
-            >
-              <MdRealEstateAgent className="sidebar_icon" />
-              Manage Agent
-            </Link>
-          </li>
-
           <li
             className={props.heading === "Manage Job Category" ? "active" : ""}
           >

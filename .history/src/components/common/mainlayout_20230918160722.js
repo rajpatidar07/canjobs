@@ -41,7 +41,6 @@ import CompanyProfileDetail from "../company/company_profile";
 import JobDetailpageAdmim from "../admin/job_Detail_page";
 import PDFViewer from "../user/user_pdf";
 import JobAssignedDashboard from "../admin/jobAssignedDashboard";
-import Agent from "../admin/agent";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
@@ -125,7 +124,6 @@ function MainLayout() {
             <Route path="/jobdetailpage" element={<JobDetailpageAdmim />} />
             <Route path="/company_detail" element={<CompanyProfileDetail />} />
             <Route path="/followup" element={<Followup />} />
-            <Route path="/agent" element={<Agent />} />
             <Route path="/filter" element={<FilterList />} />
             <Route path="/interview" element={<ManageInterview />} />
             <Route path="/responses" element={<JobResponse />} />

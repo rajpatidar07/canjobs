@@ -194,7 +194,7 @@ const AdminSidebar = (props) => {
           </li>
           <li className={props.heading === "Manage Agent" ? "active" : ""}>
             <Link
-              to="/agent"
+              to="/adminprofile"
               className={
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }

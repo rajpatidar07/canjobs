@@ -13,8 +13,8 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
-  // let admin_type = localStorage.getItem("admin_type");
+  let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
+  let admin_type = localStorage.getItem("admin_type");
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
@@ -194,7 +194,7 @@ const AdminSidebar = (props) => {
           </li>
           <li className={props.heading === "Manage Agent" ? "active" : ""}>
             <Link
-              to="/agent"
+              to="/adminprofile"
               className={
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
