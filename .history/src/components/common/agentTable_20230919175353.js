@@ -73,7 +73,6 @@ export default function AgentTable(props) {
     //   setAlredyApplied(false);
     // }
   }, [
-    props.search,
     props.pageNo,
     recordsPerPage,
     columnName,
@@ -283,7 +282,7 @@ export default function AgentTable(props) {
                     <tr className="text-capitalize applicant_row" key={data.id}>
                       <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {data.id}
+                          {"data.employee_id"}
                         </p>
                       </td>
                       <td className=" py-5">
@@ -318,16 +317,16 @@ export default function AgentTable(props) {
                           </div>
 
                           <div className=" mb-0">
-                            {data.name === null ||
-                            data.name === undefined ||
-                            data.name === "undefined" ||
-                            data.name === "" ? (
-                              <p className="font-size-3  mb-0">Unavailable</p>
-                            ) : (
-                              <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                {data.name}
-                              </p>
-                            )}
+                            {/* {data.name === null ||
+                              data.name === undefined ||
+                              data.name === "undefined" ||
+                              data.name === "" ? (
+                                <p className="font-size-3  mb-0">Unavailable</p>
+                              ) : ( */}
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                              {"data.name"}
+                            </p>
+                            {/*   )} */}
                             {/* {data.gender || data.marital_status ? (
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
                                   {data.gender === "female"
@@ -354,65 +353,65 @@ export default function AgentTable(props) {
                         {/* </Link> */}
                       </td>
                       <td className="py-5 ">
-                        {data.contact_no === null ? null : (
-                          <p className="m-0">
+                        {/* {data.contact_no === null ? null : ( */}
+                        <p className="m-0">
+                          +
+                          <Link
+                            className="text-dark"
+                            //   to={`tel:${data.contact_no}`}
+                          >
+                            {"data.contact_no"}
+                          </Link>
+                          <p className="text-gray font-size-2 m-0">
                             <Link
                               className="text-dark"
-                              to={`tel:${data.contact_no}`}
+                              //   to={`mailto:${data.email}`}
                             >
-                              +{data.contact_no}
+                              {"data.email"}
                             </Link>
-                            <p className="text-gray font-size-2 m-0">
-                              <Link
-                                className="text-dark"
-                                to={`mailto:${data.email}`}
-                              >
-                                {data.email}
-                              </Link>
-                            </p>
                           </p>
-                        )}
+                        </p>
+                        {/* )} */}
                       </td>
 
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
-                          {data.type === null ? (
+                          {/* {data.language === null ? (
                             <p className="font-size-3  mb-0">Unavailable</p>
-                          ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0">
-                                {data.type}
-                              </p>
-                            </h3>
-                          )}
+                          ) : ( */}
+
+                          <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <p className="text-gray font-size-2 m-0">Type</p>
+                          </h3>
+                          {/* )} */}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
-                          {data.address === null ? (
+                          {/* {data.education === null ? (
                             <p className="font-size-3  mb-0">Unavailable</p>
-                          ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {data.address}
-                            </p>
-                          )}
+                          ) : ( */}
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            address
+                          </p>
+                          {/* )} */}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
-                          {data.skill === null ? (
+                          {/* {data.skill === null ? (
                             <p className="font-size-3  mb-0">Unavailable</p>
-                          ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {` ${data.city},${data.state},${data.country}`}
-                            </p>
-                          )}
+                          ) : ( */}
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            Country
+                          </p>
+                          {/* )} */}
                         </td>
                       )}
                       <td className=" py-5 min-width-px-100">
@@ -423,22 +422,26 @@ export default function AgentTable(props) {
                         >
                           <button
                             className="btn btn-outline-info action_btn"
-                            onClick={() => props.EditAgent(data.id)}
+                            // onClick={() =>
+                            //   props.EditAgent(data.employee_id)
+                            // }
                             title="Edit Agent"
                           >
                             <span className="text-gray px-2">
                               <LiaUserEditSolid />
                             </span>
+                            {/* <span className=" fas fa-edit text-gray px-2"></span> */}
                           </button>
-                          {/* <button
+                          <button
                             className="btn btn-outline-info action_btn"
                             // onClick={() => ShowDeleteAlert(data)}
                             title="Delete Agent"
                           >
                             <span className="px-2 text-danger">
                               <RiDeleteBin5Line />
+                              {/* <i className="fa fa-trash "></i> */}
                             </span>
-                          </button> */}
+                          </button>
                         </div>
                       </td>
                     </tr>

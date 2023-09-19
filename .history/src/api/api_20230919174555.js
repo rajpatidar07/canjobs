@@ -1869,22 +1869,12 @@ export const AddUpdateAgent = async (data) => {
 };
 
 /*Api to Get agent*/
-export const GetAgent = async (search, page, limit, column, Order) => {
-  const response = await axios.post(
-    `${API_URL}agent/getAgent`,
-    {
-      page: page,
-      search: search,
-      limit: limit,
-      column_name: column,
-      sort_order: Order,
+export const GetAgent = async (data) => {
+  const response = await axios.put(`${API_URL}agent/getAgent`, "", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
     },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  });
   return response.data;
 };

@@ -46,14 +46,13 @@ export default function AgentTable(props) {
         columnName,
         sortOrder
       );
-      console.log(userData.data.data);
-      if (userData.data.data.length === 0) {
+      if (userData.data.length === 0) {
         setAgentData([]);
         setIsLoading(false);
         setTotalData(0);
       } else {
-        setAgentData(userData.data.data);
-        setTotalData(userData.data.total_rows);
+        setAgentData(userData.data);
+        setTotalData(userData.total_rows);
         setIsLoading(false);
       }
     } catch (err) {
@@ -73,7 +72,6 @@ export default function AgentTable(props) {
     //   setAlredyApplied(false);
     // }
   }, [
-    props.search,
     props.pageNo,
     recordsPerPage,
     columnName,
@@ -169,10 +167,10 @@ export default function AgentTable(props) {
                   >
                     <Link
                       to={""}
-                      onClick={() => {
-                        handleSort("contact_no");
-                        props.setpageNo(1);
-                      }}
+                      //   onClick={() => {
+                      //     handleSort("contact_no");
+                      //     props.setpageNo(1);
+                      //   }}
                       className="text-gray"
                       title="Sort by Contact"
                     >
@@ -188,10 +186,10 @@ export default function AgentTable(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => {
-                          handleSort("type");
-                          props.setpageNo(1);
-                        }}
+                        // onClick={() => {
+                        //   handleSort("type");
+                        //   props.setpageNo(1);
+                        // }}
                         className="text-gray"
                         title="Sort by Type"
                       >
@@ -208,10 +206,10 @@ export default function AgentTable(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => {
-                          handleSort("address");
-                          props.setpageNo(1);
-                        }}
+                        // onClick={() => {
+                        //   handleSort("address");
+                        //   props.setpageNo(1);
+                        // }}
                         className="text-gray"
                         title="Sort by Address"
                       >
@@ -228,10 +226,10 @@ export default function AgentTable(props) {
                     >
                       <Link
                         to={""}
-                        onClick={() => {
-                          handleSort("country");
-                          props.setpageNo(1);
-                        }}
+                        // onClick={() => {
+                        //   handleSort("country");
+                        //   props.setpageNo(1);
+                        // }}
                         className="text-gray"
                         title="Sort by Country"
                       >
@@ -253,197 +251,205 @@ export default function AgentTable(props) {
               </thead>
               <tbody>
                 {/* Map function to show the data in the list*/}
-                {totalData === 0 || agenteData.length === 0 ? (
-                  <tr>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? (
-                      <th className="bg-white text-center">No Data Found</th>
-                    ) : (
-                      <th className="bg-white"></th>
-                    )}
-                    <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="bg-white text-center">No Data Found</th>
-                    )}
-                    <th className="bg-white"></th>
-                    {props.heading !== "Dashboard" ? (
-                      <>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </tr>
-                ) : (
-                  (agenteData || []).map((data) => (
-                    <tr className="text-capitalize applicant_row" key={data.id}>
-                      <td className=" py-5">
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {data.id}
-                        </p>
-                      </td>
-                      <td className=" py-5">
-                        {/* <Link
-                        //   to={`/${data.employee_id}`}
+                {
+                  // totalData === 0 || employeeData.length === 0 ? (
+                  //   <tr>
+                  //     <th className="bg-white"></th>
+                  //     <th className="bg-white"></th>
+                  //     {props.heading === "Dashboard" ? (
+                  //       <th className="bg-white text-center">No Data Found</th>
+                  //     ) : (
+                  //       <th className="bg-white"></th>
+                  //     )}
+                  //     <th className="bg-white"></th>
+                  //     {props.heading === "Dashboard" ? null : (
+                  //       <th className="bg-white text-center">No Data Found</th>
+                  //     )}
+                  //     <th className="bg-white"></th>
+                  //     {props.heading !== "Dashboard" ? (
+                  //       <>
+                  //         <th className="bg-white"></th>
+                  //         <th className="bg-white"></th>
+                  //         <th className="bg-white"></th>
+                  //         <th className="bg-white"></th>
+                  //       </>
+                  //     ) : (
+                  //       ""
+                  //     )}
+                  //   </tr>
+                  // ) :
+                  //   (employeeData || []).map((empdata) => (
+                  <tr
+                    className="text-capitalize applicant_row"
+                    //   key={empdata.employee_id}
+                  >
+                    <td className=" py-5">
+                      <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        {"empdata.employee_id"}
+                      </p>
+                    </td>
+                    <td className=" py-5">
+                      {/* <Link
+                        //   to={`/${empdata.employee_id}`}
                           // onClick={
-                          //   data.name !== null
-                          //     ? () => employeeDetails(data.employee_id)
+                          //   empdata.name !== null
+                          //     ? () => employeeDetails(empdata.employee_id)
                           //     : null
                           // }
                           title="Employee Details"
                         > */}
-                        <div className="d-flex profile_box gx-2">
-                          <div className="media  align-items-center">
-                            <div className="circle-36 mx-auto overflow-hidden">
-                              {/* {data.profile_photo === null ? */}
-                              (
-                              <img
-                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                alt=""
-                                className="w-100"
-                              />
-                              )
-                              {/* : (
+                      <div className="d-flex profile_box gx-2">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto overflow-hidden">
+                            {/* {empdata.profile_photo === null ? */}
+                            (
+                            <img
+                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                              alt=""
+                              className="w-100"
+                            />
+                            )
+                            {/* : (
                                <img
-                                 src={data.profile_photo}
+                                 src={empdata.profile_photo}
                                  alt=""
                                  className="w-100"
                                />
                              )} */}
-                            </div>
                           </div>
+                        </div>
 
-                          <div className=" mb-0">
-                            {data.name === null ||
-                            data.name === undefined ||
-                            data.name === "undefined" ||
-                            data.name === "" ? (
-                              <p className="font-size-3  mb-0">Unavailable</p>
-                            ) : (
-                              <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                {data.name}
-                              </p>
-                            )}
-                            {/* {data.gender || data.marital_status ? (
+                        <div className=" mb-0">
+                          {/* {empdata.name === null ||
+                              empdata.name === undefined ||
+                              empdata.name === "undefined" ||
+                              empdata.name === "" ? (
+                                <p className="font-size-3  mb-0">Unavailable</p>
+                              ) : ( */}
+                          <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                            {"empdata.name"}
+                          </p>
+                          {/*   )} */}
+                          {/* {empdata.gender || empdata.marital_status ? (
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
-                                  {data.gender === "female"
+                                  {empdata.gender === "female"
                                     ? "F"
-                                    : data.gender === "male"
+                                    : empdata.gender === "male"
                                     ? "M"
                                     : "O"}
                                   //Calculation of age from date of birth
                                   (
-                                  {data.marital_status ||
-                                  data.date_of_birth
+                                  {empdata.marital_status ||
+                                  empdata.date_of_birth
                                     ? `${
-                                        data.marital_status
+                                        empdata.marital_status
                                       },${moment().diff(
-                                        data.date_of_birth,
+                                        empdata.date_of_birth,
                                         "years"
                                       )} Y`
                                     : null}
                                   )
                                 </p>
                               ) : null} */}
-                          </div>
                         </div>
-                        {/* </Link> */}
-                      </td>
-                      <td className="py-5 ">
-                        {data.contact_no === null ? null : (
-                          <p className="m-0">
-                            <Link
-                              className="text-dark"
-                              to={`tel:${data.contact_no}`}
-                            >
-                              +{data.contact_no}
-                            </Link>
-                            <p className="text-gray font-size-2 m-0">
-                              <Link
-                                className="text-dark"
-                                to={`mailto:${data.email}`}
-                              >
-                                {data.email}
-                              </Link>
-                            </p>
-                          </p>
-                        )}
-                      </td>
-
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {data.type === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
-                          ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0">
-                                {data.type}
-                              </p>
-                            </h3>
-                          )}
-                        </td>
-                      )}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {data.address === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
-                          ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {data.address}
-                            </p>
-                          )}
-                        </td>
-                      )}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {data.skill === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
-                          ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {` ${data.city},${data.state},${data.country}`}
-                            </p>
-                          )}
-                        </td>
-                      )}
-                      <td className=" py-5 min-width-px-100">
-                        <div
-                          className="btn-group button_group"
-                          role="group"
-                          aria-label="Basic example"
+                      </div>
+                      {/* </Link> */}
+                    </td>
+                    <td className="py-5 ">
+                      {/* {empdata.contact_no === null ? null : ( */}
+                      <p className="m-0">
+                        +
+                        <Link
+                          className="text-dark"
+                          //   to={`tel:${empdata.contact_no}`}
                         >
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => props.EditAgent(data.id)}
-                            title="Edit Agent"
+                          {"empdata.contact_no"}
+                        </Link>
+                        <p className="text-gray font-size-2 m-0">
+                          <Link
+                            className="text-dark"
+                            //   to={`mailto:${empdata.email}`}
                           >
-                            <span className="text-gray px-2">
-                              <LiaUserEditSolid />
-                            </span>
-                          </button>
-                          {/* <button
-                            className="btn btn-outline-info action_btn"
-                            // onClick={() => ShowDeleteAlert(data)}
-                            title="Delete Agent"
-                          >
-                            <span className="px-2 text-danger">
-                              <RiDeleteBin5Line />
-                            </span>
-                          </button> */}
-                        </div>
+                            {"empdata.email"}
+                          </Link>
+                        </p>
+                      </p>
+                      {/* )} */}
+                    </td>
+
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <td className=" py-5">
+                        {/* {empdata.language === null ? (
+                            <p className="font-size-3  mb-0">Unavailable</p>
+                          ) : ( */}
+
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <p className="text-gray font-size-2 m-0">Type</p>
+                        </h3>
+                        {/* )} */}
                       </td>
-                    </tr>
-                  ))
-                )}
+                    )}
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <td className=" py-5">
+                        {/* {empdata.education === null ? (
+                            <p className="font-size-3  mb-0">Unavailable</p>
+                          ) : ( */}
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                          address
+                        </p>
+                        {/* )} */}
+                      </td>
+                    )}
+                    {props.heading === "Dashboard" ? (
+                      ""
+                    ) : (
+                      <td className=" py-5">
+                        {/* {empdata.skill === null ? (
+                            <p className="font-size-3  mb-0">Unavailable</p>
+                          ) : ( */}
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                          Country
+                        </p>
+                        {/* )} */}
+                      </td>
+                    )}
+                    <td className=" py-5 min-width-px-100">
+                      <div
+                        className="btn-group button_group"
+                        role="group"
+                        aria-label="Basic example"
+                      >
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          // onClick={() =>
+                          //   props.EditAgent(empdata.employee_id)
+                          // }
+                          title="Edit Agent"
+                        >
+                          <span className="text-gray px-2">
+                            <LiaUserEditSolid />
+                          </span>
+                          {/* <span className=" fas fa-edit text-gray px-2"></span> */}
+                        </button>
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          // onClick={() => ShowDeleteAlert(empdata)}
+                          title="Delete Agent"
+                        >
+                          <span className="px-2 text-danger">
+                            <RiDeleteBin5Line />
+                            {/* <i className="fa fa-trash "></i> */}
+                          </span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  //   ))
+                }
               </tbody>
             </table>
           )}
@@ -454,7 +460,7 @@ export default function AgentTable(props) {
             currentPage={props.pageNo}
             setCurrentPage={props.setpageNo}
             total={totalData}
-            count={agenteData.length}
+            count={employeeData.length}
           /> */}
         </div>
       </div>

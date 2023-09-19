@@ -73,7 +73,6 @@ export default function AgentTable(props) {
     //   setAlredyApplied(false);
     // }
   }, [
-    props.search,
     props.pageNo,
     recordsPerPage,
     columnName,

@@ -73,7 +73,6 @@ export default function AgentTable(props) {
     //   setAlredyApplied(false);
     // }
   }, [
-    props.search,
     props.pageNo,
     recordsPerPage,
     columnName,
@@ -430,15 +429,16 @@ export default function AgentTable(props) {
                               <LiaUserEditSolid />
                             </span>
                           </button>
-                          {/* <button
+                          <button
                             className="btn btn-outline-info action_btn"
                             // onClick={() => ShowDeleteAlert(data)}
                             title="Delete Agent"
                           >
                             <span className="px-2 text-danger">
                               <RiDeleteBin5Line />
+                              {/* <i className="fa fa-trash "></i> */}
                             </span>
-                          </button> */}
+                          </button>
                         </div>
                       </td>
                     </tr>

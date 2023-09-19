@@ -73,7 +73,6 @@ export default function AgentTable(props) {
     //   setAlredyApplied(false);
     // }
   }, [
-    props.search,
     props.pageNo,
     recordsPerPage,
     columnName,
@@ -356,11 +355,12 @@ export default function AgentTable(props) {
                       <td className="py-5 ">
                         {data.contact_no === null ? null : (
                           <p className="m-0">
+                            +
                             <Link
                               className="text-dark"
                               to={`tel:${data.contact_no}`}
                             >
-                              +{data.contact_no}
+                              {data.contact_no}
                             </Link>
                             <p className="text-gray font-size-2 m-0">
                               <Link
@@ -430,15 +430,16 @@ export default function AgentTable(props) {
                               <LiaUserEditSolid />
                             </span>
                           </button>
-                          {/* <button
+                          <button
                             className="btn btn-outline-info action_btn"
                             // onClick={() => ShowDeleteAlert(data)}
                             title="Delete Agent"
                           >
                             <span className="px-2 text-danger">
                               <RiDeleteBin5Line />
+                              {/* <i className="fa fa-trash "></i> */}
                             </span>
-                          </button> */}
+                          </button>
                         </div>
                       </td>
                     </tr>

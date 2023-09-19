@@ -226,7 +226,6 @@ function Agent() {
                 setApiCall={setApiCall}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                EditAgent={EditAgent}
               />
             </div>
           </div>
