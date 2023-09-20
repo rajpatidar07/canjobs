@@ -7,7 +7,7 @@ import ItSkills from "../forms/user/skills";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import LimaArrowProfile from "../common/LimaArrowProfile";
-import ContactPage from "../common/contactPage"
+import ContactPage from "../common/contactPage";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   EmployeeDetails,
@@ -190,10 +190,10 @@ const NewUserProfile = (props) => {
     const days = duration.days();
 
     return `${
-      years === 1 ? years + "year ," : years > 1 ? years + "years ," : ""
+      years === 1 ? years + "year," : years > 1 ? years + "years," : ""
     } ${
-      months === 1 ? months + "month ," : months > 1 ? months + "months ," : ""
-    } ${days === 1 ? days + "day" : days !== 1 ? days + "days" : ""}`;
+      months === 1 ? months + "month," : months > 1 ? months + "months" : ""
+    }`;
   };
   const [status, setStatus] = useState("");
   /*function to change applicants status */
@@ -314,7 +314,6 @@ const NewUserProfile = (props) => {
                       </h4>
                       <div className="m-0 age_gender font-size-3 d-flex align-items-center">
                         <p>
-                          
                           {PersonalDetail.gender ||
                           PersonalDetail.marital_status ||
                           PersonalDetail.marital_status ||
@@ -621,11 +620,13 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                {visaStatus && user_type==="admin"?<VisaArrowProfile
-                  visaStatus={visaStatus}
-                  visaStatusRejectComment={visaStatusRejectComment}
-                  apiCall={apiCall}
-                />:null}
+                {visaStatus && user_type === "admin" ? (
+                  <VisaArrowProfile
+                    visaStatus={visaStatus}
+                    visaStatusRejectComment={visaStatusRejectComment}
+                    apiCall={apiCall}
+                  />
+                ) : null}
               </div>
 
               <div className="col-12 order-2 order-xl-1">
@@ -784,7 +785,7 @@ const NewUserProfile = (props) => {
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
-                     <li className="tab-menu-items nav-item">
+                    <li className="tab-menu-items nav-item">
                       <Link
                         className={
                           TabActive === "conatct"
@@ -817,7 +818,7 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
-                        <div className="col-12 mb-1 border-bottom">
+                        <div className="col-12 mb-1 border-bottom p-0">
                           <div className="bg-white  d-flex">
                             <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
                               <Link
@@ -868,8 +869,7 @@ const NewUserProfile = (props) => {
                                     : ""}
                                 </h4>
                                 <div className="m-0 age_gender font-size-3 d-flex align-items-center">
-                                  <p>
-                                    
+                                  <p className="m-0">
                                     {PersonalDetail.gender ||
                                     PersonalDetail.marital_status ||
                                     PersonalDetail.marital_status ||
@@ -985,7 +985,7 @@ const NewUserProfile = (props) => {
                                     className="text-dark font-size-5 w-100 text-break"
                                     to={`mailto:${PersonalDetail.email}`}
                                   >
-                                    <BsEnvelope className="text-primary font-size-5 " />
+                                    <BsEnvelope className="text-primary font-size-5 mr-2" />
                                     {PersonalDetail.email}
                                   </Link>
                                   {user_type === "admin" ||
@@ -1005,7 +1005,7 @@ const NewUserProfile = (props) => {
                                     className="text-dark font-size-5 w-100"
                                     to={`tel:${PersonalDetail.contact_no}`}
                                   >
-                                    <BiPhoneCall className="text-primary font-size-5" />
+                                    <BiPhoneCall className="text-primary font-size-5 mr-2" />
                                     {PersonalDetail.contact_no}
                                   </Link>
                                 )}
@@ -1122,7 +1122,6 @@ const NewUserProfile = (props) => {
                                       >
                                         Canada Work Permit:
                                         <b>
-                                          
                                           {PersonalDetail.work_permit_canada}
                                         </b>
                                       </span>
@@ -1133,7 +1132,6 @@ const NewUserProfile = (props) => {
                                       <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                                         Work Permit of Other Country:
                                         <b>
-                                          
                                           {
                                             PersonalDetail.work_permit_other_country
                                           }
@@ -1155,7 +1153,7 @@ const NewUserProfile = (props) => {
                             </div>
 
                             {PersonalDetail.resume ? (
-                              <div className="col-1 px-5 pt-5 pb-5 d-flex align-items-center">
+                              <div className="col-1 px-5 pt-5 pb-5 d-flex align-items-center justify-content-center">
                                 <span className="font-size-5">
                                   <Link
                                     to={""}
@@ -1175,7 +1173,7 @@ const NewUserProfile = (props) => {
                   <div className="profile_email_mobile"></div> */}
                           </div>
                         </div>
-                        <div className="col-md-6 p-10 border-right ">
+                        <div className="col-md-6 p-7 border-right ">
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>About</span>
                           </h4>
@@ -1210,7 +1208,7 @@ const NewUserProfile = (props) => {
                         {/*----Employee's Education Profile----*/}
                         <div
                           id="Career_Profile"
-                          className=" p-10 col-md-6 border-right"
+                          className="p-7 col-md-6 border-right"
                         >
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Career Profile</span>
@@ -1247,23 +1245,21 @@ const NewUserProfile = (props) => {
                                 <div className="w-100" key={i}>
                                   <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                     <div className="media align-items-center company_box col-md-6 p-0">
-                                      <div className="text_box text-left w-100 mt-n2 text-capitalize">
-                                        <h3 className="mb-0">
-                                          <span className="font-size-6 text-black-2 font-weight-semibold">
-                                            {CareerDetails.designation} -
-                                            <span className="font-size-4">
-                                              {CareerDetails.functional_area}
-                                            </span>
+                                      <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">
+                                        <span className="font-size-5 text-black-2 font-weight-semibold w-100">
+                                          {CareerDetails.designation} -
+                                          <span className="font-size-4">
+                                            {CareerDetails.functional_area}
                                           </span>
-                                        </h3>
-                                        <span className="font-size-4 text-default-color line-height-2">
+                                        </span>
+                                        <span className="font-size-3 text-default-color">
                                           {CareerDetails.company} (
                                           {CareerDetails.industry})
                                         </span>
                                       </div>
                                     </div>
                                     <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
-                                      <span className="font-size-4 text-gray w-100">
+                                      <span className="font-size-3 text-gray w-100">
                                         {/* {moment(CareerDetails.start_date).format(
                                     "DD-MM-YYYY"
                                   )}
@@ -1279,7 +1275,7 @@ const NewUserProfile = (props) => {
                                       <span className="font-size-3 text-gray w-100">
                                         <span
                                           className="mr-4"
-                                          style={{ marginTop: "-2px" }}
+                                          // style={{ marginTop: "-2px" }}
                                         >
                                           <img
                                             src="image/svg/icon-loaction-pin-black.svg"
@@ -1296,7 +1292,7 @@ const NewUserProfile = (props) => {
                           )}
                         </div>
                         {/* Employee's Skills */}
-                        <div className="border-top p-10 col-md-6 border-right">
+                        <div className="border-top p-7 col-md-6 border-right">
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Skill</span>
                             {user_type === "company" ||
@@ -1309,7 +1305,7 @@ const NewUserProfile = (props) => {
                               </CustomButton>
                             )}
                           </h4>
-                          <div className="icon-link d-flex align-items-center justify-content-center flex-wrap ">
+                          <div className="icon-link d-flex align-items-center flex-wrap ">
                             {showItSkills ? (
                               <ItSkills
                                 show={showItSkills}
@@ -1342,7 +1338,7 @@ const NewUserProfile = (props) => {
                         {/*----Employee's Education Profile----*/}
                         <div
                           id="Education_Profile"
-                          className="border-top col-md-6 p-10"
+                          className="border-top col-md-6 p-7"
                         >
                           <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                             <span>Education</span>
@@ -1743,22 +1739,21 @@ const NewUserProfile = (props) => {
                   >
                     {TabActive === "payment" ? (
                       <div className="p-10 activity_container">
-                        <PayentForm/>
-                        </div>
+                        <PayentForm />
+                      </div>
                     ) : null}
                   </div>
                   <div
-                  className={
-                    TabActive === "contact"
-                      ? "justify-content-center "
-                      : "d-none"
-                  }
-                >
-                  {TabActive === "contact" ? (
-                    <ContactPage
-                    email={PersonalDetail.email}/>
-                  ) : null}
-                </div>
+                    className={
+                      TabActive === "contact"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "contact" ? (
+                      <ContactPage email={PersonalDetail.email} />
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>

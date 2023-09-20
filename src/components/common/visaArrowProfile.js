@@ -21,9 +21,7 @@ export default function VisaArrowProfile({
                 key={i}
               >
                 <div className="job_name text-dark">
-                  <span className="m-2 font-size-2 d-block mb-1">
-                    visa
-                  </span>
+                  <span className="m-2 font-size-2 d-block mb-1">VISA</span>
                 </div>
                 <div>
                   <div
@@ -35,7 +33,9 @@ export default function VisaArrowProfile({
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : item.visa_status === "onboard"  ? "pending" : ""
+                        : item.visa_status === "onboard"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>onboard</span>
@@ -48,7 +48,9 @@ export default function VisaArrowProfile({
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : item.visa_status === "documentation"  ? "pending" : ""
+                        : item.visa_status === "documentation"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>documentation</span>
@@ -60,7 +62,9 @@ export default function VisaArrowProfile({
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : item.visa_status === "file preparation"  ? "pending" : ""
+                        : item.visa_status === "file preparation"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>file preparation</span>
@@ -71,7 +75,9 @@ export default function VisaArrowProfile({
                       item.visa_status === "file submission" ||
                       item.visa_status === "file decision"
                         ? "approved"
-                        : item.visa_status === "file review"? "pending" : ""
+                        : item.visa_status === "file review"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>file review</span>
@@ -80,8 +86,10 @@ export default function VisaArrowProfile({
                     key={i + 5}
                     className={` step text-capitalize ${
                       item.visa_status === "file decision"
-                      ? "approved"
-                      : item.visa_status === "file submission" ? "pending" : ""
+                        ? "approved"
+                        : item.visa_status === "file submission"
+                        ? "pending"
+                        : ""
                     }`}
                   >
                     <span>file submission</span>
@@ -96,50 +104,52 @@ export default function VisaArrowProfile({
                   >
                     <span>file decision</span>
                   </div> */}
-                {/*Comment for the decision status of the visa*/}
-                {item.visa_status === "file decision" &&
-                visaStatusRejectComment[i] !== undefined ?
-                  (visaStatusRejectComment[i] || []).map((subitem, i) => {
-                    return subitem.misc_id === item.visa_id ? (
-                      <div
-                    key={i }
-                    className={` step text-capitalize ${
-                      subitem.substage === "approved"
-                          ? "approved"
-                          : subitem.substage === "rejected"
-                          ? "rejected"
-                          :  "pending"
-                    }`}
-                  >
-                    <span>{subitem.substage === "approved"
-                          ? "Approved"
-                          : subitem.substage === "awaiting decision"
-                          ? "Pending"
-                          : subitem.substage === "rejected"
-                          ? "Rejected"
-                          : "awaiting decision"}</span>
-                  </div>
-                      // <small className="mx-10" key={i}>
-                        // {subitem.substage === "approved"
-                        //   ? "Congratulation your Visa is Approved"
-                        //   : subitem.substage === "awaiting decision"
-                        //   ? "Your Visa is in progress"
-                        //   : subitem.substage === "rejected"
-                        //   ? "Sorry to inform you your Visa got rejected."
-                        //   : ""}
+                  {/*Comment for the decision status of the visa*/}
+                  {item.visa_status === "file decision" &&
+                  visaStatusRejectComment[i] !== undefined ? (
+                    (visaStatusRejectComment[i] || []).map((subitem, i) => {
+                      return subitem.misc_id === item.visa_id ? (
+                        <div
+                          key={i}
+                          className={` step text-capitalize ${
+                            subitem.substage === "approved"
+                              ? "approved"
+                              : subitem.substage === "rejected"
+                              ? "rejected"
+                              : "pending"
+                          }`}
+                        >
+                          <span>
+                            {subitem.substage === "approved"
+                              ? "Approved"
+                              : subitem.substage === "awaiting decision"
+                              ? "Pending"
+                              : subitem.substage === "rejected"
+                              ? "Rejected"
+                              : "awaiting decision"}
+                          </span>
+                        </div>
+                      ) : // <small className="mx-10" key={i}>
+                      // {subitem.substage === "approved"
+                      //   ? "Congratulation your Visa is Approved"
+                      //   : subitem.substage === "awaiting decision"
+                      //   ? "Your Visa is in progress"
+                      //   : subitem.substage === "rejected"
+                      //   ? "Sorry to inform you your Visa got rejected."
+                      //   : ""}
                       // </small>
-                    ) : null;
-                  }):
-                  <div
-                    key={i + 6}
-                    className={` step text-capitalize ${
-                      item.visa_status === "file decision"
-                        ? "pending"
-                        : ""
-                    }`}
-                  >
-                    <span>awaiting decision</span>
-                  </div>}
+                      null;
+                    })
+                  ) : (
+                    <div
+                      key={i + 6}
+                      className={` step text-capitalize ${
+                        item.visa_status === "file decision" ? "pending" : ""
+                      }`}
+                    >
+                      <span>awaiting decision</span>
+                    </div>
+                  )}
                 </div>
               </div>
             )
