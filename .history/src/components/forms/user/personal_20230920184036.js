@@ -181,9 +181,9 @@ function PersonalDetails(props) {
     // ],
     reffer_by: [
       props.employeeId === "0"
-        ? null
-        : (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
+        ? (value) =>
+            value === "" || value === null ? "Refferer is required" : null
+        : null,
     ],
   };
 
@@ -225,8 +225,8 @@ function PersonalDetails(props) {
     setState({ ...state, reffer_by: option.value });
   };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();

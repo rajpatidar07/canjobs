@@ -6,9 +6,7 @@ import {
   SendOtp,
   LinkedSignup,
   SocialLogin,
-  GetAgentJson,
 } from "../../api/api";
-import Select from "react-select";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -40,7 +38,6 @@ export default function EmployeeSignupModal(props) {
     password: "",
     resume: "",
     otp: "",
-    reffer_by: "",
   };
   // VALIDATION CONDITIONS termsErr
   const validators = {
@@ -64,10 +61,6 @@ export default function EmployeeSignupModal(props) {
     ],
     resume: [
       (value) => (value === "" || value === null ? "Resume is required" : null),
-    ],
-    reffer_by: [
-      (value) =>
-        value === "" || value === null ? "Refferer is required" : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -236,7 +229,6 @@ export default function EmployeeSignupModal(props) {
           console.log(err.data);
         });
     }
-    AgentJson();
   }, []);
 
   /*FUnctiom to Sign Up with facebook */
@@ -282,25 +274,7 @@ export default function EmployeeSignupModal(props) {
     let finalBase = base64Name.split(",")[1];
     setState({ ...state, resume: finalBase });
   };
-  /*Function to get agent json list */
-  const AgentJson = async () => {
-    try {
-      let response = await GetAgentJson();
-      // setAgentJson(response);
-      const options = (response || []).map((option) => ({
-        value: option.id,
-        label: option.u_id + "  " + option.name,
-      }));
-      // console.log(agentJson);
-      setState({ ...state, reffer_by: options });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  /*Function to set data to the search job by country */
-  const onSelectChange = (option) => {
-    setState({ ...state, reffer_by: option.value });
-  };
+
   return (
     <>
       {/* <!-- Sign Up Modal --> */}
@@ -321,7 +295,7 @@ export default function EmployeeSignupModal(props) {
               setState(initialFormState);
               setErrors("");
               props.close();
-              setSingUpSuccess();
+              setSingUpSuccess()
             }}
           >
             <i className="fas fa-times"></i>
@@ -458,34 +432,6 @@ export default function EmployeeSignupModal(props) {
                             className="text-danger font-size-3"
                           >
                             {errors.email}
-                          </span>
-                        )}
-                      </div>
-                      <div className="form-group col-md-4">
-                        <label
-                          htmlFor="reffer_by"
-                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                        >
-                          Reffered by:<span className="text-danger">*</span>
-                        </label>
-                        <Select
-                          options={"" || state.reffer_by}
-                          name="reffer_by"
-                          id="reffer_by"
-                          onChange={onSelectChange}
-                          className={
-                            errors.reffer_by
-                              ? "form-control border border-danger"
-                              : "form-control"
-                          }
-                        />
-                        {/* ERROR MSG FOR REFFER BY */}
-                        {errors.reffer_by && (
-                          <span
-                            key={errors.reffer_by}
-                            className="text-danger font-size-3"
-                          >
-                            {errors.reffer_by}
                           </span>
                         )}
                       </div>

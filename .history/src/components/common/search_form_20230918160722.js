@@ -18,13 +18,12 @@ function SearchForm() {
     country_value: country ? country : "",
   });
   let [Json, setJson] = useState([]);
-  /*Function to get the jSon */
+  /*Function to get thejSon */
   const JsonData = async () => {
-    try {
-      let Json = await getJson();
-      setJson(Json);
-    } catch (err) {
-      console.log(err);
+    try{let Json = await getJson();
+    setJson(Json);}
+    catch(err){
+      console.log(err)
     }
   };
   let navigate = useNavigate();
@@ -46,11 +45,14 @@ function SearchForm() {
   /*Onclick Function to search */
   const Onsearch = () => {
     if (user_type === "company") {
-      navigate(`/empsearch?search=${state.search}`);
-      setState({ ...state, search: "" });
+      navigate(
+        `/empsearch?search=${state.search}`
+      );
+      setState({...state,search : ""})
+
     } else {
       navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
-      setState({ ...state, search: "", country: "" });
+      setState({...state,search : "",country : ""})
     }
   };
   return (
@@ -79,21 +81,20 @@ function SearchForm() {
               </span>
             </div>
             {/* <!-- select-city starts --> */}
-            {user_type === "company" ? null : (
-              <div className="form-group position-relative">
-                <Select
-                  options={"" || state.country}
-                  name="country"
-                  id="country"
-                  onChange={onSelectChange}
-                  className="bg-white pl-13"
-                />
+            {user_type === "company" ? null :
+            <div className="form-group position-relative">
+              <Select
+                options={"" || state.country}
+                name="country"
+                id="country"
+                onChange={onSelectChange}
+                className="bg-white pl-13"
+              />
 
-                <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
-                  <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
-                </span>
-              </div>
-            )}
+              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
+                <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
+              </span>
+            </div>}
           </div>
           {/* <!-- ./select-city ends --> */}
           <button
@@ -104,25 +105,20 @@ function SearchForm() {
             Search
           </button>
         </div>
-        {path === "/jobs" ||
-        path === "/managejobs" ||
-        path === "/response" ||
-        user_type === "company" ? null : (
-          <div className="row m-0 job_filter_block mt-5">
-            {/* <Filterbox
+      {path === "/jobs"  || path === "/managejobs" || path === "/response" ||user_type === "company"  ? null :  <div className="row m-0 job_filter_block mt-5">
+          {/* <Filterbox
             name="country"
             filterheading=" Jobs by Location"
             filterjson={filterjson.location}
             type={"location"}
           /> */}
-            <Filterbox
-              name="category"
-              filterheading=" Jobs by Category"
-              filterjson={Json.Category}
-              type={"category"}
-            />
-          </div>
-        )}
+          <Filterbox
+            name="category"
+            filterheading=" Jobs by Category"
+            filterjson={Json.Category}
+            type={"category"}
+          />
+        </div>}
       </div>
     </form>
   );

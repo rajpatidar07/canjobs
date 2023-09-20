@@ -179,12 +179,6 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    reffer_by: [
-      props.employeeId === "0"
-        ? null
-        : (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
-    ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -208,14 +202,11 @@ function PersonalDetails(props) {
   const AgentJson = async () => {
     try {
       let response = await GetAgentJson();
-      console.log(response);
-      if (Array.isArray(response)) {
-        const options = response.map((option) => ({
-          value: option.id,
-          label: option.u_id + "  " + option.name,
-        }));
-        setState({ ...state, reffer_by: options });
-      }
+      const options = (response || []).map((option) => ({
+        value: option.id,
+        label: option.u_id + "  " + option.name,
+      }));
+      setState({ ...state, reffer_by: options });
     } catch (err) {
       console.log(err);
     }
@@ -225,8 +216,8 @@ function PersonalDetails(props) {
     setState({ ...state, reffer_by: option.value });
   };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();
@@ -897,11 +888,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              <div
-                className={
-                  props.employeeId === "0" ? "form-group col-md-4" : "d-none"
-                }
-              >
+              <div className="form-group col-md-4">
                 <label
                   htmlFor="reffer_by"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -919,15 +906,6 @@ function PersonalDetails(props) {
                       : "form-control"
                   }
                 />
-                {/* ERROR MSG FOR REFFER BY */}
-                {errors.reffer_by && (
-                  <span
-                    key={errors.reffer_by}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.reffer_by}
-                  </span>
-                )}
               </div>
               <div className="form-group col-md-4">
                 <label

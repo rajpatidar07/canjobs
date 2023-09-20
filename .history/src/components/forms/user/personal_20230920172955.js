@@ -179,12 +179,6 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    reffer_by: [
-      props.employeeId === "0"
-        ? null
-        : (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
-    ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -209,24 +203,13 @@ function PersonalDetails(props) {
     try {
       let response = await GetAgentJson();
       console.log(response);
-      if (Array.isArray(response)) {
-        const options = response.map((option) => ({
-          value: option.id,
-          label: option.u_id + "  " + option.name,
-        }));
-        setState({ ...state, reffer_by: options });
-      }
     } catch (err) {
       console.log(err);
     }
   };
-  /*Function to set data to the search job by country */
-  const onSelectChange = (option) => {
-    setState({ ...state, reffer_by: option.value });
-  };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();
@@ -314,7 +297,20 @@ function PersonalDetails(props) {
     setState({ ...state, profile_photo: base64Name });
   };
   // console.log(state.profile_photo);
+  // /*Function to set data to the search job by country */
+  // const onSelectChange = (option) => {
+  //   setState({ ...state, reffer_by: option.value });
+  // };
 
+  // /*Function to redender the data in the option of the select box*/
+  // useEffect(() => {
+  //   JsonData();
+  //   const options = (FilterJson.location || []).map((option) => ({
+  //     value: option,
+  //     label: option,
+  //   }));
+  //   setState({ ...state, reffer_by: options });
+  // }, []);
   return (
     <>
       <Modal
@@ -897,11 +893,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              <div
-                className={
-                  props.employeeId === "0" ? "form-group col-md-4" : "d-none"
-                }
-              >
+              <div className="form-group col-md-4">
                 <label
                   htmlFor="reffer_by"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -912,22 +904,13 @@ function PersonalDetails(props) {
                   options={"" || state.reffer_by}
                   name="reffer_by"
                   id="reffer_by"
-                  onChange={onSelectChange}
+                  // onChange={onSelectChange}
                   className={
                     errors.work_permit_other_country
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                 />
-                {/* ERROR MSG FOR REFFER BY */}
-                {errors.reffer_by && (
-                  <span
-                    key={errors.reffer_by}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.reffer_by}
-                  </span>
-                )}
               </div>
               <div className="form-group col-md-4">
                 <label

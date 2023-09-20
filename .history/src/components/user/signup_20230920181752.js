@@ -8,7 +8,6 @@ import {
   SocialLogin,
   GetAgentJson,
 } from "../../api/api";
-import Select from "react-select";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -479,7 +478,7 @@ export default function EmployeeSignupModal(props) {
                               : "form-control"
                           }
                         />
-                        {/* ERROR MSG FOR REFFER BY */}
+                        {/* ERROR MSG FOR PASSWORD */}
                         {errors.reffer_by && (
                           <span
                             key={errors.reffer_by}

@@ -180,10 +180,10 @@ function PersonalDetails(props) {
     //       : "",
     // ],
     reffer_by: [
-      props.employeeId === "0"
-        ? null
-        : (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
+      props.id === "0"
+        ? (value) =>
+            value === "" || value === null ? "Refferer is required" : null
+        : null,
     ],
   };
 
@@ -225,8 +225,8 @@ function PersonalDetails(props) {
     setState({ ...state, reffer_by: option.value });
   };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();
@@ -898,9 +898,7 @@ function PersonalDetails(props) {
                 )}
               </div>
               <div
-                className={
-                  props.employeeId === "0" ? "form-group col-md-4" : "d-none"
-                }
+                className={props.id === "0" ? "d-none" : "form-group col-md-4"}
               >
                 <label
                   htmlFor="reffer_by"

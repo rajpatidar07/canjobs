@@ -180,10 +180,8 @@ function PersonalDetails(props) {
     //       : "",
     // ],
     reffer_by: [
-      props.employeeId === "0"
-        ? null
-        : (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
+      (value) =>
+        value === "" || value === null ? "Refferer is required" : null,
     ],
   };
 
@@ -208,9 +206,8 @@ function PersonalDetails(props) {
   const AgentJson = async () => {
     try {
       let response = await GetAgentJson();
-      console.log(response);
-      if (Array.isArray(response)) {
-        const options = response.map((option) => ({
+      if (response) {
+        const options = (response || []).map((option) => ({
           value: option.id,
           label: option.u_id + "  " + option.name,
         }));
@@ -225,8 +222,8 @@ function PersonalDetails(props) {
     setState({ ...state, reffer_by: option.value });
   };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();
@@ -897,11 +894,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              <div
-                className={
-                  props.employeeId === "0" ? "form-group col-md-4" : "d-none"
-                }
-              >
+              <div className="form-group col-md-4">
                 <label
                   htmlFor="reffer_by"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

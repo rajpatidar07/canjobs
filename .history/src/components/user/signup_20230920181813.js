@@ -479,7 +479,7 @@ export default function EmployeeSignupModal(props) {
                               : "form-control"
                           }
                         />
-                        {/* ERROR MSG FOR REFFER BY */}
+                        {/* ERROR MSG FOR PASSWORD */}
                         {errors.reffer_by && (
                           <span
                             key={errors.reffer_by}

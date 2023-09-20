@@ -225,8 +225,8 @@ function PersonalDetails(props) {
     setState({ ...state, reffer_by: option.value });
   };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();

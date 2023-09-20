@@ -8,7 +8,6 @@ import {
   SocialLogin,
   GetAgentJson,
 } from "../../api/api";
-import Select from "react-select";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -65,10 +64,7 @@ export default function EmployeeSignupModal(props) {
     resume: [
       (value) => (value === "" || value === null ? "Resume is required" : null),
     ],
-    reffer_by: [
-      (value) =>
-        value === "" || value === null ? "Refferer is required" : null,
-    ],
+    reffer_by: [value === "" || value === null ? "Refferer is required" : null],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, setErrors, errors, validate } =
@@ -479,7 +475,7 @@ export default function EmployeeSignupModal(props) {
                               : "form-control"
                           }
                         />
-                        {/* ERROR MSG FOR REFFER BY */}
+                        {/* ERROR MSG FOR PASSWORD */}
                         {errors.reffer_by && (
                           <span
                             key={errors.reffer_by}
