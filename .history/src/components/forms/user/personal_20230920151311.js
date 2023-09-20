@@ -7,7 +7,6 @@ import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-import Select from "react-select";
 function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
@@ -38,8 +37,8 @@ function PersonalDetails(props) {
     status: props.employeeId === "0" ? "1" : "",
     reffer_by: "",
   };
-
   /* Functionality to close the modal */
+
   const close = () => {
     setState(initialFormStateuser);
     setErrors("");
@@ -283,20 +282,7 @@ function PersonalDetails(props) {
     setState({ ...state, profile_photo: base64Name });
   };
   // console.log(state.profile_photo);
-  // /*Function to set data to the search job by country */
-  // const onSelectChange = (option) => {
-  //   setState({ ...state, reffer_by: option.value });
-  // };
 
-  // /*Function to redender the data in the option of the select box*/
-  // useEffect(() => {
-  //   JsonData();
-  //   const options = (FilterJson.location || []).map((option) => ({
-  //     value: option,
-  //     label: option,
-  //   }));
-  //   setState({ ...state, reffer_by: options });
-  // }, []);
   return (
     <>
       <Modal
@@ -878,25 +864,6 @@ function PersonalDetails(props) {
                     {errors.work_permit_other_country}
                   </span>
                 )}
-              </div>
-              <div className="form-group col-md-4">
-                <label
-                  htmlFor="reffer_by"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Reffered by:<span className="text-danger">*</span>
-                </label>
-                <Select
-                  options={"" || state.reffer_by}
-                  name="reffer_by"
-                  id="reffer_by"
-                  // onChange={onSelectChange}
-                  className={
-                    errors.work_permit_other_country
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                />
               </div>
               <div className="form-group col-md-4">
                 <label

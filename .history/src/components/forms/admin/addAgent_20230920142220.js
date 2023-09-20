@@ -213,7 +213,7 @@ function AddAgent(props) {
       try {
         const responseData = await AddUpdateAgent(state);
         console.log(responseData);
-        if (responseData.message === "created successfully") {
+        if (responseData.message === "successfully") {
           toast.success("Agent added successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,

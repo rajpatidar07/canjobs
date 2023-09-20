@@ -1889,19 +1889,3 @@ export const GetAgent = async (id, search, page, limit, column, Order) => {
   );
   return response.data;
 };
-/*Api to delte agent */
-export const DeleteAgent = async (id) => {
-  const response = await axios.post(
-    `${API_URL}agent/deleteAgent`,
-    {
-      id: id,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response.data;
-};

@@ -7,7 +7,6 @@ import { AddEmployeeDetails, EmployeeDetails } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-import Select from "react-select";
 function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
@@ -879,24 +878,18 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div>
-              <div className="form-group col-md-4">
-                <label
-                  htmlFor="reffer_by"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Reffered by:<span className="text-danger">*</span>
-                </label>
+              <div className="form-group position-relative">
                 <Select
                   options={"" || state.reffer_by}
                   name="reffer_by"
                   id="reffer_by"
-                  // onChange={onSelectChange}
-                  className={
-                    errors.work_permit_other_country
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
+                  onChange={onSelectChange}
+                  className="bg-white pl-13"
                 />
+
+                <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
+                  <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
+                </span>
               </div>
               <div className="form-group col-md-4">
                 <label

@@ -145,17 +145,7 @@ export default function AgentTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("u_id");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      DN
-                    </Link>
+                    DN
                   </th>
                   <th
                     scope="col"

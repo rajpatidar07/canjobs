@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import SAlert from "../common/sweetAlert";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Pagination from "../common/pagination";
+// import SAlert from "../common/sweetAlert";
+// import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { LiaUserEditSolid } from "react-icons/lia";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { GetAgent, DeleteAgent } from "../../api/api";
+// import { RiDeleteBin5Line } from "react-icons/ri";
+import { GetAgent } from "../../api/api";
 export default function AgentTable(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -25,14 +25,14 @@ export default function AgentTable(props) {
   //   const [alredyApplied, setAlredyApplied] = useState(false);
   //   let [employeeId, setemployeeId] = useState();
   /*delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
+  //   const [deleteAlert, setDeleteAlert] = useState(false);
+  //   const [deleteId, setDeleteID] = useState();
+  //   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("id");
+  const [columnName, setcolumnName] = useState("agent_id");
   const [sortOrder, setSortOrder] = useState("");
   /* Function to get Employee data*/
   const AgentData = async () => {
@@ -47,6 +47,7 @@ export default function AgentTable(props) {
         columnName,
         sortOrder
       );
+      console.log(userData.data.data);
       if (userData.data.data.length === 0) {
         setAgentData([]);
         setIsLoading(false);
@@ -88,16 +89,16 @@ export default function AgentTable(props) {
   // };
 
   /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.id);
-    setDeleteName(e.name);
-    setDeleteAlert(true);
-  };
+  //   const ShowDeleteAlert = (e) => {
+  //     setDeleteID(e.employee_id);
+  //     setDeleteName(e.name);
+  //     setDeleteAlert(true);
+  //   };
 
   //   /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
+  //   const CancelDelete = () => {
+  //     setDeleteAlert(false);
+  //   };
 
   /*Function to open add Document up modal */
   // const AddDoucument = (e) => {
@@ -106,24 +107,24 @@ export default function AgentTable(props) {
   // };
   // /*
   /*To call Api to delete employee */
-  async function OnDeleteAgent(e) {
-    try {
-      const responseData = await DeleteAgent(e);
-      if (responseData.message === "successfully") {
-        toast.error("Agent deleted Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlert(false);
-        setApiCall(true);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //   async function deleteEmployee(e) {
+  //     try {
+  //       const responseData = await DeleteJobEmployee(e);
+  //       if (responseData.message === "Employee has been deleted") {
+  //         toast.error("Employee deleted Successfully", {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 1000,
+  //         });
+  //         setDeleteAlert(false);
+  //         setApiCall(true);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
 
   /*Pagination Calculation */
-  const nPages = Math.ceil(totalData / recordsPerPage);
+  //   const nPages = Math.ceil(totalData / recordsPerPage);
 
   /*Sorting Function */
   const handleSort = (columnName) => {
@@ -145,17 +146,7 @@ export default function AgentTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("u_id");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      DN
-                    </Link>
+                    Display name
                   </th>
                   <th
                     scope="col"
@@ -189,7 +180,7 @@ export default function AgentTable(props) {
                       Contact
                     </Link>
                   </th>
-                  {/* {props.heading === "Dashboard" ? (
+                  {props.heading === "Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -208,7 +199,7 @@ export default function AgentTable(props) {
                         Type
                       </Link>
                     </th>
-                  )} */}
+                  )}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -267,17 +258,21 @@ export default function AgentTable(props) {
                   <tr>
                     <th className="bg-white"></th>
                     <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="bg-white text-center">No Data Found</th>
-                    )}
                     {props.heading === "Dashboard" ? (
                       <th className="bg-white text-center">No Data Found</th>
                     ) : (
                       <th className="bg-white"></th>
                     )}
                     <th className="bg-white"></th>
+                    {props.heading === "Dashboard" ? null : (
+                      <th className="bg-white text-center">No Data Found</th>
+                    )}
+                    <th className="bg-white"></th>
                     {props.heading !== "Dashboard" ? (
                       <>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
+                        <th className="bg-white"></th>
                         <th className="bg-white"></th>
                       </>
                     ) : (
@@ -289,7 +284,7 @@ export default function AgentTable(props) {
                     <tr className="text-capitalize applicant_row" key={data.id}>
                       <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {data.u_id}
+                          {data.id}
                         </p>
                       </td>
                       <td className=" py-5">
@@ -305,19 +300,21 @@ export default function AgentTable(props) {
                         <div className="d-flex profile_box gx-2">
                           <div className="media  align-items-center">
                             <div className="circle-36 mx-auto overflow-hidden">
-                              {data.profile_image === null ? (
-                                <img
-                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                  alt=""
-                                  className="w-100"
-                                />
-                              ) : (
-                                <img
-                                  src={data.profile_image}
-                                  alt=""
-                                  className="w-100"
-                                />
-                              )}
+                              {/* {data.profile_photo === null ? */}
+                              (
+                              <img
+                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                alt=""
+                                className="w-100"
+                              />
+                              )
+                              {/* : (
+                               <img
+                                 src={data.profile_photo}
+                                 alt=""
+                                 className="w-100"
+                               />
+                             )} */}
                             </div>
                           </div>
 
@@ -378,7 +375,7 @@ export default function AgentTable(props) {
                         )}
                       </td>
 
-                      {/* {props.heading === "Dashboard" ? (
+                      {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
@@ -392,7 +389,7 @@ export default function AgentTable(props) {
                             </h3>
                           )}
                         </td>
-                      )} */}
+                      )}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -434,15 +431,15 @@ export default function AgentTable(props) {
                               <LiaUserEditSolid />
                             </span>
                           </button>
-                          <button
+                          {/* <button
                             className="btn btn-outline-info action_btn"
-                            onClick={() => ShowDeleteAlert(data)}
+                            // onClick={() => ShowDeleteAlert(data)}
                             title="Delete Agent"
                           >
                             <span className="px-2 text-danger">
                               <RiDeleteBin5Line />
                             </span>
-                          </button>
+                          </button> */}
                         </div>
                       </td>
                     </tr>
@@ -453,23 +450,23 @@ export default function AgentTable(props) {
           )}
         </div>
         <div className="pt-2">
-          <Pagination
+          {/* <Pagination
             nPages={nPages}
             currentPage={props.pageNo}
             setCurrentPage={props.setpageNo}
             total={totalData}
             count={agenteData.length}
-          />
+          /> */}
         </div>
       </div>
-      <SAlert
+      {/* <SAlert
         show={deleteAlert}
         title={deleteName}
         text="Are you Sure you want to delete !"
-        onConfirm={() => OnDeleteAgent(deleteId)}
+        onConfirm={() => deleteEmployee(deleteId)}
         showCancelButton={true}
         onCancel={CancelDelete}
-      />
+      /> */}
     </>
   );
 }

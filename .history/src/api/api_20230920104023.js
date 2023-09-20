@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
-// const API_URL = "http://51.20.6.80/canjobs/";
+// const API_URL = "http://13.126.18.37/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -1878,22 +1878,6 @@ export const GetAgent = async (id, search, page, limit, column, Order) => {
       limit: limit,
       column_name: column,
       sort_order: Order,
-      id: id,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response.data;
-};
-/*Api to delte agent */
-export const DeleteAgent = async (id) => {
-  const response = await axios.post(
-    `${API_URL}agent/deleteAgent`,
-    {
       id: id,
     },
     {

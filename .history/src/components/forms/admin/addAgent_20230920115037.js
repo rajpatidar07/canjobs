@@ -49,7 +49,7 @@ function AddAgent(props) {
     country: "",
     state: "",
     city: "",
-    id: props.agentId === "0" ? "" : props.agentId,
+    id: props.agentId,
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -213,7 +213,7 @@ function AddAgent(props) {
       try {
         const responseData = await AddUpdateAgent(state);
         console.log(responseData);
-        if (responseData.message === "created successfully") {
+        if (responseData.message === "successfully") {
           toast.success("Agent added successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -221,14 +221,14 @@ function AddAgent(props) {
           props.setApiCall(true);
           return close();
         }
-        if (responseData.message === "updated successfully") {
-          toast.success("Agent Updated successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.setApiCall(true);
-          return close();
-        }
+        // if (responseData.message === "agent updated successfully") {
+        //   toast.success("agent Updated successfully", {
+        //     position: toast.POSITION.TOP_RIGHT,
+        //     autoClose: 1000,
+        //   });
+        //   props.setApiCall(true);
+        //   return close();
+        // }
         // if (responseData.message === "agent already exists") {
         //   setAlready("agent already exists");
         //   setLoading(false);

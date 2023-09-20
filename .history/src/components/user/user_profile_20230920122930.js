@@ -187,7 +187,7 @@ const NewUserProfile = (props) => {
     const duration = moment.duration(end.diff(start));
     const years = duration.years();
     const months = duration.months();
-    // const days = duration.days();
+    const days = duration.days();
 
     return `${
       years === 1 ? years + "year," : years > 1 ? years + "years," : ""

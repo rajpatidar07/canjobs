@@ -89,7 +89,7 @@ export default function AgentTable(props) {
 
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
-    setDeleteID(e.id);
+    setDeleteID(e.employee_id);
     setDeleteName(e.name);
     setDeleteAlert(true);
   };
@@ -109,8 +109,8 @@ export default function AgentTable(props) {
   async function OnDeleteAgent(e) {
     try {
       const responseData = await DeleteAgent(e);
-      if (responseData.message === "successfully") {
-        toast.error("Agent deleted Successfully", {
+      if (responseData.message === "Employee has been deleted") {
+        toast.error("Employee deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -145,17 +145,7 @@ export default function AgentTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("u_id");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      DN
-                    </Link>
+                    DN
                   </th>
                   <th
                     scope="col"

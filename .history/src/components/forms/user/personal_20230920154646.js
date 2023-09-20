@@ -881,7 +881,7 @@ function PersonalDetails(props) {
               </div>
               <div className="form-group col-md-4">
                 <label
-                  htmlFor="reffer_by"
+                  htmlFor="otherpermit"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Reffered by:<span className="text-danger">*</span>

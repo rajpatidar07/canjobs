@@ -49,7 +49,6 @@ function AddAgent(props) {
     country: "",
     state: "",
     city: "",
-    id: props.agentId === "0" ? "" : props.agentId,
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -85,17 +84,20 @@ function AddAgent(props) {
     //       ? null
     //       : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     // ],
-    // type: [(value) => (value === "" ? "Type is required" : null)],
-    // contact_no: [
-    //   (value) =>
-    //     value === "" || value === null || value.trim() === ""
-    //       ? "Contact no is required"
-    //       : value.length < 10
-    //       ? "Contact no can not be less than 10 digit"
-    //       : value.length > 10
-    //       ? "Contact no can not be more than 10 digit"
-    //       : "",
-    // ],
+    type: [
+      (value) =>
+        value === "" || value.trim() === "" ? "Type is required" : null,
+    ],
+    contact_no: [
+      (value) =>
+        value === "" || value === null || value.trim() === ""
+          ? "Contact no is required"
+          : value.length < 10
+          ? "Contact no can not be less than 10 digit"
+          : value.length > 10
+          ? "Contact no can not be more than 10 digit"
+          : "",
+    ],
     address: [
       (value) =>
         value === "" || value.trim() === ""
@@ -187,11 +189,11 @@ function AddAgent(props) {
   const AgentData = async () => {
     try {
       const userData = await GetAgent(props.agentId);
-      console.log(userData.data.data[0]);
-      if (userData) {
-        setState(userData.data.data[0]);
-      } else {
+      console.log(userData);
+      if (userData === undefined || userData.data.length === 0) {
         setState(initialFormState);
+      } else {
+        setState(userData.data[0]);
       }
     } catch (err) {
       console.log(err);
@@ -213,7 +215,7 @@ function AddAgent(props) {
       try {
         const responseData = await AddUpdateAgent(state);
         console.log(responseData);
-        if (responseData.message === "created successfully") {
+        if (responseData.message === "successfully") {
           toast.success("Agent added successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -221,14 +223,14 @@ function AddAgent(props) {
           props.setApiCall(true);
           return close();
         }
-        if (responseData.message === "updated successfully") {
-          toast.success("Agent Updated successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.setApiCall(true);
-          return close();
-        }
+        // if (responseData.message === "agent updated successfully") {
+        //   toast.success("agent Updated successfully", {
+        //     position: toast.POSITION.TOP_RIGHT,
+        //     autoClose: 1000,
+        //   });
+        //   props.setApiCall(true);
+        //   return close();
+        // }
         // if (responseData.message === "agent already exists") {
         //   setAlready("agent already exists");
         //   setLoading(false);
@@ -372,7 +374,7 @@ function AddAgent(props) {
                   id="email"
                   name="email"
                   type={"email"}
-                  // disabled={props.agentId === "0" ? false : true}
+                  disabled={props.agentId === "0" ? false : true}
                   placeholder="Enter email address"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
@@ -418,7 +420,7 @@ function AddAgent(props) {
                 )}
               </div>
             )} */}
-              {/* <div className="form-group col-md-6 ">
+              <div className="form-group col-md-6 ">
                 <label
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -450,15 +452,15 @@ function AddAgent(props) {
                       {item}
                     </option>
                   );
-                })} 
+                })} */}
                 </select>
-                {/*----ERROR MESSAGE FOR agent TYPE----
+                {/*----ERROR MESSAGE FOR agent TYPE----*/}
                 {errors.type && (
                   <span key={errors.type} className="text-danger font-size-3">
                     {errors.type}
                   </span>
                 )}
-              </div> */}
+              </div>
               <div className="form-group col-md-6 ">
                 <label
                   htmlFor="type"

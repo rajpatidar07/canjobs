@@ -893,8 +893,8 @@ function PersonalDetails(props) {
                   // onChange={onSelectChange}
                   className={
                     errors.work_permit_other_country
-                      ? "form-control border border-danger"
-                      : "form-control"
+                      ? " border border-danger"
+                      : ""
                   }
                 />
               </div>
