@@ -457,34 +457,7 @@ export default function EmployeeSignupModal(props) {
                           </span>
                         )}
                       </div>
-                      <div className="form-group col-md-4">
-                        <label
-                          htmlFor="reffer_by"
-                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                        >
-                          Reffered by:<span className="text-danger">*</span>
-                        </label>
-                        <Select
-                          options={"" || state.reffer_by}
-                          name="reffer_by"
-                          id="reffer_by"
-                          onChange={onSelectChange}
-                          className={
-                            errors.reffer_by
-                              ? "form-control border border-danger"
-                              : "form-control"
-                          }
-                        />
-                        {/* ERROR MSG FOR PASSWORD */}
-                        {errors.reffer_by && (
-                          <span
-                            key={errors.reffer_by}
-                            className="text-danger font-size-3"
-                          >
-                            {errors.reffer_by}
-                          </span>
-                        )}
-                      </div>
+
                       <div className="form-group">
                         <label
                           htmlFor="password"
