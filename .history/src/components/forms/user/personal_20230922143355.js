@@ -929,7 +929,7 @@ function PersonalDetails(props) {
                   id="reffer_by"
                   onChange={onSelectChange}
                   className={
-                    errors.reffer_by
+                    errors.work_permit_other_country
                       ? "form-control border border-danger"
                       : "form-control"
                   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
-import { AdminDetails, AddAdmin, AddChildPermission } from "../../../api//api";
+import { AdminDetails, AddAdmin } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import filterjson from "../../json/filterjson";
@@ -122,7 +122,7 @@ function Addadmin(props) {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (/*file.size > 1024 * 100*/ (file.size > 100) * 1024 === true) {
+        if (/*file.size > 1024 * 100*/ file.size > 100 * 1024 === true) {
           setImgError("Image size can't be more then 100 kb");
         } else {
           setImgError("");

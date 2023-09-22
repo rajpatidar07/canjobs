@@ -18,7 +18,6 @@ function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [agentList, setAgentList] = useState([]);
   let user_type = localStorage.getItem("userType");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -221,7 +220,7 @@ function PersonalDetails(props) {
           value: option.id,
           label: option.u_id + "  " + option.name,
         }));
-        setAgentList(options);
+        setState({ ...state, reffer_by: options });
       }
     } catch (err) {
       console.log(err);
@@ -924,12 +923,12 @@ function PersonalDetails(props) {
                   Reffered by:<span className="text-danger">*</span>
                 </label>
                 <Select
-                  options={"" || agentList}
+                  options={"" || state.reffer_by}
                   name="reffer_by"
                   id="reffer_by"
                   onChange={onSelectChange}
                   className={
-                    errors.reffer_by
+                    errors.work_permit_other_country
                       ? "form-control border border-danger"
                       : "form-control"
                   }

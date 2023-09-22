@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
-const API_URL = "http://51.20.6.80/canjobs/";
+const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "http://51.20.6.80/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -1874,7 +1874,7 @@ export const AddEmployeePermission = async (data) => {
 export const AddEmployerPermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employer/updateEmployerSetting`,
-    data,
+    { email_permission: data },
     {
       headers: {
         "Content-Type": "application/json",

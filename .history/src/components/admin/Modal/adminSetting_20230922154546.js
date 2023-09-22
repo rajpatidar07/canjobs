@@ -115,17 +115,17 @@ function AdminSetting(props) {
       if (
         Response.message === "successfully" &&
         (permissionName === "notification_lmia" || permissionName === "lmia"
-          ? updatedPermissions.notification_permission.lmia === 0 ||
-            updatedPermissions.email_permission.lmia === 0
+          ? (updatedPermissions.notification_permission.lmia ||
+              updatedPermissions.email_permission.lmia) === 0
           : permissionName === "notification_visa" || permissionName === "visa"
-          ? updatedPermissions.notification_permission.visa === 0 ||
-            updatedPermissions.email_permission.visa === 0
+          ? (updatedPermissions.notification_permission.visa ||
+              updatedPermissions.email_permission.visa) === 0
           : permissionName === "notification_interview" ||
             permissionName === "interview"
-          ? updatedPermissions.notification_permission.interview === 0 ||
-            updatedPermissions.email_permission.interview === 0
-          : updatedPermissions.notification_permission.job === 0 ||
-            updatedPermissions.email_permission.job === 0)
+          ? (updatedPermissions.notification_permission.interview ||
+              updatedPermissions.email_permission.interview) === 0
+          : (updatedPermissions.notification_permission.job ||
+              updatedPermissions.email_permission.job) === 0)
       ) {
         toast.error("Permission Denay successfully", {
           position: toast.POSITION.TOP_RIGHT,
