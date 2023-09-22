@@ -1005,4 +1005,13 @@ select.form-control.select_document_type {
   .doc_upload_row .btn {
     min-width: 118px;
   }
+
+}
+
+.dropdown-menu.show {
+  min-width: 100px;
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 0.25rem 0.5rem;
 }

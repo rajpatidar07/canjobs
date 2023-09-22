@@ -73,6 +73,7 @@ export const EmployeeSignUp = async (props) => {
   formData.append("password", props.password);
   formData.append("otp", props.otp);
   formData.append("resume", props.resume);
+  formData.append("reffer_by", props.reffer_by);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -1770,7 +1771,22 @@ export const AddExecutiveTeam = async (manager_id, executive_id) => {
   );
   return response.data;
 };
-
+/*Api to Remove executive to the manager*/
+export const RemoveExecutiveTeam = async (executive_id) => {
+  const response = await axios.put(
+    `${API_URL}manager/deleteTeamMember`,
+    {
+      executive_id: executive_id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
 /*Api to Reasign job to manager*/
 export const ReassignJobTOManager = async (manager_id, job_id) => {
   const response = await axios.put(
@@ -1812,6 +1828,31 @@ export const GetEmployerSetting = async () => {
   });
   return response.data;
 };
+/*Api to get Admin setting */
+export const GetAdminrSetting = async () => {
+  const response = await axios.post(`${API_URL}admin/getAdminSetting`, "", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+/*Api to get Parent setting */
+export const GetParentSetting = async (data) => {
+  const response = await axios.post(
+    `${API_URL}setting/getParentSetting`,
+    { type: data },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 /*Api to Add permission to employeE*/
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
@@ -1849,7 +1890,30 @@ export const GetPaymentList =async(id,user)=>{
           "user_id":id,
           "user_role":user
       }
-       ,
+       , {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Token,
+        },
+      }
+    );
+    return response.data;
+  };
+/*Api to Add permission to admin*/
+export const AddAdminPermission = async (data) => {
+  const response = await axios.put(`${API_URL}admin/updateAdminSetting`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+/*Api to Add permission by admin to employee and employer*/
+export const AddChildPermission = async (data) => {
+  const response = await axios.put(
+    `${API_URL}setting/updateParentSetting`,
+    data,
     {
       headers: {
         "Content-Type": "application/json",
@@ -1858,4 +1922,55 @@ export const GetPaymentList =async(id,user)=>{
     }
   );
   return response.data;
-}
+};
+/*Api to Add update agent*/
+export const AddUpdateAgent = async (data) => {
+  const response = await axios.put(`${API_URL}agent/addUpadateAgent`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+
+/*Api to Get agent*/
+export const GetAgent = async (id, search, page, limit, column, Order) => {
+  const response = await axios.post(
+    `${API_URL}agent/getAgent`,
+    {
+      page: page,
+      search: search,
+      limit: limit,
+      column_name: column,
+      sort_order: Order,
+      id: id,
+    },
+   
+/*Api to delete agent */
+export const DeleteAgent = async (id) => {
+  const response = await axios.post(
+    `${API_URL}agent/deleteAgent`,
+    {
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Api to get agent json list */
+export const GetAgentJson = async () => {
+  const response = await axios.post(`${API_URL}filterList/agentList.json    `, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
