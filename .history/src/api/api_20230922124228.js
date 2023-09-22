@@ -1859,7 +1859,7 @@ export const GetParentSetting = async (data) => {
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employee/updateEmployeeSetting`,
-    data,
+    { email_permission: data },
     {
       headers: {
         "Content-Type": "application/json",

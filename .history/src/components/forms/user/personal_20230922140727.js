@@ -188,8 +188,8 @@ function PersonalDetails(props) {
             value === null ||
             typeof state.reffer_by === "object"
               ? "Refferer is required"
-              : null
-        : null,
+              : null,
+:null
     ],
   };
 
@@ -243,7 +243,7 @@ function PersonalDetails(props) {
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
-    console.log(errors, state.reffer_by);
+    console.log(errors);
     if (validate() && imgError === "") {
       setLoading(true);
       try {

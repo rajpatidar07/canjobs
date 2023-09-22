@@ -7,6 +7,7 @@ import {
   SendOtp,
   LinkedInSignupEmployer,
   SocialCompanyLogin,
+  AddEmployerPermission,
 } from "../../api/api";
 import Permissions from "../json/emailPermisionJson";
 import { toast } from "react-toastify";

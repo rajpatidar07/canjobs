@@ -67,14 +67,13 @@ export const getJson = async () => {
 
 // EMPLOYEE'S API
 /*Employee sign */
-export const EmployeeSignUp = async (props, permission) => {
+export const EmployeeSignUp = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
   formData.append("otp", props.otp);
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
-  formData.append("permission", permission);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -576,14 +575,13 @@ export const AddUpdateEmployeeVisaSubStage = async (json) => {
 
 // EMPLOYER'S API
 /*Employer sign up */
-export const EmployerSignUp = async (props, permission) => {
+export const EmployerSignUp = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
   formData.append("contact_no", props.contact_no);
   formData.append("term_and_condition", props.term_and_condition);
   formData.append("otp", props.otp);
-  formData.append("permission", permission);
   const response = await axios.post(`${API_URL}employer_signup`, formData);
   return response.data;
 };
@@ -1859,7 +1857,7 @@ export const GetParentSetting = async (data) => {
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employee/updateEmployeeSetting`,
-    data,
+    { email_permission: data },
     {
       headers: {
         "Content-Type": "application/json",

@@ -176,7 +176,7 @@ const AdminSidebar = (props) => {
               }
             >
               <MdAssignmentAdd className="sidebar_icon" />
-              Manager's Dashboard
+              Manager's Jobs
             </Link>
           </li>
 

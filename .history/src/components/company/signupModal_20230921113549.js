@@ -7,6 +7,7 @@ import {
   SendOtp,
   LinkedInSignupEmployer,
   SocialCompanyLogin,
+  AddEmployerPermission,
 } from "../../api/api";
 import Permissions from "../json/emailPermisionJson";
 import { toast } from "react-toastify";
@@ -103,12 +104,24 @@ export default function CompanySignUp(props) {
     if (validate() && state.otp && state.term_and_condition) {
       /*Api to signup */
       try {
-        let Response = await EmployerSignUp(state, Permissions);
+        let Response = await EmployerSignUp(state);
         if (Response.message === "Employer has been registered") {
-          setErrors("");
-          setState(initialFormState);
-          setOtpBox(false);
-          setSingUpSuccess("success");
+          try {
+            let Response = await AddEmployerPermission(Permissions);
+            // conditions for the response toaster message
+            if (Response.message === "successfully") {
+              toast.success("Registered Successfully", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+              setErrors("");
+              setState(initialFormState);
+              setOtpBox(false);
+              setSingUpSuccess("success");
+            }
+          } catch (err) {
+            console.log(err);
+          }
         } else if (Response.message === " incorrect otp ") {
           setLoading(false);
           setotperr("Invalid Otp");
@@ -160,13 +173,22 @@ export default function CompanySignUp(props) {
   //           localStorage.setItem("userType", "company");
   //           localStorage.setItem("employee_id", res.employer_id);
   //           localStorage.setItem("profile_photo", res.company_logo);
-  //           toast.success("Logged In Successfully", {
-  //             position: toast.POSITION.TOP_RIGHT,
-  //             autoClose: 1000,
-  //           });
-  //           props.close();
-  //           navigate("/company");
-  //           window.location.reload();
+  //
+  // try {
+  //   let Response = await AddEmployerPermission(Permissions);
+  //   // conditions for the response toaster message
+  //   if (Response.message === "successfully") {
+  //     toast.success("Registered Successfully", {
+  //                   position: toast.POSITION.TOP_RIGHT,
+  //                   autoClose: 1000,
+  //                 });
+  //                 props.close();
+  //                 navigate("/company");
+  //                 window.location.reload();
+  //   }
+  // } catch (err) {
+  //   console.log(err);
+  // }
   //         } catch (err) {
   //          console.log(err) ;
   //         }
@@ -210,7 +232,7 @@ export default function CompanySignUp(props) {
     ) {
       const response = LinkedInSignupEmployer(code, type);
       response
-        .then((res) => {
+        .then(async (res) => {
           let decode = JSON.parse(res.data);
           if (res.data.email_verified === true) {
             try {
@@ -226,13 +248,21 @@ export default function CompanySignUp(props) {
               localStorage.setItem("userType", "company");
               localStorage.setItem("employee_id", data.employer_id);
               localStorage.setItem("profile_photo", data.company_logo);
-              toast.success("Logged In Successfully", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
-              });
-              props.close();
-              navigate("/company");
-              window.location.reload();
+              try {
+                let Response = await AddEmployerPermission(Permissions);
+                // conditions for the response toaster message
+                if (Response.message === "successfully") {
+                  toast.success("Registered Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
+                  props.close();
+                  navigate("/company");
+                  window.location.reload();
+                }
+              } catch (err) {
+                console.log(err);
+              }
             } catch (err) {
               console.log(err);
             }
@@ -267,13 +297,37 @@ export default function CompanySignUp(props) {
   //       localStorage.setItem("userType", "company");
   //       localStorage.setItem("employee_id", data.employer_id);
   //       localStorage.setItem("profile_photo", data.company_logo);
-  //       toast.success("Logged In Successfully",{
+  // try {
+  //   let data = SocialCompanyLogin(
+  //     res.data.sub,
+  //     res.data.email,
+  //     res.data.name,
+  //     res.data.picture,
+  //     "Linkedin"
+  //   );
+  //   console.log(data);
+  //   localStorage.setItem("token", data.token);
+  //   localStorage.setItem("userType", "company");
+  //   localStorage.setItem("employee_id", data.employer_id);
+  //   localStorage.setItem("profile_photo", data.company_logo);
+  // try {
+  //   let Response = await AddEmployerPermission(Permissions);
+  //   // conditions for the response toaster message
+  //   if (Response.message === "successfully") {
+  //     toast.success("Registered Successfully",{
   //         position: toast.POSITION.TOP_RIGHT,
   //         autoClose: 1000,
   //       });
   //       props.close();
   //       navigate("/company");
   //       window.location.reload();
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // } catch (err) {
+  //   console.log(err);
+  // }
   //     } catch (err) {
   //      console.log(err)
   //     }
