@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
-const API_URL = "http://51.20.6.80/canjobs/"
+const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "http://51.20.6.80/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -67,14 +67,13 @@ export const getJson = async () => {
 
 // EMPLOYEE'S API
 /*Employee sign */
-export const EmployeeSignUp = async (props, permission) => {
+export const EmployeeSignUp = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
   formData.append("otp", props.otp);
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
-  formData.append("permission", permission);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -576,14 +575,13 @@ export const AddUpdateEmployeeVisaSubStage = async (json) => {
 
 // EMPLOYER'S API
 /*Employer sign up */
-export const EmployerSignUp = async (props, permission) => {
+export const EmployerSignUp = async (props) => {
   const formData = new FormData();
   formData.append("email", props.email);
   formData.append("password", props.password);
   formData.append("contact_no", props.contact_no);
   formData.append("term_and_condition", props.term_and_condition);
   formData.append("otp", props.otp);
-  formData.append("permission", permission);
   const response = await axios.post(`${API_URL}employer_signup`, formData);
   return response.data;
 };
@@ -1859,7 +1857,7 @@ export const GetParentSetting = async (data) => {
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
     `${API_URL}employee/updateEmployeeSetting`,
-    data,
+    { email_permission: data },
     {
       headers: {
         "Content-Type": "application/json",
@@ -1884,7 +1882,6 @@ export const AddEmployerPermission = async (data) => {
   );
   return response.data;
 };
-
 /*Api to Add permission to admin*/
 export const AddAdminPermission = async (data) => {
   const response = await axios.put(`${API_URL}admin/updateAdminSetting`, data, {
@@ -1966,51 +1963,5 @@ export const GetAgentJson = async () => {
       Authorization: Token,
     },
   });
-  return response.data;
-};
-
-/*Payment Api's */
-export const CreateRazorpay = async (price, currency) => {
-  const response = await axios.post(`${API_URL}payment/creatRazorpayOrder`, {
-    price: price,
-    currency: currency
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
-    }
-  },)
-  return response;
-};
-export const AddRazorpay = async (amount, response) => {
-
-  await axios.post(`${API_URL}payment/addRazorPayReciept`, {
-    amount: amount,
-    razorpayPaymentId: response.razorpay_payment_id,
-    razorpay0rderId: response.razorpay_order_id,
-    razorpaysighature: response.razorpay_signature,
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
-    }
-  },);
-  return response;
-};
-/*Api to get payment list */
-export const GetPaymentList = async (id, user) => {
-  const response = await axios.post(
-    `${API_URL}payment/getPaymentReciept`,
-    {
-      "user_id": id,
-      "user_role": user
-    }
-    , {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
   return response.data;
 };

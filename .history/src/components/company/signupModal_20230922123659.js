@@ -7,6 +7,7 @@ import {
   SendOtp,
   LinkedInSignupEmployer,
   SocialCompanyLogin,
+  AddEmployerPermission,
 } from "../../api/api";
 import Permissions from "../json/emailPermisionJson";
 import { toast } from "react-toastify";
@@ -103,12 +104,24 @@ export default function CompanySignUp(props) {
     if (validate() && state.otp && state.term_and_condition) {
       /*Api to signup */
       try {
-        let Response = await EmployerSignUp(state, Permissions);
+        let Response = await EmployerSignUp(state);
         if (Response.message === "Employer has been registered") {
-          setErrors("");
-          setState(initialFormState);
-          setOtpBox(false);
-          setSingUpSuccess("success");
+          try {
+            let Response = await AddEmployerPermission(Permissions);
+            // conditions for the response toaster message
+            if (Response.message === "successfully") {
+              toast.success("Registered Successfully", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+              setErrors("");
+              setState(initialFormState);
+              setOtpBox(false);
+              setSingUpSuccess("success");
+            }
+          } catch (err) {
+            console.log(err);
+          }
         } else if (Response.message === " incorrect otp ") {
           setLoading(false);
           setotperr("Invalid Otp");
