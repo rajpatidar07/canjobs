@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
 // const API_URL = "https://apnaorganicstore.in/canjobs/";
-const API_URL = "http://13.126.18.37/canjobs/"
+const API_URL = "http://51.20.6.80/canjobs/"
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -73,6 +73,7 @@ export const EmployeeSignUp = async (props) => {
   formData.append("password", props.password);
   formData.append("otp", props.otp);
   formData.append("resume", props.resume);
+  formData.append("reffer_by", props.reffer_by);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -1827,6 +1828,31 @@ export const GetEmployerSetting = async () => {
   });
   return response.data;
 };
+/*Api to get Admin setting */
+export const GetAdminrSetting = async () => {
+  const response = await axios.post(`${API_URL}admin/getAdminSetting`, "", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+/*Api to get Parent setting */
+export const GetParentSetting = async (data) => {
+  const response = await axios.post(
+    `${API_URL}setting/getParentSetting`,
+    { type: data },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 /*Api to Add permission to employeE*/
 export const AddEmployeePermission = async (data) => {
   const response = await axios.put(
@@ -1854,5 +1880,97 @@ export const AddEmployerPermission = async (data) => {
       },
     }
   );
+  return response.data;
+};
+/*Api to get payment list */
+export const GetPaymentList =async(id,user)=>{
+  const response = await axios.post(
+    `https://apnaorganicstore.in/canjobs/payment/getPaymentReciept`,
+    {
+          "user_id":id,
+          "user_role":user
+      }
+       , {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Token,
+        },
+      }
+    );
+    return response.data;
+  };
+/*Api to Add permission to admin*/
+export const AddAdminPermission = async (data) => {
+  const response = await axios.put(`${API_URL}admin/updateAdminSetting`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+/*Api to Add permission by admin to employee and employer*/
+export const AddChildPermission = async (data) => {
+  const response = await axios.put(
+    `${API_URL}setting/updateParentSetting`,
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to Add update agent*/
+export const AddUpdateAgent = async (data) => {
+  const response = await axios.put(`${API_URL}agent/addUpadateAgent`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};
+
+/*Api to Get agent*/
+export const GetAgent = async (id, search, page, limit, column, Order) => {
+  const response = await axios.post(
+    `${API_URL}agent/getAgent`,
+    {
+      page: page,
+      search: search,
+      limit: limit,
+      column_name: column,
+      sort_order: Order,
+      id: id,
+    },
+   
+/*Api to delete agent */
+export const DeleteAgent = async (id) => {
+  const response = await axios.post(
+    `${API_URL}agent/deleteAgent`,
+    {
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Api to get agent json list */
+export const GetAgentJson = async () => {
+  const response = await axios.post(`${API_URL}filterList/agentList.json    `, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
