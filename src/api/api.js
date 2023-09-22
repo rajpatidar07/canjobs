@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
 // const API_URL = "https://apnaorganicstore.in/canjobs/";
-const API_URL = "http://13.126.18.37/canjobs/"
+const API_URL = "http://51.20.6.80/canjobs/"
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -1841,3 +1841,21 @@ export const AddEmployerPermission = async (data) => {
   );
   return response.data;
 };
+/*Api to get payment list */
+export const GetPaymentList =async(id,user)=>{
+  const response = await axios.post(
+    `https://apnaorganicstore.in/canjobs/payment/getPaymentReciept`,
+    {
+          "user_id":id,
+          "user_role":user
+      }
+       ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+}
