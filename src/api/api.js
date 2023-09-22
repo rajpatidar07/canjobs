@@ -1882,23 +1882,7 @@ export const AddEmployerPermission = async (data) => {
   );
   return response.data;
 };
-/*Api to get payment list */
-export const GetPaymentList =async(id,user)=>{
-  const response = await axios.post(
-    `https://apnaorganicstore.in/canjobs/payment/getPaymentReciept`,
-    {
-          "user_id":id,
-          "user_role":user
-      }
-       , {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: Token,
-        },
-      }
-    );
-    return response.data;
-  };
+
 /*Api to Add permission to admin*/
 export const AddAdminPermission = async (data) => {
   const response = await axios.put(`${API_URL}admin/updateAdminSetting`, data, {
@@ -1946,7 +1930,15 @@ export const GetAgent = async (id, search, page, limit, column, Order) => {
       sort_order: Order,
       id: id,
     },
-   
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
 /*Api to delete agent */
 export const DeleteAgent = async (id) => {
   const response = await axios.post(
@@ -1972,5 +1964,51 @@ export const GetAgentJson = async () => {
       Authorization: Token,
     },
   });
+  return response.data;
+};
+
+/*Payment Api's */
+export const CreateRazorpay = async (price, currency) => {
+  const response = await axios.post(`${API_URL}payment/creatRazorpayOrder`, {
+    price: price,
+    currency: currency
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    }
+  },)
+  return response;
+};
+export const AddRazorpay = async (amount, response) => {
+
+  await axios.post(`${API_URL}payment/addRazorPayReciept`, {
+    amount: amount,
+    razorpayPaymentId: response.razorpay_payment_id,
+    razorpay0rderId: response.razorpay_order_id,
+    razorpaysighature: response.razorpay_signature,
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    }
+  },);
+  return response;
+};
+/*Api to get payment list */
+export const GetPaymentList = async (id, user) => {
+  const response = await axios.post(
+    `${API_URL}payment/getPaymentReciept`,
+    {
+      "user_id": id,
+      "user_role": user
+    }
+    , {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };

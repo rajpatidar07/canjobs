@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GetParentSetting, AddChildPermission } from "../../api/api";
 import { toast } from "react-toastify";
-export default function ParentSetting({}) {
+export default function ParentSetting() {
   const [selectedOption, setSelectedOption] = useState("");
   const [child, setChild] = useState({
     lmia: 0,

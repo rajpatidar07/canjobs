@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import {CreateRazorpay ,AddRazorpay} from "../../../api/api"
 export default function PayForm({setApicall}) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +36,6 @@ export default function PayForm({setApicall}) {
    const onPayentClick = async (e) => {
 
     if(validate()){
-    console.log("first", state.amount)
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.onerror = () => {
@@ -46,16 +45,18 @@ export default function PayForm({setApicall}) {
       try {
         setLoading(true);
         // const total = userData.cart.reduce((a, b) => a + +b.price, 0).toFixed(0);
-        const result = await axios.post("https://apnaorganicstore.in/canjobs/payment/creatRazorpayOrder", {
-          price: state.amount,
-          currency:"INR"
-        }, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
-          }
-        },);
-        // console.log(result, "from handle pay ");
+        const result = await CreateRazorpay(state.amount,"INR")
+        //  await axios.post("https://apnaorganicstore.in/canjobs/payment/creatRazorpayOrder", {
+        //   price: state.amount,
+        //   currency:"INR"
+        // }, {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: localStorage.getItem("token"),
+        //   }
+        // },);
+        // console.log(result);
+        // return result
         // console.log(result.data, "from handle pay ");
         const { amount, id: orderId, currency } = result.data.data;
         // console.log(amount, orderId, currency);
@@ -70,7 +71,7 @@ export default function PayForm({setApicall}) {
           description: "FIRST RAZOR PAY",
           order_id: orderId,
           handler: async function (response) {
-            /*const result = */await axios.post("https://apnaorganicstore.in/canjobs/payment/addRazorPayReciept", {
+            /*const result = await axios.post("https://apnaorganicstore.in/canjobs/payment/addRazorPayReciept", {
               amount: amount,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpay0rderId: response.razorpay_order_id,
@@ -80,7 +81,8 @@ export default function PayForm({setApicall}) {
                 "Content-Type": "application/json",
                 Authorization: localStorage.getItem("token"),
               }
-            },);
+            },);*/
+            await AddRazorpay(amount,response)
             // console.log(result)
             // Perform any additional actions on successful payment here
             toast.success("Payment Successful.", {

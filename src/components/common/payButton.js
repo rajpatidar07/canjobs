@@ -7,7 +7,7 @@ import { toast } from "react-toastify"; // You might need to import the appropri
 function RazorPay() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  // const [userData, setUserData] = useState({
+  // const [userData, setUserData*/] = useState({
   //   cart: [], // Initialize with your cart structure
   // });
 
