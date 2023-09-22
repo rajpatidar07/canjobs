@@ -20,6 +20,7 @@ import Permission from "../json/emailPermisionJson";
 export default function EmployeeSignupModal(props) {
   const [isChecked, setIsChecked] = useState(false);
   const [termsErr, settermsErr] = useState("");
+  const [agentList, setAgentList] = useState([]);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
@@ -293,7 +294,7 @@ export default function EmployeeSignupModal(props) {
         label: option.u_id + "  " + option.name,
       }));
       // console.log(agentJson);
-      setState({ ...state, reffer_by: options });
+      setAgentList( options );
     } catch (err) {
       console.log(err);
     }
@@ -499,34 +500,37 @@ export default function EmployeeSignupModal(props) {
                         ></Link> */}
                         </div>
                       </div>
-                      <div className="form-group ">
-                        <label
-                          htmlFor="reffer_by"
-                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                        >
-                          Reffered by:<span className="text-danger">*</span>
-                        </label>
-                        <Select
-                          options={"" || state.reffer_by}
-                          name="reffer_by"
-                          id="reffer_by"
-                          onChange={onSelectChange}
-                          className={
-                            errors.reffer_by
-                              ? "form-control border border-danger"
-                              : "form-control"
-                          }
-                        />
-                        {/* ERROR MSG FOR REFFER BY */}
-                        {errors.reffer_by && (
-                          <span
-                            key={errors.reffer_by}
-                            className="text-danger font-size-3"
-                          >
-                            {errors.reffer_by}
-                          </span>
-                        )}
-                      </div>
+                      <div
+                className={ "form-group "
+                }
+              >
+                <label
+                  htmlFor="reffer_by"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Reffered by:<span className="text-danger">*</span>
+                </label>
+                <Select
+                  options={"" || agentList}
+                  name="reffer_by"
+                  id="reffer_by"
+                  onChange={onSelectChange}
+                  className={
+                    errors.reffer_by
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                />
+                {/* ERROR MSG FOR REFFER BY */}
+                {errors.reffer_by && (
+                  <span
+                    key={errors.reffer_by}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.reffer_by}
+                  </span>
+                )}
+              </div>
                       <div className="form-group">
                         <label
                           htmlFor="resume"

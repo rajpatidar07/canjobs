@@ -1739,7 +1739,7 @@ const NewUserProfile = (props) => {
                   >
                     {TabActive === "payment" ? (
                       <div className="p-10 activity_container">
-                        <PayentForm />
+                        <PayentForm data={PersonalDetail}/>
                       </div>
                     ) : null}
                   </div>

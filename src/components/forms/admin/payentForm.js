@@ -5,21 +5,21 @@ import { useParams } from "react-router-dom";
 import { GetPaymentList } from "../../../api/api"
 import PayForm from "./PayForm";
 import Loader from "../../common/loader";
-export default function PayentForm() {
+export default function PayentForm({data}) {
   const [apiCall, setApicall] = useState(true);
   const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
   
-  let { eid } = useParams()
 
   // let user = localStorage.getItem("userType")
 
   /*Function to get Payment list data */
   const PaymentData = async () => {
     try {
-      let Response = await GetPaymentList(eid, "employee")
+      let Response = await GetPaymentList(data.employee_id, "employee")
       if (Response.data.data.length === 0) {
         setPaytemList([])
+        setLoading(false)
       } else {
         setLoading(false)
         setPaytemList(Response.data.data)
@@ -77,7 +77,7 @@ export default function PayentForm() {
                 </div>
               ))}
           </div>)}
-          <PayForm setApicall={setApicall}/>
+          <PayForm data={data} setApicall={setApicall}/>
         </div>
       </div>
       {/* </Modal> */}

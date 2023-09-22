@@ -1,7 +1,7 @@
 import axios from "axios";
 // const API_URL = "https://192.168.29.92/canjobs/";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
-const API_URL = "http://51.20.6.80/canjobs/";
+const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "http://51.20.6.80/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -74,7 +74,8 @@ export const EmployeeSignUp = async (props, permission) => {
   formData.append("otp", props.otp);
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
-  formData.append("permission", permission);
+  formData.append("permission", JSON.stringify(permission));
+  console.log(permission);
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
 };
@@ -583,7 +584,7 @@ export const EmployerSignUp = async (props, permission) => {
   formData.append("contact_no", props.contact_no);
   formData.append("term_and_condition", props.term_and_condition);
   formData.append("otp", props.otp);
-  formData.append("permission", permission);
+  formData.append("permission", JSON.stringify(permission));
   const response = await axios.post(`${API_URL}employer_signup`, formData);
   return response.data;
 };
