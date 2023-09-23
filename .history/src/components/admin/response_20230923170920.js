@@ -562,7 +562,7 @@ function JobResponse(props) {
                               className="text-gray"
                               title="Sort by Address"
                             >
-                              Country of Residence
+                              Address
                             </Link>
                           </th>
                         )}
@@ -902,7 +902,7 @@ function JobResponse(props) {
                                     onClick={() => ReservedEmployee(res)}
                                     title="Reserved Employee"
                                   >
-                                    Reserve
+                                    Reserved
                                   </button>
 
                                   <button

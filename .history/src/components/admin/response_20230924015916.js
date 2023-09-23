@@ -562,7 +562,7 @@ function JobResponse(props) {
                               className="text-gray"
                               title="Sort by Address"
                             >
-                              Country of Residence
+                              Address
                             </Link>
                           </th>
                         )}

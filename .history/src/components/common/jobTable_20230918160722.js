@@ -21,7 +21,6 @@ import { BsArrow90DegRight } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
-import moment from "moment";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -389,12 +388,12 @@ export default function JobTable(props) {
                       <Link
                         to=""
                         onClick={() => {
-                          handleSort("created_at");
+                          handleSort("language");
                         }}
                         className="text-gray"
-                        title="Sort by posting date"
+                        title="Sort by Language"
                       >
-                        Posting Date
+                        Language
                       </Link>
                     </th>
                   )}
@@ -551,8 +550,7 @@ export default function JobTable(props) {
                           {props.heading === "Dashboard" ? null : (
                             <th className="py-5 ">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                                {/* {job.created_at ? job.created_at : "N/A"} */}
-                                {moment(job.created_at, "YYYYMMDD").fromNow()}
+                                {job.language ? job.language : "N/A"}
                               </h3>
                             </th>
                           )}

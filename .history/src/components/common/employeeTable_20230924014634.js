@@ -765,13 +765,7 @@ export default function EmployeeTable(props) {
                                     </span>
                                     {/* <i className="fas fa-stream text-gray"></i> */}
                                   </button>
-                                  <Link style={{padding:"0 5px", minWidth:"auto", height:"auto"}}
-                                  className="btn btn-sm btn-outline-info action_btn text-center"
-                                    to={`/${empdata.employee_id}`}
-                                    title="Employee Details"
-                                  >Update
-                                  </Link>
-                                  {/* <button
+                                  <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>
                                       editEmployee(empdata.employee_id)
@@ -813,8 +807,9 @@ export default function EmployeeTable(props) {
                                   >
                                     <span className="text-gray px-2">
                                       <LiaUserTieSolid />
+                                      {/* <i className="fas fa-user-tie"></i> */}
                                     </span>
-                                  </button> */}
+                                  </button>
                                   <button
                                     className="btn btn-outline-info action_btn text-center"
                                     onClick={() =>

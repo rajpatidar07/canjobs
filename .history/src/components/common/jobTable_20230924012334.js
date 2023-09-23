@@ -21,7 +21,6 @@ import { BsArrow90DegRight } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
-import moment from "moment";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
