@@ -182,12 +182,12 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    // reffer_by: [(value) =>
-    //         value === "" ||
-    //         value === null 
-    //           ? "Refferer is required"
-    //           : null,
-    // ],
+    reffer_by: [(value) =>
+            value === "" ||
+            value === null 
+              ? "Refferer is required"
+              : null,
+    ],
   };
 
   // CUSTOM VALIDATIONS IMPORT

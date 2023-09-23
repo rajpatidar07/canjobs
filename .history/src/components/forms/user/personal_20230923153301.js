@@ -182,12 +182,13 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    // reffer_by: [(value) =>
-    //         value === "" ||
-    //         value === null 
-    //           ? "Refferer is required"
-    //           : null,
-    // ],
+    reffer_by: [(value) =>
+            value === "" ||
+            value === null ||
+            typeof state.reffer_by === "object"
+              ? "Refferer is required"
+              : null,
+    ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -227,7 +228,6 @@ function PersonalDetails(props) {
   /*Function to set data to the search job by country */
   const onSelectChange = (option) => {
     setState({ ...state, reffer_by: option.value });
-    console.log("option", option)
   };
   useEffect(() => {
     if (props.employeeId === "0" || props.employeeId === undefined) {
