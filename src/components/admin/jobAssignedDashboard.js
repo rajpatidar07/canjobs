@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { getallAdminData } from "../../api/api";
 import Loader from "../common/loader";
 import ManegerBox from "../common/managerBox";
+import { Accordion } from "react-bootstrap";
 export default function JobAssignedDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [apiCall, setApiCall] = useState(false);
@@ -104,7 +105,8 @@ export default function JobAssignedDashboard() {
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
-              <div className="row p-3">
+              <div className="row p-3 w-100 m-0">
+              <Accordion className="w-100 p-0 m-0 border-0" defaultActiveKey="1" flush>
                 {isLoading ? (
                   <Loader />
                 ) : (
@@ -125,6 +127,7 @@ export default function JobAssignedDashboard() {
                     );
                   })
                 )}
+                </Accordion>
               </div>
             </div>
           </div>

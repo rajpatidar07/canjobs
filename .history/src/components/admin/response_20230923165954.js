@@ -239,7 +239,7 @@ function JobResponse(props) {
           autoClose: 1000,
         });
         setApiCall(true);
-        // props.setApiCall(true);
+        props.setApiCall(true);
       }
     } catch (err) {
       console.log(err);

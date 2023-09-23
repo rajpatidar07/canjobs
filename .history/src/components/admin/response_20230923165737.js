@@ -182,10 +182,20 @@ function JobResponse(props) {
         // Api call to set employee Visa
         let state = { status: "onboard", country: e.location };
         try {
-          const lmia = {
-            lmia_status: "candidate placement",
-            apply_id: e.apply_id,
-          };
+          let VisaResponse = await AddUpdateVisa(e.employee_id, state);
+          if (VisaResponse.data.message === "visa inserted successfully") {
+            // Api call to set employee Limia
+            const lmia = {
+              lmia_status: "candidate placement",
+              apply_id: e.apply_id,
+            };
+            try {
+              
+            } catch (err) {
+              console.log(err);
+            }
+           
+          }
           let LimiaResponse = await AddLimia(lmia);
           console.log(LimiaResponse, "Add Lmia");
           if (LimiaResponse.message === "Data added successfully") {
@@ -197,18 +207,6 @@ function JobResponse(props) {
             
             props.setApiCall(true);
           }
-          let VisaResponse = await AddUpdateVisa(e.employee_id, state);
-          if (VisaResponse.data.message === "visa inserted successfully") {
-            // Api call to set employee Limia
-            
-            try {
-              
-            } catch (err) {
-              console.log(err);
-            }
-           
-          }
-          
         } catch (err) {
           console.log(err);
         }
@@ -239,7 +237,7 @@ function JobResponse(props) {
           autoClose: 1000,
         });
         setApiCall(true);
-        // props.setApiCall(true);
+        props.setApiCall(true);
       }
     } catch (err) {
       console.log(err);

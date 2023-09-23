@@ -1015,18 +1015,7 @@ select.form-control.select_document_type {
 .dropdown-menu .dropdown-item {
   padding: 0.25rem 0.5rem;
 }
-
 .accordian_btn_design button{
   background-color: transparent;
-  outline: none;
   border: none;
-  width: 100%;
-  padding: 10px;
 }
-.accordian_btn_design button:hover,
-  .accordian_btn_design button:focus{
-  border: none;
-  outline: none;
-  background-color: #fcb6b6;
-}
-
