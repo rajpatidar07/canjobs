@@ -195,7 +195,7 @@ function JobResponse(props) {
             });
             setApiCall(true);
             
-            // props.setApiCall(true);
+            props.setApiCall(true);
           }
           let VisaResponse = await AddUpdateVisa(e.employee_id, state);
           if (VisaResponse.data.message === "visa inserted successfully") {
