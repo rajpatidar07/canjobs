@@ -46,7 +46,7 @@ export default function AdminTable({
           <table className="table table-striped main_data_table">
             <thead>
               <tr>
-                <th></th>
+                {/* <th></th> */}
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
@@ -57,7 +57,7 @@ export default function AdminTable({
                     onClick={() => handleSort("name")}
                     title="Sort by Name"
                   >
-                    Admin Name
+                    Name
                   </Link>
                 </th>
                 <th
@@ -70,7 +70,7 @@ export default function AdminTable({
                     onClick={() => handleSort("admin_type")}
                     title="Sort by Type"
                   >
-                    Admin Type
+                    Type
                   </Link>
                 </th>
                 <th
@@ -83,8 +83,14 @@ export default function AdminTable({
                     onClick={() => handleSort("email")}
                     title="Sort by Email"
                   >
-                    Contact
+                    Email
                   </Link>
+                </th>
+                <th
+                  scope="col"
+                  className="pl-4 border-0 font-size-4 font-weight-normal"
+                >
+                  Mobile
                 </th>
                 <th
                   scope="col"
@@ -106,7 +112,7 @@ export default function AdminTable({
               ) : (
                 (data || []).map((admin) => (
                   <tr className="text-capitalize" key={admin.admin_id}>
-                    <th>
+                    {/* <th>
                       <Link
                         className="text-gray"
                         onClick={
@@ -139,9 +145,46 @@ export default function AdminTable({
                           </div>
                         </div>
                       </Link>
-                    </th>
+                    </th> */}
                     <th className=" py-5">
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
+                      <Link
+                        className="text-gray"
+                        onClick={
+                          page === "admin page" &&
+                          admin.admin_type === "manager"
+                            ? () => {
+                                OnManagerDetailClick(admin);
+                                setAddTeamListShow(false);
+                              }
+                            : null
+                        }
+                      >
+                        <div class="d-flex profile_box gx-2">
+                          <div class="media  align-items-center">
+                            <div className="circle-36 mx-auto overflow-hidden">
+                              {admin.profile_image === null ? (
+                                <img
+                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  alt=""
+                                  className="w-100"
+                                />
+                              ) : (
+                                <img
+                                  src={admin.profile_image}
+                                  alt=""
+                                  className="w-100"
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <div class=" mb-0">
+                            <p class="m-0 text-black-2 font-weight-bold text-capitalize">
+                              {admin.name}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                      {/* <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                         <Link
                           className="text-gray"
                           onClick={
@@ -156,7 +199,7 @@ export default function AdminTable({
                         >
                           {admin.name}
                         </Link>
-                      </h3>
+                      </h3> */}
                     </th>
                     <th className="py-5">
                       <Link
@@ -177,6 +220,19 @@ export default function AdminTable({
                       </Link>
                     </th>
                     <th className="py-5 ">
+                      <h3 className="font-size-3 font-weight-normal mb-0">
+                        <p className="font-size-3 m-0">
+                          <Link
+                            className="text-dark"
+                            to={`mailto:${admin.email}`}
+                          >
+                            {admin.email}
+                          </Link>
+                        </p>
+                      </h3>
+                      {/* </Link> */}
+                    </th>
+                    <th className="py-5 ">
                       {/* <Link
                         className="text-gray"
                         onClick={
@@ -190,27 +246,13 @@ export default function AdminTable({
                         }
                       > */}
                       {admin.contact_no === null ? null : (
-                        <p className="m-0">
-                          +
-                          <Link
-                            className="text-dark"
-                            to={`tel:${admin.contact_no}`}
-                          >
-                            {admin.contact_no}
-                          </Link>
-                        </p>
+                        <Link
+                          className="font-weight-normal  font-size-3 text-gray"
+                          to={`tel:${admin.contact_no}`}
+                        >
+                          +{admin.contact_no}
+                        </Link>
                       )}
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        <p className="text-gray font-size-2 m-0">
-                          <Link
-                            className="text-dark"
-                            to={`mailto:${admin.email}`}
-                          >
-                            {admin.email}
-                          </Link>
-                        </p>
-                      </h3>
-                      {/* </Link> */}
                     </th>
                     <th className="">
                       {page === "admin page" ? (
