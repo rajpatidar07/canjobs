@@ -1,37 +1,38 @@
-import React, { useState } from 'react'
-import { Modal } from 'react-bootstrap'
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
 import FilterJson from "../../json/filterjson";
-import { AddEmployeeDetails } from "../../../api/api"
-import { toast } from 'react-toastify';
+import { AddEmployeeDetails } from "../../../api/api";
+import { toast } from "react-toastify";
 export default function ApplicantsStatusModal(props) {
-  const [status, setStatus] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
   /*function to change applicants status */
   const OnStatusChangesClick = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     let data = {
       employee_id: props.data.employee_id,
       status: status,
-    }
+    };
     try {
-      let response = await AddEmployeeDetails(data)
-      if (response.message === 'Employee data updated successfully') {
+      let response = await AddEmployeeDetails(data);
+      if (response.message === "Employee data updated successfully") {
         toast.success("Employee status changes successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true)
-        setLoading(false)
-        props.close()
+        props.setApiCall(true);
+        setLoading(false);
+        props.close();
       }
     } catch (err) {
-      console.log(err)
-      setLoading(false)
+      console.log(err);
+      setLoading(false);
     }
-  }
+  };
   return (
-    <Modal show={props.show}
+    <Modal
+      show={props.show}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -58,24 +59,30 @@ export default function ApplicantsStatusModal(props) {
             <select
               value={status || props.data.status}
               onChange={(e) => {
-                setStatus(e.target.value)
+                setStatus(e.target.value);
               }}
               className={
                 // !isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" :
-                "text-capitalize form-control"}>
-              <option value={""}>Select Applicants status</option>
-              {props.self === "yes" ?
-                <option value={1}>Approve</option> :
-                (FilterJson.employee_status || []).map((item, index) => {
-                  return (
-
-                    <option value={index + 1} key={index}>{item}</option>
-                  )
-                })}
+                "text-capitalize form-control"
+              }
+            >
+              {/* <option value={""}>Select Applicants status</option>
+              {
+              props.self === "yes" ? (
+                <option value={1}>Approve</option>
+              ) : (
+                
+              )} */}
+              {(FilterJson.employee_status || []).map((item, index) => {
+                return (
+                  <option value={index + 1} key={index}>
+                    {item}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-group text-center d-flex justify-content-center">
-
             {loading === true ? (
               <button
                 className="btn-primary px-5  mx-2  rounded-5 text-uppercase"
@@ -99,7 +106,7 @@ export default function ApplicantsStatusModal(props) {
             )}
           </div>
         </form>
-
       </div>
-    </Modal>)
+    </Modal>
+  );
 }

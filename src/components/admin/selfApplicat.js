@@ -10,6 +10,7 @@ import UserProfile from "../user/profile";
 import { GetFilter } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
+import CustomButton from "../common/button";
 function SelfApplicat(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -57,10 +58,10 @@ function SelfApplicat(props) {
     setemployeeId(e);
   };
   /* Function to show the single data to update Employee*/
-  //   const editEmployee = (e) => {
-  //     setShowEmployeeMOdal(true);
-  //     setemployeeId(e);
-  //   };
+  const editEmployee = (e) => {
+    setShowEmployeeMOdal(true);
+    setemployeeId(e);
+  };
   /*Function to search the employee */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -237,15 +238,19 @@ function SelfApplicat(props) {
                       </select>
                     </div>
                   </div>
-                  {/* {props.skill === null || props.skill === undefined || Object.keys(props.skill).length === 0 ? <div className="col px-1 form_group mt-4 text-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editEmployee("0")}
-                      title="Add Employee"
-                    >
-                      Add Employee
-                    </CustomButton>
-                  </div> : null} */}
+                  {props.skill === null ||
+                  props.skill === undefined ||
+                  Object.keys(props.skill).length === 0 ? (
+                    <div className="col px-1 form_group mt-4 text-right">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editEmployee("0")}
+                        title="Add Employee"
+                      >
+                        Add Employee
+                      </CustomButton>
+                    </div>
+                  ) : null}
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>

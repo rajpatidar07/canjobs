@@ -36,7 +36,7 @@ function AddCompanyfollowup(props) {
         setResponseData(userData.data);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -94,7 +94,7 @@ function AddCompanyfollowup(props) {
           return close();
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
         setLoading(false);
       }
     } else {
@@ -120,48 +120,49 @@ function AddCompanyfollowup(props) {
         >
           <i className="fas fa-times"></i>
         </button>*/}
+
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
           <div className="activity_container col-md-8 border-right p-10">
-            {response.length === 0 ?
+            {response.length === 0 ? (
               <div className="single_note mb-5">
                 <div className="d-flex justify-content-center">
-                  <p className="text-italic font-size-3 m-0">
-                    No Data Found
-                  </p>
-                </div>
-              </div> :
-            (response || []).map((res, index) => (
-              <div className="single_note mb-5" key={index}>
-                <div className="d-flex justify-content-between">
-                  <p className="text-italic font-size-3 m-0">
-                    Created on:
-                    {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")}
-                  </p>
-                </div>
-                <div className="card rounded-3 py-2 px-5">
-                  <p className="fw-bold m-0">
-                    <b>{res.subject}</b>
-                  </p>
-                  <p className="m-0">{res.remark}</p>
+                  <p className="text-italic font-size-3 m-0">No Data Found</p>
                 </div>
               </div>
-              // <div className="card mt-5 mb-5" key={res.id}>
-              //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
-              //     <div className="card-head font-size-3 text-dark card_left">
-              //       <span className="text-dark"> Posted date: </span>
-              //       {moment(res.created_at).format("DD-MM-YYYY")}
-              //     </div>
-              //     {res.next_followup_date === "0000-00-00" ? null :
-              //       <div className="card-head font-size-3 text-dark card_right">
-              //         <span className="text-dark"> Next date: </span>
-              //         {moment(res.next_followup_date).format("DD-MM-YYYY")}
-              //       </div>}
-              //   </div>
-              //   <div className="card-body p-3">{res.remark}</div>
-              // </div>
-            ))}
+            ) : (
+              (response || []).map((res, index) => (
+                <div className="single_note mb-5" key={index}>
+                  <div className="d-flex justify-content-between">
+                    <p className="text-italic font-size-3 m-0">
+                      Created on:
+                      {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")}
+                    </p>
+                  </div>
+                  <div className="card rounded-3 py-2 px-5">
+                    <p className="fw-bold m-0">
+                      <b>{res.subject}</b>
+                    </p>
+                    <p className="m-0">{res.remark}</p>
+                  </div>
+                </div>
+                // <div className="card mt-5 mb-5" key={res.id}>
+                //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
+                //     <div className="card-head font-size-3 text-dark card_left">
+                //       <span className="text-dark"> Posted date: </span>
+                //       {moment(res.created_at).format("DD-MM-YYYY")}
+                //     </div>
+                //     {res.next_followup_date === "0000-00-00" ? null :
+                //       <div className="card-head font-size-3 text-dark card_right">
+                //         <span className="text-dark"> Next date: </span>
+                //         {moment(res.next_followup_date).format("DD-MM-YYYY")}
+                //       </div>}
+                //   </div>
+                //   <div className="card-body p-3">{res.remark}</div>
+                // </div>
+              ))
+            )}
           </div>
           <form className="col-md-4 p-10">
             <div className="form-group col px-0 pr-3">
@@ -293,6 +294,7 @@ function AddCompanyfollowup(props) {
           </form>
         </div>
       </div>
+
       {/* </Modal> */}
     </>
   );
