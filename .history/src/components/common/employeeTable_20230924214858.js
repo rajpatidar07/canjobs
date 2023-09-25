@@ -43,7 +43,7 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [status, setStatus] = useState(props.self==="yes"?1:4);
+  const [status, setStatus] = useState(1);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -106,7 +106,6 @@ export default function EmployeeTable(props) {
     props.apiCall,
     apiCall,
     props.showEmployeeProfile,
-    status
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -315,21 +314,6 @@ export default function EmployeeTable(props) {
         />
       ) : null} */}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
-        <div class="btn-group mb-5" role="group" aria-label="Basic example">
-          {props.self==="yes"? 
-          <>
-          <button type="button" class={ status===1?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>setStatus(1)}>New</button>
-          <button type="button" class={ status===2?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>setStatus(2)}>Prospect</button>
-          <button type="button" class={ status===3?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>setStatus(3)}>Lead</button>
-          </>:
-          <>
-          <button type="button" class={ status===4?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>setStatus(4)}>Retained</button>
-          <button type="button" class={ status===5?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>setStatus(5)}>Lost</button>
-          <button type="button" class={ status===6?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>setStatus(6)}>Dead</button>
-          
-          </>
-          }
-        </div>
         <div className="table-responsive main_table_div">
           {isLoading ? (
             <Loader />

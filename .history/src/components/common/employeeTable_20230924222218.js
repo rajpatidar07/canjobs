@@ -43,7 +43,7 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [status, setStatus] = useState(props.self==="yes"?1:4);
+  const [status, setStatus] = useState(props.self==="yes"?-1:4);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
