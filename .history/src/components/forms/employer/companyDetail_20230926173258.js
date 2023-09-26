@@ -56,7 +56,7 @@ function CompanyDetails(props) {
     vacancy_for_post: "",
     franchise: "",
     logo: "",
-    permission: props.employerId === "0" ? JSON.stringify(Permissions) : null,
+    permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
   };
   // VALIDATION CONDITIONS
   const validators = {
