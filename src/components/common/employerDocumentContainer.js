@@ -47,7 +47,7 @@ export default function EmployerDocumrentContainer(props) {
           setDocTypData(response.data.data[0]);
           setDocFile(
             response.data.data[0].document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
           setDocName(response.data.data[0].type);
         } else if (
@@ -65,13 +65,13 @@ export default function EmployerDocumrentContainer(props) {
             setDocFile(
               response.data.data.find((item) => item.type === docName)
                 .document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
           }
         }
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -129,8 +129,9 @@ export default function EmployerDocumrentContainer(props) {
       reader.readAsDataURL(file);
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
-        }`;
+      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+        base64Name.split(";")[1]
+      }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocFileBase(DocFile);
@@ -185,19 +186,27 @@ export default function EmployerDocumrentContainer(props) {
               item.type ===
               (docData[0] === docTypData ? docTypData.type : docName)
           ).document_url +
-          `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
         );
       }
-      if (response.data.message === "Invalid base64-encoded data !") {
-        toast.error("Document type is not valid",{
+      if (response.data.message === "fields must not be empty !") {
+        toast.error("Document type is requried", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        }); 
+        });
+        setApiCall(true);
+        setHide(false);
+      }
+      if (response.data.message === "Invalid base64-encoded data !") {
+        toast.error("Document type is not valid", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         setApiCall(true);
         setHide(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setHide(false);
     }
   };
@@ -213,8 +222,8 @@ export default function EmployerDocumrentContainer(props) {
             ? docFileExt
             : docTypData.extension_type ===
               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-              ? "docx"
-              : docTypData.extension_type
+            ? "docx"
+            : docTypData.extension_type
         }
         filePath={docFile}
         errorComponent={() => <div>Error loading document</div>}
@@ -231,14 +240,14 @@ export default function EmployerDocumrentContainer(props) {
     try {
       let response = await VarifyEmployerDocument(id, verify);
       if (response.data.message === "successfully") {
-        toast.success("Document Verify Successfully",{
+        toast.success("Document Verify Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
-        }); 
+        });
         setApiCall(true);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -366,52 +375,55 @@ export default function EmployerDocumrentContainer(props) {
                   <th className="bg-white">No Data Found</th>
                   <th className="bg-white"></th>
                 </tr>
-              ) : (docData || []).map((item, index) => (
-                <tr
-                  key={index}
-                  action
-                  // active={
-                  //   docTypData.type === item.type ||
-                  //   (showMoreDocType === false && item.type === docName)
-                  // }
-                  active={item.type === docName}
-                  onClick={() => {
-                    setShowMoreDocType(false);
-                    setDocTypData(item);
-                    setDocName(item.type);
-                    setDocId(item.id);
-                    setOtherDoc(false);
-                    setHide(false);
-                    setShowSaveDoc(false);
-                    setDocFile(
-                      item.document_url +
-                      `?v=${new Date().getMinutes() + new Date().getSeconds()
-                      }`
-                    );
-                  }}
-                  className={
-                    item.type === docName
-                      ? "text-capitalize bg-primary text-white"
-                      : "text-capitalize"
-                  }
-                >
-                  <td className="p-3"> {textReplaceFunction(item.type)}</td>
-                  <td className="p-3">
-                    {item.updated_by_name
-                      ? item.updated_by_name
-                      : item.created_by_name}
-                  </td>
-                  <td className="p-3">{item.updated_at}</td>
-                  <td className="p-3">
-                    {item.is_varify === "1"
-                      ? // <span className="verified_doc">
-                      //   <img className="w-100" src={Verified} alt="" />
-                      // </span>
-                      "Yes"
-                      : "No"}
-                  </td>
-                </tr>
-              ))}
+              ) : (
+                (docData || []).map((item, index) => (
+                  <tr
+                    key={index}
+                    action
+                    // active={
+                    //   docTypData.type === item.type ||
+                    //   (showMoreDocType === false && item.type === docName)
+                    // }
+                    active={item.type === docName}
+                    onClick={() => {
+                      setShowMoreDocType(false);
+                      setDocTypData(item);
+                      setDocName(item.type);
+                      setDocId(item.id);
+                      setOtherDoc(false);
+                      setHide(false);
+                      setShowSaveDoc(false);
+                      setDocFile(
+                        item.document_url +
+                          `?v=${
+                            new Date().getMinutes() + new Date().getSeconds()
+                          }`
+                      );
+                    }}
+                    className={
+                      item.type === docName
+                        ? "text-capitalize bg-primary text-white"
+                        : "text-capitalize"
+                    }
+                  >
+                    <td className="p-3"> {textReplaceFunction(item.type)}</td>
+                    <td className="p-3">
+                      {item.updated_by_name
+                        ? item.updated_by_name
+                        : item.created_by_name}
+                    </td>
+                    <td className="p-3">{item.updated_at}</td>
+                    <td className="p-3">
+                      {item.is_varify === "1"
+                        ? // <span className="verified_doc">
+                          //   <img className="w-100" src={Verified} alt="" />
+                          // </span>
+                          "Yes"
+                        : "No"}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
           {/* <ListGroup defaultActiveKey="#link1">
@@ -528,7 +540,7 @@ export default function EmployerDocumrentContainer(props) {
               <button
                 className={
                   (user_type === "company" && (showMoreDocType || otherDoc)) ||
-                    user_type === "admin"
+                  user_type === "admin"
                     ? "btn btn-light"
                     : "d-none"
                 }

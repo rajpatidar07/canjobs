@@ -159,8 +159,8 @@ export default function AdminTable({
                             : null
                         }
                       >
-                        <div class="d-flex profile_box gx-2">
-                          <div class="media  align-items-center">
+                        <div className="d-flex profile_box gx-2">
+                          <div className="media  align-items-center">
                             <div className="circle-36 mx-auto overflow-hidden">
                               {admin.profile_image === null ? (
                                 <img
@@ -177,8 +177,8 @@ export default function AdminTable({
                               )}
                             </div>
                           </div>
-                          <div class=" mb-0">
-                            <p class="m-0 text-black-2 font-weight-bold text-capitalize">
+                          <div className=" mb-0">
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                               {admin.name}
                             </p>
                           </div>
