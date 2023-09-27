@@ -19,6 +19,7 @@ export default function VisaStatus(props) {
   const [expandedStatus, setExpandedStatus] = useState(
     props.employeeData.visa_status
   );
+  console.log(props.employeeData);
   // eslint-disable-next-line
   let isExpanded = false;
   // USER PERSONAL DETAIL VALIDATION

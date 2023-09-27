@@ -254,21 +254,28 @@ export default function DocumrentContainer(props) {
   const RenderNewDocFile = () => {
     // console.log(docFile, "???????");
     return (
-      <FileViewer
-        key={docTypData.id}
-        fileType={
-          docFileExt
-            ? docFileExt
-            : docTypData.extension_type ===
-              "vnd.openxmlformats-officedocument.wordprocessingml.document"
-            ? "docx"
-            : docTypData.extension_type
-        }
-        filePath={docFile}
-        errorComponent={() => <div>Error loading document</div>}
-      />
+      <React.Fragment>
+        {docFile ? (
+          <FileViewer
+            key={docTypData.id}
+            fileType={
+              docFileExt
+                ? docFileExt
+                : docTypData.extension_type ===
+                  "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                ? "docx"
+                : docTypData.extension_type
+            }
+            filePath={docFile}
+            errorComponent={() => <div>Error loading document</div>}
+          />
+        ) : (
+          <div className="text-center mt-5">No document found</div>
+        )}
+      </React.Fragment>
     );
   };
+  /* Function to replace the _ and correct the document type */
   const textReplaceFunction = (e) => {
     let new_text = e.replaceAll("_", " ");
     return new_text;
