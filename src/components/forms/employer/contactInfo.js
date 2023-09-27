@@ -37,34 +37,34 @@ function ContactInfo(props) {
         value === "" || value === null || value.trim() === ""
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 2
-              ? "Comapny name should have 2 or more letter"
-              : "",
+          ? "Cannot use special character "
+          : value.length < 2
+          ? "Comapny name should have 2 or more letter"
+          : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Phone no is required"
-          : value.length < 10
-            ? "Mobile no should be of 10 digits"
-            : "",
+          : value.length < 13
+          ? "Mobile no should be of 10 digits"
+          : "",
     ],
     designation: [
       (value) =>
         value === "" || value === null
           ? "Designation is required"
           : value.length < 2
-            ? "Designation should have 2 or more letter"
-            : "",
+          ? "Designation should have 2 or more letter"
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -84,7 +84,7 @@ function ContactInfo(props) {
         setState(userData.data.company_detail[0]);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -109,8 +109,8 @@ function ContactInfo(props) {
           return close();
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -137,7 +137,6 @@ function ContactInfo(props) {
           <form onSubmit={onCompanyContactClick}>
             <h5 className="text-center pt-2 mb-7">Contact Detail</h5>
             <div className="row">
-              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="contact_person_name"
@@ -205,7 +204,8 @@ function ContactInfo(props) {
                   htmlFor="contact_no"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact No: <span className="text-danger"> *</span>
+                  Contact No: <span className="text-danger">*</span>
+                  <small>Add mobile no. with country code without +</small>
                 </label>
                 <input
                   maxLength={30}
@@ -213,7 +213,7 @@ function ContactInfo(props) {
                   value={state.contact_no || ""}
                   onChange={onInputChange}
                   type="number"
-min={0}
+                  min={0}
                   className={
                     errors.contact_no
                       ? "form-control border border-danger"
@@ -245,7 +245,7 @@ min={0}
                   value={state.contact_no_other || ""}
                   onChange={onInputChange}
                   type="number"
-min={0}
+                  min={0}
                   className={"form-control"}
                   placeholder="Other Contact No"
                   id="contact_no_other"
@@ -296,7 +296,7 @@ min={0}
                   value={state.pin_code || ""}
                   onChange={onInputChange}
                   type="number"
-min={0}
+                  min={0}
                   className={
                     errors.pin_code
                       ? "form-control border border-danger"
@@ -317,7 +317,6 @@ min={0}
               </div>
             </div>
             <div className="row">
-              
               <div className="form-group col-md-6">
                 <label
                   htmlFor="city"

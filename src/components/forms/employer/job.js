@@ -311,7 +311,9 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-              {(user_type === "admin" && company_id === "") ||
+              {(user_type ===
+                ("admin" || "super-admin" || "manager" || "executive") &&
+                company_id === "") ||
               company_id === undefined ||
               company_id === null ||
               company_id === "undefined" ||
@@ -321,7 +323,7 @@ function AddJobModal(props) {
                     htmlFor="job_category_id"
                     className="font-size-4 text-black-2  line-height-reset"
                   >
-                    Company:<span className="text-danger"> *</span>
+                    Company:<span className="text-danger">*</span>
                   </label>
                   <div className="position-relative">
                     <select
@@ -645,7 +647,7 @@ function AddJobModal(props) {
               </div>
             </div>
             <div className="row">
-              <div className="form-group col-md-12 px-0 pr-3">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="job_description"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
@@ -696,9 +698,7 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="form-group col-md-6 px-0 pr-3">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="your_duties"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
@@ -748,7 +748,7 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-              <div className="form-group col-md-6 px-0 pr-3">
+              <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="requirement"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
