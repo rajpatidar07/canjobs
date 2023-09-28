@@ -13,12 +13,15 @@ function ApplyBeforeform(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
     name: "",
-    email: email === "undefined" ||
+    email:
+      email === "undefined" ||
       email === null ||
       email === "" ||
-      email === undefined ? "" : email,
+      email === undefined
+        ? ""
+        : email,
     contact_no: "",
-    employee_id: user_id
+    employee_id: user_id,
   };
   /* Functionality to close the modal */
 
@@ -37,30 +40,30 @@ function ApplyBeforeform(props) {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 2
-              ? "Name should have 2 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Name can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 2
+          ? "Name should have 2 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Name can not have a number."
+          : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-            ? "Mobile number should be of 10 digits"
-            : value.length > 11
-              ? "Mobile number should not be more than 11 digits"
-              : "",
+          ? "Mobile number should be more than 10 digits"
+          : value.length > 13
+          ? "Mobile no should be of 13 digits"
+          : "",
     ],
   };
 
@@ -81,7 +84,7 @@ function ApplyBeforeform(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          localStorage.setItem("name", state.name)
+          localStorage.setItem("name", state.name);
           props.setApiCall(true);
           return close();
         }
@@ -90,13 +93,13 @@ function ApplyBeforeform(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          localStorage.setItem("name", state.name)
+          localStorage.setItem("name", state.name);
           props.setApiCall(true);
           return close();
         }
       } catch (err) {
-       console.log(err) 
-        setLoading(false)
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -122,7 +125,6 @@ function ApplyBeforeform(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onUserPersonalDetailClick}>
-
             <h5 className="text-center pt-2 mb-7">Add Personal Details</h5>
 
             <div className="row pt-5">
@@ -174,11 +176,14 @@ function ApplyBeforeform(props) {
                   name="email"
                   value={state.email || ""}
                   onChange={onInputChange}
-                  disabled={email === "undefined" ||
+                  disabled={
+                    email === "undefined" ||
                     email === null ||
                     email === "" ||
-                    email === undefined ?
-                    false : true}
+                    email === undefined
+                      ? false
+                      : true
+                  }
                   className={
                     errors.email
                       ? "form-control border border-danger"
@@ -203,7 +208,7 @@ function ApplyBeforeform(props) {
                 </label>
                 <input
                   type="number"
-min={0}
+                  min={0}
                   placeholder="Mobile Number"
                   name="contact_no"
                   value={state.contact_no || ""}

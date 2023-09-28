@@ -91,9 +91,9 @@ function PersonalDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile number should be of 10 digits"
-          : value.length > 11
-          ? "Mobile number should not be more than 11 digits"
+          ? "Mobile number should be more than 10 digits"
+          : value.length > 13
+          ? "Mobile no should be of 13 digits"
           : "",
     ],
     // description: [
@@ -191,12 +191,10 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    // reffer_by: [(value) =>
-    //         value === "" ||
-    //         value === null
-    //           ? "Refferer is required"
-    //           : null,
-    // ],
+    reffer_by: [
+      (value) =>
+        value === "" || value === null ? "Refferer is required" : null,
+    ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -820,7 +818,7 @@ function PersonalDetails(props) {
                     </label>
                     <select
                       className={
-                        errors.language
+                        errors.interested_in
                           ? "form-control border border-danger"
                           : "form-control"
                       }

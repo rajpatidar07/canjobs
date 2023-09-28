@@ -54,8 +54,10 @@ function ContactInfo(props) {
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Phone no is required"
-          : value.length < 13
-          ? "Mobile no should be of 10 digits"
+          : value.length < 10
+          ? "Mobile number should be more than 10 digits"
+          : value.length > 13
+          ? "Mobile no should be of 13 digits"
           : "",
     ],
     designation: [
@@ -76,7 +78,7 @@ function ContactInfo(props) {
       let userData = await EmployerDetails(props.employerId);
       if (
         userData.data.company_detail === undefined ||
-        userData.data.company_detail === [] ||
+        userData.data.company_detail.length === 0 ||
         userData.data.company_detail === 0
       ) {
         setState(initialFormState);

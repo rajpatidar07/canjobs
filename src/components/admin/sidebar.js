@@ -14,7 +14,7 @@ import { TbFilterPlus } from "react-icons/tb";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
-  // let admin_type = localStorage.getItem("admin_type");
+  // let admin_type = localStorage.getItem("admin_  type");
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);

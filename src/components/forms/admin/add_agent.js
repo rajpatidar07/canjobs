@@ -92,8 +92,8 @@ function AddNewAgent(props) {
     //       ? "Contact no is required"
     //       : value.length < 10
     //       ? "Contact no can not be less than 10 digit"
-    //       : value.length > 10
-    //       ? "Contact no can not be more than 10 digit"
+    //       : value.length > 13
+    //       ? "Contact no can not be more than 13 digit"
     //       : "",
     // ],
     // address: [

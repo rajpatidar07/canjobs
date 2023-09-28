@@ -558,6 +558,7 @@ export default function EmployerTable(props) {
           show={showContactModal}
           employerId={employerId}
           apiCall={apiCall}
+          setApiCall={setApiCall}
           close={() => setShowContactMOdal(false)}
         />
       ) : null}

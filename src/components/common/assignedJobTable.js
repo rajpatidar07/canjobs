@@ -68,7 +68,14 @@ export default function AssignedJobTable(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [props.manager_id, apiCall]);
+  }, [
+    props.manager_id,
+    apiCall,
+    currentPage,
+    recordsPerPage,
+    columnName,
+    sortOrder,
+  ]);
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 

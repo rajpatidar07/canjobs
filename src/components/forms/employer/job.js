@@ -12,9 +12,12 @@ function AddJobModal(props) {
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
   let token = localStorage.getItem("token");
-  const company_id = props.company_id
-    ? props.company_id
-    : localStorage.getItem("company_id");
+  const company_id =
+    props.jobdata === "0"
+      ? ""
+      : props.company_id
+      ? props.company_id
+      : localStorage.getItem("company_id");
   let location = useLocation();
   const user_type = localStorage.getItem("userType");
   let [Json, setJson] = useState([]);
@@ -311,13 +314,8 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-              {(user_type ===
-                ("admin" || "super-admin" || "manager" || "executive") &&
-                company_id === "") ||
-              company_id === undefined ||
-              company_id === null ||
-              company_id === "undefined" ||
-              company_id === "null" ? (
+              {user_type !== "admin" ||
+              location.pathname === "/employer" ? null : (
                 <div className="form-group col-md-4 px-0 pr-3">
                   <label
                     htmlFor="job_category_id"
@@ -390,7 +388,7 @@ function AddJobModal(props) {
                     </span>
                   )}
                 </div>
-              ) : null}
+              )}
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="job_category_id"

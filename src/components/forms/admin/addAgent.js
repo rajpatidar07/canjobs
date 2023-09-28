@@ -90,10 +90,10 @@ function AddAgent(props) {
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
     //       ? "Contact no is required"
-    //       : value.length < 10
-    //       ? "Contact no can not be less than 10 digit"
-    //       : value.length > 10
-    //       ? "Contact no can not be more than 10 digit"
+    // : value.length < 10
+    // ? "Contact no can not be less than 10 digit"
+    // : value.length > 130
+    // ? "Contact no can not be more than 13 digit"
     //       : "",
     // ],
     // address: [
