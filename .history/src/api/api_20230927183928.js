@@ -751,7 +751,7 @@ export const GetAllJobs = async (
       filter_keyskill: skill,
       filter_location: location,
       page: page,
-      search: search ? search : company,
+      search: search /*? search : company*/,
       limit: limit,
       column_name: column_name,
       sort_order: sort_order,

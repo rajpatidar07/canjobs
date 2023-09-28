@@ -88,7 +88,7 @@ export default function JobTable(props) {
           recordsPerPage,
           columnName,
           sortOrder,
-          props.company,
+          // props.company,
           props.filter_by_time,
           job_id,
           props.response === "self" ? "1" : "0",
