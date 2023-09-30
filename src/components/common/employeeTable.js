@@ -627,9 +627,9 @@ export default function EmployeeTable(props) {
 
                             <div className=" mb-0">
                               {empdata.name === null ||
-                              empdata.name === undefined ||
-                              empdata.name === "undefined" ||
-                              empdata.name === "" ? (
+                                empdata.name === undefined ||
+                                empdata.name === "undefined" ||
+                                empdata.name === "" ? (
                                 <p className="font-size-3  mb-0">Unavailable</p>
                               ) : (
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
@@ -641,29 +641,28 @@ export default function EmployeeTable(props) {
                                   {empdata.gender === "female"
                                     ? "F"
                                     : empdata.gender === "male"
-                                    ? "M"
-                                    : "O"}
+                                      ? "M"
+                                      : "O"}
                                   {/*Calculation of age from date of birth*/}(
                                   {empdata.marital_status ||
-                                  empdata.date_of_birth
-                                    ? `${
-                                        empdata.marital_status
-                                      },${moment().diff(
-                                        empdata.date_of_birth,
-                                        "years"
-                                      )} Y`
+                                    empdata.date_of_birth
+                                    ? `${empdata.marital_status
+                                    },${moment().diff(
+                                      empdata.date_of_birth,
+                                      "years"
+                                    )} Y`
                                     : null}
                                   )
                                 </p>
                               ) : null}
                               {empdata.is_featured === "1" ||
-                              empdata.is_featured === 1 ? (
+                                empdata.is_featured === 1 ? (
                                 <span className="bg-orange text-white featured_tag">
                                   Featured
                                 </span>
                               ) : null}
                               {empdata.created_by_admin === "0" ||
-                              empdata.created_by_admin === 0 ? (
+                                empdata.created_by_admin === 0 ? (
                                 <span className="bg-info text-white web_tag">
                                   Web
                                 </span>
@@ -836,7 +835,7 @@ export default function EmployeeTable(props) {
                             aria-label="Basic example"
                           >
                             {props.skill === null ||
-                            props.skill === undefined ? (
+                              props.skill === undefined ? (
                               <>
                                 {/* <button
                                   className="btn btn-outline-info action_btn"
@@ -943,7 +942,7 @@ export default function EmployeeTable(props) {
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}
                                     title="All jobs "
-                                    // disabled={empdata.skill ? false : true}
+                                  // disabled={empdata.skill ? false : true}
                                   >
                                     <span className="text-gray px-2">
                                       <PiBriefcaseLight />

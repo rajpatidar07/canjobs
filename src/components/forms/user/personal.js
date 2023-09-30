@@ -71,30 +71,30 @@ function PersonalDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Name should have 2 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Name should have 2 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Name can not have a number."
+                : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile number should be more than 10 digits"
-          : value.length > 13
-          ? "Mobile no should be of 13 digits"
-          : "",
+            ? "Mobile number should be more than 10 digits"
+            : value.length > 13
+              ? "Mobile no should be of 13 digits"
+              : "",
     ],
     // description: [
     //   (value) =>
@@ -118,24 +118,24 @@ function PersonalDetails(props) {
         value === "" || value === null
           ? "Nationality is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Nationality should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Nationality can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Nationality should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Nationality can not have a number."
+                : "",
     ],
     current_location: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Location should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Location can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Location should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Location can not have a number."
+                : "",
     ],
     // currently_located_country: [
     //   (value) =>
@@ -174,9 +174,9 @@ function PersonalDetails(props) {
       (value) =>
         value === "" || value === null ? "Experience is required" : null,
     ],
-    resume: [
-      (value) => (value === "" || value === null ? "Resume is required" : null),
-    ],
+    // resume: [
+    //   (value) => (value === "" || value === null ? "Resume is required" : null),
+    // ],
     work_permit_canada: [
       (value) =>
         value === "" || value === null ? "Work Permit is required" : null,
@@ -1001,7 +1001,7 @@ function PersonalDetails(props) {
                       htmlFor="resume"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Resume: <span className="text-danger">*</span>
+                      Resume: {/*<span className="text-danger">*</span>*/}
                     </label>
                     <input
                       type="file"
@@ -1017,14 +1017,14 @@ function PersonalDetails(props) {
                       }
                     />
                     {/*----ERROR MESSAGE FOR RESUME----*/}
-                    {errors.resume && (
+                    {/* {errors.resume && (
                       <span
                         key={errors.resume}
                         className="text-danger font-size-3"
                       >
                         {errors.resume}
                       </span>
-                    )}
+                    )} */}
                   </div>
                   {user_type === "admin" ? (
                     <div className="form-group col-md-4">
@@ -1044,7 +1044,7 @@ function PersonalDetails(props) {
                               ...state,
                               is_featured:
                                 state.is_featured === "" ||
-                                state.is_featured === "0"
+                                  state.is_featured === "0"
                                   ? "1"
                                   : "0",
                             })

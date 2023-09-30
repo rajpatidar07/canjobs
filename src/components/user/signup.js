@@ -6,9 +6,9 @@ import {
   SendOtp,
   LinkedSignup,
   SocialLogin,
-  GetAgentJson,
+  // GetAgentJson,
 } from "../../api/api";
-import Select from "react-select";
+// import Select from "react-select";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import Permission from "../json/emailPermisionJson";
@@ -20,7 +20,7 @@ import Permission from "../json/emailPermisionJson";
 export default function EmployeeSignupModal(props) {
   const [isChecked, setIsChecked] = useState(false);
   const [termsErr, settermsErr] = useState("");
-  const [agentList, setAgentList] = useState([]);
+  // const [agentList, setAgentList] = useState([]);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
@@ -42,7 +42,7 @@ export default function EmployeeSignupModal(props) {
     password: "",
     resume: "",
     otp: "",
-    reffer_by: "",
+    // reffer_by: "",
   };
   // VALIDATION CONDITIONS termsErr
   const validators = {
@@ -51,26 +51,26 @@ export default function EmployeeSignupModal(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    resume: [
-      (value) => (value === "" || value === null ? "Resume is required" : null),
-    ],
-    reffer_by: [
-      (value) =>
-        value === "" || value === null ? "Refferer is required" : null,
-    ],
+    // resume: [
+    //   (value) => (value === "" || value === null ? "Resume is required" : null),
+    // ],
+    // reffer_by: [
+    //   (value) =>
+    //     value === "" || value === null ? "Refferer is required" : null,
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, setErrors, errors, validate } =
@@ -223,9 +223,9 @@ export default function EmployeeSignupModal(props) {
           }
           if (
             res.data.message ===
-              "The token used in the request has been revoked by the user" ||
+            "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
@@ -238,7 +238,7 @@ export default function EmployeeSignupModal(props) {
           console.log(err.data);
         });
     }
-    AgentJson();
+    // AgentJson();
   }, []);
 
   /*FUnctiom to Sign Up with facebook */
@@ -285,24 +285,24 @@ export default function EmployeeSignupModal(props) {
     setState({ ...state, resume: finalBase });
   };
   /*Function to get agent json list */
-  const AgentJson = async () => {
-    try {
-      let response = await GetAgentJson();
-      // setAgentJson(response);
-      const options = (response || []).map((option) => ({
-        value: option.id,
-        label: option.u_id + "  " + option.name,
-      }));
-      // console.log(agentJson);
-      setAgentList(options);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const AgentJson = async () => {
+  //   try {
+  //     let response = await GetAgentJson();
+  //     // setAgentJson(response);
+  //     const options = (response || []).map((option) => ({
+  //       value: option.id,
+  //       label: option.u_id + "  " + option.name,
+  //     }));
+  //     // console.log(agentJson);
+  //     setAgentList(options);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   /*Function to set data to the search job by country */
-  const onSelectChange = (option) => {
-    setState({ ...state, reffer_by: option.value });
-  };
+  // const onSelectChange = (option) => {
+  //   setState({ ...state, reffer_by: option.value });
+  // };
   return (
     <>
       {/* <!-- Sign Up Modal --> */}
@@ -500,7 +500,7 @@ export default function EmployeeSignupModal(props) {
                         ></Link> */}
                         </div>
                       </div>
-                      <div className={"form-group "}>
+                      {/* <div className={"form-group "}>
                         <label
                           htmlFor="reffer_by"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -518,7 +518,7 @@ export default function EmployeeSignupModal(props) {
                               : "form-control px-0 pt-4 border-0"
                           }
                         />
-                        {/* ERROR MSG FOR REFFER BY */}
+                        ERROR MSG FOR REFFER BY
                         {errors.reffer_by && (
                           <span
                             key={errors.reffer_by}
@@ -527,13 +527,13 @@ export default function EmployeeSignupModal(props) {
                             {errors.reffer_by}
                           </span>
                         )}
-                      </div>
+                      </div> */}
                       <div className="form-group">
                         <label
                           htmlFor="resume"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
-                          Upload Resume<span className="text-danger"> *</span>:
+                          Upload Resume{/*<span className="text-danger"> *</span>:*/}
                         </label>
                         <div className="position-relative">
                           <input
@@ -549,14 +549,14 @@ export default function EmployeeSignupModal(props) {
                             id="resume"
                             placeholder="Enter password"
                           />
-                          {errors.resume && (
+                          {/* {errors.resume && (
                             <span
                               key={errors.resume}
                               className="text-danger font-size-3"
                             >
                               {errors.resume}
                             </span>
-                          )}
+                          )} */}
                           {/* <Link
                           to="/"
                           className="show-password pos-abs-cr fas mr-6 text-black-2"
