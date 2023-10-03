@@ -7,13 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function TestMail(props) {
   let [loading, setLoading] = useState(false);
-  
+
   /* Functionality to close the modal */
   const close = () => {
-    setState( {...state,
-      email_id: "",
-      email_template_id: "",
-  });
+    setState({ ...state, email_id: "", email_template_id: "" });
     setErrors("");
     setLoading(false);
     props.close();
@@ -28,7 +25,7 @@ function TestMail(props) {
   // VALIDATION CONDITIONS
   const validators = {
     email_id: [
-        (value) =>
+      (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
@@ -46,16 +43,18 @@ function TestMail(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-     try{ const responseData = await TestEmail(state);
-      if (responseData.message === "email sent successfully") {
-        toast.success("Email sent successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        return close();
-      }}catch(err){
-       console.log(err) 
-        setLoading(false)
+      try {
+        const responseData = await TestEmail(state);
+        if (responseData.message === "email sent successfully") {
+          toast.success("Email sent successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          return close();
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
     } else {
       setLoading(false);
@@ -82,7 +81,7 @@ function TestMail(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           <form onSubmit={onTestMailClick}>
-              <h5 className="text-center mb-7 pt-2">Test</h5>
+            <h5 className="text-center mb-7 pt-2">Test</h5>
             <div className="form-group row mb-0 ">
               <label
                 htmlFor="category_type"
@@ -102,6 +101,7 @@ function TestMail(props) {
                 placeholder="Email Address"
                 id="email_id"
                 name="email_id"
+                maxLength={60}
               />
             </div>
             {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}

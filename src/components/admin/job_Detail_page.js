@@ -128,9 +128,9 @@ function JobDetailpageAdmim(props) {
                         <PiPencilDuotone />
                       </CustomButton>
                     </h3>
-                    <p className="font-size-3 text-default-color line-height-2 m-0">
+                    {/* <p className="font-size-3 text-default-color line-height-2 m-0">
                       {jobData.department}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
                 {jobData.email ? (
@@ -191,7 +191,7 @@ function JobDetailpageAdmim(props) {
                                 src="image/icons/marker.svg"
                                 alt="Location"
                               />
-                              {jobData.location}
+                              {jobData.your_duties},{jobData.location}
                             </span>
                           ) : (
                             ""
@@ -345,9 +345,9 @@ function JobDetailpageAdmim(props) {
                                       <PiPencilDuotone />
                                     </CustomButton>
                                   </h3>
-                                  <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
+                                  {/* <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
                                     {jobData.department}
-                                  </p>
+                                  </p> */}
                                 </div>
                               </div>
                               {jobData.email ? (
@@ -409,6 +409,7 @@ function JobDetailpageAdmim(props) {
                                               src="image/icons/marker.svg"
                                               alt="Location"
                                             />
+                                            {jobData.your_duties}{" "}
                                             {jobData.location}
                                           </span>
                                         ) : (
@@ -469,9 +470,9 @@ function JobDetailpageAdmim(props) {
                                 </CustomButton> */}
                               </h4>
                               <div className="pt-5 text-left">
-                                {jobData.about ? (
+                                {jobData.job_description ? (
                                   <p className="font-size-4 mb-8">
-                                    {jobData.about}
+                                    {jobData.job_description}
                                   </p>
                                 ) : (
                                   <p className="font-size-4 mb-8 text-center">
@@ -525,7 +526,7 @@ function JobDetailpageAdmim(props) {
                             !jobData.education &&
                             !jobData.role_category &&
                             !jobData.experience_required &&
-                            !jobData.industry_type ? (
+                            !jobData.department ? (
                               <div className="pt-5 text-left row m-0">
                                 <div className="font-size-3 mb-4 mr-10">
                                   No Data Found
@@ -533,7 +534,7 @@ function JobDetailpageAdmim(props) {
                               </div>
                             ) : (
                               <div className="pt-5 text-left row m-0">
-                                {jobData.industry ? (
+                                {/* {jobData.industry ? (
                                   <div
                                     className="font-size-3 mb-4 mr-10"
                                     title="Industry"
@@ -541,7 +542,7 @@ function JobDetailpageAdmim(props) {
                                     <i className="far fa-building mr-2"></i>
                                     {jobData.industry}
                                   </div>
-                                ) : null}
+                                ) : null} */}
 
                                 {jobData.corporation ? (
                                   <div
@@ -609,14 +610,14 @@ function JobDetailpageAdmim(props) {
                                     ""
                                   )}
                                 </div>
-                                {jobData.industry_type ? (
+                                {jobData.department ? (
                                   <div className="info_box text-left">
                                     <span
                                       className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                      title="Industry Type"
+                                      title="NOC code"
                                     >
-                                      <b> Industry Type </b>
-                                      {jobData.industry_type}
+                                      <b> NOC Code: </b>
+                                      {jobData.department}
                                     </span>
                                   </div>
                                 ) : null}

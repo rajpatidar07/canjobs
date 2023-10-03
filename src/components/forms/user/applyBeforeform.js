@@ -143,7 +143,7 @@ function ApplyBeforeform(props) {
                   Full Name: <span className="text-danger">*</span>
                 </label>
                 <input
-                  maxLength={20}
+                  maxLength={60}
                   name="name"
                   value={state.name || ""}
                   onChange={onInputChange}
@@ -171,7 +171,7 @@ function ApplyBeforeform(props) {
                   Email Id: <span className="text-danger">*</span>
                 </label>
                 <input
-                  maxLength={30}
+                  maxLength={60}
                   type="email"
                   name="email"
                   value={state.email || ""}
@@ -219,7 +219,7 @@ function ApplyBeforeform(props) {
                       : "form-control"
                   }
                   id="contact_no"
-                  maxLength={10}
+                  maxLength={13}
                 />
                 {/*----ERROR MESSAGE FOR MOBILENO----*/}
                 {errors.contact_no && (

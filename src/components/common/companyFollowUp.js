@@ -51,7 +51,7 @@ function AddCompanyfollowup(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     remark: "",
-    next_followup_date: "",
+    next_date: "",
     company_id: cid,
     subject: "",
   };
@@ -153,10 +153,10 @@ function AddCompanyfollowup(props) {
                 //       <span className="text-dark"> Posted date: </span>
                 //       {moment(res.created_at).format("DD-MM-YYYY")}
                 //     </div>
-                //     {res.next_followup_date === "0000-00-00" ? null :
+                //     {res.next_date === "0000-00-00" ? null :
                 //       <div className="card-head font-size-3 text-dark card_right">
                 //         <span className="text-dark"> Next date: </span>
-                //         {moment(res.next_followup_date).format("DD-MM-YYYY")}
+                //         {moment(res.next_date).format("DD-MM-YYYY")}
                 //       </div>}
                 //   </div>
                 //   <div className="card-body p-3">{res.remark}</div>
@@ -235,7 +235,7 @@ function AddCompanyfollowup(props) {
             </div>
             <div className="form-group col px-0 pr-3">
               <label
-                htmlFor="next_followup_date"
+                htmlFor="next_date"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Next Date :
@@ -244,25 +244,25 @@ function AddCompanyfollowup(props) {
                 <input
                   type="date"
                   placeholder="Next followup date"
-                  id="next_followup_date"
-                  name="next_followup_date"
+                  id="next_date"
+                  name="next_date"
                   min={moment().format("DD-MM-YYYY")}
-                  value={state.next_followup_date}
+                  value={state.next_date}
                   onChange={onInputChange}
                   onKeyDownCapture={(e) => e.preventDefault()}
                   className={
-                    errors.next_followup_date
+                    errors.next_date
                       ? "form-control coustam_datepicker border border-danger"
                       : "form-control coustam_datepicker"
                   }
                 />
-                {/*----ERROR MESSAGE FOR next_followup_date----*/}
-                {errors.next_followup_date && (
+                {/*----ERROR MESSAGE FOR next_date----*/}
+                {errors.next_date && (
                   <span
-                    key={errors.next_followup_date}
+                    key={errors.next_date}
                     className="text-danger font-size-3"
                   >
-                    {errors.next_followup_date}
+                    {errors.next_date}
                   </span>
                 )}
               </div>
