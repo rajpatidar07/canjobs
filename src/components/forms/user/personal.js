@@ -113,18 +113,18 @@ function PersonalDetails(props) {
     marital_status: [
       (value) => (value === "" || value === null ? "Status is required" : null),
     ],
-    // nationality: [
-    //   (value) =>
-    //     value === "" || value === null
-    //       ? "Nationality is required"
-    //       : /[^A-Za-z 0-9]/g.test(value)
-    //       ? "Cannot use special character "
-    //       : value.length < 3
-    //       ? "Nationality should have 3 or more letter"
-    //       : /[-]?\d+(\.\d+)?/.test(value)
-    //       ? "Nationality can not have a number."
-    //       : "",
-    // ],
+    nationality: [
+      (value) =>
+        value === "" || value === null
+          ? "Nationality is required"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : value.length < 3
+          ? "Nationality should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Nationality can not have a number."
+          : "",
+    ],
     current_location: [
       (value) =>
         value === "" || value === null || value.trim() === ""
@@ -174,9 +174,9 @@ function PersonalDetails(props) {
       (value) =>
         value === "" || value === null ? "Experience is required" : null,
     ],
-    resume: [
-      (value) => (value === "" || value === null ? "Resume is required" : null),
-    ],
+    // resume: [
+    //   (value) => (value === "" || value === null ? "Resume is required" : null),
+    // ],
     work_permit_canada: [
       (value) =>
         value === "" || value === null ? "Work Permit is required" : null,
@@ -1001,7 +1001,7 @@ function PersonalDetails(props) {
                       htmlFor="resume"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Resume: <span className="text-danger">*</span>
+                      Resume: {/*<span className="text-danger">*</span>*/}
                     </label>
                     <input
                       type="file"
@@ -1017,14 +1017,14 @@ function PersonalDetails(props) {
                       }
                     />
                     {/*----ERROR MESSAGE FOR RESUME----*/}
-                    {errors.resume && (
+                    {/* {errors.resume && (
                       <span
                         key={errors.resume}
                         className="text-danger font-size-3"
                       >
                         {errors.resume}
                       </span>
-                    )}
+                    )} */}
                   </div>
                   {user_type === "admin" ? (
                     <div className="form-group col-md-4">
