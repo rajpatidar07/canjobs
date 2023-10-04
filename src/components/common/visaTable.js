@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { GetEmployeeVisaList, GetVisaSubStages } from "../../api/api";
+import {
+  GetEmployeeVisaList,
+  GetVisaSubStages,
+  DeleteVisa,
+} from "../../api/api";
+import SAlert from "../common/sweetAlert";
 import moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
@@ -9,6 +14,8 @@ import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
 import { LiaCcVisa } from "react-icons/lia";
 import { GrDocumentUser } from "react-icons/gr";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 export default function VisaTable(props) {
   let user_type = localStorage.getItem("userType");
   /*Show modal states */
@@ -16,6 +23,10 @@ export default function VisaTable(props) {
   let [isLoading, setIsLoading] = useState(true);
   const [documentModal, setDocumentModal] = useState(false);
   let [showVisaModal, setVisaModal] = useState(false);
+  /*Delete state */
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   /* data and id states */
   const [employeeData, setemployeeData] = useState([]);
   let [employeeId, setemployeeId] = useState();
@@ -134,6 +145,28 @@ export default function VisaTable(props) {
     props.setpageNo(1);
   };
 
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.visa_id);
+    setDeleteName(e.name);
+    setDeleteAlert(true);
+  };
+  /*To call Api to delete Job */
+  async function OnDeleteVisa(e) {
+    try {
+      const responseData = await DeleteVisa(e);
+      if (responseData.message === "Successfully deleted") {
+        toast.error("Visa deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setDeleteAlert(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <>
       {showVisaModal ? (
@@ -488,8 +521,13 @@ export default function VisaTable(props) {
                             <p className="font-size-3 mb-0">Unavailable</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.experience}
-                              Years
+                              {empdata.experience === "1-3 " ||
+                              empdata.experience === "1-2 " ||
+                              empdata.experience === "3-5 " ||
+                              empdata.experience === "5-7 " ||
+                              empdata.experience === "7+ "
+                                ? empdata.experience + "years"
+                                : empdata.experience}
                             </p>
                           )}
                         </td>
@@ -502,7 +540,7 @@ export default function VisaTable(props) {
                             </span>
                           ) : (
                             <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                              Incompelete
+                              Incomplete
                             </span>
                           )}
                         </p>
@@ -591,6 +629,16 @@ export default function VisaTable(props) {
                             </span>
                             {/* <span className="fas fa-file text-gray"></span> */}
                           </button>
+                          <button
+                            className={"btn btn-outline-info action_btn"}
+                            onClick={() => ShowDeleteAlert(empdata)}
+                            title="Delete"
+                          >
+                            <span className=" text-danger px-1">
+                              <RiDeleteBin5Line />
+                              {/* <i className="fa fa-trash"></i> */}
+                            </span>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -610,6 +658,14 @@ export default function VisaTable(props) {
           />
         </div>
       </div>
+      <SAlert
+        show={deleteAlert}
+        title={deleteName}
+        text="Are you Sure you want to delete !"
+        onConfirm={() => OnDeleteVisa(deleteId)}
+        showCancelButton={true}
+        onCancel={() => setDeleteAlert(false)}
+      />
     </>
   );
 }

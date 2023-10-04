@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import FilterJson from "../../json/filterjson";
-import { AddEmployeeDetails } from "../../../api/api";
+import { AddEmployeeDetails, AddUpdateVisa } from "../../../api/api";
 import { toast } from "react-toastify";
 export default function ApplicantsStatusModal(props) {
   const [status, setStatus] = useState("");
@@ -21,15 +21,47 @@ export default function ApplicantsStatusModal(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        props.setApiCall(true);
-        setLoading(false);
-        props.close();
+        if (data.status === "4" && !props.data.visa_status) {
+          let state = { status: "onboard" };
+          try {
+            let VisaResponse = await AddUpdateVisa(
+              props.data.employee_id,
+              state
+            );
+            if (VisaResponse.data.message === "visa inserted successfully") {
+              props.setApiCall(true);
+              setLoading(false);
+              props.close();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          props.setApiCall(true);
+          setLoading(false);
+          props.close();
+        }
       }
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
   };
+  /*Function to start visa */
+  //  const visaStatus =async()=>{
+  //   let state = { status: "onboard", country: props.data.location }
+  //  try{
+  //    let VisaResponse = await AddUpdateVisa(props.data.employee_id, state);
+  //   if (VisaResponse.data.message === "visa inserted successfully") {}
+  //   }catch(err){
+  //     console.log(err)
+  //   }
+  // }
+  // useEffect(() => {
+  // if(status === "retained" &&  !props.data.visa_status ){
+  //   visaStatus()
+  // }
+  // }, [status])
   return (
     <Modal
       show={props.show}

@@ -19,7 +19,6 @@ export default function VisaStatus(props) {
   const [expandedStatus, setExpandedStatus] = useState(
     props.employeeData.visa_status
   );
-  console.log(props.employeeData);
   // eslint-disable-next-line
   let isExpanded = false;
   // USER PERSONAL DETAIL VALIDATION
@@ -270,7 +269,7 @@ export default function VisaStatus(props) {
                 value={state.country || ""}
                 onChange={onInputChange}
                 className={"form-control text-capitalize"}
-                disabled={props.employeeData.visa_country}
+                // disabled={props.employeeData.visa_country}
                 id="country"
               >
                 <option value={""}>Select visa Country </option>

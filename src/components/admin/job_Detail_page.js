@@ -191,7 +191,8 @@ function JobDetailpageAdmim(props) {
                                 src="image/icons/marker.svg"
                                 alt="Location"
                               />
-                              {jobData.your_duties},{jobData.location}
+                              {jobData.your_duties} , {jobData.industry_type}{" "}
+                              {jobData.location}
                             </span>
                           ) : (
                             ""
@@ -409,7 +410,8 @@ function JobDetailpageAdmim(props) {
                                               src="image/icons/marker.svg"
                                               alt="Location"
                                             />
-                                            {jobData.your_duties}{" "}
+                                            {jobData.your_duties},{" "}
+                                            {jobData.industry_type}
                                             {jobData.location}
                                           </span>
                                         ) : (
@@ -617,7 +619,7 @@ function JobDetailpageAdmim(props) {
                                       title="Salary"
                                     >
                                       <b> Salary: </b>
-                                      {jobData.salary} <b>$</b>
+                                      {jobData.salary} $
                                     </span>
                                   </div>
                                 ) : null}

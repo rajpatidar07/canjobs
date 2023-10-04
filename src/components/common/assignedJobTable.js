@@ -189,7 +189,7 @@ export default function AssignedJobTable(props) {
                             <div className="">
                               <Link
                                 title="Job Details"
-                                //   to={`/jobdetailpage`}
+                                //   to={`/job_detail`}
                                 //   onClick={
                                 //     () =>
                                 //       localStorage.setItem("job_id", job.job_id)
