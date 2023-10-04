@@ -83,7 +83,7 @@ function EmployeeHeader() {
             <Link to="/">
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
-                src="image/00logo-main-black.png"
+                src="image/l00logo-main-black.png"
                 alt=""
                 className="light-version-logo default-logo"
               />

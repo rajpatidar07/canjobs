@@ -527,7 +527,7 @@ function AddJobModal(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  State:
+                  State:<span className="text-danger"> *</span>
                 </label>
                 <select
                   name="location"
@@ -559,6 +559,28 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
+              {/* <label
+                htmlFor="state"
+                className="font-size-4 text-black-2  line-height-reset mt-3"
+              >
+                State:<span className="text-danger"> *</span>
+              </label>
+              <select
+                name="location"
+                value={state.location}
+                onChange={onInputChange}
+                type="text"
+                className="form-control text-capitalize"
+                placeholder="State"
+                id="location"
+              >
+                <option value={""}>Select state</option>
+                {Object.keys(states).map((state, i) => (
+                  <option key={i} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select> */}
 
               {state.location && (
                 <div className="form-group col-md-4 px-0 pr-3">
@@ -566,7 +588,7 @@ function AddJobModal(props) {
                     htmlFor="industry_type"
                     className="font-size-4 text-black-2  line-height-reset "
                   >
-                    City:
+                    City:<span className="text-danger">*</span>
                   </label>
                   <select
                     name="industry_type"

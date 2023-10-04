@@ -527,7 +527,7 @@ function AddJobModal(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  State:
+                  State:<span className="text-danger"> *</span>
                 </label>
                 <select
                   name="location"
@@ -559,6 +559,28 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
+              {/* <label
+                htmlFor="state"
+                className="font-size-4 text-black-2  line-height-reset mt-3"
+              >
+                State:<span className="text-danger"> *</span>
+              </label>
+              <select
+                name="location"
+                value={state.location}
+                onChange={onInputChange}
+                type="text"
+                className="form-control text-capitalize"
+                placeholder="State"
+                id="location"
+              >
+                <option value={""}>Select state</option>
+                {Object.keys(states).map((state, i) => (
+                  <option key={i} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select> */}
 
               {state.location && (
                 <div className="form-group col-md-4 px-0 pr-3">
@@ -566,7 +588,7 @@ function AddJobModal(props) {
                     htmlFor="industry_type"
                     className="font-size-4 text-black-2  line-height-reset "
                   >
-                    City:
+                    City:<span className="text-danger">*</span>
                   </label>
                   <select
                     name="industry_type"
@@ -586,157 +608,6 @@ function AddJobModal(props) {
                   </select>
                 </div>
               )}
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="job_description"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Job Description:
-                </label>
-                <div className="position-relative">
-                  <div
-                    sm="12"
-                    className={
-                      errors.job_description
-                        ? "border border-danger rounded overflow-hidden"
-                        : "border rounded overflow-hidden"
-                    }
-                  >
-                    {/* <CKEditor
-                      type={"classic"}
-                      name="job_description"
-                      row={6}
-                      id={"job_description"}
-                      data={state.job_description}
-                      value={state.job_description}
-                   onChange={onInputChange}
-                      initData="Job Description"
-                    /> */}
-                    <textarea
-                      maxLength={5000}
-                      placeholder="Job Description"
-                      name="job_description"
-                      value={state.job_description || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.job_description
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="job_description"
-                    ></textarea>
-                  </div>
-                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.job_description && (
-                    <span
-                      key={errors.job_description}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.job_description}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="your_duties"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Full Address :
-                </label>
-                <div className="position-relative">
-                  <div
-                    sm="6"
-                    className={
-                      errors.your_duties
-                        ? "border border-danger rounded overflow-hidden"
-                        : "border rounded overflow-hidden"
-                    }
-                  >
-                    {/* //    <CKEditor
-                  //     type={"classic"}
-                  //     name="your_duties"
-                  //     id={"your_duties"}
-                  //     data={state.your_duties}
-                  //     value={state.your_duties}
-                  //  onChange={onInputChange}
-                  //     initData="your duties"
-                  //   />  */}
-                    <textarea
-                      maxLength={5000}
-                      placeholder="Full Address"
-                      name="your_duties"
-                      value={state.your_duties || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.your_duties
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="your_duties"
-                    ></textarea>
-                  </div>
-                  {/* //----ERROR MESSAGE FOR DESRIPTION----* */}
-                  {errors.your_duties && (
-                    <span
-                      key={errors.your_duties}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.your_duties}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="requirement"
-                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
-                >
-                  Requirement:
-                </label>
-                <div className="position-relative">
-                  <div
-                    sm="6"
-                    className={
-                      errors.requirement
-                        ? "border border-danger rounded overflow-hidden"
-                        : "border rounded overflow-hidden"
-                    }
-                  >
-                    {/* <CKEditor
-                      type={"classic"}
-                      name="requirement"
-                      id={"requirement"}
-                      data={state.requirement}
-                      value={state.requirement}
-                      onChange={onInputChange}
-                      initData="Add Requirement"
-                    /> */}
-                    <textarea
-                      maxLength={5000}
-                      placeholder="Requirements"
-                      name="requirement"
-                      value={state.requirement || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.requirement
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="requirement"
-                    ></textarea>
-                  </div>
-                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
-                  {errors.requirement && (
-                    <span
-                      key={errors.requirement}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.requirement}
-                    </span>
-                  )}
-                </div>
-              </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="apply_link"
@@ -770,7 +641,6 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="role_category"
@@ -1028,7 +898,157 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
-
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="job_description"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Job Description:
+                </label>
+                <div className="position-relative">
+                  <div
+                    sm="12"
+                    className={
+                      errors.job_description
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    {/* <CKEditor
+                      type={"classic"}
+                      name="job_description"
+                      row={6}
+                      id={"job_description"}
+                      data={state.job_description}
+                      value={state.job_description}
+                   onChange={onInputChange}
+                      initData="Job Description"
+                    /> */}
+                    <textarea
+                      maxLength={5000}
+                      placeholder="Job Description"
+                      name="job_description"
+                      value={state.job_description || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.job_description
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="job_description"
+                    ></textarea>
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.job_description && (
+                    <span
+                      key={errors.job_description}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.job_description}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="your_duties"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Full Address :
+                </label>
+                <div className="position-relative">
+                  <div
+                    sm="6"
+                    className={
+                      errors.your_duties
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    {/* //    <CKEditor
+                  //     type={"classic"}
+                  //     name="your_duties"
+                  //     id={"your_duties"}
+                  //     data={state.your_duties}
+                  //     value={state.your_duties}
+                  //  onChange={onInputChange}
+                  //     initData="your duties"
+                  //   />  */}
+                    <textarea
+                      maxLength={5000}
+                      placeholder="Full Address"
+                      name="your_duties"
+                      value={state.your_duties || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.your_duties
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="your_duties"
+                    ></textarea>
+                  </div>
+                  {/* //----ERROR MESSAGE FOR DESRIPTION----* */}
+                  {errors.your_duties && (
+                    <span
+                      key={errors.your_duties}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.your_duties}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="requirement"
+                  className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                >
+                  Requirement:
+                </label>
+                <div className="position-relative">
+                  <div
+                    sm="6"
+                    className={
+                      errors.requirement
+                        ? "border border-danger rounded overflow-hidden"
+                        : "border rounded overflow-hidden"
+                    }
+                  >
+                    {/* <CKEditor
+                      type={"classic"}
+                      name="requirement"
+                      id={"requirement"}
+                      data={state.requirement}
+                      value={state.requirement}
+                      onChange={onInputChange}
+                      initData="Add Requirement"
+                    /> */}
+                    <textarea
+                      maxLength={5000}
+                      placeholder="Requirements"
+                      name="requirement"
+                      value={state.requirement || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.requirement
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="requirement"
+                    ></textarea>
+                  </div>
+                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  {errors.requirement && (
+                    <span
+                      key={errors.requirement}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.requirement}
+                    </span>
+                  )}
+                </div>
+              </div>
               {user_type === "admin" ? (
                 <div className="form-group col-md-4">
                   <label

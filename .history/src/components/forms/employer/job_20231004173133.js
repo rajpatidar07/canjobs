@@ -527,7 +527,7 @@ function AddJobModal(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  State:
+                  State:<span className="text-danger"> *</span>
                 </label>
                 <select
                   name="location"
@@ -559,6 +559,28 @@ function AddJobModal(props) {
                   </span>
                 )}
               </div>
+              {/* <label
+                htmlFor="state"
+                className="font-size-4 text-black-2  line-height-reset mt-3"
+              >
+                State:<span className="text-danger"> *</span>
+              </label>
+              <select
+                name="location"
+                value={state.location}
+                onChange={onInputChange}
+                type="text"
+                className="form-control text-capitalize"
+                placeholder="State"
+                id="location"
+              >
+                <option value={""}>Select state</option>
+                {Object.keys(states).map((state, i) => (
+                  <option key={i} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select> */}
 
               {state.location && (
                 <div className="form-group col-md-4 px-0 pr-3">
@@ -566,7 +588,7 @@ function AddJobModal(props) {
                     htmlFor="industry_type"
                     className="font-size-4 text-black-2  line-height-reset "
                   >
-                    City:
+                    City:<span className="text-danger">*</span>
                   </label>
                   <select
                     name="industry_type"
@@ -586,6 +608,39 @@ function AddJobModal(props) {
                   </select>
                 </div>
               )}
+              <div className="form-group col-md-4 px-0 pr-3">
+                <label
+                  htmlFor="apply_link"
+                  className="font-size-4 text-black-2  line-height-reset"
+                >
+                  Apply Link / email:<span className="text-danger"> *</span>
+                </label>
+                <div className="position-relative">
+                  <input
+                    type="text"
+                    maxLength={60}
+                    name="apply_link"
+                    value={state.apply_link || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.apply_link
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Apply link"
+                    id="apply_link"
+                  />
+                  {/*----ERROR MESSAGE FOR apply_link----*/}
+                  {errors.apply_link && (
+                    <span
+                      key={errors.apply_link}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.apply_link}
+                    </span>
+                  )}
+                </div>
+              </div>
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="job_description"
@@ -737,40 +792,6 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-              <div className="form-group col-md-4 px-0 pr-3">
-                <label
-                  htmlFor="apply_link"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Apply Link / email:<span className="text-danger"> *</span>
-                </label>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    maxLength={60}
-                    name="apply_link"
-                    value={state.apply_link || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.apply_link
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    placeholder="Apply link"
-                    id="apply_link"
-                  />
-                  {/*----ERROR MESSAGE FOR apply_link----*/}
-                  {errors.apply_link && (
-                    <span
-                      key={errors.apply_link}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.apply_link}
-                    </span>
-                  )}
-                </div>
-              </div>
-
               <div className="form-group col-md-4 px-0 pr-3">
                 <label
                   htmlFor="role_category"
