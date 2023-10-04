@@ -554,7 +554,7 @@ export default function JobTable(props) {
                           )}
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {job.salary ? job.salary + " $" : "N/A"}
+                              {job.salary ? job.salary + "$" : "N/A"}
                             </h3>
                           </th>
                           <th className="py-5 ">

@@ -460,7 +460,7 @@ function JobDetailpageAdmim(props) {
                           </div>
                           <div className="col-md-6 col-lg-6 p-10 border-right">
                             <div>
-                              <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between">
+                              <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
                                 <span>About {jobData.job_title}</span>
                                 {/* <CustomButton
                                   className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
@@ -471,7 +471,7 @@ function JobDetailpageAdmim(props) {
                               </h4>
                               <div className="pt-5 text-left">
                                 {jobData.job_description ? (
-                                  <p className="font-size-4 mb-8">
+                                  <p className="font-size-4 mb-8 ">
                                     {jobData.job_description}
                                   </p>
                                 ) : (
@@ -610,6 +610,17 @@ function JobDetailpageAdmim(props) {
                                     ""
                                   )}
                                 </div>
+                                {jobData.salary ? (
+                                  <div className="info_box text-left">
+                                    <span
+                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                      title="Salary"
+                                    >
+                                      <b> Salary: </b>
+                                      {jobData.salary} <b>$</b>
+                                    </span>
+                                  </div>
+                                ) : null}
                                 {jobData.department ? (
                                   <div className="info_box text-left">
                                     <span

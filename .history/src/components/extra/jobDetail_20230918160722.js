@@ -8,17 +8,16 @@ function JobDetail({ ids }) {
 
   useEffect(() => {
     const GetJobData = async () => {
-      try {
-        let Response = await GetJobDetail(ids);
-        if (Response.data.data.length === 0) {
-          setJobData("");
-        } else {
-          setJobData(Response.data.data[0]);
-        }
-      } catch (err) {
-        console.log(err);
+    try{
+      let Response = await GetJobDetail(ids);
+      if (Response.data.data.length === 0) {
+        setJobData("");
+      } else {
+        setJobData(Response.data.data[0]);
       }
-    };
+    ;}catch(err){
+      console.log(err)
+    }}
     GetJobData();
   }, [ids]);
   return (
@@ -28,8 +27,7 @@ function JobDetail({ ids }) {
           className="tab-pane fade show active"
           id="tab-pane-1"
           role="tabpanel"
-          aria-labelledby="tab-nav-1"
-        >
+          aria-labelledby="tab-nav-1">
           <div className=" bg-white rounded-4 border border-mercury shadow-9 pos-abs-xl h-1413 overflow-y-scroll mt-9 mt-xl-0">
             {/* <!-- Single Featured Job --> */}
             <div className="pt-9 pl-sm-9 pl-5 pb-8 pr-sm-9 pr-5 border-bottom border-width-1 border-default-color light-mode-texts">
@@ -51,13 +49,8 @@ function JobDetail({ ids }) {
                         alt=""
                       />
                     </Link>
-                    <Link
-                      to={`/jobdetailpage`}
-                      onClick={() =>
-                        localStorage.setItem("job_id", jobData.job_id)
-                      }
-                      className="text_box text-left w-100"
-                    >
+                    <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",jobData.job_id)} className="text_box text-left w-100">
                       <p className="font-size-3 text-default-color line-height-2 m-0">
                         {jobData.company_name}
                       </p>
@@ -89,7 +82,7 @@ function JobDetail({ ids }) {
                       <img src="image/svg/icon-dolor.svg" alt="" />
                     </div>
                     <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
-                      {jobData.salary} $ PLN PLN
+                      {jobData.salary} PLN PLN
                     </p>
                   </div>
                 </div>

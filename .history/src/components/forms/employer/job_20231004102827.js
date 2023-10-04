@@ -511,7 +511,7 @@ function AddJobModal(props) {
                       ? "form-control text-capitalize border border-danger"
                       : "form-control text-capitalize"
                   }
-                  placeholder="1000"
+                  placeholder="Salary"
                   id="salary"
                 />
                 {/*----ERROR MESSAGE FOR salary----*/}
@@ -644,7 +644,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="NOC Code"
+                    placeholder="Department"
                     id="department"
                     min={0}
                   />
@@ -875,7 +875,7 @@ function AddJobModal(props) {
                       initData="Job Description"
                     /> */}
                     <textarea
-                      maxLength={5000}
+                      maxLength={1000}
                       placeholder="Job Description"
                       name="job_description"
                       value={state.job_description || ""}
@@ -925,7 +925,7 @@ function AddJobModal(props) {
                   //     initData="your duties"
                   //   />  */}
                     <textarea
-                      maxLength={5000}
+                      // maxLength={100}
                       placeholder="Full Address"
                       name="your_duties"
                       value={state.your_duties || ""}
@@ -975,7 +975,7 @@ function AddJobModal(props) {
                       initData="Add Requirement"
                     /> */}
                     <textarea
-                      maxLength={5000}
+                      maxLength={1000}
                       placeholder="Requirements"
                       name="requirement"
                       value={state.requirement || ""}

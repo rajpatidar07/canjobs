@@ -38,9 +38,9 @@ function Followup() {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
-      if (Json.data.message === "No data found") {
-        setJson([]);
-      } else {
+      if(Json.data.message ==='No data found'){
+        setJson([])
+      }else{
         setJson(Json.data.data);
       }
       setJson(Json.data.data);
@@ -502,7 +502,7 @@ function Followup() {
                                 </td>
                                 <td className="py-5 ">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    {job.salary} $
+                                    {job.salary}
                                   </h3>
                                 </td>
                                 <td className="py-5 ">

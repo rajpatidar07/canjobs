@@ -497,9 +497,9 @@ function AddJobModal(props) {
                   htmlFor="salary"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Salary(CAD):
+                  Salary:
                 </label>
-                <input
+                <select
                   maxLength={10}
                   name="salary"
                   value={state.salary || ""}
@@ -511,9 +511,16 @@ function AddJobModal(props) {
                       ? "form-control text-capitalize border border-danger"
                       : "form-control text-capitalize"
                   }
-                  placeholder="1000"
+                  placeholder="Salary"
                   id="salary"
-                />
+                >
+                  <option value={""}>Select salary</option>
+                  {(FilterJson.salary || []).map((salary, i) => (
+                    <option key={i} value={salary}>
+                      {salary}
+                    </option>
+                  ))}
+                </select>
                 {/*----ERROR MESSAGE FOR salary----*/}
                 {errors.salary && (
                   <span key={errors.salary} className="text-danger font-size-3">
@@ -635,7 +642,7 @@ function AddJobModal(props) {
                 <div className="position-relative">
                   <input
                     type="number"
-                    maxLength={20}
+                    maxLength={60}
                     name="department"
                     value={state.department || ""}
                     onChange={onInputChange}
@@ -644,7 +651,7 @@ function AddJobModal(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="NOC Code"
+                    placeholder="Department"
                     id="department"
                     min={0}
                   />
@@ -875,7 +882,7 @@ function AddJobModal(props) {
                       initData="Job Description"
                     /> */}
                     <textarea
-                      maxLength={5000}
+                      maxLength={1000}
                       placeholder="Job Description"
                       name="job_description"
                       value={state.job_description || ""}
@@ -925,7 +932,7 @@ function AddJobModal(props) {
                   //     initData="your duties"
                   //   />  */}
                     <textarea
-                      maxLength={5000}
+                      // maxLength={100}
                       placeholder="Full Address"
                       name="your_duties"
                       value={state.your_duties || ""}
@@ -975,7 +982,7 @@ function AddJobModal(props) {
                       initData="Add Requirement"
                     /> */}
                     <textarea
-                      maxLength={5000}
+                      maxLength={1000}
                       placeholder="Requirements"
                       name="requirement"
                       value={state.requirement || ""}

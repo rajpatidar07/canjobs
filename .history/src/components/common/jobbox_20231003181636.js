@@ -268,7 +268,7 @@ function JobBox({
                             <img src="image/svg/icon-clock.svg" alt="" />
                           </span>
                           <span className="font-weight-semibold">
-                            {job.salary} $
+                            {job.salary}
                           </span>
                         </li>
                       </ul>

@@ -1636,7 +1636,7 @@ const NewUserProfile = (props) => {
                                           className="bg-regent-opacity-15 text-red font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                                         >
                                           <i className="fas fa-rupee-sign mr-2 font-weight-bold"></i>
-                                          {data.salary} $
+                                          {data.salary}
                                         </span>
                                       </li>
                                     </ul>

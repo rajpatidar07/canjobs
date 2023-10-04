@@ -280,7 +280,6 @@ const UserProfile = (props) => {
                               )}
                             </span>
                           </div>
-
                           <div className="info_box text-left">
                             {PersonalDetail.contact_no ? (
                               <span className="font-size-3 text-smoke  mr-7">
@@ -366,6 +365,7 @@ const UserProfile = (props) => {
                             Religion: <b>{PersonalDetail.religion}</b>
                           </span>
                         </div> */}
+                          s
                           {/* {PersonalDetail.nationality ? (
                             <div className="info_box text-left">
                               <span className="font-size-3 text-smoke  mr-7 text-capitalize">

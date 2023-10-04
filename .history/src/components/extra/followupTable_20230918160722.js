@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetAllJobs, getAllJobsCategory } from "../../api/api";
 import JobResponse from "./response";
-import Loader from "../common/loader";
+import Loader from '../common/loader';
 
 function FollowupTable() {
   /*show Modal and props state */
@@ -22,7 +22,7 @@ function FollowupTable() {
 
   /* Function to get Job data*/
   const JobData = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       const userData = await GetAllJobs(
         props.search,
@@ -38,16 +38,16 @@ function FollowupTable() {
       if (userData.data.length === 0) {
         setjobData([]);
         setresponseId();
-        setIsLoading(false);
+        setIsLoading(false)
       } else {
         setjobData(userData.data.data);
         setTotalData(userData.data.total_rows);
         setresponseId(userData.data.data[0].job_id);
-        setIsLoading(false);
+        setIsLoading(false)
       }
     } catch (err) {
-      console.log(err);
-      setIsLoading(false);
+      console.log(err)
+      setIsLoading(false)
     }
   };
 
@@ -61,13 +61,7 @@ function FollowupTable() {
     props.locationFilterValue,
     props.jobSwapFilterValue,
     props.search,
-    props.categoryFilterValue ||
-    props.SkillFilterValue ||
-    props.locationFilterValue ||
-    props.jobSwapFilterValue ||
-    props.search
-      ? 1
-      : currentPage,
+    props.categoryFilterValue || props.SkillFilterValue || props.locationFilterValue || props.jobSwapFilterValue || props.search ? 1 : currentPage,
     columnName,
     sortOrder,
   ]);
@@ -87,7 +81,7 @@ function FollowupTable() {
         setCategoryList(userData.data);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
 
@@ -105,10 +99,8 @@ function FollowupTable() {
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
         <div className="table-responsive main_table_div">
           tyhrtyutfhxt
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <table className="table table-striped main_data_table">
+          {isLoading ?
+            <Loader /> : <table className="table table-striped main_data_table">
               <thead>
                 <tr>
                   <th
@@ -116,10 +108,7 @@ function FollowupTable() {
                     className=" border-0 font-size-4 font-weight-normal"
                   >
                     <Link
-                      onClick={() => {
-                        handleSort("job_title");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("job_title"); setCurrentPage(1) }}
                       title="Sort by Industry"
                       className="text-gray"
                     >
@@ -133,10 +122,7 @@ function FollowupTable() {
                     <Link
                       to=""
                       title="Sort by Job"
-                      onClick={() => {
-                        handleSort("job_type");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("job_type"); setCurrentPage(1) }}
                       className="text-gray"
                     >
                       Job Type
@@ -148,10 +134,7 @@ function FollowupTable() {
                   >
                     <Link
                       to=""
-                      onClick={() => {
-                        handleSort("location");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("location"); setCurrentPage(1) }}
                       className="text-gray"
                       title="Sort by Address"
                     >
@@ -164,10 +147,7 @@ function FollowupTable() {
                   >
                     <Link
                       to=""
-                      onClick={() => {
-                        handleSort("education");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("education"); setCurrentPage(1) }}
                       className="text-gray"
                       title="Sort by Education"
                     >
@@ -180,10 +160,7 @@ function FollowupTable() {
                   >
                     <Link
                       to=""
-                      onClick={() => {
-                        handleSort("keyskill");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("keyskill"); setCurrentPage(1) }}
                       title="Sort by Skills"
                       className="text-gray"
                     >
@@ -196,10 +173,7 @@ function FollowupTable() {
                   >
                     <Link
                       to=""
-                      onClick={() => {
-                        handleSort("language");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("language"); setCurrentPage(1) }}
                       className="text-gray"
                       title="Sort by Language"
                     >
@@ -212,10 +186,7 @@ function FollowupTable() {
                   >
                     <Link
                       to=""
-                      onClick={() => {
-                        handleSort("salary");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("salary"); setCurrentPage(1) }}
                       title="Sort by Salary"
                       className="text-gray"
                     >
@@ -228,10 +199,7 @@ function FollowupTable() {
                   >
                     <Link
                       to=""
-                      onClick={() => {
-                        handleSort("experience_required");
-                        setCurrentPage(1);
-                      }}
+                      onClick={() => { handleSort("experience_required"); setCurrentPage(1) }}
                       className="text-gray"
                       title="Sort by Experience"
                     >
@@ -242,11 +210,7 @@ function FollowupTable() {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    <Link
-                      to=""
-                      className="text-gray"
-                      title="Sort by Experience"
-                    >
+                    <Link to="" className="text-gray" title="Sort by Experience">
                       Total Applicants
                     </Link>
                   </th>
@@ -299,15 +263,11 @@ function FollowupTable() {
                               onClick={() => JobDetail(job.job_id)}
                               className="font-size-3 mb-0 font-weight-semibold text-black-2"
                             >
-                              <Link
-                                to={`/jobdetailpage`}
-                                onClick={() =>
-                                  localStorage.setItem("job_id", job.job_id)
-                                }
-                              >
-                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                  {job.job_title}
-                                </p>
+                              <Link to={`/jobdetailpage`}
+                                onClick={() => localStorage.setItem("job_id",job.job_id)}>
+                              <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                {job.job_title}
+                              </p>
                               </Link>
                               <p className="text-gray font-size-2 m-0 text-capitalize">
                                 {job.company_name} - {job.industry_type}
@@ -342,7 +302,7 @@ function FollowupTable() {
                         </td>
                         <td className="py-5 ">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {job.salary} $
+                            {job.salary}
                           </h3>
                         </td>
                         <td className="py-5 ">
@@ -357,10 +317,7 @@ function FollowupTable() {
                         </td>
                         <td className="py-5 min-width-px-100">
                           {job.total_applicants > 0 ? (
-                            <div
-                              className="btn-group button_group"
-                              role="group"
-                            >
+                            <div className="btn-group button_group" role="group">
                               <button
                                 className="btn btn-outline-info action_btn"
                                 onClick={() => setresponseId(job.job_id)}
@@ -373,8 +330,7 @@ function FollowupTable() {
                         </td>
                       </tr>
                       {JobId ||
-                      (job.job_id === responseId &&
-                        job.total_applicants > 0) ? (
+                        (job.job_id === responseId && job.total_applicants > 0) ? (
                         <tr>
                           <td colSpan={10}>
                             <JobResponse responseId={responseId} />
@@ -385,16 +341,13 @@ function FollowupTable() {
                   ))
                 )}
               </tbody>
-            </table>
-          )}
+            </table>}
         </div>
         <div className="pt-2">
           <Pagination
             nPages={nPages}
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            total={totalData}
-            count={jobData.length}
+            setCurrentPage={setCurrentPage} total={totalData} count={jobData.length}
           />
         </div>
       </div>
