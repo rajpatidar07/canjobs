@@ -614,7 +614,7 @@ function PersonalDetails(props) {
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Marital status: <span className="text-danger">*</span>
+                      Maritial status: <span className="text-danger">*</span>
                     </label>
                     <select
                       name="marital_status"
@@ -627,7 +627,7 @@ function PersonalDetails(props) {
                       }
                       id="marital_status"
                     >
-                      <option value={""}>Marital Status</option>
+                      <option value={""}>Maritial Status</option>
                       <option value={"single"}>Single</option>
                       <option value={"married"}>Married</option>
                     </select>
@@ -952,7 +952,7 @@ function PersonalDetails(props) {
                       htmlFor="reffer_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Referred by:<span className="text-danger">*</span>
+                      Reffered by:<span className="text-danger">*</span>
                     </label>
                     <Select
                       options={"" || agentList}

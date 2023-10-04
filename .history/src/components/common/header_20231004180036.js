@@ -79,14 +79,13 @@ function EmployeeHeader() {
       <div className="container">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
-          <div className="brand-logo">
+          <div className="" style={{ maxWidth: "160px" }}>
             <Link to="/">
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
                 src="image/00logo-main-black.png"
                 alt=""
                 className="light-version-logo default-logo"
-                style={{ maxWidth: "160px" }}
               />
               {/* <!-- Dark version logo (logo must be White)--> */}
               <img

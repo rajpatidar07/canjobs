@@ -512,137 +512,137 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
+                </div>
+                <div className="form-group col-md-12">
+                  <label
+                    htmlFor="description"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    About:
+                  </label>
+                  <textarea
+                    name="description"
+                    value={state.description || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.description
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="description"
+                    placeholder="Description"
+                  ></textarea>
+                  {/*----ERROR MESSAGE FOR GENDER----*/}
+                  {errors.description && (
+                    <span
+                      key={errors.description}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.description}
+                    </span>
+                  )}
+                </div>
 
-                  <div className="form-group col-md-12">
-                    <label
-                      htmlFor="description"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                {/* SECOND LINE */}
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="date_of_birth"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Date Of Birth: <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    max={moment().format("DD-MM-YYYY")}
+                    type="date"
+                    placeholder="Date Of Birth "
+                    name="date_of_birth"
+                    value={state.date_of_birth || ""}
+                    onChange={onInputChange}
+                    onKeyDownCapture={(e) => e.preventDefault()}
+                    className={
+                      errors.date_of_birth
+                        ? "form-control coustam_datepicker border border-danger"
+                        : "form-control coustam_datepicker"
+                    }
+                    id="date_of_birth"
+                  />
+                  {/*----ERROR MESSAGE FOR DOB----*/}
+                  {errors.date_of_birth && (
+                    <span
+                      key={errors.date_of_birth}
+                      className="text-danger font-size-3"
                     >
-                      About:
-                    </label>
-                    <textarea
-                      name="description"
-                      value={state.description || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.description
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="description"
-                      placeholder="Description"
-                    ></textarea>
-                    {/*----ERROR MESSAGE FOR GENDER----*/}
-                    {errors.description && (
-                      <span
-                        key={errors.description}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.description}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* SECOND LINE */}
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="date_of_birth"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      {errors.date_of_birth}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="gender"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Gender: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="gender"
+                    value={state.gender || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.gender
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="gender"
+                  >
+                    <option value={""}>User Gender</option>
+                    <option value={"male"}>Male</option>
+                    <option value={"female"}>Female</option>
+                    <option value={"other"}>Other</option>
+                  </select>
+                  {/*----ERROR MESSAGE FOR GENDER----*/}
+                  {errors.gender && (
+                    <span
+                      key={errors.gender}
+                      className="text-danger font-size-3"
                     >
-                      Date Of Birth: <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      max={moment().format("DD-MM-YYYY")}
-                      type="date"
-                      placeholder="Date Of Birth "
-                      name="date_of_birth"
-                      value={state.date_of_birth || ""}
-                      onChange={onInputChange}
-                      onKeyDownCapture={(e) => e.preventDefault()}
-                      className={
-                        errors.date_of_birth
-                          ? "form-control coustam_datepicker border border-danger"
-                          : "form-control coustam_datepicker"
-                      }
-                      id="date_of_birth"
-                    />
-                    {/*----ERROR MESSAGE FOR DOB----*/}
-                    {errors.date_of_birth && (
-                      <span
-                        key={errors.date_of_birth}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.date_of_birth}
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="gender"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      {errors.gender}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="marital_status"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Maritial status: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="marital_status"
+                    value={state.marital_status || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.marital_status
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="marital_status"
+                  >
+                    <option value={""}>Maritial Status</option>
+                    <option value={"single"}>Single</option>
+                    <option value={"married"}>Married</option>
+                  </select>
+                  {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
+                  {errors.marital_status && (
+                    <span
+                      key={errors.marital_status}
+                      className="text-danger font-size-3"
                     >
-                      Gender: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      name="gender"
-                      value={state.gender || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.gender
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="gender"
-                    >
-                      <option value={""}>User Gender</option>
-                      <option value={"male"}>Male</option>
-                      <option value={"female"}>Female</option>
-                      <option value={"other"}>Other</option>
-                    </select>
-                    {/*----ERROR MESSAGE FOR GENDER----*/}
-                    {errors.gender && (
-                      <span
-                        key={errors.gender}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.gender}
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="marital_status"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                    >
-                      Marital status: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      name="marital_status"
-                      value={state.marital_status || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.marital_status
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="marital_status"
-                    >
-                      <option value={""}>Marital Status</option>
-                      <option value={"single"}>Single</option>
-                      <option value={"married"}>Married</option>
-                    </select>
-                    {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
-                    {errors.marital_status && (
-                      <span
-                        key={errors.marital_status}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.marital_status}
-                      </span>
-                    )}
-                  </div>
-                  {/* THIRD LINE */}
-                  {/* <div className="form-group col-md-4">
+                      {errors.marital_status}
+                    </span>
+                  )}
+                </div>
+                {/* THIRD LINE */}
+                {/* <div className="form-group col-md-4">
                     <label
                       htmlFor="nationality"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -674,108 +674,108 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div> */}
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="current_location"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="current_location"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Current Location: <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    maxLength={60}
+                    type="text"
+                    placeholder="Current Location"
+                    name="current_location"
+                    value={state.current_location || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.current_location
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="current_location"
+                  />
+                  {/*----ERROR MESSAGE FOR LOCATION----*/}
+                  {errors.current_location && (
+                    <span
+                      key={errors.current_location}
+                      className="text-danger font-size-3"
                     >
-                      Current Location: <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      maxLength={60}
-                      type="text"
-                      placeholder="Current Location"
-                      name="current_location"
-                      value={state.current_location || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.current_location
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="current_location"
-                    />
-                    {/*----ERROR MESSAGE FOR LOCATION----*/}
-                    {errors.current_location && (
-                      <span
-                        key={errors.current_location}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.current_location}
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="currently_located_country"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      {errors.current_location}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="currently_located_country"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Country of Residence:
+                  </label>
+                  <input
+                    maxLength={60}
+                    type="text"
+                    className={
+                      errors.currently_located_country
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Currently Located Country"
+                    id="currently_located_country"
+                    name="currently_located_country"
+                    value={state.currently_located_country || ""}
+                    onChange={onInputChange}
+                  />
+                  {/*----ERROR MESSAGE FOR COUNTRY----*/}
+                  {errors.currently_located_country && (
+                    <span
+                      key={errors.currently_located_country}
+                      className="text-danger font-size-3"
                     >
-                      Country of Residence:
-                    </label>
-                    <input
-                      maxLength={60}
-                      type="text"
-                      className={
-                        errors.currently_located_country
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      placeholder="Currently Located Country"
-                      id="currently_located_country"
-                      name="currently_located_country"
-                      value={state.currently_located_country || ""}
-                      onChange={onInputChange}
-                    />
-                    {/*----ERROR MESSAGE FOR COUNTRY----*/}
-                    {errors.currently_located_country && (
-                      <span
-                        key={errors.currently_located_country}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.currently_located_country}
-                      </span>
-                    )}
-                  </div>
+                      {errors.currently_located_country}
+                    </span>
+                  )}
+                </div>
 
-                  {/* FOURTH LINE */}
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="language"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                {/* FOURTH LINE */}
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="language"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Languages Known {/*(Max 3)*/}:
+                    <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="language"
+                    value={state.language || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.language
+                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
+                        : "text-capitalize form-control position-relative overflow-hidden"
+                    }
+                    placeholder="Language"
+                    id="language"
+                  >
+                    <option value={""}>Known Language</option>
+                    {(FilterJson.language || []).map((Language) => (
+                      <option key={Language} value={Language}>
+                        {Language}
+                      </option>
+                    ))}
+                  </select>
+                  {/*----ERROR MESSAGE FOR LANGUAGE----*/}
+                  {errors.language && (
+                    <span
+                      key={errors.language}
+                      className="text-danger font-size-3"
                     >
-                      Languages Known {/*(Max 3)*/}:
-                      <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      name="language"
-                      value={state.language || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.language
-                          ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
-                          : "text-capitalize form-control position-relative overflow-hidden"
-                      }
-                      placeholder="Language"
-                      id="language"
-                    >
-                      <option value={""}>Known Language</option>
-                      {(FilterJson.language || []).map((Language) => (
-                        <option key={Language} value={Language}>
-                          {Language}
-                        </option>
-                      ))}
-                    </select>
-                    {/*----ERROR MESSAGE FOR LANGUAGE----*/}
-                    {errors.language && (
-                      <span
-                        key={errors.language}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.language}
-                      </span>
-                    )}
-                  </div>
-                  {/* <div className="form-group col-md-4">
+                      {errors.language}
+                    </span>
+                  )}
+                </div>
+                {/* <div className="form-group col-md-4">
                 <label
                   htmlFor="religion"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -805,212 +805,212 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div> */}
-                  <div className="form-group col-md-4">
-                    <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                      Interested In: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className={
-                        errors.interested_in
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="interested_in"
-                      name="interested_in"
-                      value={state.interested_in || ""}
-                      onChange={onInputChange}
-                    >
-                      <option value={""}>Select</option>
-                      {(FilterJson.interested || []).map((interest) => (
-                        <option key={interest} value={interest}>
-                          {interest}
-                        </option>
-                      ))}
-                      {/* <option value={"swap"}>SWEP</option>
+                <div className="form-group col-md-4">
+                  <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                    Interested In: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className={
+                      errors.interested_in
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="interested_in"
+                    name="interested_in"
+                    value={state.interested_in || ""}
+                    onChange={onInputChange}
+                  >
+                    <option value={""}>Select</option>
+                    {(FilterJson.interested || []).map((interest) => (
+                      <option key={interest} value={interest}>
+                        {interest}
+                      </option>
+                    ))}
+                    {/* <option value={"swap"}>SWEP</option>
                   <option value={"parttime"}>Part-time</option>
                   <option value={"all"}>All</option> */}
-                    </select>
-                    {/*----ERROR MESSAGE FOR interested_in----*/}
-                    {errors.interested_in && (
-                      <span
-                        key={errors.interested_in}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.interested_in}
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="experience"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                    >
-                      Experience: <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      name="experience"
-                      value={state.experience || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.experience
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
-                      }
-                      id="experience"
-                    >
-                      <option value={""}>User Experience</option>
-                      {(FilterJson.experience || []).map((ex, i) => (
-                        <option value={ex} key={i}>
-                          {ex}
-                          {ex === "fresher" || ex === "Other" ? "" : "Years"}
-                        </option>
-                      ))}
-                    </select>
-                    {/*----ERROR MESSAGE FOR experience----*/}
-                    {errors.experience && (
-                      <span
-                        key={errors.experience}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.experience}
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="work_permit_canada"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                    >
-                      Work Permit of Canada:{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      name="work_permit_canada"
-                      value={state.work_permit_canada || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.work_permit_canada
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="work_permit_canada"
-                    >
-                      <option value={""}>Permit </option>
-                      <option value={"no"}>No</option>
-                      <option value={"yes"}>Yes</option>
-                    </select>
-                    {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
-                    {errors.work_permit_canada && (
-                      <span
-                        key={errors.work_permit_canada}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.work_permit_canada}
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="otherpermit"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                    >
-                      Work Permit of Other Country:
-                    </label>
-                    <input
-                      maxLength={60}
-                      type="text"
-                      className={
-                        errors.work_permit_other_country
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      placeholder="Permit of Other Country"
-                      id="work_permit_other_country"
-                      name="work_permit_other_country"
-                      value={state.work_permit_other_country || ""}
-                      onChange={onInputChange}
-                    />
-                    {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
-                    {errors.work_permit_other_country && (
-                      <span
-                        key={errors.work_permit_other_country}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.work_permit_other_country}
-                      </span>
-                    )}
-                  </div>
-                  <div
-                    className={
-                      props.employeeId === "0"
-                        ? "form-group col-md-4 d-flex"
-                        : "d-none"
-                    }
-                    style={{ position: "relative" }}
-                  >
-                    <label
-                      htmlFor="reffer_by"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                    >
-                      Referred by:<span className="text-danger">*</span>
-                    </label>
-                    <Select
-                      options={"" || agentList}
-                      name="reffer_by"
-                      id="reffer_by"
-                      onChange={onSelectChange}
-                      className={
-                        errors.reffer_by
-                          ? "form-control border border-danger px-0 pt-4 "
-                          : "form-control px-0 pt-4 border-0"
-                      }
-                    />
+                  </select>
+                  {/*----ERROR MESSAGE FOR interested_in----*/}
+                  {errors.interested_in && (
                     <span
-                      className="btn btn-sm btn-secondary"
-                      onClick={() => setShowAgentMOdal(true)}
-                      style={{
-                        width: "auto",
-                        minWidth: "auto",
-                        height: "44px",
-                      }}
-                      title="Add New Agent"
+                      key={errors.interested_in}
+                      className="text-danger font-size-3"
                     >
-                      +
+                      {errors.interested_in}
                     </span>
-
-                    {/* ERROR MSG FOR REFFER BY */}
-                    {errors.reffer_by && (
-                      <span
-                        key={errors.reffer_by}
-                        className="text-danger font-size-3"
-                      >
-                        {errors.reffer_by}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="form-group col-md-4">
-                    <label
-                      htmlFor="resume"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="experience"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Experience: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="experience"
+                    value={state.experience || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.experience
+                        ? "form-control text-capitalize border border-danger"
+                        : "form-control text-capitalize"
+                    }
+                    id="experience"
+                  >
+                    <option value={""}>User Experience</option>
+                    {(FilterJson.experience || []).map((ex, i) => (
+                      <option value={ex} key={i}>
+                        {ex}
+                        {ex === "fresher" || ex === "Other" ? "" : "Years"}
+                      </option>
+                    ))}
+                  </select>
+                  {/*----ERROR MESSAGE FOR experience----*/}
+                  {errors.experience && (
+                    <span
+                      key={errors.experience}
+                      className="text-danger font-size-3"
                     >
-                      Resume: {/*<span className="text-danger">*</span>*/}
-                    </label>
-                    <input
-                      type="file"
-                      placeholder="Resume"
-                      id="resume"
-                      name="resume"
-                      accept=".pdf,application/pdf"
-                      onChange={handleUploadFile}
-                      className={
-                        errors.resume
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                    />
-                    {/*----ERROR MESSAGE FOR RESUME----*/}
-                    {/* {errors.resume && (
+                      {errors.experience}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="work_permit_canada"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Work Permit of Canada:{" "}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="work_permit_canada"
+                    value={state.work_permit_canada || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.work_permit_canada
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    id="work_permit_canada"
+                  >
+                    <option value={""}>Permit </option>
+                    <option value={"no"}>No</option>
+                    <option value={"yes"}>Yes</option>
+                  </select>
+                  {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
+                  {errors.work_permit_canada && (
+                    <span
+                      key={errors.work_permit_canada}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.work_permit_canada}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="otherpermit"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Work Permit of Other Country:
+                  </label>
+                  <input
+                    maxLength={60}
+                    type="text"
+                    className={
+                      errors.work_permit_other_country
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="Permit of Other Country"
+                    id="work_permit_other_country"
+                    name="work_permit_other_country"
+                    value={state.work_permit_other_country || ""}
+                    onChange={onInputChange}
+                  />
+                  {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
+                  {errors.work_permit_other_country && (
+                    <span
+                      key={errors.work_permit_other_country}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.work_permit_other_country}
+                    </span>
+                  )}
+                </div>
+                <div
+                  className={
+                    props.employeeId === "0"
+                      ? "form-group col-md-4 d-flex"
+                      : "d-none"
+                  }
+                  style={{ position: "relative" }}
+                >
+                  <label
+                    htmlFor="reffer_by"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Reffered by:<span className="text-danger">*</span>
+                  </label>
+                  <Select
+                    options={"" || agentList}
+                    name="reffer_by"
+                    id="reffer_by"
+                    onChange={onSelectChange}
+                    className={
+                      errors.reffer_by
+                        ? "form-control border border-danger px-0 pt-4 "
+                        : "form-control px-0 pt-4 border-0"
+                    }
+                  />
+                  <span
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => setShowAgentMOdal(true)}
+                    style={{
+                      width: "auto",
+                      minWidth: "auto",
+                      height: "44px",
+                    }}
+                    title="Add New Agent"
+                  >
+                    +
+                  </span>
+
+                  {/* ERROR MSG FOR REFFER BY */}
+                  {errors.reffer_by && (
+                    <span
+                      key={errors.reffer_by}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.reffer_by}
+                    </span>
+                  )}
+                </div>
+
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="resume"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Resume: {/*<span className="text-danger">*</span>*/}
+                  </label>
+                  <input
+                    type="file"
+                    placeholder="Resume"
+                    id="resume"
+                    name="resume"
+                    accept=".pdf,application/pdf"
+                    onChange={handleUploadFile}
+                    className={
+                      errors.resume
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                  />
+                  {/*----ERROR MESSAGE FOR RESUME----*/}
+                  {/* {errors.resume && (
                       <span
                         key={errors.resume}
                         className="text-danger font-size-3"
@@ -1018,35 +1018,34 @@ function PersonalDetails(props) {
                         {errors.resume}
                       </span>
                     )} */}
-                  </div>
-                  {user_type === "admin" ? (
-                    <div className="form-group col-md-4">
-                      <label
-                        htmlFor="fetured"
-                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                      >
-                        Featured:{" "}
-                        <input
-                          type="checkbox"
-                          id="fetured"
-                          name="fetured"
-                          checked={state.is_featured === "1"}
-                          value={state.is_featured}
-                          onChange={(e) =>
-                            setState({
-                              ...state,
-                              is_featured:
-                                state.is_featured === "" ||
-                                state.is_featured === "0"
-                                  ? "1"
-                                  : "0",
-                            })
-                          }
-                        />
-                      </label>
-                    </div>
-                  ) : null}
                 </div>
+                {user_type === "admin" ? (
+                  <div className="form-group col-md-4">
+                    <label
+                      htmlFor="fetured"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Featured:{" "}
+                      <input
+                        type="checkbox"
+                        id="fetured"
+                        name="fetured"
+                        checked={state.is_featured === "1"}
+                        value={state.is_featured}
+                        onChange={(e) =>
+                          setState({
+                            ...state,
+                            is_featured:
+                              state.is_featured === "" ||
+                              state.is_featured === "0"
+                                ? "1"
+                                : "0",
+                          })
+                        }
+                      />
+                    </label>
+                  </div>
+                ) : null}
                 <div className="form-group text-center">
                   {loading === true ? (
                     <button

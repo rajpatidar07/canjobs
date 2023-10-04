@@ -952,7 +952,7 @@ function PersonalDetails(props) {
                       htmlFor="reffer_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Referred by:<span className="text-danger">*</span>
+                      Reffered by:<span className="text-danger">*</span>
                     </label>
                     <Select
                       options={"" || agentList}

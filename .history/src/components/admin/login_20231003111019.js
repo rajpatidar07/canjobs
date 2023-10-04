@@ -93,7 +93,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
             <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
               <div className="pb-5 mb-5 text-center">
                 <img
-                  src="image/00logo-main-black.png"
+                  src="image/logo-main-black1.png"
                   className="img-fluid "
                   height={200}
                   width={200}

@@ -512,7 +512,8 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-
+                </div>
+                <div className="row">
                   <div className="form-group col-md-12">
                     <label
                       htmlFor="description"
@@ -542,8 +543,10 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
+                </div>
 
-                  {/* SECOND LINE */}
+                {/* SECOND LINE */}
+                <div className="row">
                   <div className="form-group col-md-4">
                     <label
                       htmlFor="date_of_birth"
@@ -614,7 +617,7 @@ function PersonalDetails(props) {
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Marital status: <span className="text-danger">*</span>
+                      Maritial status: <span className="text-danger">*</span>
                     </label>
                     <select
                       name="marital_status"
@@ -627,7 +630,7 @@ function PersonalDetails(props) {
                       }
                       id="marital_status"
                     >
-                      <option value={""}>Marital Status</option>
+                      <option value={""}>Maritial Status</option>
                       <option value={"single"}>Single</option>
                       <option value={"married"}>Married</option>
                     </select>
@@ -641,7 +644,9 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {/* THIRD LINE */}
+                </div>
+                {/* THIRD LINE */}
+                <div className="row">
                   {/* <div className="form-group col-md-4">
                     <label
                       htmlFor="nationality"
@@ -736,8 +741,10 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
+                </div>
 
-                  {/* FOURTH LINE */}
+                {/* FOURTH LINE */}
+                <div className="row">
                   <div className="form-group col-md-4">
                     <label
                       htmlFor="language"
@@ -952,7 +959,7 @@ function PersonalDetails(props) {
                       htmlFor="reffer_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Referred by:<span className="text-danger">*</span>
+                      Reffered by:<span className="text-danger">*</span>
                     </label>
                     <Select
                       options={"" || agentList}

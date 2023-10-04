@@ -86,7 +86,6 @@ function EmployeeHeader() {
                 src="image/00logo-main-black.png"
                 alt=""
                 className="light-version-logo default-logo"
-                style={{ maxWidth: "160px" }}
               />
               {/* <!-- Dark version logo (logo must be White)--> */}
               <img
