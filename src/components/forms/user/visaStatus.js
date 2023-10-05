@@ -32,6 +32,7 @@ export default function VisaStatus(props) {
     try {
       let Response = await GetVisaSubStages(props.employeeData.visa_id, "visa");
       setSelectedStatus(Response.data.data.data);
+      props.setApiCall(true);
     } catch (err) {
       console.log(err);
     }
@@ -218,7 +219,7 @@ export default function VisaStatus(props) {
                 handleSubStageSelection={handleSubStageSelection}
               />
             )}
-            <div className="form-group col">
+            <div className="form-group col mt-5">
               <label
                 htmlFor="status"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

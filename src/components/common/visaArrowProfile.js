@@ -122,8 +122,6 @@ export default function VisaArrowProfile({
                           <span>
                             {subitem.substage === "approved"
                               ? "Approved"
-                              : subitem.substage === "awaiting decision"
-                              ? "Pending"
                               : subitem.substage === "rejected"
                               ? "Rejected"
                               : "awaiting decision"}

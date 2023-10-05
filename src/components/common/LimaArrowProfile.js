@@ -137,7 +137,6 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                           }`}
                         >
                           <span>
-                            {console.log(item)}
                             {item.lmia_substage === "approved"
                               ? "Approved"
                               : item.lmia_substage === "rejected"

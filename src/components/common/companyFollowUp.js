@@ -33,7 +33,7 @@ function AddCompanyfollowup(props) {
       ) {
         setResponseData([]);
       } else {
-        setResponseData(userData.data);
+        setResponseData(userData.data.data);
       }
     } catch (err) {
       console.log(err);
@@ -54,6 +54,7 @@ function AddCompanyfollowup(props) {
     next_date: "",
     company_id: cid,
     subject: "",
+    status: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -192,6 +193,39 @@ function AddCompanyfollowup(props) {
               {errors.subject && (
                 <span key={errors.subject} className="text-danger font-size-3">
                   {errors.subject}
+                </span>
+              )}
+            </div>
+
+            <div className="form-group col px-0 pr-3">
+              <label
+                htmlFor="subject"
+                className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+              >
+                Status:
+              </label>
+              <div className="position-relative">
+                <select
+                  name="status"
+                  value={state.status || ""}
+                  onChange={onInputChange}
+                  type="text"
+                  className={
+                    errors.status
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="status"
+                  id="status"
+                >
+                  <option value={""}>Select Status</option>
+                  <option value={1}>Urgent</option>
+                </select>
+              </div>
+              {/*----ERROR MESSAGE FOR name----*/}
+              {errors.status && (
+                <span key={errors.status} className="text-danger font-size-3">
+                  {errors.status}
                 </span>
               )}
             </div>
