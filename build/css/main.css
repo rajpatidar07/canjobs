@@ -100,6 +100,12 @@ body {
 .dark-version-logo.default-logo {
   display: block;
 }
+.main_data_table{
+  overflow: visible !important;
+}
+.table-responsive.main_table_div{
+  min-height: 190px !important;
+}
 
 body[data-theme='dark'] .dark-version-logo,
 body[data-theme='dark'] .dark-shape,

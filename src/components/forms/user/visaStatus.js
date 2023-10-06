@@ -32,7 +32,6 @@ export default function VisaStatus(props) {
     try {
       let Response = await GetVisaSubStages(props.employeeData.visa_id, "visa");
       setSelectedStatus(Response.data.data.data);
-      props.setApiCall(true);
     } catch (err) {
       console.log(err);
     }
@@ -96,8 +95,6 @@ export default function VisaStatus(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          props.setApiCall(true);
-          setApiCall(true);
           setLoading(false);
           close();
         }
@@ -106,11 +103,10 @@ export default function VisaStatus(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          props.setApiCall(true);
-          setApiCall(true);
           setLoading(false);
           close();
         }
+        props.setApiCall(true);
       } catch (err) {
         console.log(err);
         setLoading(false);
@@ -164,6 +160,7 @@ export default function VisaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        // props.setApiCall(true);
         // if (state.status !== props.employeeData.status && status !== state.status) {
         //   setState({ ...state, status: status })
         //   if (typeof onVisaUpdateClick === 'function') {
@@ -178,6 +175,7 @@ export default function VisaStatus(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        // props.setApiCall(true);
         // if (state.status !== props.employeeData.status && status !== state.status) {
         //   setState({ ...state, status: status })
         //   if (typeof onVisaUpdateClick === 'function') {

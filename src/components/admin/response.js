@@ -34,7 +34,7 @@ function JobResponse(props) {
   let [documentModal, setDocumentModal] = useState(false);
   let [showVisaModal, setVisaModal] = useState(false);
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
-  let [apiCall, setApiCall] = useState(props.apiCall);
+  let [apiCall, setApiCall] = useState(false);
   // let [followup, setFollowUp] = useState(false);
   let [interview, setInterview] = useState(false);
   let [lmia, setLimia] = useState(false);
@@ -135,12 +135,8 @@ function JobResponse(props) {
   useEffect(() => {
     ResponseData();
     JsonData();
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-    if (changeJob === true) {
-      setChangeJob(false);
-    }
+    setApiCall(false);
+    setChangeJob(false);
   }, [
     skillFilterValue,
     experienceTypeFilterValue,
@@ -150,6 +146,7 @@ function JobResponse(props) {
     columnName,
     sortOrder,
     props.filter_by_time,
+    props.apiCall,
     apiCall,
   ]);
 

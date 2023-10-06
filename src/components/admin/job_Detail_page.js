@@ -274,7 +274,13 @@ function JobDetailpageAdmim(props) {
                       Details
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
                     <Link
                       className={
                         TabActive === "jobs"
