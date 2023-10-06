@@ -59,9 +59,16 @@ function ManageAdmin() {
       } else {
         setAdminData(userData.data);
         setTotalData(userData.total_rows);
-        OnManagerDetailClick(
-          userData.data.filter((item) => item.admin_type === "manager")[0]
-        );
+
+        //  Condition to get manager and its executive
+        if (
+          userData.data.filter((item) => item.admin_type === "manager")
+            .length !== 0
+        ) {
+          OnManagerDetailClick(
+            userData.data.filter((item) => item.admin_type === "manager")[0]
+          );
+        }
         if (apiCall === true) {
           let Admin_name = userData.data.filter(
             (data) => data.admin_id === localStorage.getItem("admin_id")

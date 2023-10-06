@@ -64,7 +64,7 @@ function RazorPay() {
           description: "FIRST RAZOR PAY",
           order_id: orderId,
           handler: async function (response) {
-            const result = await axios.put(
+            await axios.put(
               "http://192.168.29.92/canjobs_razorpay/common/addPaymentReceipt",
               {
                 amount: amount,
