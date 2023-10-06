@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { GetAdminrSetting, AddAdminPermission } from "../../../api/api";
+import {
+  GetEmployeeSetting,
+  GetEmployerSetting,
+  AddEmployeePermission,
+  AddEmployerPermission,
+} from "../../api/api";
+import ChangePassword from "./changepassword";
 import { toast } from "react-toastify";
-import ParentSetting from "../../common/parentSetting";
-function AdminSetting(props) {
+function Setting(props) {
   const [apiCall, setApiCall] = useState(false);
+  const [showChangePass, setShowChangePass] = useState(false);
   const [email, setEmail] = useState({
     lmia: 0,
     job: 0,
@@ -19,11 +25,16 @@ function AdminSetting(props) {
     interview: 0,
     visa: 0,
   });
-
+  let userType = localStorage.getItem("userType");
   /*Function to get the permision data */
   const GetPermissionData = async () => {
     try {
-      let Response = await GetAdminrSetting();
+      let Response;
+      if (userType === "user") {
+        Response = await GetEmployeeSetting();
+      } else {
+        Response = await GetEmployerSetting();
+      }
       const email_permissions = JSON.parse(Response.data.email_permission);
       const notification_permission = JSON.parse(
         Response.data.notification_permission
@@ -88,8 +99,13 @@ function AdminSetting(props) {
     };
 
     try {
-      let Response = await AddAdminPermission(updatedPermissions);
-      // console.log(updatedPermissions, permissionName);
+      let Response;
+      if (userType === "user") {
+        Response = await AddEmployeePermission(updatedPermissions);
+      } else {
+        Response = await AddEmployerPermission(updatedPermissions);
+      }
+      console.log(Response);
       // conditions for the reponse toaster message
       if (
         Response.message === "successfully" &&
@@ -143,7 +159,7 @@ function AdminSetting(props) {
       console.log(err);
     }
   };
-  // console.log(apiCall);
+
   return (
     <>
       <Modal
@@ -164,7 +180,8 @@ function AdminSetting(props) {
           <h3 className="text-center">Settings</h3>
           <div>
             <h6 className="text-start mt-4 text-grey">
-              Admin's Email Preferences
+              {userType === "user" ? "Employee's" : "Employer's"} Email
+              Preferences
             </h6>
             <ul className="list-unstyled row">
               <li className="mb-3 col-6">
@@ -237,7 +254,8 @@ function AdminSetting(props) {
               </li>
             </ul>
             <h6 className="text-start mt-4 text-grey">
-              Admin's Notification Preferences
+              {userType === "user" ? "Employee's" : "Employer's"} Notification
+              Preferences
             </h6>
             <ul className="list-unstyled row">
               <li className="mb-3 col-6">
@@ -310,18 +328,20 @@ function AdminSetting(props) {
               </li>
             </ul>
             <div className="mb-3">
-              <ParentSetting />
+              <Link
+                to=""
+                onClick={() => setShowChangePass(true)}
+                className="btn btn-primary  d-flex align-items-center"
+              >
+                <RiLockPasswordFill className="mr-2" /> Change Password
+              </Link>
+              {showChangePass && (
+                <ChangePassword
+                  show={showChangePass}
+                  close={() => setShowChangePass(false)}
+                />
+              )}
             </div>
-            <Link
-              to=""
-              onClick={() => {
-                props.setShowChangePass(true);
-                props.close();
-              }}
-              className="btn btn-primary  d-flex align-items-center mb-3"
-            >
-              <RiLockPasswordFill className="mr-2" /> Change Password
-            </Link>
           </div>
         </div>
       </Modal>
@@ -329,4 +349,4 @@ function AdminSetting(props) {
   );
 }
 
-export default AdminSetting;
+export default Setting;

@@ -16,7 +16,7 @@ function JobDetail({ ids }) {
           setJobData(Response.data.data[0]);
         }
       } catch (err) {
-        // console.log(err);
+        console.log(err);
       }
     };
     GetJobData();

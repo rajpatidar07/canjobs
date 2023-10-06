@@ -15,7 +15,6 @@ import {
   AddEmployeeDetails,
   GetEmployeeByLima,
   GetLimaSubStages,
-  AddUpdateVisa,
 } from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
@@ -213,19 +212,7 @@ const NewUserProfile = (props) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (data.status === "4" && visaStatus.length === 0) {
-          let state = { status: "onboard" };
-          try {
-            let VisaResponse = await AddUpdateVisa(data.employee_id, state);
-            if (VisaResponse.data.message === "visa inserted successfully") {
-              setApiCall(true);
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        } else {
-          setApiCall(true);
-        }
+        setApiCall(true);
       }
     } catch (err) {
       console.log(err);

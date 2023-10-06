@@ -1,46 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import useValidation from "../common/useValidation";
 import {
-  EmployerLogin,
-  EmployerForgotPassword,
-  LinkedInLoginEmployer,
-  SocialCompanyLogin,
+  EmployeeLogin,
+  EmployeeForgotPassword,
+  LinkedInLogin,
+  SocialLogin,
 } from "../../api/api";
+import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
-// import { useGoogleLogin } from '@react-oauth/google';
+// import { useGoogleLogin } from "@react-oauth/google";
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
-// import linkedin from 'react--login-oauth2/assets/linkedin.png';
-// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-export default function CompanyLogin(props) {
-  let [showCompanyForgotPassword, setShowCompanyForgotPassword] =
-    useState(false);
+// import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+export default function EmployeeLoginModal(props) {
+  let [showForgotPassword, setShowForgotPassword] = useState(false);
   let [loading, setLoading] = useState(false);
-  let Navigate = useNavigate();
+  let navigate = useNavigate();
   // let [facebook, setFacebook] = useState(false);
   let i = 0;
   const [searchParams] = useSearchParams();
   let code = searchParams.get("code");
   if (props.show === true) {
-    localStorage.setItem("linkedin", "employerLogin");
+    localStorage.setItem("linkedin", "employeeLogin");
   }
-  const type = localStorage.getItem("linkedin");
-  /* Functionality to close the modal */
-  const close = () => {
-    setErrors("");
-    setState("");
+  /*Function to close the modal */
+  const Close = () => {
+    setShowForgotPassword(false);
     setLoading(false);
-    setShowCompanyForgotPassword(false);
+    setErrors("");
     props.close();
   };
+  const type = localStorage.getItem("linkedin");
+  // let code = dataa[1].split("&")[0]
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
     password: "",
-    remember: "",
-    Credentials: "",
     forget_email: "",
   };
   /*----VALIDATION CONTENT----*/
@@ -66,62 +63,66 @@ export default function CompanyLogin(props) {
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
-  const { state, setErrors, setState, onInputChange, errors, validate } =
-    useValidation(initialFormState, validators);
+  const { state, onInputChange, setErrors, errors, validate } = useValidation(
+    initialFormState,
+    validators
+  );
 
   /*----LOGIN SUBMIT FUNCTION----*/
-  const onCompanyLoginClick = async (event) => {
+  const onUserLoginClick = async (event) => {
     event.preventDefault();
-    // console.log(errors);
-
     if (validate()) {
+      // handle form submission
       setLoading(true);
       try {
-        let Response = await EmployerLogin(state);
-        // console.log("Response =>",Response);
-        if (
-          Response.status === true ||
-          Response.message === "Successfully Logged In"
-        ) {
-          localStorage.setItem("token", Response.token);
-          localStorage.setItem("userType", "company");
-          localStorage.setItem("company_id", Response.company_id);
-          localStorage.setItem("profile_photo", Response.company_logo);
-          // console.log("------------------------------", Response.company_id);
-
-          toast.success("Log in Successfully", {
+        const updatedTodo = await EmployeeLogin(state);
+        console.log(updatedTodo);
+        if (updatedTodo.status) {
+          localStorage.setItem("token", updatedTodo.token);
+          localStorage.setItem("email", updatedTodo.email);
+          localStorage.setItem("userType", "user");
+          localStorage.setItem("employee_id", updatedTodo.employee_id);
+          localStorage.setItem("name", updatedTodo.name);
+          localStorage.setItem("skill", updatedTodo.skill);
+          localStorage.setItem("profile_photo", updatedTodo.profile_photo);
+          toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          close();
-          Navigate("/company");
-          window.location.reload();
-        } else if (Response.message === "Invalid Credentials !") {
           setLoading(false);
-          setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-          // handle form submission
+          Close();
+          navigate("/");
+          window.location.reload();
+        }
+        if (updatedTodo.message === "Invalid credentials !") {
+          setLoading(false);
+          setErrors({ ...errors, email: "Invalid credentials !" });
         }
       } catch (err) {
-        console.log(err);
         setLoading(false);
+        setErrors({ ...errors, email: ["Please try again later."] });
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     }
   };
-
-  const onCompanyForgotPasswordClick = async (event) => {
+  // END USER LOGIN VALIDATION
+  const onForgoteClick = async (event) => {
     event.preventDefault();
-
-    // console.log(state, "working", errors);
     if (validate()) {
+      // setLoading(true)
       setLoading(true);
       try {
-        let Response = await EmployerForgotPassword(state);
+        const Response = await EmployeeForgotPassword(state);
         if (Response.status === 1 || Response.message === "Sent you a mail") {
           toast.success("Email sent Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          close();
+          setLoading(false);
+          Close();
         } else if (Response.message === "No user found") {
           setLoading(false);
           setErrors({ ...errors, Credentials: ["No user found"] });
@@ -129,46 +130,58 @@ export default function CompanyLogin(props) {
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
         setErrors({ ...errors, Credentials: ["Please try again later."] });
         toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoading(false);
       }
     }
   };
-
-  // END USER LOGIN VALIDATION
   /*Function to login with google */
   // const GoogleLogin = useGoogleLogin({
   //   onSuccess: async (tokenResponse) => {
   //     try {
-  //       let data = await axios("https://www.googleapis.com/oauth2/v3/userinfo", {
-  //         headers: {
-  //           "Authorization": `Bearer ${tokenResponse.access_token}`
+  //       let data = await axios(
+  //         "https://www.googleapis.com/oauth2/v3/userinfo",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${tokenResponse.access_token}`,
+  //           },
   //         }
-  //       });
-  //       console.log("response =>", data.data);
-  //       if (data.data.email_verified === true) {
-  //         let res = await SocialCompanyLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
-  //         console.log(res);
-  //         localStorage.setItem("token", res.token);
-  //         localStorage.setItem("userType", "company");
-  //         localStorage.setItem("company_id", res.company_id);
-  //         localStorage.setItem("profile_photo", res.company_logo);
-  //         toast.success("Logged In Successfully", {
-  //           position: toast.POSITION.TOP_RIGHT,
-  //           autoClose: 1000,
-  //         });
-  //         props.close();
-  //         Navigate("/company");
-  //         window.location.reload();
+  //       );
+  //       try {
+  //         if (data.data.email_verified === true) {
+  //           let res = await SocialLogin(
+  //             data.data.sub,
+  //             data.data.email,
+  //             data.data.name,
+  //             data.data.picture,
+  //             "Google"
+  //           );
+  //           console.log(res);
+  //           localStorage.setItem("token", res.token);
+  //           localStorage.setItem("email", res.email);
+  //           localStorage.setItem("userType", "user");
+  //           localStorage.setItem("employee_id", res.employee_id);
+  //           localStorage.setItem("profile_photo", res.profile_photo);
+  //           localStorage.setItem("skill", res.skill);
+  //           toast.success("Logged In Successfully", {
+  //             position: toast.POSITION.TOP_RIGHT,
+  //             autoClose: 1000,
+  //           });
+  //           Close();
+  //           navigate("/");
+  //           window.location.reload();
+  //         }
+  //       } catch (err) {
+  //         setLoading(false);
   //       }
   //     } catch (err) {
   //       console.log(err);
   //     }
-  //   }
+  //   },
   // });
 
   /*Function to login in with Linked in */
@@ -181,7 +194,6 @@ export default function CompanyLogin(props) {
   //   console.error('Error:', error.message);
   // });
   // console.log(i , "code =>" , code);
-  // console.log(type , (code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 4 && type === "employerLogin");
   const handleLinkedInLogin = () => {
     const clientId = "78mhwjaumkvtbm";
     const redirectUri = "http://3.6.36.125:3000/";
@@ -192,39 +204,43 @@ export default function CompanyLogin(props) {
       redirectUri
     )}&scope=${encodeURIComponent(scope)}`;
   };
+  // console.log("sdfdgfdg.",type,"';;l;;;",(code !== '' || code !== undefined || code !== "undefined" || code !== null) ,i, i === 1 , type === "employeeLogin");
+  // console.log((code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 0 && type === "employeeLogin");
   useEffect(() => {
-    i = i + 4;
+    i = i + 1;
     if (
       (code !== "" ||
         code !== undefined ||
         code !== "undefined" ||
         code !== null) &&
-      i === 4 &&
-      type === "employerLogin"
+      i === 1 &&
+      type === "employeeLogin"
     ) {
-      const response = LinkedInLoginEmployer(code, type);
+      const response = LinkedInLogin(code, type);
       response
         .then((res) => {
           let decode = JSON.parse(res.data);
           if (res.data.email_verified === true) {
-            let data = SocialCompanyLogin(
+            let data = SocialLogin(
               res.data.sub,
               res.data.email,
               res.data.name,
               res.data.picture,
               "Linkedin"
             );
-            // console.log(data);
+            console.log(data);
             localStorage.setItem("token", data.token);
-            localStorage.setItem("userType", "company");
-            localStorage.setItem("company_id", data.company_id);
-            localStorage.setItem("profile_photo", data.company_logo);
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("userType", "user");
+            localStorage.setItem("employee_id", data.employee_id);
+            localStorage.setItem("profile_photo", data.profile_photo);
+            localStorage.setItem("skill", data.skill);
             toast.success("Logged In Successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            props.close();
-            Navigate("/company");
+            Close();
+            navigate("/");
             window.location.reload();
           }
           if (
@@ -237,34 +253,45 @@ export default function CompanyLogin(props) {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            Navigate("/company");
+            navigate("/");
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.data);
+          setLoading(false);
         });
     }
   }, []);
 
-  /*FUnctiom to login with facebook */
+  /*Functiom to login with facebook */
   // const responseFacebook = async (response) => {
-  //   // console.log(response);
   //   if (response.graphDomain === "facebook") {
-  //     let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
-  //     // console.log(data);
-  //     localStorage.setItem("token", data.token);
-  //     localStorage.setItem("userType", "company");
-  //     localStorage.setItem("company_id", data.company_id);
-  //     localStorage.setItem("profile_photo", data.company_logo);
-  //     toast.success("Logged In Successfully", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //       autoClose: 1000,
-  //     });
-  //     props.close();
-  //     Navigate("/company");
-  //     window.location.reload();
+  //     try {
+  //       let data = await SocialLogin(
+  //         response.userID,
+  //         response.email,
+  //         response.name,
+  //         response.picture.data.url,
+  //         "Facebook"
+  //       );
+  //       localStorage.setItem("token", data.token);
+  //       localStorage.setItem("email", data.email);
+  //       localStorage.setItem("userType", "user");
+  //       localStorage.setItem("employee_id", data.employee_id);
+  //       localStorage.setItem("profile_photo", data.profile_photo);
+  //       localStorage.setItem("skill", data.skill);
+  //       toast.success("Logged In Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       Close();
+  //       navigate("/");
+  //       window.location.reload();
+  //     } catch (err) {
+  //       setLoading(false);
+  //     }
   //   }
-  // }
+  // };
   return (
     <>
       {/* <!-- Login Modal --> */}
@@ -279,7 +306,7 @@ export default function CompanyLogin(props) {
             type="button"
             className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
             data-dismiss="modal"
-            onClick={close}
+            onClick={Close}
           >
             <i className="fas fa-times"></i>
           </button>
@@ -291,7 +318,7 @@ export default function CompanyLogin(props) {
                     <h3 className="font-size-8 text-white line-height-reset pb-4 line-height-1p4">
                       Welcome Back
                     </h3>
-                    {showCompanyForgotPassword === false ? (
+                    {showForgotPassword === false ? (
                       <p className="mb-0 font-size-4 text-white">
                         Log in to continue your account and explore new jobs.
                       </p>
@@ -320,11 +347,9 @@ export default function CompanyLogin(props) {
                 </div>
               </div>
               <div className="col-lg-7 col-md-6">
-                <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
+                <div className="bg-white-2 h-100 px-11 pt-11  pb-7 login_Modal_box">
                   <div
-                    className={
-                      showCompanyForgotPassword === false ? "row" : "d-none"
-                    }
+                    className={showForgotPassword === false ? "row" : "d-none"}
                   >
                     <div className="col-4 col-xs-12">
                       <button
@@ -339,7 +364,8 @@ export default function CompanyLogin(props) {
                     </div>
                     {/* <div className="col-4 col-xs-12">
                       <Link
-                        to="" onClick={GoogleLogin}
+                        to=""
+                        onClick={GoogleLogin}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
@@ -350,7 +376,8 @@ export default function CompanyLogin(props) {
                     </div>
                     <div className="col-4 col-xs-12">
                       <Link
-                        to="" onClick={() => setFacebook(true)}
+                        to=""
+                        onClick={() => setFacebook(true)}
                         className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                       >
                         <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
@@ -358,7 +385,7 @@ export default function CompanyLogin(props) {
                           Import from Facebook
                         </span>
                       </Link>
-                      {facebook ?
+                      {facebook ? (
                         <FacebookLogin
                           appId="2170088543184291"
                           autoLoad
@@ -366,34 +393,31 @@ export default function CompanyLogin(props) {
                           fields="name,email,picture"
                           scope="public_profile,user_friends,email,user_actions.books"
                           className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                          render={renderProps => (
-                            <button onClick={renderProps.onClick} className="d-none">
-                            </button>
+                          render={(renderProps) => (
+                            <button
+                              onClick={renderProps.onClick}
+                              className="d-none"
+                            ></button>
                           )}
                         />
-                        : null}
+                      ) : null}
                     </div> */}
                   </div>
-                  {/* END SOCIAL MEDIA LINK BUTTONS */}
                   <div
                     className={
-                      showCompanyForgotPassword === false
-                        ? "or-devider"
-                        : "d-none"
+                      showForgotPassword === false ? "or-devider" : "d-none"
                     }
                   >
                     <span className="font-size-3 line-height-reset ">Or</span>
                   </div>
-                  {/* company login form */}
+                  {/* user login form */}
                   <form
-                    className={
-                      showCompanyForgotPassword === false ? "" : "d-none"
-                    }
-                    onSubmit={onCompanyLoginClick}
+                    onSubmit={onUserLoginClick}
+                    className={showForgotPassword === false ? "" : "d-none"}
                   >
-                    <div className="form-group">
+                    <div className="form-group p-0">
                       <label
-                        htmlFor="email"
+                        htmlFor="useremail"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         E-mail
@@ -401,20 +425,20 @@ export default function CompanyLogin(props) {
                       <input
                         type="email"
                         name="email"
-                        value={state.email || ""}
+                        value={state.useremail}
                         onChange={onInputChange}
                         className={
-                          errors.email
+                          errors.useremail
                             ? "form-control border border-danger"
                             : "form-control"
                         }
                         placeholder="example@gmail.com"
-                        id="email"
+                        id="useremail"
                       />
                       {/*----ERROR MESSAGE FOR EMAIL----*/}
-                      {errors.email && (
+                      {errors.useremail && (
                         <span>
-                          {errors.email.map((error) => (
+                          {errors.useremail.map((error) => (
                             <span
                               key={error}
                               className="text-danger font-size-3"
@@ -427,7 +451,7 @@ export default function CompanyLogin(props) {
                     </div>
                     <div className="form-group">
                       <label
-                        htmlFor="password"
+                        htmlFor="userpassword"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Password
@@ -436,20 +460,20 @@ export default function CompanyLogin(props) {
                         <input
                           name="password"
                           type="password"
-                          value={state.password || ""}
+                          value={state.userpassword}
                           onChange={onInputChange}
                           className={
-                            errors.password
+                            errors.userpassword
                               ? "form-control border border-danger"
                               : "form-control"
                           }
                           placeholder="Enter password"
-                          id="password"
+                          id="userpassword"
                         />
                         {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                        {errors.password && (
+                        {errors.userpassword && (
                           <span>
-                            {errors.password.map((error) => (
+                            {errors.userpassword.map((error) => (
                               <span
                                 key={error}
                                 className="text-danger font-size-3"
@@ -459,28 +483,24 @@ export default function CompanyLogin(props) {
                             ))}
                           </span>
                         )}
+                        {/* <a
+                          href="http://localhost:3000/"
+                          className="show-password pos-abs-cr fas mr-6 text-black-2"
+                          data-show-pass="password"
+                        ></a> */}
                       </div>
-                      {errors.Credentials && (
-                        <span
-                          key={errors.Credentials}
-                          className="text-danger font-size-3"
-                        >
-                          {errors.Credentials}
-                        </span>
-                      )}
+                      <small className="text-danger">{errors.email}</small>
                     </div>
-                    <div className=" d-flex flex-wrap justify-content-between mb-5 col-md-12 ">
-                      <label htmlFor="remember" className="mb-0 d-flex  mr-3">
+                    <div className="d-flex flex-wrap justify-content-between">
+                      <label
+                        htmlFor="terms-check"
+                        className="gr-check-input d-flex  mr-3"
+                      >
                         <input
                           type="checkbox"
-                          id="remember"
-                          name="remember"
-                          onChange={(event) =>
-                            setState({
-                              ...state,
-                              remember: event.target.checked,
-                            })
-                          }
+                          id="tandr"
+                          name="tandr"
+                          onChange={onInputChange}
                           className="text-black-2 pt-5 mr-5"
                         />
                         <span className="font-size-3 mb-1 line-height-reset d-block">
@@ -489,22 +509,22 @@ export default function CompanyLogin(props) {
                       </label>
 
                       <Link
-                        to="/"
-                        className="font-size-3 text-dodger line-height-reset"
+                        to={""}
+                        className="font-size-3 text-dodger line-height-reset mb-3"
                         onClick={() => {
-                          setShowCompanyForgotPassword(true);
+                          setShowForgotPassword(true);
                           setErrors("");
                         }}
                       >
                         Forget Password
                       </Link>
                       {/*----ERROR MESSAGE FOR terms----*/}
-                      {errors.remember && (
+                      {errors.tandr && (
                         <span
-                          key={errors.remember}
+                          key={errors.tandr}
                           className="text-danger font-size-3"
                         >
-                          {errors.remember}
+                          {errors.tandr}
                         </span>
                       )}
                     </div>
@@ -537,42 +557,31 @@ export default function CompanyLogin(props) {
                       <Link
                         className="text-primary"
                         to={""}
-                        onClick={() => {
-                          props.CompanySignUpClick();
-                          setErrors("");
-                        }}
+                        onClick={props.signUpClick}
                       >
                         Create a free account
                       </Link>
                     </p>
                   </form>
-                  {/* end company login form */}
 
-                  {/* FORGOT PASSWORD FORM */}
                   <form
-                    className={
-                      showCompanyForgotPassword === true ? "" : "d-none"
-                    }
-                    onSubmit={onCompanyForgotPasswordClick}
+                    className={showForgotPassword === true ? "" : "d-none"}
+                    onSubmit={onForgoteClick}
                   >
                     <div className="form-group">
                       <label
-                        htmlFor="email2"
+                        htmlFor="forget_email"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         E-mail
                       </label>
                       <input
                         type="email"
-                        className={
-                          errors.forget_email
-                            ? "form-control border border-danger"
-                            : "form-control"
-                        }
+                        value={state.forget_email}
+                        onChange={onInputChange}
+                        className="form-control"
                         placeholder="example@gmail.com"
                         id="forget_email"
-                        value={state.forget_email || ""}
-                        onChange={onInputChange}
                         name="forget_email"
                       />
                       {errors.forget_email && (
@@ -599,25 +608,6 @@ export default function CompanyLogin(props) {
                           ))}
                         </span>
                       )}
-                    </div>
-                    <div className="form-group d-flex flex-wrap justify-content-between mb-1">
-                      <label
-                        htmlFor="terms-check2"
-                        className="gr-check-input d-flex  mr-3"
-                      >
-                        <input
-                          className="d-none"
-                          type="checkbox"
-                          id="terms-check2"
-                        />
-                        <span className="checkbox mr-5"></span>
-                        <span className="font-size-3 mb-0 line-height-reset d-block">
-                          Agree to the
-                          <Link to={""} className="text-primary">
-                            Terms & Conditions
-                          </Link>
-                        </span>
-                      </label>
                     </div>
                     <div className="form-group text-center">
                       {loading === true ? (
@@ -648,7 +638,7 @@ export default function CompanyLogin(props) {
                         to=""
                         className="text-primary"
                         onClick={() => {
-                          setShowCompanyForgotPassword(false);
+                          setShowForgotPassword(false);
                           setErrors("");
                         }}
                       >
@@ -656,7 +646,6 @@ export default function CompanyLogin(props) {
                       </Link>
                     </p>
                   </form>
-                  {/*END  FORGOT PASSWORD FORM */}
                 </div>
               </div>
             </div>

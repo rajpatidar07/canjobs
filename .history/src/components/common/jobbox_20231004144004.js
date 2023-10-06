@@ -184,7 +184,7 @@ function JobBox({
                   <div className="row job_header m-0">
                     <div className="media align-items-center company_box col-md-6 p-0">
                       {/* <div className="text_box text-left">
-                        {// console.log(job.logo)}
+                        {console.log(job.logo)}
                         <img
                           className="company_logo"
                           src={

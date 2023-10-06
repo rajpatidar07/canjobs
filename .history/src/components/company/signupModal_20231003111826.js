@@ -232,7 +232,7 @@ export default function CompanySignUp(props) {
                 res.data.picture,
                 "Linkedin"
               );
-              // console.log(data);
+              console.log(data);
               localStorage.setItem("token", data.token);
               localStorage.setItem("userType", "company");
               localStorage.setItem("employee_id", data.employer_id);
@@ -245,7 +245,7 @@ export default function CompanySignUp(props) {
               navigate("/company");
               window.location.reload();
             } catch (err) {
-              // console.log(err);
+              console.log(err);
             }
           }
           if (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +15,12 @@ function RazorPay() {
     // Fetch user data when the component mounts
     // Replace this with your actual fetchUserData function
     // fetchUserData()
-    // .then((data) => {
-    //   setUserData(data);
-    // })
-    // .catch((error) => {
-    //   console.error(error.message);
-    // });
+      // .then((data) => {
+      //   setUserData(data);
+      // })
+      // .catch((error) => {
+      //   console.error(error.message);
+      // });
   }, []);
 
   // const fetchUserData = async () => {
@@ -43,16 +43,13 @@ function RazorPay() {
       try {
         setLoading(true);
         // const total = userData.cart.reduce((a, b) => a + +b.price, 0).toFixed(0);
-        const result = await axios.post(
-          "http://192.168.29.92/canjobs_razorpay/common/creatOrder",
-          {
-            price: 90,
-          }
-        );
-        // console.log(result, "from handle pay ");
-        // console.log(result.data, "from handle pay ");
+        const result = await axios.post("http://192.168.29.92/canjobs_razorpay/common/creatOrder", {
+          price: 90 ,
+        });
+        console.log(result, "from handle pay ");
+        console.log(result.data, "from handle pay ");
         const { amount, id: orderId, currency } = result.data.data;
-        // console.log(amount, orderId, currency);
+        console.log(amount, orderId, currency);
 
         // const getkey = await axios.get("http://localhost:8080/payment/get-razorpay-key");
         const key = "rzp_test_m5J59Uvpq9YHDx";
@@ -64,21 +61,18 @@ function RazorPay() {
           description: "FIRST RAZOR PAY",
           order_id: orderId,
           handler: async function (response) {
-            const result = await axios.put(
-              "http://192.168.29.92/canjobs_razorpay/common/addPaymentReceipt",
-              {
-                amount: amount,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpay0rderId: response.razorpay_order_id,
-                razorpaysighature: response.razorpay_signature,
-              }
-            );
-            // console.log(result)
+            const result = await axios.put("http://192.168.29.92/canjobs_razorpay/common/addPaymentReceipt", {
+              amount: amount,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpay0rderId: response.razorpay_order_id,
+              razorpaysighature: response.razorpay_signature,
+            });
+console.log(result)
             // Perform any additional actions on successful payment here
             toast.success("Payment Successful.", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 5000,
-            });
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 5000,
+              });
 
             navigate("/");
           },

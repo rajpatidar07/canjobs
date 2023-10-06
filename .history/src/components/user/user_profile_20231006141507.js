@@ -213,10 +213,13 @@ const NewUserProfile = (props) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (data.status === "4" && visaStatus.length === 0) {
+        if (data.status === "4" && !props.data.visa_status) {
           let state = { status: "onboard" };
           try {
-            let VisaResponse = await AddUpdateVisa(data.employee_id, state);
+            let VisaResponse = await AddUpdateVisa(
+              props.data.employee_id,
+              state
+            );
             if (VisaResponse.data.message === "visa inserted successfully") {
               setApiCall(true);
             }

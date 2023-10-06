@@ -1773,7 +1773,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 };
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data) => {
-  // console.log(data);
+  console.log(data);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
     {

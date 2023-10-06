@@ -136,7 +136,6 @@ function JobResponse(props) {
     ResponseData();
     JsonData();
     setApiCall(false);
-
     setChangeJob(false);
   }, [
     skillFilterValue,

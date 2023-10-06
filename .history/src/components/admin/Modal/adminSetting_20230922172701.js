@@ -89,7 +89,7 @@ function AdminSetting(props) {
 
     try {
       let Response = await AddAdminPermission(updatedPermissions);
-      // console.log(updatedPermissions, permissionName);
+      console.log(updatedPermissions, permissionName);
       // conditions for the reponse toaster message
       if (
         Response.message === "successfully" &&
@@ -143,7 +143,7 @@ function AdminSetting(props) {
       console.log(err);
     }
   };
-  // console.log(apiCall);
+  console.log(apiCall);
   return (
     <>
       <Modal

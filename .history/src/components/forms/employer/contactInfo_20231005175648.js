@@ -119,7 +119,7 @@ function ContactInfo(props) {
           return close();
         }
       } catch (err) {
-        // console.log(err);
+        console.log(err);
         setLoading(false);
       }
     } else {

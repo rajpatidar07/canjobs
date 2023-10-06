@@ -187,7 +187,7 @@ function AddAgent(props) {
   const AgentData = async () => {
     try {
       const userData = await GetAgent(props.agentId);
-      // console.log(userData.data.data[0]);
+      console.log(userData.data.data[0]);
       if (userData) {
         setState(userData.data.data[0]);
       } else {
@@ -212,7 +212,7 @@ function AddAgent(props) {
       setLoading(true);
       try {
         const responseData = await AddUpdateAgent(state);
-        // console.log(responseData);
+        console.log(responseData);
         if (responseData.message === "created successfully") {
           toast.success("Agent added successfully", {
             position: toast.POSITION.TOP_RIGHT,

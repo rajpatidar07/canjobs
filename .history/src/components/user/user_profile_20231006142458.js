@@ -213,16 +213,17 @@ const NewUserProfile = (props) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (data.status === "4" && visaStatus.length === 0) {
+        console.log(data.status === "4", visaStatus);
+        if (data.status === "4" && !visaStatus) {
           let state = { status: "onboard" };
-          try {
-            let VisaResponse = await AddUpdateVisa(data.employee_id, state);
-            if (VisaResponse.data.message === "visa inserted successfully") {
-              setApiCall(true);
-            }
-          } catch (err) {
-            console.log(err);
-          }
+          // try {
+          //   let VisaResponse = await AddUpdateVisa(data.employee_id, state);
+          //   if (VisaResponse.data.message === "visa inserted successfully") {
+          //     setApiCall(true);
+          //   }
+          // } catch (err) {
+          //   console.log(err);
+          // }
         } else {
           setApiCall(true);
         }

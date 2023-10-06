@@ -214,7 +214,7 @@ export default function CompanyLogin(props) {
               res.data.picture,
               "Linkedin"
             );
-            // console.log(data);
+            console.log(data);
             localStorage.setItem("token", data.token);
             localStorage.setItem("userType", "company");
             localStorage.setItem("company_id", data.company_id);

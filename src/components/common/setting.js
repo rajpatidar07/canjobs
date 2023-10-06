@@ -105,7 +105,7 @@ function Setting(props) {
       } else {
         Response = await AddEmployerPermission(updatedPermissions);
       }
-      console.log(Response);
+      // console.log(Response);
       // conditions for the reponse toaster message
       if (
         Response.message === "successfully" &&

@@ -249,7 +249,7 @@ function PersonalDetails(props) {
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
-    // console.log(errors, state.reffer_by);
+    console.log(errors, state.reffer_by);
     if (validate() && imgError === "") {
       setLoading(true);
       try {
@@ -305,7 +305,7 @@ function PersonalDetails(props) {
     encoded = await convertToBase64(e.target.files[0]);
     let base64Name = encoded.base64;
     let finalBase = base64Name;
-    // console.log(finalBase);
+    console.log(finalBase);
     setState({ ...state, resume: finalBase });
   };
 

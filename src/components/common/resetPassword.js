@@ -29,8 +29,8 @@ export default function ResetPassword() {
         value === ""
           ? "Confirm Password is required"
           : value !== state.password
-            ? "Confirm Password must be Same as Password"
-            : "",
+          ? "Confirm Password must be Same as Password"
+          : "",
     ],
   };
   /*----RESET PASSWORD ONCHANGE FUNCTION----*/
@@ -41,7 +41,7 @@ export default function ResetPassword() {
   /*----RESET PASSWORD SUBMIT FUNCTION----*/
   const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
-    console.log(state);
+    // console.log(state);
     if (validate()) {
       setLoading(true);
       // handle form submission
@@ -61,10 +61,9 @@ export default function ResetPassword() {
             navigate("/");
             window.location.reload();
           }
-        }
-        catch (err) {
-         console.log(err) 
-          setLoading(false)
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
         }
       }
       if (userType === "company") {
@@ -84,8 +83,8 @@ export default function ResetPassword() {
             window.location.reload();
           }
         } catch (err) {
-         console.log(err) 
-          setLoading(false)
+          console.log(err);
+          setLoading(false);
         }
       }
       if (userType === "admin") {
@@ -105,8 +104,8 @@ export default function ResetPassword() {
             window.location.reload();
           }
         } catch (err) {
-         console.log(err) 
-          setLoading(false)
+          console.log(err);
+          setLoading(false);
         }
       }
     }
