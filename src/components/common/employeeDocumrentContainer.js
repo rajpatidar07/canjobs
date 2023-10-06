@@ -611,7 +611,7 @@ export default function DocumrentContainer(props) {
                   )}
                 </div>
               ) : null}
-              {hide === false && docFile && user_type === "admin" ? (
+              {hide === false && docFile && docName && user_type === "admin" ? (
                 <div className="doc_upload_col flex-end">
                   <button
                     className="p-1 rounded-3 btn-warning mx-3 w-auto"
