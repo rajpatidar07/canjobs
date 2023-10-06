@@ -213,7 +213,6 @@ const NewUserProfile = (props) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        console.log(" hello just checking");
         if (data.status === "4" && visaStatus.length === 0) {
           let state = { status: "onboard" };
           try {
