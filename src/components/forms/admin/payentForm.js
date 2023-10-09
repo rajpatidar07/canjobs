@@ -5,12 +5,13 @@ import { ToastContainer } from "react-toastify";
 import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
 import Loader from "../../common/loader";
+import AddTransactionForm from "./addTransactionForm";
 export default function PayentForm({ data }) {
   const [apiCall, setApicall] = useState(true);
   const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
 
-  // let user = localStorage.getItem("userType")
+  let user = localStorage.getItem("userType");
 
   /*Function to get Payment list data */
   const PaymentData = async () => {
@@ -64,23 +65,47 @@ export default function PayentForm({ data }) {
                     <div className="card rounded-3 py-2 px-5">
                       <p className="fw-bold m-0 row">
                         <span className="col-10 ">
-                          <span>
-                            <b>Payment mode</b>: {res.payment_mode}
-                          </span>
-                          <br />
-                          <span>
-                            <b>Payment Id</b>: {res.payment_id}
-                          </span>
-                          <br />
-                          <span>
-                            <b>order Id</b>: {res.order_id}
-                          </span>
-                          <br />
-                          <span>
-                            <b>Total Amount</b>: {res.amount}/-
+                          {res.payment_mode ? (
+                            <>
+                              <span>
+                                <b>Payment mode</b>: {res.payment_mode}
+                              </span>
+                              <br />
+                            </>
+                          ) : null}
+                          {res.payment_id ? (
+                            <>
+                              <span>
+                                <b>Payment Id</b>: {res.payment_id}
+                              </span>
+                              <br />
+                            </>
+                          ) : null}
+                          {res.order_id ? (
+                            <>
+                              <span>
+                                <b>order Id</b>: {res.order_id}
+                              </span>
+                              <br />
+                            </>
+                          ) : null}
+                          {res.amount ? (
+                            <span>
+                              <b>Total Amount</b>: {res.amount}/-
+                            </span>
+                          ) : null}
+                        </span>
+                        <span className="col-2">
+                          <span
+                            className={`${
+                              res.status === "success"
+                                ? " bg-primary-opacity-8 text-white text-center w-100 border rounded-pill"
+                                : " bg-warning text-white text-center w-100 border rounded-pill"
+                            }`}
+                          >
+                            {res.status}
                           </span>
                         </span>
-                        <span className="col-2">{res.status}</span>
                       </p>
                     </div>
                   </div>
@@ -88,7 +113,11 @@ export default function PayentForm({ data }) {
               )}
             </div>
           )}
-          <PayForm data={data} setApicall={setApicall} />
+          {user === "user" ? (
+            <PayForm data={data} setApicall={setApicall} />
+          ) : (
+            <AddTransactionForm data={data} setApicall={setApicall} />
+          )}
         </div>
       </div>
       {/* </Modal> */}

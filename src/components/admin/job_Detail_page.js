@@ -469,7 +469,7 @@ function JobDetailpageAdmim(props) {
                           <div className="col-md-6 col-lg-6 p-10 border-right">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
-                                <span>About {jobData.job_title}</span>
+                                <span>About</span>
                                 {/* <CustomButton
                                   className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                                   onClick={() => setShowJobEditModal(true)}
