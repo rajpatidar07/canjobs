@@ -2099,11 +2099,15 @@ export const GetPaymentList = async (id, user) => {
 /*Api to add cash paymet by admin  */
 
 export const AddCashpayment = async (data) => {
-  const response = await axios.put(`${API_URL}payment/addPaymentReciept`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
+  const response = await axios.put(
+    `${API_URL}payment/addPaymentReciept`,
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
