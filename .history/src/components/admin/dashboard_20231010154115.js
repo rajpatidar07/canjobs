@@ -580,7 +580,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             {/* <!-- Recent lima's- --> */}
-            <div className={openTable === 5 ? "col-md-12" : "col-md-6"}>
+            <div className={openTable === 5 ? "col0md-12" : "col-md-6"}>
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
@@ -632,8 +632,8 @@ const AdminDashboard = () => {
                   filter_by_time={lima}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
-                  lmia={openTable === 5 ? "" : "yes"}
-                  response={openTable === 5 ? "" : "lima"}
+                  lmia="yes"
+                  response={"lima"}
                   pageNo={lmiaPageNo}
                   setpageNo={setLmiaPageNo}
                 />

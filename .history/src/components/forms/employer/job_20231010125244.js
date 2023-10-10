@@ -528,7 +528,7 @@ function AddJobModal(props) {
                   htmlFor="location"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  State:<span className="text-danger">*</span>
+                  State:
                 </label>
                 <select
                   name="location"

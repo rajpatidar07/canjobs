@@ -391,8 +391,8 @@ export default function LimiaStatusTable(props) {
                 (props.heading === undefined && user_type === "admin")
                   ? ""
                   : props.heading === "Dashboard"
-                  ? ""
-                  : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
+                  ? "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
+                  : ""
               }
             >
               <div className="table-responsive main_table_div">
