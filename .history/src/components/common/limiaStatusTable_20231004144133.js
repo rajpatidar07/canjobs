@@ -108,7 +108,6 @@ export default function LimiaStatusTable(props) {
     apiCall,
     limiaFilterValue,
     props.filter_by_time,
-    props.apiCall,
   ]);
 
   /*Search Onchange function to Search REsponse data */
@@ -510,17 +509,17 @@ export default function LimiaStatusTable(props) {
                         >
                           Job
                         </th>
-                        {props.heading === "Dashboard" ||
+                        {/* {props.heading === "Dashboard" ||
                         user_type === "company" ? (
-                          ""
-                        ) : (
-                          <th
-                            scope="col"
-                            className="pl-4 border-0 font-size-4 font-weight-normal"
-                          >
-                            Action
-                          </th>
-                        )}
+                        ""
+                      ) : (
+                        <th
+                          scope="col"
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
+                        >
+                          Action
+                        </th>
+                      )} */}
                       </tr>
                     </thead>
                     <tbody>

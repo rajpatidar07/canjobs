@@ -106,6 +106,13 @@ export default function JobTable(props) {
         setresponseId();
         setIsLoading(false);
       } else {
+        console.log(
+          props.heading === "Dashboard",
+          location.pathname === "/employee",
+          props.lima === "no",
+          user_type === "user",
+          props.skill
+        );
         if (
           props.heading ||
           location.pathname === "/employee" ||
@@ -203,7 +210,6 @@ export default function JobTable(props) {
     props.filter_by_time,
     apiCall,
     props.apiCall,
-    props.heading,
   ]);
   /* Function to show the Job detail data */
   // const JobDetail = (e) => {

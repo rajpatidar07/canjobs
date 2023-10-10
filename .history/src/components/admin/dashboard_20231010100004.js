@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
   let [interview, setInterview] = useState("");
   // let [response, setResponse] = useState("");
   // let [followup, setFollowUP] = useState("");
-  let [apiCall, setApiCall] = useState(false);
+  let [apiCall, setApiCall] = useState("");
   const [employeepageNo, setEmployeePageNo] = useState(1);
   const [employerpageNo, setEmployerPageNo] = useState(1);
   const [jobPageNo, setJobPageNo] = useState(1);
@@ -47,12 +47,6 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
-
-  useEffect(() => {
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall]);
 
   /*Function to get the summary count */
   // let AllCounts = async () => {
@@ -359,11 +353,9 @@ const AdminDashboard = () => {
                   filter_by_time={job}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
-                  lmia={openTable === 1 ? "" : "no"}
+                  lmia="no"
                   setpageNo={setJobPageNo}
                   pageNo={jobPageNo}
-                  selfJob={openTable === 1 ? "no" : ""}
-                  response={openTable === 1 ? "response" : ""}
                 />
               </div>
             </div>
@@ -516,7 +508,6 @@ const AdminDashboard = () => {
                   setpageNo={setInterviewPageNo}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
-                  openTable={openTable}
                 />
               </div>
             </div>

@@ -187,7 +187,7 @@ export default function JobTable(props) {
   /*Render function to get the job */
   useEffect(() => {
     JobData();
-    if (apiCall === true || props.apiCall === true) {
+    if (apiCall === true) {
       props.setApiCall(false);
       setApiCall(false);
     }

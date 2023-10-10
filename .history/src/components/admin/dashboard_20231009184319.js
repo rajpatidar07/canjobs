@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
   let [interview, setInterview] = useState("");
   // let [response, setResponse] = useState("");
   // let [followup, setFollowUP] = useState("");
-  let [apiCall, setApiCall] = useState(false);
+  let [apiCall, setApiCall] = useState("");
   const [employeepageNo, setEmployeePageNo] = useState(1);
   const [employerpageNo, setEmployerPageNo] = useState(1);
   const [jobPageNo, setJobPageNo] = useState(1);
@@ -47,12 +47,6 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
-
-  useEffect(() => {
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall]);
 
   /*Function to get the summary count */
   // let AllCounts = async () => {
@@ -359,11 +353,9 @@ const AdminDashboard = () => {
                   filter_by_time={job}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
-                  lmia={openTable === 1 ? "" : "no"}
+                  lmia="no"
                   setpageNo={setJobPageNo}
                   pageNo={jobPageNo}
-                  selfJob={openTable === 1 ? "no" : ""}
-                  response={openTable === 1 ? "response" : ""}
                 />
               </div>
             </div>
@@ -420,8 +412,6 @@ const AdminDashboard = () => {
                   filter_by_time={employer}
                   setpageNo={setEmployerPageNo}
                   pageNo={employerpageNo}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
                 />
               </div>
             </div>
@@ -462,7 +452,7 @@ const AdminDashboard = () => {
                 <JobResponse heading={"Dashboard"} filter_by_time={response} />
               </div> */}
             {/* <!-- Recent Interviews- --> */}
-            <div className={openTable === 3 ? "col-md-12" : "col-md-6"}>
+            <div className="col-md-6">
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
@@ -497,31 +487,18 @@ const AdminDashboard = () => {
                         View All
                       </Link>
                     </div>
-                    <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 3 ? "open" : ""
-                      }`}
-                      to=""
-                      onClick={() => toggleTable(3)}
-                      title={openTable === 3 ? "Minimize" : "Maximize"}
-                    >
-                      {getIcon(3)}
-                    </Link>
                   </div>
                 </div>
                 <Interview
-                  heading={openTable === 3 ? "" : "Dashboard"}
+                  heading={"Dashboard"}
                   filter_by_time={interview}
                   pageNo={interviewPageNo}
                   setpageNo={setInterviewPageNo}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  openTable={openTable}
                 />
               </div>
             </div>
             {/* <!-- Recent Employees- --> */}
-            <div className={openTable === 4 ? "col0md-12" : "col-md-6"}>
+            <div className="col-md-6">
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
@@ -556,31 +533,19 @@ const AdminDashboard = () => {
                         View All
                       </Link>
                     </div>
-                    <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 4 ? "open" : ""
-                      }`}
-                      to=""
-                      onClick={() => toggleTable(4)}
-                      title={openTable === 4 ? "Minimize" : "Maximize"}
-                    >
-                      {getIcon(4)}
-                    </Link>
                   </div>
                 </div>
                 <EmployeeTable
-                  heading={openTable === 4 ? "" : "Dashboard"}
+                  heading={"Dashboard"}
                   filter_by_time={employee}
                   setpageNo={setEmployeePageNo}
                   pageNo={employeepageNo}
                   self={"yes"}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
                 />
               </div>
             </div>
             {/* <!-- Recent lima's- --> */}
-            <div className={openTable === 5 ? "col0md-12" : "col-md-6"}>
+            <div className="col-md-6">
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
@@ -615,20 +580,10 @@ const AdminDashboard = () => {
                         View All
                       </Link>
                     </div>
-                    <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 5 ? "open" : ""
-                      }`}
-                      to=""
-                      onClick={() => toggleTable(5)}
-                      title={openTable === 5 ? "Minimize" : "Maximize"}
-                    >
-                      {getIcon(5)}
-                    </Link>
                   </div>
                 </div>
                 <LimiaStatusTable
-                  heading={openTable === 5 ? "" : "Dashboard"}
+                  heading={"Dashboard"}
                   filter_by_time={lima}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
@@ -640,20 +595,10 @@ const AdminDashboard = () => {
               </div>
             </div>
             {/* <!-- Recent Follow- --> */}
-            <div className={openTable === 6 ? "col-md-12" : "col-md-6"}>
+            <div className="col-md-6">
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Employee Alerts</h3>
-                  <Link
-                    className={`text-dark mx-5 ${
-                      openTable === 6 ? "open" : ""
-                    }`}
-                    to=""
-                    onClick={() => toggleTable(6)}
-                    title={openTable === 6 ? "Minimize" : "Maximize"}
-                  >
-                    {getIcon(6)}
-                  </Link>
                   {/* <div className="d-flex justify-content-between p-0">
                     <div className="select_div mr-5">
                       <select

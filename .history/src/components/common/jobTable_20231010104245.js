@@ -106,6 +106,13 @@ export default function JobTable(props) {
         setresponseId();
         setIsLoading(false);
       } else {
+        console.log(
+          props.heading === "Dashboard",
+          location.pathname === "/employee",
+          props.lima === "no",
+          user_type === "user",
+          props.skill
+        );
         if (
           props.heading ||
           location.pathname === "/employee" ||

@@ -111,6 +111,7 @@ export default function LimiaStatusTable(props) {
     props.apiCall,
   ]);
 
+  console.log(props.apiCall);
   /*Search Onchange function to Search REsponse data */
   const onSearch = (e) => {
     const inputValue = e.target.value;

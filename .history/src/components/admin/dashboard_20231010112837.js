@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
@@ -48,12 +48,7 @@ const AdminDashboard = () => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
 
-  useEffect(() => {
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall]);
-
+  console.log(apiCall);
   /*Function to get the summary count */
   // let AllCounts = async () => {
   // try{  let Data = await getSummaryCount();
@@ -516,7 +511,6 @@ const AdminDashboard = () => {
                   setpageNo={setInterviewPageNo}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
-                  openTable={openTable}
                 />
               </div>
             </div>

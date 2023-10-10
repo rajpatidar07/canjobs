@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
   let [interview, setInterview] = useState("");
   // let [response, setResponse] = useState("");
   // let [followup, setFollowUP] = useState("");
-  let [apiCall, setApiCall] = useState(false);
+  let [apiCall, setApiCall] = useState("");
   const [employeepageNo, setEmployeePageNo] = useState(1);
   const [employerpageNo, setEmployerPageNo] = useState(1);
   const [jobPageNo, setJobPageNo] = useState(1);
@@ -47,12 +47,6 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
-
-  useEffect(() => {
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall]);
 
   /*Function to get the summary count */
   // let AllCounts = async () => {
@@ -359,11 +353,9 @@ const AdminDashboard = () => {
                   filter_by_time={job}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
-                  lmia={openTable === 1 ? "" : "no"}
+                  lmia="no"
                   setpageNo={setJobPageNo}
                   pageNo={jobPageNo}
-                  selfJob={openTable === 1 ? "no" : ""}
-                  response={openTable === 1 ? "response" : ""}
                 />
               </div>
             </div>
@@ -420,8 +412,6 @@ const AdminDashboard = () => {
                   filter_by_time={employer}
                   setpageNo={setEmployerPageNo}
                   pageNo={employerpageNo}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
                 />
               </div>
             </div>
@@ -514,9 +504,6 @@ const AdminDashboard = () => {
                   filter_by_time={interview}
                   pageNo={interviewPageNo}
                   setpageNo={setInterviewPageNo}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  openTable={openTable}
                 />
               </div>
             </div>
@@ -574,8 +561,6 @@ const AdminDashboard = () => {
                   setpageNo={setEmployeePageNo}
                   pageNo={employeepageNo}
                   self={"yes"}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
                 />
               </div>
             </div>
@@ -640,19 +625,19 @@ const AdminDashboard = () => {
               </div>
             </div>
             {/* <!-- Recent Follow- --> */}
-            <div className={openTable === 6 ? "col-md-12" : "col-md-6"}>
+            <div className={openTable === 5 ? "col-md-12" : "col-md-6"}>
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Employee Alerts</h3>
                   <Link
                     className={`text-dark mx-5 ${
-                      openTable === 6 ? "open" : ""
+                      openTable === 5 ? "open" : ""
                     }`}
                     to=""
-                    onClick={() => toggleTable(6)}
-                    title={openTable === 6 ? "Minimize" : "Maximize"}
+                    onClick={() => toggleTable(5)}
+                    title={openTable === 5 ? "Minimize" : "Maximize"}
                   >
-                    {getIcon(6)}
+                    {getIcon(5)}
                   </Link>
                   {/* <div className="d-flex justify-content-between p-0">
                     <div className="select_div mr-5">

@@ -108,7 +108,7 @@ export default function LimiaStatusTable(props) {
     apiCall,
     limiaFilterValue,
     props.filter_by_time,
-    props.apiCall,
+    props.heading,
   ]);
 
   /*Search Onchange function to Search REsponse data */

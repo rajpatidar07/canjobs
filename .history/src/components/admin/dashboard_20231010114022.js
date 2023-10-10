@@ -49,11 +49,11 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
+    console.log(apiCall);
     if (apiCall === true) {
       setApiCall(false);
     }
   }, [apiCall]);
-
   /*Function to get the summary count */
   // let AllCounts = async () => {
   // try{  let Data = await getSummaryCount();

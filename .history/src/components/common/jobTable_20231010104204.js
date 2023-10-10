@@ -57,6 +57,13 @@ export default function JobTable(props) {
     : location.pathname === "/job_detail"
     ? localStorage.getItem("job_id")
     : "";
+  console.log(
+    props.heading === "Dashboard",
+    location.pathname === "/employee",
+    props.lima === "no",
+    user_type === "user",
+    props.skill
+  );
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -203,7 +210,6 @@ export default function JobTable(props) {
     props.filter_by_time,
     apiCall,
     props.apiCall,
-    props.heading,
   ]);
   /* Function to show the Job detail data */
   // const JobDetail = (e) => {

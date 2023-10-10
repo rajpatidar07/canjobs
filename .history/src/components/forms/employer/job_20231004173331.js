@@ -316,8 +316,7 @@ function AddJobModal(props) {
                 )}
               </div>
               {user_type !== "admin" ||
-              location.pathname === "/employer" ||
-              location.pathname === "/dashboard" ? null : (
+              location.pathname === "/employer" ? null : (
                 <div className="form-group col-md-4 px-0 pr-3">
                   <label
                     htmlFor="job_category_id"

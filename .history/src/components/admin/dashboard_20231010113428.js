@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
@@ -47,12 +47,6 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
-
-  useEffect(() => {
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall]);
 
   /*Function to get the summary count */
   // let AllCounts = async () => {
@@ -514,9 +508,8 @@ const AdminDashboard = () => {
                   filter_by_time={interview}
                   pageNo={interviewPageNo}
                   setpageNo={setInterviewPageNo}
-                  apiCall={apiCall}
+                  apiCall={apiCall || openTable}
                   setApiCall={setApiCall}
-                  openTable={openTable}
                 />
               </div>
             </div>

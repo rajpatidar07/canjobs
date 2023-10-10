@@ -64,8 +64,6 @@ function Interview(props) {
     showAddInterviewModal,
     props.filter_by_time,
     props.statusFilterValue,
-    props.openTable,
-    props.apiCall,
   ]);
 
   /* Function to show the single data to update interview*/

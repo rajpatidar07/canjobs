@@ -188,7 +188,7 @@ export default function JobTable(props) {
   useEffect(() => {
     JobData();
     if (apiCall === true || props.apiCall === true) {
-      props.setApiCall(false);
+      props.setApiCall(true);
       setApiCall(false);
     }
   }, [

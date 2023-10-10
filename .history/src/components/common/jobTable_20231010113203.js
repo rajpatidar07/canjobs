@@ -1060,6 +1060,7 @@ export default function JobTable(props) {
                                           : ""
                                         : ""
                                     }
+                                    mainCall={props.setApiCall}
                                   />
                                 </>
                               }
