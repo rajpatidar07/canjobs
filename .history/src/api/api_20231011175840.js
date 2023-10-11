@@ -25,10 +25,10 @@ export const GetCountry = async () => {
   });
   return response.data;
 };
-export const ReadEmail = async (id, page, limit, email) => {
+export const ReadEmail = async (id, email) => {
   const response = await axios.post(
     `http://192.168.29.92/canjobs_latest/common/readEmail`,
-    { email_id: id, page: page, limit: limit, filter_by_email_id: email },
+    { email_id: id, filter_by_email_id: email },
     {
       headers: {
         "Content-Type": "application/json",
@@ -2112,15 +2112,11 @@ export const GetPaymentList = async (id, user) => {
 /*Api to add cash paymet by admin  */
 
 export const AddCashpayment = async (data) => {
-  const response = await axios.put(
-    `${API_URL}payment/addPaymentReciept`,
-    data,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.put(`${API_URL}payment/addPaymentReciept`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };

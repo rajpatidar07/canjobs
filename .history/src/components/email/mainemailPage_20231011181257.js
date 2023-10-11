@@ -31,7 +31,7 @@ const MainEmailPage = () => {
         setIsLoading(false);
       } else {
         setemailData(userData.data);
-        setTotalData(userData.total);
+        // setTotalData(userData.data.total_rows);
         setIsLoading(false);
       }
       setIsLoading(false);
@@ -47,7 +47,7 @@ const MainEmailPage = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [currentPage, recordsPerPage /*, columnName, sortOrder*/, apiCall]);
+  }, [currentPage, recordsPerPage, columnName, sortOrder, apiCall]);
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);

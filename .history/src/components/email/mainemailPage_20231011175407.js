@@ -14,9 +14,9 @@ const MainEmailPage = () => {
   //  let [employeeId, setemployeeId] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
   /* Pagination states */
-  const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(10);
+  //   const [totalData, setTotalData] = useState("");
+  //   const [currentPage, setCurrentPage] = useState(1);
+  //   const [recordsPerPage] = useState(10);
   /* Shorting states */
   //   const [columnName, setcolumnName] = useState("msgno");
   //   const [sortOrder, setSortOrder] = useState("DESC");
@@ -24,14 +24,14 @@ const MainEmailPage = () => {
   const EmailData = async () => {
     setIsLoading(true);
     try {
-      const userData = await ReadEmail("", currentPage, recordsPerPage);
+      const userData = await ReadEmail();
       // // console.log(userData.data)
       if (userData.data.length === 0) {
         setemailData([]);
         setIsLoading(false);
       } else {
         setemailData(userData.data);
-        setTotalData(userData.total);
+        // setTotalData(userData.data.total_rows);
         setIsLoading(false);
       }
       setIsLoading(false);
@@ -47,10 +47,10 @@ const MainEmailPage = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [currentPage, recordsPerPage /*, columnName, sortOrder*/, apiCall]);
+  }, [/*currentPage, recordsPerPage, columnName, sortOrder,*/ apiCall]);
 
   /*Pagination Calculation */
-  const nPages = Math.ceil(totalData / recordsPerPage);
+  //   const nPages = Math.ceil(totalData / recordsPerPage);
 
   return (
     <>
@@ -282,10 +282,10 @@ const MainEmailPage = () => {
                 setApiCall={setApiCall}
                 isLoading={isLoading}
                 data={emailData}
-                totalData={totalData}
-                nPages={nPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                // totalData={totalData}
+                // nPages={nPages}
+                // currentPage={currentPage}
+                // setCurrentPage={setCurrentPage}
               />
             </div>
           </div>

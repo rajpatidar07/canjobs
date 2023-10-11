@@ -31,7 +31,7 @@ const MainEmailPage = () => {
         setIsLoading(false);
       } else {
         setemailData(userData.data);
-        setTotalData(userData.total);
+        // setTotalData(userData.data.total_rows);
         setIsLoading(false);
       }
       setIsLoading(false);
