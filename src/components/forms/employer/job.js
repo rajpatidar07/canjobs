@@ -460,7 +460,7 @@ function AddJobModal(props) {
                   htmlFor="experience_required"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Experience required:<span className="text-danger"> *</span>
+                  Experience Required:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select
@@ -499,7 +499,7 @@ function AddJobModal(props) {
                   htmlFor="salary"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Salary(CAD):
+                  Per hour wage ($CAD):
                 </label>
                 <input
                   maxLength={10}
@@ -513,7 +513,7 @@ function AddJobModal(props) {
                       ? "form-control text-capitalize border border-danger"
                       : "form-control text-capitalize"
                   }
-                  placeholder="1000"
+                  placeholder="$"
                   id="salary"
                 />
                 {/*----ERROR MESSAGE FOR salary----*/}
@@ -543,7 +543,7 @@ function AddJobModal(props) {
                   placeholder="Location"
                   id="location"
                 >
-                  <option value={""}>Select state</option>
+                  <option value={""}>Select State</option>
                   {(Object.keys(states) || []).map((state, i) => (
                     <option key={i} value={state}>
                       {state}
@@ -578,7 +578,7 @@ function AddJobModal(props) {
                     placeholder="City"
                     id="industry_type"
                   >
-                    <option value={""}>Select city</option>
+                    <option value={""}>Select City</option>
                     {(states[state.location] || []).map((city, i) => (
                       <option key={i} value={city}>
                         {city}
@@ -743,7 +743,7 @@ function AddJobModal(props) {
                   htmlFor="apply_link"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Apply Link / email:<span className="text-danger"> *</span>
+                  Apply Link / Email:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <input
@@ -777,7 +777,7 @@ function AddJobModal(props) {
                   htmlFor="role_category"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  No. of vacancies:<span className="text-danger">*</span>
+                  No. Of Vacancies:<span className="text-danger">*</span>
                 </label>
 
                 <div className="position-relative">
@@ -811,7 +811,7 @@ function AddJobModal(props) {
                   htmlFor="department"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  NOC code:
+                  NOC Code:
                 </label>
                 <div className="position-relative">
                   <input
@@ -860,7 +860,7 @@ function AddJobModal(props) {
                         : "text-capitalize form-control position-relative overflow-hidden"
                     }
                   >
-                    <option value={""}>Select job type</option>
+                    <option value={""}>Select Job Type</option>
                     {(FilterJson.job_type || []).map((job_type) => (
                       <option key={job_type} value={job_type}>
                         {job_type}
@@ -898,7 +898,7 @@ function AddJobModal(props) {
                     placeholder="Apply education"
                     id="education"
                   >
-                    <option value={""}>Select education</option>
+                    <option value={""}>Select Education</option>
                     {(Json.Education || []).map((education) => (
                       <option key={education.id} value={education.value}>
                         {education.value}

@@ -239,7 +239,7 @@ export default function VisaStatus(props) {
                 }
                 id="status"
               >
-                <option value={""}>Select visa status </option>
+                <option value={""}>Select Visa Status </option>
                 {(FilterJson.visa_status || []).map((item, index) => {
                   isExpanded = expandedStatus === item;
                   return (
