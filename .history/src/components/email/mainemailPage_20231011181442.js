@@ -7,8 +7,8 @@ import { ReadEmail } from "../../api/api";
 const MainEmailPage = () => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [searcherror, setSearchError] = useState("");
+  //   const [search, setSearch] = useState("");
+  //   const [searcherror, setSearchError] = useState("");
   /* data and id states */
   const [emailData, setemailData] = useState([]);
   //  let [employeeId, setemployeeId] = useState();
@@ -24,7 +24,7 @@ const MainEmailPage = () => {
   const EmailData = async () => {
     setIsLoading(true);
     try {
-      const userData = await ReadEmail("", currentPage, recordsPerPage, search);
+      const userData = await ReadEmail("", currentPage, recordsPerPage);
       // // console.log(userData.data)
       if (userData.data.length === 0) {
         setemailData([]);
@@ -47,33 +47,11 @@ const MainEmailPage = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [
-    currentPage,
-    recordsPerPage,
-    search /*, columnName, sortOrder*/,
-    apiCall,
-  ]);
+  }, [currentPage, recordsPerPage /*, columnName, sortOrder*/, apiCall]);
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*Function to search the employee */
-  const onSearch = (e) => {
-    const inputValue = e.target.value;
-    setSearch(inputValue);
-    setCurrentPage(1);
-    if (inputValue.length > 0) {
-      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-        setSearchError("Company Name cannot start with a number.");
-      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-        setSearchError("Cannot use special characters.");
-      } else {
-        setSearchError("");
-      }
-    } else {
-      setSearchError("");
-    }
-  };
   return (
     <>
       <div className={"site-wrapper overflow-hidden bg-default-2"}>
@@ -185,21 +163,22 @@ const MainEmailPage = () => {
                 </div>
               </div> */}
                 {/*<-- Job Search and Filter -->*/}
-                <div className={"row m-0 align-items-center"}>
-                  <div className="col p-1 form_group mb-3">
-                    <p className="input_label">Search:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control w-100"
-                      placeholder={"Search email"}
-                      value={search}
-                      name={"name"}
-                      onChange={(e) => onSearch(e)}
-                    />
-                    <small className="text-danger">{searcherror}</small>
-                  </div>
-                  {/* <div className="col p-1 form_group mb-3">
+                {/* <div className={userType === "company" ? "d-none"
+              :"row m-0 align-items-center"}>
+                <div className="col p-1 form_group mb-3">
+                  <p className="input_label">Search:</p>
+                  <input
+                    required
+                    type="text"
+                    className="form-control w-100"
+                    placeholder={"Search Job"}
+                    value={search}
+                    name={"name"}
+                    onChange={(e) => onSearch(e)}
+                  />
+                  <small className="text-danger">{searcherror}</small>
+                </div>
+                <div className="col p-1 form_group mb-3">
                   <p className="input_label">Company Name:</p>
                   <input
                     required
@@ -294,8 +273,8 @@ const MainEmailPage = () => {
                       })}
                     </select>
                   </div>
-                </div> */}
                 </div>
+              </div> */}
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
               <EmailList

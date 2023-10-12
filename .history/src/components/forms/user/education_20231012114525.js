@@ -443,7 +443,7 @@ function Education(props) {
                   htmlFor="specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialisation:
+                  Specialization:
                 </label>
                 <input
                   className={

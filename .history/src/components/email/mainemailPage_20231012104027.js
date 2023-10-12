@@ -47,12 +47,7 @@ const MainEmailPage = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [
-    currentPage,
-    recordsPerPage,
-    search /*, columnName, sortOrder*/,
-    apiCall,
-  ]);
+  }, [currentPage, recordsPerPage /*, columnName, sortOrder*/, apiCall]);
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);

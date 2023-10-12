@@ -28,13 +28,7 @@ export const GetCountry = async () => {
 export const ReadEmail = async (id, page, limit, search, email) => {
   const response = await axios.post(
     `http://192.168.29.92/canjobs_latest/common/readEmail`,
-    {
-      email_id: id,
-      page: page,
-      limit: limit,
-      filter_by_email_id: email,
-      search: search,
-    },
+    { email_id: id, page: page, limit: limit, filter_by_email_id: email },
     {
       headers: {
         "Content-Type": "application/json",

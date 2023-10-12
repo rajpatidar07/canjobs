@@ -271,7 +271,7 @@ span.web_tag {
 /* SIDEBAR */
 
 ul.list-unstyled.dashboard-layout-sidebar {
-  max-height: calc(100vh - 55px);
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
 }
 

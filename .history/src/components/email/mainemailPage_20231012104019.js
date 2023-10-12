@@ -47,12 +47,7 @@ const MainEmailPage = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [
-    currentPage,
-    recordsPerPage,
-    search /*, columnName, sortOrder*/,
-    apiCall,
-  ]);
+  }, [currentPage, recordsPerPage /*, columnName, sortOrder*/, apiCall]);
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -61,7 +56,7 @@ const MainEmailPage = () => {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setCurrentPage(1);
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Company Name cannot start with a number.");

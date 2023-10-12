@@ -253,7 +253,7 @@ function Education(props) {
                               </span>
                             </span>
                           </h3>
-                          <span className="font-size-4 text-default-color line-height-2 text-break">
+                          <span className="font-size-4 text-default-color line-height-2">
                             {education.course}, {education.specialization}
                           </span>
                         </div>
@@ -443,7 +443,7 @@ function Education(props) {
                   htmlFor="specialization"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Specialisation:
+                  Specialization:
                 </label>
                 <input
                   className={

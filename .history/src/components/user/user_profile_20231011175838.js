@@ -1289,7 +1289,7 @@ const NewUserProfile = (props) => {
                                           <h3 className="mb-0">
                                             <span className="font-size-6 text-black-2 font-weight-semibold">
                                               {EducationDetails.qualification}
-                                              <span className="font-size-4 text-break">
+                                              <span className="font-size-4">
                                                 (
                                                 {
                                                   EducationDetails.university_institute
@@ -1298,7 +1298,7 @@ const NewUserProfile = (props) => {
                                               </span>
                                             </span>
                                           </h3>
-                                          <span className="font-size-4 text-default-color line-height-2 text-break">
+                                          <span className="font-size-4 text-default-color line-height-2">
                                             {EducationDetails.course},
                                             {EducationDetails.specialization}
                                           </span>
