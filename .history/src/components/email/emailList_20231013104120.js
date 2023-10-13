@@ -249,7 +249,7 @@ const EmailList = ({
               </>
             )}
           </div>
-          <div className=" table-responsive main_table_div col-md-6 m-0">
+          <div className="col-md-6">
             {emailId ? <PreviewEmail id={emailId} /> : null}
           </div>
 

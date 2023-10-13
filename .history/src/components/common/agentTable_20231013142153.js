@@ -46,7 +46,7 @@ export default function AgentTable(props) {
     setIsLoading(true);
     try {
       const userData = await GetAgent(
-        user_type === "agent" ? AgentId : "",
+        AgentId,
         props.search,
         props.pageNo,
         recordsPerPage,
