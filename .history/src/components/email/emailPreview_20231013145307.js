@@ -102,18 +102,21 @@ const PreviewEmail = ({ id }) => {
     //     </div>
     //   </div>
     // </div>
-    <div className="table-responsive main_table_div">
+    <div className="">
       {/* <h1>Exciting News!</h1>
                   <p>Hello [Recipient's Name],</p>
                   <p>We have some exciting news to share with you...</p> */}
       {
         isLoading ? (
-          <div>
+          <div className="table-responsive main_table_div">
             <Loader />
           </div>
         ) : (
           // emailData.includes("=?UTF-8?Q?") ? (
-          <div dangerouslySetInnerHTML={{ __html: emailData }} />
+          <div
+            className="table-responsive main_table_div"
+            dangerouslySetInnerHTML={{ __html: emailData }}
+          />
         ) //decodeEmailSubject(emailData)
         // ) : (
         //   <pre>{emailData}</pre>
