@@ -161,6 +161,7 @@ export default function VisaTable(props) {
           autoClose: 1000,
         });
         setApiCall(true);
+        props.setApiCall(true);
         setDeleteAlert(false);
       }
     } catch (err) {

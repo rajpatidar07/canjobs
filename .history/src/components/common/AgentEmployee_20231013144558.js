@@ -299,7 +299,6 @@ function AgentsEmployee(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
-    setCurrentPage(1);
   };
 
   /*Funcion to get the user time from updated time */

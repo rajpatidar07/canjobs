@@ -39,14 +39,13 @@ export default function AgentTable(props) {
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("");
-  console.log(AgentId);
   /* Function to get Employee data*/
   const AgentData = async () => {
     // const params = useParams();
     setIsLoading(true);
     try {
       const userData = await GetAgent(
-        user_type === "agent" ? AgentId : "",
+        AgentId,
         props.search,
         props.pageNo,
         recordsPerPage,
@@ -306,8 +305,11 @@ export default function AgentTable(props) {
                   </tr>
                 ) : (
                   (agenteData || []).map((data) => (
-                    <React.Fragment key={data.id}>
-                      <tr className="text-capitalize applicant_row">
+                    <>
+                      <tr
+                        className="text-capitalize applicant_row"
+                        key={data.id}
+                      >
                         <td className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {data.u_id}
@@ -522,7 +524,7 @@ export default function AgentTable(props) {
                           </td>
                         </tr>
                       ) : null}
-                    </React.Fragment>
+                    </>
                   ))
                 )}
               </tbody>

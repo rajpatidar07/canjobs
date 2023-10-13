@@ -113,10 +113,7 @@ const PreviewEmail = ({ id }) => {
           </div>
         ) : (
           // emailData.includes("=?UTF-8?Q?") ? (
-          <div
-            className="table-responsive main_table_div"
-            dangerouslySetInnerHTML={{ __html: emailData }}
-          />
+          <div dangerouslySetInnerHTML={{ __html: emailData }} />
         ) //decodeEmailSubject(emailData)
         // ) : (
         //   <pre>{emailData}</pre>

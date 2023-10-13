@@ -299,7 +299,6 @@ function AgentsEmployee(props) {
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
-    setCurrentPage(1);
   };
 
   /*Funcion to get the user time from updated time */
@@ -491,6 +490,7 @@ function AgentsEmployee(props) {
                             to={""}
                             onClick={() => {
                               handleSort("name");
+                              props.setpageNo(1);
                             }}
                             className="text-gray"
                             title="Sort by Name"
@@ -506,6 +506,7 @@ function AgentsEmployee(props) {
                             to={""}
                             onClick={() => {
                               handleSort("contact_no");
+                              props.setpageNo(1);
                             }}
                             className="text-gray"
                             title="Sort by Contact"
@@ -524,6 +525,7 @@ function AgentsEmployee(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("created_at");
+                                props.setpageNo(1);
                               }}
                               className="text-gray"
                               title="Sort by date added"
@@ -543,6 +545,7 @@ function AgentsEmployee(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("education");
+                                props.setpageNo(1);
                               }}
                               className="text-gray"
                               title="Sort by Education"
@@ -562,6 +565,7 @@ function AgentsEmployee(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("skill");
+                                props.setpageNo(1);
                               }}
                               className="text-gray"
                               title="Sort by Skill"
@@ -581,6 +585,7 @@ function AgentsEmployee(props) {
                               to={""}
                               onClick={() => {
                                 handleSort("experience");
+                                props.setpageNo(1);
                               }}
                               className="text-gray"
                               title="Sort by Experience"
@@ -798,7 +803,7 @@ function AgentsEmployee(props) {
                                   </span>
                                 ) : (
                                   <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Incomplete
+                                    Incompelete
                                   </span>
                                 )}
                               </p>
