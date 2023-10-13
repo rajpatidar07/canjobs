@@ -64,10 +64,7 @@ export default function AgentLogin() {
           setIsLoading(false);
           navigate("/agent");
           //   window.location.reload();
-        } else if (
-          updatedTodo.message === "Invalid Credentials" ||
-          updatedTodo.message === "Invalid credentials !"
-        ) {
+        } else if (updatedTodo.message === "Invalid Credentials") {
           setLoading(false);
           setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
         }
