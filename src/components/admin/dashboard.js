@@ -10,7 +10,7 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-// import { getSummaryCount } from "../../api/api";
+import { ReadEmail /*getSummaryCount*/ } from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 import Addfollowup from "../forms/admin/addfollowup";
 import { FaWindowMaximize } from "react-icons/fa";
@@ -42,16 +42,26 @@ const AdminDashboard = () => {
     } else {
       setOpenTable(tableNumber);
     }
+    // Function to focus on the particular div we select for maximizing and minimizing.
+    window.requestAnimationFrame(() => {
+      const element = document.getElementById(`table${tableNumber}`);
+      element && element.scrollIntoView({ behavior: "smooth" });
+    });
   };
   /*Function get minimize maximize icons */
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
 
+  let getEmail = async () => {
+    let res = await ReadEmail();
+    console.log(res);
+  };
   useEffect(() => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    getEmail();
   }, [apiCall]);
 
   /*Function to get the summary count */
@@ -309,7 +319,10 @@ const AdminDashboard = () => {
           </div>
           <div className="row">
             {/* <!-- Recent Jobs- --> */}
-            <div className={openTable === 1 ? "col-md-12" : "col-md-6"}>
+            <div
+              id="table1"
+              className={openTable === 1 ? "col-md-12" : "col-md-6"}
+            >
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0 ">Recently Added Jobs</h3>
@@ -367,8 +380,73 @@ const AdminDashboard = () => {
                 />
               </div>
             </div>
+            {/* <!-- Recent Employees- --> */}
+            <div
+              id="table4"
+              className={openTable === 4 ? "col-md-12" : "col-md-6"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Candidates
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="employee"
+                        value={employee}
+                        id="employee"
+                        onChange={(e) => {
+                          setEmployee(e.target.value);
+                          setEmployeePageNo(1);
+                        }}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      <Link
+                        className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/employee"}
+                        title="View all Applicants"
+                      >
+                        View All
+                      </Link>
+                    </div>
+                    <Link
+                      className={`text-dark mx-5 ${
+                        openTable === 4 ? "open" : ""
+                      }`}
+                      to=""
+                      onClick={() => toggleTable(4)}
+                      title={openTable === 4 ? "Minimize" : "Maximize"}
+                    >
+                      {getIcon(4)}
+                    </Link>
+                  </div>
+                </div>
+                <EmployeeTable
+                  heading={openTable === 4 ? "" : "Dashboard"}
+                  filter_by_time={employee}
+                  setpageNo={setEmployeePageNo}
+                  pageNo={employeepageNo}
+                  self={"yes"}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
+                />
+              </div>
+            </div>
             {/* <!-- Recent Companies- --> */}
-            <div className={openTable === 2 ? "col-md-12" : "col-md-6"}>
+            <div
+              id="table2"
+              className={openTable === 2 ? "col-md-12" : "col-md-6"}
+            >
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
@@ -461,126 +539,11 @@ const AdminDashboard = () => {
                 </div>
                 <JobResponse heading={"Dashboard"} filter_by_time={response} />
               </div> */}
-            {/* <!-- Recent Interviews- --> */}
-            <div className={openTable === 3 ? "col-md-12" : "col-md-6"}>
-              <div className="bg-white dashboard_card mb-7">
-                <div className="d-flex justify-content-between p-5 align-items-center">
-                  <h3 className="font-size-5 px-3 m-0  ">
-                    Recently Added Interview
-                  </h3>
-                  <div className="d-flex justify-content-between p-0">
-                    <div className="select_div mr-5">
-                      <select
-                        name="interview"
-                        value={interview}
-                        id="interview"
-                        onChange={(e) => {
-                          setInterview(e.target.value);
-                          setInterviewPageNo(1);
-                        }}
-                        className="form-control-sm bg-white dashboard_select rounded-3"
-                      >
-                        <option value={""}>Select</option>
-                        <option value={"today"}>Today </option>
-                        <option value={"this_week"}>This Week </option>
-                        <option value={"last_week"}>Last Week</option>
-                        <option value={"last_month"}>Last Month</option>
-                        <option value={"current_month"}>Current Month</option>
-                      </select>
-                    </div>
-                    <div className="">
-                      <Link
-                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                        to={"/interview"}
-                        title="View All Interview"
-                      >
-                        View All
-                      </Link>
-                    </div>
-                    <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 3 ? "open" : ""
-                      }`}
-                      to=""
-                      onClick={() => toggleTable(3)}
-                      title={openTable === 3 ? "Minimize" : "Maximize"}
-                    >
-                      {getIcon(3)}
-                    </Link>
-                  </div>
-                </div>
-                <Interview
-                  heading={openTable === 3 ? "" : "Dashboard"}
-                  filter_by_time={interview}
-                  pageNo={interviewPageNo}
-                  setpageNo={setInterviewPageNo}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  openTable={openTable}
-                />
-              </div>
-            </div>
-            {/* <!-- Recent Employees- --> */}
-            <div className={openTable === 4 ? "col-md-12" : "col-md-6"}>
-              <div className="bg-white dashboard_card mb-7">
-                <div className="d-flex justify-content-between p-5 align-items-center">
-                  <h3 className="font-size-5 px-3 m-0  ">
-                    Recently Added Candidates
-                  </h3>
-                  <div className="d-flex justify-content-between p-0">
-                    <div className="select_div mr-5">
-                      <select
-                        name="employee"
-                        value={employee}
-                        id="employee"
-                        onChange={(e) => {
-                          setEmployee(e.target.value);
-                          setEmployeePageNo(1);
-                        }}
-                        className="form-control-sm bg-white dashboard_select rounded-3"
-                      >
-                        <option value={""}>Select</option>
-                        <option value={"today"}>Today </option>
-                        <option value={"this_week"}>This Week </option>
-                        <option value={"last_week"}>Last Week</option>
-                        <option value={"last_month"}>Last Month</option>
-                        <option value={"current_month"}>Current Month</option>
-                      </select>
-                    </div>
-                    <div className="">
-                      <Link
-                        className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                        to={"/employee"}
-                        title="View all Applicants"
-                      >
-                        View All
-                      </Link>
-                    </div>
-                    <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 4 ? "open" : ""
-                      }`}
-                      to=""
-                      onClick={() => toggleTable(4)}
-                      title={openTable === 4 ? "Minimize" : "Maximize"}
-                    >
-                      {getIcon(4)}
-                    </Link>
-                  </div>
-                </div>
-                <EmployeeTable
-                  heading={openTable === 4 ? "" : "Dashboard"}
-                  filter_by_time={employee}
-                  setpageNo={setEmployeePageNo}
-                  pageNo={employeepageNo}
-                  self={"yes"}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                />
-              </div>
-            </div>
             {/* <!-- Recent lima's- --> */}
-            <div className={openTable === 5 ? "col-md-12" : "col-md-6"}>
+            <div
+              id="table5"
+              className={openTable === 5 ? "col-md-12" : "col-md-6"}
+            >
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
@@ -639,8 +602,73 @@ const AdminDashboard = () => {
                 />
               </div>
             </div>
+            {/* <!-- Recent Interviews- --> */}
+            <div
+              id="table3"
+              className={openTable === 3 ? "col-md-12" : "col-md-6"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Interview
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="interview"
+                        value={interview}
+                        id="interview"
+                        onChange={(e) => {
+                          setInterview(e.target.value);
+                          setInterviewPageNo(1);
+                        }}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Select</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <div className="">
+                      <Link
+                        className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                        to={"/interview"}
+                        title="View All Interview"
+                      >
+                        View All
+                      </Link>
+                    </div>
+                    <Link
+                      className={`text-dark mx-5 ${
+                        openTable === 3 ? "open" : ""
+                      }`}
+                      to=""
+                      onClick={() => toggleTable(3)}
+                      title={openTable === 3 ? "Minimize" : "Maximize"}
+                    >
+                      {getIcon(3)}
+                    </Link>
+                  </div>
+                </div>
+                <Interview
+                  heading={openTable === 3 ? "" : "Dashboard"}
+                  filter_by_time={interview}
+                  pageNo={interviewPageNo}
+                  setpageNo={setInterviewPageNo}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
+                  openTable={openTable}
+                />
+              </div>
+            </div>
             {/* <!-- Recent Follow- --> */}
-            <div className={openTable === 6 ? "col-md-12" : "col-md-6"}>
+            <div
+              id="table6"
+              className={openTable === 6 ? "col-md-12" : "col-md-6"}
+            >
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Employee Alerts</h3>

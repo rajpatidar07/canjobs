@@ -87,7 +87,7 @@ export default function Visa() {
     setEmpId("");
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1)
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Company Name cannot start with a number.");
@@ -165,7 +165,7 @@ export default function Visa() {
                         onChange={(e) => {
                           setVisaCountryFilter(e.target.value);
                           setEmpId("");
-                          setpageNo(1)
+                          setpageNo(1);
                         }}
                         className="text-capitalize form-control"
                       >
@@ -188,7 +188,7 @@ export default function Visa() {
                         onChange={(e) => {
                           setVisStatusFilterValue(e.target.value);
                           setEmpId("");
-                          setpageNo(1)
+                          setpageNo(1);
                         }}
                         className="text-capitalize form-control"
                       >
@@ -211,7 +211,7 @@ export default function Visa() {
                         onChange={(e) => {
                           setIntrestedFilterValue(e.target.value);
                           setEmpId("");
-                          setpageNo(1)
+                          setpageNo(1);
                         }}
                         className="text-capitalize form-control"
                       >

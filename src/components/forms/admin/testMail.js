@@ -87,7 +87,7 @@ function TestMail(props) {
                 htmlFor="category_type"
                 className="font-size-4 text-black-2  line-height-reset"
               >
-                Email id <span className="text-danger">*</span> :
+                Email Id <span className="text-danger">*</span> :
               </label>
               <input
                 type="text"

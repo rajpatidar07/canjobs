@@ -68,7 +68,7 @@ function JobDetailpageAdmim(props) {
         : jobData.keyskill.split(",");
   }
   return (
-    <div>
+    <div className="text-break">
       {user_type === "admin" && (
         <>
           <AdminHeader
@@ -624,8 +624,7 @@ function JobDetailpageAdmim(props) {
                                       className="font-size-3 text-smoke  mr-7 text-capitalize"
                                       title="Salary"
                                     >
-                                      <b> Salary: </b>
-                                      {jobData.salary} $
+                                      <b> Salary: </b>$ {jobData.salary}
                                     </span>
                                   </div>
                                 ) : null}

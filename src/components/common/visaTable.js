@@ -343,32 +343,9 @@ export default function VisaTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? (
-                      <th className="bg-white text-center">No Data Found</th>
-                    ) : (
-                      <th className="bg-white"></th>
-                    )}
-                    <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="bg-white text-center">No Data Found</th>
-                    )}
-                    <th className="bg-white"></th>
-                    {props.heading !== "Dashboard" ? (
-                      <>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th
-                          className={
-                            user_type === "company" ? "d-none" : "bg-white"
-                          }
-                        ></th>
-                      </>
-                    ) : (
-                      ""
-                    )}
+                    <th colSpan={10} className="bg-white text-center">
+                      No Data Found
+                    </th>
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata, i) => (
@@ -406,7 +383,7 @@ export default function VisaTable(props) {
                           <div title="Employee Details">
                             {empdata.name === null ? (
                               <div className="font-size-3 mb-0 text-capitalize">
-                                Unavailable
+                                N/A
                               </div>
                             ) : (
                               <div className=" mb-0">
@@ -449,7 +426,7 @@ export default function VisaTable(props) {
                       </td>
                       <td className="py-5 ">
                         {empdata.contact_no === null ? (
-                          <p className="font-size-3 mb-0">Unavailable</p>
+                          <p className="font-size-3 mb-0">N/A</p>
                         ) : (
                           <p className="m-0">
                             +
@@ -478,7 +455,7 @@ export default function VisaTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.language === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.language}
@@ -491,7 +468,7 @@ export default function VisaTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.interested_in === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                               {empdata.interested_in}
@@ -505,7 +482,7 @@ export default function VisaTable(props) {
                         <td className=" py-5">
                           {empdata.visa_country === null ||
                           empdata.visa_country === "" ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                               {empdata.visa_country}
@@ -518,7 +495,7 @@ export default function VisaTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.experience === null ? (
-                            <p className="font-size-3 mb-0">Unavailable</p>
+                            <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.experience === "1-3 " ||
