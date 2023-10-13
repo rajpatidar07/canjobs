@@ -298,7 +298,7 @@ export default function AgentTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || agenteData.length === 0 ? (
                   <tr>
-                    <th colSpan={6} className="bg-white text-center">
+                    <th colSpan={5} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>

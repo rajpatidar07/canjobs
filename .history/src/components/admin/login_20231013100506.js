@@ -228,7 +228,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                   )}
                   <Link
                     to={"/agentlogin"}
-                    className="font-size-3 text-dodger line-height-reset mb-3"
+                    className="font-size-3 text-primary line-height-reset mb-3"
                   >
                     Agent Login
                   </Link>

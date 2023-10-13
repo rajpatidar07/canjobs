@@ -226,13 +226,13 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                       Log in
                     </button>
                   )}
-                  <Link
-                    to={"/agentlogin"}
-                    className="font-size-3 text-dodger line-height-reset mb-3"
-                  >
-                    Agent Login
-                  </Link>
                 </div>
+                <Link
+                  to={"/agntlogin"}
+                  className="font-size-3 text-dodger line-height-reset mb-3"
+                >
+                  Agent Login
+                </Link>
               </form>
             </div>
           )}

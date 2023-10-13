@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
 export default function AdminLoginFrom({ setAdminLoggedIn }) {
@@ -226,13 +226,13 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                       Log in
                     </button>
                   )}
-                  <Link
-                    to={"/agentlogin"}
-                    className="font-size-3 text-dodger line-height-reset mb-3"
-                  >
-                    Agent Login
-                  </Link>
                 </div>
+                <Link
+                  to={"/agntlogin"}
+                  className="font-size-3 text-dodger line-height-reset mb-3"
+                >
+                  Agent Login
+                </Link>
               </form>
             </div>
           )}
