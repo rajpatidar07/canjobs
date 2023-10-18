@@ -49,7 +49,6 @@ function Interview(props) {
       }
     } catch (err) {
       console.log(err);
-      setIsLoading(false);
     }
   };
 
