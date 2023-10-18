@@ -1,6 +1,6 @@
 // src/PreviewEmail.js
 import React, { useState, useEffect } from "react";
-// import { GetPreviewEmail } from "../../api/api";
+import { GetPreviewEmail } from "../../api/api";
 import Loader from "../common/loader";
 // import { ToastContainer } from "react-toastify";
 // import AdminSidebar from "../admin/sidebar";
@@ -10,27 +10,27 @@ const PreviewEmail = ({ id }) => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   /* data and id states */
-  const [emailData /*, setemailData*/] = useState([]);
+  const [emailData, setemailData] = useState([]);
   /* Function to get Employee visa data*/
   const EmailData = async () => {
     setIsLoading(true);
     try {
-      // const Res = await GetPreviewEmail(id);
-      // // // console.log(Res.data)
-      // if (
-      //   Res.messsage === "No data found" ||
-      //   Res.status === "0" ||
-      //   Res.status === 0 ||
-      //   Res.data === undefined ||
-      //   Res.data.length === 0
-      // ) {
-      //   setemailData([]);
-      //   setIsLoading(false);
-      // } else {
-      //   setemailData(Res.data);
-      //   // setTotalData(Res.data.total_rows);
-      //   setIsLoading(false);
-      // }
+      const Res = await GetPreviewEmail(id);
+      // // console.log(Res.data)
+      if (
+        Res.messsage === "No data found" ||
+        Res.status === "0" ||
+        Res.status === 0 ||
+        Res.data === undefined ||
+        Res.data.length === 0
+      ) {
+        setemailData([]);
+        setIsLoading(false);
+      } else {
+        setemailData(Res.data);
+        // setTotalData(Res.data.total_rows);
+        setIsLoading(false);
+      }
       setIsLoading(false);
     } catch (err) {
       console.log(err);

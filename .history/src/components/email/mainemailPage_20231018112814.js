@@ -3,18 +3,18 @@ import EmailList from "./emailList";
 import { ToastContainer } from "react-toastify";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-// import { ReadEmail } from "../../api/api";
+import { ReadEmail } from "../../api/api";
 const MainEmailPage = () => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   /* data and id states */
-  const [emailData /*, setemailData*/] = useState([]);
+  const [emailData, setemailData] = useState([]);
   //  let [employeeId, setemployeeId] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
   /* Pagination states */
-  const [totalData /* setTotalData*/] = useState(0);
+  const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /* Shorting states */
