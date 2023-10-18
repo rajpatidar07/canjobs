@@ -162,6 +162,7 @@ export default function VisaTable(props) {
         });
         setApiCall(true);
         props.setApiCall(true);
+        props.setVisaStatus([]);
         setDeleteAlert(false);
       }
     } catch (err) {

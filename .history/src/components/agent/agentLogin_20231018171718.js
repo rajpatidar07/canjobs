@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LoginAgent } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, Link } from "react-router-dom";
@@ -86,7 +86,7 @@ export default function AgentLogin() {
 
   useEffect(() => {
     document.body.classList.remove("admin_body");
-  }, []);
+  }, [localStorage.getItem("userType")]);
   // END USER LOGIN VALIDATION
 
   return (

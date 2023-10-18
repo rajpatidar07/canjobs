@@ -57,6 +57,7 @@ const AdminDashboard = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    getEmail();
   }, [apiCall]);
 
   /*Function to get the summary count */

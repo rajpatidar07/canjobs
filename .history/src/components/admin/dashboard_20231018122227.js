@@ -10,7 +10,7 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-// import { getSummaryCount } from "../../api/api";
+import { ReadEmail /*getSummaryCount*/ } from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 import Addfollowup from "../forms/admin/addfollowup";
 import { FaWindowMaximize } from "react-icons/fa";
@@ -57,6 +57,7 @@ const AdminDashboard = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    getEmail();
   }, [apiCall]);
 
   /*Function to get the summary count */

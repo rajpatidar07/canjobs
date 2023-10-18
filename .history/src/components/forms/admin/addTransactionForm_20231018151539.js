@@ -25,13 +25,13 @@ export default function AddTransactionForm({ data, setApicall }) {
     amount: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Amount is required"
+          ? "amount is required"
           : "",
     ],
     payment_mode: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Payment Method is required"
+          ? "method is required"
           : "",
     ],
   };

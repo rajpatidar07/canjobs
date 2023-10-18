@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LoginAgent } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, Link } from "react-router-dom";
@@ -84,9 +84,6 @@ export default function AgentLogin() {
     }
   };
 
-  useEffect(() => {
-    document.body.classList.remove("admin_body");
-  }, []);
   // END USER LOGIN VALIDATION
 
   return (
@@ -254,11 +251,6 @@ export default function AgentLogin() {
                       }}
                     >
                       Create a free account
-                    </Link>
-                  </p>
-                  <p className="font-size-4 text-center heading-default-color">
-                    <Link to="/adminlogin" className="text-primary">
-                      Admin Login
                     </Link>
                   </p>
                 </form>

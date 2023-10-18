@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LoginAgent } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, Link } from "react-router-dom";

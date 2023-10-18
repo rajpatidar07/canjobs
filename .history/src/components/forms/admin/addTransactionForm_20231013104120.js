@@ -25,13 +25,13 @@ export default function AddTransactionForm({ data, setApicall }) {
     amount: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Amount is required"
+          ? "amount is required"
           : "",
     ],
     payment_mode: [
       (value) =>
         value === "" || value === null || value.trim() === ""
-          ? "Payment Method is required"
+          ? "method is required"
           : "",
     ],
   };
@@ -52,13 +52,13 @@ export default function AddTransactionForm({ data, setApicall }) {
           });
           setState(initialFormState);
           setApicall(true);
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
       }
     }
+
+    setLoading(false);
   };
   return (
     <form className="col-md-4 p-10">
