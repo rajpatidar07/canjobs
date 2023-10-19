@@ -219,7 +219,7 @@ function AddCompanyfollowup(props) {
                   id="status"
                 >
                   <option value={""}>Select Status</option>
-                  <option value={1}>Urgent</option>
+                  <option value={1}>Private</option>
                 </select>
               </div>
               {/*----ERROR MESSAGE FOR name----*/}

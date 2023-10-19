@@ -105,30 +105,34 @@ export default function JobAssignedDashboard() {
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
-              <div className="row p-3 w-100 m-0">
-              <Accordion className="w-100 p-0 m-0 border-0" defaultActiveKey="1" flush>
-                {isLoading ? (
-                  <Loader />
-                ) : (
-                  (adminData || []).map((item, index) => {
-                    return (
-                      <ManegerBox
-                        key={index}
-                        data={item}
-                        allData={adminData}
-                        isLoading={isLoading}
-                        handleSort={handleSort}
-                        nPages={nPages}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        totalData={totalData}
-                        setApiCall={setApiCall}
-                      />
-                    );
-                  })
-                )}
-                </Accordion>
-              </div>
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <div className="row p-3 w-100 m-0">
+                  <Accordion
+                    className="w-100 p-0 m-0 border-0"
+                    defaultActiveKey="1"
+                    flush
+                  >
+                    {(adminData || []).map((item, index) => {
+                      return (
+                        <ManegerBox
+                          key={index}
+                          data={item}
+                          allData={adminData}
+                          isLoading={isLoading}
+                          handleSort={handleSort}
+                          nPages={nPages}
+                          currentPage={currentPage}
+                          setCurrentPage={setCurrentPage}
+                          totalData={totalData}
+                          setApiCall={setApiCall}
+                        />
+                      );
+                    })}
+                  </Accordion>
+                </div>
+              )}
             </div>
           </div>
         </div>
