@@ -561,29 +561,9 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? (
-                      <th className="bg-white text-center">No Data Found</th>
-                    ) : (
-                      <th className="bg-white"></th>
-                    )}
-                    <th className="bg-white"></th>
-                    {props.heading === "Dashboard" ? null : (
-                      <th className="bg-white text-center">No Data Found</th>
-                    )}
-                    <th className="bg-white"></th>
-                    {props.heading !== "Dashboard" ? (
-                      <>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                        <th className="bg-white"></th>
-                      </>
-                    ) : (
-                      ""
-                    )}
+                    <th colSpan={11} className="bg-white text-center">
+                      No Data Found
+                    </th>
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata) => (
@@ -630,7 +610,7 @@ export default function EmployeeTable(props) {
                               empdata.name === undefined ||
                               empdata.name === "undefined" ||
                               empdata.name === "" ? (
-                                <p className="font-size-3  mb-0">Unavailable</p>
+                                <p className="font-size-3  mb-0">N/A</p>
                               ) : (
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {empdata.name}
@@ -656,7 +636,12 @@ export default function EmployeeTable(props) {
                                   )
                                 </p>
                               ) : null}
-
+                              {empdata.is_featured === "1" ||
+                              empdata.is_featured === 1 ? (
+                                <span className="bg-orange text-white featured_tag">
+                                  Featured
+                                </span>
+                              ) : null}
                               {empdata.created_by_admin === "0" ||
                               empdata.created_by_admin === 0 ? (
                                 <span className="bg-info text-white web_tag">
@@ -702,7 +687,7 @@ export default function EmployeeTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.language === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {/* {empdata.language} */}
@@ -719,7 +704,7 @@ export default function EmployeeTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.agent_name === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                               {empdata.agent_u_id} {empdata.agent_name}
@@ -732,7 +717,7 @@ export default function EmployeeTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.education === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                               {empdata.education}
@@ -745,7 +730,7 @@ export default function EmployeeTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.skill === null ? (
-                            <p className="font-size-3  mb-0">Unavailable</p>
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                               {empdata.skill}
@@ -758,7 +743,7 @@ export default function EmployeeTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.experience === null ? (
-                            <p className="font-size-3 mb-0">Unavailable</p>
+                            <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.experience === "1-3 " ||

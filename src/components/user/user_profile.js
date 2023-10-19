@@ -1440,7 +1440,7 @@ const NewUserProfile = (props) => {
                             ) : (
                               (userDetail.career || []).map(
                                 (CareerDetails, i) => (
-                                  <div className="w-100" key={i}>
+                                  <div className="w-100 text-break" key={i}>
                                     <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
                                       <div className="media align-items-center company_box col-md-6 p-0">
                                         <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">

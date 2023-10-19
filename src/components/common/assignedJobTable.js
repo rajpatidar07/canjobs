@@ -174,11 +174,9 @@ export default function AssignedJobTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || jobData.length === 0 ? (
                   <tr>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
-                    <th className="bg-white text-center">No Data Found</th>
-                    <th className="bg-white"></th>
-                    <th className="bg-white"></th>
+                    <th colSpan={5} className="bg-white text-center">
+                      No Data Found
+                    </th>
                   </tr>
                 ) : (
                   (jobData || []).map((job, i) => {

@@ -43,7 +43,7 @@ export default function ExecutiveBox({ data, index }) {
                               empdata.name === undefined ||
                               empdata.name === "undefined" ||
                               empdata.name === "" ? (
-                                <p className="font-size-3  mb-0">Unavailable</p>
+                                <p className="font-size-3  mb-0">N/A</p>
                               ) : ( */}
                     <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                       {data.name}{" "}
@@ -99,7 +99,7 @@ export default function ExecutiveBox({ data, index }) {
 
           <div
             id={`collapseOne${index}`}
-            className={`collapse d-none`} 
+            className={`collapse d-none`}
             // {/*index === activeIndex ? "show" : ""*/}
             aria-labelledby={`headingOne${index}`}
             data-parent="#accordion"

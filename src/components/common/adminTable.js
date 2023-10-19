@@ -103,11 +103,9 @@ export default function AdminTable({
             <tbody>
               {totalData === 0 || data.length === 0 ? (
                 <tr>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white text-center">No Data Found</th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
+                  <th colSpan={5} className="bg-white text-center">
+                    No Data Found
+                  </th>
                 </tr>
               ) : (
                 (data || []).map((admin) => (

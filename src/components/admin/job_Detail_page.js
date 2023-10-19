@@ -68,7 +68,7 @@ function JobDetailpageAdmim(props) {
         : jobData.keyskill.split(",");
   }
   return (
-    <div>
+    <div className="text-break">
       {user_type === "admin" && (
         <>
           <AdminHeader
