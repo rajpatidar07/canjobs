@@ -250,12 +250,17 @@ table.table.table-striped.main_data_table_inn tr {
 
 span.featured_tag {
   position: absolute;
-  top: 2px;
-  left: 0;
-  padding: 1px;
-  font-size: 10px;
-  font-weight: 400;
+  top: 0;
+  left: 10%;
+  padding: 10px;
+  font-size: 36px;
   line-height: 1;
+  height: 100%;
+  opacity: .15;
+  color: #fa5f1c !important;
+  text-transform: uppercase;
+  font-weight: 900;
+  background: transparent !important;
 }
 
 span.web_tag {
@@ -575,15 +580,20 @@ label.image_upload_btn {
 label.image_upload_btn_2 {
   position: absolute;
   bottom: -8px;
-  left: 16px;
-  background: #ccc;
-  width: 18px;
-  height: 18px;
+  right: 0;
+  left: 0;
+  background: #333;
+  width: 22px;
+  height: 22px;
   border-radius: 20px;
   text-align: center;
-  font-size: 10px;
+  font-size: 18px;
   line-height: 18px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 /* CKEDITOR */
@@ -1031,6 +1041,7 @@ select.form-control.select_document_type {
   outline: none;
   background-color: #fcb6b6;
 }
+
 /* src/PreviewEmail.css */
 .preview-email {
   font-family: Arial, sans-serif;

@@ -848,6 +848,121 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
+                        <div className="col-md-8 p-8">
+                          <div className="d-flex align-items-center rounded bg-light p-8">
+                            <Link
+                              className="position-relative text-white"
+                              onClick={
+                                user_type === "company" || props.self === "yes"
+                                  ? null
+                                  : () => setShowPersonalDetails(true)
+                              }
+                            >
+                              {user_type === "admin" ? (
+                                <>
+                                  <input
+                                    type="file"
+                                    id="ImgUploadInput"
+                                    className="d-none"
+                                  />
+                                  <label
+                                    className="image_upload_btn image_upload_btn_2 bg-warning"
+                                    htmlFor="ImgUploadInput"
+                                  >
+                                    <span className="text-">
+                                      <PiPencilDuotone />
+                                    </span>
+                                    {/* <span className="fas fa-pen text-gray"> </span> */}
+                                  </label>
+                                </>
+                              ) : (
+                                ""
+                              )}
+                              <img
+                                className="rounded-circle"
+                                src={
+                                  PersonalDetail.profile_photo
+                                    ? PersonalDetail.profile_photo
+                                    : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                                }
+                                alt=""
+                                width={"120px"}
+                                height={"120px"}
+                              />
+                            </Link>
+                            <div className="ml-2">
+                              <h2 className="mb-0 text-capitalize line-height-1 text-break">
+                                {PersonalDetail.name ? PersonalDetail.name : ""}
+                              </h2>
+                              <div className="m-0 age_gender d-flex align-items-center">
+                                {PersonalDetail.gender ? (
+                                  <span class="badge bg-secondary rounded-pill font-size-3 text-white mr-2">
+                                    {PersonalDetail.gender === "female"
+                                      ? "Female"
+                                      : PersonalDetail.gender === "male"
+                                      ? "Male"
+                                      : "Other"}
+                                  </span>
+                                ) : null}
+                                {PersonalDetail.marital_status ? (
+                                  <span class="badge bg-info rounded-pill font-size-3 text-white text-capitalize mr-2">
+                                    {PersonalDetail.marital_status}
+                                  </span>
+                                ) : null}
+                                {PersonalDetail.date_of_birth ? (
+                                  <span class="badge bg-warning rounded-pill font-size-3 text-white">
+                                    {moment().diff(
+                                      PersonalDetail.date_of_birth,
+                                      "years"
+                                    )}
+                                    Y
+                                  </span>
+                                ) : null}
+                              </div>
+                              {user_type === "admin" && (
+                                <DropdownButton
+                                  as={ButtonGroup}
+                                  title={
+                                    status === "1"
+                                      ? "New"
+                                      : status === "2"
+                                      ? "Prospect"
+                                      : status === "3"
+                                      ? "Lead"
+                                      : status === "4"
+                                      ? "Reatined"
+                                      : status === "5"
+                                      ? "Lost"
+                                      : status === "6"
+                                      ? "Dead"
+                                      : // ) : status === "7" ? (
+                                      //   "Reserved"
+                                      status === "0"
+                                      ? "New"
+                                      : "status"
+                                  }
+                                  size="sm"
+                                  className="user_status_btn btn-primary text-white rounded-8"
+                                  onSelect={OnStatusChange}
+                                >
+                                  {(FilterJson.employee_status || []).map(
+                                    (item, index) => (
+                                      <Dropdown.Item
+                                        key={index}
+                                        value={index + 1}
+                                        eventKey={index + 1}
+                                        className="text-capitalize"
+                                      >
+                                        {item}
+                                      </Dropdown.Item>
+                                    )
+                                  )}
+                                </DropdownButton>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
                         <div className="col-12 ">
                           <div
                             className="px-5 pt-5 pb-5 d-flex align-items-center justify-content-space-between border-bottom"
@@ -962,37 +1077,6 @@ const NewUserProfile = (props) => {
                                       )}
                                     </DropdownButton>
                                   )}
-                                  {/* <div className="d-flex">
-                                    {(visaStatus || []).map((item, index) => {
-                                      return (
-                                        <p
-                                          className="font-size-2 font-weight-normal text-black-2 mb-0"
-                                          key={index}
-                                        >
-                                          <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                            {item.visa_status === "onboard"
-                                              ? " On Board"
-                                              : item.visa_status ===
-                                                "documentation"
-                                              ? "Documentation"
-                                              : item.visa_status ===
-                                                "file preparation"
-                                              ? "File Preparation"
-                                              : item.visa_status ===
-                                                "file review"
-                                              ? "File Review"
-                                              : item.visa_status ===
-                                                "file submission"
-                                              ? "File Submission"
-                                              : item.visa_status ===
-                                                "file decision"
-                                              ? "File Decision"
-                                              : "NA"}
-                                          </span>
-                                        </p>
-                                      );
-                                    })}
-                                  </div> */}
                                 </div>
                               </div>
                             </div>
@@ -1053,7 +1137,7 @@ const NewUserProfile = (props) => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-3 col-md-4 mb-1 border-bottom p-0 border-right">
+                        <div className="col-lg-4 col-md-4 mb-1 border-bottom p-0 border-right">
                           <div className="bg-white ">
                             <div className="px-5 pt-5 pb-5 d-flex position-relative mb-5 mt-5">
                               {PersonalDetail.email === "" ||
@@ -1240,7 +1324,7 @@ const NewUserProfile = (props) => {
                   <div className="profile_email_mobile"></div> */}
                           </div>
                         </div>
-                        <div className="col-lg-9 col-md-8 p-7">
+                        <div className="col-lg-8 col-md-8 p-7">
                           <div
                             id="about_Profile"
                             className="position-relative p-7"
