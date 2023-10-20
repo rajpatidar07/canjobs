@@ -284,9 +284,9 @@ function UserRegisterPage() {
       <div className="row no-gutters  justify-content-center m-5">
         {SingUpSuccess === "success" ? (
           <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
-            Congratulations! <br />
-            You have successfully registered your account. Please login to
-            continue
+            Thank you! <br />
+            You have successfully registered your account. Please wait! We will
+            contact you soon...
             <br />
             {/* <Link
               to="/"
@@ -300,7 +300,7 @@ function UserRegisterPage() {
             </Link> */}
           </div>
         ) : (
-          <div className="col-lg-5 col-md-6 border ">
+          <div className="col-lg-8 col-md-8 border ">
             <form onSubmit={onUserPersonalDetailClick} className="p-2">
               <h5 className="text-center pt-2 mb-7"> Register Employee</h5>
               {/* FIRST LINE */}

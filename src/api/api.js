@@ -182,7 +182,7 @@ export const AddEmployeeDetails = async (props) => {
       "Content-Type": "application/json",
       Authorization: Token
         ? Token
-        : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjIiLCJlbWFpbCI6InJhai53ZTJjb2RlQGdtYWlsLmNvbSIsInVzZXJfdHlwZSI6InN1cGVyLWFkbWluIiwiQVBJX1RJTUUiOjE2OTc4MTQ0NDN9.pKCGuRn4a0zTop0hWUo655vMcBjB3BVlQnkUbah_pG8",
+        : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjM0IiwiZW1haWwiOiJ0b2tlbkBnbWFpbC5jb20iLCJ1c2VyX3R5cGUiOiJzdXBlci1hZG1pbiIsIkFQSV9USU1FIjoxNjk3ODE5MjU3fQ.KMcaHwbumy5SQSOlhgTE5v7qsDD30NDeXjcl2LE6dKM",
     },
   });
   return response.data;
