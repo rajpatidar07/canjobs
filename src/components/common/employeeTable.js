@@ -314,7 +314,7 @@ export default function EmployeeTable(props) {
           employee_id={employeeId}
         />
       ) : null} */}
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
         {props.heading === "Dashboard" ? null : (
           <div
             className={`btn-group mb-5 ${props.skill ? "d-none" : ""}`}

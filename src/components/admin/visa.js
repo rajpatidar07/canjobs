@@ -193,11 +193,13 @@ export default function Visa() {
                         className="text-capitalize form-control"
                       >
                         <option value={""}>Select visa status </option>
-                        <option value={"pending"}>Pending</option>
-                        <option value={"approved"}>Approved</option>
-                        <option value={"reject"}>Rejected</option>
-                        <option value={"experied"}>experied</option>
-                        <option value={"cancel"}>Cancel</option>
+                        {(FilterJson.visa_status || []).map((item, index) => {
+                          return (
+                            <option value={item} key={index}>
+                              {item}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

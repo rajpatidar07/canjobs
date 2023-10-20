@@ -66,7 +66,11 @@ export default function LimiaStatusTable(props) {
         // props.heading === "Manage Follow-ups" || props.heading === "LIMIA status" || user_type === "company"
         //     ? jobId
         //     :
-        location.state === null ? jobId : location.state.id,
+        location.pathname === "/dashboard"
+          ? ""
+          : location.state === null
+          ? jobId
+          : location.state.id,
         search,
         limiaFilterValue,
         props.pageNo,
@@ -173,13 +177,12 @@ export default function LimiaStatusTable(props) {
   return (
     <div
       className={
-        // props.heading === "LIMIA status" ||
-        //     (props.heading === undefined && user_type === "admin")
-        //     ? "site-wrapper overflow-hidden bg-default-2  "
-        //     : props.heading === "Dashboard"
-        // ?
-        "site-wrapper overflow-hidden bg-default-2 bg-white"
-        // : "response_main_div"
+        props.heading === "LIMIA status" ||
+        (props.heading === undefined && user_type === "admin")
+          ? "site-wrapper overflow-hidden bg-default-2  "
+          : props.heading === "Dashboard"
+          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+          : "response_main_div"
       }
     >
       {/* {props.heading === "LIMIA status" ||
@@ -254,24 +257,22 @@ export default function LimiaStatusTable(props) {
     ) : null} */}
       <div
         className={
-          // props.heading === "LIMIA status" ||
-          //     (props.heading === undefined && user_type === "admin")
-          //     ? "dashboard-main-container mt-16"
-          //     : props.heading === "Dashboard"
-          //         ? ""
-          //         : "response__container"
-          ""
+          props.heading === "LIMIA status" ||
+          (props.heading === undefined && user_type === "admin")
+            ? "dashboard-main-container mt-16"
+            : props.heading === "Dashboard"
+            ? ""
+            : "response__container"
         }
       >
         <div
           className={
-            // props.heading === "LIMIA status" ||
-            //     (props.heading === undefined && user_type === "admin")
-            //     ? "container"
-            //     : props.heading === "Dashboard"
-            //         ?
-            ""
-            // : "container"
+            props.heading === "LIMIA status" ||
+            (props.heading === undefined && user_type === "admin")
+              ? "container"
+              : props.heading === "Dashboard"
+              ? ""
+              : "container"
           }
         >
           {props.heading === "Dashboard" ? (
@@ -386,13 +387,12 @@ export default function LimiaStatusTable(props) {
           <div className="mb-8">
             <div
               className={
-                // props.heading === "LIMIA status" ||
-                // (props.heading === undefined && user_type === "admin")
-                // ? ""
-                // : props.heading === "Dashboard"
-                // ?
-                "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                // : ""
+                props.heading === "LIMIA status" ||
+                (props.heading === undefined && user_type === "admin")
+                  ? ""
+                  : props.heading === "Dashboard"
+                  ? ""
+                  : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
               }
             >
               <div className="table-responsive main_table_div">

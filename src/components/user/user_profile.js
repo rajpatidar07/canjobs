@@ -42,6 +42,7 @@ const NewUserProfile = (props) => {
 
   // console.log(eid, "PARATATATA");
   const [apiCall, setApiCall] = useState(false);
+  const [status, setStatus] = useState("");
   const [statusCall, setStatusCall] = useState(false);
   const [lima, setLmia] = useState(false);
   const [visaStatusRejectComment, setVisaStatusRejectComment] = useState([]);
@@ -197,7 +198,6 @@ const NewUserProfile = (props) => {
       months === 1 ? months + "month," : months > 1 ? months + "months" : ""
     }`;
   };
-  const [status, setStatus] = useState("");
   /*function to change applicants status */
   const OnStatusChange = async (e) => {
     // e.preventDefault()
@@ -235,7 +235,7 @@ const NewUserProfile = (props) => {
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
-      {user_type === "admin" ? (
+      {user_type === "admin" || user_type === "agent" ? (
         <>
           <AdminHeader
             heading={
@@ -260,7 +260,7 @@ const NewUserProfile = (props) => {
       )}
       <div
         className={
-          user_type === "admin"
+          user_type === "admin" || user_type === "agent"
             ? "dashboard-main-container mt-12 mt-lg-12"
             : "mt-22 mt-lg-22"
         }
@@ -441,7 +441,9 @@ const NewUserProfile = (props) => {
                           <BsEnvelope className="text-primary font-size-5 " />
                           {PersonalDetail.email}
                         </Link>
-                        {user_type === "admin" || props.self === "no" ? (
+                        {user_type === "admin" ||
+                        user_type === "agent" ||
+                        props.self === "no" ? (
                           <CustomButton
                             title={"Send Custom Email"}
                             className="font-size-4 rounded-3 btn-primary py-0 d-none"
@@ -621,7 +623,7 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                {lima && user_type === "admin" ? (
+                {(lima && user_type === "admin") || user_type === "agent" ? (
                   <LimaArrowProfile
                     lmia={lima}
                     lmiaStatusRejectComment={lmiaStatusRejectComment}
@@ -634,7 +636,8 @@ const NewUserProfile = (props) => {
                   "col-12"
                 }
               >
-                {visaStatus && user_type === "admin" ? (
+                {(visaStatus && user_type === "admin") ||
+                user_type === "agent" ? (
                   <VisaArrowProfile
                     visaStatus={visaStatus}
                     visaStatusRejectComment={visaStatusRejectComment}
@@ -724,7 +727,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "user"
+                        user_type === "user" || user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }
@@ -747,7 +750,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "user" || user_type === "company"
+                        user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }
@@ -815,7 +818,13 @@ const NewUserProfile = (props) => {
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
-                    <li className="tab-menu-items nav-item">
+                    <li
+                      className={
+                        user_type === "user" || user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
                       <Link
                         className={
                           TabActive === "conatct"
@@ -978,7 +987,8 @@ const NewUserProfile = (props) => {
                                     : () => setShowPersonalDetails(true)
                                 }
                               >
-                                {user_type === "admin" ? (
+                                {user_type === "admin" ||
+                                user_type === "agent" ? (
                                   <>
                                     <input
                                       type="file"
@@ -1037,7 +1047,8 @@ const NewUserProfile = (props) => {
                                       Y)`
                                       : ""}
                                   </p>
-                                  {user_type === "admin" && (
+                                  {(user_type === "admin" ||
+                                    user_type === "agent") && (
                                     <DropdownButton
                                       as={ButtonGroup}
                                       title={
@@ -1101,7 +1112,8 @@ const NewUserProfile = (props) => {
                               className="d-flex flex-wrap"
                               style={{ gap: "10px" }}
                             >
-                              {PersonalDetail.email ? (
+                              {!PersonalDetail.email ||
+                              user_type === "company" ? null : (
                                 <div>
                                   <Link
                                     className="text-dark font-size-5 text-break btn btn-secondary text-white btn-rounded"
@@ -1111,8 +1123,9 @@ const NewUserProfile = (props) => {
                                     {PersonalDetail.email}
                                   </Link>
                                 </div>
-                              ) : null}
-                              {PersonalDetail.contact_no && (
+                              )}
+                              {!PersonalDetail.contact_no ||
+                              user_type === "company" ? null : (
                                 <div>
                                   <Link
                                     className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
@@ -1248,6 +1261,7 @@ const NewUserProfile = (props) => {
                                       >
                                         Canada Work Permit:
                                         <b>
+                                          {" "}
                                           {PersonalDetail.work_permit_canada}
                                         </b>
                                       </span>
@@ -1258,6 +1272,7 @@ const NewUserProfile = (props) => {
                                       <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                                         Work Permit of Other Country:
                                         <b>
+                                          {" "}
                                           {
                                             PersonalDetail.work_permit_other_country
                                           }
@@ -1604,7 +1619,7 @@ const NewUserProfile = (props) => {
                             return (
                               <Link
                                 to={
-                                  user_type === "admin"
+                                  user_type === "admin"||user_type === "agent"
                                     ? "/job"
                                     : user_type === "user"
                                     ? "/jobs"
@@ -1836,7 +1851,7 @@ const NewUserProfile = (props) => {
           )}
         </div>
       </div>
-      {user_type === "admin" ? "" : <EmployeeFooter />}
+      {user_type === "admin" || user_type === "agent" ? "" : <EmployeeFooter />}
       {showEducation ? (
         <EducationDetails
           show={showEducation}

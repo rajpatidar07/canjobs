@@ -513,7 +513,9 @@ export default function DocumrentContainer(props) {
             ) : (
               <button
                 className={
-                  user_type === "user" || user_type === "admin"
+                  user_type === "user" ||
+                  user_type === "admin" ||
+                  user_type === "agent"
                     ? "btn btn-secondary"
                     : "d-none"
                 }
@@ -552,7 +554,8 @@ export default function DocumrentContainer(props) {
               <button
                 className={
                   (user_type === "user" && (showMoreDocType || otherDoc)) ||
-                  user_type === "admin"
+                  user_type === "admin" ||
+                  user_type === "agent"
                     ? "btn btn-light"
                     : "d-none"
                 }
@@ -596,7 +599,9 @@ export default function DocumrentContainer(props) {
           </div>
           <div className="doc_preview_box  p-5 bg-light rounded position-relative">
             <div className="doc_action_div">
-              {hide === false && docTypData && user_type === "admin" ? (
+              {hide === false &&
+              docTypData &&
+              (user_type === "admin" || user_type === "agent") ? (
                 <div className="doc_upload_col">
                   {docTypData.is_varify === "1" ? (
                     <img className="verified_doc_img" src={Verified} alt="" />
@@ -611,7 +616,10 @@ export default function DocumrentContainer(props) {
                   )}
                 </div>
               ) : null}
-              {hide === false && docFile && docName && user_type === "admin" ? (
+              {hide === false &&
+              docFile &&
+              docName &&
+              (user_type === "admin" || user_type === "agent") ? (
                 <div className="doc_upload_col flex-end">
                   <button
                     className="p-1 rounded-3 btn-warning mx-3 w-auto"

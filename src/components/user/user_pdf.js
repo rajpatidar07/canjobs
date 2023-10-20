@@ -5,13 +5,14 @@ const PDFViewer = () => {
   const location = useLocation();
   const urlSearchParams = new URLSearchParams(location.search);
   const pdfUrl = urlSearchParams.get("pdfUrl");
+  const fileExtension = pdfUrl ? pdfUrl.split(".").pop().toLowerCase() : null;
 
   /*Functio to Download pdf */
   const downloadPDF = () => {
     const link = document.createElement("a");
     link.href = pdfUrl;
     link.target = "_blank";
-    link.download = "resume.pdf";
+    link.download = `resume.${fileExtension}`;
     link.click();
   };
   if (!pdfUrl) {
@@ -31,11 +32,15 @@ const PDFViewer = () => {
       </div>
       <div className="d-flex justify-content-around text-center">
         <div className="w-100">
-          {pdfUrl?<FileViewer
-            fileType="pdf"
-            filePath={decodeURIComponent(pdfUrl)}
-            errorComponent={() => <div>Error loading document</div>}
-          />:<div>No PDF URL provided.</div>}
+          {pdfUrl ? (
+            <FileViewer
+              fileType={fileExtension === "pdf" ? "pdf" : "image"}
+              filePath={decodeURIComponent(pdfUrl)}
+              errorComponent={() => <div>Error loading document</div>}
+            />
+          ) : (
+            <div>No PDF URL provided.</div>
+          )}
         </div>
       </div>
     </div>
