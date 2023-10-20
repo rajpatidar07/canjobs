@@ -9,6 +9,7 @@ function AddCompanyfollowup(props) {
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   let cid = props.company_id;
+  let user_type = localStorage.getItem("userType");
   // le/*tjobId*/ = props.job_id;
   /* Functionality to close the modal */
   const close = () => {
@@ -125,7 +126,11 @@ function AddCompanyfollowup(props) {
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
-          <div className="activity_container col-md-8 border-right p-10">
+          <div
+            className={`activity_container ${
+              user_type === "company" ? "col-md-12" : "col-md-8 border-right"
+            } p-10`}
+          >
             {response.length === 0 ? (
               <div className="single_note mb-5">
                 <div className="d-flex justify-content-center">
@@ -165,7 +170,7 @@ function AddCompanyfollowup(props) {
               ))
             )}
           </div>
-          <form className="col-md-4 p-10">
+          <form className={user_type === "admin" && "col-md-4 p-10"}>
             <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="subject"

@@ -35,6 +35,7 @@ function Setting(props) {
       } else {
         Response = await GetEmployerSetting();
       }
+      console.log(Response);
       const email_permissions = JSON.parse(Response.data.email_permission);
       const notification_permission = JSON.parse(
         Response.data.notification_permission
