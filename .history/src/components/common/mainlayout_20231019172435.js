@@ -65,7 +65,7 @@ function MainLayout() {
       <Routes>
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
-        <Route path="/signup" element={<SinUpPage />} />
+        <Route path="/sigup" element={<SinUpPage />} />
         <Route path="/rozarepay" element={<RazorPay />} />
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
