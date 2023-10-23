@@ -863,7 +863,7 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
-                        <div className="col-md-8 p-8 d-none">
+                        <div className="col-md-8 p-8">
                           <div className="d-flex align-items-center rounded bg-light p-8">
                             <Link
                               className="position-relative text-white"
