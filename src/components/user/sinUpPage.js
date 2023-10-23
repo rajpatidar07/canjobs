@@ -1,7 +1,6 @@
 import React from "react";
 import UserRegisterPage from "../common/userRegisterPage";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../../App.css";
+
 function SinUpPage() {
   return (
     <div>

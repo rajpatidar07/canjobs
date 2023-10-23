@@ -922,7 +922,7 @@ function UserRegisterPage() {
               <div className="form-group text-center">
                 {loading === true ? (
                   <button
-                    className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                    className="btn btn-primary btn-small  rounded-5 text-uppercase"
                     type="button"
                     disabled
                   >
@@ -935,7 +935,7 @@ function UserRegisterPage() {
                   </button>
                 ) : (
                   <button
-                    className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                    className="btn btn-primary btn-small rounded-5 text-uppercase"
                     type="submit"
                   >
                     Submit
