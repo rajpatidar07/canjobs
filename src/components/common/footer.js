@@ -10,7 +10,7 @@ function EmployeeFooter() {
     <footer className="footer bg-ebony-clay dark-mode-texts">
       <div className="container">
         {/* <!-- Cta section --> */}
-        <div className="pt-11 pt-lg-20 pb-13 pb-lg-20 border-bottom border-width-1 border-default-color-2">
+        <div className="pt-11 pt-lg-11 pb-11 pb-lg-11 border-bottom border-width-1 border-default-color-2">
           <div className="row justify-content-center ">
             <div
               className="col-xl-7 col-lg-12"
@@ -68,32 +68,17 @@ function EmployeeFooter() {
           </div>
         </div>
       </div>
-      <div className="container  pt-12 pt-lg-19 pb-10 pb-lg-19">
+      <div className="container  pt-12 pt-lg-12 pb-10 pb-lg-12">
         <div className="row text-left">
           <div className="col-lg-4 col-sm-6 mb-lg-0 mb-9">
             {/* <!-- footer logo start --> */}
             <img
-              src="image/logo-main-white.png"
+              src="image/logo-main-black.png"
               alt=""
-              className="footer-logo mb-14"
+              className="footer-logo mb-6"
+              style={{ maxHeight: "unset", maxWidth: "250px" }}
             />
-            {/* <!-- footer logo End --> */}
-            {/* <!-- media start --> */}
-            <div className="media mb-11">
-              <img
-                src="image/l1/png/message.png"
-                className="align-self-center mr-3"
-                alt=""
-              />
-              <div className="media-body pl-5">
-                <p className="mb-0 font-size-4 text-white">Contact us at</p>
-                <Link className="mb-0 font-size-4 font-weight-bold" to="">
-                  canjobs.com
-                </Link>
-              </div>
-            </div>
-            {/* <!-- media start --> */}
-            {/* <!-- widget social icon start --> */}
+
             <div className="social-icons">
               <ul className="pl-0 list-unstyled d-flex align-items-end ">
                 <li className="d-flex flex-column justify-content-center px-3 mr-3 font-size-4 heading-default-color">
@@ -127,54 +112,56 @@ function EmployeeFooter() {
             </div>
             {/* <!-- widget social icon end --> */}
           </div>
-          <div className="col-lg-8 col-md-6 d-none">
+          <div className="col-lg-8 col-md-6 ">
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6">
                 <div className="footer-widget widget2 mb-md-0 mb-13">
                   {/* <!-- footer widget title start --> */}
                   <p className="widget-title font-size-4 text-gray mb-md-8 mb-7">
-                    Company
+                    Links
                   </p>
                   {/* <!-- footer widget title end --> */}
                   {/* <!-- widget social menu start --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
-                        to={""}
+                        to={"/"}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
-                        About us
+                        Home
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
-                        to={""}
+                        to={"/jobs"}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
-                        Contact us
+                        Jobs
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
+                        onClick={() => setShowLogin(true)}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
-                        Careers
+                        User Login
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
+                        onClick={() => setShowSingUp(true)}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
-                        Press
+                        Company Login
                       </Link>
                     </li>
                   </ul>
                   {/* <!-- widget social menu end --> */}
                 </div>
               </div>
-              <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6 ">
+              <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6 d-none">
                 <div className="footer-widget widget3 mb-sm-0 mb-13">
                   {/* <!-- footer widget title start --> */}
                   <p className="widget-title font-size-4 text-gray mb-md-8 mb-7">
@@ -183,7 +170,7 @@ function EmployeeFooter() {
                   {/* <!-- footer widget title end --> */}
                   {/* <!-- widget social menu start --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -191,7 +178,7 @@ function EmployeeFooter() {
                         Features
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -199,7 +186,7 @@ function EmployeeFooter() {
                         Pricing
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -207,7 +194,7 @@ function EmployeeFooter() {
                         News
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -215,7 +202,7 @@ function EmployeeFooter() {
                         Help desk
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -227,7 +214,7 @@ function EmployeeFooter() {
                   {/* <!-- widget social menu end --> */}
                 </div>
               </div>
-              <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6">
+              <div className="col-lg-3 col-md-6 col-sm-3 col-xs-6 d-none">
                 <div className="footer-widget widget4 mb-sm-0 mb-13">
                   {/* <!-- footer widget title start --> */}
                   <p className="widget-title font-size-4 text-gray mb-md-8 mb-7">
@@ -236,7 +223,7 @@ function EmployeeFooter() {
                   {/* <!-- footer widget title end --> */}
                   {/* <!-- widget social menu start --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -244,7 +231,7 @@ function EmployeeFooter() {
                         Digital Marketing
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -252,7 +239,7 @@ function EmployeeFooter() {
                         SEO for Business
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -260,7 +247,7 @@ function EmployeeFooter() {
                         Avasta Dash
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -280,7 +267,7 @@ function EmployeeFooter() {
                   </p>
                   {/* <!-- footer widget title end --> */}
                   <ul className="widget-links pl-0 list-unstyled list-hover-primary">
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
@@ -288,20 +275,12 @@ function EmployeeFooter() {
                         Privacy Policy
                       </Link>
                     </li>
-                    <li className="mb-6">
+                    <li className="mb-3">
                       <Link
                         to={""}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
                         Terms & Conditions
-                      </Link>
-                    </li>
-                    <li className="mb-6">
-                      <Link
-                        to={""}
-                        className="heading-default-color font-size-4 font-weight-normal"
-                      >
-                        Return Policy
                       </Link>
                     </li>
                   </ul>

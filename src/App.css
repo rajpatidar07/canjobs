@@ -74,8 +74,8 @@ p {
 
 .brand-logo img,
 .footer-logo {
-  max-height: 28px;
-  max-width: 100px;
+  max-height: 32px;
+  max-width: 110px;
 }
 
 .connect_btn {
@@ -256,7 +256,7 @@ span.featured_tag {
   font-size: 36px;
   line-height: 1;
   height: 100%;
-  opacity: .15;
+  opacity: .1;
   color: #fa5f1c !important;
   text-transform: uppercase;
   font-weight: 900;
@@ -291,7 +291,7 @@ header.site-header.admin_header {
   right: 0;
   left: auto;
   margin: 1px 20px 5px; */
-  max-width: calc(100% - 115px);
+  max-width: calc(100% - 125px);
   right: 0;
   left: auto;
   margin: 0;
