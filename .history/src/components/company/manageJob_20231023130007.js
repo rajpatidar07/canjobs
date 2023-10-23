@@ -9,7 +9,6 @@ import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
 import Loader from "../common/loader";
-import States from "../json/states";
 
 function ManageJobs() {
   /*Data and modal states */
@@ -153,7 +152,7 @@ function ManageJobs() {
                           <option data-display="Experience Level " value={""}>
                             Select job Location
                           </option>
-                          {(Object.keys(States) || []).map((job) => (
+                          {(Object.keys(states) || []).map((job) => (
                             <option key={job} value={job}>
                               {job}
                             </option>

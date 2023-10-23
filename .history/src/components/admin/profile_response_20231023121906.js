@@ -713,9 +713,7 @@ function JobProfileResponse(props) {
                             </h3>
                           </th>
                         )} */}
-                        <th
-                          className={user_type === "user" ? "d-none" : " py-5"}
-                        >
+                        <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <Link
                               to={

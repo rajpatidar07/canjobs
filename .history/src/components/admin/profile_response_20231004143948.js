@@ -536,11 +536,7 @@ function JobProfileResponse(props) {
                     )} */}
                     <th
                       scope="col"
-                      className={
-                        user_type === "user"
-                          ? "d-none"
-                          : "pl-4 border-0 font-size-4 font-weight-normal"
-                      }
+                      className="pl-4 border-0 font-size-4 font-weight-normal"
                     >
                       <Link
                         to={""}
@@ -713,9 +709,7 @@ function JobProfileResponse(props) {
                             </h3>
                           </th>
                         )} */}
-                        <th
-                          className={user_type === "user" ? "d-none" : " py-5"}
-                        >
+                        <th className=" py-5">
                           <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <Link
                               to={

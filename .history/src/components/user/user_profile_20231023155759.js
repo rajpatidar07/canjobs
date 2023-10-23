@@ -664,9 +664,7 @@ const NewUserProfile = (props) => {
                   </ul> */}
                   {/*----Profile Header----*/}
                   <ul
-                    className={`nav border-top border-bottom border-mercury user_profile_tab ${
-                      user_type === "admin" ? "" : "mt-13"
-                    }`}
+                    className="nav border-top border-bottom border-mercury user_profile_tab mt-13"
                     id="myTab"
                     role="tablist"
                   >

@@ -9,7 +9,7 @@ import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
 import Loader from "../common/loader";
-import States from "../json/states";
+import states from "../json/states";
 
 function ManageJobs() {
   /*Data and modal states */

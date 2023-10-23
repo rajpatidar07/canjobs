@@ -664,9 +664,7 @@ const NewUserProfile = (props) => {
                   </ul> */}
                   {/*----Profile Header----*/}
                   <ul
-                    className={`nav border-top border-bottom border-mercury user_profile_tab ${
-                      user_type === "admin" ? "" : "mt-13"
-                    }`}
+                    className="nav border-top border-bottom border-mercury user_profile_tab"
                     id="myTab"
                     role="tablist"
                   >
@@ -1178,9 +1176,7 @@ const NewUserProfile = (props) => {
                                 userDetail.skill.length === 0 ||
                                 userDetail.education === undefined ||
                                 userDetail.education.length === 0
-                                  ? user_type === "user"
-                                    ? "Complete your Profile"
-                                    : "Imcomplete Profile"
+                                  ? "Complete your Profile"
                                   : "Generated Resume"}
                               </button>
                             </div>

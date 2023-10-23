@@ -211,7 +211,7 @@ function JobBoxResponse({
                 </ul>
               </div>
 
-              <div className="media justify-content-md-end col-md-4 mb-5">
+              <div className="media justify-content-md-end col-md-4">
                 <Link
                   to={""}
                   className="btn btn-secondary text-uppercase font-size-3"

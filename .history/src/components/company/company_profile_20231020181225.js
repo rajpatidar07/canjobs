@@ -467,7 +467,7 @@ function CompanyProfileDetail(props) {
                                 </Link>
                               </div>
                             )}
-                            <div className="col px-5 pt-5 pb-5 ">
+                            <div className="col px-5 pt-5 pb-5   position-relative">
                               <CompanyDetailPage
                                 employerId={
                                   user_type === "company" ? company_id : cid

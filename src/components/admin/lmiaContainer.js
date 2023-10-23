@@ -132,7 +132,14 @@ function LimaContainer(props) {
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className={userType === "company" ? "" : "page___heading"}>
-                  <h3 className="font-size-6 mb-0">LMIA of Jobs </h3>
+                  <h3
+                    className="font-size-6 mb-0 "
+                    style={{
+                      marginTop: userType === "company" ? "110px" : null,
+                    }}
+                  >
+                    LMIA of Jobs{" "}
+                  </h3>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 {userType === "company" ? null : (

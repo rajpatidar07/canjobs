@@ -170,7 +170,7 @@ function AddCompanyfollowup(props) {
               ))
             )}
           </div>
-          <form className={user_type === "admin" && "col-md-4 p-10"}>
+          <form className={user_type === "admin" ? "col-md-4 p-10" : "d-none"}>
             <div className="form-group col px-0 pr-3">
               <label
                 htmlFor="subject"

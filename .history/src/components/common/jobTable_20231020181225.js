@@ -431,11 +431,7 @@ export default function JobTable(props) {
                   </th>
                   <th
                     scope="col"
-                    className={
-                      user_type === "user"
-                        ? "d-none"
-                        : " border-0 font-size-4 font-weight-normal"
-                    }
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
                     LMIA status
                   </th>
@@ -594,11 +590,7 @@ export default function JobTable(props) {
                               )}
                             </h3>
                           </th>
-                          <th
-                            className={
-                              user_type === "user" ? "d-none" : " py-5"
-                            }
-                          >
+                          <th className=" py-5">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {
                                 job.lmia_status === "onboarding" ? (

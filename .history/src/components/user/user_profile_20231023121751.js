@@ -664,9 +664,7 @@ const NewUserProfile = (props) => {
                   </ul> */}
                   {/*----Profile Header----*/}
                   <ul
-                    className={`nav border-top border-bottom border-mercury user_profile_tab ${
-                      user_type === "admin" ? "" : "mt-13"
-                    }`}
+                    className="nav border-top border-bottom border-mercury user_profile_tab"
                     id="myTab"
                     role="tablist"
                   >
@@ -913,7 +911,7 @@ const NewUserProfile = (props) => {
                               </h2>
                               <div className="m-0 age_gender d-flex align-items-center">
                                 {PersonalDetail.gender ? (
-                                  <span className="badge bg-secondary rounded-pill font-size-3 text-white mr-2">
+                                  <span class="badge bg-secondary rounded-pill font-size-3 text-white mr-2">
                                     {PersonalDetail.gender === "female"
                                       ? "Female"
                                       : PersonalDetail.gender === "male"
@@ -922,12 +920,12 @@ const NewUserProfile = (props) => {
                                   </span>
                                 ) : null}
                                 {PersonalDetail.marital_status ? (
-                                  <span className="badge bg-info rounded-pill font-size-3 text-white text-capitalize mr-2">
+                                  <span class="badge bg-info rounded-pill font-size-3 text-white text-capitalize mr-2">
                                     {PersonalDetail.marital_status}
                                   </span>
                                 ) : null}
                                 {PersonalDetail.date_of_birth ? (
-                                  <span className="badge bg-warning rounded-pill font-size-3 text-white">
+                                  <span class="badge bg-warning rounded-pill font-size-3 text-white">
                                     {moment().diff(
                                       PersonalDetail.date_of_birth,
                                       "years"
@@ -1178,9 +1176,7 @@ const NewUserProfile = (props) => {
                                 userDetail.skill.length === 0 ||
                                 userDetail.education === undefined ||
                                 userDetail.education.length === 0
-                                  ? user_type === "user"
-                                    ? "Complete your Profile"
-                                    : "Imcomplete Profile"
+                                  ? "Complete your Profile"
                                   : "Generated Resume"}
                               </button>
                             </div>

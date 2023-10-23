@@ -603,11 +603,7 @@ function JobResponse(props) {
                         </th>
                         <th
                           scope="col"
-                          className={
-                            user_type === "company"
-                              ? "d-none"
-                              : "pl-4 border-0 font-size-4 font-weight-normal"
-                          }
+                          className="pl-4 border-0 font-size-4 font-weight-normal"
                         >
                           Visa
                         </th>
@@ -814,11 +810,7 @@ function JobResponse(props) {
                                 </Link>
                               </div>
                             </th>
-                            <th
-                              className={
-                                user_type === "company" ? "d-none" : "  py-5 "
-                              }
-                            >
+                            <th className="  py-5 ">
                               <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                 {res.visa_status === "onboard" ? (
                                   <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">

@@ -64,10 +64,10 @@ export default function PayentForm({ data }) {
                     </div>
                     <div className="card rounded-3 py-2 px-5">
                       <p className="fw-bold m-0 row">
-                        <span className="col-10 ">
+                        <span className="col-md-10 col-sm-12 ">
                           {res.payment_mode ? (
                             <>
-                              <span>
+                              <span className="text-break">
                                 <b>Payment mode</b>: {res.payment_mode}
                               </span>
                               <br />
@@ -75,7 +75,7 @@ export default function PayentForm({ data }) {
                           ) : null}
                           {res.payment_id ? (
                             <>
-                              <span>
+                              <span className="text-break">
                                 <b>Payment Id</b>: {res.payment_id}
                               </span>
                               <br />
@@ -83,7 +83,7 @@ export default function PayentForm({ data }) {
                           ) : null}
                           {res.order_id ? (
                             <>
-                              <span>
+                              <span className="text-break">
                                 <b>order Id</b>: {res.order_id}
                               </span>
                               <br />
@@ -95,12 +95,12 @@ export default function PayentForm({ data }) {
                             </span>
                           ) : null}
                         </span>
-                        <span className="col-2">
+                        <span className="col-md-2 col-sm-12">
                           <span
                             className={`${
                               res.status === "success"
-                                ? " bg-primary-opacity-8 text-white text-center w-100 border rounded-pill"
-                                : " bg-warning text-white text-center w-100 border rounded-pill"
+                                ? " bg-primary-opacity-8 text-white text-center w-100  rounded-pill"
+                                : " bg-warning text-white text-center w-100  rounded-pill"
                             }`}
                           >
                             {res.status}

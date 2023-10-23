@@ -431,11 +431,7 @@ export default function JobTable(props) {
                   </th>
                   <th
                     scope="col"
-                    className={
-                      user_type === "user"
-                        ? "d-none"
-                        : " border-0 font-size-4 font-weight-normal"
-                    }
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
                     LMIA status
                   </th>
