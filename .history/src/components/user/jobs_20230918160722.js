@@ -8,10 +8,9 @@ import FilterJson from "../json/filterjson";
 import SearchForm from "../common/search_form";
 import { getJson } from "../../api/api";
 import { useEffect } from "react";
-import Loader from "../common/loader";
+import Loader from '../common/loader';
 import CustomButton from "../common/button";
 import { ToastContainer } from "react-toastify";
-import states from "../json/states";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -21,11 +20,9 @@ function JobSearch() {
   let [Json, setJson] = useState([]);
   /*Function to get thejSon */
   const JsonData = async () => {
-    try {
-      let Json = await getJson();
-      setJson(Json);
-    } catch (err) {
-      console.log(err);
+    try{let Json = await getJson();
+    setJson(Json);}catch(err){
+      console.log(err)
     }
   };
   /*Render Method */
@@ -39,7 +36,7 @@ function JobSearch() {
     setSkillFilterValue("");
     setJobSwapFilterValue("");
     setJobLocation("");
-  };
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden ">
@@ -107,8 +104,10 @@ function JobSearch() {
                         onChange={(e) => setJobLocation(e.target.value)}
                         className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option value="">Select Job Location</option>
-                        {(Object.keys(states) || []).map((job) => (
+                        <option value="">
+                          Select Job Location
+                        </option>
+                        {(FilterJson.location || []).map((job) => (
                           <option key={job} value={job}>
                             {job}
                           </option>
@@ -124,7 +123,9 @@ function JobSearch() {
                         onChange={(e) => setJobSwapFilterValue(e.target.value)}
                         className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
                       >
-                        <option value="">Select Job type</option>
+                        <option value="">
+                          Select Job type
+                        </option>
                         {(FilterJson.job_type || []).map((job_type) => (
                           <option key={job_type} value={job_type}>
                             {job_type}
@@ -155,23 +156,19 @@ function JobSearch() {
                     id="search-nav-tab"
                     role="tablist"
                   >
-                    {<JobBox /> ? (
-                      <div className="mb-8 p-0 w-100 active active">
+                    {
+                      <JobBox /> ? <div className="mb-8 p-0 w-100 active active">
                         {/* <!-- Single Featured Job --> */}
                         <JobBox
                           categoryFilterValue={categoryFilterValue}
                           SkillFilterValue={SkillFilterValue}
                           jobSwapFilterValue={jobSwapFilterValue}
                           jobLocation={jobLocation}
-                          setJobLocation={setJobLocation}
                         />
                         {/* <!-- End Single Featured Job --> */}
-                      </div>
-                    ) : (
-                      <div className="table-responsive main_table_div">
-                        <Loader />
-                      </div>
-                    )}
+                      </div> :
+                        <div className="table-responsive main_table_div">
+                          <Loader /></div>}
                   </div>
                 </div>
                 {/* <!-- form end --> */}

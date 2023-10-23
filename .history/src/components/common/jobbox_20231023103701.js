@@ -46,15 +46,23 @@ function JobBox({
   const category = searchParams.get("category");
   const path = location.pathname;
   const name = localStorage.getItem("name");
-  /* Function to get Job data*/
+  console.log(
+    path === "/jobs",
+    path === "/managejobs",
+    (path === "/response", !country),
+    "jobLocation",
+    jobLocation,
+    "country",
+    country
+  );
+  // /* Function to get Job data*/
   const JobData = async () => {
     try {
       const userData = await GetAllJobs(
         search,
-        (path === "/jobs" && !country) ||
+        path === "/jobs" ||
           path === "/managejobs" ||
-          (path === "/response" && !country) ||
-          jobLocation
+          (path === "/response" && !country)
           ? jobLocation
           : country,
         path === "/jobs" ||

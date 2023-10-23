@@ -231,12 +231,6 @@ const NewUserProfile = (props) => {
       console.log(err);
     }
   };
-
-  /*Function to generate resume */
-  const ResumeClick = (employee_id) => {
-    const id = employee_id;
-    window.open(`/resume/${id}`, "_blank");
-  };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -611,7 +605,7 @@ const NewUserProfile = (props) => {
                             handleViewResume(PersonalDetail.resume)
                           }
                         >
-                          Resume
+                          dssssss Resume
                         </Link>
                       </span>
                     </div>
@@ -1150,28 +1144,9 @@ const NewUserProfile = (props) => {
                                     handleViewResume(PersonalDetail.resume)
                                   }
                                 >
-                                  Resume
+                                  Resumeddddd
                                 </Link>
                               ) : null}
-                              {console.log(
-                                PersonalDetail.name === null,
-                                PersonalDetail.name === undefined,
-                                PersonalDetail.name === ""
-                              )}
-                              {/* <Link
-                                className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                to={""} // You should specify a valid URL here
-                                onClick={() =>
-                                  ResumeClick(PersonalDetail.employee_id)
-                                }
-                                disabled={
-                                  PersonalDetail.name === null ||
-                                  PersonalDetail.name === undefined ||
-                                  PersonalDetail.name === ""
-                                }
-                              >
-                                Generated Resume
-                              </Link> */}
                             </div>
                           </div>
                         </div>

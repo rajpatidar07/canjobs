@@ -1158,7 +1158,7 @@ const NewUserProfile = (props) => {
                                 PersonalDetail.name === undefined,
                                 PersonalDetail.name === ""
                               )}
-                              {/* <Link
+                              <Link
                                 className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
                                 to={""} // You should specify a valid URL here
                                 onClick={() =>
@@ -1170,8 +1170,8 @@ const NewUserProfile = (props) => {
                                   PersonalDetail.name === ""
                                 }
                               >
-                                Generated Resume
-                              </Link> */}
+                                Link Text
+                              </Link>
                             </div>
                           </div>
                         </div>

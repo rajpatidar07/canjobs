@@ -1153,12 +1153,8 @@ const NewUserProfile = (props) => {
                                   Resume
                                 </Link>
                               ) : null}
-                              {console.log(
-                                PersonalDetail.name === null,
-                                PersonalDetail.name === undefined,
-                                PersonalDetail.name === ""
-                              )}
-                              {/* <Link
+                              {console.log(PersonalDetail.name)}
+                              <Link
                                 className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
                                 to={""} // You should specify a valid URL here
                                 onClick={() =>
@@ -1168,10 +1164,10 @@ const NewUserProfile = (props) => {
                                   PersonalDetail.name === null ||
                                   PersonalDetail.name === undefined ||
                                   PersonalDetail.name === ""
-                                }
+                                } // Simplified ternary expression
                               >
-                                Generated Resume
-                              </Link> */}
+                                Link Text
+                              </Link>
                             </div>
                           </div>
                         </div>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
 import EmployeeLoginModal from "../user/login";
-import EmployeeSignupModal from "../user/signup";
+// import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 import Setting from "./setting";
 
@@ -24,7 +24,7 @@ function EmployeeHeader() {
   // EMPLOYEEE LOGIN AND SIGNUP
   // Employee signup and login modal
   const [showLogin, setShowLogin] = useState(false);
-  const [showSingUp, setShowSingUp] = useState(false);
+  // const [showSingUp, setShowSingUp] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,15 +34,15 @@ function EmployeeHeader() {
   }
 
   /*-- Function to switch login to singup --*/
-  const SignUpClick = () => {
-    setShowSingUp(true);
-    setShowLogin(false);
-  };
+  // const SignUpClick = () => {
+  //   setShowSingUp(true);
+  //   setShowLogin(false);
+  // };
   /*-- Function to switch singup to login--*/
-  const LoginClick = () => {
-    setShowLogin(true);
-    setShowSingUp(false);
-  };
+  // const LoginClick = () => {
+  //   setShowLogin(true);
+  //   setShowSingUp(false);
+  // };
   // END EMPLOYEE LOGIN AND SIGNUP
 
   // COMPANY LOGIN AND SIGNUP
@@ -199,23 +199,23 @@ function EmployeeHeader() {
               </Link>
               <EmployeeLoginModal
                 show={showLogin}
-                signUpClick={SignUpClick}
+                // signUpClick={SignUpClick}
                 close={() => setShowLogin(false)}
               />
 
               {/* <!-- Modal for SingUp--> */}
               <Link
                 className="btn btn-primary"
-                // to={"/signup"}
-                onClick={() => setShowSingUp(true)}
+                to={"/signup"}
+                // onClick={() => setShowSingUp(true)}
               >
                 Sign up
               </Link>
-              <EmployeeSignupModal
+              {/* <EmployeeSignupModal
                 show={showSingUp}
                 loginClick={LoginClick}
                 close={() => setShowSingUp(false)}
-              />
+              /> */}
             </div>
           )}
           {userType === "company" || userType === "user" ? (

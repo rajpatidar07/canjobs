@@ -231,12 +231,6 @@ const NewUserProfile = (props) => {
       console.log(err);
     }
   };
-
-  /*Function to generate resume */
-  const ResumeClick = (employee_id) => {
-    const id = employee_id;
-    window.open(`/resume/${id}`, "_blank");
-  };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -862,7 +856,7 @@ const NewUserProfile = (props) => {
                       aria-labelledby="home-tab"
                     >
                       {/*----About Employee----*/}
-                      <div className="row m-0">
+                      <div className="row m-0 d-none">
                         <div className="col-md-8 p-8">
                           <div className="d-flex align-items-center rounded bg-light p-8">
                             <Link
@@ -977,7 +971,61 @@ const NewUserProfile = (props) => {
                             </div>
                           </div>
                         </div>
-
+                        <div className="col-md-4 p-8">
+                          <div className="d-flex align-items-center rounded bg-light p-8">
+                            <div
+                              className="d-flex flex-wrap"
+                              style={{ gap: "10px" }}
+                            >
+                              {!PersonalDetail.email ||
+                              user_type === "company" ? null : (
+                                <div>
+                                  <Link
+                                    className="text-dark font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                    to={`mailto:${PersonalDetail.email}`}
+                                  >
+                                    <BsEnvelope className="text-white font-size-5 mr-4" />
+                                    {PersonalDetail.email}
+                                  </Link>
+                                </div>
+                              )}
+                              {!PersonalDetail.contact_no ||
+                              user_type === "company" ? null : (
+                                <div>
+                                  <Link
+                                    className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                    to={`tel:${PersonalDetail.contact_no}`}
+                                  >
+                                    <BiPhoneCall className="text-white font-size-5 mr-4" />
+                                    {PersonalDetail.contact_no}
+                                  </Link>
+                                </div>
+                              )}
+                              {PersonalDetail.resume ? (
+                                <Link
+                                  className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                  to={""}
+                                  onClick={() =>
+                                    handleViewResume(PersonalDetail.resume)
+                                  }
+                                >
+                                  Resume
+                                </Link>
+                              ) : null}
+                              <Link
+                                className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                to={""}
+                                onClick={() =>
+                                  handleViewResume(PersonalDetail.resume)
+                                }
+                              >
+                                Generated REsume
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row m-0">
                         <div className="col-12 ">
                           <div
                             className="px-5 pt-5 pb-5 d-flex align-items-center justify-content-space-between border-bottom"
@@ -1153,25 +1201,6 @@ const NewUserProfile = (props) => {
                                   Resume
                                 </Link>
                               ) : null}
-                              {console.log(
-                                PersonalDetail.name === null,
-                                PersonalDetail.name === undefined,
-                                PersonalDetail.name === ""
-                              )}
-                              {/* <Link
-                                className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                to={""} // You should specify a valid URL here
-                                onClick={() =>
-                                  ResumeClick(PersonalDetail.employee_id)
-                                }
-                                disabled={
-                                  PersonalDetail.name === null ||
-                                  PersonalDetail.name === undefined ||
-                                  PersonalDetail.name === ""
-                                }
-                              >
-                                Generated Resume
-                              </Link> */}
                             </div>
                           </div>
                         </div>

@@ -595,7 +595,7 @@ export default function EmployeeSignupModal(props) {
                             htmlFor="otp"
                             className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                           >
-                            Enter OTP
+                            Enter Otp
                           </label>
                           <div className="position-relative">
                             <input
@@ -688,7 +688,7 @@ export default function EmployeeSignupModal(props) {
                             className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                             type="submit"
                           >
-                            Send OTP
+                            Send otp
                           </button>
                         )}
                       </div>
