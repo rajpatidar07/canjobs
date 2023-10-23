@@ -199,7 +199,7 @@ function EmployeeHeader() {
               </Link>
               <EmployeeLoginModal
                 show={showLogin}
-                signUpClick={SignUpClick}
+                // signUpClick={SignUpClick}
                 close={() => setShowLogin(false)}
               />
 

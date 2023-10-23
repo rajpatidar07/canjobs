@@ -163,7 +163,6 @@ function JobSearch() {
                           SkillFilterValue={SkillFilterValue}
                           jobSwapFilterValue={jobSwapFilterValue}
                           jobLocation={jobLocation}
-                          setJobLocation={setJobLocation}
                         />
                         {/* <!-- End Single Featured Job --> */}
                       </div>

@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-// import FilterJson from "../json/filterjson";
+import FilterJson from "../json/filterjson";
 import Select from "react-select";
 import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
 import states from "../json/states";
 import { getJson } from "../../api/api";
 function SearchForm() {
+  console.log(states);
   const location = useLocation();
   const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get("search");
   const country = searchParams.get("country");
   const user_type = localStorage.getItem("userType");
-  let [Json, setJson] = useState([]);
   let [state, setState] = useState({
     search: search ? search : "",
     country: "",
     country_value: country ? country : "",
   });
+  let [Json, setJson] = useState([]);
   /*Function to get the jSon */
   const JsonData = async () => {
     try {
@@ -36,12 +37,12 @@ function SearchForm() {
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
     JsonData();
-    const options = (Object.keys(states) || []).map((option) => ({
+    const options = (FilterJson.location || []).map((option) => ({
       value: option,
       label: option,
     }));
     setState({ ...state, country: options });
-  }, [states]);
+  }, [FilterJson.location]);
 
   /*Onclick Function to search */
   const Onsearch = () => {

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CompanyLogin from "../company/loginModal";
 import CompanySignUp from "../company/signupModal";
 import EmployeeLoginModal from "../user/login";
-import EmployeeSignupModal from "../user/signup";
+// import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 import Setting from "./setting";
 
@@ -199,7 +199,7 @@ function EmployeeHeader() {
               </Link>
               <EmployeeLoginModal
                 show={showLogin}
-                signUpClick={SignUpClick}
+                // signUpClick={SignUpClick}
                 close={() => setShowLogin(false)}
               />
 
@@ -214,7 +214,7 @@ function EmployeeHeader() {
               <EmployeeSignupModal
                 show={showSingUp}
                 loginClick={LoginClick}
-                close={() => setShowSingUp(false)}
+                // close={() => setShowSingUp(false)}
               />
             </div>
           )}

@@ -1153,25 +1153,16 @@ const NewUserProfile = (props) => {
                                   Resume
                                 </Link>
                               ) : null}
-                              {console.log(
-                                PersonalDetail.name === null,
-                                PersonalDetail.name === undefined,
-                                PersonalDetail.name === ""
-                              )}
-                              {/* <Link
+                              <Link
                                 className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                to={""} // You should specify a valid URL here
+                                to={""}
                                 onClick={() =>
                                   ResumeClick(PersonalDetail.employee_id)
                                 }
-                                disabled={
-                                  PersonalDetail.name === null ||
-                                  PersonalDetail.name === undefined ||
-                                  PersonalDetail.name === ""
-                                }
+                                disable={!PersonalDetail}
                               >
                                 Generated Resume
-                              </Link> */}
+                              </Link>
                             </div>
                           </div>
                         </div>

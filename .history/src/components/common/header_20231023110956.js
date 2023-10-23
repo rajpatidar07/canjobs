@@ -199,7 +199,7 @@ function EmployeeHeader() {
               </Link>
               <EmployeeLoginModal
                 show={showLogin}
-                signUpClick={SignUpClick}
+                // signUpClick={SignUpClick}
                 close={() => setShowLogin(false)}
               />
 
@@ -214,7 +214,7 @@ function EmployeeHeader() {
               <EmployeeSignupModal
                 show={showSingUp}
                 loginClick={LoginClick}
-                close={() => setShowSingUp(false)}
+                // close={() => setShowSingUp(false)}
               />
             </div>
           )}

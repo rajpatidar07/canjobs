@@ -231,12 +231,6 @@ const NewUserProfile = (props) => {
       console.log(err);
     }
   };
-
-  /*Function to generate resume */
-  const ResumeClick = (employee_id) => {
-    const id = employee_id;
-    window.open(`/resume/${id}`, "_blank");
-  };
   return (
     /*---- Employee Profile Details Page ----*/
     <div className="site-wrapper overflow-hidden bg-default-2">
@@ -1153,25 +1147,15 @@ const NewUserProfile = (props) => {
                                   Resume
                                 </Link>
                               ) : null}
-                              {console.log(
-                                PersonalDetail.name === null,
-                                PersonalDetail.name === undefined,
-                                PersonalDetail.name === ""
-                              )}
-                              {/* <Link
+                              <Link
                                 className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                to={""} // You should specify a valid URL here
+                                to={""}
                                 onClick={() =>
-                                  ResumeClick(PersonalDetail.employee_id)
-                                }
-                                disabled={
-                                  PersonalDetail.name === null ||
-                                  PersonalDetail.name === undefined ||
-                                  PersonalDetail.name === ""
+                                  handleViewResume(PersonalDetail.resume)
                                 }
                               >
-                                Generated Resume
-                              </Link> */}
+                                Generated REsume
+                              </Link>
                             </div>
                           </div>
                         </div>
