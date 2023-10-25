@@ -223,8 +223,8 @@ function PersonalDetails(props) {
   const AgentJson = async () => {
     try {
       let response = await GetAgentJson();
-      let json = await GetFilter();
-      // console.log(json);
+      let json = GetFilter();
+      console.log(json);
       if (Array.isArray(response)) {
         const options = response.map((option) => ({
           value: option.id,
@@ -232,7 +232,7 @@ function PersonalDetails(props) {
         }));
         setAgentList(options);
       }
-      setJsonList(json.data.data);
+      setJsonList(json);
     } catch (err) {
       console.log(err);
     }
@@ -778,9 +778,9 @@ function PersonalDetails(props) {
                       id="language"
                     >
                       <option value={""}>Known Language</option>
-                      {(jsonList.Language || []).map((Lang) => (
-                        <option key={Lang.id} value={Lang.value}>
-                          {Lang.value}
+                      {(FilterJson.language || []).map((Language) => (
+                        <option key={Language} value={Language}>
+                          {Language}
                         </option>
                       ))}
                     </select>

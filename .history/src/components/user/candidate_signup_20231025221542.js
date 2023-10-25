@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   EmployeeSignUp,

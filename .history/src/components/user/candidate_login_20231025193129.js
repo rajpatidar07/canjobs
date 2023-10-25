@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   EmployeeLogin,
@@ -29,7 +30,7 @@ export default function CandidateLoginForm(props) {
     setShowForgotPassword(false);
     setLoading(false);
     setErrors("");
-    // props.close();
+    props.close();
   };
   const type = localStorage.getItem("linkedin");
   // let code = dataa[1].split("&")[0]

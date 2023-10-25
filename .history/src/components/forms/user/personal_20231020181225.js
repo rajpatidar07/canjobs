@@ -7,7 +7,6 @@ import {
   AddEmployeeDetails,
   EmployeeDetails,
   GetAgentJson,
-  GetFilter,
   // AddEmployeePermission,
 } from "../../../api/api";
 import { toast } from "react-toastify";
@@ -23,7 +22,6 @@ function PersonalDetails(props) {
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
-  const [jsonList, setJsonList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   /*data and id states */
@@ -223,8 +221,7 @@ function PersonalDetails(props) {
   const AgentJson = async () => {
     try {
       let response = await GetAgentJson();
-      let json = await GetFilter();
-      // console.log(json);
+      // console.log(response);
       if (Array.isArray(response)) {
         const options = response.map((option) => ({
           value: option.id,
@@ -232,7 +229,6 @@ function PersonalDetails(props) {
         }));
         setAgentList(options);
       }
-      setJsonList(json.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -778,9 +774,9 @@ function PersonalDetails(props) {
                       id="language"
                     >
                       <option value={""}>Known Language</option>
-                      {(jsonList.Language || []).map((Lang) => (
-                        <option key={Lang.id} value={Lang.value}>
-                          {Lang.value}
+                      {(FilterJson.language || []).map((Language) => (
+                        <option key={Language} value={Language}>
+                          {Language}
                         </option>
                       ))}
                     </select>

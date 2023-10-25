@@ -49,6 +49,8 @@ import MainEmailPage from "../email/mainemailPage";
 import SinUpPage from "../user/sinUpPage";
 import CandidateLoginForm from "../user/candidate_login";
 import CandidateSignup from "../user/candidate_signup";
+import Company_login from "../company/company_login";
+import Company_singup from "../company/company_singup";
 import CompanyLoginForm from "../company/company_login";
 import CompanySingupForm from "../company/company_singup";
 // import PreviewEmail from "../email/emailPreview";

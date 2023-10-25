@@ -575,16 +575,7 @@ const filterjson = {
   ],
   admintype: ["super-admin", "admin", "manager", "executive"],
   duration: ["last week", "last month", "last 3 months", "last year"],
-  employee_status: [
-    "new",
-    "prospect",
-    "lead",
-    "retained",
-    "lost",
-    "dead",
-    "working on",
-    "submitted",
-  ],
+  employee_status: ["new", "prospect", "lead", "retained", "lost", "dead"],
   interested: [
     "swep",
     "internship",

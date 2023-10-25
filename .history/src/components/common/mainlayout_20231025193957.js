@@ -47,10 +47,10 @@ import Notes from "../admin/notes";
 import AgentLogin from "../agent/agentLogin";
 import MainEmailPage from "../email/mainemailPage";
 import SinUpPage from "../user/sinUpPage";
+import CandidateLogin from "./candidate_login";
 import CandidateLoginForm from "../user/candidate_login";
 import CandidateSignup from "../user/candidate_signup";
-import CompanyLoginForm from "../company/company_login";
-import CompanySingupForm from "../company/company_singup";
+import Company_login from "../company/company_login";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -72,8 +72,6 @@ function MainLayout() {
         <Route path="/signup" element={<SinUpPage />} />
         <Route path="/candidate_login" element={<CandidateLoginForm />} />
         <Route path="/candidate_signup" element={<CandidateSignup />} />
-        <Route path="/company_login" element={<CompanyLoginForm />} />
-        <Route path="/company_singup" element={<CompanySingupForm />} />
         <Route path="/rozarepay" element={<RazorPay />} />
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
@@ -98,6 +96,8 @@ function MainLayout() {
         {/* Employer */}
         {userType === "company" && token !== ("" || null || undefined) ? (
           <>
+            <Route path="/company_login" element={<Company_login />} />
+            {/* <Route path="/company_singup" element={<EmployerHome />} /> */}
             <Route path="/company" element={<EmployerHome />} />
             <Route path="/companyprofile" element={<CompanyProfile />} />
             <Route path="/managejobs" element={<ManageJobs />} />

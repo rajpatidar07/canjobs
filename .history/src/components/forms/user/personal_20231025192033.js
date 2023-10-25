@@ -224,7 +224,7 @@ function PersonalDetails(props) {
     try {
       let response = await GetAgentJson();
       let json = await GetFilter();
-      // console.log(json);
+      console.log(json);
       if (Array.isArray(response)) {
         const options = response.map((option) => ({
           value: option.id,

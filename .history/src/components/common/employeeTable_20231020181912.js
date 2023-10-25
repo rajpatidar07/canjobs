@@ -352,6 +352,18 @@ export default function EmployeeTable(props) {
                 >
                   Lead
                 </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className={
+                    status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
+                  }
+                  onClick={() => setStatus(4)}
+                >
+                  Retained
+                </button>
                 <button
                   type="button"
                   className={
@@ -369,36 +381,6 @@ export default function EmployeeTable(props) {
                   onClick={() => setStatus(6)}
                 >
                   Dead
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  className={
-                    status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
-                  }
-                  onClick={() => setStatus(4)}
-                >
-                  Retained
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
-                  }
-                  onClick={() => setStatus(7)}
-                >
-                  Working on
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
-                  }
-                  onClick={() => setStatus(8)}
-                >
-                  Submitted
                 </button>
               </>
             )}

@@ -1,50 +1,53 @@
 import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import {
-  EmployeeSignUp,
-  SendOtp,
-  LinkedSignup,
-  SocialLogin,
-  // GetAgentJson,
-} from "../../api/api";
-// import Select from "react-select";
 import useValidation from "../common/useValidation";
+import {
+  EmployerSignUp,
+  SendOtp,
+  LinkedInSignupEmployer,
+  SocialCompanyLogin,
+} from "../../api/api";
+import Permissions from "../json/emailPermisionJson";
 import { toast } from "react-toastify";
-import Permission from "../json/emailPermisionJson";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
 // import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-export default function CandidateSignup(props) {
-  const [isChecked, setIsChecked] = useState(false);
-  const [termsErr, settermsErr] = useState("");
-  // const [agentList, setAgentList] = useState([]);
-  const [SingUpSuccess, setSingUpSuccess] = useState("");
+function Company_singup(props) {
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
+  const [SingUpSuccess, setSingUpSuccess] = useState("");
+  const [otpErr, setotperr] = useState("");
   // let [facebook, setFacebook] = useState(false);
+  let i = 0;
+  let navigate = useNavigate();
   const [searchParams] = useSearchParams();
   let code = searchParams.get("code");
-  let navigate = useNavigate();
-  let i = 0;
-  let encoded;
   if (props.show === true) {
-    localStorage.setItem("linkedin", "employeeSignup");
+    localStorage.setItem("linkedin", "employerSignup");
   }
   const type = localStorage.getItem("linkedin");
+  /*Function to close he modal */
+  //   const close = () => {
+  //     setErrors("");
+  //     setState(initialFormState);
+  //     setOtpBox(false);
+  //     //props.close()();
+  //   };
   // USER SIGNUP VALIDATION
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     email: "",
     password: "",
-    resume: "",
+    contact_no: "",
+    term_and_condition: "",
     otp: "",
-    reffer_by: "",
     Credentials: "",
   };
-  // VALIDATION CONDITIONS termsErr
+  // VALIDATION CONDITIONS
   const validators = {
     email: [
       (value) =>
@@ -64,51 +67,66 @@ export default function CandidateSignup(props) {
           ? null
           : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
-    resume: [
-      // (value) => (value === "" || value === null ? "Resume is required" : null),
+    contact_no: [
+      (value) =>
+        value.trim() === "" || value === "" || value === null
+          ? "Contact no is required"
+          : value.length < 10 || value.length > 11
+          ? "Contact no should be of 10 digits"
+          : "",
     ],
-    // reffer_by: [
-    //   (value) =>
-    //     value === "" || value === null ? "Refferer is required" : null,
-    // ],
+    term_and_condition: [
+      (value) =>
+        otpBox === false
+          ? ""
+          : value === null || value === "" || value === false
+          ? "Please accept terms and conditions continue"
+          : "",
+    ],
+    otp: [
+      (value) =>
+        otpBox
+          ? value === null || value === ""
+            ? "Otp is requried"
+            : otpErr === "Invalid Otp"
+            ? "Invalid Otp"
+            : ""
+          : "",
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, setErrors, errors, validate } =
+  const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
 
   // USER SIGNUP SUBMIT BUTTON
-  const onUserSignUpClick = async (event) => {
+  const onCompanySignUpClick = async (event) => {
     event.preventDefault();
-    setLoading(false);
-    if (validate() && state.otp) {
+    if (validate() && state.otp && state.term_and_condition) {
       /*Api to signup */
-      if (isChecked) {
-        settermsErr("");
-        setLoading(true);
-        try {
-          const signUpData = await EmployeeSignUp(state, Permission);
-          if (signUpData.message === "Employee has been registered") {
-            setSingUpSuccess("success");
-            setLoading(false);
-          } else if (signUpData.message === "Email already exists") {
-            setLoading(false);
-            settermsErr("Email already exist");
-          } else if (signUpData.message === " incorrect otp ") {
-            setLoading(false);
-            setErrors({ ...errors, otp: "Invalid Otp" });
-          }
-        } catch (err) {
-          console.log(err);
+      try {
+        let Response = await EmployerSignUp(state, Permissions);
+        if (Response.message === "Employer has been registered") {
+          setErrors("");
+          setState(initialFormState);
+          setOtpBox(false);
+          setSingUpSuccess("success");
+        } else if (Response.message === " incorrect otp ") {
           setLoading(false);
-          setErrors({ ...errors, Credentials: ["Please try again later."] });
-          toast.error("Something went wrong", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+          setotperr("Invalid Otp");
+          setErrors({ ...errors, term_and_condition: "" });
+          setErrors({ ...errors, contact_no: "" });
+        } else if (Response.message === "Email already exists") {
+          setErrors({ ...errors, email: ["Email already exists"] });
+          setState(initialFormState);
+          setOtpBox(false);
         }
-      } else {
-        setLoading(false);
-        settermsErr("Accept terms and conditions");
+      } catch (err) {
+        console.log(err);
+        setErrors({ ...errors, Credentials: ["Please try again later."] });
+        toast.error("Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
       }
     } else if (otpBox === false && validate()) {
       /*Api to get otp */
@@ -125,17 +143,16 @@ export default function CandidateSignup(props) {
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         setErrors({ ...errors, Credentials: ["Please try again later."] });
         toast.error("Something went wrong", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoading(false);
       }
     }
   };
   // END USER SIGNUP VALIDATION
-
   /*Function to Sign Up with google */
   // const GoogleLogin = useGoogleLogin({
   //   onSuccess: async (tokenResponse) => {
@@ -145,24 +162,24 @@ export default function CandidateSignup(props) {
   //           "Authorization": `Bearer ${tokenResponse.access_token}`
   //         }
   //       });
-  //       console.log(data.data);
+  //       console.log("response =>", data.data);
   //       if (data.data.email_verified === true) {
   //         try {
-  //           let res = await SocialLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
-  //           console.log(res,);
+  //           let res = await SocialCompanyLogin(data.data.sub, data.data.email, data.data.name, data.data.picture, "Google");
+  //           console.log(res);
   //           localStorage.setItem("token", res.token);
-  //           localStorage.setItem("userType", "user");
-  //           localStorage.setItem("employee_id", res.employee_id);
-  //           localStorage.setItem("profile_photo", res.profile_photo);
+  //           localStorage.setItem("userType", "company");
+  //           localStorage.setItem("employee_id", res.employer_id);
+  //           localStorage.setItem("profile_photo", res.company_logo);
   //           toast.success("Logged In Successfully", {
   //             position: toast.POSITION.TOP_RIGHT,
   //             autoClose: 1000,
   //           });
-  //           props.close();
-  //           navigate("/");
+  //           //props.close()();
+  //           navigate("/company");
   //           window.location.reload();
   //         } catch (err) {
-  //          console.log(err)
+  //          console.log(err) ;
   //         }
   //       }
   //     } catch (err) {
@@ -171,7 +188,7 @@ export default function CandidateSignup(props) {
   //   }
   // });
 
-  /*Function to Sign Up with Linked in */
+  /*Function to Sign Up  with Linked in */
   /*Code to get access token */
   // axios.post(`https://www.linkedin.com/oauth/v2/accessToken?code=${code}&grant_type=authorization_code&client_id=78mhwjaumkvtbm&client_secret=ZoZKbJgORl0vYJFr&redirect_uri=${window.location.origin}`)
   // .then(response => {
@@ -191,44 +208,44 @@ export default function CandidateSignup(props) {
       redirectUri
     )}&scope=${encodeURIComponent(scope)}`;
   };
-  // console.log(type,(code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 3 && type === "employeeSignup");
+  // console.log(type ,(code !== '' || code !== undefined || code !== "undefined" || code !== null) && i === 2 && type === "employerSignup");
   useEffect(() => {
-    i = i + 3;
+    i = i + 2;
     if (
       (code !== "" ||
         code !== undefined ||
         code !== "undefined" ||
         code !== null) &&
-      i === 3 &&
-      type === "employeeSignup"
+      i === 2 &&
+      type === "employerSignup"
     ) {
-      const response = LinkedSignup(code, type);
+      const response = LinkedInSignupEmployer(code, type);
       response
         .then((res) => {
           let decode = JSON.parse(res.data);
           if (res.data.email_verified === true) {
             try {
-              let data = SocialLogin(
+              let data = SocialCompanyLogin(
                 res.data.sub,
                 res.data.email,
                 res.data.name,
                 res.data.picture,
                 "Linkedin"
               );
-              console.log(data);
+              // console.log(data);
               localStorage.setItem("token", data.token);
-              localStorage.setItem("userType", "user");
-              localStorage.setItem("employee_id", data.employee_id);
-              localStorage.setItem("profile_photo", data.profile_photo);
+              localStorage.setItem("userType", "company");
+              localStorage.setItem("employee_id", data.employer_id);
+              localStorage.setItem("profile_photo", data.company_logo);
               toast.success("Logged In Successfully", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 1000,
               });
-              props.close();
-              navigate("/");
+              //props.close()();
+              navigate("/company");
               window.location.reload();
             } catch (err) {
-              console.log(err);
+              // console.log(err);
             }
           }
           if (
@@ -241,14 +258,13 @@ export default function CandidateSignup(props) {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            navigate("/");
+            navigate("/company");
           }
         })
         .catch((err) => {
           console.log(err.data);
         });
     }
-    // AgentJson();
   }, []);
 
   /*FUnctiom to Sign Up with facebook */
@@ -256,76 +272,24 @@ export default function CandidateSignup(props) {
   //   console.log(response);
   //   if (response.graphDomain === "facebook") {
   //     try {
-  //       let data = await SocialLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
+  //       let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");
   //       console.log(data);
   //       localStorage.setItem("token", data.token);
-  //       localStorage.setItem("userType", "user");
-  //       localStorage.setItem("employee_id", data.employee_id);
-  //       localStorage.setItem("profile_photo", data.profile_photo);
-  //       toast.success("Logged In Successfully", {
+  //       localStorage.setItem("userType", "company");
+  //       localStorage.setItem("employee_id", data.employer_id);
+  //       localStorage.setItem("profile_photo", data.company_logo);
+  //       toast.success("Logged In Successfully",{
   //         position: toast.POSITION.TOP_RIGHT,
   //         autoClose: 1000,
   //       });
-  //       props.close();
-  //       navigate("/");
+  //       //props.close()();
+  //       navigate("/company");
   //       window.location.reload();
   //     } catch (err) {
   //      console.log(err)
   //     }
   //   }
   // }
-  /*Function to convert file to base64 */
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.addEventListener("load", () => {
-        resolve({ base64: fileReader.result });
-      });
-      fileReader.readAsDataURL(file);
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-  /*Onchange function of Resume */
-  const handleUploadFile = async (e) => {
-    const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
-
-    const file = e.target.files[0];
-
-    if (allowedFormats.includes(file.type)) {
-      encoded = await convertToBase64(file);
-      let base64Name = encoded.base64;
-      let finalBase = base64Name.split(",")[1];
-      setState({ ...state, resume: finalBase });
-    } else {
-      setErrors({
-        ...errors,
-        resume: [
-          "Invalid file format. Please upload an image (JPEG or PNG) or a PDF.",
-        ],
-      });
-    }
-  };
-  /*Function to get agent json list */
-  // const AgentJson = async () => {
-  //   try {
-  //     let response = await GetAgentJson();
-  //     // setAgentJson(response);
-  //     const options = (response || []).map((option) => ({
-  //       value: option.id,
-  //       label: option.u_id + "  " + option.name,
-  //     }));
-  //     // console.log(agentJson);
-  //     setAgentList(options);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  /*Function to set data to the search job by country */
-  // const onSelectChange = (option) => {
-  //   setState({ ...state, reffer_by: option.value });
-  // };
   return (
     <div
       className="row no-gutters justify-content-center"
@@ -338,7 +302,11 @@ export default function CandidateSignup(props) {
             You have successfully registered your account. Please login to
             continue
             <br />
-            <Link to="/company_login" className="btn btn-primary mt-12">
+            <Link
+              to=""
+              className="btn btn-primary mt-12"
+              onClick={props.loginClick}
+            >
               Login
             </Link>
           </div>
@@ -358,41 +326,41 @@ export default function CandidateSignup(props) {
                 </button>
               </div>
               {/* <div className="col-4 col-xs-12">
-                        <Link
-                          to="" onClick={GoogleLogin}
-                          className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                        >
-                          <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
-                          <span className="d-none d-xs-block mx-5 px-3">
-                            Import from Google
-                          </span>
-                        </Link>
-                      </div>
-                      <div className="col-4 col-xs-12">
-                        <Link
-                          to="" onClick={() => setFacebook(true)}
-                          className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                        >
-                          <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
-                          <span className="d-none d-xs-block mx-5 px-3">
-                            Import from Facebook
-                          </span>
-                        </Link>
-                        {facebook ?
-                          <FacebookLogin
-                            appId="2170088543184291"
-                            autoLoad
-                            callback={responseFacebook}
-                            fields="name,email,picture"
-                            scope="public_profile,user_friends,email,user_actions.books"
-                            className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
-                            render={renderProps => (
-                              <button onClick={renderProps.onClick} className="d-none">
-                              </button>
-                            )}
-                          />
-                          : null}
-                      </div> */}
+                    <Link
+                      to="" onClick={GoogleLogin}
+                      className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                    >
+                      <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>
+                      <span className="d-none d-xs-block mx-5 px-3">
+                        Import from Google
+                      </span>
+                    </Link>
+                  </div>
+                  <div className="col-4 col-xs-12">
+                    <Link
+                      to="" onClick={() => setFacebook(true)}
+                      className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                    >
+                      <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>
+                      <span className="d-none d-xs-block mx-5 px-3">
+                        Import from Facebook
+                      </span>
+                    </Link>
+                    {facebook ?
+                      <FacebookLogin
+                        appId="2170088543184291"
+                        autoLoad
+                        callback={responseFacebook}
+                        fields="name,email,picture"
+                        scope="public_profile,user_friends,email,user_actions.books"
+                        className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                        render={renderProps => (
+                          <button onClick={renderProps.onClick} className="d-none">
+                          </button>
+                        )}
+                      />
+                      : null}
+                  </div> */}
             </div>
             {/* END SOCIAL MEDIA LINK BUTTONS */}
             <div className="or-devider">
@@ -400,7 +368,7 @@ export default function CandidateSignup(props) {
             </div>
 
             {/* SIGNUP FORM */}
-            <form onSubmit={onUserSignUpClick}>
+            <form onSubmit={onCompanySignUpClick}>
               {/* FORM FIELDS */}
               <div className="form-group">
                 <label
@@ -460,77 +428,40 @@ export default function CandidateSignup(props) {
                     </span>
                   )}
                   {/* <Link
-                          to="/"
-                          className="show-password pos-abs-cr fas mr-6 text-black-2"
-                          data-show-pass="password2"
-                        ></Link> */}
+                      to="/"
+                      className="show-password pos-abs-cr fas mr-6 text-black-2"
+                      data-show-pass="password2"
+                    ></Link> */}
                 </div>
               </div>
               {/* <div className={"form-group "}>
-                        <label
-                          htmlFor="reffer_by"
-                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                        >
-                          Reffered by:<span className="text-danger">*</span>
-                        </label>
-                        <Select
-                          options={"" || agentList}
-                          name="reffer_by"
-                          id="reffer_by"
-                          onChange={onSelectChange}
-                          className={
-                            errors.reffer_by
-                              ? "form-control border border-danger"
-                              : "form-control px-0 pt-4 border-0"
-                          }
-                        />
-                        ERROR MSG FOR REFFER BY
-                        {errors.reffer_by && (
-                          <span
-                            key={errors.reffer_by}
-                            className="text-danger font-size-3"
-                          >
-                            {errors.reffer_by}
-                          </span>
-                        )}
-                      </div> */}
-              <div className="form-group">
-                <label
-                  htmlFor="resume"
-                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                >
-                  Upload Resume
-                  {/*<span className="text-danger"> *</span>:*/}
-                </label>
-                <div className="position-relative">
-                  <input
-                    name="resume"
-                    onChange={handleUploadFile}
-                    type="file"
-                    accept=".pdf,application/pdf"
-                    className={
-                      errors.resume
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    id="resume"
-                    placeholder="Enter password"
-                  />
-                  {errors.resume && (
-                    <span
-                      key={errors.resume}
-                      className="text-danger font-size-3"
+                    <label
+                      htmlFor="reffer_by"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      {errors.resume}
-                    </span>
-                  )}
-                  {/* <Link
-                          to="/"
-                          className="show-password pos-abs-cr fas mr-6 text-black-2"
-                          data-show-pass="password23"
-                        ></Link> */}
-                </div>
-              </div>
+                      Reffered by:<span className="text-danger">*</span>
+                    </label>
+                    <Select
+                      options={"" || agentList}
+                      name="reffer_by"
+                      id="reffer_by"
+                      onChange={onSelectChange}
+                      className={
+                        errors.reffer_by
+                          ? "form-control border border-danger"
+                          : "form-control px-0 pt-4 border-0"
+                      }
+                    />
+                    ERROR MSG FOR REFFER BY
+                    {errors.reffer_by && (
+                      <span
+                        key={errors.reffer_by}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.reffer_by}
+                      </span>
+                    )}
+                  </div> */}
               {otpBox ? (
                 <div className="form-group">
                   <label
@@ -571,11 +502,14 @@ export default function CandidateSignup(props) {
                 <label htmlFor="tandr" className="gr-check-input d-flex  mr-3">
                   <input
                     type="checkbox"
-                    id="tandr"
-                    name="tandr"
-                    onChange={(event) => {
-                      setIsChecked(event.target.checked);
-                    }}
+                    id="term_and_condition"
+                    name="term_and_condition"
+                    onChange={(event) =>
+                      setState({
+                        ...state,
+                        term_and_condition: event.target.checked,
+                      })
+                    }
                     className="text-black-2 pt-5 mr-5"
                   />
                   <span className="font-size-3 mb-0 line-height-reset d-block">
@@ -586,8 +520,11 @@ export default function CandidateSignup(props) {
                   </span>
                 </label>
                 {/*----ERROR MESSAGE FOR terms----*/}
-                <span key={termsErr} className="text-danger font-size-3">
-                  {termsErr}
+                <span
+                  key={errors.term_and_condition}
+                  className="text-danger font-size-3"
+                >
+                  {errors.term_and_condition}
                 </span>
               </div>
               {errors.Credentials && (
@@ -642,3 +579,5 @@ export default function CandidateSignup(props) {
     </div>
   );
 }
+
+export default Company_singup;

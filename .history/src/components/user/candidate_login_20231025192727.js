@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   EmployeeLogin,
@@ -29,7 +30,7 @@ export default function CandidateLoginForm(props) {
     setShowForgotPassword(false);
     setLoading(false);
     setErrors("");
-    // props.close();
+    props.close();
   };
   const type = localStorage.getItem("linkedin");
   // let code = dataa[1].split("&")[0]
@@ -75,8 +76,12 @@ export default function CandidateLoginForm(props) {
       setLoading(true);
       try {
         const updatedTodo = await EmployeeLogin(state);
-        // console.log(updatedTodo);
-        if (updatedTodo.message === "Successfully Logged In") {
+        console.log(updatedTodo);
+        if (
+          updatedTodo.status === 1 ||
+          updatedTodo.status === "1" ||
+          updatedTodo.message === "Successfully Logged In"
+        ) {
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("email", updatedTodo.email);
           localStorage.setItem("userType", "user");

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   EmployeeSignUp,
@@ -338,7 +339,11 @@ export default function CandidateSignup(props) {
             You have successfully registered your account. Please login to
             continue
             <br />
-            <Link to="/company_login" className="btn btn-primary mt-12">
+            <Link
+              to=""
+              className="btn btn-primary mt-12"
+              onClick={props.loginClick}
+            >
               Login
             </Link>
           </div>
