@@ -272,8 +272,20 @@ function CompanyLoginForm(props) {
       >
         <div className="col-lg-4 col-md-6 card">
           <div className="bg-white-2 h-100 px-11 pt-11  pb-7 login_Modal_box">
+            <div className="brand-logo mb-10 text-center">
+              <Link to="/">
+                <img
+                  src="image/00logo-main-black.png"
+                  alt=""
+                  className="light-version-logo default-logo"
+                  style={{ maxWidth: "250px", maxHeight: "80px" }}
+                />
+              </Link>
+            </div>
             <div
-              className={showCompanyForgotPassword === false ? "row" : "d-none"}
+              className={
+                showCompanyForgotPassword === false ? "row d-none" : "d-none"
+              }
             >
               <div className="col-4 col-xs-12">
                 <button
@@ -329,7 +341,9 @@ function CompanyLoginForm(props) {
             </div>
             <div
               className={
-                showCompanyForgotPassword === false ? "or-devider" : "d-none"
+                showCompanyForgotPassword === false
+                  ? "or-devider d-none"
+                  : "d-none"
               }
             >
               <span className="font-size-3 line-height-reset ">Or</span>
@@ -469,7 +483,7 @@ function CompanyLoginForm(props) {
               </div>
               <p className="font-size-4 text-center heading-default-color">
                 Don’t have an account?
-                <Link className="text-primary ml-2" to={"/candidate_signup"}>
+                <Link className="text-primary ml-2" to={"/company_singup"}>
                   Create a free account
                 </Link>
               </p>

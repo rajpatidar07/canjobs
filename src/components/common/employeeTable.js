@@ -823,11 +823,15 @@ export default function EmployeeTable(props) {
                               </span>
                             ) : empdata.status === "7" ? (
                               <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                Reserved
+                                Working on
                               </span>
                             ) : empdata.status === "0" ? (
                               <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
                                 New
+                              </span>
+                            ) : empdata.status === "8" ? (
+                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                Submitted
                               </span>
                             ) : null}
                           </p>

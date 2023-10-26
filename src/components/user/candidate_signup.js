@@ -345,7 +345,7 @@ export default function CandidateSignup(props) {
         ) : (
           <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box">
             {/* SOCIAL MEDIA LINK BUTTONS */}
-            <div className="row">
+            <div className="row d-none">
               <div className="col-4 col-xs-12">
                 <button
                   onClick={handleLinkedInLogin}
@@ -395,11 +395,21 @@ export default function CandidateSignup(props) {
                       </div> */}
             </div>
             {/* END SOCIAL MEDIA LINK BUTTONS */}
-            <div className="or-devider">
+            <div className="or-devider d-none">
               <span className="font-size-3 line-height-reset">Or</span>
             </div>
 
             {/* SIGNUP FORM */}
+            <div className="brand-logo mb-10 text-center">
+              <Link to="/">
+                <img
+                  src="image/00logo-main-black.png"
+                  alt=""
+                  className="light-version-logo default-logo"
+                  style={{ maxWidth: "250px", maxHeight: "80px" }}
+                />
+              </Link>
+            </div>
             <form onSubmit={onUserSignUpClick}>
               {/* FORM FIELDS */}
               <div className="form-group">

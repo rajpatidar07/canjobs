@@ -298,7 +298,9 @@ export default function CandidateLoginForm(props) {
     >
       <div className="col-lg-4 col-md-6 card">
         <div className="bg-white-2 h-100 px-11 pt-11  pb-7 login_Modal_box">
-          <div className={showForgotPassword === false ? "row" : "d-none"}>
+          <div
+            className={showForgotPassword === false ? "row d-none" : "d-none"}
+          >
             <div className="col-4 col-xs-12">
               <button
                 onClick={handleLinkedInLogin}
@@ -351,8 +353,20 @@ export default function CandidateLoginForm(props) {
                       ) : null}
                     </div> */}
           </div>
+          <div className="brand-logo mb-10 text-center">
+            <Link to="/">
+              <img
+                src="image/00logo-main-black.png"
+                alt=""
+                className="light-version-logo default-logo"
+                style={{ maxWidth: "250px", maxHeight: "80px" }}
+              />
+            </Link>
+          </div>
           <div
-            className={showForgotPassword === false ? "or-devider" : "d-none"}
+            className={
+              showForgotPassword === false ? "or-devider d-none" : "d-none"
+            }
           >
             <span className="font-size-3 line-height-reset ">Or</span>
           </div>
