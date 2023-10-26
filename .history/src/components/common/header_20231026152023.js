@@ -53,7 +53,7 @@ function EmployeeHeader() {
   // const CompanySignUpClick = () => {
   //   setShowCompanySignUp(true);
   //   setShowCompanyLogin(false);
-  // };
+  };
   /*-- Function to switch signup to login--*/
   // const CompanyLoginClick = () => {
   //   setShowCompanyLogin(true);

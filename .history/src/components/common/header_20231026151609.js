@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import CompanyLogin from "../company/loginModal";
-// import CompanySignUp from "../company/signupModal";
+import CompanyLogin from "../company/loginModal";
+import CompanySignUp from "../company/signupModal";
 // import EmployeeLoginModal from "../user/login";
 // import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
@@ -47,18 +47,18 @@ function EmployeeHeader() {
 
   // COMPANY LOGIN AND SIGNUP
   // Company signup and login state
-  // const [showCompanyLogin, setShowCompanyLogin] = useState(false);
-  // const [showCompanySignUp, setShowCompanySignUp] = useState(false);
+  const [showCompanyLogin, setShowCompanyLogin] = useState(false);
+  const [showCompanySignUp, setShowCompanySignUp] = useState(false);
   /*-- Function to switch login to signup --*/
-  // const CompanySignUpClick = () => {
-  //   setShowCompanySignUp(true);
-  //   setShowCompanyLogin(false);
-  // };
+  const CompanySignUpClick = () => {
+    setShowCompanySignUp(true);
+    setShowCompanyLogin(false);
+  };
   /*-- Function to switch signup to login--*/
-  // const CompanyLoginClick = () => {
-  //   setShowCompanyLogin(true);
-  //   setShowCompanySignUp(false);
-  // };
+  const CompanyLoginClick = () => {
+    setShowCompanyLogin(true);
+    setShowCompanySignUp(false);
+  };
 
   useEffect(() => {
     profile_photo = localStorage.getItem("profile_photo");
@@ -149,8 +149,8 @@ function EmployeeHeader() {
                   <li className="drop-menu-item">
                     <Link
                       className="nav-link"
-                      to={"/company_login"}
-                      // onClick={() => setShowCompanyLogin(true)}
+                      to={""}
+                      onClick={() => setShowCompanyLogin(true)}
                     >
                       Employer Login
                     </Link>
@@ -164,16 +164,16 @@ function EmployeeHeader() {
                 </ul>
               )}
             </div>
-            {/* <CompanyLogin
+            <CompanyLogin
               show={showCompanyLogin}
               CompanySignUpClick={CompanySignUpClick}
               close={() => setShowCompanyLogin(false)}
-            /> */}
-            {/* <CompanySignUp
+            />
+            <CompanySignUp
               show={showCompanySignUp}
               CompanyLoginClick={CompanyLoginClick}
               close={() => setShowCompanySignUp(false)}
-            /> */}
+            />
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"
               type="button"

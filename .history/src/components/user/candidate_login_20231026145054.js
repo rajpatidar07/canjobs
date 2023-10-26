@@ -576,7 +576,7 @@ export default function CandidateLoginForm(props) {
             <p className="font-size-4 text-center heading-default-color">
               Already have an account?
               <Link
-                to="/candidate_login"
+                to=""
                 className="text-primary"
                 onClick={() => {
                   setShowForgotPassword(false);

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import CompanyLogin from "../company/loginModal";
-// import CompanySignUp from "../company/signupModal";
-// import EmployeeLoginModal from "../user/login";
-// import EmployeeSignupModal from "../user/signup";
+import CompanyLogin from "../company/loginModal";
+import CompanySignUp from "../company/signupModal";
+import EmployeeLoginModal from "../user/login";
+import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 import Setting from "./setting";
 
@@ -23,8 +23,8 @@ function EmployeeHeader() {
   // };
   // EMPLOYEEE LOGIN AND SIGNUP
   // Employee signup and login modal
-  // const [showLogin, setShowLogin] = useState(false);
-  // const [showSingUp, setShowSingUsp] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSingUp, setShowSingUp] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,31 +34,31 @@ function EmployeeHeader() {
   }
 
   /*-- Function to switch login to singup --*/
-  // const SignUpClick = () => {
-  //   setShowSingUp(true);
-  //   setShowLogin(false);
-  // };
+  const SignUpClick = () => {
+    setShowSingUp(true);
+    setShowLogin(false);
+  };
   /*-- Function to switch singup to login--*/
-  // const LoginClick = () => {
-  //   setShowLogin(true);
-  //   setShowSingUp(false);
-  // };
+  const LoginClick = () => {
+    setShowLogin(true);
+    setShowSingUp(false);
+  };
   // END EMPLOYEE LOGIN AND SIGNUP
 
   // COMPANY LOGIN AND SIGNUP
   // Company signup and login state
-  // const [showCompanyLogin, setShowCompanyLogin] = useState(false);
-  // const [showCompanySignUp, setShowCompanySignUp] = useState(false);
+  const [showCompanyLogin, setShowCompanyLogin] = useState(false);
+  const [showCompanySignUp, setShowCompanySignUp] = useState(false);
   /*-- Function to switch login to signup --*/
-  // const CompanySignUpClick = () => {
-  //   setShowCompanySignUp(true);
-  //   setShowCompanyLogin(false);
-  // };
+  const CompanySignUpClick = () => {
+    setShowCompanySignUp(true);
+    setShowCompanyLogin(false);
+  };
   /*-- Function to switch signup to login--*/
-  // const CompanyLoginClick = () => {
-  //   setShowCompanyLogin(true);
-  //   setShowCompanySignUp(false);
-  // };
+  const CompanyLoginClick = () => {
+    setShowCompanyLogin(true);
+    setShowCompanySignUp(false);
+  };
 
   useEffect(() => {
     profile_photo = localStorage.getItem("profile_photo");
@@ -149,8 +149,8 @@ function EmployeeHeader() {
                   <li className="drop-menu-item">
                     <Link
                       className="nav-link"
-                      to={"/company_login"}
-                      // onClick={() => setShowCompanyLogin(true)}
+                      to={""}
+                      onClick={() => setShowCompanyLogin(true)}
                     >
                       Employer Login
                     </Link>
@@ -164,16 +164,16 @@ function EmployeeHeader() {
                 </ul>
               )}
             </div>
-            {/* <CompanyLogin
+            <CompanyLogin
               show={showCompanyLogin}
               CompanySignUpClick={CompanySignUpClick}
               close={() => setShowCompanyLogin(false)}
-            /> */}
-            {/* <CompanySignUp
+            />
+            <CompanySignUp
               show={showCompanySignUp}
               CompanyLoginClick={CompanyLoginClick}
               close={() => setShowCompanySignUp(false)}
-            /> */}
+            />
             <button
               className="d-block d-lg-none offcanvas-btn-close focus-reset"
               type="button"
@@ -192,30 +192,30 @@ function EmployeeHeader() {
               {/* <!-- Modal for Login--> */}
               <Link
                 className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                to={"/candidate_login"}
-                // onClick={() => setShowLogin(true)}
+                to={""}
+                onClick={() => setShowLogin(true)}
               >
                 Log in
               </Link>
-              {/* <EmployeeLoginModal
+              <EmployeeLoginModal
                 show={showLogin}
                 signUpClick={SignUpClick}
                 close={() => setShowLogin(false)}
-              /> */}
+              />
 
               {/* <!-- Modal for SingUp--> */}
               <Link
                 className="btn btn-primary"
-                to={"/candidate_signup"}
-                // onClick={() => setShowSingUp(true)}
+                // to={"/signup"}
+                onClick={() => setShowSingUp(true)}
               >
                 Sign up
               </Link>
-              {/* <EmployeeSignupModal
+              <EmployeeSignupModal
                 show={showSingUp}
                 loginClick={LoginClick}
                 close={() => setShowSingUp(false)}
-          />*/}
+              />
             </div>
           )}
           {userType === "company" || userType === "user" ? (
