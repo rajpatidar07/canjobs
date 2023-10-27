@@ -166,7 +166,9 @@ const NewUserProfile = (props) => {
       AppliedJob();
     }
     UserData();
-    getLimaOfuser();
+    if (user_type === "admin") {
+      getLimaOfuser();
+    }
     if (apiCall === true) {
       setApiCall(false);
       // if (PersonalDetail.name !== (undefined || "undefined" || null || "")
@@ -273,7 +275,7 @@ const NewUserProfile = (props) => {
         id="dashboard-body"
       >
         <ToastContainer />
-        <div className="container-fluid">
+        <div className="container">
           {(name === null || name === "") && user_type === "user" ? (
             <h4>Complete profile</h4>
           ) : (
@@ -654,7 +656,7 @@ const NewUserProfile = (props) => {
                 ) : null}
               </div>
 
-              <div className="col-12 order-2 order-xl-1">
+              <div className=" col-12 order-2 order-xl-1">
                 <div className="bg-white">
                   {/* LMIA */}
                   {/* <ul
@@ -1186,7 +1188,7 @@ const NewUserProfile = (props) => {
                                 userDetail.education.length === 0
                                   ? user_type === "user"
                                     ? "Complete your Profile"
-                                    : "Imcomplete Profile"
+                                    : "incomplete Profile"
                                   : "Generated Resume"}
                               </button>
                             </div>
@@ -1424,9 +1426,9 @@ const NewUserProfile = (props) => {
                               (userDetail.education || []).map(
                                 (EducationDetails, index) => (
                                   <div className="w-100" key={index}>
-                                    <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
+                                    <div className="d-flex align-items-center mb-5 flex-wrap media_profile_box flex-sm-nowrap justify-content-between border-top">
                                       <div className="media align-items-center company_box p-0">
-                                        <div className="text_box text-left w-100 mt-n2 text-capitalize">
+                                        <div className="text_box text-left w-100 mt-n2 text-capitalize ">
                                           <h3 className="mb-0">
                                             <span className="font-size-6 text-black-2 font-weight-semibold">
                                               {EducationDetails.qualification}
@@ -1449,18 +1451,22 @@ const NewUserProfile = (props) => {
                                         <span className="font-size-4 text-gray w-100">
                                           {EducationDetails.passing_year}
                                         </span>
-                                        <span className="font-size-3 text-gray w-100">
-                                          <span
-                                            className="mr-4"
-                                            style={{ marginTop: "-2px" }}
-                                          >
-                                            <img
-                                              src="image/svg/icon-loaction-pin-black.svg"
-                                              alt=""
-                                            />
+                                        {EducationDetails.institute_location && (
+                                          <span className="font-size-3 text-gray w-100">
+                                            <span
+                                              className="mr-4"
+                                              style={{ marginTop: "-2px" }}
+                                            >
+                                              <img
+                                                src="image/svg/icon-loaction-pin-black.svg"
+                                                alt=""
+                                              />
+                                            </span>
+                                            {
+                                              EducationDetails.institute_location
+                                            }
                                           </span>
-                                          {EducationDetails.institute_location}
-                                        </span>
+                                        )}
                                       </div>
                                     </div>
                                   </div>

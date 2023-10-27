@@ -114,13 +114,21 @@ export default function CandidateSignup(props) {
       /*Api to get otp */
       setLoading(true);
       try {
-        const updatedTodo = await SendOtp(state);
+        const updatedTodo = await SendOtp(state, "employee");
         if (updatedTodo.message === "successful") {
           toast.success("Otp sent Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           setOtpBox(true);
+          setLoading(false);
+          setErrors("");
+          settermsErr("");
+        }
+        if (updatedTodo.message === "Email already exists") {
+          settermsErr("Email already exist");
+          setState(initialFormState);
+          setOtpBox(false);
           setLoading(false);
         }
       } catch (err) {
@@ -595,11 +603,11 @@ export default function CandidateSignup(props) {
                     </Link>
                   </span>
                 </label>
-                {/*----ERROR MESSAGE FOR terms----*/}
-                <span key={termsErr} className="text-danger font-size-3">
-                  {termsErr}
-                </span>
               </div>
+              {/*----ERROR MESSAGE FOR terms----*/}
+              <span key={termsErr} className="text-danger font-size-3 s">
+                {termsErr}
+              </span>
               {errors.Credentials && (
                 <span
                   key={errors.Credentials}

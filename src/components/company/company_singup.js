@@ -132,7 +132,7 @@ function CompanySingupForm(props) {
       /*Api to get otp */
       setLoading(true);
       try {
-        const updatedTodo = await SendOtp(state);
+        const updatedTodo = await SendOtp(state, "employer");
         if (updatedTodo.message === "successful") {
           toast.success("Otp sent Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -140,6 +140,12 @@ function CompanySingupForm(props) {
           });
           setOtpBox(true);
           setLoading(false);
+          setErrors("");
+        }
+        if (updatedTodo.message === "Email already exists") {
+          setErrors({ ...errors, Credentials: ["Email already exists"] });
+          setState(initialFormState);
+          setOtpBox(false);
         }
       } catch (err) {
         console.log(err);

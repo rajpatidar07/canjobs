@@ -452,6 +452,7 @@ header.site-header.admin_header h3 {
   .job_search_main_form {
     padding: 10px !important;
     border-radius: 10px;
+    margin-top: 36px;
   }
 }
 
@@ -1016,7 +1017,9 @@ select.form-control.select_document_type {
   .doc_upload_row .btn {
     min-width: 118px;
   }
-
+.media_profile_box{
+  text-align-last: start;
+}
 }
 
 .dropdown-menu.show {

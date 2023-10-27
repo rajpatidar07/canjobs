@@ -219,10 +219,10 @@ function PersonalDetails(props) {
       setLoading(false);
     }
   };
-  /*Function to get agent json list */
   const AgentJson = async () => {
+    /*Function to get agent json list */
+    let response = await GetAgentJson();
     try {
-      let response = await GetAgentJson();
       let json = await GetFilter();
       // console.log(json);
       if (Array.isArray(response)) {
@@ -243,8 +243,8 @@ function PersonalDetails(props) {
     // console.log("option", option);
   };
   useEffect(() => {
+    AgentJson();
     if (props.employeeId === "0" || props.employeeId === undefined) {
-      AgentJson();
       setState(initialFormStateuser);
     } else {
       UserData();
