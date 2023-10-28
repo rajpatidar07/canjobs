@@ -275,7 +275,7 @@ const NewUserProfile = (props) => {
         id="dashboard-body"
       >
         <ToastContainer />
-        <div className={`container${user_type === "admin" ? "-fluid" : ""}`}>
+        <div className="container">
           {(name === null || name === "") && user_type === "user" ? (
             <h4>Complete profile</h4>
           ) : (

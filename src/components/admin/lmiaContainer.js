@@ -128,7 +128,7 @@ function LimaContainer(props) {
           }
           id="dashboard-body"
         >
-          <div className="container-fluid">
+          <div className={`container${userType === "admin" ? "-fluid" : ""}`}>
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className={userType === "company" ? "" : "page___heading"}>

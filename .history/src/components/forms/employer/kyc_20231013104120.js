@@ -454,7 +454,7 @@ function KycComplianceDetails(props) {
                 </label>
                 <input
                   type="text"
-                  placeholder="Country"
+                  placeholder="State"
                   id="country"
                   name="country"
                   value={state.country || ""}

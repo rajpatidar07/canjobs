@@ -68,7 +68,7 @@ function JobDetailpageAdmim(props) {
         : jobData.keyskill.split(",");
   }
   return (
-    <div className="text-break">
+    <div className="">
       {user_type === "admin" && (
         <>
           <AdminHeader
@@ -98,7 +98,7 @@ function JobDetailpageAdmim(props) {
             : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"
         }
       >
-        <div className="container-fluid">
+        <div className={`container${user_type === "admin" ? "-fluid" : ""}`}>
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
@@ -115,7 +115,7 @@ function JobDetailpageAdmim(props) {
                     />
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
-                    <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
+                    <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                       {jobData.job_title}
                       <CustomButton
                         className={
@@ -179,7 +179,7 @@ function JobDetailpageAdmim(props) {
                       </div>
                     ) : (
                       <>
-                        <div className="info_box text-left text-capitalize">
+                        <div className="info_box text-left text-capitalize text-break">
                           {jobData.location ? (
                             <span
                               className="font-size-3 text-smoke  mr-7"
@@ -198,7 +198,7 @@ function JobDetailpageAdmim(props) {
                             ""
                           )}
                         </div>
-                        <div className="info_box text-left text-capitalize">
+                        <div className="info_box text-left text-capitalize text-break">
                           {jobData.language ? (
                             <span
                               className="font-size-3 text-smoke  mr-7"
@@ -216,7 +216,7 @@ function JobDetailpageAdmim(props) {
                             ""
                           )}
                         </div>
-                        <div className="info_box text-left text-capitalize">
+                        <div className="info_box text-left text-capitalize text-break">
                           {jobData.address ? (
                             <span
                               className="font-size-3 text-smoke  mr-7"
@@ -442,7 +442,7 @@ function JobDetailpageAdmim(props) {
                                           ""
                                         )}
                                       </div>
-                                      <div className="info_box text-left text-capitalize">
+                                      <div className="info_box text-left text-capitalize text-break">
                                         {jobData.address ? (
                                           <span
                                             className="font-size-3 text-smoke  mr-7"
@@ -499,7 +499,7 @@ function JobDetailpageAdmim(props) {
                                       {(skill || []).map((skill) =>
                                         skill === "" ? null : (
                                           <li key={skill}>
-                                            <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1">
+                                            <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1 text-break">
                                               {skill}
                                             </span>
                                           </li>

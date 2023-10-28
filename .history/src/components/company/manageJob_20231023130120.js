@@ -163,13 +163,7 @@ function ManageJobs() {
                       <div className="col-12 mb-5 filter_input_div text-right">
                         <button
                           onClick={() =>
-                            Company_name === null ||
-                            Company_name === "null" ||
-                            Company_name === "undefined" ||
-                            Company_name === undefined ||
-                            Company_name === ""
-                              ? CompleteProfileAlert()
-                              : editJob("0")
+                            Company_name ? editJob("0") : CompleteProfileAlert()
                           }
                           className="btn btn-secondary text-uppercase btn-medium w-10 h-px-48 rounded-3"
                           type="button"

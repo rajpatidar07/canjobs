@@ -849,9 +849,7 @@ select.form-control.select_document_type {
   .main_job_box_ button.btn.btn-secondary {
     width: 100%;
   }
-  .main_job_box_ button.btn.btn-info {
-    width: 100%;
-  }
+
   .job_search_box_page.translateY-25 {
     transform: none;
   }

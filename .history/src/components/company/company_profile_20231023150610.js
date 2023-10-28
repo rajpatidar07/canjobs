@@ -117,7 +117,7 @@ function CompanyProfileDetail(props) {
             : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"
         }
       >
-        <div className={`container${user_type === "admin" ? "-fluid" : ""}`}>
+        <div className="container-fluid">
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">

@@ -131,12 +131,6 @@ export default function CandidateSignup(props) {
           setOtpBox(false);
           setLoading(false);
         }
-        if (updatedTodo.message === "Invalid Credentials !") {
-          settermsErr("Invalid Credentials !");
-          setState(initialFormState);
-          setOtpBox(false);
-          setLoading(false);
-        }
       } catch (err) {
         console.log(err);
         setLoading(false);

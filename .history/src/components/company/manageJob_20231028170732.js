@@ -161,6 +161,13 @@ function ManageJobs() {
                         </select>
                       </div>
                       <div className="col-12 mb-5 filter_input_div text-right">
+                        {console.log(
+                          Company_name === null,
+                          Company_name === "null",
+                          Company_name === "undefined",
+                          Company_name === undefined,
+                          Company_name === ""
+                        )}
                         <button
                           onClick={() =>
                             Company_name === null ||

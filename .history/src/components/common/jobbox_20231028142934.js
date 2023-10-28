@@ -327,7 +327,7 @@ function JobBox({
                         className={
                           job.is_applied === "0"
                             ? "btn btn-secondary text-uppercase font-size-3"
-                            : "btn btn-info text-uppercase font-size-3 "
+                            : "btn btn-info text-uppercase font-size-3 w-100"
                         }
                         onClick={
                           // name === null ||
