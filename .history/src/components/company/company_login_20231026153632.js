@@ -41,7 +41,6 @@ function CompanyLoginForm(props) {
     remember: "",
     Credentials: "",
     forget_email: "",
-    tandr: "",
   };
   /*----VALIDATION CONTENT----*/
   const validators = {
@@ -78,10 +77,7 @@ function CompanyLoginForm(props) {
       setLoading(true);
       try {
         let Response = await EmployerLogin(state);
-        console.log(
-          "Response =>",
-          Response.message === "Invalid Credentials !"
-        );
+        console.log("Response =>", Response);
         if (
           Response.status === true ||
           Response.message === "Successfully Logged In"
@@ -99,10 +95,10 @@ function CompanyLoginForm(props) {
           close();
           Navigate("/company");
           window.location.reload();
-        }
-        if (Response.message === "Invalid Credentials !") {
+        } else if (Response.message === "Invalid Credentials !") {
           setLoading(false);
-          setErrors({ ...errors, tandr: ["Invalid Credentials"] });
+          setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
+          // handle form submission
         }
       } catch (err) {
         console.log(err);
@@ -426,12 +422,6 @@ function CompanyLoginForm(props) {
                         ></a> */}
                 </div>
                 <small className="text-danger">{errors.email}</small>
-                {/*----ERROR MESSAGE FOR INVALID PASSWORD----*/}
-                {errors.tandr && (
-                  <span key={errors.tandr} className="text-danger font-size-3">
-                    {errors.tandr}
-                  </span>
-                )}
               </div>
               <div className="d-flex flex-wrap justify-content-between">
                 <label
@@ -460,6 +450,12 @@ function CompanyLoginForm(props) {
                 >
                   Forget Password
                 </Link>
+                {/*----ERROR MESSAGE FOR terms----*/}
+                {errors.tandr && (
+                  <span key={errors.tandr} className="text-danger font-size-3">
+                    {errors.tandr}
+                  </span>
+                )}
               </div>
 
               <div className="form-group mb-8">

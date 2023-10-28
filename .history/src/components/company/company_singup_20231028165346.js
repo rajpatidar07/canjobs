@@ -100,7 +100,6 @@ function CompanySingupForm(props) {
   // USER SIGNUP SUBMIT BUTTON
   const onCompanySignUpClick = async (event) => {
     event.preventDefault();
-    console.log(validate, errors);
     if (validate() && state.otp && state.term_and_condition) {
       /*Api to signup */
       try {

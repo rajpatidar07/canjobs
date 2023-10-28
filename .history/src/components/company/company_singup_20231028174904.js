@@ -148,6 +148,12 @@ function CompanySingupForm(props) {
           setOtpBox(false);
           setLoading(false);
         }
+        if (updatedTodo.message === "Invalid Credentials !") {
+          setErrors({ ...errors, Credentials: ["Invalid Credentials !"] });
+          setState(initialFormState);
+          setOtpBox(false);
+          setLoading(false);
+        }
       } catch (err) {
         console.log(err);
         setErrors({ ...errors, Credentials: ["Please try again later."] });
