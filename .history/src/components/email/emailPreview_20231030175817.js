@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { GetPreviewEmail } from "../../api/api";
 import Loader from "../common/loader";
-import { FileViewer } from "react-file-viewer";
 // import { ToastContainer } from "react-toastify";
 // import AdminSidebar from "../admin/sidebar";
 // import AdminHeader from "../admin/header";
@@ -67,7 +66,6 @@ const PreviewEmail = ({ id }) => {
         )
     );
   }
-
   return (
     /*---- Employee Profile Details Page ----*/
     // <div className="site-wrapper overflow-hidden bg-default-2">
@@ -141,22 +139,7 @@ const PreviewEmail = ({ id }) => {
               <h5>body :</h5>
               <p>{emailData.body_data}</p>
             </div>
-            <div>
-              {(emailData.attachment[0] || []).map((item) => {
-                return (
-                  <>
-                    {console.log(item.file_data)}
-                    <img
-                      // fileType={item.ext_type}
-                      src={`data:image/${item.ext_type};base64,${item.file_data}`}
-                      alt="attachment"
-                      width={100}
-                      height={100}
-                    />
-                  </>
-                );
-              })}
-            </div>
+            <div>{JSON.parse(emailData.atachment)}</div>
           </div>
           // emailData.includes("=?UTF-8?Q?") ? (
           // <div dangerouslySetInnerHTML={{ __html: emailData }} />

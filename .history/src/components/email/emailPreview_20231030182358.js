@@ -145,13 +145,10 @@ const PreviewEmail = ({ id }) => {
               {(emailData.attachment[0] || []).map((item) => {
                 return (
                   <>
-                    {console.log(item.file_data)}
-                    <img
-                      // fileType={item.ext_type}
-                      src={`data:image/${item.ext_type};base64,${item.file_data}`}
-                      alt="attachment"
-                      width={100}
-                      height={100}
+                    {console.log(emailData.attachment[0])}
+                    <FileViewer
+                      fileType={item.ext_type}
+                      filePath={item.file_data}
                     />
                   </>
                 );

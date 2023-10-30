@@ -149,9 +149,6 @@ const PreviewEmail = ({ id }) => {
                     <img
                       // fileType={item.ext_type}
                       src={`data:image/${item.ext_type};base64,${item.file_data}`}
-                      alt="attachment"
-                      width={100}
-                      height={100}
                     />
                   </>
                 );

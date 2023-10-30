@@ -1,8 +1,7 @@
 // src/PreviewEmail.js
 import React, { useState, useEffect } from "react";
-import { GetPreviewEmail } from "../../api/api";
+// import { GetPreviewEmail } from "../../api/api";
 import Loader from "../common/loader";
-import { FileViewer } from "react-file-viewer";
 // import { ToastContainer } from "react-toastify";
 // import AdminSidebar from "../admin/sidebar";
 // import AdminHeader from "../admin/header";
@@ -11,27 +10,27 @@ const PreviewEmail = ({ id }) => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   /* data and id states */
-  const [emailData, setemailData] = useState([]);
+  const [emailData /*, setemailData*/] = useState([]);
   /* Function to get Employee visa data*/
   const EmailData = async () => {
     setIsLoading(true);
     try {
-      const Res = await GetPreviewEmail(id);
-      console.log(Res.data);
-      if (
-        Res.messsage === "No data found" ||
-        Res.status === "0" ||
-        Res.status === 0 ||
-        Res.data === undefined ||
-        Res.data.length === 0
-      ) {
-        setemailData([]);
-        setIsLoading(false);
-      } else {
-        setemailData(Res.data);
-        // setTotalData(Res.data.total_rows);
-        setIsLoading(false);
-      }
+      // const Res = await GetPreviewEmail(id);
+      // // // console.log(Res.data)
+      // if (
+      //   Res.messsage === "No data found" ||
+      //   Res.status === "0" ||
+      //   Res.status === 0 ||
+      //   Res.data === undefined ||
+      //   Res.data.length === 0
+      // ) {
+      //   setemailData([]);
+      //   setIsLoading(false);
+      // } else {
+      //   setemailData(Res.data);
+      //   // setTotalData(Res.data.total_rows);
+      //   setIsLoading(false);
+      // }
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -57,17 +56,6 @@ const PreviewEmail = ({ id }) => {
   //       )
   //   );
   // }
-  function decodeEmailSubject(encodedSubject) {
-    return decodeURIComponent(
-      encodedSubject
-        .replace(/=\?UTF-8\?Q\?/g, "")
-        .replace(/\?=/g, "")
-        .replace(/=([0-9A-F]{2})/g, (_, p1) =>
-          String.fromCharCode(parseInt(p1, 16))
-        )
-    );
-  }
-
   return (
     /*---- Employee Profile Details Page ----*/
     // <div className="site-wrapper overflow-hidden bg-default-2">
@@ -124,42 +112,8 @@ const PreviewEmail = ({ id }) => {
             <Loader />
           </div>
         ) : (
-          <div className="container">
-            <div>
-              <h5>From :</h5>
-              <p>{emailData.from}</p>
-            </div>
-            <div>
-              <h5>To :</h5>
-              <p>{emailData.to}</p>
-            </div>
-            <div>
-              <h5>Subject :</h5>
-              <p>{emailData.subject}</p>
-            </div>
-            <div>
-              <h5>body :</h5>
-              <p>{emailData.body_data}</p>
-            </div>
-            <div>
-              {(emailData.attachment[0] || []).map((item) => {
-                return (
-                  <>
-                    {console.log(item.file_data)}
-                    <img
-                      // fileType={item.ext_type}
-                      src={`data:image/${item.ext_type};base64,${item.file_data}`}
-                      alt="attachment"
-                      width={100}
-                      height={100}
-                    />
-                  </>
-                );
-              })}
-            </div>
-          </div>
           // emailData.includes("=?UTF-8?Q?") ? (
-          // <div dangerouslySetInnerHTML={{ __html: emailData }} />
+          <div dangerouslySetInnerHTML={{ __html: emailData }} />
         ) //decodeEmailSubject(emailData)
         // ) : (
         //   <pre>{emailData}</pre>

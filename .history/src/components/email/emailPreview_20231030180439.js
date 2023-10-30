@@ -67,7 +67,6 @@ const PreviewEmail = ({ id }) => {
         )
     );
   }
-
   return (
     /*---- Employee Profile Details Page ----*/
     // <div className="site-wrapper overflow-hidden bg-default-2">
@@ -142,18 +141,12 @@ const PreviewEmail = ({ id }) => {
               <p>{emailData.body_data}</p>
             </div>
             <div>
-              {(emailData.attachment[0] || []).map((item) => {
+              {emailData.attachment.map((item) => {
                 return (
-                  <>
-                    {console.log(item.file_data)}
-                    <img
-                      // fileType={item.ext_type}
-                      src={`data:image/${item.ext_type};base64,${item.file_data}`}
-                      alt="attachment"
-                      width={100}
-                      height={100}
-                    />
-                  </>
+                  <FileViewer
+                    fileType={item.ext_type}
+                    filePath={item.file_data}
+                  />
                 );
               })}
             </div>

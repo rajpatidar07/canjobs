@@ -3,18 +3,18 @@ import EmailList from "./emailList";
 import { ToastContainer } from "react-toastify";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-import { ReadEmail } from "../../api/api";
+// import { ReadEmail } from "../../api/api";
 const MainEmailPage = () => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   /* data and id states */
-  const [emailData, setemailData] = useState([]);
+  const [emailData /*, setemailData*/] = useState([]);
   //  let [employeeId, setemployeeId] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
   /* Pagination states */
-  const [totalData, setTotalData] = useState(0);
+  const [totalData /* setTotalData*/] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /* Shorting states */
@@ -24,23 +24,23 @@ const MainEmailPage = () => {
   const EmailData = async () => {
     setIsLoading(true);
     try {
-      const userData = await ReadEmail(currentPage, recordsPerPage, search);
-      console.log(userData.data);
-      if (
-        userData.messsage === "No data found" ||
-        userData.status === "0" ||
-        userData.status === 0 ||
-        userData.data === undefined ||
-        userData.data.length === 0
-      ) {
-        setemailData([]);
-        setIsLoading(false);
-        setTotalData("");
-      } else {
-        setemailData(userData.data);
-        setTotalData(userData.total);
-        setIsLoading(false);
-      }
+      // const userData = await ReadEmail(currentPage, recordsPerPage, search);
+      // console.log(userData.data)
+      // if (
+      //   userData.messsage === "No data found" ||
+      //   userData.status === "0" ||
+      //   userData.status === 0 ||
+      //   userData.data === undefined ||
+      //   userData.data.length === 0
+      // ) {
+      //   setemailData([]);
+      //   setIsLoading(false);
+      //   setTotalData("");
+      // } else {
+      //   setemailData(userData.data);
+      //   setTotalData(userData.total);
+      //   setIsLoading(false);
+      // }
       setIsLoading(false);
     } catch (err) {
       console.log(err);

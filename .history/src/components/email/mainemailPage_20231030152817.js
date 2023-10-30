@@ -10,11 +10,11 @@ const MainEmailPage = () => {
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   /* data and id states */
-  const [emailData, setemailData] = useState([]);
+  const [emailData /*, setemailData*/] = useState([]);
   //  let [employeeId, setemployeeId] = useState();
   // let [lmiaStatus, setLmiaStatus] = useState();
   /* Pagination states */
-  const [totalData, setTotalData] = useState(0);
+  const [totalData /* setTotalData*/] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /* Shorting states */

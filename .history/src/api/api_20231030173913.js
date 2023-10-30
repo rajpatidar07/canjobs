@@ -1737,6 +1737,21 @@ export const ReadEmail = async (page, limit, search, email) => {
   );
   return response.data;
 };
+export const PreviewEmail = async (id) => {
+  const response = await axios.post(
+    `http://192.168.29.92/canjobs_latest/common/openEmail`,
+    {
+      email_id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
 
 /*Api to get the job filterd by employee id if it is applied or not */
 export const GetEmployeeFilterJob = async (

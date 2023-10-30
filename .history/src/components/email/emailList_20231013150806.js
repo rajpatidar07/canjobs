@@ -22,6 +22,7 @@ const EmailList = ({
         )
     );
   }
+
   return (
     <div className="emails">
       <div className="email-list">
@@ -247,17 +248,18 @@ const EmailList = ({
                 </table>
               </>
             )}
-            <div className="pt-2 mx-23">
-              <Pagination
-                nPages={nPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                total={totalData}
-                count={data.length}
-              />
-            </div>
           </div>
           <div>{emailId ? <PreviewEmail id={emailId} /> : null}</div>
+
+          <div className="pt-2 mx-23">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={totalData}
+              count={data.length}
+            />
+          </div>
         </div>
       </div>
     </div>

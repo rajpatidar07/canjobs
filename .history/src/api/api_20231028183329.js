@@ -1737,7 +1737,6 @@ export const ReadEmail = async (page, limit, search, email) => {
   );
   return response.data;
 };
-
 /*Api to get the job filterd by employee id if it is applied or not */
 export const GetEmployeeFilterJob = async (
   id /* skill*/,
