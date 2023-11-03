@@ -868,9 +868,9 @@ const NewUserProfile = (props) => {
                       aria-labelledby="home-tab"
                     >
                       {/*----About Employee----*/}
-                      <div className="row m-0">
-                        <div className="col-md-12 p-8">
-                          <div className="d-flex align-items-center rounded bg-light p-8">
+                      <div className="row m-0 ">
+                        <div className="col-md-12 px-8 pt-8 pb-4">
+                          <div className="d-flex align-items-center rounded bg-light p-8 position-relative">
                             <Link
                               className="position-relative text-white"
                               onClick={
@@ -900,24 +900,25 @@ const NewUserProfile = (props) => {
                                 ""
                               )}
                               <img
-                                className="rounded-circle"
+                                className="rounded"
                                 src={
                                   PersonalDetail.profile_photo
                                     ? PersonalDetail.profile_photo
                                     : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
                                 }
                                 alt=""
-                                width={"120px"}
-                                height={"120px"}
+                                width={"180px"}
+                                height={"180px"}
                               />
                             </Link>
-                            <div className="ml-2">
+                            <div className="ml-5 w-100">
                               <h2 className="mb-0 text-capitalize line-height-1 text-break">
                                 {PersonalDetail.name ? PersonalDetail.name : ""}
                               </h2>
+                              <hr className="my-3" />
                               <div className="m-0 age_gender d-flex align-items-center">
                                 {PersonalDetail.gender ? (
-                                  <span className="badge bg-secondary rounded-pill font-size-3 text-white mr-2">
+                                  <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
                                     {PersonalDetail.gender === "female"
                                       ? "Female"
                                       : PersonalDetail.gender === "male"
@@ -926,12 +927,12 @@ const NewUserProfile = (props) => {
                                   </span>
                                 ) : null}
                                 {PersonalDetail.marital_status ? (
-                                  <span className="badge bg-info rounded-pill font-size-3 text-white text-capitalize mr-2">
+                                  <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2">
                                     {PersonalDetail.marital_status}
                                   </span>
                                 ) : null}
                                 {PersonalDetail.date_of_birth ? (
-                                  <span className="badge bg-warning rounded-pill font-size-3 text-white">
+                                  <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
                                     {moment().diff(
                                       PersonalDetail.date_of_birth,
                                       "years"
@@ -939,422 +940,141 @@ const NewUserProfile = (props) => {
                                     Y
                                   </span>
                                 ) : null}
-                              </div>
-                              {user_type === "admin" && (
-                                <DropdownButton
-                                  as={ButtonGroup}
-                                  title={
-                                    status === "1"
-                                      ? "New"
-                                      : status === "2"
-                                      ? "Prospect"
-                                      : status === "3"
-                                      ? "Lead"
-                                      : status === "4"
-                                      ? "Retained"
-                                      : status === "5"
-                                      ? "Lost"
-                                      : status === "6"
-                                      ? "Dead"
-                                      : status === "7"
-                                      ? "Working on"
-                                      : status === "8"
-                                      ? "Submitted"
-                                      : status === "0"
-                                      ? "New"
-                                      : "status"
-                                  }
-                                  size="sm"
-                                  className="user_status_btn btn-primary text-white rounded-8"
-                                  onSelect={OnStatusChange}
-                                >
-                                  {(FilterJson.employee_status || []).map(
-                                    (item, index) => (
-                                      <Dropdown.Item
-                                        key={index}
-                                        value={index + 1}
-                                        eventKey={index + 1}
-                                        className="text-capitalize"
-                                      >
-                                        {item}
-                                      </Dropdown.Item>
-                                    )
-                                  )}
-                                </DropdownButton>
-                              )}
-                            </div>
-                            <div
-                              className="d-flex flex-wrap"
-                              style={{ gap: "10px" }}
-                            >
-                              {!PersonalDetail.email ||
-                              user_type === "company" ? null : (
-                                <div>
-                                  <Link
-                                    className="text-dark font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                    to={`mailto:${PersonalDetail.email}`}
+                                {user_type === "admin" && (
+                                  <DropdownButton
+                                    as={ButtonGroup}
+                                    title={
+                                      status === "1"
+                                        ? "New"
+                                        : status === "2"
+                                        ? "Prospect"
+                                        : status === "3"
+                                        ? "Lead"
+                                        : status === "4"
+                                        ? "Retained"
+                                        : status === "5"
+                                        ? "Lost"
+                                        : status === "6"
+                                        ? "Dead"
+                                        : status === "7"
+                                        ? "Working on"
+                                        : status === "8"
+                                        ? "Submitted"
+                                        : status === "0"
+                                        ? "New"
+                                        : "status"
+                                    }
+                                    size="sm"
+                                    className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
+                                    onSelect={OnStatusChange}
                                   >
-                                    <BsEnvelope className="text-white font-size-5 mr-4" />
-                                    {PersonalDetail.email}
-                                  </Link>
-                                </div>
-                              )}
-                              {!PersonalDetail.contact_no ||
-                              user_type === "company" ? null : (
-                                <div>
-                                  <Link
-                                    className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                    to={`tel:${PersonalDetail.contact_no}`}
-                                  >
-                                    <BiPhoneCall className="text-white font-size-5 mr-4" />
-                                    {PersonalDetail.contact_no}
-                                  </Link>
-                                </div>
-                              )}
-                              {PersonalDetail.resume ? (
-                                <Link
-                                  className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                  to={""}
-                                  onClick={() =>
-                                    handleViewResume(PersonalDetail.resume)
-                                  }
-                                >
-                                  Resume
-                                </Link>
-                              ) : null}
-                              <button
-                                className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                to={""} // You should specify a valid URL here
-                                onClick={() =>
-                                  ResumeClick(PersonalDetail.employee_id)
-                                }
-                                disabled={
-                                  PersonalDetail.name === null ||
-                                  PersonalDetail.name === undefined ||
-                                  PersonalDetail.name === "" ||
-                                  userDetail.skill === undefined ||
-                                  userDetail.skill.length === 0 ||
-                                  userDetail.education === undefined ||
-                                  userDetail.education.length === 0
-                                }
-                              >
-                                {PersonalDetail.name === null ||
-                                PersonalDetail.name === undefined ||
-                                PersonalDetail.name === "" ||
-                                userDetail.skill === undefined ||
-                                userDetail.skill.length === 0 ||
-                                userDetail.education === undefined ||
-                                userDetail.education.length === 0
-                                  ? user_type === "user"
-                                    ? "Complete your Profile"
-                                    : "incomplete Profile"
-                                  : "Generated Resume"}
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="col-12 ">
-                          <div
-                            className="px-5 pt-5 pb-5 d-flex align-items-center justify-content-space-between border-bottom"
-                            style={{ flexWrap: "wrap", gap: "10px" }}
-                          >
-                            <div className="d-flex align-items-center">
-                              <Link
-                                className="position-relative text-white"
-                                onClick={
-                                  user_type === "company" ||
-                                  props.self === "yes"
-                                    ? null
-                                    : () => setShowPersonalDetails(true)
-                                }
-                              >
-                                {user_type === "admin" ||
-                                user_type === "agent" ? (
-                                  <>
-                                    <input
-                                      type="file"
-                                      id="ImgUploadInput"
-                                      className="d-none"
-                                    />
-                                    <label
-                                      className="image_upload_btn image_upload_btn_2 m-0 bg-warning"
-                                      htmlFor="ImgUploadInput"
-                                    >
-                                      <span className="text-">
-                                        <PiPencilDuotone />
-                                      </span>
-                                      {/* <span className="fas fa-pen text-gray"> </span> */}
-                                    </label>
-                                  </>
-                                ) : (
-                                  ""
+                                    {(FilterJson.employee_status || []).map(
+                                      (item, index) => (
+                                        <Dropdown.Item
+                                          key={index}
+                                          value={index + 1}
+                                          eventKey={index + 1}
+                                          className="text-capitalize"
+                                        >
+                                          {item}
+                                        </Dropdown.Item>
+                                      )
+                                    )}
+                                  </DropdownButton>
                                 )}
-                                <img
-                                  className="rounded-circle"
-                                  src={
-                                    PersonalDetail.profile_photo
-                                      ? PersonalDetail.profile_photo
-                                      : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
-                                  }
-                                  alt=""
-                                  width={"50px"}
-                                  height={"50px"}
-                                />
-                              </Link>
-                              <div className="ml-2">
-                                <h4 className="mb-0 text-capitalize line-height-1 text-break">
-                                  {PersonalDetail.name
-                                    ? PersonalDetail.name
-                                    : ""}
-                                </h4>
-                                <div className="m-0 age_gender font-size-3 d-flex align-items-center">
-                                  <p className="m-0">
-                                    {PersonalDetail.gender ||
-                                    PersonalDetail.marital_status ||
-                                    PersonalDetail.marital_status ||
-                                    PersonalDetail.date_of_birth
-                                      ? `(${
-                                          PersonalDetail.gender === "female"
-                                            ? "F"
-                                            : PersonalDetail.gender === "male"
-                                            ? "M"
-                                            : "O"
-                                        },
-                                      ${PersonalDetail.marital_status},
-                                      ${moment().diff(
-                                        PersonalDetail.date_of_birth,
-                                        "years"
-                                      )}
-                                      Y)`
-                                      : ""}
-                                  </p>
-                                  {(user_type === "admin" ||
-                                    user_type === "agent") && (
-                                    <DropdownButton
-                                      as={ButtonGroup}
-                                      title={
-                                        status === "1"
-                                          ? "New"
-                                          : status === "2"
-                                          ? "Prospect"
-                                          : status === "3"
-                                          ? "Lead"
-                                          : status === "4"
-                                          ? "Retained"
-                                          : status === "5"
-                                          ? "Lost"
-                                          : status === "6"
-                                          ? "Dead"
-                                          : status === "7"
-                                          ? "Working on"
-                                          : status === "8"
-                                          ? "Submitted"
-                                          : status === "0"
-                                          ? "New"
-                                          : "status"
-                                      }
-                                      size="sm"
-                                      className="user_status_btn btn-primary text-white ml-1"
-                                      onSelect={OnStatusChange}
-                                    >
-                                      {(FilterJson.employee_status || []).map(
-                                        (item, index) => (
-                                          <Dropdown.Item
-                                            key={index}
-                                            value={index + 1}
-                                            eventKey={index + 1}
-                                            className="text-capitalize"
-                                          >
-                                            {item}
-                                          </Dropdown.Item>
-                                        )
-                                      )}
-                                    </DropdownButton>
-                                  )}
-                                </div>
                               </div>
-                            </div>
-                            {user_type ===
-                              ("super-admin" ||
-                                "admin" ||
-                                "executive" ||
-                                "manager") || props.self === "no" ? (
-                              <div className="d-flex justify-content-between align-items-center">
-                                <CustomButton
-                                  title={"Send Custom Email"}
-                                  className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                  /*Functionalities have to be done. */
-                                >
-                                  {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
-                                  <RiMailSendLine />
-                                </CustomButton>
-                              </div>
-                            ) : null}
-
-                            <div
-                              className="d-flex flex-wrap"
-                              style={{ gap: "10px" }}
-                            >
-                              {!PersonalDetail.email ||
-                              user_type === "company" ? null : (
-                                <div>
-                                  <Link
-                                    className="text-dark font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                    to={`mailto:${PersonalDetail.email}`}
-                                  >
-                                    <BsEnvelope className="text-white font-size-5 mr-4" />
-                                    {PersonalDetail.email}
-                                  </Link>
-                                </div>
-                              )}
-                              {!PersonalDetail.contact_no ||
-                              user_type === "company" ? null : (
-                                <div>
-                                  <Link
-                                    className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                    to={`tel:${PersonalDetail.contact_no}`}
-                                  >
-                                    <BiPhoneCall className="text-white font-size-5 mr-4" />
-                                    {PersonalDetail.contact_no}
-                                  </Link>
-                                </div>
-                              )}
-                              {PersonalDetail.resume ? (
-                                <Link
-                                  className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                  to={""}
-                                  onClick={() =>
-                                    handleViewResume(PersonalDetail.resume)
-                                  }
-                                >
-                                  Resume
-                                </Link>
-                              ) : null}
-                              <button
-                                className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
-                                to={""} // You should specify a valid URL here
-                                onClick={() =>
-                                  ResumeClick(PersonalDetail.employee_id)
-                                }
-                                disabled={
-                                  PersonalDetail.name === null ||
-                                  PersonalDetail.name === undefined ||
-                                  PersonalDetail.name === "" ||
-                                  userDetail.skill === undefined ||
-                                  userDetail.skill.length === 0 ||
-                                  userDetail.education === undefined ||
-                                  userDetail.education.length === 0
-                                }
-                              >
-                                {PersonalDetail.name === null ||
-                                PersonalDetail.name === undefined ||
-                                PersonalDetail.name === "" ||
-                                userDetail.skill === undefined ||
-                                userDetail.skill.length === 0 ||
-                                userDetail.education === undefined ||
-                                userDetail.education.length === 0
-                                  ? user_type === "user"
-                                    ? "Complete your Profile"
-                                    : "incomplete Profile"
-                                  : "Generated Resume"}
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-lg-4 col-md-4 mb-1 border-bottom p-0 border-right">
-                          <div className="bg-white ">
-                            <div className="px-5 pt-5 pb-5 d-flex position-relative mb-5 mt-5">
-                              {PersonalDetail.email === "" ||
-                              PersonalDetail.length === 0 ||
-                              (!PersonalDetail.current_location &&
-                                !PersonalDetail.language &&
-                                !PersonalDetail.currently_located_country &&
-                                !PersonalDetail.experience &&
-                                // !PersonalDetail.nationality &&
-                                !PersonalDetail.experience &&
-                                !PersonalDetail.work_permit_canada &&
-                                !PersonalDetail.work_permit_other_country) ? (
-                                <div>
-                                  <p className="text-center">No Data Found</p>
-                                </div>
-                              ) : (
-                                <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                                  <div className="info_box text-left text-capitalize">
-                                    {PersonalDetail.current_location ? (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7"
-                                        title="Current Location"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/marker.svg"
-                                          alt="Location"
-                                        />
-                                        {PersonalDetail.current_location}
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
+                              <hr className="my-3" />
+                              <div className="d-flex align-items-center">
+                                {PersonalDetail.email === "" ||
+                                PersonalDetail.length === 0 ||
+                                (!PersonalDetail.current_location &&
+                                  !PersonalDetail.language &&
+                                  !PersonalDetail.currently_located_country &&
+                                  !PersonalDetail.experience &&
+                                  // !PersonalDetail.nationality &&
+                                  !PersonalDetail.experience &&
+                                  !PersonalDetail.work_permit_canada &&
+                                  !PersonalDetail.work_permit_other_country) ? (
+                                  <div>
+                                    <p className="text-center">No Data Found</p>
                                   </div>
-                                  <div className="info_box text-left text-capitalize">
-                                    {PersonalDetail.language ? (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7"
-                                        title="User Language"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/language.svg"
-                                          alt="language"
-                                        />
-                                        {PersonalDetail.language}
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                  <div className="info_box text-left text-capitalize">
-                                    {PersonalDetail.currently_located_country ? (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7"
-                                        title="Currently Located Country"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/address-book.svg"
-                                          alt="Address"
-                                        />
-                                        {
-                                          PersonalDetail.currently_located_country
-                                        }
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                  <div className="info_box text-left text-capitalize">
-                                    {PersonalDetail.experience ? (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7"
-                                        title="Total Experience"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/envelope.svg"
-                                          alt="Email"
-                                        />
-                                        {PersonalDetail.experience} Years
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                  {/* {PersonalDetail.nationality ? (
+                                ) : (
+                                  <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                                    <div className="info_box text-left text-capitalize">
+                                      {PersonalDetail.current_location ? (
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7"
+                                          title="Current Location"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/marker.svg"
+                                            alt="Location"
+                                          />
+                                          {PersonalDetail.current_location}
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    <div className="info_box text-left text-capitalize">
+                                      {PersonalDetail.language ? (
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7"
+                                          title="User Language"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/language.svg"
+                                            alt="language"
+                                          />
+                                          {PersonalDetail.language}
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    <div className="info_box text-left text-capitalize">
+                                      {PersonalDetail.currently_located_country ? (
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7"
+                                          title="Currently Located Country"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/address-book.svg"
+                                            alt="Address"
+                                          />
+                                          {
+                                            PersonalDetail.currently_located_country
+                                          }
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    <div className="info_box text-left text-capitalize">
+                                      {PersonalDetail.experience ? (
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7"
+                                          title="Total Experience"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/envelope.svg"
+                                            alt="Email"
+                                          />
+                                          {PersonalDetail.experience} Years
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    {/* {PersonalDetail.nationality ? (
                                     <div
                                       className="info_box text-left"
                                       title="Nationality"
@@ -1365,47 +1085,136 @@ const NewUserProfile = (props) => {
                                       </span>
                                     </div>
                                   ) : null} */}
-                                  {PersonalDetail.work_permit_canada ? (
-                                    <div className="info_box text-left">
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                        title="Canada Work Permit"
-                                      >
-                                        Canada Work Permit:
-                                        <b>
-                                          {" "}
-                                          {PersonalDetail.work_permit_canada}
-                                        </b>
-                                      </span>
-                                    </div>
-                                  ) : null}
-                                  {PersonalDetail.work_permit_other_country ? (
-                                    <div className="info_box text-left">
-                                      <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                        Work Permit of Other Country:
-                                        <b>
-                                          {" "}
-                                          {
-                                            PersonalDetail.work_permit_other_country
-                                          }
-                                        </b>
-                                      </span>
-                                    </div>
-                                  ) : null}
-                                </div>
-                              )}
-                              {user_type === "company" ||
-                              props.self === "yes" ? null : (
-                                <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                  onClick={() => setShowPersonalDetails(true)}
+                                    {PersonalDetail.work_permit_canada ? (
+                                      <div className="info_box text-left">
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                          title="Canada Work Permit"
+                                        >
+                                          Canada Work Permit:
+                                          <b>
+                                            {" "}
+                                            {PersonalDetail.work_permit_canada}
+                                          </b>
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                    {PersonalDetail.work_permit_other_country ? (
+                                      <div className="info_box text-left">
+                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                          Work Permit of Other Country:
+                                          <b>
+                                            {" "}
+                                            {
+                                              PersonalDetail.work_permit_other_country
+                                            }
+                                          </b>
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                )}
+                                {user_type === "company" ||
+                                props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    onClick={() => setShowPersonalDetails(true)}
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </div>
+                              <hr className="my-3" />
+                              <div
+                                className="d-flex flex-wrap"
+                                style={{ gap: "10px" }}
+                              >
+                                {!PersonalDetail.email ||
+                                user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`mailto:${PersonalDetail.email}`}
+                                    >
+                                      <BsEnvelope className="font-size-3 mr-4" />
+                                      {PersonalDetail.email}
+                                    </Link>
+                                  </div>
+                                )}
+                                {!PersonalDetail.contact_no ||
+                                user_type === "company" ? null : (
+                                  <div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`tel:${PersonalDetail.contact_no}`}
+                                    >
+                                      <BiPhoneCall className="font-size-3 mr-4" />
+                                      {PersonalDetail.contact_no}
+                                    </Link>
+                                  </div>
+                                )}
+                                {PersonalDetail.resume ? (
+                                  <Link
+                                    className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                    to={""}
+                                    onClick={() =>
+                                      handleViewResume(PersonalDetail.resume)
+                                    }
+                                  >
+                                    Resume
+                                  </Link>
+                                ) : null}
+                                <button
+                                  className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                  to={""} // You should specify a valid URL here
+                                  onClick={() =>
+                                    ResumeClick(PersonalDetail.employee_id)
+                                  }
+                                  disabled={
+                                    PersonalDetail.name === null ||
+                                    PersonalDetail.name === undefined ||
+                                    PersonalDetail.name === "" ||
+                                    userDetail.skill === undefined ||
+                                    userDetail.skill.length === 0 ||
+                                    userDetail.education === undefined ||
+                                    userDetail.education.length === 0
+                                  }
                                 >
-                                  <PiPencilDuotone />
-                                </CustomButton>
-                              )}
+                                  {PersonalDetail.name === null ||
+                                  PersonalDetail.name === undefined ||
+                                  PersonalDetail.name === "" ||
+                                  userDetail.skill === undefined ||
+                                  userDetail.skill.length === 0 ||
+                                  userDetail.education === undefined ||
+                                  userDetail.education.length === 0
+                                    ? user_type === "user"
+                                      ? "Complete your Profile"
+                                      : "incomplete Profile"
+                                    : "Generated Resume"}
+                                </button>
+                              </div>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row m-0 px-8 pb-8 rounded position-relative">
+                        <div className="col-12 p-0 d-flex rounded bg-light">
+                          <div className="col-lg-5 col-md-6 p-8 border-right">
+                            <div
+                              id="about_Profile"
+                              className="position-relative"
+                            >
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>About</span>
+                              </h4>
 
-                            <div className="px-5 pt-5 pb-5 position-relative ">
+                              <p className="w-100 card p-5 shadow-8 border-0 m-0">
+                                {PersonalDetail.description
+                                  ? PersonalDetail.description
+                                  : "No Data Found"}
+                              </p>
+                            </div>
+                            <div className="position-relative mt-8">
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>Skill</span>
                                 {user_type === "company" ||
@@ -1418,7 +1227,7 @@ const NewUserProfile = (props) => {
                                   </CustomButton>
                                 )}
                               </h4>
-                              <div className="icon-link d-flex align-items-center flex-wrap ">
+                              <div className="w-100 card p-5 shadow-8 border-0">
                                 {showItSkills ? (
                                   <ItSkills
                                     show={showItSkills}
@@ -1429,7 +1238,7 @@ const NewUserProfile = (props) => {
                                   />
                                 ) : null}
 
-                                <ul className="list-unstyled d-flex align-items-start flex-wrap">
+                                <ul className="list-unstyled d-flex align-items-start flex-wrap m-0">
                                   {userDetail.skill === undefined ||
                                   userDetail.skill.length === 0 ? (
                                     <li>No Data Found</li>
@@ -1447,178 +1256,164 @@ const NewUserProfile = (props) => {
                                 </ul>
                               </div>
                             </div>
-                            {/* <div className="col px-5 pt-5 pb-5 d-flex align-items-center border-right"></div>
-                  <div className="profile_email_mobile"></div> */}
                           </div>
-                        </div>
-                        <div className="col-lg-8 col-md-8 p-7">
-                          <div
-                            id="about_Profile"
-                            className="position-relative p-7"
-                          >
-                            <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                              <span>About</span>
-                            </h4>
-
-                            <p className="text-break m-0">
-                              {PersonalDetail.description
-                                ? PersonalDetail.description
-                                : "No Data Found"}
-                            </p>
-                          </div>
-                          {/*----Employee's Education Profile----*/}
-                          <div
-                            id="Education_Profile"
-                            className="position-relative p-7"
-                          >
-                            <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                              <span>Education</span>
-                              {user_type === "company" ||
-                              props.self === "yes" ? null : (
-                                <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                  onClick={() => setShowEducation(true)}
-                                >
-                                  <PiPencilDuotone />
-                                </CustomButton>
-                              )}
-                            </h4>
-                            {userDetail.education === undefined ||
-                            userDetail.education.length === 0 ? (
-                              <div>
-                                <p className="text-center">
-                                  Add Education Details
-                                </p>
-                              </div>
-                            ) : (
-                              (userDetail.education || []).map(
-                                (EducationDetails, index) => (
-                                  <div className="w-100" key={index}>
-                                    <div className="d-flex align-items-center mb-5 flex-wrap media_profile_box flex-sm-nowrap justify-content-between border-top">
-                                      <div className="media align-items-center company_box p-0">
-                                        <div className="text_box text-left w-100 mt-n2 text-capitalize ">
-                                          <h3 className="mb-0">
-                                            <span className="font-size-6 text-black-2 font-weight-semibold">
-                                              {EducationDetails.qualification}
-                                              <span className="font-size-4 text-break">
-                                                (
-                                                {
-                                                  EducationDetails.university_institute
-                                                }
-                                                )
+                          <div className="col-lg-7 col-md-6 p-8">
+                            {/*----Employee's Education Profile----*/}
+                            <div
+                              id="Education_Profile"
+                              className="position-relative"
+                            >
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>Education</span>
+                                {user_type === "company" ||
+                                props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    onClick={() => setShowEducation(true)}
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </h4>
+                              {userDetail.education === undefined ||
+                              userDetail.education.length === 0 ? (
+                                <div>Add Education Details</div>
+                              ) : (
+                                (userDetail.education || []).map(
+                                  (EducationDetails, index) => (
+                                    <div
+                                      className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
+                                      key={index}
+                                    >
+                                      <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
+                                        <div className="media align-items-center company_box p-0">
+                                          <div className="text_box text-left w-100 mt-n2 text-capitalize ">
+                                            <h4 className="mb-0">
+                                              <span className="font-size-4 font-weight-semibold">
+                                                {EducationDetails.qualification +
+                                                  " "}
+                                                <span className="font-size-4 text-break">
+                                                  (
+                                                  {
+                                                    EducationDetails.university_institute
+                                                  }
+                                                  )
+                                                </span>
                                               </span>
+                                            </h4>
+                                            <span className="font-size-3 text-default-color text-break">
+                                              {EducationDetails.course +
+                                                " - " +
+                                                EducationDetails.specialization}
                                             </span>
-                                          </h3>
-                                          <span className="font-size-4 text-default-color line-height-2 text-break">
-                                            {EducationDetails.course},
-                                            {EducationDetails.specialization}
-                                          </span>
+                                          </div>
                                         </div>
-                                      </div>
-                                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
-                                        <span className="font-size-4 text-gray w-100">
-                                          {EducationDetails.passing_year}
-                                        </span>
-                                        {EducationDetails.institute_location && (
-                                          <span className="font-size-3 text-gray w-100">
-                                            <span
-                                              className="mr-4"
-                                              style={{ marginTop: "-2px" }}
-                                            >
-                                              <img
-                                                src="image/svg/icon-loaction-pin-black.svg"
-                                                alt=""
-                                              />
-                                            </span>
-                                            {
-                                              EducationDetails.institute_location
-                                            }
+                                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                          <span className="font-size-4 text-gray w-100">
+                                            {EducationDetails.passing_year}
                                           </span>
-                                        )}
+                                          {EducationDetails.institute_location && (
+                                            <span className="font-size-3 text-gray w-100">
+                                              <span
+                                                className="mr-4"
+                                                style={{ marginTop: "-2px" }}
+                                              >
+                                                <img
+                                                  src="image/svg/icon-loaction-pin-black.svg"
+                                                  alt=""
+                                                />
+                                              </span>
+                                              {
+                                                EducationDetails.institute_location
+                                              }
+                                            </span>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  )
                                 )
-                              )
-                            )}
-                          </div>
-                          <div
-                            id="Career_Profile"
-                            className="position-relative p-7 "
-                          >
-                            <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                              <span>Career</span>
-                              {user_type === "company" ||
-                              props.self === "yes" ? null : (
-                                <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                  onClick={() => setShowEmplyomentDetails(true)}
-                                >
-                                  <PiPencilDuotone />
-                                </CustomButton>
                               )}
-                            </h4>
-                            {/* {moment(PersonalDetail.start_date)}
+                            </div>
+                            <div
+                              id="Career_Profile"
+                              className="position-relative mt-8"
+                            >
+                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                <span>Career</span>
+                                {user_type === "company" ||
+                                props.self === "yes" ? null : (
+                                  <CustomButton
+                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    onClick={() =>
+                                      setShowEmplyomentDetails(true)
+                                    }
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                )}
+                              </h4>
+                              {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                            {userDetail.career === undefined ||
-                            userDetail.career.length === 0 ? (
-                              <div>
-                                <p className="text-center">
-                                  Add Career Details
-                                </p>
-                              </div>
-                            ) : (
-                              (userDetail.career || []).map(
-                                (CareerDetails, i) => (
-                                  <div className="w-100 text-break" key={i}>
-                                    <div className="d-flex align-items-center mb-5 flex-wrap flex-sm-nowrap justify-content-md-between border-top">
-                                      <div className="media align-items-center company_box col-md-6 p-0">
-                                        <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">
-                                          <span className="font-size-5 text-black-2 font-weight-semibold w-100">
-                                            {CareerDetails.designation} -
-                                            <span className="font-size-4">
-                                              {CareerDetails.functional_area}
+                              {userDetail.career === undefined ||
+                              userDetail.career.length === 0 ? (
+                                <div>Add Career Details</div>
+                              ) : (
+                                (userDetail.career || []).map(
+                                  (CareerDetails, i) => (
+                                    <div
+                                      className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
+                                      key={i}
+                                    >
+                                      <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
+                                        <div className="media align-items-center company_box col-md-6 p-0">
+                                          <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">
+                                            <span className="font-size-5 text-black-2 font-weight-semibold w-100">
+                                              {CareerDetails.designation} -
+                                              <span className="font-size-4">
+                                                {CareerDetails.functional_area}
+                                              </span>
                                             </span>
-                                          </span>
-                                          <span className="font-size-3 text-default-color">
-                                            {CareerDetails.company} (
-                                            {CareerDetails.industry})
-                                          </span>
+                                            <span className="font-size-3 text-default-color">
+                                              {CareerDetails.company} (
+                                              {CareerDetails.industry})
+                                            </span>
+                                          </div>
                                         </div>
-                                      </div>
-                                      <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
-                                        <span className="font-size-3 text-gray w-100">
-                                          {/* {moment(CareerDetails.start_date).format(
+                                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                          <span className="font-size-3 text-gray w-100">
+                                            {/* {moment(CareerDetails.start_date).format(
                                     "DD-MM-YYYY"
                                   )}
                                   -
                                   {moment(CareerDetails.end_date).format(
                                     "DD-MM-YYYY"
                                   )} */}
-                                          {calculateDuration(
-                                            CareerDetails.start_date,
-                                            CareerDetails.end_date
-                                          )}
-                                        </span>
-                                        <span className="font-size-3 text-gray w-100">
-                                          <span
-                                            className="mr-4"
-                                            // style={{ marginTop: "-2px" }}
-                                          >
-                                            <img
-                                              src="image/svg/icon-loaction-pin-black.svg"
-                                              alt=""
-                                            />
+                                            {calculateDuration(
+                                              CareerDetails.start_date,
+                                              CareerDetails.end_date
+                                            )}
                                           </span>
-                                          {CareerDetails.company_location}
-                                        </span>
+                                          <span className="font-size-3 text-gray w-100">
+                                            <span
+                                              className="mr-4"
+                                              // style={{ marginTop: "-2px" }}
+                                            >
+                                              <img
+                                                src="image/svg/icon-loaction-pin-black.svg"
+                                                alt=""
+                                              />
+                                            </span>
+                                            {CareerDetails.company_location}
+                                          </span>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  )
                                 )
-                              )
-                            )}
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
