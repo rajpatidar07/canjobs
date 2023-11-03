@@ -25,7 +25,7 @@ const PreviewEmail = ({ id }) => {
         Res.data === undefined ||
         Res.data.length === 0
       ) {
-        setemailData({});
+        setemailData([]);
         setIsLoading(false);
       } else {
         setemailData(Res.data);
@@ -35,7 +35,6 @@ const PreviewEmail = ({ id }) => {
     } catch (err) {
       console.log(err);
       setIsLoading(false);
-      setemailData({});
     }
   };
 
@@ -72,16 +71,54 @@ const PreviewEmail = ({ id }) => {
   };
 
   return (
-    /*---- Email preview Page ----*/
+    /*---- Employee Profile Details Page ----*/
+    // <div className="site-wrapper overflow-hidden bg-default-2">
+    //   {/* <!-- Header Area --> */}
+
+    //   <AdminHeader
+    //     heading={
+    //       <Link
+    //         className="d-flex align-items-center "
+    //         onClick={() => navigate(-1)}
+    //       >
+    //         <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+    //         <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+    //           <h3 className="font-size-6 mb-0 text-capitalize">
+    //             Email preview
+    //           </h3>
+    //         </span>
+    //       </Link>
+    //     }
+    //   />
+    //   {/* <!-- navbar- --> */}
+    //   <AdminSidebar heading={"Email preview"} />
+
+    //   <div
+    //     className={"dashboard-main-container mt-12 mt-lg-12"}
+    //     id="dashboard-body"
+    //   >
+    //     <ToastContainer />
+    //     <div className="container-fluid">
+    //   {isLoading ? (
+    //     <div className="table-responsive main_table_div">
+    //       <Loader />
+    //     </div>
+    //   ) : (
+    //         <div className="row text-left mt-5 pt-0">
+    //           <div className="preview-email">
+    //             <div className="header">
+    //               <img src="/image/00logo-main-black.png" alt="Your Logo" />
+    //             </div>
+    //             <div className="content">{emailData}</div>
+    //           </div>
+    //         </div>
+    //       )}
+    //     </div>
+    //   </div>
+    // </div>
     <div>
       {isLoading ? (
         <Loader />
-      ) : emailData === "" ? (
-        <div className="gmail-preview-container ">
-          <div className="email-content">
-            <div className="email-header">No Email found</div>
-          </div>
-        </div>
       ) : (
         <div className="gmail-preview-container ">
           <div className="email-content">
@@ -91,17 +128,22 @@ const PreviewEmail = ({ id }) => {
               <p>To: {emailData.to}</p>
             </div>
             <div className="email-body">
-              {emailData.body_data &&
-                (emailData.body_data.includes("W2ltYWdlOiBHb29nbGVd") ===
-                true ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: atob(emailData.body_data),
-                    }}
-                  />
-                ) : (
-                  <p>{emailData.body_data}</p>
-                ))}
+              {emailData.body_data.includes("W2ltYWdlOiBHb29nbGVd") ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: atob(emailData.body_data),
+                  }}
+                />
+              ) : (
+                <p>{emailData.body_data}</p>
+              )}
+              {/* */}
+
+              {console.log(
+                typeof emailData.body_data,
+                "=>",
+                atob(emailData.body_data)
+              )}
             </div>
             <div className="attachments">
               {emailData.attachment &&
