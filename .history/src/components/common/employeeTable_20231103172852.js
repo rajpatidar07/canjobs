@@ -842,10 +842,10 @@ export default function EmployeeTable(props) {
                       )}
                       {/* Calulation to get user is new or retained */}
                       {/* <td className=" py-5">
-          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-            {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
-            </p>
-        </td> */}
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}                        
+                          </p>
+                      </td> */}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -859,25 +859,25 @@ export default function EmployeeTable(props) {
                             props.skill === undefined ? (
                               <>
                                 {/* <button
-      className="btn btn-outline-info action_btn"
-      onClick={() => editVisa(empdata.employee_id)}
-      title="Update Visa status"
-    >
-      <span className="fab fa-cc-visa text-gray px-2"></span>
-    </button> */}
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => editVisa(empdata.employee_id)}
+                                  title="Update Visa status"
+                                >
+                                  <span className="fab fa-cc-visa text-gray px-2"></span>
+                                </button> */}
                                 {/* {props.visa === "yes" ? (
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          AddDoucument(empdata.employee_id)
-        }
-        title="Documents"
-      >
-        
-        <span className="fas fa-file text-gray"></span>
-      </button>
-    ) :
-     ( */}
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      AddDoucument(empdata.employee_id)
+                                    }
+                                    title="Documents"
+                                  >
+                                    
+                                    <span className="fas fa-file text-gray"></span>
+                                  </button>
+                                ) :
+                                 ( */}
                                 <>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -904,49 +904,49 @@ export default function EmployeeTable(props) {
                                     Update
                                   </Link>
                                   {/* <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployee(empdata.employee_id)
-        }
-        title="Edit Employee"
-      >
-        <span className="text-gray px-2">
-          <LiaUserEditSolid />
-        </span>
-      </button>
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployeeEducation(empdata.employee_id)
-        }
-        title="Education"
-      >
-        <span className="text-gray px-2">
-          <MdOutlineCastForEducation />
-        </span>
-      </button>
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployeeSkills(empdata.employee_id)
-        }
-        title="Skills"
-      >
-        <span className="text-gray px-2">
-          <GiSkills />
-        </span>
-      </button>
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployeeCareer(empdata.employee_id)
-        }
-        title="Edit Career"
-      >
-        <span className="text-gray px-2">
-          <LiaUserTieSolid />
-        </span>
-      </button> */}
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployee(empdata.employee_id)
+                                    }
+                                    title="Edit Employee"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <LiaUserEditSolid />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeEducation(empdata.employee_id)
+                                    }
+                                    title="Education"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <MdOutlineCastForEducation />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeSkills(empdata.employee_id)
+                                    }
+                                    title="Skills"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <GiSkills />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeCareer(empdata.employee_id)
+                                    }
+                                    title="Edit Career"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <LiaUserTieSolid />
+                                    </span>
+                                  </button> */}
                                   <button
                                     className="btn btn-outline-info action_btn text-center"
                                     onClick={() =>
@@ -999,20 +999,20 @@ export default function EmployeeTable(props) {
                         </td>
                       )}
                       {/* {props.self === "yes" ? (
-          <td>
-            <button
-className="btn btn-outline-info action_btn"
-onClick={() => ChangeApplicantsStatus(empdata)}
-title="Approve Applicant"
-            >
-<span className="text-gray px-2">
-  <GoTasklist />
-</span>
-            </button>
-          </td>
-        ) : (
-          ""
-        )} */}
+                        <td>
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => ChangeApplicantsStatus(empdata)}
+                            title="Approve Applicant"
+                          >
+                            <span className="text-gray px-2">
+                              <GoTasklist />
+                            </span>
+                          </button>
+                        </td>
+                      ) : (
+                        ""
+                      )} */}
                     </tr>
                   ))
                 )}

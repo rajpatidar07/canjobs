@@ -246,6 +246,7 @@ export default function EmployeeTable(props) {
   }
   return (
     <>
+      {" "}
       {showAddEmployeeModal ? (
         <PersonalDetails
           show={showAddEmployeeModal}
@@ -404,7 +405,7 @@ export default function EmployeeTable(props) {
                   Submitted
                 </button>
               </>
-            )}
+            )}{" "}
           </div>
         )}
         <div className="table-responsive main_table_div">
@@ -575,10 +576,11 @@ export default function EmployeeTable(props) {
                     >
                       Action
                     </th>
-                  )}
+                  )}{" "}
                 </tr>
               </thead>
               <tbody>
+                {" "}
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
@@ -594,7 +596,7 @@ export default function EmployeeTable(props) {
                     >
                       <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {empdata.employee_id}
+                          {empdata.employee_id}{" "}
                         </p>
                       </td>
                       <td className=" py-5">
@@ -622,7 +624,7 @@ export default function EmployeeTable(props) {
                                     alt=""
                                     className="w-100"
                                   />
-                                )}
+                                )}{" "}
                               </div>
                             </div>
 
@@ -634,7 +636,7 @@ export default function EmployeeTable(props) {
                                 <p className="font-size-3  mb-0">N/A</p>
                               ) : (
                                 <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                                  {empdata.name}
+                                  {empdata.name}{" "}
                                 </p>
                               )}
                               {empdata.gender || empdata.marital_status ? (
@@ -644,7 +646,7 @@ export default function EmployeeTable(props) {
                                     : empdata.gender === "male"
                                     ? "M"
                                     : "O"}
-                                  {/*Calculation of age from date of birth*/}(
+                                  {/*Calculation of age from date of birth*/}({" "}
                                   {empdata.marital_status ||
                                   empdata.date_of_birth
                                     ? `${
@@ -668,7 +670,7 @@ export default function EmployeeTable(props) {
                                 <span className="bg-info text-white web_tag">
                                   Web
                                 </span>
-                              ) : null}
+                              ) : null}{" "}
                             </div>
                           </div>
                         </Link>
@@ -677,7 +679,7 @@ export default function EmployeeTable(props) {
                           <span className="bg-orange text-white featured_tag">
                             Featured
                           </span>
-                        ) : null}
+                        ) : null}{" "}
                       </td>
                       <td className="py-5 ">
                         {empdata.contact_no === null ? null : (
@@ -687,7 +689,7 @@ export default function EmployeeTable(props) {
                               className="text-dark"
                               to={`tel:${empdata.contact_no}`}
                             >
-                              {empdata.contact_no}
+                              {empdata.contact_no}{" "}
                             </Link>
                           </p>
                         )}
@@ -697,7 +699,7 @@ export default function EmployeeTable(props) {
                               className="text-dark"
                               to={`mailto:${empdata.email}`}
                             >
-                              {empdata.email}
+                              {empdata.email}{" "}
                             </Link>
                           </p>
                         </h3>
@@ -714,9 +716,9 @@ export default function EmployeeTable(props) {
                               {moment(
                                 empdata.created_at,
                                 "YYYY-MM-DD HH:mm:ss"
-                              ).fromNow()}
+                              ).fromNow()}{" "}
                             </p>
-                          )}
+                          )}{" "}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -728,9 +730,9 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
                               {empdata.agent_u_id}
-                              {empdata.agent_name}
+                              {empdata.agent_name}{" "}
                             </p>
-                          )}
+                          )}{" "}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -741,9 +743,9 @@ export default function EmployeeTable(props) {
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {empdata.education}
+                              {empdata.education}{" "}
                             </p>
-                          )}
+                          )}{" "}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -754,9 +756,9 @@ export default function EmployeeTable(props) {
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {empdata.skill}
+                              {empdata.skill}{" "}
                             </p>
-                          )}
+                          )}{" "}
                         </td>
                       )}
                       {props.heading === "Dashboard" ? (
@@ -773,9 +775,9 @@ export default function EmployeeTable(props) {
                               empdata.experience === "5-7 " ||
                               empdata.experience === "7+ "
                                 ? empdata.experience + "years"
-                                : empdata.experience}
+                                : empdata.experience}{" "}
                             </p>
-                          )}
+                          )}{" "}
                         </td>
                       )}
                       <td className=" py-5">
@@ -788,7 +790,7 @@ export default function EmployeeTable(props) {
                             <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                               Incomplete
                             </span>
-                          )}
+                          )}{" "}
                         </p>
                       </td>
                       {props.visa === "yes" ? null : (
@@ -836,16 +838,16 @@ export default function EmployeeTable(props) {
                               <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
                                 Submitted
                               </span>
-                            ) : null}
+                            ) : null}{" "}
                           </p>
                         </td>
                       )}
                       {/* Calulation to get user is new or retained */}
                       {/* <td className=" py-5">
-          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-            {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
-            </p>
-        </td> */}
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}                        
+                          </p>
+                      </td> */}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -858,26 +860,27 @@ export default function EmployeeTable(props) {
                             {props.skill === null ||
                             props.skill === undefined ? (
                               <>
+                                {" "}
                                 {/* <button
-      className="btn btn-outline-info action_btn"
-      onClick={() => editVisa(empdata.employee_id)}
-      title="Update Visa status"
-    >
-      <span className="fab fa-cc-visa text-gray px-2"></span>
-    </button> */}
+                                  className="btn btn-outline-info action_btn"
+                                  onClick={() => editVisa(empdata.employee_id)}
+                                  title="Update Visa status"
+                                >
+                                  <span className="fab fa-cc-visa text-gray px-2"></span>
+                                </button> */}
                                 {/* {props.visa === "yes" ? (
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          AddDoucument(empdata.employee_id)
-        }
-        title="Documents"
-      >
-        
-        <span className="fas fa-file text-gray"></span>
-      </button>
-    ) :
-     ( */}
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      AddDoucument(empdata.employee_id)
+                                    }
+                                    title="Documents"
+                                  >
+                                    
+                                    <span className="fas fa-file text-gray"></span>
+                                  </button>
+                                ) :
+                                 ( */}
                                 <>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -889,7 +892,7 @@ export default function EmployeeTable(props) {
                                     <span className="text-gray px-2">
                                       <GoTasklist />
                                     </span>
-                                    {/* <i className="fas fa-stream text-gray"></i> */}
+                                    {/* <i className="fas fa-stream text-gray"></i> */}{" "}
                                   </button>
                                   <Link
                                     style={{
@@ -904,49 +907,49 @@ export default function EmployeeTable(props) {
                                     Update
                                   </Link>
                                   {/* <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployee(empdata.employee_id)
-        }
-        title="Edit Employee"
-      >
-        <span className="text-gray px-2">
-          <LiaUserEditSolid />
-        </span>
-      </button>
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployeeEducation(empdata.employee_id)
-        }
-        title="Education"
-      >
-        <span className="text-gray px-2">
-          <MdOutlineCastForEducation />
-        </span>
-      </button>
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployeeSkills(empdata.employee_id)
-        }
-        title="Skills"
-      >
-        <span className="text-gray px-2">
-          <GiSkills />
-        </span>
-      </button>
-      <button
-        className="btn btn-outline-info action_btn"
-        onClick={() =>
-          editEmployeeCareer(empdata.employee_id)
-        }
-        title="Edit Career"
-      >
-        <span className="text-gray px-2">
-          <LiaUserTieSolid />
-        </span>
-      </button> */}
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployee(empdata.employee_id)
+                                    }
+                                    title="Edit Employee"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <LiaUserEditSolid />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeEducation(empdata.employee_id)
+                                    }
+                                    title="Education"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <MdOutlineCastForEducation />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeSkills(empdata.employee_id)
+                                    }
+                                    title="Skills"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <GiSkills />
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      editEmployeeCareer(empdata.employee_id)
+                                    }
+                                    title="Edit Career"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <LiaUserTieSolid />
+                                    </span>
+                                  </button> */}
                                   <button
                                     className="btn btn-outline-info action_btn text-center"
                                     onClick={() =>
@@ -957,7 +960,7 @@ export default function EmployeeTable(props) {
                                     <span className="text-gray px-2">
                                       <AiOutlineFilePdf />
                                     </span>
-                                    {/* <span className="fas fa-file text-gray"></span> */}
+                                    {/* <span className="fas fa-file text-gray"></span> */}{" "}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn text-gray"
@@ -968,7 +971,7 @@ export default function EmployeeTable(props) {
                                     <span className="text-gray px-2">
                                       <PiBriefcaseLight />
                                     </span>
-                                    {/* <i className="fas fa-briefcase"></i> */}
+                                    {/* <i className="fas fa-briefcase"></i> */}{" "}
                                   </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -976,12 +979,12 @@ export default function EmployeeTable(props) {
                                     title="Delete"
                                   >
                                     <span className="px-2 text-danger">
-                                      <RiDeleteBin5Line />
-                                      {/* <i className="fa fa-trash "></i> */}
+                                      <RiDeleteBin5Line />{" "}
+                                      {/* <i className="fa fa-trash "></i> */}{" "}
                                     </span>
                                   </button>
                                 </>
-                                {/* )} */}
+                                {/* )} */}{" "}
                               </>
                             ) : (
                               <button
@@ -992,33 +995,33 @@ export default function EmployeeTable(props) {
                                 }
                                 title="Apply For job"
                               >
-                                {alredyApplied ? "Already Applied" : "Apply"}
+                                {alredyApplied ? "Already Applied" : "Apply"}{" "}
                               </button>
-                            )}
+                            )}{" "}
                           </div>
                         </td>
                       )}
                       {/* {props.self === "yes" ? (
-          <td>
-            <button
-className="btn btn-outline-info action_btn"
-onClick={() => ChangeApplicantsStatus(empdata)}
-title="Approve Applicant"
-            >
-<span className="text-gray px-2">
-  <GoTasklist />
-</span>
-            </button>
-          </td>
-        ) : (
-          ""
-        )} */}
+                        <td>
+                          <button
+                            className="btn btn-outline-info action_btn"
+                            onClick={() => ChangeApplicantsStatus(empdata)}
+                            title="Approve Applicant"
+                          >
+                            <span className="text-gray px-2">
+                              <GoTasklist />
+                            </span>
+                          </button>
+                        </td>
+                      ) : (
+                        ""
+                      )} */}{" "}
                     </tr>
                   ))
-                )}
+                )}{" "}
               </tbody>
             </table>
-          )}
+          )}{" "}
         </div>
         <div className="pt-2">
           <Pagination
