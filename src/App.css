@@ -849,9 +849,11 @@ select.form-control.select_document_type {
   .main_job_box_ button.btn.btn-secondary {
     width: 100%;
   }
+
   .main_job_box_ button.btn.btn-info {
     width: 100%;
   }
+
   .job_search_box_page.translateY-25 {
     transform: none;
   }
@@ -1019,9 +1021,10 @@ select.form-control.select_document_type {
   .doc_upload_row .btn {
     min-width: 118px;
   }
-.media_profile_box{
-  text-align-last: start;
-}
+
+  .media_profile_box {
+    text-align-last: start;
+  }
 }
 
 .dropdown-menu.show {
@@ -1084,6 +1087,7 @@ select.form-control.select_document_type {
   text-decoration: none;
   border-radius: 5px;
 }
+
 /* Email preview css */
 /* src/PreviewEmail.css */
 .gmail-preview-container {
@@ -1094,7 +1098,7 @@ select.form-control.select_document_type {
   max-width: 800px;
   margin: 0 auto;
   height: auto;
-  
+
 }
 
 .email-content {
