@@ -73,15 +73,10 @@ const PreviewEmail = ({ id }) => {
 
   return (
     /*---- Email preview Page ----*/
+
     <div>
       {isLoading ? (
         <Loader />
-      ) : emailData === "" ? (
-        <div className="gmail-preview-container ">
-          <div className="email-content">
-            <div className="email-header">No Email found</div>
-          </div>
-        </div>
       ) : (
         <div className="gmail-preview-container ">
           <div className="email-content">

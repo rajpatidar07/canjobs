@@ -79,7 +79,7 @@ const PreviewEmail = ({ id }) => {
       ) : emailData === "" ? (
         <div className="gmail-preview-container ">
           <div className="email-content">
-            <div className="email-header">No Email found</div>
+            <div className="email-header">No Email Found</div>
           </div>
         </div>
       ) : (

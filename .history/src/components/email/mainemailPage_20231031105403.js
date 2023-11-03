@@ -24,7 +24,7 @@ const MainEmailPage = () => {
   const EmailData = async () => {
     try {
       const userData = await ReadEmail(currentPage, recordsPerPage, search);
-      // console.log(userData.data);
+      console.log(userData.data);
       if (
         userData.messsage === "No data found" ||
         userData.status === "0" ||

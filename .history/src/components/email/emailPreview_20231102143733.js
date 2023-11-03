@@ -76,13 +76,12 @@ const PreviewEmail = ({ id }) => {
     <div>
       {isLoading ? (
         <Loader />
-      ) : emailData === "" ? (
-        <div className="gmail-preview-container ">
-          <div className="email-content">
-            <div className="email-header">No Email found</div>
+      ) : emailData ===""?
+      <div className="gmail-preview-container ">
+      <div className="email-content">
+        <div className="email-header">
           </div>
-        </div>
-      ) : (
+          </div>:(
         <div className="gmail-preview-container ">
           <div className="email-content">
             <div className="email-header">

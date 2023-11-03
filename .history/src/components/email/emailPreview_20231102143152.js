@@ -79,7 +79,7 @@ const PreviewEmail = ({ id }) => {
       ) : emailData === "" ? (
         <div className="gmail-preview-container ">
           <div className="email-content">
-            <div className="email-header">No Email found</div>
+            <div className="email-header">No Email Found</div>
           </div>
         </div>
       ) : (
@@ -109,9 +109,11 @@ const PreviewEmail = ({ id }) => {
                   <>
                     {item.ext_type === "pdf" ? (
                       <Link
-                        onClick={() => {
-                          openPDFInNewTab(item.file_data);
-                        }}
+                        // onClick={() => {
+                        //   openPDFInNewTab(item.file_data);
+                        // }}
+                        target="_blank"
+                        to={`data:application/pdf;base64,${item.file_data}`}
                       >
                         <img
                           key={index}
