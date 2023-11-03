@@ -869,7 +869,7 @@ const NewUserProfile = (props) => {
                     >
                       {/*----About Employee----*/}
                       <div className="row m-0">
-                        <div className="col-md-8 p-8 d-none">
+                        <div className="col-md-12 p-8">
                           <div className="d-flex align-items-center rounded bg-light p-8">
                             <Link
                               className="position-relative text-white"
@@ -982,6 +982,74 @@ const NewUserProfile = (props) => {
                                   )}
                                 </DropdownButton>
                               )}
+                            </div>
+                            <div
+                              className="d-flex flex-wrap"
+                              style={{ gap: "10px" }}
+                            >
+                              {!PersonalDetail.email ||
+                              user_type === "company" ? null : (
+                                <div>
+                                  <Link
+                                    className="text-dark font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                    to={`mailto:${PersonalDetail.email}`}
+                                  >
+                                    <BsEnvelope className="text-white font-size-5 mr-4" />
+                                    {PersonalDetail.email}
+                                  </Link>
+                                </div>
+                              )}
+                              {!PersonalDetail.contact_no ||
+                              user_type === "company" ? null : (
+                                <div>
+                                  <Link
+                                    className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                    to={`tel:${PersonalDetail.contact_no}`}
+                                  >
+                                    <BiPhoneCall className="text-white font-size-5 mr-4" />
+                                    {PersonalDetail.contact_no}
+                                  </Link>
+                                </div>
+                              )}
+                              {PersonalDetail.resume ? (
+                                <Link
+                                  className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                  to={""}
+                                  onClick={() =>
+                                    handleViewResume(PersonalDetail.resume)
+                                  }
+                                >
+                                  Resume
+                                </Link>
+                              ) : null}
+                              <button
+                                className="font-size-5 text-break btn btn-secondary text-white btn-rounded"
+                                to={""} // You should specify a valid URL here
+                                onClick={() =>
+                                  ResumeClick(PersonalDetail.employee_id)
+                                }
+                                disabled={
+                                  PersonalDetail.name === null ||
+                                  PersonalDetail.name === undefined ||
+                                  PersonalDetail.name === "" ||
+                                  userDetail.skill === undefined ||
+                                  userDetail.skill.length === 0 ||
+                                  userDetail.education === undefined ||
+                                  userDetail.education.length === 0
+                                }
+                              >
+                                {PersonalDetail.name === null ||
+                                PersonalDetail.name === undefined ||
+                                PersonalDetail.name === "" ||
+                                userDetail.skill === undefined ||
+                                userDetail.skill.length === 0 ||
+                                userDetail.education === undefined ||
+                                userDetail.education.length === 0
+                                  ? user_type === "user"
+                                    ? "Complete your Profile"
+                                    : "incomplete Profile"
+                                  : "Generated Resume"}
+                              </button>
                             </div>
                           </div>
                         </div>
