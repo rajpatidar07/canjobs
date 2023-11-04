@@ -1277,7 +1277,9 @@ const NewUserProfile = (props) => {
                               </h4>
                               {userDetail.education === undefined ||
                               userDetail.education.length === 0 ? (
-                                <div>Add Education Details</div>
+                                <div className="w-100 card p-5 shadow-8 border-0 mb-2">
+                                  Add Education Details
+                                </div>
                               ) : (
                                 (userDetail.education || []).map(
                                   (EducationDetails, index) => (
@@ -1358,7 +1360,9 @@ const NewUserProfile = (props) => {
 
                               {userDetail.career === undefined ||
                               userDetail.career.length === 0 ? (
-                                <div>Add Career Details</div>
+                                <div className="w-100 card p-5 shadow-8 border-0 mb-2">
+                                  Add Career Details
+                                </div>
                               ) : (
                                 (userDetail.career || []).map(
                                   (CareerDetails, i) => (
