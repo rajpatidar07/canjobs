@@ -8,6 +8,7 @@ import Loader from "../common/loader";
 // import AdminHeader from "../admin/header";
 import { /*useNavigate,*/ Link } from "react-router-dom";
 const PreviewEmail = ({ id, emailType }) => {
+  console.log(emailType);
   /* states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);

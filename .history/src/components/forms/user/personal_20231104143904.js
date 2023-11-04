@@ -731,27 +731,20 @@ function PersonalDetails(props) {
                     >
                       Country Of Residence:
                     </label>
-                    <select
+                    <input
                       maxLength={60}
                       type="text"
                       className={
                         errors.currently_located_country
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                          ? "form-control border border-danger"
+                          : "form-control"
                       }
                       placeholder="Currently Located Country"
                       id="currently_located_country"
                       name="currently_located_country"
                       value={state.currently_located_country || ""}
                       onChange={onInputChange}
-                    >
-                      <option value={""}>Select Country</option>
-                      {(FilterJson.location || []).map((item, i) => (
-                        <option value={item} key={i}>
-                          {item}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     {/*----ERROR MESSAGE FOR COUNTRY----*/}
                     {errors.currently_located_country && (
                       <span
@@ -784,7 +777,7 @@ function PersonalDetails(props) {
                       placeholder="Language"
                       id="language"
                     >
-                      <option value={""}>Level</option>
+                      <option value={""}>Known Language</option>
                       <option value={"no english"}> No English</option>
                       <option value={"basic"}>Basic</option>
                       <option value={"medium"}>Medium</option>

@@ -589,7 +589,7 @@ const NewUserProfile = (props) => {
                         {PersonalDetail.work_permit_other_country ? (
                           <div className="info_box text-left">
                             <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                              Work Status: {"  "}
+                              Candidate Status: {"  "}
                               <b>{PersonalDetail.work_permit_other_country}</b>
                             </span>
                           </div>
@@ -1093,6 +1093,7 @@ const NewUserProfile = (props) => {
                                         >
                                           Canada Work Permit:
                                           <b>
+                                            {" "}
                                             {PersonalDetail.work_permit_canada}
                                           </b>
                                         </span>
@@ -1101,8 +1102,9 @@ const NewUserProfile = (props) => {
                                     {PersonalDetail.work_permit_other_country ? (
                                       <div className="info_box text-left">
                                         <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                          Work Status:
+                                          Candidate Status:
                                           <b>
+                                            {" "}
                                             {
                                               PersonalDetail.work_permit_other_country
                                             }

@@ -784,7 +784,7 @@ function PersonalDetails(props) {
                       placeholder="Language"
                       id="language"
                     >
-                      <option value={""}>Level</option>
+                      <option value={""}>level</option>
                       <option value={"no english"}> No English</option>
                       <option value={"basic"}>Basic</option>
                       <option value={"medium"}>Medium</option>

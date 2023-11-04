@@ -25,10 +25,10 @@ const MainEmailPage = () => {
   const EmailData = async () => {
     try {
       let userData;
-      if (emailType === "SENT") {
-        userData = await ReadSentEmail(currentPage, recordsPerPage, search);
-      } else userData = await ReadEmail(currentPage, recordsPerPage, search);
-      // console.log(userData);
+      emailType === "SENT"
+        ? await ReadSentEmail(currentPage, recordsPerPage, search)
+        : (userData = await ReadEmail(currentPage, recordsPerPage, search));
+      console.log(userData.data);
       if (
         userData.messsage === "No data found" ||
         userData.status === "0" ||

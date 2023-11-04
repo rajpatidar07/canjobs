@@ -7,7 +7,7 @@ import {
   AddEmployeeDetails,
   EmployeeDetails,
   GetAgentJson,
-  // GetFilter,
+  GetFilter,
   // AddEmployeePermission,
 } from "../../../api/api";
 import { toast } from "react-toastify";
@@ -23,7 +23,7 @@ function PersonalDetails(props) {
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
-  // const [jsonList, setJsonList] = useState([]);
+  const [jsonList, setJsonList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   /*data and id states */
@@ -223,7 +223,7 @@ function PersonalDetails(props) {
     /*Function to get agent json list */
     let response = await GetAgentJson();
     try {
-      // let json = await GetFilter();
+      let json = await GetFilter();
       // console.log(json);
       if (Array.isArray(response)) {
         const options = response.map((option) => ({
@@ -232,7 +232,7 @@ function PersonalDetails(props) {
         }));
         setAgentList(options);
       }
-      // setJsonList(json.data.data);
+      setJsonList(json.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -731,27 +731,20 @@ function PersonalDetails(props) {
                     >
                       Country Of Residence:
                     </label>
-                    <select
+                    <input
                       maxLength={60}
                       type="text"
                       className={
                         errors.currently_located_country
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                          ? "form-control border border-danger"
+                          : "form-control"
                       }
                       placeholder="Currently Located Country"
                       id="currently_located_country"
                       name="currently_located_country"
                       value={state.currently_located_country || ""}
                       onChange={onInputChange}
-                    >
-                      <option value={""}>Select Country</option>
-                      {(FilterJson.location || []).map((item, i) => (
-                        <option value={item} key={i}>
-                          {item}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     {/*----ERROR MESSAGE FOR COUNTRY----*/}
                     {errors.currently_located_country && (
                       <span
@@ -784,7 +777,7 @@ function PersonalDetails(props) {
                       placeholder="Language"
                       id="language"
                     >
-                      <option value={""}>Level</option>
+                      <option value={""}>Known Language</option>
                       <option value={"no english"}> No English</option>
                       <option value={"basic"}>Basic</option>
                       <option value={"medium"}>Medium</option>
@@ -920,7 +913,7 @@ function PersonalDetails(props) {
                       onChange={onInputChange}
                       className={
                         errors.work_permit_canada
-                          ? "form-control  border border-danger"
+                          ? "form-control border border-danger"
                           : "form-control"
                       }
                       id="work_permit_canada"
@@ -957,8 +950,8 @@ function PersonalDetails(props) {
                       type="text"
                       className={
                         errors.work_permit_other_country
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                          ? "form-control border border-danger"
+                          : "form-control"
                       }
                       placeholder="Permit of Other Country"
                       id="work_permit_other_country"

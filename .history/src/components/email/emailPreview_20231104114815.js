@@ -7,7 +7,7 @@ import Loader from "../common/loader";
 // import AdminSidebar from "../admin/sidebar";
 // import AdminHeader from "../admin/header";
 import { /*useNavigate,*/ Link } from "react-router-dom";
-const PreviewEmail = ({ id, emailType }) => {
+const PreviewEmail = ({ id }) => {
   /* states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -16,7 +16,7 @@ const PreviewEmail = ({ id, emailType }) => {
   const EmailData = async () => {
     setIsLoading(true);
     try {
-      const Res = await GetPreviewEmail(emailType, id);
+      const Res = await GetPreviewEmail(id);
       // console.log(Res.data);
       if (
         Res.messsage === "No data found" ||
@@ -97,9 +97,11 @@ const PreviewEmail = ({ id, emailType }) => {
                     dangerouslySetInnerHTML={{
                       __html: atob(emailData.body_data),
                     }}
-                  />
+                  >
+                    1
+                  </div>
                 ) : (
-                  <p>{emailData.body_data}</p>
+                  <p>{emailData.body_data} 2</p>
                 ))}
             </div>
             <div className="attachments">

@@ -1093,6 +1093,7 @@ const NewUserProfile = (props) => {
                                         >
                                           Canada Work Permit:
                                           <b>
+                                            {" "}
                                             {PersonalDetail.work_permit_canada}
                                           </b>
                                         </span>
@@ -1103,6 +1104,7 @@ const NewUserProfile = (props) => {
                                         <span className="font-size-3 text-smoke  mr-7 text-capitalize">
                                           Work Status:
                                           <b>
+                                            {" "}
                                             {
                                               PersonalDetail.work_permit_other_country
                                             }

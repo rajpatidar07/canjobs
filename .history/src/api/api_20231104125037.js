@@ -1706,6 +1706,7 @@ export const TestEmail = async (props) => {
 
 /*Api to get single  email preveiw */
 export const GetPreviewEmail = async (emailType, id) => {
+  alert(emailType);
   const response = await axios.post(
     `http://192.168.29.92/canjobs_latest/common/openEmail`,
     {
@@ -1726,26 +1727,6 @@ export const GetPreviewEmail = async (emailType, id) => {
 export const ReadEmail = async (page, limit, search, email) => {
   const response = await axios.post(
     `http://192.168.29.92/canjobs_latest/common/readEmail`,
-    {
-      // email_id: id,
-      page: page,
-      limit: limit,
-      filter_by_email_id: email,
-      search: search,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response.data;
-};
-/*Api to read Sent email */
-export const ReadSentEmail = async (page, limit, search, email) => {
-  const response = await axios.post(
-    `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
     {
       // email_id: id,
       page: page,

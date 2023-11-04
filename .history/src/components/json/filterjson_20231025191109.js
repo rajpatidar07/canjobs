@@ -714,13 +714,5 @@ const filterjson = {
     "file review": ["create account on authorized representative portal"],
     "file decision": ["awaiting decision", "approved", "rejected"],
   },
-  canadian_candidate_status: [
-    "Visitor",
-    "Student",
-    "Post Grad Work Permit",
-    "Open WorkPermit",
-    "LMIA Closed Work permit",
-    "Spousal Open Work Permit",
-  ],
 };
 export default filterjson;

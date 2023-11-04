@@ -37,22 +37,22 @@ const EmailList = ({
             <button
               type="button"
               className={
-                emailType === "SENT"
+                emailType === "sent"
                   ? "btn btn-primary"
                   : "btn btn-outline-primary"
               }
-              onClick={() => setEmailType("SENT")}
+              onClick={() => setEmailType("sent")}
             >
               Sent
             </button>
             <button
               type="button"
               className={
-                emailType === "INBOX"
+                emailType === "rec"
                   ? "btn btn-primary"
                   : "btn btn-outline-primary"
               }
-              onClick={() => setEmailType("INBOX")}
+              onClick={() => setEmailType("rec")}
             >
               Inbox
             </button>
@@ -294,9 +294,7 @@ const EmailList = ({
             </div>
           </div>
           <div className="table-responsive main_table_div col-md-6">
-            {emailId ? (
-              <PreviewEmail id={emailId} emailType={emailType} />
-            ) : null}
+            {emailId ? <PreviewEmail id={emailId} /> : null}
           </div>
         </div>
       </div>

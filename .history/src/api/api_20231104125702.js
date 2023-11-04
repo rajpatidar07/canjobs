@@ -1742,7 +1742,8 @@ export const ReadEmail = async (page, limit, search, email) => {
   );
   return response.data;
 };
-/*Api to read Sent email */
+/*Api to read email */
+
 export const ReadSentEmail = async (page, limit, search, email) => {
   const response = await axios.post(
     `http://192.168.29.92/canjobs_latest/common/readSentEmail`,

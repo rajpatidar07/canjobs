@@ -28,37 +28,37 @@ const EmailList = ({
   return (
     <div className="emails">
       <div className="email-list">
-        <div
-          className={`btn-group mb-5 `}
-          role="group"
-          aria-label="Basic example"
-        >
-          <div>
-            <button
-              type="button"
-              className={
-                emailType === "SENT"
-                  ? "btn btn-primary"
-                  : "btn btn-outline-primary"
-              }
-              onClick={() => setEmailType("SENT")}
-            >
-              Sent
-            </button>
-            <button
-              type="button"
-              className={
-                emailType === "INBOX"
-                  ? "btn btn-primary"
-                  : "btn btn-outline-primary"
-              }
-              onClick={() => setEmailType("INBOX")}
-            >
-              Inbox
-            </button>
-          </div>
-        </div>
         <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 row m-0 p-5 ">
+          <div
+            className={`btn-group mb-5 `}
+            role="group"
+            aria-label="Basic example"
+          >
+            <div>
+              <button
+                type="button"
+                className={
+                  emailType === "sent"
+                    ? "btn btn-primary"
+                    : "btn btn-outline-primary"
+                }
+                onClick={() => setEmailType("sent")}
+              >
+                Sent
+              </button>
+              <button
+                type="button"
+                className={
+                  emailType === "rec"
+                    ? "btn btn-primary"
+                    : "btn btn-outline-primary"
+                }
+                onClick={() => setEmailType("rec")}
+              >
+                Inbox
+              </button>
+            </div>
+          </div>
           <div className="table-responsive main_table_div col-md-6">
             {isLoading ? (
               <Loader />
@@ -294,9 +294,7 @@ const EmailList = ({
             </div>
           </div>
           <div className="table-responsive main_table_div col-md-6">
-            {emailId ? (
-              <PreviewEmail id={emailId} emailType={emailType} />
-            ) : null}
+            {emailId ? <PreviewEmail id={emailId} /> : null}
           </div>
         </div>
       </div>

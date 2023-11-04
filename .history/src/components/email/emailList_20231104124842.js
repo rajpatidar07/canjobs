@@ -290,13 +290,12 @@ const EmailList = ({
                 setCurrentPage={setCurrentPage}
                 total={totalData}
                 count={data.length}
+                emailType={emailType}
               />
             </div>
           </div>
           <div className="table-responsive main_table_div col-md-6">
-            {emailId ? (
-              <PreviewEmail id={emailId} emailType={emailType} />
-            ) : null}
+            {emailId ? <PreviewEmail id={emailId} /> : null}
           </div>
         </div>
       </div>

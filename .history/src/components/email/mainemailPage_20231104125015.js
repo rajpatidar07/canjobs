@@ -3,7 +3,7 @@ import EmailList from "./emailList";
 import { ToastContainer } from "react-toastify";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-import { ReadEmail, ReadSentEmail } from "../../api/api";
+import { ReadEmail } from "../../api/api";
 const MainEmailPage = () => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -25,10 +25,8 @@ const MainEmailPage = () => {
   const EmailData = async () => {
     try {
       let userData;
-      if (emailType === "SENT") {
-        userData = await ReadSentEmail(currentPage, recordsPerPage, search);
-      } else userData = await ReadEmail(currentPage, recordsPerPage, search);
-      // console.log(userData);
+      userData = await ReadEmail(currentPage, recordsPerPage, search);
+      // console.log(userData.data);
       if (
         userData.messsage === "No data found" ||
         userData.status === "0" ||
@@ -61,7 +59,6 @@ const MainEmailPage = () => {
     recordsPerPage,
     search /*, columnName, sortOrder*/,
     apiCall,
-    emailType,
   ]);
 
   /*Pagination Calculation */

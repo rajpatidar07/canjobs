@@ -736,8 +736,8 @@ function PersonalDetails(props) {
                       type="text"
                       className={
                         errors.currently_located_country
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                          ? "form-control border border-danger"
+                          : "form-control"
                       }
                       placeholder="Currently Located Country"
                       id="currently_located_country"
@@ -745,7 +745,7 @@ function PersonalDetails(props) {
                       value={state.currently_located_country || ""}
                       onChange={onInputChange}
                     >
-                      <option value={""}>Select Country</option>
+                      <option value={""}>Select status</option>
                       {(FilterJson.location || []).map((item, i) => (
                         <option value={item} key={i}>
                           {item}
@@ -784,7 +784,7 @@ function PersonalDetails(props) {
                       placeholder="Language"
                       id="language"
                     >
-                      <option value={""}>Level</option>
+                      <option value={""}>Known Language</option>
                       <option value={"no english"}> No English</option>
                       <option value={"basic"}>Basic</option>
                       <option value={"medium"}>Medium</option>

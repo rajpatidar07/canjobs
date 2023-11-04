@@ -29,7 +29,7 @@ const PreviewEmail = ({ id, emailType }) => {
         setIsLoading(false);
       } else {
         setemailData(Res.data);
-        // setTotalData(Res.data.total_rows);
+        setTotalData(Res.data.total_rows);
         setIsLoading(false);
       }
     } catch (err) {

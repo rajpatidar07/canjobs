@@ -99,7 +99,7 @@ const PreviewEmail = ({ id, emailType }) => {
                     }}
                   />
                 ) : (
-                  <p>{emailData.body_data}</p>
+                  <p>{typeof emailData.body_data}</p>
                 ))}
             </div>
             <div className="attachments">
