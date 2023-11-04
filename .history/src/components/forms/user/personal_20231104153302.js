@@ -967,7 +967,7 @@ function PersonalDetails(props) {
                       onChange={onInputChange}
                     >
                       <option value={""}>Select status</option>
-                      {(FilterJson.canadian_candidate_work_status || []).map(
+                      {(FilterJson.canadian_candidate_status || []).map(
                         (item, i) => (
                           <option value={item} key={i}>
                             {item}
