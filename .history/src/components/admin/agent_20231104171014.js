@@ -4,13 +4,11 @@ import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AddAgent from "../forms/admin/addAgent";
 // import { GetFilter } from "../../api/api";
 import AgentTable from "../common/agentTable";
 // import FilterJson from "../json/filterjson";
 function Agent() {
   /*Show modal states */
-  let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   /*data and id states */
   let [agentId, setAgentId] = useState();
@@ -79,7 +77,6 @@ function Agent() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Agent"} />
         <ToastContainer />
-        {/* <!--Add Adgent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
           <div className="container-fluid">
@@ -214,21 +211,13 @@ function Agent() {
                 // experienceFilterValue={experienceFilterValue}
                 // educationFilterValue={educationFilterValue}
                 // skillFilterValue={skillFilterValue}
-                apiCall={apiCall}
-                setApiCall={setApiCall}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 EditAgent={EditAgent}
+                showAddEAgentModal={showAddEAgentModal}
+                agentId={agentId}
+                setShowAgentMOdal={setShowAgentMOdal}
               />
-              {showAddEAgentModal ? (
-                <AddAgent
-                  show={showAddEAgentModal}
-                  agentId={agentId}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  close={() => setShowAgentMOdal(false)}
-                />
-              ) : null}
             </div>
           </div>
         </div>

@@ -247,6 +247,7 @@ function AddAgent(props) {
       <Modal
         show={props.show}
         size="md"
+        // className="position-relative"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >

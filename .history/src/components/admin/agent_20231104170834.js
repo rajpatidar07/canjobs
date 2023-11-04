@@ -79,7 +79,6 @@ function Agent() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Agent"} />
         <ToastContainer />
-        {/* <!--Add Adgent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
           <div className="container-fluid">
@@ -219,16 +218,11 @@ function Agent() {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 EditAgent={EditAgent}
+                showAddEAgentModal={showAddEAgentModal}
+                agentId={agentId}
+                setApiCall={setApiCall}
+                setShowAgentMOdal={setShowAgentMOdal}
               />
-              {showAddEAgentModal ? (
-                <AddAgent
-                  show={showAddEAgentModal}
-                  agentId={agentId}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  close={() => setShowAgentMOdal(false)}
-                />
-              ) : null}
             </div>
           </div>
         </div>

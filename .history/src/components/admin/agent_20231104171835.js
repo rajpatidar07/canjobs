@@ -80,8 +80,16 @@ function Agent() {
         <AdminSidebar heading={"Manage Agent"} />
         <ToastContainer />
         {/* <!--Add Adgent Details Modal --> */}
-
-        <div className={"dashboard-main-container mt-16"} id="dashboard-body">
+        {showAddEAgentModal ? (
+          <AddAgent
+            show={showAddEAgentModal}
+            agentId={agentId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => setShowAgentMOdal(false)}
+          />
+        ) : null}
+        <div className={"dashboard-main-container mt-16"}>
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -220,15 +228,6 @@ function Agent() {
                 setpageNo={setpageNo}
                 EditAgent={EditAgent}
               />
-              {showAddEAgentModal ? (
-                <AddAgent
-                  show={showAddEAgentModal}
-                  agentId={agentId}
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  close={() => setShowAgentMOdal(false)}
-                />
-              ) : null}
             </div>
           </div>
         </div>

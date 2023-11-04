@@ -77,7 +77,7 @@ export default function ContactPage(props) {
               <div className="col-md-4 ">
                 <img
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                  className="card-img mx-2 mb-2"
+                  className="card-img mx-2 mb-2 mt-2"
                   alt="Profile"
                 />
               </div>
@@ -108,7 +108,7 @@ export default function ContactPage(props) {
               <div className="col-md-4 ">
                 <img
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                  className="card-img mx-2 mb-2"
+                  className="card-img mx-2 mb-2 mt-2"
                   alt="Profile"
                 />
               </div>

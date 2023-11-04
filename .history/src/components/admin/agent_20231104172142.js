@@ -228,7 +228,8 @@ function Agent() {
                   setApiCall={setApiCall}
                   close={() => setShowAgentMOdal(false)}
                 />
-              ) : null}
+              ) : null}{" "}
+              size="lg"
             </div>
           </div>
         </div>

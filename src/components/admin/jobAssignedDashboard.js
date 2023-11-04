@@ -106,7 +106,9 @@ export default function JobAssignedDashboard() {
                 <small className="text-danger">{searcherror}</small>
               </div>
               {isLoading ? (
-                <Loader />
+                <div className="table-responsive main_table_div">
+                  <Loader />
+                </div>
               ) : (
                 <div className="row p-3 w-100 m-0">
                   <Accordion
