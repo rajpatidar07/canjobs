@@ -835,7 +835,7 @@ const NewUserProfile = (props) => {
                       className={
                         user_type === "user" || user_type === "company"
                           ? "d-none"
-                          : "tab-menu-items nav-item "
+                          : "tab-menu-items nav-item d-none"
                       }
                     >
                       <Link
@@ -858,7 +858,7 @@ const NewUserProfile = (props) => {
                       className={
                         user_type === "user" || user_type === "company"
                           ? "d-none"
-                          : "tab-menu-items nav-item d-none"
+                          : "tab-menu-items nav-item"
                       }
                     >
                       <Link
