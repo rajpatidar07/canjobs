@@ -1,73 +1,6 @@
-import React, { /*useEffect,*/ useState } from "react";
-import useValidation from "./useValidation";
-import { SendEmail } from "../../api/api";
-import { toast } from "react-toastify";
+import React from "react";
+import SendMailForm from "../forms/user/sendMailForm";
 export default function ContactPage(props) {
-  const [loading, setLoading] = useState(false);
-
-  /*Render function to get the Response*/
-  // useEffect(() => {
-  // }, []);
-
-  // INITIAL STATE ASSIGNMENT
-  const initialFormState = {
-    subject: "",
-    description: "",
-    email: props.email,
-  };
-
-  /*Validation */
-  let validators = {
-    subject: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Subject is required"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Subject can not have a number."
-          : value.length < 2
-          ? "Subject should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
-    ],
-    description: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Description is required"
-          : // : /[-]?\d+(\.\d+)?/.test(value)
-          // ? "Description can not have a number."
-          value.length < 5
-          ? "Description should have 2 or more letters"
-          : // : /[^A-Za-z 0-9]/g.test(value)
-            // ? "Cannot use special character "
-            "",
-    ],
-  };
-  // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
-
-  /*Function to sent email*/
-  const onContactusClick = async () => {
-    if (validate()) {
-      try {
-        setLoading(true);
-        let Response = await SendEmail(state);
-        if (Response.message === "email sent successfully") {
-          toast.success("Email sent successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setLoading(false);
-          setState(initialFormState);
-          setErrors("");
-        }
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    }
-  };
   return (
     <div className="activity_container profile_id_card">
       <div className="row m-0">
@@ -135,7 +68,8 @@ export default function ContactPage(props) {
         </div>
         <div className="p-10 col">
           <h5>Send Email to Us</h5>
-          <form>
+          <SendMailForm email={props.email} />
+          {/* <form>
             <div className="row pt-7">
               <div className="form-group col-12 p-0">
                 <label
@@ -160,7 +94,7 @@ export default function ContactPage(props) {
                     id="subject"
                   />
                 </div>
-                {/*----ERROR MESSAGE FOR name----*/}
+                ----ERROR MESSAGE FOR name----
                 {errors.subject && (
                   <span
                     key={errors.subject}
@@ -200,7 +134,7 @@ export default function ContactPage(props) {
                       placeholder="Add Note here"
                     ></textarea>
                   </div>
-                  {/*----ERROR MESSAGE FOR DESRIPTION----*/}
+                  ----ERROR MESSAGE FOR DESRIPTION----
                   {errors.description && (
                     <span
                       key={errors.description}
@@ -236,7 +170,7 @@ export default function ContactPage(props) {
                 )}
               </div>
             </div>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>
