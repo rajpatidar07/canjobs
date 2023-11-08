@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import PreviewEmail from "./emailPreview";
 import SendMailForm from "../forms/user/sendMailForm";
 import { BsFillPencilFill } from "react-icons/bs";
-import { ImCross } from "react-icons/im";
 import moment from "moment";
 const EmailList = ({
   data,
@@ -76,9 +75,7 @@ const EmailList = ({
                 }}
               >
                 {sentEmail === "yes" ? (
-                  <div>
-                    Cancel <ImCross />
-                  </div>
+                  "Cancel"
                 ) : (
                   <div>
                     Compose <BsFillPencilFill />

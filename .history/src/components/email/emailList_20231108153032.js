@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import PreviewEmail from "./emailPreview";
 import SendMailForm from "../forms/user/sendMailForm";
 import { BsFillPencilFill } from "react-icons/bs";
-import { ImCross } from "react-icons/im";
-import moment from "moment";
 const EmailList = ({
   data,
   isLoading,
@@ -76,9 +74,7 @@ const EmailList = ({
                 }}
               >
                 {sentEmail === "yes" ? (
-                  <div>
-                    Cancel <ImCross />
-                  </div>
+                  "Cancel"
                 ) : (
                   <div>
                     Compose <BsFillPencilFill />
@@ -99,22 +95,6 @@ const EmailList = ({
                     <tr className="">
                       <th
                         scope="col"
-                        className="border-0 font-size-4 font-weight-normal"
-                      >
-                        <Link
-                          to={""}
-                          // onClick={() => {
-                          //   handleSort("contact_no");
-                          //   props.setpageNo(1);
-                          // }}
-                          className="text-gray"
-                          title="Sort by Contact"
-                        >
-                          Sender
-                        </Link>
-                      </th>
-                      <th
-                        scope="col"
                         className=" border-0 font-size-4 font-weight-normal"
                       >
                         <Link
@@ -127,6 +107,22 @@ const EmailList = ({
                           title="Sort by Name"
                         >
                           Subject
+                        </Link>
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-0 font-size-4 font-weight-normal"
+                      >
+                        <Link
+                          to={""}
+                          // onClick={() => {
+                          //   handleSort("contact_no");
+                          //   props.setpageNo(1);
+                          // }}
+                          className="text-gray"
+                          title="Sort by Contact"
+                        >
+                          Sender
                         </Link>
                       </th>
 
@@ -186,37 +182,8 @@ const EmailList = ({
                                 : null
                             }
                           >
-                            {
-                              // props.heading === "Dashboard" ? (
-                              //   ""
-                              // ) :
-                              <td className=" py-5">
-                                {email.sender === null ? (
-                                  <p className="font-size-3  mb-0">N/A</p>
-                                ) : (
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                    <p className="text-gray font-size-2 m-0">
-                                      <Link
-                                        className="text-dark"
-                                        to={`mailto:${email.sender}`}
-                                      >
-                                        {email.seen === "1" ||
-                                        email.seen === 1 ? (
-                                          email.sender
-                                        ) : (
-                                          <b>{email.sender}</b>
-                                        )}
-                                      </Link>
-                                    </p>
-                                  </h3>
-                                )}
-                              </td>
-                            }
                             <td className="py-5 ">
-                              {email.subject === null ||
-                              email.subject === "" ||
-                              email.subject === undefined ||
-                              email.subject === "undefined" ? (
+                              {email.subject === null ? (
                                 <p className="font-size-3 mb-0">N/A</p>
                               ) : (
                                 <Link
@@ -251,18 +218,41 @@ const EmailList = ({
                               //   ""
                               // ) :
                               <td className=" py-5">
+                                {email.sender === null ? (
+                                  <p className="font-size-3  mb-0">N/A</p>
+                                ) : (
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                    <p className="text-gray font-size-2 m-0">
+                                      <Link
+                                        className="text-dark"
+                                        to={`mailto:${email.sender}`}
+                                      >
+                                        {email.seen === "1" ||
+                                        email.seen === 1 ? (
+                                          email.sender
+                                        ) : (
+                                          <b>{email.sender}</b>
+                                        )}
+                                      </Link>
+                                    </p>
+                                  </h3>
+                                )}
+                              </td>
+                            }
+
+                            {
+                              // props.heading === "Dashboard" ? (
+                              //   ""
+                              // ) :
+                              <td className=" py-5">
                                 {email.date === null || email.date === "" ? (
                                   <p className="font-size-2  mb-0">N/A</p>
                                 ) : (
                                   <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
                                     {email.seen === "1" || email.seen === 1 ? (
-                                      moment(email.date).format("DD-MM-YYYY")
+                                      email.date
                                     ) : (
-                                      <b>
-                                        {moment(email.date).format(
-                                          "DD-MM-YYYY"
-                                        )}
-                                      </b>
+                                      <b>{email.date}</b>
                                     )}
                                   </p>
                                 )}

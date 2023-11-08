@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import PreviewEmail from "./emailPreview";
 import SendMailForm from "../forms/user/sendMailForm";
 import { BsFillPencilFill } from "react-icons/bs";
-import { ImCross } from "react-icons/im";
-import moment from "moment";
 const EmailList = ({
   data,
   isLoading,
@@ -76,9 +74,7 @@ const EmailList = ({
                 }}
               >
                 {sentEmail === "yes" ? (
-                  <div>
-                    Cancel <ImCross />
-                  </div>
+                  "Cancel"
                 ) : (
                   <div>
                     Compose <BsFillPencilFill />
@@ -256,13 +252,9 @@ const EmailList = ({
                                 ) : (
                                   <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
                                     {email.seen === "1" || email.seen === 1 ? (
-                                      moment(email.date).format("DD-MM-YYYY")
+                                      email.date
                                     ) : (
-                                      <b>
-                                        {moment(email.date).format(
-                                          "DD-MM-YYYY"
-                                        )}
-                                      </b>
+                                      <b>{email.date}</b>
                                     )}
                                   </p>
                                 )}

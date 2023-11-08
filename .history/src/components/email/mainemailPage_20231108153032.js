@@ -46,13 +46,7 @@ const MainEmailPage = ({ email }) => {
         setIsLoading(false);
         setTotalData("");
       } else {
-        let reversedData = userData.data.slice(); // Create a copy of the array
-        if (emailType === "SENT") {
-          reversedData.reverse(); // Reverse the array if emailType is "SENT"
-        }
-
-        setemailData(reversedData);
-        // setemailData(userData.data);
+        setemailData(userData.data);
         setTotalData(userData.total);
         setIsLoading(false);
       }
