@@ -10,8 +10,9 @@ export default function ContactPage(props) {
               <div className="col-md-4 ">
                 <img
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                  className="card-img mx-2 mb-2 mt-2"
+                  className=" mx-2 mb-2 mt-2"
                   alt="Profile"
+                  width={"95%"}
                 />
               </div>
               <div className="col-md-8">
@@ -41,8 +42,9 @@ export default function ContactPage(props) {
               <div className="col-md-4 ">
                 <img
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                  className="card-img mx-2 mb-2 mt-2"
+                  className=" mx-2 mb-2 mt-2"
                   alt="Profile"
+                  width={"95%"}
                 />
               </div>
               <div className="col-md-8">
