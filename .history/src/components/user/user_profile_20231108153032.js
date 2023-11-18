@@ -854,7 +854,13 @@ const NewUserProfile = (props) => {
                         Contact Us
                       </Link>
                     </li>
-                    <li className={"tab-menu-items nav-item"}>
+                    <li
+                      className={
+                        user_type === "user" || user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
                       <Link
                         className={
                           TabActive === "email"

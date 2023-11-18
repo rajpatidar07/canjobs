@@ -42,16 +42,8 @@ const EmailList = ({
           role="group"
           aria-label="Basic example"
         >
-          <div
-            className={` ${
-              user_type === "user" || user_type === "company" ? "" : "row"
-            }`}
-          >
-            <div
-              className={` ${
-                user_type === "user" || user_type === "company" ? "" : "col-11"
-              }`}
-            >
+          <div className="row">
+            <div className="col-11">
               <button
                 type="button"
                 className={

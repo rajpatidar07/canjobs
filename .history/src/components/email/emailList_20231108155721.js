@@ -21,9 +21,7 @@ const EmailList = ({
 }) => {
   const [emailId, setEmailId] = useState();
   const [sentEmail, setSentEmail] = useState("no");
-  let user_type = localStorage.getItem("userType");
 
-  /*Function to decode the email subject */
   function decodeEmailSubject(encodedSubject) {
     return decodeURIComponent(
       encodedSubject
@@ -42,16 +40,8 @@ const EmailList = ({
           role="group"
           aria-label="Basic example"
         >
-          <div
-            className={` ${
-              user_type === "user" || user_type === "company" ? "" : "row"
-            }`}
-          >
-            <div
-              className={` ${
-                user_type === "user" || user_type === "company" ? "" : "col-11"
-              }`}
-            >
+          <div className="row">
+            <div className="col-11">
               <button
                 type="button"
                 className={
@@ -75,11 +65,7 @@ const EmailList = ({
                 Inbox
               </button>
             </div>
-            <div
-              className={`${
-                user_type === "user" || user_type === "company" ? "d-none" : ""
-              } col-1`}
-            >
+            <div className="col-1">
               <button
                 type="button"
                 className={"btn btn-outline-primary "}

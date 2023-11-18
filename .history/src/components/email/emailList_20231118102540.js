@@ -43,13 +43,13 @@ const EmailList = ({
           aria-label="Basic example"
         >
           <div
-            className={` ${
-              user_type === "user" || user_type === "company" ? "" : "row"
+            className={`row ${
+              user_type === "user" || user_type === "company" ? "d-none" : ""
             }`}
           >
             <div
-              className={` ${
-                user_type === "user" || user_type === "company" ? "" : "col-11"
+              className={`col-11 ${
+                user_type === "user" || user_type === "company" ? "d-none" : ""
               }`}
             >
               <button

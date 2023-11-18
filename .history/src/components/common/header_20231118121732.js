@@ -161,63 +161,60 @@ function EmployeeHeader() {
                       Admin
                     </Link>
                   </li>
-                  {userType === "company" || userType === "user" ? (
-                    <>
-                      <li className="nav-item">
-                        <Link
-                          onClick={() => setShowSetting(true)}
-                          className="nav-link py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                          to=""
-                        >
-                          Settings
-                        </Link>
-                        {showSetting && (
-                          <Setting
-                            show={showSetting}
-                            close={() => setShowSetting(false)}
-                          />
-                        )}
-                      </li>
-                      <li className="nav-item">
-                        <Link
-                          className="nav-link py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                          to={
-                            userType === "user"
-                              ? `/${employee_id}`
-                              : userType === "company"
-                              ? "/company_detail"
-                              : null
-                          }
-                          onClick={
-                            userType === "company"
-                              ? () =>
-                                  localStorage.setItem("company_id", company_id)
-                              : null
-                          }
-                        >
-                          Profile
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link
-                          className="nav-linkht-1p2 text-uppercase"
-                          to=""
-                          onClick={() => {
-                            localStorage.clear(); // clear the local storage
-                            toast.error("Log Out Successfully", {
-                              position: toast.POSITION.TOP_RIGHT,
-                              autoClose: 1000,
-                            });
-                            navigate("/");
-                            window.location.reload();
-                          }}
-                        >
-                          {" "}
-                          Log out
-                        </Link>
-                      </li>
-                    </>
-                  ) : null}
+                  {userType === "company" || userType === "user" ? (<>
+  <li className="nav-item">
+                    <Link
+                      onClick={() => setShowSetting(true)}
+                      className="nav-link py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                      to=""
+                    >
+                      Settings
+                    </Link>
+                    {showSetting && (
+                      <Setting
+                        show={showSetting}
+                        close={() => setShowSetting(false)}
+                      />
+                    )}
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
+                      to={
+                        userType === "user"
+                          ? `/${employee_id}`
+                          : userType === "company"
+                          ? "/company_detail"
+                          : null
+                      }
+                      onClick={
+                        userType === "company"
+                          ? () => localStorage.setItem("company_id", company_id)
+                          : null
+                      }
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-linkht-1p2 text-uppercase"
+                      to=""
+                      onClick={() => {
+                        localStorage.clear(); // clear the local storage
+                        toast.error("Log Out Successfully", {
+                          position: toast.POSITION.TOP_RIGHT,
+                          autoClose: 1000,
+                        });
+                        navigate("/");
+                        window.location.reload();
+                      }}
+                    >
+                      {" "}
+                      Log out
+                    </Link>
+                  </li>
+                  v):null}
                 </ul>
               )}
             </div>
