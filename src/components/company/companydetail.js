@@ -24,7 +24,7 @@ function CompanyDetailPage(props) {
           setEmployerData(userData.data.company_detail[0]);
         }
       } catch (err) {
-       console.log(err) 
+        console.log(err);
       }
     };
     if (props.employerId !== "0" || props.employerId !== undefined) {
@@ -40,30 +40,19 @@ function CompanyDetailPage(props) {
             : "company_info"
         }
       >
-        {props.page === "company_profile" ? null : (
-          <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-            <span>Contact Info</span>
-            <CustomButton
-              className={
-                " font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
-              }
-              onClick={() => setContactDetails(true)}
-            >
-              <PiPencilDuotone />
-            </CustomButton>
-          </h4>
-        )}
         {employerData.contact_person_name === null ||
         employerData.contact_person_name === undefined ||
         employerData.contact_person_name === "undefined" ? (
-          <div className="pt-5 text-left row m-0">
-            <div className="font-size-4 mr-7 mb-2">No Data Found</div>
+          <div className="text-left row m-0">
+            <div className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7">
+              No Data Found
+            </div>
           </div>
         ) : (
-          <div className="pt-5 text-left row m-0">
+          <div className="text-left row m-0">
             {employerData.contact_person_name ? (
               <div
-                className="font-size-4 mr-7 mb-2"
+                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Contact Person Name"
               >
                 <i className="fas fa-user mr-2"></i>
@@ -71,13 +60,19 @@ function CompanyDetailPage(props) {
               </div>
             ) : null}
             {employerData.designation ? (
-              <div className="font-size-4 mr-7 mb-2" title="Designation">
+              <div
+                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                title="Designation"
+              >
                 <i className="fas fa-portrait mr-2"></i>
                 {employerData.designation}
               </div>
             ) : null}
             {employerData.email && props.page !== "company_profile" ? (
-              <div className="font-size-4 mr-7 mb-2" title="Email">
+              <div
+                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                title="Email"
+              >
                 <i className="fas fa-envelope mr-2"></i>
                 <Link className="text-dark" to={`mailto:${employerData.email}`}>
                   {employerData.email}
@@ -85,7 +80,10 @@ function CompanyDetailPage(props) {
               </div>
             ) : null}
             {employerData.contact_no && props.page !== "company_profile" ? (
-              <div className="font-size-4 mr-7 mb-2" title="Contact No">
+              <div
+                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                title="Contact No"
+              >
                 <i className="fas fa-phone-alt mr-2"></i>
                 <Link
                   className="text-dark"
@@ -97,7 +95,10 @@ function CompanyDetailPage(props) {
             ) : null}
             {employerData.contact_no_other &&
             props.page !== "company_profile" ? (
-              <div className="font-size-4 mr-7 mb-2" title="Contact No">
+              <div
+                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                title="Contact No"
+              >
                 <i className="fas fa-phone-alt mr-2"></i>
                 <Link
                   className="text-dark"
@@ -108,26 +109,41 @@ function CompanyDetailPage(props) {
               </div>
             ) : null}
             {employerData.address ? (
-              <div className="font-size-4 mr-7 mb-2" title="Address">
+              <div
+                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                title="Address"
+              >
                 <i className="fas fa-map-marker-alt mr-2"></i>
                 {employerData.address}
               </div>
-            ) : null}
+            ) : null}{" "}
+            {props.page === "company_profile" ? null : (
+              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                <span>Contact Info</span>
+                <CustomButton
+                  className={" font-size-3 rounded-3 btn-primary border-0"}
+                  onClick={() => setContactDetails(true)}
+                >
+                  <PiPencilDuotone />
+                </CustomButton>
+              </h4>
+            )}
           </div>
         )}
+        {props.page === "company_profile" ? (
+          <CustomButton
+            className={
+              user_type === "user"
+                ? "d-none"
+                : " font-size-3 rounded-3 btn-primary border-0"
+            }
+            onClick={() => setContactDetails(true)}
+          >
+            <PiPencilDuotone />
+          </CustomButton>
+        ) : null}
       </div>
-      {props.page === "company_profile" ? (
-        <CustomButton
-          className={
-            user_type === "user"
-              ? "d-none"
-              : " font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
-          }
-          onClick={() => setContactDetails(true)}
-        >
-          <PiPencilDuotone />
-        </CustomButton>
-      ) : null}
+
       {ContactDetails ? (
         <ContactInfo
           employerId={props.employerId}

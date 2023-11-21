@@ -317,54 +317,243 @@ function JobDetailpageAdmim(props) {
                     ) : (
                       <div
                         className={
-                          user_type === "admin" ? "row m-0" : "row m-0"
+                          user_type === "admin"
+                            ? "row m-0 p-8 overflow-hidden"
+                            : "row m-0 p-8 overflow-hidden"
                         }
                       >
                         {/* <!-- Company Profile --> */}
 
-                        <div className="text-capitalize company_detail_box w-100 row m-0">
-                          <div className="col-12 mb-1">
-                            <div className="bg-white  d-flex">
-                              <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
-                                <div className="text_box text-left">
-                                  <img
-                                    className="company_logo"
-                                    src={
-                                      jobData.logo === null
-                                        ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                                        : jobData.logo
-                                    }
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="text_box text-left w-100 text-capitalize">
-                                  <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
-                                    {jobData.job_title}
+                        <div className="text-capitalize company_detail_box w-100 m-0 bg-light rounded p-8 position-relative">
+                          <CustomButton
+                            className={
+                              user_type === "user" || jobData.length === 0
+                                ? "d-none"
+                                : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
+                            }
+                            onClick={() => setShowJobEditModal(true)}
+                          >
+                            <PiPencilDuotone />
+                          </CustomButton>
+                          <div className="col-md-12 col-sm-12 media align-items-center company_box media">
+                            <div className="text_box text-left">
+                              <img
+                                className="company_logo"
+                                src={
+                                  jobData.logo === null
+                                    ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                                    : jobData.logo
+                                }
+                                alt=""
+                              />
+                            </div>
+                            <div className="text_box text-left w-100 text-capitalize">
+                              <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
+                                {jobData.job_title}
+                              </h3>
+                              <hr class="my-3" />
+                              <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
+                                {!jobData.location &&
+                                !jobData.language &&
+                                !jobData.address ? (
+                                  ""
+                                ) : (
+                                  <>
+                                    <div className="info_box text-left text-capitalize">
+                                      {jobData.location ? (
+                                        <div
+                                          className="font-size-3 text-smoke mr-7"
+                                          title="Current Location"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/marker.svg"
+                                            alt="Location"
+                                          />
+                                          {jobData.your_duties},
+                                          {jobData.industry_type}
+                                          {jobData.location}
+                                        </div>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    <div className="info_box text-left text-capitalize">
+                                      {jobData.language ? (
+                                        <div
+                                          className="font-size-3 text-smoke  mr-7"
+                                          title="User Language"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/language.svg"
+                                            alt="language"
+                                          />
+                                          {jobData.language}
+                                        </div>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    <div className="info_box text-left text-capitalize text-break">
+                                      {jobData.address ? (
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7"
+                                          title="Currently Located Country"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/address-book.svg"
+                                            alt="Address"
+                                          />
+                                          {jobData.address}
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                              <hr class="my-3" />
+                              <div className="">
+                                <div className="d-none">
+                                  <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                    <span>{/*Kyc Details*/}</span>
                                     <CustomButton
-                                      className={
-                                        user_type === "user" ||
-                                        jobData.length === 0
-                                          ? "d-none"
-                                          : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
-                                      }
+                                      className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                                       onClick={() => setShowJobEditModal(true)}
                                     >
                                       <PiPencilDuotone />
                                     </CustomButton>
-                                  </h3>
-                                  {/* <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
-                                    {jobData.department}
-                                  </p> */}
+                                  </h4>
                                 </div>
+                                {!jobData.industry &&
+                                !jobData.corporation &&
+                                !jobData.company_size &&
+                                !jobData.job_type &&
+                                !jobData.education &&
+                                !jobData.role_category &&
+                                !jobData.experience_required &&
+                                !jobData.department ? (
+                                  <div className="text-left row m-0">
+                                    <div className="font-size-3 mb-4 mr-10">
+                                      No Data Found
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="text-left row m-0">
+                                    {/* {jobData.industry ? (
+                                  <div
+                                    className="font-size-3 mb-4 mr-10"
+                                    title="Industry"
+                                  >
+                                    <i className="far fa-building mr-2"></i>
+                                    {jobData.industry}
+                                  </div>
+                                ) : null} */}
+
+                                    {jobData.corporation ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="Business Type"
+                                      >
+                                        <i className="fas fa-briefcase mr-2"></i>
+                                        {jobData.corporation}
+                                      </div>
+                                    ) : null}
+                                    {jobData.company_size ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="Company size"
+                                      >
+                                        <i className="fas fa-user-friends mr-2"></i>
+                                        {jobData.company_size}
+                                      </div>
+                                    ) : null}
+                                    {jobData.job_type ? (
+                                      <div
+                                        className="info_box text-left font-size-3 mb-4 mr-10"
+                                        title="Job Type"
+                                      >
+                                        <span className="font-size-3 text-smoke text-capitalize">
+                                          <b>Job Type </b> {jobData.job_type}
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                    {jobData.education ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="Edication"
+                                      >
+                                        <i className="fas fa-graduation-cap mr-2"></i>
+                                        <Link className="text-dark" to={""}>
+                                          {jobData.education}
+                                        </Link>
+                                      </div>
+                                    ) : null}
+                                    {jobData.role_category ? (
+                                      <div
+                                        className="font-size-3 mb-4 mr-10"
+                                        title="Hiring for"
+                                      >
+                                        <i className="fas fa-bullhorn mr-2"></i>
+                                        {jobData.role_category}
+                                      </div>
+                                    ) : null}
+                                    <div className="info_box text-left font-size-3 mb-4 mr-10 text-capitalize">
+                                      {jobData.experience_required ? (
+                                        <span
+                                          className="font-size-3 text-smoke"
+                                          title="Total Experience"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/envelope.svg"
+                                            alt="Email"
+                                          />
+                                          {jobData.experience_required} Years
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                    {jobData.salary ? (
+                                      <div className="info_box text-left font-size-3 mb-4 mr-10">
+                                        <span
+                                          className="font-size-3 text-smoke  text-capitalize"
+                                          title="Salary"
+                                        >
+                                          <b> Salary: </b>$ {jobData.salary}
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                    {jobData.department ? (
+                                      <div className="info_box text-left font-size-3 mb-4 mr-10">
+                                        <span
+                                          className="font-size-3 text-smoke text-capitalize"
+                                          title="NOC code"
+                                        >
+                                          <b> NOC Code: </b>
+                                          {jobData.department}
+                                        </span>
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                )}
                               </div>
                               {jobData.email ? (
-                                <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                                <div className="p-0 d-none">
                                   <div className="d-flex justify-content-between align-items-center">
                                     <Link
-                                      className="text-dark font-size-5 w-100 text-break"
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
                                       to={`mailto:${jobData.email}`}
                                     >
-                                      <BsEnvelope className="text-primary font-size-5 " />
+                                      <BsEnvelope className="text-secondary font-size-5 mr-2" />
                                       {jobData.email}
                                     </Link>
                                     {user_type === "admin" ||
@@ -392,84 +581,17 @@ function JobDetailpageAdmim(props) {
                               ) : (
                                 ""
                               )}
-                              <div className="col px-5 pt-5 pb-5  border-right position-relative">
-                                <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                                  {!jobData.location &&
-                                  !jobData.language &&
-                                  !jobData.address ? (
-                                    <div className="info_box text-left text-capitalize">
-                                      <span className="font-size-3 text-smoke  mr-7">
-                                        No Data FOund
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <>
-                                      <div className="info_box text-left text-capitalize">
-                                        {jobData.location ? (
-                                          <span
-                                            className="font-size-3 text-smoke  mr-7"
-                                            title="Current Location"
-                                          >
-                                            <img
-                                              className="mr-1"
-                                              height={"16px"}
-                                              src="image/icons/marker.svg"
-                                              alt="Location"
-                                            />
-                                            {jobData.your_duties},{" "}
-                                            {jobData.industry_type}
-                                            {jobData.location}
-                                          </span>
-                                        ) : (
-                                          ""
-                                        )}
-                                      </div>
-                                      <div className="info_box text-left text-capitalize">
-                                        {jobData.language ? (
-                                          <span
-                                            className="font-size-3 text-smoke  mr-7"
-                                            title="User Language"
-                                          >
-                                            <img
-                                              className="mr-1"
-                                              height={"16px"}
-                                              src="image/icons/language.svg"
-                                              alt="language"
-                                            />
-                                            {jobData.language}
-                                          </span>
-                                        ) : (
-                                          ""
-                                        )}
-                                      </div>
-                                      <div className="info_box text-left text-capitalize text-break">
-                                        {jobData.address ? (
-                                          <span
-                                            className="font-size-3 text-smoke  mr-7"
-                                            title="Currently Located Country"
-                                          >
-                                            <img
-                                              className="mr-1"
-                                              height={"16px"}
-                                              src="image/icons/address-book.svg"
-                                              alt="Address"
-                                            />
-                                            {jobData.address}
-                                          </span>
-                                        ) : (
-                                          ""
-                                        )}
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
+                              {/* <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
+                                    {jobData.department}
+                                  </p> */}
                             </div>
                           </div>
-                          <div className="col-md-6 col-lg-6 p-10 border-right">
+                        </div>
+                        <div className="text-capitalize company_detail_box w-100 m-0 mt-5 bg-light rounded p-8 position-relative">
+                          <div className="col-md-12 col-lg-12 p-0">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
-                                <span>About</span>
+                                Job Description
                                 {/* <CustomButton
                                   className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                                   onClick={() => setShowJobEditModal(true)}
@@ -488,12 +610,11 @@ function JobDetailpageAdmim(props) {
                                   </p>
                                 )}
                               </div>
-                              <div className="pt-5 pl-sm-9 pl-6 pb-10 light-mode-texts border-top border-width-1 border-default-color">
+                              <div className="pt-5 light-mode-texts border-top border-width-1 border-default-color">
                                 <div className="tags">
-                                  <p className="font-size-4 text-gray mb-0">
-                                    {" "}
-                                    Skill
-                                  </p>
+                                  <h4 className="text-black-2 mb-0 font-size-5 d-flex text-break align-items-center justify-content-space-between">
+                                    Skills
+                                  </h4>
                                   {skill.length > 0 ? (
                                     <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
                                       {(skill || []).map((skill) =>
@@ -514,133 +635,6 @@ function JobDetailpageAdmim(props) {
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="col-md-6 col-lg-6 p-10">
-                            <div>
-                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                                <span>{/*Kyc Details*/}</span>
-                                {/* <CustomButton
-                                  className="font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
-                                  onClick={() => setShowJobEditModal(true)}
-                                >
-                                  <PiPencilDuotone />
-                                </CustomButton> */}
-                              </h4>
-                            </div>
-                            {!jobData.industry &&
-                            !jobData.corporation &&
-                            !jobData.company_size &&
-                            !jobData.job_type &&
-                            !jobData.education &&
-                            !jobData.role_category &&
-                            !jobData.experience_required &&
-                            !jobData.department ? (
-                              <div className="pt-5 text-left row m-0">
-                                <div className="font-size-3 mb-4 mr-10">
-                                  No Data Found
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="pt-5 text-left row m-0">
-                                {/* {jobData.industry ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Industry"
-                                  >
-                                    <i className="far fa-building mr-2"></i>
-                                    {jobData.industry}
-                                  </div>
-                                ) : null} */}
-
-                                {jobData.corporation ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Business Type"
-                                  >
-                                    <i className="fas fa-briefcase mr-2"></i>
-                                    {jobData.corporation}
-                                  </div>
-                                ) : null}
-                                {jobData.company_size ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Company size"
-                                  >
-                                    <i className="fas fa-user-friends mr-2"></i>
-                                    {jobData.company_size}
-                                  </div>
-                                ) : null}
-                                {jobData.job_type ? (
-                                  <div
-                                    className="info_box text-left"
-                                    title="Job Type"
-                                  >
-                                    <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                      <b>Job Type </b> {jobData.job_type}
-                                    </span>
-                                  </div>
-                                ) : null}
-                                {jobData.education ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Edication"
-                                  >
-                                    <i className="fas fa-graduation-cap mr-2"></i>
-                                    <Link className="text-dark" to={""}>
-                                      {jobData.education}
-                                    </Link>
-                                  </div>
-                                ) : null}
-                                {jobData.role_category ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Hiring for"
-                                  >
-                                    <i className="fas fa-bullhorn mr-2"></i>
-                                    {jobData.role_category}
-                                  </div>
-                                ) : null}
-                                <div className="info_box text-left text-capitalize">
-                                  {jobData.experience_required ? (
-                                    <span
-                                      className="font-size-3 text-smoke  mr-7"
-                                      title="Total Experience"
-                                    >
-                                      <img
-                                        className="mr-1"
-                                        height={"16px"}
-                                        src="image/icons/envelope.svg"
-                                        alt="Email"
-                                      />
-                                      {jobData.experience_required} Years
-                                    </span>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                                {jobData.salary ? (
-                                  <div className="info_box text-left">
-                                    <span
-                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                      title="Salary"
-                                    >
-                                      <b> Salary: </b>$ {jobData.salary}
-                                    </span>
-                                  </div>
-                                ) : null}
-                                {jobData.department ? (
-                                  <div className="info_box text-left">
-                                    <span
-                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                      title="NOC code"
-                                    >
-                                      <b> NOC Code: </b>
-                                      {jobData.department}
-                                    </span>
-                                  </div>
-                                ) : null}
-                              </div>
-                            )}
                           </div>
                         </div>
                       </div>

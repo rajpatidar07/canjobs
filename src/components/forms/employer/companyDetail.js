@@ -265,8 +265,8 @@ function CompanyDetails(props) {
                   htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Company Name (as per Kyc)
-                  <span className="text-danger"> *</span>:
+                  Company’s Legal Name
+                  <span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
@@ -297,7 +297,7 @@ function CompanyDetails(props) {
                   htmlFor="franchise"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Franchise :
+                  Operating Name:
                 </label>
                 <div className="position-relative">
                   <input
@@ -330,7 +330,7 @@ function CompanyDetails(props) {
                   htmlFor="industry"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Industry<span className="text-danger"> *</span> :
+                  Industry<span className="text-danger">*</span>:
                 </label>
                 <select
                   name="industry"
@@ -403,7 +403,7 @@ function CompanyDetails(props) {
                   htmlFor="alias"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Alias :
+                  Alias:
                 </label>
                 <div className="position-relative">
                   <input
@@ -469,8 +469,8 @@ function CompanyDetails(props) {
                   htmlFor="company_size"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  No. of working official's{" "}
-                  <span className="text-danger"> *</span> :
+                  No. of working official's
+                  <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
                   <input
@@ -504,7 +504,7 @@ function CompanyDetails(props) {
                   htmlFor="website_url"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Website URL :
+                  Website URL:
                 </label>
                 <input
                   type="text"
@@ -535,7 +535,8 @@ function CompanyDetails(props) {
                   htmlFor="vacancy_for_post"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Vacancy For Post <span className="text-danger"> *</span> :
+                  Number of Advertisements Posted
+                  <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
                   <input

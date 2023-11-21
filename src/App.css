@@ -466,11 +466,11 @@ header.site-header.admin_header h3 {
 }
 
 .company_box {
-  max-width: 85%;
+  /* max-width: 85%; */
 }
 
 .company_box .company_logo {
-  max-height: 50px;
+  /* max-height: 50px; */
   margin-right: 10px;
   max-width: 150px;
 }

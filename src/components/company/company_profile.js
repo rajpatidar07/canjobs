@@ -121,7 +121,7 @@ function CompanyProfileDetail(props) {
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
-                <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
+                <div className="col-md-12 col-sm-12 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
                     <img
                       className="company_logo"
@@ -399,9 +399,9 @@ function CompanyProfileDetail(props) {
                       >
                         {/* <!-- Company Profile --> */}
 
-                        <div className="text-capitalize company_detail_box w-100 row m-0 ">
-                          <div className="col-12 bg-white  d-flex border-bottom">
-                            <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
+                        <div className="company_detail_box w-100 row m-0 p-8">
+                          <div className="bg-white row m-0 w-100 ">
+                            <div className="col-md-12 col-sm-12 p-0 media align-items-center company_box media bg-light rounded p-8">
                               <div className="text_box text-left">
                                 <img
                                   className="company_logo"
@@ -413,7 +413,7 @@ function CompanyProfileDetail(props) {
                                   alt=""
                                 />
                               </div>
-                              <div className="text_box text-left w-100 text-capitalize">
+                              <div className="text_box text-left w-100">
                                 <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                                   {employerData.company_name}
                                 </h3>
@@ -430,60 +430,196 @@ function CompanyProfileDetail(props) {
                                 <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
                                   {employerData.industry}
                                 </p>
-                              </div>
-                            </div>
-                            {!employerData.email || user_type === "user" ? (
-                              ""
-                            ) : (
-                              <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
-                                <div className="d-flex justify-content-between align-items-center">
-                                  <Link
-                                    className="text-dark font-size-5 w-100 text-break"
-                                    to={`mailto:${employerData.email}`}
-                                  >
-                                    <BsEnvelope className="text-primary font-size-5 " />
-                                    {employerData.email}
-                                  </Link>
-                                  {user_type === "admin" ||
-                                  props.self === "no" ? (
-                                    <CustomButton
-                                      title={"Send Custom Email"}
-                                      className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                      /*Functionalities have to be done. */
-                                    >
-                                      {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
-                                      <RiMailSendLine />
-                                    </CustomButton>
-                                  ) : null}
+                                <hr class="my-3" />
+                                <div className="position-relative">
+                                  <CompanyDetailPage
+                                    employerId={
+                                      user_type === "company" ? company_id : cid
+                                    }
+                                    page={"company_profile"}
+                                  />
                                 </div>
-                                <Link
-                                  className="text-dark font-size-5 w-100 text-break"
-                                  to={`tel:${employerData.contact_no}`}
-                                >
-                                  <BiPhoneCall className="text-primary font-size-5" />
-                                  {employerData.contact_no}
-                                </Link>
+                                <hr class="my-3" />
+                                <div className="position-relative">
+                                  {!employerData.industry &&
+                                  !employerData.corporation &&
+                                  !employerData.company_size &&
+                                  !employerData.company_start_date &&
+                                  !employerData.website_url &&
+                                  !employerData.vacancy_for_post &&
+                                  !employerKycData.pan_no &&
+                                  !employerKycData.tan_number &&
+                                  !employerKycData.gstin ? (
+                                    <div className="text-left row m-0">
+                                      <div className="font-size-4 mb-8 text-center mr-10">
+                                        No Data Found
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className="text-left row m-0">
+                                      {employerData.industry ? (
+                                        <div
+                                          className="font-size-3 mb-1 mr-10"
+                                          title="Industry"
+                                        >
+                                          <i className="far fa-building mr-2"></i>
+                                          {employerData.industry}
+                                        </div>
+                                      ) : null}
+                                      {employerData.corporation ? (
+                                        <div
+                                          className="font-size-3 mb-1 mr-10"
+                                          title="Business Type"
+                                        >
+                                          <i className="fas fa-briefcase mr-2"></i>
+                                          {employerData.corporation}
+                                        </div>
+                                      ) : null}
+                                      {employerData.company_size ? (
+                                        <div
+                                          className="font-size-3 mb-1 mr-10"
+                                          title="Company size"
+                                        >
+                                          <i className="fas fa-user-friends mr-2"></i>
+                                          {employerData.company_size}
+                                        </div>
+                                      ) : null}
+                                      {employerData.company_start_date ? (
+                                        <div
+                                          className="font-size-3 mb-1 mr-10"
+                                          title="Est. Since"
+                                        >
+                                          <i className="fas fa-business-time mr-2"></i>
+                                          {moment(
+                                            employerData.company_start_date
+                                          ).format("YYYY")}
+                                        </div>
+                                      ) : null}
+                                      {employerData.website_url ? (
+                                        <div
+                                          className="font-size-3 mb-1 mr-10"
+                                          title="Website URL"
+                                        >
+                                          <i className="fas fa-globe mr-2"></i>
+                                          <Link className="text-dark" to={""}>
+                                            {employerData.website_url}
+                                          </Link>
+                                        </div>
+                                      ) : null}
+                                      {employerData.vacancy_for_post ? (
+                                        <div
+                                          className="font-size-3 mb-1 mr-10"
+                                          title="Hiring for"
+                                        >
+                                          <i className="fas fa-bullhorn mr-2"></i>
+                                          {employerData.vacancy_for_post}
+                                        </div>
+                                      ) : null}
+                                      {employerKycData === "" ||
+                                      user_type === "user" ? null : (
+                                        <>
+                                          {employerKycData.pan_no ? (
+                                            <div
+                                              className="font-size-3 mb-1 mr-10"
+                                              title="PAN"
+                                            >
+                                              <span className="mr-2 font-weight-bold">
+                                                PAN
+                                              </span>
+                                              {employerKycData.pan_no}
+                                            </div>
+                                          ) : null}
+                                          {!employerKycData.tan_number ||
+                                          user_type === "user" ? null : (
+                                            <div
+                                              className="font-size-3 mb-1 mr-10"
+                                              title="TAN"
+                                            >
+                                              <span className="mr-2 font-weight-bold">
+                                                TAN
+                                              </span>
+                                              {employerKycData.tan_number}
+                                            </div>
+                                          )}
+                                          {!employerKycData.gstin ||
+                                          user_type === "user" ? null : (
+                                            <div
+                                              className="font-size-3 mb-1 mr-10"
+                                              title="GSTIN"
+                                            >
+                                              <span className="mr-2 font-weight-bold">
+                                                GSTIN
+                                              </span>
+                                              {employerKycData.gstin}
+                                            </div>
+                                          )}
+                                        </>
+                                      )}
+                                      <CustomButton
+                                        className={
+                                          user_type === "user"
+                                            ? "d-none"
+                                            : "font-size-3 rounded-3 btn-primary border-0"
+                                        }
+                                        onClick={() =>
+                                          setShowKycComplainDetailsModal(true)
+                                        }
+                                      >
+                                        <PiPencilDuotone />
+                                      </CustomButton>
+                                    </div>
+                                  )}
+                                </div>
+                                <hr class="my-3" />
+                                {!employerData.email || user_type === "user" ? (
+                                  ""
+                                ) : (
+                                  <div
+                                    className="d-flex"
+                                    style={{ gap: "10px" }}
+                                  >
+                                    <div className="d-flex justify-content-between align-items-center">
+                                      <Link
+                                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                        to={`mailto:${employerData.email}`}
+                                      >
+                                        <BsEnvelope className="text-secondary font-size-5 mr-2" />
+                                        {employerData.email}
+                                      </Link>
+                                      {user_type === "admin" ||
+                                      props.self === "no" ? (
+                                        <CustomButton
+                                          title={"Send Custom Email"}
+                                          className="font-size-4 rounded-3 btn-primary py-0 d-none"
+                                          /*Functionalities have to be done. */
+                                        >
+                                          {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                                          <RiMailSendLine />
+                                        </CustomButton>
+                                      ) : null}
+                                    </div>
+                                    <Link
+                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                      to={`tel:${employerData.contact_no}`}
+                                    >
+                                      <BiPhoneCall className="text-secondary font-size-5 mr-2" />
+                                      {employerData.contact_no}
+                                    </Link>
+                                  </div>
+                                )}
                               </div>
-                            )}
-                            <div className="col px-5 pt-5 pb-5 ">
-                              <CompanyDetailPage
-                                employerId={
-                                  user_type === "company" ? company_id : cid
-                                }
-                                page={"company_profile"}
-                              />
                             </div>
-                            {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">
-           
-            <CustomButton
-              className=" font-size-4 rounded-3 btn-primary border-0"
-              onClick={() => setShowDoc(true)}
-            >
-              Add Document
-            </CustomButton>
-          </div> */}
+
+                            {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">           
+                              <CustomButton
+                                className=" font-size-4 rounded-3 btn-primary border-0"
+                                onClick={() => setShowDoc(true)}
+                              >
+                                Add Document
+                              </CustomButton>
+                            </div> */}
                           </div>
-                          <div className="col-md-6 col-lg-6 p-10 border-right">
+                          <div className="col-md-12 col-lg-12 p-8 mt-5 bg-light rounded">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between text-break">
                                 <span>About {employerData.company_name}</span>
@@ -506,141 +642,6 @@ function CompanyProfileDetail(props) {
                                 )}
                               </div>
                             </div>
-                          </div>
-                          <div className="col-md-6 col-lg-6 p-10">
-                            <div>
-                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                                <span>{/*Kyc Details*/}</span>
-                                <CustomButton
-                                  className={
-                                    user_type === "user"
-                                      ? "d-none"
-                                      : "font-size-3 rounded-3 btn-primary border-0 absolute_top_right"
-                                  }
-                                  onClick={() =>
-                                    setShowKycComplainDetailsModal(true)
-                                  }
-                                >
-                                  <PiPencilDuotone />
-                                </CustomButton>
-                              </h4>
-                            </div>
-                            {!employerData.industry &&
-                            !employerData.corporation &&
-                            !employerData.company_size &&
-                            !employerData.company_start_date &&
-                            !employerData.website_url &&
-                            !employerData.vacancy_for_post &&
-                            !employerKycData.pan_no &&
-                            !employerKycData.tan_number &&
-                            !employerKycData.gstin ? (
-                              <div className="pt-5 text-left row m-0">
-                                <div className="font-size-4 mb-8 text-center mr-10">
-                                  No Data Found
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="pt-5 text-left row m-0">
-                                {employerData.industry ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Industry"
-                                  >
-                                    <i className="far fa-building mr-2"></i>
-                                    {employerData.industry}
-                                  </div>
-                                ) : null}
-                                {employerData.corporation ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Business Type"
-                                  >
-                                    <i className="fas fa-briefcase mr-2"></i>
-                                    {employerData.corporation}
-                                  </div>
-                                ) : null}
-                                {employerData.company_size ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Company size"
-                                  >
-                                    <i className="fas fa-user-friends mr-2"></i>
-                                    {employerData.company_size}
-                                  </div>
-                                ) : null}
-                                {employerData.company_start_date ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Est. Since"
-                                  >
-                                    <i className="fas fa-business-time mr-2"></i>
-                                    {moment(
-                                      employerData.company_start_date
-                                    ).format("YYYY")}
-                                  </div>
-                                ) : null}
-                                {employerData.website_url ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Website URL"
-                                  >
-                                    <i className="fas fa-globe mr-2"></i>
-                                    <Link className="text-dark" to={""}>
-                                      {employerData.website_url}
-                                    </Link>
-                                  </div>
-                                ) : null}
-                                {employerData.vacancy_for_post ? (
-                                  <div
-                                    className="font-size-3 mb-4 mr-10"
-                                    title="Hiring for"
-                                  >
-                                    <i className="fas fa-bullhorn mr-2"></i>
-                                    {employerData.vacancy_for_post}
-                                  </div>
-                                ) : null}
-                                {employerKycData === "" ||
-                                user_type === "user" ? null : (
-                                  <>
-                                    {employerKycData.pan_no ? (
-                                      <div
-                                        className="font-size-3 mb-4 mr-10"
-                                        title="PAN"
-                                      >
-                                        <span className="mr-2 font-weight-bold">
-                                          PAN
-                                        </span>
-                                        {employerKycData.pan_no}
-                                      </div>
-                                    ) : null}
-                                    {!employerKycData.tan_number ||
-                                    user_type === "user" ? null : (
-                                      <div
-                                        className="font-size-3 mb-4 mr-10"
-                                        title="TAN"
-                                      >
-                                        <span className="mr-2 font-weight-bold">
-                                          TAN
-                                        </span>
-                                        {employerKycData.tan_number}
-                                      </div>
-                                    )}
-                                    {!employerKycData.gstin ||
-                                    user_type === "user" ? null : (
-                                      <div
-                                        className="font-size-3 mb-4 mr-10"
-                                        title="GSTIN"
-                                      >
-                                        <span className="mr-2 font-weight-bold">
-                                          GSTIN
-                                        </span>
-                                        {employerKycData.gstin}
-                                      </div>
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                            )}
                           </div>
                         </div>
                       </div>

@@ -152,7 +152,7 @@ function ContactInfo(props) {
                   htmlFor="contact_person_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Contact Person Name: <span className="text-danger"> *</span>
+                  Contact Person Name:<span className="text-danger">*</span>
                 </label>
                 <input
                   maxLength={60}
@@ -305,7 +305,7 @@ function ContactInfo(props) {
                   name="pin_code"
                   value={state.pin_code || ""}
                   onChange={onInputChange}
-                  type="number"
+                  type="text"
                   min={0}
                   className={
                     errors.pin_code
