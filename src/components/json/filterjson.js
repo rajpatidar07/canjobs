@@ -277,8 +277,8 @@ const filterjson = {
     "other",
   ],
   qualification: [
-    "metric",
-    "post metric",
+    "grade 10",
+    "grade 12",
     "diploma",
     "graduate",
     "post graduate",

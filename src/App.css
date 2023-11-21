@@ -1177,3 +1177,9 @@ select.form-control.select_document_type {
   opacity: 1;
   display: block;
 }
+
+.education_btn_grp {
+  position: absolute;
+  display: block;
+  left: 100%;
+}

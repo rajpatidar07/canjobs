@@ -317,6 +317,11 @@ export default function DocumrentContainer(props) {
     "medical",
     "police_clearance",
     "refusal_letter",
+    "Employment Contract",
+    "Reference Letters",
+    "Client Info",
+    "Representative Submission Letter",
+    "Bank Statement",
   ];
 
   /*Render method */

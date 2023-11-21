@@ -232,33 +232,30 @@ function Education(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onEducationSubmitClick}>
             <h5 className="text-center pt-2 mb-7">Education Details</h5>
-            <div className="row mb-5">
+            <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
               {(educationData || []).map((education) => (
                 <div
-                  className="col-12 text-capitalize"
+                  className="col-12 text-capitalize p-0"
                   key={education.education_id}
                 >
-                  <div className=" border m-1 rounded">
-                    <div className="py-2 px-4 d-flex align-items-center flex-wrap flex-sm-nowrap justify-content-md-between ">
+                  <div className="w-100 card px-6 py-3 shadow-8 border-0 mb-2">
+                    <div className="d-flex align-items-center flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box p-0">
                         <div className="text_box text-left w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <span
-                              className="font-size-6 text-black-2 font-weight-semibold"
-                              onClick={() => EducationData(education)}
-                            >
-                              {education.qualification}
-                              <span className="font-size-4 text-break">
-                                ({education.university_institute})
-                              </span>
+                          <span
+                            className="font-size-4 font-weight-semibold w-100"
+                            onClick={() => EducationData(education)}
+                          >
+                            {education.qualification + " "}
+                            <span className="font-size-4 text-break">
+                              ({education.university_institute})
                             </span>
-                          </h3>
-                          <span className="font-size-4 text-default-color line-height-2 text-break">
-                            {education.course +
-                              (education.specialization
-                                ? `, ${education.specialization}`
-                                : "")}{" "}
-                            {education.specialization}
+                          </span>
+                          <span className="font-size-3 text-default-color text-break">
+                            {education.course}
+                            {education.specialization
+                              ? `,  ${education.specialization}`
+                              : " "}
                           </span>
                         </div>
                       </div>
@@ -274,7 +271,7 @@ function Education(props) {
                                 : ""
                             } font-size-3 text-gray w-100`}
                           >
-                            <span className="mr-4">
+                            <span className="mr-2">
                               <img
                                 src="image/svg/icon-loaction-pin-black.svg"
                                 alt=""
@@ -283,16 +280,18 @@ function Education(props) {
                             {education.institute_location}
                           </span>
                         </div>
-                        <Link
-                          to=""
-                          className="fa fa-edit text-gray px-5"
-                          onClick={() => EducationData(education)}
-                        ></Link>
-                        <Link
-                          to=""
-                          className="fa fa-times-circle px-5"
-                          onClick={() => ShowDeleteAlert(education)}
-                        ></Link>
+                        <div className="w-auto education_btn_grp">
+                          <Link
+                            to=""
+                            className="fa fa-edit text-gray px-5"
+                            onClick={() => EducationData(education)}
+                          ></Link>
+                          <Link
+                            to=""
+                            className="fa fa-trash px-5"
+                            onClick={() => ShowDeleteAlert(education)}
+                          ></Link>
+                        </div>
                       </div>
                     </div>
                   </div>

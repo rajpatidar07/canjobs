@@ -487,7 +487,7 @@ function PersonalDetails(props) {
                       }
                       id="email"
                       placeholder="email"
-                      disabled={props.employeeId === "0" ? false : true}
+                      // disabled={props.employeeId === "0" ? false : true}
                     />
                     {/*----ERROR MESSAGE FOR EMAIL----*/}
                     {errors.email && (

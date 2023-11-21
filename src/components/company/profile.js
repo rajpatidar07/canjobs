@@ -89,7 +89,9 @@ function CompanyProfile(props) {
               }
             >
               {/* <!-- Company Profile --> */}
+              
               <div className="w-100 row m-0 align-items-center px-12 mb-8 text-center text-xs-left">
+                <div>aaaaaaaaaaaaa</div>
                 <div className="media align-items-center company_box col-10 p-0">
                   <div className="text_box text-left">
                     <img
