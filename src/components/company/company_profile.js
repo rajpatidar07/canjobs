@@ -430,8 +430,8 @@ function CompanyProfileDetail(props) {
                                 <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
                                   {employerData.industry}
                                 </p>
-                                <hr class="my-3" />
-                                <div className="position-relative">
+                                <hr class="my-3 d-none" />
+                                <div className="position-relative d-none">
                                   <CompanyDetailPage
                                     employerId={
                                       user_type === "company" ? company_id : cid

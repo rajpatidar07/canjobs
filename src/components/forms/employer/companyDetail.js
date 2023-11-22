@@ -365,9 +365,23 @@ function CompanyDetails(props) {
                   htmlFor="contactperson"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Corporation:
+                  Sole Proprietor:
                 </label>
-                <select
+                <input
+                  type="text"
+                  placeholder="Sole Proprietor"
+                  maxLength={60}
+                  name="corporation"
+                  value={state.corporation || ""}
+                  onChange={onInputChange}
+                  className={
+                    errors.corporation
+                      ? "text-capitalize form-control border border-danger"
+                      : "text-capitalize form-control"
+                  }
+                  id="corporation"
+                />
+                {/* <select
                   type="text"
                   placeholder="Contact Person "
                   maxLength={60}
@@ -387,7 +401,7 @@ function CompanyDetails(props) {
                       {data.value}
                     </option>
                   ))}
-                </select>
+                </select> */}
                 {/*----ERROR MESSAGE FOR corporation----*/}
                 {errors.corporation && (
                   <span

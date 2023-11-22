@@ -260,25 +260,36 @@ export default function EmployerDocumrentContainer(props) {
 
   /*Type array */
   let DocTypeData = [
-    "passport",
-    "drivers_license",
-    "photograph",
-    "immigration_status",
-    "lmia",
-    "job_offer_letter",
-    "provincial_nominee_letter",
-    "proof_of_funds",
-    "proof_of_employment",
-    "marriage_certificate",
-    "education_metric",
-    "education_higher_secondary",
-    "education_graduation",
-    "education_post_graduation",
-    "resume_or_cv",
-    "ielts",
-    "medical",
-    "police_clearance",
-    "refusal_letter",
+    "Business T2",
+    "Recent PD7A",
+    "Business T4",
+    "Business Incorporation Certificate",
+    "Schedule A",
+    "Provincial Business Certificate",
+    "Representative Submission Letter",
+    "Employment Contract",
+    "Offer of Employment",
+    "LMIA Summary",
+    "LMIA Decision Letter",
+    // "passport",
+    // "drivers_license",
+    // "photograph",
+    // "immigration_status",
+    // "lmia",
+    // "job_offer_letter",
+    // "provincial_nominee_letter",
+    // "proof_of_funds",
+    // "proof_of_employment",
+    // "marriage_certificate",
+    // "education_metric",
+    // "education_higher_secondary",
+    // "education_graduation",
+    // "education_post_graduation",
+    // "resume_or_cv",
+    // "ielts",
+    // "medical",
+    // "police_clearance",
+    // "refusal_letter",
   ];
 
   /*Render method */
@@ -533,7 +544,7 @@ export default function EmployerDocumrentContainer(props) {
                   className="form-control"
                   value={docName}
                   onChange={(e) => setDocName(e.target.value)}
-                  placeholder="Docuent Name"
+                  placeholder="Document Name"
                 />
               </div>
             ) : null}

@@ -100,7 +100,7 @@ function AddEmployer(props) {
                   htmlFor="companyname"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Company Name <span className="text-danger">*</span>:
+                  Company Name<span className="text-danger">*</span>:
                 </label>
                 <input
                   type="text"
