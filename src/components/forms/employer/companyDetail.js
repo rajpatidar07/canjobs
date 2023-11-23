@@ -101,10 +101,6 @@ function CompanyDetails(props) {
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
           ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Vacancy can not have a number."
-          : value.length < 2
-          ? "Vacancy should have 2 or more letters."
           : "",
     ],
 

@@ -430,8 +430,8 @@ function CompanyProfileDetail(props) {
                                 <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
                                   {employerData.industry}
                                 </p>
-                                <hr class="my-3 d-none" />
-                                <div className="position-relative d-none">
+                                <hr class="my-3" />
+                                <div className="position-relative">
                                   <CompanyDetailPage
                                     employerId={
                                       user_type === "company" ? company_id : cid
@@ -469,7 +469,7 @@ function CompanyProfileDetail(props) {
                                       {employerData.corporation ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
-                                          title="Business Type"
+                                          title="Sole Proprietor"
                                         >
                                           <i className="fas fa-briefcase mr-2"></i>
                                           {employerData.corporation}
@@ -517,7 +517,7 @@ function CompanyProfileDetail(props) {
                                       ) : null}
                                       {employerKycData === "" ||
                                       user_type === "user" ? null : (
-                                        <>
+                                        <div className="d-none">
                                           {employerKycData.pan_no ? (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
@@ -553,13 +553,13 @@ function CompanyProfileDetail(props) {
                                               {employerKycData.gstin}
                                             </div>
                                           )}
-                                        </>
+                                        </div>
                                       )}
                                       <CustomButton
                                         className={
                                           user_type === "user"
                                             ? "d-none"
-                                            : "font-size-3 rounded-3 btn-primary border-0"
+                                            : "font-size-3 rounded-3 btn-primary border-0 d-none"
                                         }
                                         onClick={() =>
                                           setShowKycComplainDetailsModal(true)

@@ -44,7 +44,7 @@ function CompanyDetailPage(props) {
         employerData.contact_person_name === undefined ||
         employerData.contact_person_name === "undefined" ? (
           <div className="text-left row m-0">
-            <div className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7">
+            <div className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7">
               No Data Found
             </div>
           </div>
@@ -52,7 +52,7 @@ function CompanyDetailPage(props) {
           <div className="text-left row m-0">
             {employerData.contact_person_name ? (
               <div
-                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Contact Person Name"
               >
                 <i className="fas fa-user mr-2"></i>
@@ -61,7 +61,7 @@ function CompanyDetailPage(props) {
             ) : null}
             {employerData.designation ? (
               <div
-                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Designation"
               >
                 <i className="fas fa-portrait mr-2"></i>
@@ -70,7 +70,7 @@ function CompanyDetailPage(props) {
             ) : null}
             {employerData.email && props.page !== "company_profile" ? (
               <div
-                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Email"
               >
                 <i className="fas fa-envelope mr-2"></i>
@@ -81,7 +81,7 @@ function CompanyDetailPage(props) {
             ) : null}
             {employerData.contact_no && props.page !== "company_profile" ? (
               <div
-                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Contact No"
               >
                 <i className="fas fa-phone-alt mr-2"></i>
@@ -96,7 +96,7 @@ function CompanyDetailPage(props) {
             {employerData.contact_no_other &&
             props.page !== "company_profile" ? (
               <div
-                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Contact No"
               >
                 <i className="fas fa-phone-alt mr-2"></i>
@@ -110,7 +110,7 @@ function CompanyDetailPage(props) {
             ) : null}
             {employerData.address ? (
               <div
-                className="font-size-4 text-default-color line-height-2 m-0 text-break mr-7"
+                className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
                 title="Address"
               >
                 <i className="fas fa-map-marker-alt mr-2"></i>
