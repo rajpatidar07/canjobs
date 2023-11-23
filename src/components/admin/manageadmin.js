@@ -290,7 +290,7 @@ function ManageAdmin() {
                 }
               </div>
               {showManagerDetailBox && (
-                <div className="card p-3 mt-2 col-6 mb-18 text-capitalize">
+                <div className="card p-3 mt-2 col-6 mb-18">
                   <div className="mb-4 align-items-center">
                     <div className="page___heading">
                       <h3 className="font-size-6 mb-0">Admin</h3>
@@ -325,20 +325,20 @@ function ManageAdmin() {
                             ) : (
                               <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
                                 {managerData.name}
-                                <small className="text-gray font-size-3 m-0 text-capitalize">
+                                <small className="text-gray font-size-3 m-0 ">
                                   ({managerData.admin_type})
                                 </small>
                               </h5>
                             )}
                             {managerData.email || managerData.contact_no ? (
-                              <>
-                                <p className="text-gray font-size-3 m-0 text-capitalize">
+                              <div>
+                                <p className="text-gray font-size-3 m-0">
                                   {managerData.email}
                                 </p>
-                                <p className="text-gray font-size-3 m-0 text-capitalize">
+                                <p className="text-gray font-size-3 m-0">
                                   {`+${managerData.contact_no}`}
                                 </p>
-                              </>
+                              </div>
                             ) : null}
                           </div>
                         </div>

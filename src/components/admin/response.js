@@ -642,10 +642,7 @@ function JobResponse(props) {
                         (response || []).map((res, i) => (
                           // ((props.response === "response") || (props.response === "self") ||
                           //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
-                          <tr
-                            className="text-capitalize position-relative"
-                            key={i}
-                          >
+                          <tr className="position-relative" key={i}>
                             <th className="py-5 ">{res.employee_id}</th>
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">

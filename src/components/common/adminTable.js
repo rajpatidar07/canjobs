@@ -109,7 +109,7 @@ export default function AdminTable({
                 </tr>
               ) : (
                 (data || []).map((admin) => (
-                  <tr className="text-capitalize" key={admin.admin_id}>
+                  <tr className="" key={admin.admin_id}>
                     {/* <th>
                       <Link
                         className="text-gray"

@@ -532,7 +532,7 @@ export default function LimiaStatusTable(props) {
                         </tr>
                       ) : (
                         (response || []).map((res, i) => (
-                          <tr className="text-capitalize" key={i}>
+                          <tr className="" key={i}>
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.name || res.gender || res.date_of_birth ? (
