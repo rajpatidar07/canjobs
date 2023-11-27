@@ -168,7 +168,7 @@ function ContactInfo(props) {
                   placeholder="Contact person Name"
                   id="contact_person_name"
                 />
-                {/*----ERROR MESSAGE FOR contact_person_name----*/}
+                {/*----ERROR MESSAGE FOR CONTACT PERSON NAME----*/}
                 {errors.contact_person_name && (
                   <span
                     key={errors.contact_person_name}
@@ -199,7 +199,7 @@ function ContactInfo(props) {
                   placeholder="example@gmail.com"
                   id="email"
                 />
-                {/*----ERROR MESSAGE FOR email----*/}
+                {/*----ERROR MESSAGE FOR EMAIL----*/}
                 {errors.email && (
                   <span key={errors.email} className="text-danger font-size-3">
                     {errors.email}
@@ -232,7 +232,7 @@ function ContactInfo(props) {
                   placeholder="Contact No"
                   id="contact_no"
                 />
-                {/*----ERROR MESSAGE FOR Contact No----*/}
+                {/*----ERROR MESSAGE FOR CONTACT NO----*/}
                 {errors.contact_no && (
                   <span
                     key={errors.contact_no}
@@ -284,7 +284,7 @@ function ContactInfo(props) {
                   placeholder="Address"
                   id="address"
                 />
-                {/*----ERROR MESSAGE FOR address----*/}
+                {/*----ERROR MESSAGE FOR ADDRESS----*/}
                 {errors.address && (
                   <span
                     key={errors.address}
@@ -315,7 +315,7 @@ function ContactInfo(props) {
                   placeholder="Pincode"
                   id="pin_code"
                 />
-                {/*----ERROR MESSAGE FOR pin_code----*/}
+                {/*----ERROR MESSAGE FOR PINCODE----*/}
                 {errors.pin_code && (
                   <span
                     key={errors.pin_code}
@@ -348,7 +348,7 @@ function ContactInfo(props) {
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR city----*/}
+                {/*----ERROR MESSAGE FOR CITY----*/}
                 {errors.city && (
                   <span key={errors.city} className="text-danger font-size-3">
                     {errors.city}
@@ -375,7 +375,7 @@ function ContactInfo(props) {
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR state----*/}
+                {/*----ERROR MESSAGE FOR STATE----*/}
                 {errors.state && (
                   <span key={errors.state} className="text-danger font-size-3">
                     {errors.state}
@@ -406,7 +406,7 @@ function ContactInfo(props) {
                       : "form-control"
                   }
                 />
-                {/*----ERROR MESSAGE FOR country----*/}
+                {/*----ERROR MESSAGE FOR COUNTRY----*/}
                 {errors.country && (
                   <span
                     key={errors.country}
@@ -438,7 +438,7 @@ function ContactInfo(props) {
                     placeholder="Designation"
                     id="designation"
                   />
-                  {/*----ERROR MESSAGE FOR designation----*/}
+                  {/*----ERROR MESSAGE FOR DESIGNTION----*/}
                   {errors.designation && (
                     <span
                       key={errors.designation}

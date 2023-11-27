@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import {
   AddEmployeeDetails,
   EmployeeDetails,
@@ -18,6 +20,7 @@ import Select from "react-select";
 // import { Link } from "react-router-dom";
 import AddNewAgent from "../admin/add_agent";
 import Permissions from "../../json/emailPermisionJson";
+
 function PersonalDetails(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
@@ -353,7 +356,9 @@ function PersonalDetails(props) {
     setState({ ...state, profile_photo: base64Name });
   };
   // console.log(state.profile_photo);
-
+  const handleChange = (value) => {
+    setState({ ...state, description: value });
+  };
   return (
     <>
       <Modal
@@ -539,7 +544,7 @@ function PersonalDetails(props) {
                     >
                       About:
                     </label>
-                    <textarea
+                    {/* <textarea
                       name="description"
                       value={state.description || ""}
                       onChange={onInputChange}
@@ -550,7 +555,11 @@ function PersonalDetails(props) {
                       }
                       id="description"
                       placeholder="Description"
-                    ></textarea>
+                    ></textarea> */}
+                    <ReactQuill
+                      value={state.description}
+                      onChange={handleChange}
+                    />
                     {/*----ERROR MESSAGE FOR GENDER----*/}
                     {errors.description && (
                       <span

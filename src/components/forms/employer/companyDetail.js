@@ -227,12 +227,12 @@ function CompanyDetails(props) {
       )
     : [];
   /*Corporation Json for not having same data */
-  const Corporation = Json.Corporation
-    ? Json.Corporation.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
-    : [];
+  // const Corporation = Json.Corporation
+  //   ? Json.Corporation.filter(
+  //       (thing, index, self) =>
+  //         index === self.findIndex((t) => t.value === thing.value)
+  //     )
+  //   : [];
   return (
     <>
       <Modal
@@ -275,10 +275,10 @@ function CompanyDetails(props) {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="Company Name"
+                  placeholder="Company’s Legal Name"
                   id="company_name"
                 />
-                {/*----ERROR MESSAGE FOR company_name----*/}
+                {/*----ERROR MESSAGE FOR COMPANY NAME----*/}
                 {errors.company_name && (
                   <span
                     key={errors.company_name}
@@ -307,10 +307,10 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Franchise"
+                    placeholder="Operating Name"
                     id="franchise"
                   />
-                  {/*----ERROR MESSAGE FOR franchise----*/}
+                  {/*----ERROR MESSAGE FOR FRANCHISE----*/}
                   {errors.franchise && (
                     <span
                       key={errors.franchise}
@@ -346,7 +346,7 @@ function CompanyDetails(props) {
                     </option>
                   ))}
                 </select>
-                {/*----ERROR MESSAGE FOR industry----*/}
+                {/*----ERROR MESSAGE FOR INDUSTRY ----*/}
                 {errors.industry && (
                   <span
                     key={errors.industry}
@@ -398,7 +398,7 @@ function CompanyDetails(props) {
                     </option>
                   ))}
                 </select> */}
-                {/*----ERROR MESSAGE FOR corporation----*/}
+                {/*----ERROR MESSAGE FOR CORPORATION----*/}
                 {errors.corporation && (
                   <span
                     key={errors.corporation}
@@ -430,7 +430,7 @@ function CompanyDetails(props) {
                     }
                     id="alias"
                   />
-                  {/*----ERROR MESSAGE FOR company_start_date----*/}
+                  {/*----ERROR MESSAGE FOR ALIAS----*/}
                   {errors.alias && (
                     <span
                       key={errors.alias}
@@ -464,7 +464,7 @@ function CompanyDetails(props) {
                   placeholder="company_start_date"
                   id="company_start_date"
                 />
-                {/*----ERROR MESSAGE FOR company_start_date----*/}
+                {/*----ERROR MESSAGE FOR COMPANY SART DATE----*/}
                 {errors.company_start_date && (
                   <span
                     key={errors.company_start_date}
@@ -494,11 +494,11 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Company size"
+                    placeholder="No. of working official's"
                     id="company_size"
                     min={0}
                   />
-                  {/*----ERROR MESSAGE FOR company_size----*/}
+                  {/*----ERROR MESSAGE FOR COMPANY SIZE----*/}
                   {errors.company_size && (
                     <span
                       key={errors.company_size}
@@ -530,7 +530,7 @@ function CompanyDetails(props) {
                   }
                   id="website_url"
                 />
-                {/*----ERROR MESSAGE FOR website_url----*/}
+                {/*----ERROR MESSAGE FOR WEBSITE URL----*/}
                 {errors.website_url && (
                   <span
                     key={errors.website_url}
@@ -560,10 +560,10 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Vacancy For Post"
+                    placeholder="Number of Advertisements Posted"
                     id="vacancy_for_post"
                   />
-                  {/*----ERROR MESSAGE FOR vacancy_for_post----*/}
+                  {/*----ERROR MESSAGE FOR VACANCY FOR POST----*/}
                   {errors.vacancy_for_post && (
                     <span
                       key={errors.vacancy_for_post}

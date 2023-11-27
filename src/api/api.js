@@ -4,7 +4,7 @@ import axios from "axios";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 // const API_URL = "http://51.20.6.80/canjobs/";
 // const API_URL = "http://192.168.29.92/canjobs_october/";
-//new aws backend
+//New AWS backend
 // const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");

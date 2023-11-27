@@ -25,6 +25,7 @@
     "react-linkedin-login-oauth2": "^2.0.1",
     "react-moment": "^1.1.3",
     "react-native-web": "^0.19.4",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^2.1.3",
     "react-select": "^5.7.2",

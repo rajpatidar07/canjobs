@@ -62,6 +62,24 @@ function SendMailForm({ email }) {
           setState(initialFormState);
           setErrors("");
         }
+        if (Response.message === "Failed !") {
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          setErrors("");
+        }
+        if (Response.message === "Fields must not be empty!") {
+          toast.error("Something went wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+          setState(initialFormState);
+          setErrors("");
+        }
       } catch (err) {
         console.log(err);
         setLoading(false);

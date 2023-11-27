@@ -12,7 +12,7 @@ import { LiaEdit } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiAddressBookLight } from "react-icons/pi";
 import { BsArrow90DegRight } from "react-icons/bs";
-import { AiOutlineFileZip } from "react-icons/ai";
+// import { AiOutlineFileZip } from "react-icons/ai";
 import AddJobModal from "../forms/employer/job";
 import { LiaBriefcaseMedicalSolid } from "react-icons/lia";
 export default function EmployerTable(props) {
@@ -98,10 +98,10 @@ export default function EmployerTable(props) {
     setEmployerID(e);
   };
   /* Function to show the single data to update Kyc*/
-  const editEmployerKyc = (e) => {
-    setShowkycMOdal(true);
-    setEmployerID(e);
-  };
+  // const editEmployerKyc = (e) => {
+  //   setShowkycMOdal(true);
+  //   setEmployerID(e);
+  // };
 
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -464,7 +464,7 @@ export default function EmployerTable(props) {
                               </span>
                               {/* <span className="fa fa-address-book text-gray px-1"></span> */}{" "}
                             </button>
-                            <button
+                            {/* <button
                               className="btn btn-outline-info action_btn"
                               onClick={() =>
                                 editEmployerKyc(empdata.company_id)
@@ -474,8 +474,7 @@ export default function EmployerTable(props) {
                               <span className="text-gray px-1">
                                 <AiOutlineFileZip />
                               </span>
-                              {/* <span className="fa fa-file text-gray px-1 "></span> */}{" "}
-                            </button>
+                            </button> */}
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => editEmployer(empdata.company_id)}
