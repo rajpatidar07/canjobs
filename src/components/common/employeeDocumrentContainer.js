@@ -117,8 +117,8 @@ export default function DocumrentContainer(props) {
       return;
     }
     // Check file size
-    else if (file.size > 1024 * 5000) {
-      toast.error("Document size can't be more than 5 mb", {
+    else if (file.size > 1024 * 4000) {
+      toast.error("Document size can't be more than 4 mb", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });

@@ -351,7 +351,7 @@ function JobDetailpageAdmim(props) {
                               <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                                 {jobData.job_title}
                               </h3>
-                              <hr class="my-3" />
+                              <hr className="my-3" />
                               <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
                                 {!jobData.location &&
                                 !jobData.language &&
@@ -371,8 +371,13 @@ function JobDetailpageAdmim(props) {
                                             src="image/icons/marker.svg"
                                             alt="Location"
                                           />
-                                          {jobData.your_duties},
-                                          {jobData.industry_type}
+                                          <span
+                                            dangerouslySetInnerHTML={{
+                                              __html: jobData.your_duties,
+                                            }}
+                                          />{" "}
+                                          {jobData.industry_type &&
+                                            `,${jobData.industry_type}`}
                                           {jobData.location}
                                         </div>
                                       ) : (
@@ -418,7 +423,7 @@ function JobDetailpageAdmim(props) {
                                   </>
                                 )}
                               </div>
-                              <hr class="my-3" />
+                              <hr className="my-3" />
                               <div className="">
                                 <div className="d-none">
                                   <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
@@ -601,9 +606,16 @@ function JobDetailpageAdmim(props) {
                               </h4>
                               <div className="pt-5 text-left">
                                 {jobData.job_description ? (
-                                  <p className="font-size-4 mb-8 ">
-                                    {jobData.job_description}
-                                  </p>
+                                  // <p className="font-size-4 mb-8 ">
+                                  //   {jobData.job_description}
+                                  // </p>
+                                  <div className="font-size-4 mb-8">
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html: jobData.job_description,
+                                      }}
+                                    />
+                                  </div>
                                 ) : (
                                   <p className="font-size-4 mb-8 text-center">
                                     No data Found
