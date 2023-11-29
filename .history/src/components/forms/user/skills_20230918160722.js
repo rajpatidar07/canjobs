@@ -44,10 +44,10 @@ function Skills(props) {
         value === "" || value.trim() === ""
           ? "Skills / Software Name is required"
           : value.length < 3
-          ? "Skills / Software Name should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Skills / Software Name can not have a number."
-          : "",
+            ? "Skills / Software Name should have 3 or more letter"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Skills / Software Name can not have a number."
+              : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -62,8 +62,9 @@ function Skills(props) {
       try {
         let SkillList = await GetFilter();
         setSkillList(SkillList.data.data.Skill);
-      } catch (err) {
-        console.log(err);
+      }
+      catch (err) {
+       console.log(err) 
       }
       if (SkillDetails.data.skill.length === 0) {
         SetSkillData([]);
@@ -71,7 +72,7 @@ function Skills(props) {
         SetSkillData(SkillDetails.data.skill);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
   /*Render method to get the skill data */
@@ -80,7 +81,7 @@ function Skills(props) {
       SkillData();
     }
     if (apiCall === true) {
-      setApiCall(false);
+      setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, apiCall]);
@@ -100,6 +101,7 @@ function Skills(props) {
     setSkillOption({ ...state, skill: options });
   }, [SkillList]);
 
+  // console.log("Option =>" ,state.skill)
   // USER SKILLS SUBMIT BUTTON
   const onUserSkillsClick = async (event) => {
     event.preventDefault();
@@ -117,8 +119,9 @@ function Skills(props) {
           setErrors("");
           setLoading(false);
           props.setApiCall(true);
-          setApiCall(true);
-        } else if (responseData.message === "already exist !") {
+          setApiCall(true)
+        }
+        else if (responseData.message === "already exist !") {
           toast.error("Skill Already added", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -128,11 +131,11 @@ function Skills(props) {
           setErrors("");
           setLoading(false);
           props.setApiCall(true);
-          setApiCall(true);
+          setApiCall(true)
         }
       } catch (err) {
-        console.log(err);
-        setLoading(false);
+       console.log(err) 
+        setLoading(false)
       }
     }
   };
@@ -164,7 +167,7 @@ function Skills(props) {
         setDeleteAlert(false);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
   return (
@@ -214,9 +217,7 @@ function Skills(props) {
                 id="skill"
                 onChange={onSelectChange}
                 className={
-                  errors.skill
-                    ? "border border-danger w-100 text-capitalize"
-                    : "text-capitalize w-100"
+                  errors.skill ? "border border-danger w-100 text-capitalize" : "text-capitalize w-100"
                 }
                 isClearable={""}
               />
