@@ -41,7 +41,6 @@ export default function ResetPassword() {
   /*----RESET PASSWORD SUBMIT FUNCTION----*/
   const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
-    // console.log(state);
     if (validate()) {
       setLoading(true);
       // handle form submission

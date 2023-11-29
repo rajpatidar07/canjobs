@@ -53,7 +53,6 @@ export default function VisaTable(props) {
         sortOrder,
         props.employee_id
       );
-      // // console.log(userData.data)
       if (userData.data.data.length === 0) {
         setemployeeData([]);
         setIsLoading(false);

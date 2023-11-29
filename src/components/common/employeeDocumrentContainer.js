@@ -92,7 +92,6 @@ export default function DocumrentContainer(props) {
   /*Onchange function of Logo */
   const handleFileChange = async (event, id) => {
     const file = event.target.files[0];
-    // console.log("employee_id",props.employee_id,
     // "document =>", base64Name,
     // "Type =>" , docName)
     if (!file) {
@@ -106,7 +105,6 @@ export default function DocumrentContainer(props) {
     const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const fileType = `.${file.name.split(".").pop()}`;
     if (!allowedTypes.includes(fileType.toLowerCase())) {
-      // console.log("not matched");
       toast.error(
         "Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG",
         {
@@ -157,7 +155,6 @@ export default function DocumrentContainer(props) {
       //     });
       //     setShowMoreDocType(false)
       //     setApiCall(true)
-      //     // console.log(docData.find((item)=>item.type === docName))
       //     setDocTypData(docData.find((item) => item.type === docName))
       //     setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
       //   }
@@ -192,7 +189,6 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        // console.log(docName);
         setShowMoreDocType(false);
         setOtherDoc(false);
         setDocName(docName);
@@ -211,7 +207,6 @@ export default function DocumrentContainer(props) {
         setShowMoreDocType(false);
         setApiCall(true);
         setHide(false);
-        // console.log(docData.find((item)=>item.type === docName))
         setDocTypData(
           docData.find(
             (item) =>
@@ -252,7 +247,6 @@ export default function DocumrentContainer(props) {
   };
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
-    // console.log(docFile, "???????");
     return (
       <React.Fragment>
         {docFile ? (

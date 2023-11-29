@@ -153,7 +153,6 @@ export default function EmployerDocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        // console.log(docName);
         setShowMoreDocType(false);
         setOtherDoc(false);
         setDocName(docName);
@@ -172,7 +171,6 @@ export default function EmployerDocumrentContainer(props) {
         setShowMoreDocType(false);
         setApiCall(true);
         setHide(false);
-        // console.log(docData.find((item)=>item.type === docName))
         setDocTypData(
           docData.find(
             (item) =>
@@ -213,7 +211,6 @@ export default function EmployerDocumrentContainer(props) {
 
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
-    // console.log(docFile, "???????");
     return (
       <React.Fragment>
         {docFile ? (

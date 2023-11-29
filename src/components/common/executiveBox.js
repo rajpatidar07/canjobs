@@ -10,7 +10,6 @@ export default function ExecutiveBox({ data, index }) {
   // };
   /*Functo to remove assigned executive */
   // const RemoveAssined = async () => {
-  //   console.log("remove assigned executive");
   // };
   return (
     <div>

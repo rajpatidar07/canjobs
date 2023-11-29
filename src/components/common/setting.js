@@ -35,7 +35,6 @@ function Setting(props) {
       } else {
         Response = await GetEmployerSetting();
       }
-      console.log(Response);
       const email_permissions = JSON.parse(Response.data.email_permission);
       const notification_permission = JSON.parse(
         Response.data.notification_permission
@@ -106,7 +105,6 @@ function Setting(props) {
       } else {
         Response = await AddEmployerPermission(updatedPermissions);
       }
-      // console.log(Response);
       // conditions for the reponse toaster message
       if (
         Response.message === "successfully" &&
