@@ -82,7 +82,16 @@ const GoogleDrive = () => {
         discoveryDocs: [
           "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
         ],
-        scope: "https://www.googleapis.com/auth/drive",
+        scope: [
+          "https://www.googleapis.com/auth/drive",
+          //   "https://www.googleapis.com/auth/drive",
+          //   "https://www.googleapis.com/auth/drive.file",
+          //   "https://www.googleapis.com/auth/drive.metadata",
+          //   "https://www.googleapis.com/auth/drive.metadata.readonly",
+          //   "https://www.googleapis.com/auth/drive.photos.readonly",
+          //   "https://www.googleapis.com/auth/drive.readonly",
+          //
+        ],
       });
       gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
       updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());

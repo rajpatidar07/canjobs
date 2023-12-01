@@ -1,6 +1,8 @@
-import styled from "styled-components";
+// GoogleDrive.js
+
 import React, { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
+import styled from "styled-components";
 
 const Container = styled.div`
   font-family: "Arial", sans-serif;
@@ -50,10 +52,14 @@ const FileListItem = styled.li`
   font-size: 16px;
   cursor: pointer;
 `;
-
 const API_KEY = "AIzaSyAV4SubRxacR2-L-sv_EJ_adINPhtKWtQI"; // Replace with your actual API key
 const CLIENT_ID =
   "654480915922-bgepo1btfcgm8n6mlc0ea7k8nj7l4ls7.apps.googleusercontent.com";
+const DISCOVERY_DOCS = [
+  "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
+];
+const SCOPES = ["https://www.googleapis.com/auth/drive"];
+
 const GoogleDrive = () => {
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
   const [isFetchingGoogleDriveFiles, setIsFetchingGoogleDriveFiles] =
@@ -63,7 +69,6 @@ const GoogleDrive = () => {
   const [signedInUser, setSignedInUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedDocument, setSelectedDocument] = useState(null);
 
   useEffect(() => {
     handleClientLoad();
@@ -73,23 +78,23 @@ const GoogleDrive = () => {
     gapi.load("client:auth2", initClient);
   };
 
-  const initClient = async () => {
+  const initClient = () => {
     setIsLoadingGoogleDriveApi(true);
-    try {
-      await gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
-        discoveryDocs: [
-          "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
-        ],
-        scope: "https://www.googleapis.com/auth/drive",
+    gapi.client
+      .init({
+        apiKey: API_KEY, // Replace with your actual API key
+        clientId: CLIENT_ID, // Replace with your actual client ID
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      })
+      .then(() => {
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      })
+      .catch((error) => {
+        setIsLoadingGoogleDriveApi(false);
+        console.error("Error initializing Google Drive API:", error);
       });
-      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    } catch (error) {
-      setIsLoadingGoogleDriveApi(false);
-      console.error("Error initializing Google Drive API:", error);
-    }
   };
 
   const updateSigninStatus = (isSignedIn) => {
@@ -102,21 +107,26 @@ const GoogleDrive = () => {
     }
   };
 
-  const listFiles = async (searchTerm = null) => {
+  const listFiles = (folderId = null) => {
     setIsFetchingGoogleDriveFiles(true);
-    try {
-      const response = await gapi.client.drive.files.list({
+    const query = folderId ? `'${folderId}' in parents` : null;
+
+    gapi.client.drive.files
+      .list({
         pageSize: 10,
         fields: "nextPageToken, files(id, name, mimeType, modifiedTime)",
-        q: searchTerm,
+        q: query,
+      })
+      .then((response) => {
+        setIsFetchingGoogleDriveFiles(false);
+        setListDocumentsVisibility(true);
+        const res = response.result;
+        setDocuments(res.files);
+      })
+      .catch((error) => {
+        setIsFetchingGoogleDriveFiles(false);
+        console.error("Error listing files:", error);
       });
-      setIsFetchingGoogleDriveFiles(false);
-      setListDocumentsVisibility(true);
-      setDocuments(response.result.files);
-    } catch (error) {
-      setIsFetchingGoogleDriveFiles(false);
-      console.error("Error listing files:", error);
-    }
   };
 
   const handleAuthClick = () => {
@@ -130,7 +140,7 @@ const GoogleDrive = () => {
 
   const handleSearch = debounce((value) => {
     setSearchTerm(value);
-    listFiles(value);
+    listFiles();
   }, 500);
 
   const handleFileChange = (event) => {
@@ -138,7 +148,7 @@ const GoogleDrive = () => {
     setSelectedFile(file);
   };
 
-  const handleAddDocument = async () => {
+  const handleAddDocument = () => {
     if (!selectedFile) {
       console.error("No file selected.");
       return;
@@ -156,48 +166,16 @@ const GoogleDrive = () => {
       },
     };
 
-    try {
-      await gapi.client.drive.files.create(requestBody);
-      listFiles(searchTerm);
-      setSelectedFile(null);
-    } catch (error) {
-      console.error("Error adding document:", error);
-    }
-  };
-
-  const handleOpenDocument = async (file) => {
-    if (!file || !file.id) {
-      console.error("Invalid file object:", file);
-      return;
-    }
-
-    const fileId = file.id;
-
-    if (file.mimeType === "application/vnd.google-apps.folder") {
-      listFiles(fileId);
-      return;
-    }
-
-    try {
-      let documentContent;
-      if (file.mimeType.startsWith("application/vnd.google-apps.")) {
-        const exportMimeType = "application/pdf";
-        const response = await gapi.client.drive.files.export({
-          fileId: fileId,
-          mimeType: exportMimeType,
-        });
-        documentContent = response.body;
-      } else {
-        const response = await gapi.client.drive.files.get({
-          fileId: fileId,
-          alt: "media",
-        });
-        documentContent = response.body;
-      }
-      setSelectedDocument(documentContent);
-    } catch (error) {
-      console.error("Error getting document content:", error);
-    }
+    gapi.client.drive.files
+      .create(requestBody)
+      .then(() => {
+        // File added successfully, you might want to refresh the file list
+        listFiles();
+        setSelectedFile(null); // Reset selected file after upload
+      })
+      .catch((error) => {
+        console.error("Error adding document:", error);
+      });
   };
 
   return (
@@ -227,23 +205,22 @@ const GoogleDrive = () => {
               {documents.map((document) => (
                 <FileListItem
                   key={document.id}
-                  onClick={() => handleOpenDocument(document)}
+                  onClick={() => {
+                    if (
+                      document.mimeType === "application/vnd.google-apps.folder"
+                    ) {
+                      // If the clicked document is a folder, list its contents
+                      listFiles(document.id);
+                    } else {
+                      // Handle opening/viewing non-folder documents
+                      console.log("Opening document:", document);
+                    }
+                  }}
                 >
                   {document.name}
                 </FileListItem>
               ))}
             </FileList>
-          )}
-          {selectedDocument && (
-            <div>
-              <h2>Selected Document Content</h2>
-              <iframe
-                title="document-viewer"
-                srcDoc={selectedDocument}
-                width="100%"
-                height="500px"
-              />
-            </div>
           )}
         </>
       )}
@@ -251,6 +228,7 @@ const GoogleDrive = () => {
   );
 };
 
+// Debounce utility function
 function debounce(func, wait) {
   let timeout;
   return function (...args) {

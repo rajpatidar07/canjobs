@@ -37,7 +37,7 @@ import EmployeeHeader from "../common/header";
 import VisaArrowProfile from "../common/visaArrowProfile";
 import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
-// import GoogleDrive from "../common/googleDrive";
+import GoogleDrive from "../common/googleDrive";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   let navigate = useNavigate();
@@ -1232,7 +1232,7 @@ const NewUserProfile = (props) => {
                                     __html: PersonalDetail.description,
                                   }}
                                 />
-                                {/* <GoogleDrive /> */}
+                                <GoogleDrive />
                               </div>
                             </div>
                             <div className="position-relative mt-8">

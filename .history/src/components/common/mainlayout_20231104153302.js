@@ -51,7 +51,6 @@ import CandidateLoginForm from "../user/candidate_login";
 import CandidateSignup from "../user/candidate_signup";
 import CompanyLoginForm from "../company/company_login";
 import CompanySingupForm from "../company/company_singup";
-import GoogleDrive from "./googleDrive";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -153,7 +152,6 @@ function MainLayout() {
             {/* <Route path="/emailpreview" element={<PreviewEmail />} /> */}
             <Route path="/email" element={<MainEmailPage />} />
             {/* <Route path="*" element={<NotFound />} /> */}
-            <Route path="/googledrive" element={<GoogleDrive />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}
