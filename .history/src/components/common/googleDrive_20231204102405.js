@@ -204,7 +204,7 @@ const GoogleDrive = () => {
     <Container>
       <Title>Google Drive Integration</Title>
       <div>
-        <h5>Google Drive from iframe</h5>
+        <h2>Google Drive from i frame</h2>
         <iframe
           title="Google Drive Comments"
           src="https://docs.google.com/document/d/13mXSxLzCIu_0OrIFKRFbqAexpunpMOAhKAGZQvt65gg/edit?usp=sharing"
