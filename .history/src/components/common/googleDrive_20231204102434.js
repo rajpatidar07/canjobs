@@ -201,69 +201,63 @@ const GoogleDrive = () => {
   };
 
   return (
-    <iframe
-      title="Google Drive Embed"
-      src="https://drive.google.com/embeddedfolderview?id=1HxWHjHmgFJ30U4zmRJdFe-68PZ7KsUaC#list"
-      width="640"
-      height="480"
-    ></iframe>
-    // <Container>
-    //   <Title>Google Drive Integration</Title>
-    //   <div>
-    //     <h5>Google Drive from iframe</h5>
-    //     <iframe
-    //       title="Google Drive Comments"
-    //       src="https://docs.google.com/document/d/13mXSxLzCIu_0OrIFKRFbqAexpunpMOAhKAGZQvt65gg/edit?usp=sharing"
-    //       width="100%"
-    //       height="600"
-    //       allowFullScreen
-    //     ></iframe>
-    //   </div>
-    //   {isLoadingGoogleDriveApi && (
-    //     <LoadingMessage>Loading Google Drive API...</LoadingMessage>
-    //   )}
-    //   {!signedInUser && !isLoadingGoogleDriveApi && (
-    //     <Button onClick={handleAuthClick}>Sign In</Button>
-    //   )}
-    //   {signedInUser && (
-    //     <>
-    //       <Button onClick={handleSignOutClick}>Sign Out</Button>
-    //       <Input
-    //         type="text"
-    //         placeholder="Search files..."
-    //         onChange={(e) => handleSearch(e.target.value)}
-    //       />
-    //       <input type="file" onChange={handleFileChange} />
-    //       <Button onClick={handleAddDocument}>Add Document</Button>
-    //       {isFetchingGoogleDriveFiles && (
-    //         <LoadingMessage>Fetching Google Drive files...</LoadingMessage>
-    //       )}
-    //       {listDocumentsVisibility && (
-    //         <FileList>
-    //           {documents.map((document) => (
-    //             <FileListItem
-    //               key={document.id}
-    //               onClick={() => handleOpenDocument(document)}
-    //             >
-    //               {document.name}
-    //             </FileListItem>
-    //           ))}
-    //         </FileList>
-    //       )}
-    //       {selectedDocument && (
-    //         <div>
-    //           <h2>Selected Document Content</h2>
-    //           <iframe
-    //             title="document-viewer"
-    //             srcDoc={selectedDocument}
-    //             width="100%"
-    //             height="500px"
-    //           />
-    //         </div>
-    //       )}
-    //     </>
-    //   )}
-    // </Container>
+    <Container>
+      <Title>Google Drive Integration</Title>
+      <div>
+        <h5>Google Drive from iframe</h5>
+        <iframe
+          title="Google Drive Comments"
+          src="https://docs.google.com/document/d/13mXSxLzCIu_0OrIFKRFbqAexpunpMOAhKAGZQvt65gg/edit?usp=sharing"
+          width="100%"
+          height="600"
+          allowFullScreen
+        ></iframe>
+      </div>
+      {isLoadingGoogleDriveApi && (
+        <LoadingMessage>Loading Google Drive API...</LoadingMessage>
+      )}
+      {!signedInUser && !isLoadingGoogleDriveApi && (
+        <Button onClick={handleAuthClick}>Sign In</Button>
+      )}
+      {signedInUser && (
+        <>
+          <Button onClick={handleSignOutClick}>Sign Out</Button>
+          <Input
+            type="text"
+            placeholder="Search files..."
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+          <input type="file" onChange={handleFileChange} />
+          <Button onClick={handleAddDocument}>Add Document</Button>
+          {isFetchingGoogleDriveFiles && (
+            <LoadingMessage>Fetching Google Drive files...</LoadingMessage>
+          )}
+          {listDocumentsVisibility && (
+            <FileList>
+              {documents.map((document) => (
+                <FileListItem
+                  key={document.id}
+                  onClick={() => handleOpenDocument(document)}
+                >
+                  {document.name}
+                </FileListItem>
+              ))}
+            </FileList>
+          )}
+          {selectedDocument && (
+            <div>
+              <h2>Selected Document Content</h2>
+              <iframe
+                title="document-viewer"
+                srcDoc={selectedDocument}
+                width="100%"
+                height="500px"
+              />
+            </div>
+          )}
+        </>
+      )}
+    </Container>
   );
 };
 

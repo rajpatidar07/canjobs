@@ -52,7 +52,6 @@ import CandidateSignup from "../user/candidate_signup";
 import CompanyLoginForm from "../company/company_login";
 import CompanySingupForm from "../company/company_singup";
 import GoogleDrive from "./googleDrive";
-import Anotation from "./anotation";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -155,7 +154,6 @@ function MainLayout() {
             <Route path="/email" element={<MainEmailPage />} />
             {/* <Route path="*" element={<NotFound />} /> */}
             <Route path="/googledrive" element={<GoogleDrive />} />
-            <Route path="/anotation" element={<Anotation />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}

@@ -161,7 +161,7 @@ function EmployeeHeader() {
                       Admin
                     </Link>
                   </li>
-                  {/* {userType === "company" || userType === "user" ? (
+                  {userType === "company" || userType === "user" ? (
                     <>
                       <li className="nav-item">
                         <Link
@@ -217,7 +217,7 @@ function EmployeeHeader() {
                         </Link>
                       </li>
                     </>
-                  ) : null} */}
+                  ) : null}
                 </ul>
               )}
             </div>

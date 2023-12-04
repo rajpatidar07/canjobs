@@ -9158,22 +9158,3 @@ html .ui-button.ui-state-disabled:active {
   margin-top: 5px;
   /* Adjust as needed */
 }
-.image-container {
-  position: relative;
-}
-
-.annotatable-image {
-  width: 100%;
-  height: auto;
-}
-
-.annotation {
-  position: absolute;
-  /* border: 2px solid red; */
-  background-color: transparent;
-  pointer-events: none;
-  position: "absolute";
-  left: "-5px";
-  top: "-5px";
-  cursor: "pointer"; 
-}

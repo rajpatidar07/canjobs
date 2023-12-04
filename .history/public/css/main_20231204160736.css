@@ -9169,11 +9169,7 @@ html .ui-button.ui-state-disabled:active {
 
 .annotation {
   position: absolute;
-  /* border: 2px solid red; */
+  border: 2px solid red;
   background-color: transparent;
   pointer-events: none;
-  position: "absolute";
-  left: "-5px";
-  top: "-5px";
-  cursor: "pointer"; 
 }
