@@ -80,6 +80,7 @@
 // }
 import React, { useState, useEffect } from "react";
 import { FaFlag } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Annotation = () => {
   const [annotations, setAnnotations] = useState([]);
@@ -131,32 +132,6 @@ const Annotation = () => {
     return commentsList;
   };
 
-  const minX = Math.min(
-    ...annotations.map((point) => point.x),
-    currentAnnotation.x
-  );
-  const maxX = Math.max(
-    ...annotations.map((point) => point.x),
-    currentAnnotation.x
-  );
-  const minY = Math.min(
-    ...annotations.map((point) => point.y),
-    currentAnnotation.y
-  );
-  const maxY = Math.max(
-    ...annotations.map((point) => point.y),
-    currentAnnotation.y
-  );
-
-  const xAxisRange = maxX - minX;
-  const yAxisRange = maxY - minY;
-
-  useEffect(() => {
-    if (currentAnnotation.x !== 0 && currentAnnotation.y !== 0) {
-      setAnnotations([...annotations, currentAnnotation]);
-    }
-  }, [currentAnnotation, annotations]);
-
   return (
     <div style={{ position: "relative" }}>
       <img
@@ -169,6 +144,10 @@ const Annotation = () => {
 
       {annotations.map((annotation, index) => (
         <div key={index} style={{ ...flagIconStyle }}>
+          <FaFlag
+            style={{ color: "red" }}
+            onClick={() => handleFlagClick(annotation)}
+          />
           <div
             className="annotation"
             style={{
@@ -178,18 +157,9 @@ const Annotation = () => {
               height: "10px",
             }}
           >
-            <FaFlag
-              style={{
-                color:
-                  selectedAnnotation &&
-                  selectedAnnotation.x === annotation.x &&
-                  selectedAnnotation.y === annotation.y
-                    ? "pink"
-                    : "red",
-                cursor: "pointer",
-              }}
-              onClick={() => handleFlagClick(annotation)}
-            />
+            <Link onClick={() => handleFlagClick(annotation)}>
+              <FaFlag style={{ color: "red" }} />
+            </Link>
           </div>
 
           {comments[`${annotation.x}-${annotation.y}`] && (

@@ -80,6 +80,7 @@
 // }
 import React, { useState, useEffect } from "react";
 import { FaFlag } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Annotation = () => {
   const [annotations, setAnnotations] = useState([]);
@@ -169,6 +170,10 @@ const Annotation = () => {
 
       {annotations.map((annotation, index) => (
         <div key={index} style={{ ...flagIconStyle }}>
+          <FaFlag
+            style={{ color: "red" }}
+            onClick={() => handleFlagClick(annotation)}
+          />
           <div
             className="annotation"
             style={{
@@ -179,15 +184,7 @@ const Annotation = () => {
             }}
           >
             <FaFlag
-              style={{
-                color:
-                  selectedAnnotation &&
-                  selectedAnnotation.x === annotation.x &&
-                  selectedAnnotation.y === annotation.y
-                    ? "pink"
-                    : "red",
-                cursor: "pointer",
-              }}
+              style={{ color: "pink" }}
               onClick={() => handleFlagClick(annotation)}
             />
           </div>

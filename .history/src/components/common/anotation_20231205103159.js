@@ -80,14 +80,14 @@
 // }
 import React, { useState, useEffect } from "react";
 import { FaFlag } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Annotation = () => {
   const [annotations, setAnnotations] = useState([]);
   const [comments, setComments] = useState({});
   const [currentAnnotation, setCurrentAnnotation] = useState({ x: 0, y: 0 });
-  const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
-
+  const [plot, setPlot] = useState([]);
   const flagIconStyle = {
     position: "absolute",
     left: "-5px",
@@ -114,48 +114,24 @@ const Annotation = () => {
 
   const toggleAnnotationMode = () => {
     setAnnotationMode(!isAnnotationMode);
-    setSelectedAnnotation(null); // Close any open input when toggling mode
   };
 
-  const handleFlagClick = (annotation) => {
-    setSelectedAnnotation(annotation); // Open input for this annotation
-  };
-
-  const getCommentsList = () => {
-    const commentsList = [];
-    for (const key in comments) {
-      if (comments.hasOwnProperty(key)) {
-        commentsList.push({ coordinates: key, comment: comments[key] });
-      }
+  const handleFlagClick = (e, annotation) => {
+    const existingComment = comments[`${annotation.x}-${annotation.y}`];
+    const newComment = prompt("Add a comment:", existingComment || "");
+    if (newComment !== null) {
+      setComments({
+        ...comments,
+        [`${annotation.x}-${annotation.y}`]: newComment,
+      });
     }
-    return commentsList;
   };
-
-  const minX = Math.min(
-    ...annotations.map((point) => point.x),
-    currentAnnotation.x
-  );
-  const maxX = Math.max(
-    ...annotations.map((point) => point.x),
-    currentAnnotation.x
-  );
-  const minY = Math.min(
-    ...annotations.map((point) => point.y),
-    currentAnnotation.y
-  );
-  const maxY = Math.max(
-    ...annotations.map((point) => point.y),
-    currentAnnotation.y
-  );
-
-  const xAxisRange = maxX - minX;
-  const yAxisRange = maxY - minY;
 
   useEffect(() => {
     if (currentAnnotation.x !== 0 && currentAnnotation.y !== 0) {
-      setAnnotations([...annotations, currentAnnotation]);
+      setPlot([...plot, currentAnnotation]);
     }
-  }, [currentAnnotation, annotations]);
+  }, [currentAnnotation]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -168,7 +144,23 @@ const Annotation = () => {
       />
 
       {annotations.map((annotation, index) => (
-        <div key={index} style={{ ...flagIconStyle }}>
+        <div
+          key={index}
+          style={{ ...flagIconStyle }}
+          onClick={(e) => handleFlagClick(e, annotation)}
+        >
+          {/* Flag Icon */}
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="14" height="14" rx="2" fill="red" />
+          </svg>
+
+          {/* Annotation Point */}
           <div
             className="annotation"
             style={{
@@ -178,20 +170,12 @@ const Annotation = () => {
               height: "10px",
             }}
           >
-            <FaFlag
-              style={{
-                color:
-                  selectedAnnotation &&
-                  selectedAnnotation.x === annotation.x &&
-                  selectedAnnotation.y === annotation.y
-                    ? "pink"
-                    : "red",
-                cursor: "pointer",
-              }}
-              onClick={() => handleFlagClick(annotation)}
-            />
+            <Link>
+              <FaFlag style={{ color: "red" }} />
+            </Link>
           </div>
 
+          {/* Comment Input */}
           {comments[`${annotation.x}-${annotation.y}`] && (
             <div
               style={{
@@ -208,43 +192,23 @@ const Annotation = () => {
               {comments[`${annotation.x}-${annotation.y}`]}
             </div>
           )}
-
-          <form
-            style={{
-              position: "absolute",
-              left: annotation.x + 10,
-              top: annotation.y + 20,
-              zIndex: 1,
-              display:
-                selectedAnnotation &&
-                selectedAnnotation.x === annotation.x &&
-                selectedAnnotation.y === annotation.y
-                  ? "block"
-                  : "none",
-            }}
-          >
-            <input
-              type="text"
-              value={comments[`${annotation.x}-${annotation.y}`] || ""}
-              onChange={(e) =>
-                setComments({
-                  ...comments,
-                  [`${annotation.x}-${annotation.y}`]: e.target.value,
-                })
-              }
-            />
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedAnnotation(null); // Close input on save
-              }}
-            >
-              Save Comment
-            </button>
-          </form>
         </div>
       ))}
 
+      {isAnnotationMode && (
+        <div
+          style={{
+            position: "absolute",
+            left: currentAnnotation.x,
+            top: currentAnnotation.y,
+            width: "10px",
+            height: "10px",
+            backgroundColor: "blue",
+          }}
+        ></div>
+      )}
+
+      {/* Plot the x-axis */}
       <div
         style={{
           position: "absolute",
@@ -256,6 +220,7 @@ const Annotation = () => {
         }}
       ></div>
 
+      {/* Plot the y-axis */}
       <div
         style={{
           position: "absolute",
@@ -270,17 +235,6 @@ const Annotation = () => {
       <button onClick={toggleAnnotationMode}>
         {isAnnotationMode ? "Finish Annotation" : "Start Annotation"}
       </button>
-
-      <div style={{ marginTop: "20px" }}>
-        <h2>List of Comments:</h2>
-        <ul>
-          {getCommentsList().map((commentItem, index) => (
-            <li key={index}>
-              <strong>{commentItem.coordinates}:</strong> {commentItem.comment}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 };

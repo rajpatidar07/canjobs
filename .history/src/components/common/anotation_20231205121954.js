@@ -80,13 +80,15 @@
 // }
 import React, { useState, useEffect } from "react";
 import { FaFlag } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Annotation = () => {
   const [annotations, setAnnotations] = useState([]);
+  const [plot, setPlot] = useState([]);
   const [comments, setComments] = useState({});
   const [currentAnnotation, setCurrentAnnotation] = useState({ x: 0, y: 0 });
-  const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
+  const [openInputForAnnotation, setOpenInputForAnnotation] = useState(null);
 
   const flagIconStyle = {
     position: "absolute",
@@ -114,21 +116,7 @@ const Annotation = () => {
 
   const toggleAnnotationMode = () => {
     setAnnotationMode(!isAnnotationMode);
-    setSelectedAnnotation(null); // Close any open input when toggling mode
-  };
-
-  const handleFlagClick = (annotation) => {
-    setSelectedAnnotation(annotation); // Open input for this annotation
-  };
-
-  const getCommentsList = () => {
-    const commentsList = [];
-    for (const key in comments) {
-      if (comments.hasOwnProperty(key)) {
-        commentsList.push({ coordinates: key, comment: comments[key] });
-      }
-    }
-    return commentsList;
+    setOpenInputForAnnotation(null); // Close any open input when toggling mode
   };
 
   const minX = Math.min(
@@ -153,9 +141,24 @@ const Annotation = () => {
 
   useEffect(() => {
     if (currentAnnotation.x !== 0 && currentAnnotation.y !== 0) {
-      setAnnotations([...annotations, currentAnnotation]);
+      setPlot([...plot, currentAnnotation]);
     }
-  }, [currentAnnotation, annotations]);
+  }, [currentAnnotation]);
+
+  const handleFlagClick = (annotation) => {
+    console.log(annotation);
+    setOpenInputForAnnotation(annotation); // Open input for this annotation
+  };
+
+  const getCommentsList = () => {
+    const commentsList = [];
+    for (const key in comments) {
+      if (comments.hasOwnProperty(key)) {
+        commentsList.push({ coordinates: key, comment: comments[key] });
+      }
+    }
+    return commentsList;
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -169,6 +172,10 @@ const Annotation = () => {
 
       {annotations.map((annotation, index) => (
         <div key={index} style={{ ...flagIconStyle }}>
+          <FaFlag
+            style={{ color: "red" }}
+            onClick={() => handleFlagClick(annotation)}
+          />
           <div
             className="annotation"
             style={{
@@ -178,18 +185,9 @@ const Annotation = () => {
               height: "10px",
             }}
           >
-            <FaFlag
-              style={{
-                color:
-                  selectedAnnotation &&
-                  selectedAnnotation.x === annotation.x &&
-                  selectedAnnotation.y === annotation.y
-                    ? "pink"
-                    : "red",
-                cursor: "pointer",
-              }}
-              onClick={() => handleFlagClick(annotation)}
-            />
+            <Link onClick={() => handleFlagClick(annotation)}>
+              <FaFlag style={{ color: "red" }} />
+            </Link>
           </div>
 
           {comments[`${annotation.x}-${annotation.y}`] && (
@@ -215,12 +213,7 @@ const Annotation = () => {
               left: annotation.x + 10,
               top: annotation.y + 20,
               zIndex: 1,
-              display:
-                selectedAnnotation &&
-                selectedAnnotation.x === annotation.x &&
-                selectedAnnotation.y === annotation.y
-                  ? "block"
-                  : "none",
+              display: openInputForAnnotation === annotation ? "block" : "none",
             }}
           >
             <input
@@ -236,7 +229,7 @@ const Annotation = () => {
             <button
               type="button"
               onClick={() => {
-                setSelectedAnnotation(null); // Close input on save
+                setOpenInputForAnnotation(null); // Close input on save
               }}
             >
               Save Comment

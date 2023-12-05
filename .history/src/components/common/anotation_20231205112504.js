@@ -80,21 +80,25 @@
 // }
 import React, { useState, useEffect } from "react";
 import { FaFlag } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Annotation = () => {
+  // State for storing annotations (coordinates) and comments
   const [annotations, setAnnotations] = useState([]);
-  const [comments, setComments] = useState({});
+  const [comments, setComments] = useState("");
   const [currentAnnotation, setCurrentAnnotation] = useState({ x: 0, y: 0 });
-  const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
+  const [plot, setPlot] = useState([]);
 
+  // Style for the flag icon
   const flagIconStyle = {
     position: "absolute",
     left: "-5px",
     top: "-5px",
-    cursor: "pointer",
+    cursor: "pointer", // Cursor pointer to indicate it's clickable
   };
 
+  // Event handler for mouse down to capture annotation coordinates
   const handleMouseDown = (e) => {
     if (isAnnotationMode) {
       const imageRect = e.target.getBoundingClientRect();
@@ -105,6 +109,7 @@ const Annotation = () => {
     }
   };
 
+  // Event handler for mouse up to save annotation and reset currentAnnotation
   const handleMouseUp = () => {
     if (isAnnotationMode) {
       setAnnotations([...annotations, currentAnnotation]);
@@ -112,25 +117,12 @@ const Annotation = () => {
     }
   };
 
+  // Toggle annotation mode
   const toggleAnnotationMode = () => {
     setAnnotationMode(!isAnnotationMode);
-    setSelectedAnnotation(null); // Close any open input when toggling mode
   };
 
-  const handleFlagClick = (annotation) => {
-    setSelectedAnnotation(annotation); // Open input for this annotation
-  };
-
-  const getCommentsList = () => {
-    const commentsList = [];
-    for (const key in comments) {
-      if (comments.hasOwnProperty(key)) {
-        commentsList.push({ coordinates: key, comment: comments[key] });
-      }
-    }
-    return commentsList;
-  };
-
+  // Calculate the minimum and maximum values for x and y coordinates
   const minX = Math.min(
     ...annotations.map((point) => point.x),
     currentAnnotation.x
@@ -148,17 +140,46 @@ const Annotation = () => {
     currentAnnotation.y
   );
 
+  // Calculate the range for x and y axes
   const xAxisRange = maxX - minX;
   const yAxisRange = maxY - minY;
 
+  // Effect to update the plot array when currentAnnotation changes
   useEffect(() => {
     if (currentAnnotation.x !== 0 && currentAnnotation.y !== 0) {
-      setAnnotations([...annotations, currentAnnotation]);
+      setPlot([...plot, currentAnnotation]);
     }
-  }, [currentAnnotation, annotations]);
+  }, [currentAnnotation]);
 
+  // Event handler for clicking on a flag to add or update a comment
+  const handleFlagClick = (e, annotation) => {
+    // Prompt user to add or update a comment
+    const existingComment = comments[`${annotation.x}-${annotation.y}`] || "";
+    const newComment = prompt("Add a comment:", existingComment);
+    if (newComment !== null) {
+      // Save the comment in the state
+      setComments({
+        ...comments,
+        [`${annotation.x}-${annotation.y}`]: newComment,
+      });
+    }
+  };
+
+  // Function to get the list of comments
+  const getCommentsList = () => {
+    const commentsList = [];
+    for (const key in comments) {
+      if (comments.hasOwnProperty(key)) {
+        commentsList.push({ coordinates: key, comment: comments[key] });
+      }
+    }
+    return commentsList;
+  };
+
+  // Render the component
   return (
     <div style={{ position: "relative" }}>
+      {/* Annotated Image */}
       <img
         src="https://image.slidesharecdn.com/nextgenerationofdatascientist-220221085037/75/next-generation-of-data-scientist-4-2048.jpg?cb=1668057843"
         alt="Annotated Image"
@@ -167,8 +188,13 @@ const Annotation = () => {
         onMouseUp={handleMouseUp}
       />
 
+      {/* Render Annotations */}
       {annotations.map((annotation, index) => (
         <div key={index} style={{ ...flagIconStyle }}>
+          {/* Flag Icon */}
+          <FaFlag style={{ color: "red" }} />
+
+          {/* Annotation Point */}
           <div
             className="annotation"
             style={{
@@ -178,20 +204,13 @@ const Annotation = () => {
               height: "10px",
             }}
           >
-            <FaFlag
-              style={{
-                color:
-                  selectedAnnotation &&
-                  selectedAnnotation.x === annotation.x &&
-                  selectedAnnotation.y === annotation.y
-                    ? "pink"
-                    : "red",
-                cursor: "pointer",
-              }}
-              onClick={() => handleFlagClick(annotation)}
-            />
+            {/* Link to trigger the click event */}
+            <Link onClick={(e) => handleFlagClick(e, annotation)}>
+              <FaFlag style={{ color: "red" }} />
+            </Link>
           </div>
 
+          {/* Comment Display */}
           {comments[`${annotation.x}-${annotation.y}`] && (
             <div
               style={{
@@ -209,23 +228,21 @@ const Annotation = () => {
             </div>
           )}
 
+          {/* Comment Form */}
           <form
             style={{
               position: "absolute",
               left: annotation.x + 10,
               top: annotation.y + 20,
               zIndex: 1,
-              display:
-                selectedAnnotation &&
-                selectedAnnotation.x === annotation.x &&
-                selectedAnnotation.y === annotation.y
-                  ? "block"
-                  : "none",
+              display: comments[`${annotation.x}-${annotation.y}`]
+                ? "none"
+                : "block",
             }}
           >
             <input
               type="text"
-              value={comments[`${annotation.x}-${annotation.y}`] || ""}
+              value={comments || ""}
               onChange={(e) =>
                 setComments({
                   ...comments,
@@ -233,18 +250,14 @@ const Annotation = () => {
                 })
               }
             />
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedAnnotation(null); // Close input on save
-              }}
-            >
+            <button type="button" onClick={() => setComments({})}>
               Save Comment
             </button>
           </form>
         </div>
       ))}
 
+      {/* Plot the x-axis */}
       <div
         style={{
           position: "absolute",
@@ -256,6 +269,7 @@ const Annotation = () => {
         }}
       ></div>
 
+      {/* Plot the y-axis */}
       <div
         style={{
           position: "absolute",
@@ -267,10 +281,12 @@ const Annotation = () => {
         }}
       ></div>
 
+      {console.log(comments) /* Button to toggle Annotation Mode */}
       <button onClick={toggleAnnotationMode}>
         {isAnnotationMode ? "Finish Annotation" : "Start Annotation"}
       </button>
 
+      {/* Display List of Comments */}
       <div style={{ marginTop: "20px" }}>
         <h2>List of Comments:</h2>
         <ul>
