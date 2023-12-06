@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import {
   UploadEmployerDocument,
@@ -7,9 +7,13 @@ import {
 } from "../../api/api";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
-import { useEffect } from "react";
 import Verified from "../../media/verified.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+/*Annotation */
+import { FaFlag } from "react-icons/fa";
+import { MdAddComment } from "react-icons/md";
+import { FcCancel } from "react-icons/fc";
+import { Link } from "react-router-dom";
 export default function EmployerDocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
@@ -25,6 +29,56 @@ export default function EmployerDocumrentContainer(props) {
   const [hide, setHide] = useState(false);
   let encoded;
   let user_type = localStorage.getItem("userType");
+  /**
+   * Annotation   */
+  // Annotation State
+  const [imageAnnotations, setImageAnnotations] = useState([]);
+  const [comments, setComments] = useState({});
+  const [selectedAnnotation, setSelectedAnnotation] = useState(null);
+  const [isAnnotationMode, setAnnotationMode] = useState(false);
+
+  const fileViewerRef = useRef(null);
+
+  // Handle click event on the FileViewer to capture annotations
+  const handleFileViewerClick = (e) => {
+    if (isAnnotationMode) {
+      const rect = fileViewerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      setImageAnnotations([...imageAnnotations, { x, y }]);
+    }
+  };
+
+  // Handle flag click to select the annotation and toggle the form visibility for image annotation
+  const handleFlagClick = (annotation) => {
+    if (
+      selectedAnnotation &&
+      selectedAnnotation.x === annotation.x &&
+      selectedAnnotation.y === annotation.y
+    ) {
+      setSelectedAnnotation(null);
+    } else {
+      setSelectedAnnotation(annotation);
+    }
+  };
+
+  // Generate a list of comments from the state for image annotation
+  const getCommentsList = () => {
+    const commentsList = [];
+    for (const key in comments) {
+      if (comments.hasOwnProperty(key)) {
+        commentsList.push({ coordinates: key, comment: comments[key] });
+      }
+    }
+    return commentsList;
+  };
+
+  // Effect to clear selected annotation when the annotation mode is toggled
+  useEffect(() => {
+    setSelectedAnnotation(null);
+  }, [isAnnotationMode]);
+  /*Annotaton functionalites close */
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
@@ -214,19 +268,25 @@ export default function EmployerDocumrentContainer(props) {
     return (
       <React.Fragment>
         {docFile ? (
-          <FileViewer
-            key={docTypData.id}
-            fileType={
-              docFileExt
-                ? docFileExt
-                : docTypData.extension_type ===
-                  "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                ? "docx"
-                : docTypData.extension_type
-            }
-            filePath={docFile}
-            errorComponent={() => <div>Error loading document</div>}
-          />
+          <div
+            className="w-100"
+            ref={fileViewerRef}
+            onClick={handleFileViewerClick}
+          >
+            <FileViewer
+              key={docTypData.id}
+              fileType={
+                docFileExt
+                  ? docFileExt
+                  : docTypData.extension_type ===
+                    "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  ? "docx"
+                  : docTypData.extension_type
+              }
+              filePath={docFile}
+              errorComponent={() => <div>Error loading document</div>}
+            />
+          </div>
         ) : (
           <div className="text-center mt-5">No document found</div>
         )}
@@ -494,7 +554,7 @@ export default function EmployerDocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup> */}
         </div>
-        <div className="col-md-8">
+        <div className="col-md-4">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
@@ -631,12 +691,131 @@ export default function EmployerDocumrentContainer(props) {
                 </div>
               ) : null}
             </div>
-            <RenderNewDocFile />
+            {/* Annotation */}
+            {docFile ? (
+              <div>
+                <div
+                  style={{
+                    position: "relative",
+                    overflow: "scroll",
+                    width: "100%",
+                  }}
+                >
+                  <div className="d-flex justify-content-center">
+                    <div>
+                      <RenderNewDocFile />
+                    </div>
+                    <Link
+                      className={`btn-sm mt-7 ${
+                        isAnnotationMode ? "btn-primary" : "btn-secondary"
+                      }`}
+                      onClick={() => setAnnotationMode(!isAnnotationMode)}
+                    >
+                      {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
+                    </Link>
+                  </div>
+                  {/* Transparent overlay for capturing click events */}
+                  {isAnnotationMode && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        pointerEvents: "none",
+                      }}
+                    />
+                  )}
+
+                  {imageAnnotations.map((annotation, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        left: annotation.x - 5,
+                        top: annotation.y - 5,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleFlagClick(annotation)}
+                    >
+                      <FaFlag
+                        style={{
+                          color:
+                            selectedAnnotation &&
+                            selectedAnnotation.x === annotation.x &&
+                            selectedAnnotation.y === annotation.y
+                              ? "pink"
+                              : "red",
+                        }}
+                      />
+                    </div>
+                  ))}
+
+                  {selectedAnnotation && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: selectedAnnotation.x + 10,
+                        top: selectedAnnotation.y + 20,
+                        zIndex: 1,
+                      }}
+                    >
+                      <form>
+                        <input
+                          type="text"
+                          value={
+                            comments[
+                              `${selectedAnnotation.x}-${selectedAnnotation.y}`
+                            ] || ""
+                          }
+                          onChange={(e) =>
+                            setComments({
+                              ...comments,
+                              [`${selectedAnnotation.x}-${selectedAnnotation.y}`]:
+                                e.target.value,
+                            })
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedAnnotation(null);
+                          }}
+                        >
+                          Save Comment
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="text-center mt-5">No document found</div>
+            )}
+            {/* Annotation Close */}
             {/* ) : (
               <div className="text-center">
                 <h2> No Documents </h2>
               </div>
             )} */}
+          </div>
+        </div>
+        <div className="col-md-4 p-0 border-left">
+          <div
+            style={
+              docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
+            }
+          >
+            <h2>List of Comments:</h2>
+            <ul>
+              {getCommentsList().map((commentItem, index) => (
+                <li key={index} className="text-break">
+                  <strong>{commentItem.coordinates}:</strong>{" "}
+                  {commentItem.comment}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
