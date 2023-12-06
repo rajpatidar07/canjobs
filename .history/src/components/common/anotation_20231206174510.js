@@ -166,7 +166,6 @@ import { FaFlag } from "react-icons/fa";
 import FileViewer from "react-file-viewer";
 import { MdAddComment } from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
-import { Link } from "react-router-dom";
 
 const Annotation = () => {
   // Annotation State
@@ -238,14 +237,14 @@ const Annotation = () => {
               errorComponent={() => <div>Error loading document</div>}
             />
           </div>
-          <Link
-            className={`btn-sm mt-7 ${
+          <button
+            className={`btn-sm mt-9 ${
               isAnnotationMode ? "btn-primary" : "btn-secondary"
             }`}
             onClick={() => setAnnotationMode(!isAnnotationMode)}
           >
             {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
-          </Link>
+          </button>
         </div>
         {/* Transparent overlay for capturing click events */}
         {isAnnotationMode && (

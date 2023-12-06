@@ -161,31 +161,41 @@
 // };
 
 // export default Annotation;
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { FaFlag } from "react-icons/fa";
 import FileViewer from "react-file-viewer";
-import { MdAddComment } from "react-icons/md";
-import { FcCancel } from "react-icons/fc";
-import { Link } from "react-router-dom";
 
 const Annotation = () => {
   // Annotation State
   const [imageAnnotations, setImageAnnotations] = useState([]);
   const [comments, setComments] = useState({});
+  const [currentAnnotation, setCurrentAnnotation] = useState({ x: 0, y: 0 });
   const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
 
-  const fileViewerRef = useRef(null);
-
-  // Handle click event on the FileViewer to capture annotations
-  const handleFileViewerClick = (e) => {
+  // Handle mouse down event to set the current annotation for image annotation
+  const handleMouseDown = (e) => {
     if (isAnnotationMode) {
-      const rect = fileViewerRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      setImageAnnotations([...imageAnnotations, { x, y }]);
+      const imageRect = e.target.getBoundingClientRect();
+      setCurrentAnnotation({
+        x: e.clientX - imageRect.left,
+        y: e.clientY - imageRect.top,
+      });
     }
+  };
+
+  // Handle mouse up event to save the current annotation for image annotation
+  const handleMouseUp = () => {
+    if (isAnnotationMode) {
+      setImageAnnotations([...imageAnnotations, currentAnnotation]);
+      setCurrentAnnotation({ x: 0, y: 0 });
+    }
+  };
+
+  // Toggle annotation mode for image annotation
+  const toggleAnnotationMode = () => {
+    setAnnotationMode(!isAnnotationMode);
+    setSelectedAnnotation(null);
   };
 
   // Handle flag click to select the annotation and toggle the form visibility for image annotation
@@ -212,54 +222,34 @@ const Annotation = () => {
     return commentsList;
   };
 
-  // Effect to clear selected annotation when the annotation mode is toggled
+  // Effect to add the current annotation to the annotations array for image annotation
   useEffect(() => {
-    setSelectedAnnotation(null);
-  }, [isAnnotationMode]);
+    if (currentAnnotation.x !== 0 && currentAnnotation.y !== 0) {
+      setImageAnnotations([...imageAnnotations, currentAnnotation]);
+      setCurrentAnnotation({ x: 0, y: 0 });
+    }
+  }, [currentAnnotation]);
 
   return (
     <div>
       {/* Annotation */}
       <div style={{ position: "relative", overflow: "scroll" }}>
-        <div className="d-flex justify-content-center">
-          <div ref={fileViewerRef} onClick={handleFileViewerClick}>
-            <FileViewer
-              alt="Annotated Image"
-              style={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-                overflow: "scroll",
-              }}
-              fileType={"png"}
-              filePath={
-                "https://blog.hootsuite.com/wp-content/uploads/2023/09/Social-media-image-sizes-2023.png"
-              }
-              errorComponent={() => <div>Error loading document</div>}
-            />
-          </div>
-          <Link
-            className={`btn-sm mt-7 ${
-              isAnnotationMode ? "btn-primary" : "btn-secondary"
-            }`}
-            onClick={() => setAnnotationMode(!isAnnotationMode)}
-          >
-            {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
-          </Link>
-        </div>
-        {/* Transparent overlay for capturing click events */}
-        {isAnnotationMode && (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              pointerEvents: "none",
-            }}
-          />
-        )}
+        <FileViewer
+          alt="Annotated Image"
+          style={{
+            height: "50%",
+            width: "50%",
+            position: "relative",
+            overflow: "scroll",
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          fileType={"pdf"}
+          filePath={
+            "https://apnaorganicstore.in/canjobs/uploads/employee_documents/employee_50/resume_or_cv_50.pdf"
+          }
+          errorComponent={() => <div>Error loading document</div>}
+        />
 
         {imageAnnotations.map((annotation, index) => (
           <div
@@ -322,6 +312,9 @@ const Annotation = () => {
         )}
 
         <div style={{ marginTop: "20px" }}>
+          <button onClick={toggleAnnotationMode}>
+            {isAnnotationMode ? "Finish Annotation" : "Start Annotation"}
+          </button>
           <h2>List of Comments:</h2>
           <ul>
             {getCommentsList().map((commentItem, index) => (

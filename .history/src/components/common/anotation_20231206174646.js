@@ -238,14 +238,14 @@ const Annotation = () => {
               errorComponent={() => <div>Error loading document</div>}
             />
           </div>
-          <Link
+          <Links
             className={`btn-sm mt-7 ${
               isAnnotationMode ? "btn-primary" : "btn-secondary"
             }`}
             onClick={() => setAnnotationMode(!isAnnotationMode)}
           >
             {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
-          </Link>
+          </Links>
         </div>
         {/* Transparent overlay for capturing click events */}
         {isAnnotationMode && (

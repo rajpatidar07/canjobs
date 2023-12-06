@@ -239,7 +239,7 @@ const Annotation = () => {
             />
           </div>
           <Link
-            className={`btn-sm mt-7 ${
+            className={`btn-sm mt-5 ${
               isAnnotationMode ? "btn-primary" : "btn-secondary"
             }`}
             onClick={() => setAnnotationMode(!isAnnotationMode)}

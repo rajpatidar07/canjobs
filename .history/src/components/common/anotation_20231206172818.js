@@ -166,7 +166,6 @@ import { FaFlag } from "react-icons/fa";
 import FileViewer from "react-file-viewer";
 import { MdAddComment } from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
-import { Link } from "react-router-dom";
 
 const Annotation = () => {
   // Annotation State
@@ -221,31 +220,21 @@ const Annotation = () => {
     <div>
       {/* Annotation */}
       <div style={{ position: "relative", overflow: "scroll" }}>
-        <div className="d-flex justify-content-center">
-          <div ref={fileViewerRef} onClick={handleFileViewerClick}>
-            <FileViewer
-              alt="Annotated Image"
-              style={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-                overflow: "scroll",
-              }}
-              fileType={"png"}
-              filePath={
-                "https://blog.hootsuite.com/wp-content/uploads/2023/09/Social-media-image-sizes-2023.png"
-              }
-              errorComponent={() => <div>Error loading document</div>}
-            />
-          </div>
-          <Link
-            className={`btn-sm mt-7 ${
-              isAnnotationMode ? "btn-primary" : "btn-secondary"
-            }`}
-            onClick={() => setAnnotationMode(!isAnnotationMode)}
-          >
-            {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
-          </Link>
+        <div ref={fileViewerRef} onClick={handleFileViewerClick}>
+          <FileViewer
+            alt="Annotated Image"
+            style={{
+              height: "50%",
+              width: "100%",
+              position: "relative",
+              overflow: "scroll",
+            }}
+            fileType={"png"}
+            filePath={
+              "https://blog.hootsuite.com/wp-content/uploads/2023/09/Social-media-image-sizes-2023.png"
+            }
+            errorComponent={() => <div>Error loading document</div>}
+          />
         </div>
         {/* Transparent overlay for capturing click events */}
         {isAnnotationMode && (
@@ -322,6 +311,14 @@ const Annotation = () => {
         )}
 
         <div style={{ marginTop: "20px" }}>
+          <button
+            className={`btn ${
+              isAnnotationMode ? "btn-primary" : "btn-secondary"
+            }`}
+            onClick={() => setAnnotationMode(!isAnnotationMode)}
+          >
+            {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
+          </button>
           <h2>List of Comments:</h2>
           <ul>
             {getCommentsList().map((commentItem, index) => (

@@ -164,9 +164,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaFlag } from "react-icons/fa";
 import FileViewer from "react-file-viewer";
-import { MdAddComment } from "react-icons/md";
-import { FcCancel } from "react-icons/fc";
-import { Link } from "react-router-dom";
 
 const Annotation = () => {
   // Annotation State
@@ -175,12 +172,12 @@ const Annotation = () => {
   const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
 
-  const fileViewerRef = useRef(null);
+  const overlayRef = useRef(null);
 
-  // Handle click event on the FileViewer to capture annotations
-  const handleFileViewerClick = (e) => {
+  // Handle click event on the overlay to capture annotations
+  const handleOverlayClick = (e) => {
     if (isAnnotationMode) {
-      const rect = fileViewerRef.current.getBoundingClientRect();
+      const rect = overlayRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
@@ -221,45 +218,34 @@ const Annotation = () => {
     <div>
       {/* Annotation */}
       <div style={{ position: "relative", overflow: "scroll" }}>
-        <div className="d-flex justify-content-center">
-          <div ref={fileViewerRef} onClick={handleFileViewerClick}>
-            <FileViewer
-              alt="Annotated Image"
-              style={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-                overflow: "scroll",
-              }}
-              fileType={"png"}
-              filePath={
-                "https://blog.hootsuite.com/wp-content/uploads/2023/09/Social-media-image-sizes-2023.png"
-              }
-              errorComponent={() => <div>Error loading document</div>}
-            />
-          </div>
-          <Link
-            className={`btn-sm mt-7 ${
-              isAnnotationMode ? "btn-primary" : "btn-secondary"
-            }`}
-            onClick={() => setAnnotationMode(!isAnnotationMode)}
-          >
-            {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
-          </Link>
-        </div>
+        <FileViewer
+          alt="Annotated Image"
+          style={{
+            height: "50%",
+            width: "50%",
+            position: "relative",
+            overflow: "scroll",
+          }}
+          fileType={"png"}
+          filePath={
+            "https://blog.hootsuite.com/wp-content/uploads/2023/09/Social-media-image-sizes-2023.png"
+          }
+          errorComponent={() => <div>Error loading document</div>}
+        />
+
         {/* Transparent overlay for capturing click events */}
-        {isAnnotationMode && (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              pointerEvents: "none",
-            }}
-          />
-        )}
+        <div
+          ref={overlayRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: isAnnotationMode ? "auto" : "none",
+          }}
+          onClick={handleOverlayClick}
+        />
 
         {imageAnnotations.map((annotation, index) => (
           <div
@@ -322,6 +308,9 @@ const Annotation = () => {
         )}
 
         <div style={{ marginTop: "20px" }}>
+          <button onClick={() => setAnnotationMode(!isAnnotationMode)}>
+            {isAnnotationMode ? "Finish Annotation" : "Start Annotation"}
+          </button>
           <h2>List of Comments:</h2>
           <ul>
             {getCommentsList().map((commentItem, index) => (

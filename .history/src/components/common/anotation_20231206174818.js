@@ -226,8 +226,8 @@ const Annotation = () => {
             <FileViewer
               alt="Annotated Image"
               style={{
-                height: "100%",
-                width: "100%",
+                // height: "100%",
+                // width: "100%",
                 position: "relative",
                 overflow: "scroll",
               }}
@@ -239,7 +239,7 @@ const Annotation = () => {
             />
           </div>
           <Link
-            className={`btn-sm mt-7 ${
+            className={`btn-sm  ${
               isAnnotationMode ? "btn-primary" : "btn-secondary"
             }`}
             onClick={() => setAnnotationMode(!isAnnotationMode)}
