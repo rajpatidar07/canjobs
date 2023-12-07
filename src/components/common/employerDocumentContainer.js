@@ -4,6 +4,8 @@ import {
   UploadEmployerDocument,
   GetEmployerDocumentList,
   VarifyEmployerDocument,
+  ADocAnnotation,
+  GetCommentsAndAssign,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
@@ -29,11 +31,13 @@ export default function EmployerDocumrentContainer(props) {
   const [hide, setHide] = useState(false);
   let encoded;
   let user_type = localStorage.getItem("userType");
+  let admin_id = localStorage.getItem("admin_id");
   /**
    * Annotation   */
   // Annotation State
   const [imageAnnotations, setImageAnnotations] = useState([]);
-  const [comments, setComments] = useState({});
+  const [comments, setComments] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
   const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
 
@@ -45,8 +49,8 @@ export default function EmployerDocumrentContainer(props) {
       const rect = fileViewerRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-
-      setImageAnnotations([...imageAnnotations, { x, y }]);
+      handleFlagClick({ x, y });
+      setImageAnnotations([...imageAnnotations, { x_axis: x, y_axis: y }]);
     }
   };
 
@@ -64,20 +68,28 @@ export default function EmployerDocumrentContainer(props) {
   };
 
   // Generate a list of comments from the state for image annotation
-  const getCommentsList = () => {
-    const commentsList = [];
-    for (const key in comments) {
-      if (comments.hasOwnProperty(key)) {
-        commentsList.push({ coordinates: key, comment: comments[key] });
+  const getCommentsList = async () => {
+    try {
+      let res = await GetCommentsAndAssign(docId);
+      if (res.status === (1 || "1")) {
+        setCommentsList(res.data.data);
+        setImageAnnotations(res.data.data);
       }
+      if (res.data.message === "Task data not found") {
+        setCommentsList([]);
+        setImageAnnotations([]);
+      }
+    } catch (err) {
+      console.log(err);
     }
-    return commentsList;
   };
 
   // Effect to clear selected annotation when the annotation mode is toggled
   useEffect(() => {
     setSelectedAnnotation(null);
-  }, [isAnnotationMode]);
+    getCommentsList();
+  }, [isAnnotationMode, docId]);
+
   /*Annotaton functionalites close */
   /*Functo get Applicants Document */
   const GetDocument = async () => {
@@ -411,6 +423,39 @@ export default function EmployerDocumrentContainer(props) {
       printWindow.print();
     };
   };
+  // Function to add annotation based on conditions
+  const addAnnotation = async (annotation) => {
+    // Retrieve data from local storage
+    const assignedUserId = admin_id;
+    const email = /\S+@\S+\.\S+/.test(comments) ? comments : "";
+    const subject = "";
+    const comment = /\S+@\S+\.\S+/.test(comments) ? "" : comments;
+    // Send data to the API
+    try {
+      let res = await ADocAnnotation(
+        admin_id,
+        docId,
+        assignedUserId,
+        email,
+        subject,
+        comment,
+        annotation.x,
+        annotation.y
+      );
+      if (res.data.message === "task inserted successfully!") {
+        toast.success("Comment uploaded Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setSelectedAnnotation(null);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    // Update state to include the new annotation
+    // setImageAnnotations([...imageAnnotations, { x, y }]);
+  };
+
   return (
     <div
       className={
@@ -420,7 +465,7 @@ export default function EmployerDocumrentContainer(props) {
       }
     >
       <div className="row m-0">
-        <div className="col-md-4 p-0 border-right">
+        <div className="col-md-3 p-0 border-right">
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
@@ -554,7 +599,7 @@ export default function EmployerDocumrentContainer(props) {
             </ListGroup.Item>
           </ListGroup> */}
         </div>
-        <div className="col-md-4">
+        <div className="col-md-6">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
@@ -695,98 +740,102 @@ export default function EmployerDocumrentContainer(props) {
             {docFile ? (
               <div>
                 <div
+                  id="annotation-container"
                   style={{
                     position: "relative",
                     overflow: "scroll",
                     width: "100%",
+                    height: "100vh",
                   }}
                 >
                   <div className="d-flex justify-content-center">
-                    <div>
-                      <RenderNewDocFile />
-                    </div>
+                    <RenderNewDocFile />
+
                     <Link
-                      className={`btn-sm mt-7 ${
-                        isAnnotationMode ? "btn-primary" : "btn-secondary"
+                      className={`${
+                        hide === false &&
+                        docFile &&
+                        docName &&
+                        user_type === "admin"
+                          ? `btn-sm mt-7 ${
+                              isAnnotationMode ? "btn-primary" : "btn-secondary"
+                            }`
+                          : "d-none"
                       }`}
+                      style={{ position: "absolute", right: "88px" }}
                       onClick={() => setAnnotationMode(!isAnnotationMode)}
                     >
                       {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
                     </Link>
                   </div>
                   {/* Transparent overlay for capturing click events */}
-                  {isAnnotationMode && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        pointerEvents: "none",
-                      }}
-                    />
-                  )}
-
-                  {imageAnnotations.map((annotation, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        left: annotation.x - 5,
-                        top: annotation.y - 5,
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleFlagClick(annotation)}
-                    >
-                      <FaFlag
-                        style={{
-                          color:
-                            selectedAnnotation &&
-                            selectedAnnotation.x === annotation.x &&
-                            selectedAnnotation.y === annotation.y
-                              ? "pink"
-                              : "red",
-                        }}
-                      />
-                    </div>
-                  ))}
-
-                  {selectedAnnotation && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: selectedAnnotation.x + 10,
-                        top: selectedAnnotation.y + 20,
-                        zIndex: 1,
-                      }}
-                    >
-                      <form>
-                        <input
-                          type="text"
-                          value={
-                            comments[
-                              `${selectedAnnotation.x}-${selectedAnnotation.y}`
-                            ] || ""
-                          }
-                          onChange={(e) =>
-                            setComments({
-                              ...comments,
-                              [`${selectedAnnotation.x}-${selectedAnnotation.y}`]:
-                                e.target.value,
-                            })
-                          }
+                  {!hide && docFile && docName && user_type === "admin" && (
+                    <>
+                      {isAnnotationMode && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            pointerEvents: "none",
+                          }}
                         />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedAnnotation(null);
+                      )}
+
+                      {imageAnnotations.map((annotation, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            position: "absolute",
+                            left: annotation.x_axis - 5,
+                            top: annotation.y_axis - 5,
+                            cursor: "pointer",
+                          }}
+                          onClick={() => handleFlagClick(annotation)}
+                        >
+                          <FaFlag
+                            style={{
+                              color:
+                                selectedAnnotation &&
+                                selectedAnnotation.x === annotation.x_axis &&
+                                selectedAnnotation.y === annotation.y_axis
+                                  ? "pink"
+                                  : "red",
+                            }}
+                          />
+                        </div>
+                      ))}
+
+                      {selectedAnnotation && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            left: selectedAnnotation.x + 10,
+                            top: selectedAnnotation.y + 20,
+                            zIndex: 1,
                           }}
                         >
-                          Save Comment
-                        </button>
-                      </form>
-                    </div>
+                          <form>
+                            <input
+                              type="text"
+                              value={comments || ""}
+                              onChange={(e) => setComments(e.target.value)}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                addAnnotation(selectedAnnotation);
+                              }}
+                              className="btn btn-primary"
+                            >
+                              Save Comment
+                            </button>
+                          </form>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -801,21 +850,31 @@ export default function EmployerDocumrentContainer(props) {
             )} */}
           </div>
         </div>
-        <div className="col-md-4 p-0 border-left">
+        <div className="col-md-3 p-0 border-left">
           <div
             style={
               docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
             }
           >
-            <h2>List of Comments:</h2>
-            <ul>
-              {getCommentsList().map((commentItem, index) => (
-                <li key={index} className="text-break">
-                  <strong>{commentItem.coordinates}:</strong>{" "}
-                  {commentItem.comment}
-                </li>
+            {" "}
+            <ol className="d-flex flex-column">
+              {(commentsList || []).map((commentItem, index) => (
+                <Link
+                  to=""
+                  onClick={() =>
+                    setSelectedAnnotation({
+                      x: commentItem.x_axis,
+                      y: commentItem.y_axis,
+                    })
+                  }
+                  className="text-decoration-none"
+                >
+                  <li key={index} className="text-break">
+                    {commentItem.subject_description}
+                  </li>
+                </Link>
               ))}
-            </ul>
+            </ol>
           </div>
         </div>
       </div>
