@@ -6,16 +6,19 @@ import {
   VarifyEmployerDocument,
   ADocAnnotation,
   GetCommentsAndAssign,
+  getallAdminData,
+  UpdateDocuentcommentAssign,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import Verified from "../../media/verified.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 /*Annotation */
-import { FaFlag } from "react-icons/fa";
+// import { FaFlag } from "react-icons/fa";
 import { MdAddComment } from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import moment from "moment";
 export default function EmployerDocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
@@ -36,13 +39,71 @@ export default function EmployerDocumrentContainer(props) {
    * Annotation   */
   // Annotation State
   const [imageAnnotations, setImageAnnotations] = useState([]);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState("");
   const [commentsList, setCommentsList] = useState([]);
   const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
+  let [allAdmin, setAllAdmin] = useState([]);
+  let [adminid, setAdminId] = useState();
 
   const fileViewerRef = useRef(null);
 
+  const [filteredEmails, setFilteredEmails] = useState([]);
+
+  /*Function to get admin list */
+  const AdminData = async () => {
+    try {
+      const userData = await getallAdminData();
+      if (userData.data.length === 0) {
+        setAllAdmin([]);
+      } else {
+        // const filteredData = userData.data.filter(item => item.admin_type === "manager");
+        setAllAdmin(userData.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*onchange Function to set email or any other comment  */
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    if (value.startsWith("@")) {
+      // Filter admin emails based on input
+      const filteredAdminEmails = allAdmin.filter((admin) => {
+        // Check if admin and admin.email are defined
+        if (admin && admin.email) {
+          // Convert both to lowercase and check for inclusion
+          return admin.email
+            .toLowerCase()
+            .includes(value.slice(1).toLowerCase());
+        }
+        return false; // Handle the case where admin or admin.email is undefined
+      });
+
+      // Update the filtered emails
+      setFilteredEmails(filteredAdminEmails);
+    } else {
+      // Reset filtered emails if input doesn't start with '@'
+      setFilteredEmails([]);
+    }
+
+    // Update the input value
+    setComments(value);
+  };
+  /*Function to get the email to assign */
+  const handleEmailClick = (email) => {
+    // Set the selected email as the input value
+    setComments(email);
+
+    // Clear the filtered emails
+    setFilteredEmails([]);
+  };
+  /*Function to get the email to input on hover */
+  const handleEmailMouseOver = (email) => {
+    // Highlight the email on mouseover
+    setComments(email);
+  };
   // Handle click event on the FileViewer to capture annotations
   const handleFileViewerClick = (e) => {
     if (isAnnotationMode) {
@@ -69,26 +130,20 @@ export default function EmployerDocumrentContainer(props) {
 
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async () => {
-    try {
-      let res = await GetCommentsAndAssign(docId);
-      if (res.status === (1 || "1")) {
-        setCommentsList(res.data.data);
-        setImageAnnotations(res.data.data);
-      }
-      if (res.data.message === "Task data not found") {
+    if (docId) {
+      try {
+        let res = await GetCommentsAndAssign(docId, adminid);
+        if (res.data.status === (1 || "1")) {
+          setCommentsList(res.data.data);
+          setImageAnnotations(res.data.data);
+        }
+      } catch (err) {
+        console.log(err);
         setCommentsList([]);
         setImageAnnotations([]);
       }
-    } catch (err) {
-      console.log(err);
     }
   };
-
-  // Effect to clear selected annotation when the annotation mode is toggled
-  useEffect(() => {
-    setSelectedAnnotation(null);
-    getCommentsList();
-  }, [isAnnotationMode, docId]);
 
   /*Annotaton functionalites close */
   /*Functo get Applicants Document */
@@ -115,6 +170,7 @@ export default function EmployerDocumrentContainer(props) {
             response.data.data[0].document_url +
               `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
+          setDocId(response.data.data[0].id);
           setDocName(response.data.data[0].type);
         } else if (
           showMoreDocType === false &&
@@ -365,10 +421,13 @@ export default function EmployerDocumrentContainer(props) {
   useEffect(() => {
     GetDocument();
     RenderNewDocFile();
+    setSelectedAnnotation(null);
+    getCommentsList();
+    AdminData();
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [docName, apiCall]);
+  }, [docName, apiCall, isAnnotationMode, docId, adminid]);
 
   /*Function to change document type */
   const handleDocTypeChange = (e) => {
@@ -426,7 +485,9 @@ export default function EmployerDocumrentContainer(props) {
   // Function to add annotation based on conditions
   const addAnnotation = async (annotation) => {
     // Retrieve data from local storage
-    const assignedUserId = admin_id;
+    const assignedUserId = allAdmin.find((item) => item.email === comments)
+      ? allAdmin.find((item) => item.email === comments).admin_id
+      : "";
     const email = /\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
     const comment = /\S+@\S+\.\S+/.test(comments) ? "" : comments;
@@ -448,12 +509,38 @@ export default function EmployerDocumrentContainer(props) {
           autoClose: 1000,
         });
         setSelectedAnnotation(null);
+        setComments("");
+        setApiCall(true);
       }
     } catch (err) {
       console.log(err);
     }
     // Update state to include the new annotation
     // setImageAnnotations([...imageAnnotations, { x, y }]);
+  };
+  /* Function to update comment and assign */
+  const OnHandleUpdateComment = async (originalData) => {
+    try {
+      // Clone the original data to avoid modifying the original object
+      const updatedData = { ...originalData };
+
+      // Update the 'status' property in the cloned data
+      updatedData.status = "1"; // Replace 'newStatus' with the desired value
+
+      // Call the API with the updated data
+      let res = await UpdateDocuentcommentAssign(updatedData);
+      if (res.message === "Task updated successfully!") {
+        toast.success("Task completed Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setSelectedAnnotation(null);
+        setComments("");
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -763,7 +850,10 @@ export default function EmployerDocumrentContainer(props) {
                           : "d-none"
                       }`}
                       style={{ position: "absolute", right: "88px" }}
-                      onClick={() => setAnnotationMode(!isAnnotationMode)}
+                      onClick={() => {
+                        setAnnotationMode(!isAnnotationMode);
+                        setComments("");
+                      }}
                     >
                       {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
                     </Link>
@@ -795,16 +885,20 @@ export default function EmployerDocumrentContainer(props) {
                           }}
                           onClick={() => handleFlagClick(annotation)}
                         >
-                          <FaFlag
+                          <span
+                            className="rounded-circle p-2 rounded-lg"
                             style={{
-                              color:
+                              background:
                                 selectedAnnotation &&
                                 selectedAnnotation.x === annotation.x_axis &&
                                 selectedAnnotation.y === annotation.y_axis
                                   ? "pink"
                                   : "red",
+                              color: "white",
                             }}
-                          />
+                          >
+                            {index + 1}
+                          </span>
                         </div>
                       ))}
 
@@ -818,11 +912,59 @@ export default function EmployerDocumrentContainer(props) {
                           }}
                         >
                           <form>
-                            <input
+                            {/* <input
                               type="text"
                               value={comments || ""}
                               onChange={(e) => setComments(e.target.value)}
-                            />
+                            /> */}
+                            <div
+                              style={{ position: "relative", width: "250px" }}
+                            >
+                              <input
+                                type="text"
+                                value={comments || ""}
+                                onChange={handleInputChange}
+                                placeholder="Comments or add others with @"
+                                style={{ fontSize: "16px", width: "100%" }}
+                              />
+                              {filteredEmails.length > 0 && (
+                                <ul
+                                  style={{
+                                    listStyle: "none",
+                                    padding: 0,
+                                    margin: 0,
+                                    position: "absolute",
+                                    top: "100%",
+                                    left: 0,
+                                    width: "100%",
+                                    border: "1px solid #ccc",
+                                    borderTop: "none",
+                                    borderRadius: "0 0 5px 5px",
+                                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                    backgroundColor: "#fff",
+                                    zIndex: 1,
+                                  }}
+                                >
+                                  {filteredEmails.map((email) => (
+                                    <li
+                                      key={email}
+                                      onClick={() =>
+                                        handleEmailClick(email.email)
+                                      }
+                                      onMouseOver={() =>
+                                        handleEmailMouseOver(email.email)
+                                      }
+                                      style={{
+                                        padding: "8px",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      {email.email}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </div>
                             <button
                               type="button"
                               onClick={() => {
@@ -856,24 +998,115 @@ export default function EmployerDocumrentContainer(props) {
               docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
             }
           >
-            {" "}
-            <ol className="d-flex flex-column">
-              {(commentsList || []).map((commentItem, index) => (
-                <Link
-                  to=""
-                  onClick={() =>
-                    setSelectedAnnotation({
-                      x: commentItem.x_axis,
-                      y: commentItem.y_axis,
-                    })
-                  }
-                  className="text-decoration-none"
+            <div
+              className={
+                props.skill === null || props.skill === undefined
+                  ? "col p-1 form_group mb-3"
+                  : "col p-1 form_group"
+              }
+            >
+              <p className="input_label">Filter by Admin:</p>
+              <div className="select_div">
+                <select
+                  name="skill"
+                  value={adminid}
+                  id="Skill"
+                  onChange={(e) => {
+                    setAdminId(e.target.value);
+                  }}
+                  className="text-capitalize form-control"
                 >
-                  <li key={index} className="text-break">
-                    {commentItem.subject_description}
-                  </li>
-                </Link>
-              ))}
+                  <option value={""}>Select Admin</option>
+                  {(allAdmin || []).map((data) => {
+                    return (
+                      <option value={data.admin_id} key={data.id}>
+                        {data.email}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+            <ol className="d-flex flex-column">
+              {(commentsList || []).map((commentItem, index) =>
+                commentItem.status === "0" ? (
+                  <div
+                    className="card m-2"
+                    style={{
+                      backgroundColor: "#edf2fa",
+                      color: "white",
+                    }}
+                    key={index}
+                  >
+                    {console.log(commentItem.status === "0")}
+                    <Link className="d-flex flex-row-reverse mt-2 mx-3">
+                      <span
+                        style={{
+                          cursor: "pointer",
+                          margin: "2px",
+                          color: "blue",
+                          borderRadius: "40px",
+                          border: "solid 1px blue",
+                          padding: "1px 5px",
+                        }}
+                        onClick={(e) => {
+                          OnHandleUpdateComment(commentItem);
+                        }}
+                      >
+                        &#x2713; {/* Checkmark symbol */}
+                      </span>
+                    </Link>
+                    <div className="card-body">
+                      <div className="text-muted">
+                        {moment(commentItem.created_on).format("DD-MM-YYYY")}
+                      </div>
+                      {commentItem.subject_description && (
+                        <h5 className="card-title text-break">
+                          <Link
+                            onClick={() =>
+                              setSelectedAnnotation({
+                                x: commentItem.x_axis,
+                                y: commentItem.y_axis,
+                              })
+                            }
+                          >
+                            {commentItem.subject_description}
+                          </Link>
+                        </h5>
+                      )}
+                      {commentItem.assigned_to && (
+                        <div
+                          style={{
+                            borderRadius: "15px",
+                            padding: "5px 10px",
+                            margin: "5px 0",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <h5 className="text-dark">
+                            {
+                              allAdmin.find(
+                                (item) =>
+                                  item.admin_id ===
+                                  commentItem.assined_to_user_id
+                              ).name
+                            }
+                          </h5>
+                          <br />
+                          <Link
+                            className="text-dark text-break"
+                            to={`mailto:${commentItem.assigned_to}`}
+                            style={{ marginLeft: "5px" }}
+                          >
+                            {`@${commentItem.assigned_to}`}
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : null
+              )}
             </ol>
           </div>
         </div>
