@@ -505,7 +505,7 @@ export const VarifyDocument = async (id, verify) => {
 /*Api function to delete document */
 export const DeleteDocument = async (id) => {
   const response = await axios.post(
-    `${API_URL}admin/deleteDocument`,
+    `${API_URL}/admin/deleteDocument`,
     { id: id },
     {
       headers: {

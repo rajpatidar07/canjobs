@@ -491,7 +491,6 @@ export default function DocumrentContainer(props) {
     "Bank Statement",
   ];
 
-  /*Render method */
   useEffect(() => {
     GetDocument();
     RenderNewDocFile();
@@ -960,7 +959,7 @@ export default function DocumrentContainer(props) {
                                 selectedAnnotation &&
                                 selectedAnnotation.x === annotation.x_axis &&
                                 selectedAnnotation.y === annotation.y_axis
-                                  ? "pink"
+                                  ? "blue"
                                   : annotation.status === "1"
                                   ? "lightgreen"
                                   : "red",
@@ -1027,7 +1026,7 @@ export default function DocumrentContainer(props) {
                                         cursor: "pointer",
                                       }}
                                     >
-                                      {email.email}
+                                      {email.name} {email.email}
                                     </li>
                                   ))}
                                 </ul>
@@ -1084,7 +1083,7 @@ export default function DocumrentContainer(props) {
                     {(allAdmin || []).map((data) => {
                       return (
                         <option value={data.admin_id} key={data.id}>
-                          {data.email}
+                          {data.name} {data.email}
                         </option>
                       );
                     })}

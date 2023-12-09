@@ -561,6 +561,7 @@ export default function EmployerDocumrentContainer(props) {
         setSelectedAnnotation(null);
         setComments("");
         setApiCall(true);
+        setAnnotationMode(!isAnnotationMode);
       }
     } catch (err) {
       console.log(err);
@@ -943,7 +944,7 @@ export default function EmployerDocumrentContainer(props) {
                                 selectedAnnotation &&
                                 selectedAnnotation.x === annotation.x_axis &&
                                 selectedAnnotation.y === annotation.y_axis
-                                  ? "pink"
+                                  ? "blue"
                                   : annotation.status === "1"
                                   ? "lightgreen"
                                   : "red",
@@ -1004,7 +1005,7 @@ export default function EmployerDocumrentContainer(props) {
                                         cursor: "pointer",
                                       }}
                                     >
-                                      {email.email}
+                                      {email.name} {email.email}
                                     </li>
                                   ))}
                                 </ul>
@@ -1044,45 +1045,47 @@ export default function EmployerDocumrentContainer(props) {
               docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
             }
           >
-            <div className={"col mx-2 form_group"}>
-              <p className="input_label">Filter by Admin:</p>
-              <div className="select_div">
-                <select
-                  name="admin"
-                  value={adminid}
-                  id="admin"
-                  onChange={(e) => {
-                    setAdminId(e.target.value);
-                  }}
-                  className="text-capitalize form-control"
-                >
-                  <option value={""}>Select Admin</option>
-                  {(allAdmin || []).map((data) => {
-                    return (
-                      <option value={data.admin_id} key={data.id}>
-                        {data.email}
-                      </option>
-                    );
-                  })}
-                </select>
+            <div className="row">
+              <div className={"col mx-2 form_group"}>
+                <p className="input_label">Filter by Admin:</p>
+                <div className="select_div">
+                  <select
+                    name="admin"
+                    value={adminid}
+                    id="admin"
+                    onChange={(e) => {
+                      setAdminId(e.target.value);
+                    }}
+                    className="text-capitalize form-control"
+                  >
+                    <option value={""}>Select Admin</option>
+                    {(allAdmin || []).map((data) => {
+                      return (
+                        <option value={data.admin_id} key={data.id}>
+                          {data.name} {data.email}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
               </div>
-            </div>
-            <div className={"col mx-2 form_group"}>
-              <p className="input_label">Filter by Status:</p>
-              <div className="select_div">
-                <select
-                  name="status"
-                  value={annotationStatus}
-                  id="status"
-                  onChange={(e) => {
-                    setAnnotationStatus(e.target.value);
-                  }}
-                  className="text-capitalize form-control"
-                >
-                  <option value={""}>Select Status</option>
-                  <option value={"1"}>Done </option>
-                  <option value={"0"}>Pending</option>
-                </select>
+              <div className={"col mx-2 form_group"}>
+                <p className="input_label">Filter by Status:</p>
+                <div className="select_div">
+                  <select
+                    name="status"
+                    value={annotationStatus}
+                    id="status"
+                    onChange={(e) => {
+                      setAnnotationStatus(e.target.value);
+                    }}
+                    className="text-capitalize form-control"
+                  >
+                    <option value={""}>Select Status</option>
+                    <option value={"1"}>Done </option>
+                    <option value={"0"}>Pending</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div className="d-flex flex-column">
