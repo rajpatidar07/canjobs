@@ -501,21 +501,6 @@ export const VarifyDocument = async (id, verify) => {
   );
   return response;
 };
-
-/*Api function to delete document */
-export const DeleteDocument = async (id) => {
-  const response = await axios.post(
-    `${API_URL}/admin/deleteDocument`,
-    { id: id },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
-};
 /*Api function to add annotation for the document */
 export const ADocAnnotation = async (
   id,
@@ -551,13 +536,12 @@ export const ADocAnnotation = async (
   return response;
 };
 /*Api to get document comment list  */
-export const GetCommentsAndAssign = async (id, adminid, status) => {
+export const GetCommentsAndAssign = async (id, adminid) => {
   const response = await axios.post(
     `${API_URL}admin/searchDocTask`,
     {
       doc_id: id,
       assined_to_user_id: adminid,
-      status: status,
     },
     {
       headers: {

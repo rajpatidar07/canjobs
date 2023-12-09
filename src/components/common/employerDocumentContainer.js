@@ -8,13 +8,16 @@ import {
   GetCommentsAndAssign,
   getallAdminData,
   UpdateDocuentcommentAssign,
+  DeleteCommentsAndAssign,
+  DeleteDocument,
 } from "../../api/api";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import Verified from "../../media/verified.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { CiTrash } from "react-icons/ci";
 /*Annotation */
-// import { FaFlag } from "react-icons/fa";
+import { FaFlag } from "react-icons/fa";
 import { MdAddComment } from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
 import { Link } from "react-router-dom";
@@ -45,6 +48,8 @@ export default function EmployerDocumrentContainer(props) {
   const [isAnnotationMode, setAnnotationMode] = useState(false);
   let [allAdmin, setAllAdmin] = useState([]);
   let [adminid, setAdminId] = useState();
+  const [addCommentFlag, setAddCommentFlag] = useState(false);
+  let [annotationStatus, setAnnotationStatus] = useState();
 
   const fileViewerRef = useRef(null);
 
@@ -112,6 +117,7 @@ export default function EmployerDocumrentContainer(props) {
       const y = e.clientY - rect.top;
       handleFlagClick({ x, y });
       setImageAnnotations([...imageAnnotations, { x_axis: x, y_axis: y }]);
+      setAddCommentFlag(true);
     }
   };
 
@@ -132,7 +138,7 @@ export default function EmployerDocumrentContainer(props) {
   const getCommentsList = async () => {
     if (docId) {
       try {
-        let res = await GetCommentsAndAssign(docId, adminid);
+        let res = await GetCommentsAndAssign(docId, adminid, annotationStatus);
         if (res.data.status === (1 || "1")) {
           setCommentsList(res.data.data);
           setImageAnnotations(res.data.data);
@@ -290,6 +296,9 @@ export default function EmployerDocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        if (commentsList.length > 0) {
+          OnDeleteComment(docData[0] === docTypData ? docTypData.id : docId);
+        }
         setShowMoreDocType(false);
         setApiCall(true);
         setHide(false);
@@ -336,25 +345,49 @@ export default function EmployerDocumrentContainer(props) {
     return (
       <React.Fragment>
         {docFile ? (
-          <div
-            className="w-100"
-            ref={fileViewerRef}
-            onClick={handleFileViewerClick}
-          >
-            <FileViewer
-              key={docTypData.id}
-              fileType={
-                docFileExt
-                  ? docFileExt
-                  : docTypData.extension_type ===
-                    "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                  ? "docx"
-                  : docTypData.extension_type
-              }
-              filePath={docFile}
-              errorComponent={() => <div>Error loading document</div>}
-            />
-          </div>
+          <>
+            <Link
+              className={` ${
+                hide === false && docFile && docName && user_type === "admin"
+                  ? `btn-sm mt-7 ${
+                      isAnnotationMode ? "btn-primary" : "btn-secondary"
+                    }`
+                  : "d-none"
+              }`}
+              style={{
+                position: "fixed",
+                bottom: "285px",
+                right: "24%",
+                zIndex: "99",
+              }}
+              onClick={() => {
+                setAnnotationMode(!isAnnotationMode);
+                setComments("");
+              }}
+            >
+              {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
+            </Link>
+
+            <div
+              className="w-100"
+              ref={fileViewerRef}
+              onClick={handleFileViewerClick}
+            >
+              <FileViewer
+                key={docTypData.id}
+                fileType={
+                  docFileExt
+                    ? docFileExt
+                    : docTypData.extension_type ===
+                      "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    ? "docx"
+                    : docTypData.extension_type
+                }
+                filePath={docFile}
+                errorComponent={() => <div>Error loading document</div>}
+              />
+            </div>
+          </>
         ) : (
           <div className="text-center mt-5">No document found</div>
         )}
@@ -427,7 +460,7 @@ export default function EmployerDocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [docName, apiCall, isAnnotationMode, docId, adminid]);
+  }, [docName, apiCall, isAnnotationMode, docId, adminid, annotationStatus]);
 
   /*Function to change document type */
   const handleDocTypeChange = (e) => {
@@ -482,6 +515,22 @@ export default function EmployerDocumrentContainer(props) {
       printWindow.print();
     };
   };
+  /*Function to delete document  */
+  const OnDeleteDoc = async (id) => {
+    try {
+      let res = await DeleteDocument(id);
+      if (res.data.message === "document deleted successfully!") {
+        toast.success("Document deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*annnotations main api */
   // Function to add annotation based on conditions
   const addAnnotation = async (annotation) => {
     // Retrieve data from local storage
@@ -501,7 +550,8 @@ export default function EmployerDocumrentContainer(props) {
         subject,
         comment,
         annotation.x,
-        annotation.y
+        annotation.y,
+        "employer"
       );
       if (res.data.message === "task inserted successfully!") {
         toast.success("Comment uploaded Successfully", {
@@ -542,7 +592,15 @@ export default function EmployerDocumrentContainer(props) {
       console.log(err);
     }
   };
-
+  /*Function to delete document comments*/
+  const OnDeleteComment = async (docId) => {
+    try {
+      let res = await DeleteCommentsAndAssign(docId);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div
       className={
@@ -572,15 +630,17 @@ export default function EmployerDocumrentContainer(props) {
                 <th className="p-3" scope="col">
                   Verified
                 </th>
+                <th className="p-3" scope="col">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {docData.length === 0 ? (
                 <tr>
-                  <th className="bg-white"></th>
-                  <th className="bg-white"></th>
-                  <th className="bg-white">No Data Found</th>
-                  <th className="bg-white"></th>
+                  <th className="bg-white text-center" colSpan={5}>
+                    No Data Found
+                  </th>
                 </tr>
               ) : (
                 (docData || []).map((item, index) => (
@@ -619,7 +679,9 @@ export default function EmployerDocumrentContainer(props) {
                         ? item.updated_by_name
                         : item.created_by_name}
                     </td>
-                    <td className="p-3">{item.updated_at}</td>
+                    <td className="p-3">
+                      {moment(item.updated_at).format("DD-MM-YYYY")}
+                    </td>
                     <td className="p-3">
                       {item.is_varify === "1"
                         ? // <span className="verified_doc">
@@ -627,6 +689,16 @@ export default function EmployerDocumrentContainer(props) {
                           // </span>
                           "Yes"
                         : "No"}
+                    </td>
+                    <td className="p-3">
+                      <Link onClick={() => OnDeleteDoc(item.id)}>
+                        <CiTrash
+                          style={{
+                            color: item.type === docName ? "white" : "black",
+                            fontSize: "25px",
+                          }}
+                        />
+                      </Link>
                     </td>
                   </tr>
                 ))
@@ -699,7 +771,6 @@ export default function EmployerDocumrentContainer(props) {
                   {(DocTypeData || []).map((item, index) => {
                     return (
                       <option value={item} key={index}>
-                        {/* {item}/ */}
                         {textReplaceFunction(item)}
                       </option>
                     );
@@ -837,26 +908,6 @@ export default function EmployerDocumrentContainer(props) {
                 >
                   <div className="d-flex justify-content-center">
                     <RenderNewDocFile />
-
-                    <Link
-                      className={`${
-                        hide === false &&
-                        docFile &&
-                        docName &&
-                        user_type === "admin"
-                          ? `btn-sm mt-7 ${
-                              isAnnotationMode ? "btn-primary" : "btn-secondary"
-                            }`
-                          : "d-none"
-                      }`}
-                      style={{ position: "absolute", right: "88px" }}
-                      onClick={() => {
-                        setAnnotationMode(!isAnnotationMode);
-                        setComments("");
-                      }}
-                    >
-                      {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
-                    </Link>
                   </div>
                   {/* Transparent overlay for capturing click events */}
                   {!hide && docFile && docName && user_type === "admin" && (
@@ -885,24 +936,23 @@ export default function EmployerDocumrentContainer(props) {
                           }}
                           onClick={() => handleFlagClick(annotation)}
                         >
-                          <span
-                            className="rounded-circle p-2 rounded-lg"
+                          <FaFlag
+                            className=""
                             style={{
-                              background:
+                              color:
                                 selectedAnnotation &&
                                 selectedAnnotation.x === annotation.x_axis &&
                                 selectedAnnotation.y === annotation.y_axis
                                   ? "pink"
+                                  : annotation.status === "1"
+                                  ? "lightgreen"
                                   : "red",
-                              color: "white",
                             }}
-                          >
-                            {index + 1}
-                          </span>
+                          />
                         </div>
                       ))}
 
-                      {selectedAnnotation && (
+                      {selectedAnnotation && addCommentFlag === true && (
                         <div
                           style={{
                             position: "absolute",
@@ -912,11 +962,6 @@ export default function EmployerDocumrentContainer(props) {
                           }}
                         >
                           <form>
-                            {/* <input
-                              type="text"
-                              value={comments || ""}
-                              onChange={(e) => setComments(e.target.value)}
-                            /> */}
                             <div
                               style={{ position: "relative", width: "250px" }}
                             >
@@ -969,6 +1014,7 @@ export default function EmployerDocumrentContainer(props) {
                               type="button"
                               onClick={() => {
                                 addAnnotation(selectedAnnotation);
+                                setAddCommentFlag(false);
                               }}
                               className="btn btn-primary"
                             >
@@ -998,19 +1044,13 @@ export default function EmployerDocumrentContainer(props) {
               docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
             }
           >
-            <div
-              className={
-                props.skill === null || props.skill === undefined
-                  ? "col p-1 form_group mb-3"
-                  : "col p-1 form_group"
-              }
-            >
+            <div className={"col mx-2 form_group"}>
               <p className="input_label">Filter by Admin:</p>
               <div className="select_div">
                 <select
-                  name="skill"
+                  name="admin"
                   value={adminid}
-                  id="Skill"
+                  id="admin"
                   onChange={(e) => {
                     setAdminId(e.target.value);
                   }}
@@ -1027,87 +1067,107 @@ export default function EmployerDocumrentContainer(props) {
                 </select>
               </div>
             </div>
-            <ol className="d-flex flex-column">
-              {(commentsList || []).map((commentItem, index) =>
-                commentItem.status === "0" ? (
-                  <div
-                    className="card m-2"
-                    style={{
-                      backgroundColor: "#edf2fa",
-                      color: "white",
-                    }}
-                    key={index}
+            <div className={"col mx-2 form_group"}>
+              <p className="input_label">Filter by Status:</p>
+              <div className="select_div">
+                <select
+                  name="status"
+                  value={annotationStatus}
+                  id="status"
+                  onChange={(e) => {
+                    setAnnotationStatus(e.target.value);
+                  }}
+                  className="text-capitalize form-control"
+                >
+                  <option value={""}>Select Status</option>
+                  <option value={"1"}>Done </option>
+                  <option value={"0"}>Pending</option>
+                </select>
+              </div>
+            </div>
+            <div className="d-flex flex-column">
+              {(commentsList || []).map((commentItem, index) => (
+                <div
+                  className="card m-2"
+                  style={{
+                    backgroundColor: "#edf2fa",
+                    color: "white",
+                  }}
+                  key={index}
+                >
+                  <Link className="d-flex flex-row-reverse mt-2 mx-3">
+                    <span
+                      style={{
+                        cursor: "pointer",
+                        margin: "2px",
+                        color: commentItem.status === "0" ? "blue" : "white",
+                        borderRadius: "40px",
+                        border:
+                          commentItem.status === "0" ? "solid 1px blue" : "",
+                        padding: "1px 5px",
+                        backgroundColor:
+                          commentItem.status === "1" && "lightgreen",
+                      }}
+                      onClick={
+                        commentItem.status === "0"
+                          ? (e) => {
+                              OnHandleUpdateComment(commentItem);
+                            }
+                          : null
+                      }
+                    >
+                      &#x2713; {/* Checkmark symbol */}
+                    </span>
+                  </Link>
+                  <Link
+                    onClick={() =>
+                      setSelectedAnnotation({
+                        x: commentItem.x_axis,
+                        y: commentItem.y_axis,
+                      })
+                    }
+                    className="card-body"
                   >
-                    {console.log(commentItem.status === "0")}
-                    <Link className="d-flex flex-row-reverse mt-2 mx-3">
-                      <span
+                    <div className="text-muted">
+                      {moment(commentItem.created_on).format("DD-MM-YYYY")}
+                    </div>
+                    {commentItem.subject_description && (
+                      <h5 className="card-title text-break">
+                        {commentItem.subject_description}
+                      </h5>
+                    )}
+                    {commentItem.assigned_to && (
+                      <div
                         style={{
-                          cursor: "pointer",
-                          margin: "2px",
-                          color: "blue",
-                          borderRadius: "40px",
-                          border: "solid 1px blue",
-                          padding: "1px 5px",
-                        }}
-                        onClick={(e) => {
-                          OnHandleUpdateComment(commentItem);
+                          borderRadius: "15px",
+                          padding: "5px 10px",
+                          margin: "5px 0",
+                          display: "flex",
+                          alignItems: "center",
                         }}
                       >
-                        &#x2713; {/* Checkmark symbol */}
-                      </span>
-                    </Link>
-                    <div className="card-body">
-                      <div className="text-muted">
-                        {moment(commentItem.created_on).format("DD-MM-YYYY")}
-                      </div>
-                      {commentItem.subject_description && (
-                        <h5 className="card-title text-break">
-                          <Link
-                            onClick={() =>
-                              setSelectedAnnotation({
-                                x: commentItem.x_axis,
-                                y: commentItem.y_axis,
-                              })
-                            }
-                          >
-                            {commentItem.subject_description}
-                          </Link>
+                        <h5 className="text-dark">
+                          {
+                            allAdmin.find(
+                              (item) =>
+                                item.admin_id === commentItem.assined_to_user_id
+                            ).name
+                          }
                         </h5>
-                      )}
-                      {commentItem.assigned_to && (
-                        <div
-                          style={{
-                            borderRadius: "15px",
-                            padding: "5px 10px",
-                            margin: "5px 0",
-                            display: "flex",
-                            alignItems: "center",
-                          }}
+                        <br />
+                        <Link
+                          className="text-dark text-break"
+                          to={`mailto:${commentItem.assigned_to}`}
+                          style={{ marginLeft: "5px" }}
                         >
-                          <h5 className="text-dark">
-                            {
-                              allAdmin.find(
-                                (item) =>
-                                  item.admin_id ===
-                                  commentItem.assined_to_user_id
-                              ).name
-                            }
-                          </h5>
-                          <br />
-                          <Link
-                            className="text-dark text-break"
-                            to={`mailto:${commentItem.assigned_to}`}
-                            style={{ marginLeft: "5px" }}
-                          >
-                            {`@${commentItem.assigned_to}`}
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ) : null
-              )}
-            </ol>
+                          {`@${commentItem.assigned_to}`}
+                        </Link>
+                      </div>
+                    )}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

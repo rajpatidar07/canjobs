@@ -551,13 +551,12 @@ export const ADocAnnotation = async (
   return response;
 };
 /*Api to get document comment list  */
-export const GetCommentsAndAssign = async (id, adminid, status) => {
+export const GetCommentsAndAssign = async (id, adminid) => {
   const response = await axios.post(
     `${API_URL}admin/searchDocTask`,
     {
       doc_id: id,
       assined_to_user_id: adminid,
-      status: status,
     },
     {
       headers: {
