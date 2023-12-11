@@ -11,6 +11,7 @@ import {
   DeleteCommentsAndAssign,
   DeleteDocument,
 } from "../../api/api";
+import { FaReplyAll } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
@@ -39,10 +40,10 @@ export default function DocumrentContainer(props) {
   let encoded;
   let user_type = localStorage.getItem("userType");
   let admin_id = localStorage.getItem("admin_id");
-  /* Annotation   */
   // Annotation State
   const [imageAnnotations, setImageAnnotations] = useState([]);
   const [comments, setComments] = useState("");
+  const [replyComment, setReplyComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
   const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [isAnnotationMode, setAnnotationMode] = useState(false);
@@ -52,6 +53,8 @@ export default function DocumrentContainer(props) {
   const [filteredEmails, setFilteredEmails] = useState([]);
   const fileViewerRef = useRef(null);
   let [annotationStatus, setAnnotationStatus] = useState();
+  let [replyCommentClick, setReplyCommentClick] = useState();
+
   /*Function to get admin list */
   const AdminData = async () => {
     try {
@@ -68,7 +71,7 @@ export default function DocumrentContainer(props) {
   };
 
   /*onchange Function to set email or any other comment  */
-  const handleInputChange = (event) => {
+  const handleInputChange = (event, type) => {
     const value = event.target.value;
     if (value.startsWith("@")) {
       // Filter admin emails based on input
@@ -91,46 +94,56 @@ export default function DocumrentContainer(props) {
     }
 
     // Update the input value
-    setComments(value);
+    if (type === "reply") {
+      setReplyComment(value);
+    } else {
+      setComments(value);
+    }
   };
   /*Function to get the email to assign */
-  const handleEmailClick = (email) => {
+  const handleEmailClick = (email, type) => {
     // Set the selected email as the input value
-    setComments(email);
-
+    if (type === "reply") {
+      setReplyComment(email);
+    } else {
+      setComments(email);
+    }
     // Clear the filtered emails
     setFilteredEmails([]);
   };
   /*Function to get the email to input on hover */
-  const handleEmailMouseOver = (email) => {
+  const handleEmailMouseOver = (email, type) => {
     // Highlight the email on mouseover
-    setComments(email);
+    if (type === "reply") {
+      setReplyComment(email);
+    } else {
+      setComments(email);
+    }
   };
   // Handle click event on the FileViewer to capture annotations
   const handleFileViewerClick = (e) => {
     if (isAnnotationMode) {
       const rect = fileViewerRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      handleFlagClick({ x, y });
-      setImageAnnotations([...imageAnnotations, { x_axis: x, y_axis: y }]);
+      const x_axis = e.clientX - rect.left;
+      const y_axis = e.clientY - rect.top;
+      handleFlagClick({ x_axis, y_axis });
+      setImageAnnotations([...imageAnnotations, { x_axis, y_axis }]);
       setAddCommentFlag(true);
     }
   };
 
   // Handle flag click to select the annotation and toggle the form visibility for image annotation
   const handleFlagClick = (annotation) => {
-    if (
-      selectedAnnotation &&
-      selectedAnnotation.x === annotation.x &&
-      selectedAnnotation.y === annotation.y
-    ) {
-      setSelectedAnnotation(null);
-    } else {
-      setSelectedAnnotation(annotation);
-    }
+    // if (
+    //   selectedAnnotation &&
+    //   selectedAnnotation.x === annotation.x &&
+    //   selectedAnnotation.y === annotation.y
+    // ) {
+    //   setSelectedAnnotation(null);
+    // } else {
+    setSelectedAnnotation(annotation);
+    // }
   };
-
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async () => {
     if (docId) {
@@ -149,7 +162,6 @@ export default function DocumrentContainer(props) {
   };
 
   /*Annotaton functionalites close */
-  const fileInputRef = useRef(null);
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
@@ -451,13 +463,16 @@ export default function DocumrentContainer(props) {
   /*Function to delete document  */
   const OnDeleteDoc = async (id) => {
     try {
-      let res = await DeleteDocument(id);
+      let res = await DeleteDocument(id, "employee");
       if (res.data.message === "document deleted successfully!") {
         toast.success("Document deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         setApiCall(true);
+        setDocFile("");
+        setDocId("");
+        setDocData("");
       }
     } catch (err) {
       console.log(err);
@@ -559,7 +574,7 @@ export default function DocumrentContainer(props) {
     // Retrieve data from local storage
     const assignedUserId = allAdmin.find((item) => item.email === comments)
       ? allAdmin.find((item) => item.email === comments).admin_id
-      : "";
+      : admin_id;
     const email = /\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
     const comment = /\S+@\S+\.\S+/.test(comments) ? "" : comments;
@@ -572,8 +587,8 @@ export default function DocumrentContainer(props) {
         email,
         subject,
         comment,
-        annotation.x,
-        annotation.y,
+        annotation.x_axis,
+        annotation.y_axis,
         "employee"
       );
       if (res.data.message === "task inserted successfully!") {
@@ -584,6 +599,7 @@ export default function DocumrentContainer(props) {
         setSelectedAnnotation(null);
         setComments("");
         setApiCall(true);
+        setAnnotationMode(!isAnnotationMode);
       }
     } catch (err) {
       console.log(err);
@@ -620,6 +636,52 @@ export default function DocumrentContainer(props) {
     try {
       let res = await DeleteCommentsAndAssign(docId);
       console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Function to set the color code to the background of the user name */
+  const determineBackgroundColor = (commentItem) => {
+    const colorClasses = [
+      "bg-primary-opacity-7",
+      "bg-color-warning-opacity-7",
+      "bg-orange-opacity-6",
+      "bg-info-opacity-7",
+      "bg-secondary-opacity-7",
+      "bg-danger-opacity-6",
+      "bg-info-opacity-visible",
+    ];
+
+    const assignedUserId = commentItem.assigned_to_user_id;
+
+    // Create a mapping dynamically based on assignedUserId
+    const userColorMap = {};
+
+    // Check if assignedUserId is present in the mapping
+    if (assignedUserId && userColorMap.hasOwnProperty(assignedUserId)) {
+      return userColorMap[assignedUserId];
+    }
+
+    // If not found in the mapping, use the colorClasses logic
+    const id = commentItem.id;
+    const hashCode = (str) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+      }
+      return hash;
+    };
+
+    const hash = Math.abs(hashCode(id.toString()));
+    const index = hash % colorClasses.length;
+
+    return colorClasses[index];
+  };
+  /*Function to reply for the comment */
+  const ReplyAnnotation = async (data) => {
+    try {
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -957,8 +1019,9 @@ export default function DocumrentContainer(props) {
                             style={{
                               color:
                                 selectedAnnotation &&
-                                selectedAnnotation.x === annotation.x_axis &&
-                                selectedAnnotation.y === annotation.y_axis
+                                selectedAnnotation.x_axis ===
+                                  annotation.x_axis &&
+                                selectedAnnotation.y_axis === annotation.y_axis
                                   ? "blue"
                                   : annotation.status === "1"
                                   ? "lightgreen"
@@ -973,8 +1036,8 @@ export default function DocumrentContainer(props) {
                         <div
                           style={{
                             position: "absolute",
-                            left: selectedAnnotation.x + 10,
-                            top: selectedAnnotation.y + 20,
+                            left: selectedAnnotation.x_axis + 10,
+                            top: selectedAnnotation.y_axis + 20,
                             zIndex: 1,
                           }}
                         >
@@ -992,6 +1055,7 @@ export default function DocumrentContainer(props) {
                                 value={comments || ""}
                                 onChange={handleInputChange}
                                 placeholder="Comments or add others with @"
+                                className="rounded-pill"
                                 style={{ fontSize: "16px", width: "100%" }}
                               />
                               {filteredEmails.length > 0 && (
@@ -1032,16 +1096,25 @@ export default function DocumrentContainer(props) {
                                 </ul>
                               )}
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                addAnnotation(selectedAnnotation);
-                                setAddCommentFlag(false);
-                              }}
-                              className="btn btn-primary"
-                            >
-                              Save Comment
-                            </button>
+                            <div className="d-flex justify-content-center">
+                              {" "}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  addAnnotation(selectedAnnotation);
+                                  setAddCommentFlag(false);
+                                }}
+                                className="btn btn-primary rounded-pill"
+                              >
+                                Save Comment
+                                <button
+                                  className="btn btn-info rounded-pill"
+                                  onClick={() => setSelectedAnnotation(null)}
+                                >
+                                  Cancel
+                                </button>{" "}
+                              </button>
+                            </div>
                           </form>
                         </div>
                       )}
@@ -1109,88 +1182,194 @@ export default function DocumrentContainer(props) {
                 </div>
               </div>
             </div>
-            <div className="d-flex flex-column">
-              {(commentsList || []).map((commentItem, index) => (
-                <div
-                  className="card m-2"
-                  style={{
-                    backgroundColor: "#edf2fa",
-                    color: "white",
-                  }}
-                  key={index}
-                >
-                  <Link className="d-flex flex-row-reverse mt-2 mx-3">
-                    <span
-                      style={{
-                        cursor: "pointer",
-                        margin: "2px",
-                        color: commentItem.status === "0" ? "blue" : "white",
-                        borderRadius: "40px",
-                        border:
-                          commentItem.status === "0" ? "solid 1px blue" : "",
-                        padding: "1px 5px",
-                        backgroundColor:
-                          commentItem.status === "1" && "lightgreen",
-                      }}
-                      onClick={
-                        commentItem.status === "0"
-                          ? (e) => {
-                              OnHandleUpdateComment(commentItem);
-                            }
-                          : null
-                      }
-                    >
-                      &#x2713; {/* Checkmark symbol */}
-                    </span>
-                  </Link>
-                  <Link
+            <div
+              className="d-flex flex-column h-75vh"
+              style={{ overflowY: "scroll" }}
+            >
+              {commentsList.length === 0 ? (
+                <div className="text-center mt-5">
+                  <h5>No comments</h5>
+                </div>
+              ) : (
+                (commentsList || []).map((commentItem, index) => (
+                  <div
+                    className={`card m-2 ${
+                      selectedAnnotation &&
+                      selectedAnnotation.x_axis === commentItem.x_axis &&
+                      selectedAnnotation.y_axis === commentItem.y_axis
+                        ? "highlighted-comment"
+                        : ""
+                    }`}
+                    style={{
+                      backgroundColor: "#edf2fa",
+                      color: "white",
+                    }}
                     onClick={() =>
                       setSelectedAnnotation({
-                        x: commentItem.x_axis,
-                        y: commentItem.y_axis,
+                        x_axis: commentItem.x_axis,
+                        y_axis: commentItem.y_axis,
                       })
                     }
-                    className="card-body"
+                    key={index}
                   >
-                    <div className="text-muted">
-                      {moment(commentItem.created_on).format("DD-MM-YYYY")}
-                    </div>
-                    {commentItem.subject_description && (
-                      <h5 className="card-title text-break">
-                        {commentItem.subject_description}
-                      </h5>
-                    )}
-                    {commentItem.assigned_to && (
-                      <div
+                    <p className="d-flex flex-row-reverse mt-2 mx-3">
+                      <span
                         style={{
-                          borderRadius: "15px",
-                          padding: "5px 10px",
-                          margin: "5px 0",
-                          display: "flex",
-                          alignItems: "center",
+                          cursor: "pointer",
+                          margin: "2px",
+                          color: commentItem.status === "0" ? "blue" : "white",
+                          borderRadius: "40px",
+                          border:
+                            commentItem.status === "0" ? "solid 1px blue" : "",
+                          padding: "1px 5px",
+                          backgroundColor:
+                            commentItem.status === "1" && "lightgreen",
                         }}
+                        onClick={
+                          commentItem.status === "0"
+                            ? (e) => {
+                                OnHandleUpdateComment(commentItem);
+                              }
+                            : null
+                        }
                       >
-                        <h5 className="text-dark">
-                          {
-                            allAdmin.find(
+                        &#x2713; {/* Checkmark symbol */}
+                      </span>
+                    </p>
+                    <div className="card-body">
+                      <div className="text-dark h4">
+                        <span
+                          className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
+                            commentItem
+                          )}`}
+                        >
+                          {commentItem.assined_to_user_id
+                            ? allAdmin
+                                .find(
+                                  (item) =>
+                                    item.admin_id ===
+                                    commentItem.assined_to_user_id
+                                )
+                                .name.charAt(0)
+                            : ""}
+                        </span>
+                        {commentItem.assined_to_user_id
+                          ? allAdmin.find(
                               (item) =>
                                 item.admin_id === commentItem.assined_to_user_id
                             ).name
-                          }
-                        </h5>
+                          : ""}
                         <br />
-                        <Link
-                          className="text-dark text-break"
-                          to={`mailto:${commentItem.assigned_to}`}
-                          style={{ marginLeft: "5px" }}
-                        >
-                          {`@${commentItem.assigned_to}`}
-                        </Link>
+                        <span className="text-gray-400 h6 mx-8">
+                          {moment(commentItem.created_on).format("HH:mm D MMM")}
+                        </span>
                       </div>
+
+                      {commentItem.subject_description && (
+                        <h5 className="card-title text-break">
+                          {commentItem.subject_description}
+                        </h5>
+                      )}
+                      {commentItem.assigned_to && (
+                        <div
+                          style={{
+                            borderRadius: "15px",
+                            padding: "5px 10px",
+                            margin: "5px 0",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Link
+                            className="text-break"
+                            to={`mailto:${commentItem.assigned_to}`}
+                            style={{ marginLeft: "5px" }}
+                          >
+                            {`@${commentItem.assigned_to}`}
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                    {replyCommentClick === commentItem.id ? (
+                      <form>
+                        {/* <input
+                            type="text"
+                            value={comments || ""}
+                            onChange={(e) => setComments(e.target.value)}
+                          /> */}
+                        <div style={{ position: "relative", width: "250px" }}>
+                          <input
+                            type="text"
+                            value={replyComment || ""}
+                            onChange={(e) => handleInputChange(e, "reply")}
+                            placeholder="Comments or add others with @"
+                            className="rounded-pill"
+                            style={{ fontSize: "16px", width: "100%" }}
+                          />
+                          {filteredEmails.length > 0 && (
+                            <ul
+                              style={{
+                                listStyle: "none",
+                                padding: 0,
+                                margin: 0,
+                                position: "absolute",
+                                top: "100%",
+                                left: 0,
+                                width: "100%",
+                                border: "1px solid #ccc",
+                                borderTop: "none",
+                                borderRadius: "0 0 5px 5px",
+                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                backgroundColor: "#fff",
+                                zIndex: 1,
+                              }}
+                            >
+                              {filteredEmails.map((email) => (
+                                <li
+                                  key={email}
+                                  onClick={() => handleEmailClick(email.email)}
+                                  onMouseOver={() =>
+                                    handleEmailMouseOver(email.email, "reply")
+                                  }
+                                  style={{
+                                    padding: "8px",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  {email.name} {email.email}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                        <div className=" d-flex justify-content-center">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              ReplyAnnotation(commentItem);
+                            }}
+                            className="btn btn-primary rounded-pill"
+                          >
+                            Reply Comment
+                          </button>
+                          <button
+                            className="btn btn-info rounded-pill"
+                            onClick={() => setReplyComment()}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    ) : (
+                      <Link
+                        onClick={() => setReplyCommentClick(commentItem.id)}
+                      >
+                        <FaReplyAll />
+                      </Link>
                     )}
-                  </Link>
-                </div>
-              ))}
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

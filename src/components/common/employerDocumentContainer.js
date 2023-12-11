@@ -123,15 +123,15 @@ export default function EmployerDocumrentContainer(props) {
 
   // Handle flag click to select the annotation and toggle the form visibility for image annotation
   const handleFlagClick = (annotation) => {
-    if (
-      selectedAnnotation &&
-      selectedAnnotation.x === annotation.x &&
-      selectedAnnotation.y === annotation.y
-    ) {
-      setSelectedAnnotation(null);
-    } else {
-      setSelectedAnnotation(annotation);
-    }
+    // if (
+    //   selectedAnnotation &&
+    //   selectedAnnotation.x === annotation.x &&
+    //   selectedAnnotation.y === annotation.y
+    // ) {
+    //   setSelectedAnnotation(null);
+    // } else {
+    setSelectedAnnotation(annotation);
+    // }
   };
 
   // Generate a list of comments from the state for image annotation
@@ -536,7 +536,7 @@ export default function EmployerDocumrentContainer(props) {
     // Retrieve data from local storage
     const assignedUserId = allAdmin.find((item) => item.email === comments)
       ? allAdmin.find((item) => item.email === comments).admin_id
-      : "";
+      : admin_id;
     const email = /\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
     const comment = /\S+@\S+\.\S+/.test(comments) ? "" : comments;
@@ -549,8 +549,8 @@ export default function EmployerDocumrentContainer(props) {
         email,
         subject,
         comment,
-        annotation.x,
-        annotation.y,
+        annotation.x_axis,
+        annotation.y_axis,
         "employer"
       );
       if (res.data.message === "task inserted successfully!") {
@@ -602,12 +602,40 @@ export default function EmployerDocumrentContainer(props) {
       console.log(err);
     }
   };
+  /*Function to set the color code to the background of the user name */
+  const determineBackgroundColor = (commentItem) => {
+    const colorClasses = [
+      "bg-primary-opacity-7",
+      "bg-color-warning-opacity-7",
+      "bg-orange-opacity-6",
+      "bg-info-opacity-7",
+      "bg-secondary-opacity-7",
+      "bg-danger-opacity-6",
+      "bg-info-opacity-visible",
+    ];
+    const id = commentItem.id;
+
+    const hashCode = (str) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+      }
+      return hash;
+    };
+
+    const hash = Math.abs(hashCode(id.toString()));
+    const index = hash % (colorClasses.length + 1);
+
+    return index < colorClasses.length ? colorClasses[index] : colorClasses[0];
+  };
   return (
     <div
       className={
-        props.page === "company_profile"
-          ? "document_container bg-white py-7 mb-10"
-          : "container document_container bg-white p-5 mb-10"
+        // props.page === "company_profile"
+        //
+        "document_container bg-white py-7 mb-10"
+        // : "container document_container bg-white p-5 mb-10"
       }
     >
       <div className="row m-0">
@@ -707,57 +735,57 @@ export default function EmployerDocumrentContainer(props) {
             </tbody>
           </table>
           {/* <ListGroup defaultActiveKey="#link1">
-            {(docData || []).map((item, index) => (
-              <ListGroup.Item
-                key={index}
-                action
-                // active={
-                //   docTypData.type === item.type ||
-                //   (showMoreDocType === false && item.type === docName)
-                // }
-                active={item.type === docName}
-                onClick={() => {
-                  setShowMoreDocType(false);
-                  setDocTypData(item);
-                  setDocName(item.type);
-                  setDocId(item.id);
-                  setOtherDoc(false);
-                  setHide(false);
-                  setShowSaveDoc(false);
-                  setDocFile(
-                    item.document_url +
-                      `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-                  );
-                }}
-                className="text-capitalize"
-              >
-                {textReplaceFunction(item.type)}
-                {item.is_varify === "1" ? (
-                  <span className="verified_doc">
-                    <img className="w-100" src={Verified} alt="" />
-                  </span>
-                ) : null}
-              </ListGroup.Item>
-            ))}
-            <ListGroup.Item
-              className={
-                user_type === "company" || user_type === "admin"
-                  ? "bg-secondary text-white"
-                  : "d-none"
-              }
-              onClick={() => {
-                setShowMoreDocType(true);
-                setDocTypData("");
-                setDocId("");
-                setOtherDoc(false);
-                setDocFile("");
-                setHide(false);
-                setShowSaveDoc(false);
-              }}
-            >
-              <b>+ Add New Documents</b>
-            </ListGroup.Item>
-          </ListGroup> */}
+        {(docData || []).map((item, index) => (
+          <ListGroup.Item
+            key={index}
+            action
+            // active={
+            //   docTypData.type === item.type ||
+            //   (showMoreDocType === false && item.type === docName)
+            // }
+            active={item.type === docName}
+            onClick={() => {
+              setShowMoreDocType(false);
+              setDocTypData(item);
+              setDocName(item.type);
+              setDocId(item.id);
+              setOtherDoc(false);
+              setHide(false);
+              setShowSaveDoc(false);
+              setDocFile(
+                item.document_url +
+                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              );
+            }}
+            className="text-capitalize"
+          >
+            {textReplaceFunction(item.type)}
+            {item.is_varify === "1" ? (
+              <span className="verified_doc">
+                <img className="w-100" src={Verified} alt="" />
+              </span>
+            ) : null}
+          </ListGroup.Item>
+        ))}
+        <ListGroup.Item
+          className={
+            user_type === "company" || user_type === "admin"
+              ? "bg-secondary text-white"
+              : "d-none"
+          }
+          onClick={() => {
+            setShowMoreDocType(true);
+            setDocTypData("");
+            setDocId("");
+            setOtherDoc(false);
+            setDocFile("");
+            setHide(false);
+            setShowSaveDoc(false);
+          }}
+        >
+          <b>+ Add New Documents</b>
+        </ListGroup.Item>
+      </ListGroup> */}
         </div>
         <div className="col-md-6">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
@@ -810,29 +838,21 @@ export default function EmployerDocumrentContainer(props) {
               </div>
             ) : null}
             <div className="">
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                style={{ display: "none" }}
-                onChange={(e) => handleFileChange(e, docTypData.id)}
-              />
-              <button
-                className={
-                  (user_type === "company" && (showMoreDocType || otherDoc)) ||
-                  user_type === "admin"
-                    ? "btn btn-light"
-                    : "d-none"
-                }
-                onClick={() => {
-                  document.querySelector('input[type="file"]').click();
-                  setHide(true);
-                }}
-              >
+              <label className="btn btn-light">
                 <AiOutlineCloudUpload className="font-size-3 mr-2" />
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    handleFileChange(e, docTypData.id);
+                    setHide(true);
+                  }}
+                />
                 {docTypData.id
                   ? "Update Current Document"
                   : "Upload New Document"}
-              </button>
+              </label>
             </div>
             {showSaveDoc ? (
               <div className="doc_upload_col">
@@ -942,12 +962,14 @@ export default function EmployerDocumrentContainer(props) {
                             style={{
                               color:
                                 selectedAnnotation &&
-                                selectedAnnotation.x === annotation.x_axis &&
-                                selectedAnnotation.y === annotation.y_axis
+                                selectedAnnotation.x_axis ===
+                                  annotation.x_axis &&
+                                selectedAnnotation.y_axis === annotation.y_axis
                                   ? "blue"
                                   : annotation.status === "1"
                                   ? "lightgreen"
                                   : "red",
+                              // color: "white",
                             }}
                           />
                         </div>
@@ -957,12 +979,17 @@ export default function EmployerDocumrentContainer(props) {
                         <div
                           style={{
                             position: "absolute",
-                            left: selectedAnnotation.x + 10,
-                            top: selectedAnnotation.y + 20,
+                            left: selectedAnnotation.x_axis + 10,
+                            top: selectedAnnotation.y_axis + 20,
                             zIndex: 1,
                           }}
                         >
                           <form>
+                            {/* <input
+                          type="text"
+                          value={comments || ""}
+                          onChange={(e) => setComments(e.target.value)}
+                        /> */}
                             <div
                               style={{ position: "relative", width: "250px" }}
                             >
@@ -1033,10 +1060,10 @@ export default function EmployerDocumrentContainer(props) {
             )}
             {/* Annotation Close */}
             {/* ) : (
-              <div className="text-center">
-                <h2> No Documents </h2>
-              </div>
-            )} */}
+          <div className="text-center">
+            <h2> No Documents </h2>
+          </div>
+        )} */}
           </div>
         </div>
         <div className="col-md-3 p-0 border-left">
@@ -1088,88 +1115,117 @@ export default function EmployerDocumrentContainer(props) {
                 </div>
               </div>
             </div>
-            <div className="d-flex flex-column">
-              {(commentsList || []).map((commentItem, index) => (
-                <div
-                  className="card m-2"
-                  style={{
-                    backgroundColor: "#edf2fa",
-                    color: "white",
-                  }}
-                  key={index}
-                >
-                  <Link className="d-flex flex-row-reverse mt-2 mx-3">
-                    <span
-                      style={{
-                        cursor: "pointer",
-                        margin: "2px",
-                        color: commentItem.status === "0" ? "blue" : "white",
-                        borderRadius: "40px",
-                        border:
-                          commentItem.status === "0" ? "solid 1px blue" : "",
-                        padding: "1px 5px",
-                        backgroundColor:
-                          commentItem.status === "1" && "lightgreen",
-                      }}
-                      onClick={
-                        commentItem.status === "0"
-                          ? (e) => {
-                              OnHandleUpdateComment(commentItem);
-                            }
-                          : null
-                      }
-                    >
-                      &#x2713; {/* Checkmark symbol */}
-                    </span>
-                  </Link>
+            <div
+              className="d-flex flex-column h-75vh"
+              style={{ overflowY: "scroll" }}
+            >
+              {commentsList.length === 0 ? (
+                <div className="text-center mt-5">
+                  <h5>No comments</h5>
+                </div>
+              ) : (
+                (commentsList || []).map((commentItem, index) => (
                   <Link
+                    className={`card m-2 ${
+                      selectedAnnotation &&
+                      selectedAnnotation.x_axis === commentItem.x_axis &&
+                      selectedAnnotation.y_axis === commentItem.y_axis
+                        ? "highlighted-comment"
+                        : ""
+                    }`}
+                    style={{
+                      backgroundColor: "#edf2fa",
+                      color: "white",
+                    }}
                     onClick={() =>
                       setSelectedAnnotation({
-                        x: commentItem.x_axis,
-                        y: commentItem.y_axis,
+                        x_axis: commentItem.x_axis,
+                        y_axis: commentItem.y_axis,
                       })
                     }
-                    className="card-body"
+                    key={index}
                   >
-                    <div className="text-muted">
-                      {moment(commentItem.created_on).format("DD-MM-YYYY")}
-                    </div>
-                    {commentItem.subject_description && (
-                      <h5 className="card-title text-break">
-                        {commentItem.subject_description}
-                      </h5>
-                    )}
-                    {commentItem.assigned_to && (
-                      <div
+                    <p className="d-flex flex-row-reverse mt-2 mx-3">
+                      <span
                         style={{
-                          borderRadius: "15px",
-                          padding: "5px 10px",
-                          margin: "5px 0",
-                          display: "flex",
-                          alignItems: "center",
+                          cursor: "pointer",
+                          margin: "2px",
+                          color: commentItem.status === "0" ? "blue" : "white",
+                          borderRadius: "40px",
+                          border:
+                            commentItem.status === "0" ? "solid 1px blue" : "",
+                          padding: "1px 5px",
+                          backgroundColor:
+                            commentItem.status === "1" && "lightgreen",
                         }}
+                        onClick={
+                          commentItem.status === "0"
+                            ? (e) => {
+                                OnHandleUpdateComment(commentItem);
+                              }
+                            : null
+                        }
                       >
-                        <h5 className="text-dark">
-                          {
-                            allAdmin.find(
+                        &#x2713; {/* Checkmark symbol */}
+                      </span>
+                    </p>
+                    <div className="card-body">
+                      <div className="text-dark h4">
+                        <span
+                          className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
+                            commentItem
+                          )}`}
+                        >
+                          {commentItem.assined_to_user_id
+                            ? allAdmin
+                                .find(
+                                  (item) =>
+                                    item.admin_id ===
+                                    commentItem.assined_to_user_id
+                                )
+                                .name.charAt(0)
+                            : ""}
+                        </span>
+                        {commentItem.assined_to_user_id
+                          ? allAdmin.find(
                               (item) =>
                                 item.admin_id === commentItem.assined_to_user_id
                             ).name
-                          }
-                        </h5>
+                          : ""}
                         <br />
-                        <Link
-                          className="text-dark text-break"
-                          to={`mailto:${commentItem.assigned_to}`}
-                          style={{ marginLeft: "5px" }}
-                        >
-                          {`@${commentItem.assigned_to}`}
-                        </Link>
+                        <span className="text-gray-400 h6 mx-8">
+                          {moment(commentItem.created_on).format("HH:mm D MMM")}
+                        </span>
                       </div>
-                    )}
+
+                      {commentItem.subject_description && (
+                        <h5 className="card-title text-break">
+                          {commentItem.subject_description}
+                        </h5>
+                      )}
+                      {commentItem.assigned_to && (
+                        <div
+                          style={{
+                            borderRadius: "15px",
+                            padding: "5px 10px",
+                            margin: "5px 0",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Link
+                            className="text-break"
+                            to={`mailto:${commentItem.assigned_to}`}
+                            style={{ marginLeft: "5px" }}
+                          >
+                            {`@${commentItem.assigned_to}`}
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   </Link>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
