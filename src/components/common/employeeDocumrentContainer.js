@@ -10,6 +10,7 @@ import {
   UpdateDocuentcommentAssign,
   DeleteCommentsAndAssign,
   DeleteDocument,
+  SendReplyCommit,
 } from "../../api/api";
 import { FaReplyAll } from "react-icons/fa6";
 import { toast } from "react-toastify";
@@ -21,7 +22,7 @@ import { CiTrash } from "react-icons/ci";
 /*Annotation */
 import { FaFlag } from "react-icons/fa";
 import { MdAddComment } from "react-icons/md";
-import { FcCancel } from "react-icons/fc";
+import { RxCrossCircled } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import moment from "moment";
 export default function DocumrentContainer(props) {
@@ -146,9 +147,13 @@ export default function DocumrentContainer(props) {
   };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async () => {
-    if (docId) {
+    if (docId || docData.find((item) => item.type === docName)) {
       try {
-        let res = await GetCommentsAndAssign(docId, adminid, annotationStatus);
+        let res = await GetCommentsAndAssign(
+          docId ? docId : docData.find((item) => item.type === docName).id,
+          adminid,
+          annotationStatus
+        );
         if (res.data.status === (1 || "1")) {
           setCommentsList(res.data.data);
           setImageAnnotations(res.data.data);
@@ -158,6 +163,9 @@ export default function DocumrentContainer(props) {
         setCommentsList([]);
         setImageAnnotations([]);
       }
+    } else {
+      setCommentsList([]);
+      setImageAnnotations([]);
     }
   };
 
@@ -396,7 +404,7 @@ export default function DocumrentContainer(props) {
               className={` ${
                 hide === false && docFile && docName && user_type === "admin"
                   ? `btn-sm mt-7 ${
-                      isAnnotationMode ? "btn-primary" : "btn-secondary"
+                      isAnnotationMode ? "btn-primary " : "btn-secondary"
                     }`
                   : "d-none"
               }`}
@@ -411,7 +419,7 @@ export default function DocumrentContainer(props) {
                 setComments("");
               }}
             >
-              {isAnnotationMode ? <FcCancel /> : <MdAddComment />}
+              {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
             </Link>
 
             <div
@@ -473,6 +481,7 @@ export default function DocumrentContainer(props) {
         setDocFile("");
         setDocId("");
         setDocData("");
+        setDocTypData("");
       }
     } catch (err) {
       console.log(err);
@@ -505,7 +514,6 @@ export default function DocumrentContainer(props) {
     "Representative Submission Letter",
     "Bank Statement",
   ];
-
   useEffect(() => {
     GetDocument();
     RenderNewDocFile();
@@ -515,7 +523,7 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [docName, apiCall, isAnnotationMode, docId, adminid, annotationStatus]);
+  }, [apiCall, docName, isAnnotationMode, docId, adminid, annotationStatus]);
 
   const handleDocTypeChange = (e) => {
     const selectedValue = e.target.value;
@@ -578,11 +586,14 @@ export default function DocumrentContainer(props) {
     const email = /\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
     const comment = /\S+@\S+\.\S+/.test(comments) ? "" : comments;
+    let DocId = docId
+      ? docId
+      : docData.find((item) => item.type === docName).id;
     // Send data to the API
     try {
       let res = await ADocAnnotation(
         admin_id,
-        docId,
+        DocId,
         assignedUserId,
         email,
         subject,
@@ -603,6 +614,17 @@ export default function DocumrentContainer(props) {
       }
     } catch (err) {
       console.log(err);
+      if (err.response.data.message === "required fields cannot be blank") {
+        toast.error(" Please try again later.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setSelectedAnnotation(null);
+        setComments("");
+        setApiCall(true);
+        setAnnotationMode(!isAnnotationMode);
+        setAddCommentFlag();
+      }
     }
     // Update state to include the new annotation
     // setImageAnnotations([...imageAnnotations, { x, y }]);
@@ -746,6 +768,7 @@ export default function DocumrentContainer(props) {
                       setOtherDoc(false);
                       setHide(false);
                       setShowSaveDoc(false);
+                      setAnnotationMode(!isAnnotationMode);
                       setDocFile(
                         item.document_url +
                           `?v=${
@@ -1041,78 +1064,56 @@ export default function DocumrentContainer(props) {
                             zIndex: 1,
                           }}
                         >
-                          <form>
-                            {/* <input
-                            type="text"
-                            value={comments || ""}
-                            onChange={(e) => setComments(e.target.value)}
-                          /> */}
-                            <div
-                              style={{ position: "relative", width: "250px" }}
-                            >
+                          <form className="comment-form">
+                            <div className="comment-input-container">
                               <input
                                 type="text"
                                 value={comments || ""}
                                 onChange={handleInputChange}
                                 placeholder="Comments or add others with @"
-                                className="rounded-pill"
-                                style={{ fontSize: "16px", width: "100%" }}
+                                className="rounded-pill comment-input"
                               />
                               {filteredEmails.length > 0 && (
-                                <ul
-                                  style={{
-                                    listStyle: "none",
-                                    padding: 0,
-                                    margin: 0,
-                                    position: "absolute",
-                                    top: "100%",
-                                    left: 0,
-                                    width: "100%",
-                                    border: "1px solid #ccc",
-                                    borderTop: "none",
-                                    borderRadius: "0 0 5px 5px",
-                                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                    backgroundColor: "#fff",
-                                    zIndex: 1,
-                                  }}
-                                >
+                                <ul className="email-suggestions">
                                   {filteredEmails.map((email) => (
                                     <li
-                                      key={email}
+                                      key={email.email}
                                       onClick={() =>
                                         handleEmailClick(email.email)
                                       }
                                       onMouseOver={() =>
                                         handleEmailMouseOver(email.email)
                                       }
-                                      style={{
-                                        padding: "8px",
-                                        cursor: "pointer",
-                                      }}
+                                      className="email-suggestion-item"
                                     >
-                                      {email.name} {email.email}
+                                      <strong>{email.name}</strong>{" "}
+                                      {email.email}
                                     </li>
                                   ))}
                                 </ul>
                               )}
                             </div>
-                            <div className="d-flex justify-content-center">
-                              {" "}
+                            <div className="button-container mx-4">
                               <button
                                 type="button"
                                 onClick={() => {
                                   addAnnotation(selectedAnnotation);
                                   setAddCommentFlag(false);
                                 }}
-                                className="btn btn-primary rounded-pill"
+                                className="btn-sm btn-primary rounded-pill save-comment-btn"
                               >
                                 Save Comment
-                                <button
-                                  className="btn btn-info rounded-pill"
-                                  onClick={() => setSelectedAnnotation(null)}
-                                >
-                                  Cancel
-                                </button>{" "}
+                              </button>
+                              <button
+                                className="btn-sm btn-info rounded-pill cancel-btn"
+                                onClick={() => {
+                                  setAddCommentFlag();
+                                  setSelectedAnnotation(null);
+                                  setComments("");
+                                  setAnnotationMode(!isAnnotationMode);
+                                }}
+                              >
+                                Cancel
                               </button>
                             </div>
                           </form>
@@ -1183,7 +1184,7 @@ export default function DocumrentContainer(props) {
               </div>
             </div>
             <div
-              className="d-flex flex-column h-75vh"
+              className="d-flex flex-column h-100vh"
               style={{ overflowY: "scroll" }}
             >
               {commentsList.length === 0 ? (
@@ -1291,70 +1292,47 @@ export default function DocumrentContainer(props) {
                       )}
                     </div>
                     {replyCommentClick === commentItem.id ? (
-                      <form>
-                        {/* <input
-                            type="text"
-                            value={comments || ""}
-                            onChange={(e) => setComments(e.target.value)}
-                          /> */}
-                        <div style={{ position: "relative", width: "250px" }}>
+                      <form className="comment-form x-auto flex-start">
+                        <div className="comment-input-container">
                           <input
                             type="text"
                             value={replyComment || ""}
                             onChange={(e) => handleInputChange(e, "reply")}
                             placeholder="Comments or add others with @"
-                            className="rounded-pill"
-                            style={{ fontSize: "16px", width: "100%" }}
+                            className="rounded-pill comment-input"
                           />
                           {filteredEmails.length > 0 && (
-                            <ul
-                              style={{
-                                listStyle: "none",
-                                padding: 0,
-                                margin: 0,
-                                position: "absolute",
-                                top: "100%",
-                                left: 0,
-                                width: "100%",
-                                border: "1px solid #ccc",
-                                borderTop: "none",
-                                borderRadius: "0 0 5px 5px",
-                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                backgroundColor: "#fff",
-                                zIndex: 1,
-                              }}
-                            >
+                            <ul className="email-suggestions">
                               {filteredEmails.map((email) => (
                                 <li
                                   key={email}
-                                  onClick={() => handleEmailClick(email.email)}
+                                  onClick={() =>
+                                    handleEmailClick(email.email, "reply")
+                                  }
                                   onMouseOver={() =>
                                     handleEmailMouseOver(email.email, "reply")
                                   }
-                                  style={{
-                                    padding: "8px",
-                                    cursor: "pointer",
-                                  }}
+                                  className="email-suggestion-item text-dark"
                                 >
-                                  {email.name} {email.email}
+                                  <strong>{email.name}</strong> {email.email}
                                 </li>
                               ))}
                             </ul>
                           )}
                         </div>
-                        <div className=" d-flex justify-content-center">
+                        <div className="button-container mb-3">
                           <button
                             type="button"
                             onClick={() => {
                               ReplyAnnotation(commentItem);
                             }}
-                            className="btn btn-primary rounded-pill"
+                            className="btn-sm btn-primary rounded-pill save-comment-btn"
                           >
                             Reply Comment
                           </button>
                           <button
-                            className="btn btn-info rounded-pill"
-                            onClick={() => setReplyComment()}
+                            className="btn-sm btn-info rounded-pill cancel-btn"
+                            onClick={() => setReplyCommentClick()}
                           >
                             Cancel
                           </button>
