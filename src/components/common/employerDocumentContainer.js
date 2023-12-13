@@ -1323,7 +1323,6 @@ export default function EmployerDocumrentContainer(props) {
                         </div>
                       )}
                     </div>
-
                     {replyCommentClick === commentItem.id ? (
                       <>
                         <form className="comment-form x-auto flex-start">
