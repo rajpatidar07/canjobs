@@ -758,7 +758,7 @@ export default function DocumrentContainer(props) {
       }
     >
       <div className="row m-0">
-        <div className="col-md-3 p-0 border-right">
+        <div className="col-md-2 p-0 border-right">
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
@@ -769,18 +769,11 @@ export default function DocumrentContainer(props) {
                 <th className="p-3" scope="col">
                   Document
                 </th>
-                <th className="p-3" scope="col">
-                  Added By
-                </th>
-                <th className="p-3" scope="col">
+                {/* <th className="p-3" scope="col">
                   Date
-                </th>
-                <th className="p-3" scope="col">
-                  Verified
-                </th>
-                <th className="p-3" scope="col">
-                  Action
-                </th>
+                </th> */}
+                <th className="p-3" scope="col"></th>
+                <th className="p-3" scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -822,29 +815,34 @@ export default function DocumrentContainer(props) {
                         : "text-capitalize"
                     }
                   >
-                    <td className="p-3"> {textReplaceFunction(item.type)}</td>
                     <td className="p-3">
+                      {textReplaceFunction(item.type)}
+                      <p className="font-size-2 m-0">
+                        {moment(item.updated_at).format("DD-MMM-YYYY")}
+                      </p>
+                    </td>
+                    {/* <td className="p-3">
                       {item.updated_by_name
                         ? item.updated_by_name
                         : item.created_by_name}
-                    </td>
+                    </td> */}
+                    <td className="p-3"></td>
                     <td className="p-3">
-                      {moment(item.updated_at).format("DD-MM-YYYY")}
-                    </td>
-                    <td className="p-3">
-                      {item.is_varify === "1"
-                        ? // <span className="verified_doc">
-                          //   <img className="w-100" src={Verified} alt="" />
-                          // </span>
-                          "Yes"
-                        : "No"}
+                      {item.is_varify === "1" ? (
+                        // <span className="verified_doc">
+                        //   <img className="w-100" src={Verified} alt="" />
+                        // </span>
+                        <span>&#x2713;</span>
+                      ) : (
+                        ""
+                      )}
                     </td>
                     <td className="p-3">
                       <Link onClick={() => OnDeleteDoc(item.id)}>
                         <CiTrash
                           style={{
                             color: item.type === docName ? "white" : "black",
-                            fontSize: "25px",
+                            fontSize: "18px",
                           }}
                         />
                       </Link>
@@ -907,7 +905,7 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
-        <div className="col-md-6">
+        <div className="col-md-7">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
@@ -1087,7 +1085,7 @@ export default function DocumrentContainer(props) {
                                 selectedAnnotation.y_axis === annotation.y_axis
                                   ? "blue"
                                   : annotation.status === "1"
-                                  ? "lightgreen"
+                                  ? "green"
                                   : "red",
                               // color: "white",
                             }}

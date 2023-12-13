@@ -1183,3 +1183,27 @@ select.form-control.select_document_type {
   display: block;
   left: 100%;
 }
+
+
+/* DOCUMENT AND COMMENT DESIGN */
+.comment_box_card {
+  position: relative;
+}
+
+.comment_box_card .comment_status_update {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid #f5f5f5;
+}
+
+.highlighted-comment.comment_box_card {
+  border: 2px solid blue;
+  background-color: #f5f5f5 !important;
+  z-index: 99;
+}
