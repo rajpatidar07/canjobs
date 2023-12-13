@@ -3,7 +3,6 @@ import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CreateRazorpay, AddRazorpay } from "../../../api/api";
-import PayPalButton from "../../common/PayPal";
 export default function PayForm({ setApicall, data }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -245,8 +244,6 @@ export default function PayForm({ setApicall, data }) {
             Pay
           </button>
         )}
-        ---------OR-----------
-        <PayPalButton />
       </div>
     </form>
   );

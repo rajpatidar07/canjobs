@@ -5,6 +5,7 @@
   "proxy": "http://13.126.18.37/canjobs/",
   "dependencies": {
     "@cyntler/react-doc-viewer": "^1.13.0",
+    "@paypal/react-paypal-js": "^8.1.3",
     "@react-18-pdf/renderer": "^2.3.4",
     "@react-oauth/google": "^0.11.0",
     "@react-pdf/renderer": "^3.1.9",
