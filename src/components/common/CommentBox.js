@@ -143,7 +143,7 @@ export default function CommentBox({
                         </div>
                       </div>
                       <div class=" mb-0">
-                        <div class="text-black-2 font-weight-bold text-capitalize mb-1">
+                        <div class="font-size-5 font-weight-bold text-capitalize mb-1">
                           {commentItem.assined_to_user_id
                             ? allAdmin.find(
                                 (item) =>
@@ -173,17 +173,12 @@ export default function CommentBox({
                   {commentItem.assigned_to && (
                     <div
                       style={{
-                        borderRadius: "5px",
-                        padding: "5px 10px",
-                        margin: "5px 0",
                         display: "flex",
-                        alignItems: "center",
                       }}
                     >
                       <Link
                         className="text-break"
                         to={`mailto:${commentItem.assigned_to}`}
-                        style={{ marginLeft: "5px" }}
                       >
                         {`@${commentItem.assigned_to}`}
                       </Link>
