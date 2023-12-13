@@ -668,7 +668,7 @@ export default function EmployerDocumrentContainer(props) {
   const determineBackgroundColor = (commentItem) => {
     const colorClasses = [
       "bg-primary-opacity-7",
-      "bg-color-warning-opacity-7",
+      "bg-warning-opacity-7",
       "bg-orange-opacity-6",
       "bg-info-opacity-7",
       "bg-secondary-opacity-7",
@@ -704,11 +704,16 @@ export default function EmployerDocumrentContainer(props) {
   };
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {
+    let emailrejex = /\S+@\S+\.\S+/;
+    let id = emailrejex.test(replyComment)
+      ? allAdmin.find((item) => item.email === replyComment).admin_id
+      : data.assined_to_user_id;
     try {
       let res = await SendReplyCommit(
         data,
-        /\S+@\S+\.\S+/.test(replyComment) ? replyComment : "",
-        !/\S+@\S+\.\S+/.test(replyComment) ? replyComment : ""
+        emailrejex.test(replyComment) ? replyComment : "",
+        !emailrejex.test(replyComment) ? replyComment : "",
+        id
       );
       if (res.data.message === "message sent successfully!") {
         toast.success("Replied Successfully", {
@@ -716,6 +721,8 @@ export default function EmployerDocumrentContainer(props) {
           autoClose: 1000,
         });
         setReplyCommentClick();
+        setReplyComment("");
+        setApiCall(true);
       }
     } catch (err) {
       console.log(err);
@@ -1461,46 +1468,37 @@ export default function EmployerDocumrentContainer(props) {
                                     </span>
                                   </Accordion.Header>
                                   <Accordion.Body>
-                                    {(commentsReplyList || []).map(
-                                      (replyItem, replyIndex) =>
-                                        replyItem.task_id ===
-                                          commentItem.id && (
-                                          <div key={replyIndex}>
-                                            {/* Display reply message */}
-                                            {replyItem.msg && (
-                                              <h5 className="card-title text-break">
-                                                {replyItem.msg}
-                                              </h5>
-                                            )}
+                                    (
+                                    <div key={replyIndex}>
+                                      {/* Display reply message */}
+                                      {replyItem.msg && (
+                                        <h5 className="card-title text-break">
+                                          {replyItem.msg}
+                                        </h5>
+                                      )}
 
-                                            {/* Display mention */}
-                                            {replyItem.mention && (
-                                              <div
-                                                style={{
-                                                  borderRadius: "15px",
-                                                  // padding: "5px 10px",
-                                                  // margin: "5px 0",
-                                                  display: "flex",
-                                                  alignItems: "center",
-                                                }}
-                                              >
-                                                <Link
-                                                  className="text-break"
-                                                  to={`mailto:${replyItem.mention}`}
-                                                  style={{ marginLeft: "5px" }}
-                                                >
-                                                  {`@${replyItem.mention}`}
-                                                </Link>
-                                              </div>
-                                            )}
-                                          </div>
-                                        )
-                                    )}
-
-                                    {/* Reply Comment Form */}
-                                    <form className="comment-form x-auto flex-start">
-                                      {/* Form content here */}
-                                    </form>
+                                      {/* Display mention */}
+                                      {replyItem.mention && (
+                                        <div
+                                          style={{
+                                            borderRadius: "15px",
+                                            // padding: "5px 10px",
+                                            // margin: "5px 0",
+                                            display: "flex",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Link
+                                            className="text-break"
+                                            to={`mailto:${replyItem.mention}`}
+                                            style={{ marginLeft: "5px" }}
+                                          >
+                                            {`@${replyItem.mention}`}
+                                          </Link>
+                                        </div>
+                                      )}
+                                    </div>
+                                    )
                                   </Accordion.Body>
                                 </Accordion.Item>
                               )

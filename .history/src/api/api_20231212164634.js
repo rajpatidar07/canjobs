@@ -596,14 +596,14 @@ export const DeleteCommentsAndAssign = async (DocId, id) => {
   return response;
 };
 /*Api to Send Reply for document comments */
-export const SendReplyCommit = async (data, email, msg, recid) => {
+export const SendReplyCommit = async (data, email, msg) => {
   const response = await axios.post(
     `${API_URL}/admin/sendMsg`,
     {
       doc_id: data.doc_id,
       task_id: data.id,
       sender_id: data.task_creator_user_id,
-      receiver_id: recid,
+      receiver_id: data.assined_to_user_id,
       mention: email,
       msg: msg,
     },

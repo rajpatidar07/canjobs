@@ -11,6 +11,7 @@ import {
   DeleteCommentsAndAssign,
   DeleteDocument,
   SendReplyCommit,
+  GetReplyCommit,
 } from "../../api/api";
 import { FaReplyAll } from "react-icons/fa6";
 import { toast } from "react-toastify";
@@ -25,6 +26,8 @@ import { MdAddComment } from "react-icons/md";
 import { RxCrossCircled } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { Accordion } from "react-bootstrap";
+
 export default function DocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
@@ -55,7 +58,7 @@ export default function DocumrentContainer(props) {
   const fileViewerRef = useRef(null);
   let [annotationStatus, setAnnotationStatus] = useState();
   let [replyCommentClick, setReplyCommentClick] = useState();
-
+  const [commentsReplyList, setCommentsReplyList] = useState([]);
   /*Function to get admin list */
   const AdminData = async () => {
     try {
@@ -170,6 +173,26 @@ export default function DocumrentContainer(props) {
   };
 
   /*Annotaton functionalites close */
+  // Generate a list of comments reply
+  const getCommentsReplyList = async () => {
+    if (docId || docData.find((item) => item.type === docName)) {
+      try {
+        let res = await GetReplyCommit(
+          docId ? docId : docData.find((item) => item.type === docName).id,
+          adminid,
+          annotationStatus
+        );
+        if (res.data.status === (1 || "1")) {
+          setCommentsReplyList(res.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        setCommentsReplyList([]);
+      }
+    } else {
+      setCommentsReplyList([]);
+    }
+  };
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
@@ -519,6 +542,7 @@ export default function DocumrentContainer(props) {
     RenderNewDocFile();
     setSelectedAnnotation(null);
     getCommentsList();
+    getCommentsReplyList();
     AdminData();
     if (apiCall === true) {
       setApiCall(false);
@@ -666,7 +690,7 @@ export default function DocumrentContainer(props) {
   const determineBackgroundColor = (commentItem) => {
     const colorClasses = [
       "bg-primary-opacity-7",
-      "bg-color-warning-opacity-7",
+      "bg-warning-opacity-7",
       "bg-orange-opacity-6",
       "bg-info-opacity-7",
       "bg-secondary-opacity-7",
@@ -702,8 +726,26 @@ export default function DocumrentContainer(props) {
   };
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {
+    let emailrejex = /\S+@\S+\.\S+/;
+    let id = emailrejex.test(replyComment)
+      ? allAdmin.find((item) => item.email === replyComment).admin_id
+      : data.assined_to_user_id;
     try {
-      console.log(data);
+      let res = await SendReplyCommit(
+        data,
+        emailrejex.test(replyComment) ? replyComment : "",
+        !emailrejex.test(replyComment) ? replyComment : "",
+        id
+      );
+      if (res.data.message === "message sent successfully!") {
+        toast.success("Replied Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setReplyCommentClick();
+        setReplyComment("");
+        setApiCall(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -1245,20 +1287,32 @@ export default function DocumrentContainer(props) {
                           )}`}
                         >
                           {commentItem.assined_to_user_id
-                            ? allAdmin
-                                .find(
-                                  (item) =>
-                                    item.admin_id ===
-                                    commentItem.assined_to_user_id
-                                )
-                                .name.charAt(0)
+                            ? allAdmin.find(
+                                (item) =>
+                                  item.admin_id ===
+                                  commentItem.assined_to_user_id
+                              )
+                              ? allAdmin
+                                  .find(
+                                    (item) =>
+                                      item.admin_id ===
+                                      commentItem.assined_to_user_id
+                                  )
+                                  .name.charAt(0)
+                              : ""
                             : ""}
                         </span>
                         {commentItem.assined_to_user_id
                           ? allAdmin.find(
                               (item) =>
                                 item.admin_id === commentItem.assined_to_user_id
-                            ).name
+                            )
+                            ? allAdmin.find(
+                                (item) =>
+                                  item.admin_id ===
+                                  commentItem.assined_to_user_id
+                              ).name
+                            : ""
                           : ""}
                         <br />
                         <span className="text-gray-400 h6 mx-8">
@@ -1292,52 +1346,186 @@ export default function DocumrentContainer(props) {
                       )}
                     </div>
                     {replyCommentClick === commentItem.id ? (
-                      <form className="comment-form x-auto flex-start">
-                        <div className="comment-input-container">
-                          <input
-                            type="text"
-                            value={replyComment || ""}
-                            onChange={(e) => handleInputChange(e, "reply")}
-                            placeholder="Comments or add others with @"
-                            className="rounded-pill comment-input"
-                          />
-                          {filteredEmails.length > 0 && (
-                            <ul className="email-suggestions">
-                              {filteredEmails.map((email) => (
-                                <li
-                                  key={email}
-                                  onClick={() =>
-                                    handleEmailClick(email.email, "reply")
-                                  }
-                                  onMouseOver={() =>
-                                    handleEmailMouseOver(email.email, "reply")
-                                  }
-                                  className="email-suggestion-item text-dark"
+                      <>
+                        <form className="comment-form x-auto flex-start">
+                          <div className="comment-input-container">
+                            <input
+                              type="text"
+                              value={replyComment || ""}
+                              onChange={(e) => handleInputChange(e, "reply")}
+                              placeholder="Comments or add others with @"
+                              className="rounded-pill comment-input"
+                            />
+                            {filteredEmails.length > 0 && (
+                              <ul className="email-suggestions">
+                                {filteredEmails.map((email, index) => (
+                                  <li
+                                    key={index}
+                                    onClick={() =>
+                                      handleEmailClick(email.email, "reply")
+                                    }
+                                    onMouseOver={() =>
+                                      handleEmailMouseOver(email.email, "reply")
+                                    }
+                                    className="email-suggestion-item text-dark"
+                                  >
+                                    <strong>{email.name}</strong> {email.email}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                          <div className="button-container mb-3">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                ReplyAnnotation(commentItem);
+                              }}
+                              className="btn-sm btn-primary rounded-pill save-comment-btn"
+                            >
+                              Reply Comment
+                            </button>
+                            <button
+                              className="btn-sm btn-info rounded-pill cancel-btn"
+                              onClick={() => setReplyCommentClick()}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </form>
+                        {/* Display replies only if task_id matches */}
+                        <Accordion
+                          className="w-100 p-0 m-0 border-0"
+                          defaultActiveKey="1"
+                          flush
+                        >
+                          {(commentsReplyList || []).map(
+                            (replyItem, replyIndex) =>
+                              // Only render the reply if task_id matches the comment's id
+                              replyItem.task_id === commentItem.id && (
+                                // <div
+                                //   className={`card m-2 ml-5 `}
+                                //   style={{
+                                //     backgroundColor: "#edf2fa",
+                                //     color: "white",
+                                //   }}
+                                //   // onClick={() =>
+                                //   //   setSelectedAnnotation({
+                                //   //     x_axis: replyItem.x_axis,
+                                //   //     y_axis: replyItem.y_axis,
+                                //   //   })
+                                //   // }
+                                //   key={replyIndex}
+                                // >
+                                //   <p className="d-flex flex-row-reverse ">
+                                //     {console.log(replyItem)}
+                                //   </p>
+                                // <div className="text-dark h4">
+                                //   <span
+                                //     className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
+                                //       replyItem
+                                //     )}`}
+                                //   >
+                                //     {replyItem.receiver_name &&
+                                //       replyItem.receiver_name.charAt(0)}
+                                //   </span>
+                                //   {replyItem.receiver_name}
+                                //   <br />
+                                //   <span className="text-gray-400 h6 mx-8">
+                                //     {moment(replyItem.created_on).format(
+                                //       "HH:mm D MMM"
+                                //     )}
+                                //   </span>
+                                // </div>
+
+                                // {/* Display reply message */}
+                                // {replyItem.msg && (
+                                //   <h5 className="card-title text-break">
+                                //     {replyItem.msg}
+                                //   </h5>
+                                // )}
+
+                                // {/* Display mention */}
+                                // {replyItem.mention && (
+                                //   <div
+                                //     style={{
+                                //       borderRadius: "15px",
+                                //       // padding: "5px 10px",
+                                //       // margin: "5px 0",
+                                //       display: "flex",
+                                //       alignItems: "center",
+                                //     }}
+                                //   >
+                                //     <Link
+                                //       className="text-break"
+                                //       to={`mailto:${replyItem.mention}`}
+                                //       style={{ marginLeft: "5px" }}
+                                //     >
+                                //       {`@${replyItem.mention}`}
+                                //     </Link>
+                                //   </div>
+                                // )}
+                                // </div>
+
+                                <Accordion.Item
+                                  className="card w-100 rounded-6 overflow-hidden border-0 mb-5"
+                                  eventKey={replyItem.id} // Assuming commentItem.id is unique
                                 >
-                                  <strong>{email.name}</strong> {email.email}
-                                </li>
-                              ))}
-                            </ul>
+                                  <Accordion.Header className="w-100 m-0 border-0 bg-white accordian_btn_design">
+                                    <span
+                                      className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
+                                        replyItem
+                                      )}`}
+                                    >
+                                      {replyItem.receiver_name &&
+                                        replyItem.receiver_name.charAt(0)}
+                                    </span>
+                                    {replyItem.receiver_name}
+                                    <br />
+                                    <span className="text-gray-400 h6 mx-8">
+                                      {moment(replyItem.created_on).format(
+                                        "HH:mm D MMM"
+                                      )}
+                                    </span>
+                                  </Accordion.Header>
+                                  <Accordion.Body>
+                                    (
+                                    <div key={replyIndex}>
+                                      {/* Display reply message */}
+                                      {replyItem.msg && (
+                                        <h5 className="card-title text-break">
+                                          {replyItem.msg}
+                                        </h5>
+                                      )}
+
+                                      {/* Display mention */}
+                                      {replyItem.mention && (
+                                        <div
+                                          style={{
+                                            borderRadius: "15px",
+                                            // padding: "5px 10px",
+                                            // margin: "5px 0",
+                                            display: "flex",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <Link
+                                            className="text-break"
+                                            to={`mailto:${replyItem.mention}`}
+                                            style={{ marginLeft: "5px" }}
+                                          >
+                                            {`@${replyItem.mention}`}
+                                          </Link>
+                                        </div>
+                                      )}
+                                    </div>
+                                    )
+                                  </Accordion.Body>
+                                </Accordion.Item>
+                              )
                           )}
-                        </div>
-                        <div className="button-container mb-3">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              ReplyAnnotation(commentItem);
-                            }}
-                            className="btn-sm btn-primary rounded-pill save-comment-btn"
-                          >
-                            Reply Comment
-                          </button>
-                          <button
-                            className="btn-sm btn-info rounded-pill cancel-btn"
-                            onClick={() => setReplyCommentClick()}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </form>
+                        </Accordion>
+                      </>
                     ) : (
                       <Link
                         onClick={() => setReplyCommentClick(commentItem.id)}
