@@ -1395,7 +1395,8 @@ export default function DocumrentContainer(props) {
                         </form>
                         {/* Display replies only if task_id matches */}
                         <Accordion
-                          className="w-100 p-0 m-0 border-0"
+                          className="w-100 p-0 m-0 border-0 h-25vh"
+                          style={{ overflowY: "scroll" }}
                           defaultActiveKey="1"
                           flush
                         >
@@ -1403,77 +1404,13 @@ export default function DocumrentContainer(props) {
                             (replyItem, replyIndex) =>
                               // Only render the reply if task_id matches the comment's id
                               replyItem.task_id === commentItem.id && (
-                                // <div
-                                //   className={`card m-2 ml-5 `}
-                                //   style={{
-                                //     backgroundColor: "#edf2fa",
-                                //     color: "white",
-                                //   }}
-                                //   // onClick={() =>
-                                //   //   setSelectedAnnotation({
-                                //   //     x_axis: replyItem.x_axis,
-                                //   //     y_axis: replyItem.y_axis,
-                                //   //   })
-                                //   // }
-                                //   key={replyIndex}
-                                // >
-                                //   <p className="d-flex flex-row-reverse ">
-                                //     {console.log(replyItem)}
-                                //   </p>
-                                // <div className="text-dark h4">
-                                //   <span
-                                //     className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
-                                //       replyItem
-                                //     )}`}
-                                //   >
-                                //     {replyItem.receiver_name &&
-                                //       replyItem.receiver_name.charAt(0)}
-                                //   </span>
-                                //   {replyItem.receiver_name}
-                                //   <br />
-                                //   <span className="text-gray-400 h6 mx-8">
-                                //     {moment(replyItem.created_on).format(
-                                //       "HH:mm D MMM"
-                                //     )}
-                                //   </span>
-                                // </div>
-
-                                // {/* Display reply message */}
-                                // {replyItem.msg && (
-                                //   <h5 className="card-title text-break">
-                                //     {replyItem.msg}
-                                //   </h5>
-                                // )}
-
-                                // {/* Display mention */}
-                                // {replyItem.mention && (
-                                //   <div
-                                //     style={{
-                                //       borderRadius: "15px",
-                                //       // padding: "5px 10px",
-                                //       // margin: "5px 0",
-                                //       display: "flex",
-                                //       alignItems: "center",
-                                //     }}
-                                //   >
-                                //     <Link
-                                //       className="text-break"
-                                //       to={`mailto:${replyItem.mention}`}
-                                //       style={{ marginLeft: "5px" }}
-                                //     >
-                                //       {`@${replyItem.mention}`}
-                                //     </Link>
-                                //   </div>
-                                // )}
-                                // </div>
-
                                 <Accordion.Item
-                                  className="card w-100 rounded-6 overflow-hidden border-0 mb-5"
+                                  className=" w-100 rounded-6 overflow-hidden border-0 mb-2"
                                   eventKey={replyItem.id} // Assuming commentItem.id is unique
                                 >
-                                  <Accordion.Header className="w-100 m-0 border-0 bg-white accordian_btn_design">
+                                  <Accordion.Header className="w-100 m-0 border-0 bg-white accordian_btn_design h5">
                                     <span
-                                      className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
+                                      className={`rounded-circle text-capitalize px-2 mx-2 text-white  ${determineBackgroundColor(
                                         replyItem
                                       )}`}
                                     >
@@ -1482,7 +1419,10 @@ export default function DocumrentContainer(props) {
                                     </span>
                                     {replyItem.receiver_name}
                                     <br />
-                                    <span className="text-gray-400 h6 mx-8">
+                                    <span
+                                      className="text-gray-400 mx-8"
+                                      style={{ fontSize: "12px" }}
+                                    >
                                       {moment(replyItem.created_on).format(
                                         "HH:mm D MMM"
                                       )}
@@ -1493,7 +1433,7 @@ export default function DocumrentContainer(props) {
                                     <div key={replyIndex}>
                                       {/* Display reply message */}
                                       {replyItem.msg && (
-                                        <h5 className="card-title text-break">
+                                        <h5 className="text-break">
                                           {replyItem.msg}
                                         </h5>
                                       )}
