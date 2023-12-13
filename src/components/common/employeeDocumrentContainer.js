@@ -1085,7 +1085,7 @@ export default function DocumrentContainer(props) {
                                 selectedAnnotation.y_axis === annotation.y_axis
                                   ? "blue"
                                   : annotation.status === "1"
-                                  ? "lightgreen"
+                                  ? "green"
                                   : "red",
                               // color: "white",
                             }}

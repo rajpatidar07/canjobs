@@ -29,7 +29,7 @@ export default function CommentBox({
     <div className="col-md-3 p-0 border-left">
       <div
         style={
-          docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
+          docData.length === 0 ? { display: "none" } : { marginTop: "0px" }
         }
       >
         <div className="row m-0">
@@ -75,10 +75,7 @@ export default function CommentBox({
             </div>
           </div>
         </div>
-        <div
-          className="row m-0 p-7 flex-column h-100vh"
-          style={{ overflowY: "scroll" }}
-        >
+        <div className="row m-0 p-7 flex-column" style={{ overflow: "auto" }}>
           {commentsList.length === 0 ? (
             <div className="col text-center">
               <h5>No comments</h5>
@@ -86,7 +83,7 @@ export default function CommentBox({
           ) : (
             (commentsList || []).map((commentItem, index) => (
               <div
-                className={`card col mb-3 comment_box_card ${
+                className={`card col-12 mb-3 p-0 comment_box_card ${
                   selectedAnnotation &&
                   selectedAnnotation.x_axis === commentItem.x_axis &&
                   selectedAnnotation.y_axis === commentItem.y_axis
@@ -94,7 +91,7 @@ export default function CommentBox({
                     : ""
                 }`}
                 style={{
-                  backgroundColor: "#f5f5f5",
+                  backgroundColor: "#fafafa",
                   color: "white",
                 }}
                 onClick={() =>
@@ -111,7 +108,7 @@ export default function CommentBox({
                     cursor: "pointer",
                     color: commentItem.status === "0" ? "blue" : "white",
                     border: commentItem.status === "0" ? "solid 1px blue" : "",
-                    backgroundColor: commentItem.status === "1" && "lightgreen",
+                    backgroundColor: commentItem.status === "1" && "green",
                   }}
                   onClick={(e) => {
                     OnHandleUpdateComment(commentItem);
@@ -119,54 +116,64 @@ export default function CommentBox({
                 >
                   &#x2713; {/* Checkmark symbol */}
                 </span>
-                <div className="card-body">
+                <div className="card-body p-5">
                   <div className="text-dark h4">
-                    <span
-                      className={`rounded-circle text-capitalize px-2 mx-2 text-white ${determineBackgroundColor(
-                        commentItem
-                      )}`}
-                    >
-                      {commentItem.assined_to_user_id
-                        ? allAdmin.find(
-                            (item) =>
-                              item.admin_id === commentItem.assined_to_user_id
-                          )
-                          ? allAdmin
-                              .find(
+                    <div class="d-flex profile_box gx-2">
+                      <div class="media  align-items-center">
+                        <div
+                          class={`circle-36 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                            commentItem
+                          )}`}
+                        >
+                          {commentItem.assined_to_user_id
+                            ? allAdmin.find(
                                 (item) =>
                                   item.admin_id ===
                                   commentItem.assined_to_user_id
                               )
-                              .name.charAt(0)
-                          : ""
-                        : ""}
-                    </span>
-                    {commentItem.assined_to_user_id
-                      ? allAdmin.find(
-                          (item) =>
-                            item.admin_id === commentItem.assined_to_user_id
-                        )
-                        ? allAdmin.find(
-                            (item) =>
-                              item.admin_id === commentItem.assined_to_user_id
-                          ).name
-                        : ""
-                      : ""}
-                    <br />
-                    <span className="text-gray-400 h6 mx-8">
-                      {moment(commentItem.created_on).format("HH:mm D MMM")}
-                    </span>
+                              ? allAdmin
+                                  .find(
+                                    (item) =>
+                                      item.admin_id ===
+                                      commentItem.assined_to_user_id
+                                  )
+                                  .name.charAt(0)
+                              : ""
+                            : ""}
+                        </div>
+                      </div>
+                      <div class=" mb-0">
+                        <div class="text-black-2 font-weight-bold text-capitalize mb-1">
+                          {commentItem.assined_to_user_id
+                            ? allAdmin.find(
+                                (item) =>
+                                  item.admin_id ===
+                                  commentItem.assined_to_user_id
+                              )
+                              ? allAdmin.find(
+                                  (item) =>
+                                    item.admin_id ===
+                                    commentItem.assined_to_user_id
+                                ).name
+                              : ""
+                            : ""}
+                        </div>
+                        <div class="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
+                          {moment(commentItem.created_on).format("HH:mm D MMM")}
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {commentItem.subject_description && (
-                    <h5 className="card-title text-break">
+                    <p className="card-title text-break m-0">
                       {commentItem.subject_description}
-                    </h5>
+                    </p>
                   )}
                   {commentItem.assigned_to && (
                     <div
                       style={{
-                        borderRadius: "15px",
+                        borderRadius: "5px",
                         padding: "5px 10px",
                         margin: "5px 0",
                         display: "flex",
