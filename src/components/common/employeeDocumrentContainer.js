@@ -760,7 +760,7 @@ export default function DocumrentContainer(props) {
       }
     >
       <div className="row m-0">
-        <div className="col-md-3 p-0 border-right">
+        <div className="col-md-2 p-0 border-right">
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
@@ -771,18 +771,11 @@ export default function DocumrentContainer(props) {
                 <th className="p-3" scope="col">
                   Document
                 </th>
-                <th className="p-3" scope="col">
-                  Added By
-                </th>
-                <th className="p-3" scope="col">
+                {/* <th className="p-3" scope="col">
                   Date
-                </th>
-                <th className="p-3" scope="col">
-                  Verified
-                </th>
-                <th className="p-3" scope="col">
-                  Action
-                </th>
+                </th> */}
+                <th className="p-3" scope="col"></th>
+                <th className="p-3" scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -824,29 +817,34 @@ export default function DocumrentContainer(props) {
                         : "text-capitalize"
                     }
                   >
-                    <td className="p-3"> {textReplaceFunction(item.type)}</td>
                     <td className="p-3">
+                      {textReplaceFunction(item.type)}
+                      <p className="font-size-2 m-0">
+                        {moment(item.updated_at).format("DD-MMM-YYYY")}
+                      </p>
+                    </td>
+                    {/* <td className="p-3">
                       {item.updated_by_name
                         ? item.updated_by_name
                         : item.created_by_name}
-                    </td>
+                    </td> */}
+                    <td className="p-3"></td>
                     <td className="p-3">
-                      {moment(item.updated_at).format("DD-MM-YYYY")}
-                    </td>
-                    <td className="p-3">
-                      {item.is_varify === "1"
-                        ? // <span className="verified_doc">
-                          //   <img className="w-100" src={Verified} alt="" />
-                          // </span>
-                          "Yes"
-                        : "No"}
+                      {item.is_varify === "1" ? (
+                        // <span className="verified_doc">
+                        //   <img className="w-100" src={Verified} alt="" />
+                        // </span>
+                        <span>&#x2713;</span>
+                      ) : (
+                        ""
+                      )}
                     </td>
                     <td className="p-3">
                       <Link onClick={() => OnDeleteDoc(item.id)}>
                         <CiTrash
                           style={{
                             color: item.type === docName ? "white" : "black",
-                            fontSize: "25px",
+                            fontSize: "18px",
                           }}
                         />
                       </Link>
@@ -909,7 +907,7 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
-        <div className="col-md-6">
+        <div className="col-md-7">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
@@ -1182,7 +1180,7 @@ export default function DocumrentContainer(props) {
               docData.length === 0 ? { display: "none" } : { marginTop: "20px" }
             }
           >
-            <div className="row">
+            <div className="row m-0">
               <div className={"col mx-2 form_group"}>
                 <p className="input_label">Filter by Admin:</p>
                 <div className="select_div">
@@ -1226,17 +1224,17 @@ export default function DocumrentContainer(props) {
               </div>
             </div>
             <div
-              className="d-flex flex-column h-100vh"
+              className="flex-column h-100vh row m-0"
               style={{ overflowY: "scroll" }}
             >
               {commentsList.length === 0 ? (
-                <div className="text-center mt-5">
+                <div className="text-center mt-5 col">
                   <h5>No comments</h5>
                 </div>
               ) : (
                 (commentsList || []).map((commentItem, index) => (
                   <div
-                    className={`card m-2 ${
+                    className={`card comment_box_card col ${
                       selectedAnnotation &&
                       selectedAnnotation.x_axis === commentItem.x_axis &&
                       selectedAnnotation.y_axis === commentItem.y_axis
@@ -1244,7 +1242,7 @@ export default function DocumrentContainer(props) {
                         : ""
                     }`}
                     style={{
-                      backgroundColor: "#edf2fa",
+                      backgroundColor: "#f5f5f5",
                       color: "white",
                     }}
                     onClick={() =>
@@ -1255,30 +1253,26 @@ export default function DocumrentContainer(props) {
                     }
                     key={index}
                   >
-                    <p className="d-flex flex-row-reverse mt-2 mx-3">
-                      <span
-                        style={{
-                          cursor: "pointer",
-                          margin: "2px",
-                          color: commentItem.status === "0" ? "blue" : "white",
-                          borderRadius: "40px",
-                          border:
-                            commentItem.status === "0" ? "solid 1px blue" : "",
-                          padding: "1px 5px",
-                          backgroundColor:
-                            commentItem.status === "1" && "lightgreen",
-                        }}
-                        onClick={
-                          commentItem.status === "0"
-                            ? (e) => {
-                                OnHandleUpdateComment(commentItem);
-                              }
-                            : null
-                        }
-                      >
-                        &#x2713; {/* Checkmark symbol */}
-                      </span>
-                    </p>
+                    <span
+                      className="comment_status_update"
+                      style={{
+                        cursor: "pointer",
+                        color: commentItem.status === "0" ? "blue" : "white",
+                        border:
+                          commentItem.status === "0" ? "solid 1px blue" : "",
+                        backgroundColor:
+                          commentItem.status === "1" && "lightgreen",
+                      }}
+                      onClick={
+                        commentItem.status === "0"
+                          ? (e) => {
+                              OnHandleUpdateComment(commentItem);
+                            }
+                          : null
+                      }
+                    >
+                      &#x2713; {/* Checkmark symbol */}
+                    </span>
                     <div className="card-body">
                       <div className="text-dark h4">
                         <span

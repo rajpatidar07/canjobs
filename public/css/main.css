@@ -9158,6 +9158,7 @@ html .ui-button.ui-state-disabled:active {
   margin-top: 5px;
   /* Adjust as needed */
 }
+
 .image-container {
   position: relative;
 }
@@ -9175,15 +9176,9 @@ html .ui-button.ui-state-disabled:active {
   position: "absolute";
   left: "-5px";
   top: "-5px";
-  cursor: "pointer"; 
+  cursor: "pointer";
 }
-.highlighted-comment {
-  border: 2px solid blue;
-  transform: scale(1.05);
-  margin: 12px !important;
-  background-color: rgb(227 235 249) !important;
-  z-index: 99;
-}
+
 /*Comment form css*/
 .comment-form {
   display: flex;
@@ -9237,6 +9232,7 @@ html .ui-button.ui-state-disabled:active {
 }
 
 .cancel-btn {
-  background-color: #17a2b8; /* Use a color that fits your design */
+  background-color: #17a2b8;
+  /* Use a color that fits your design */
   color: #fff;
 }
