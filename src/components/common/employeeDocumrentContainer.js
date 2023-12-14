@@ -425,28 +425,6 @@ export default function DocumrentContainer(props) {
       <React.Fragment>
         {docFile ? (
           <>
-            <Link
-              className={` ${
-                hide === false && docFile && docName && user_type === "admin"
-                  ? `btn-sm mt-7 ${
-                      isAnnotationMode ? "btn-primary " : "btn-secondary"
-                    }`
-                  : "d-none"
-              }`}
-              style={{
-                position: "fixed",
-                bottom: "285px",
-                right: "24%",
-                zIndex: "99",
-              }}
-              onClick={() => {
-                setAnnotationMode(!isAnnotationMode);
-                setComments("");
-              }}
-            >
-              {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
-            </Link>
-
             <div
               className="w-100"
               ref={fileViewerRef}
@@ -1060,8 +1038,35 @@ export default function DocumrentContainer(props) {
                     height: "100vh",
                   }}
                 >
-                  <div className="d-flex justify-content-center">
-                    <RenderNewDocFile />
+                  <div className="d-flex justify-content-center position-relative">
+                    {/* <RenderNewDocFile /> */}
+                    {RenderNewDocFile()}
+                    <Link
+                      className={` ${
+                        hide === false &&
+                        docFile &&
+                        docName &&
+                        user_type === "admin"
+                          ? `btn-sm mt-7 ${
+                              isAnnotationMode
+                                ? "btn-primary "
+                                : "btn-secondary"
+                            }`
+                          : "d-none"
+                      }`}
+                      style={{
+                        position: "fixed",
+                        bottom: "285px",
+                        right: "24%",
+                        zIndex: "99",
+                      }}
+                      onClick={() => {
+                        setAnnotationMode(!isAnnotationMode);
+                        setComments("");
+                      }}
+                    >
+                      {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
+                    </Link>
                   </div>
                   {/* Transparent overlay for capturing click events */}
                   {!hide && docFile && docName && user_type === "admin" && (
