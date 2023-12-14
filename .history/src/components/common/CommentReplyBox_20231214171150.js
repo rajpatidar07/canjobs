@@ -61,8 +61,7 @@ export default function CommentReplyBox({
       <form
         className="comment-form x-auto flex-start"
         onSubmit={(e) => {
-          e.preventDefault();
-          ReplyAnnotation(commentItem);
+          ReplyAnnotation(e, commentItem);
         }}
       >
         <div className="comment-input-container p-2 bg-white rounded">

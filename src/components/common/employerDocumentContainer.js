@@ -391,28 +391,6 @@ export default function EmployerDocumrentContainer(props) {
       <React.Fragment>
         {docFile ? (
           <>
-            <Link
-              className={` ${
-                hide === false && docFile && docName && user_type === "admin"
-                  ? `btn-sm mt-7 ${
-                      isAnnotationMode ? "btn-primary" : "btn-secondary"
-                    }`
-                  : "d-none"
-              }`}
-              style={{
-                position: "fixed",
-                bottom: "285px",
-                right: "24%",
-                zIndex: "99",
-              }}
-              onClick={() => {
-                setAnnotationMode(!isAnnotationMode);
-                setComments("");
-              }}
-            >
-              {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
-            </Link>
-
             <div
               className="w-100"
               ref={fileViewerRef}
@@ -508,11 +486,14 @@ export default function EmployerDocumrentContainer(props) {
   useEffect(() => {
     getCommentsReplyList();
     AdminData();
-  }, []);
+  }, [replyCommentClick]);
   //USeEffect foe commet list
   useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
+    if (commenAapiCall === true) {
+      setCommentApiCall(false);
+    }
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   /*Function to change document type */
@@ -590,6 +571,7 @@ export default function EmployerDocumrentContainer(props) {
   /*annnotations main api */
   // Function to add annotation based on conditions
   const addAnnotation = async (annotation) => {
+    setAddCommentFlag(false);
     // Retrieve data from local storage
     const assignedUserId = allAdmin.find((item) => item.email === comments)
       ? allAdmin.find((item) => item.email === comments).admin_id
@@ -731,7 +713,6 @@ export default function EmployerDocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setReplyCommentClick();
         setReplyComment("");
         getCommentsReplyList();
       }
@@ -760,21 +741,14 @@ export default function EmployerDocumrentContainer(props) {
                 <th className="p-3" scope="col">
                   Document
                 </th>
-                <th className="p-3" scope="col">
-                  Added By
-                </th>
-                <th className="p-3" scope="col">
+                {/* <th className="p-3" scope="col">
                   Date
-                </th>
-                <th className="p-3" scope="col">
-                  Verified
-                </th>
-                <th className="p-3" scope="col">
-                  Action
-                </th>
+                </th> */}
+                <th className="p-3" scope="col"></th>
+                <th className="p-3" scope="col"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="doc_list">
               {docData.length === 0 ? (
                 <tr>
                   <th className="bg-white text-center" colSpan={5}>
@@ -813,29 +787,34 @@ export default function EmployerDocumrentContainer(props) {
                         : "text-capitalize"
                     }
                   >
-                    <td className="p-3"> {textReplaceFunction(item.type)}</td>
                     <td className="p-3">
+                      {textReplaceFunction(item.type)}
+                      <p className="font-size-2 m-0">
+                        {moment(item.updated_at).format("DD-MMM-YYYY")}
+                      </p>
+                    </td>
+                    {/* <td className="p-3">
                       {item.updated_by_name
                         ? item.updated_by_name
                         : item.created_by_name}
-                    </td>
+                    </td> */}
+                    <td className="p-3"></td>
                     <td className="p-3">
-                      {moment(item.updated_at).format("DD-MM-YYYY")}
-                    </td>
-                    <td className="p-3">
-                      {item.is_varify === "1"
-                        ? // <span className="verified_doc">
-                          //   <img className="w-100" src={Verified} alt="" />
-                          // </span>
-                          "Yes"
-                        : "No"}
+                      {item.is_varify === "1" ? (
+                        // <span className="verified_doc">
+                        //   <img className="w-100" src={Verified} alt="" />
+                        // </span>
+                        <span>&#x2713;</span>
+                      ) : (
+                        ""
+                      )}
                     </td>
                     <td className="p-3">
                       <Link onClick={() => OnDeleteDoc(item.id)}>
                         <CiTrash
                           style={{
                             color: item.type === docName ? "white" : "black",
-                            fontSize: "25px",
+                            fontSize: "18px",
                           }}
                         />
                       </Link>
@@ -1039,7 +1018,34 @@ export default function EmployerDocumrentContainer(props) {
                   }}
                 >
                   <div className="d-flex justify-content-center">
-                    <RenderNewDocFile />
+                    {/* <RenderNewDocFile /> */}
+                    {RenderNewDocFile()}
+                    <Link
+                      className={` ${
+                        hide === false &&
+                        docFile &&
+                        docName &&
+                        user_type === "admin"
+                          ? `btn-sm mt-7 ${
+                              isAnnotationMode
+                                ? "btn-primary "
+                                : "btn-secondary"
+                            }`
+                          : "d-none"
+                      }`}
+                      style={{
+                        position: "fixed",
+                        bottom: "285px",
+                        right: "24%",
+                        zIndex: "99",
+                      }}
+                      onClick={() => {
+                        setAnnotationMode(!isAnnotationMode);
+                        setComments("");
+                      }}
+                    >
+                      {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
+                    </Link>
                   </div>
                   {/* Transparent overlay for capturing click events */}
                   {!hide && docFile && docName && user_type === "admin" && (
@@ -1095,7 +1101,13 @@ export default function EmployerDocumrentContainer(props) {
                             zIndex: 1,
                           }}
                         >
-                          <form className="comment-form">
+                          <form
+                            className="comment-form"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              addAnnotation(selectedAnnotation);
+                            }}
+                          >
                             <div className="comment-input-container">
                               <input
                                 type="text"
@@ -1126,11 +1138,11 @@ export default function EmployerDocumrentContainer(props) {
                             </div>
                             <div className="button-container mx-4">
                               <button
-                                type="button"
-                                onClick={() => {
-                                  addAnnotation(selectedAnnotation);
-                                  setAddCommentFlag(false);
-                                }}
+                                type="submit"
+                                // onClick={(e) => {
+                                //   e.preventDefault();
+                                //   addAnnotation(selectedAnnotation);
+                                // }}
                                 className="btn-sm btn-primary rounded-pill save-comment-btn"
                               >
                                 Save Comment

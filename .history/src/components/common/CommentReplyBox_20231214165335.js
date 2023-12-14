@@ -60,8 +60,7 @@ export default function CommentReplyBox({
       )}
       <form
         className="comment-form x-auto flex-start"
-        onSubmit={(e) => {
-          e.preventDefault();
+        onSubmit={() => {
           ReplyAnnotation(commentItem);
         }}
       >
@@ -78,7 +77,7 @@ export default function CommentReplyBox({
               }}
             />
             <button
-              type="button"
+              type="submit"
               onClick={() => {
                 ReplyAnnotation(commentItem);
               }}

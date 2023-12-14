@@ -530,11 +530,14 @@ export default function DocumrentContainer(props) {
   useEffect(() => {
     getCommentsReplyList();
     AdminData();
-  }, []);
+  }, [replyCommentClick]);
   //USeEffect foe commet list
   useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
+    if (commenAapiCall === true) {
+      setCommentApiCall(false);
+    }
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   const handleDocTypeChange = (e) => {
@@ -591,6 +594,7 @@ export default function DocumrentContainer(props) {
   /*Major api's for annotations */
   // Function to add annotation based on conditions
   const addAnnotation = async (annotation) => {
+    setAddCommentFlag(false);
     // Retrieve data from local storage
     const assignedUserId = allAdmin.find((item) => item.email === comments)
       ? allAdmin.find((item) => item.email === comments).admin_id
@@ -732,9 +736,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setReplyCommentClick();
         setReplyComment("");
-        // setApiCall(true);
         getCommentsReplyList();
       }
     } catch (err) {
@@ -1122,7 +1124,13 @@ export default function DocumrentContainer(props) {
                             zIndex: 1,
                           }}
                         >
-                          <form className="comment-form">
+                          <form
+                            className="comment-form"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              addAnnotation(selectedAnnotation);
+                            }}
+                          >
                             <div className="comment-input-container">
                               <input
                                 type="text"
@@ -1153,11 +1161,12 @@ export default function DocumrentContainer(props) {
                             </div>
                             <div className="button-container mx-4">
                               <button
-                                type="button"
-                                onClick={() => {
-                                  addAnnotation(selectedAnnotation);
-                                  setAddCommentFlag(false);
-                                }}
+                                type="submit"
+                                // onClick={(e) => {
+                                //   e.preventDefault();
+                                //   addAnnotation(selectedAnnotation);
+
+                                // }}
                                 className="btn-sm btn-primary rounded-pill save-comment-btn"
                               >
                                 Save Comment
