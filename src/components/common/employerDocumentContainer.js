@@ -339,7 +339,9 @@ export default function EmployerDocumrentContainer(props) {
           autoClose: 1000,
         });
         if (commentsList.length > 0) {
-          // OnDeleteComment(docData[0] === docTypData ? docTypData.id : docId);
+          OnHandleUpdateComment(
+            docData[0] === docTypData ? docTypData.id : docId
+          );
         }
         setShowMoreDocType(false);
         setApiCall(true);
@@ -632,14 +634,15 @@ export default function EmployerDocumrentContainer(props) {
   };
   /* Function to update comment and assign */
   const OnHandleUpdateComment = async (originalData) => {
+    let updatedData;
+    //Condtion to update x and y axis on documet update
+    if (originalData === (docData[0] === docTypData ? docTypData.id : docId)) {
+      updatedData = { doc_id: originalData, x_axis: 0, y_axis: 0 };
+    } else {
+      updatedData = { ...originalData };
+      updatedData.status = originalData.status === "1" ? "0" : "1";
+    }
     try {
-      // Clone the original data to avoid modifying the original object
-      const updatedData = { ...originalData };
-
-      // Update the 'status' property in the cloned data
-      updatedData.status = updatedData.status =
-        originalData.status === "1" ? "0" : "1"; // Replace 'newStatus' with the desired value
-
       // Call the API with the updated data
       let res = await UpdateDocuentcommentAssign(updatedData);
       if (res.message === "Task updated successfully!") {

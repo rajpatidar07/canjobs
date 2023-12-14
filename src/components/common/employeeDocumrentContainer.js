@@ -657,14 +657,12 @@ export default function DocumrentContainer(props) {
   /* Function to update comment and assign */
   const OnHandleUpdateComment = async (originalData) => {
     let updatedData;
-    if ((originalData === docData[0]) === docTypData ? docTypData.id : docId) {
+    //Condtion to update x and y axis on documet update
+    if (originalData === (docData[0] === docTypData ? docTypData.id : docId)) {
       updatedData = { doc_id: originalData, x_axis: 0, y_axis: 0 };
     } else {
-      // Clone the original data to avoid modifying the original object
       updatedData = { ...originalData };
-
-      // Update the 'status' property in the cloned data
-      updatedData.status = originalData.status === "1" ? "0" : "1"; // Replace 'newStatus' with the desired value
+      updatedData.status = originalData.status === "1" ? "0" : "1";
     }
     try {
       // Call the API with the updated data
