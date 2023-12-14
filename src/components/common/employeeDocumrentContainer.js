@@ -1173,28 +1173,30 @@ export default function DocumrentContainer(props) {
           </div>
         </div>
         {/* Comment box */}
-        <CommentBox
-          commentsReplyList={commentsReplyList}
-          docData={docData}
-          adminid={adminid}
-          setAdminId={setAdminId}
-          allAdmin={allAdmin}
-          annotationStatus={annotationStatus}
-          setAnnotationStatus={setAnnotationStatus}
-          commentsList={commentsList}
-          selectedAnnotation={selectedAnnotation}
-          setSelectedAnnotation={setSelectedAnnotation}
-          OnHandleUpdateComment={OnHandleUpdateComment}
-          determineBackgroundColor={determineBackgroundColor}
-          setReplyCommentClick={setReplyCommentClick}
-          replyCommentClick={replyCommentClick}
-          replyComment={replyComment}
-          handleInputChange={handleInputChange}
-          filteredEmails={filteredEmails}
-          handleEmailClick={handleEmailClick}
-          handleEmailMouseOver={handleEmailMouseOver}
-          ReplyAnnotation={ReplyAnnotation}
-        />
+        {user_type === "admin" && (
+          <CommentBox
+            commentsReplyList={commentsReplyList}
+            docData={docData}
+            adminid={adminid}
+            setAdminId={setAdminId}
+            allAdmin={allAdmin}
+            annotationStatus={annotationStatus}
+            setAnnotationStatus={setAnnotationStatus}
+            commentsList={commentsList}
+            selectedAnnotation={selectedAnnotation}
+            setSelectedAnnotation={setSelectedAnnotation}
+            OnHandleUpdateComment={OnHandleUpdateComment}
+            determineBackgroundColor={determineBackgroundColor}
+            setReplyCommentClick={setReplyCommentClick}
+            replyCommentClick={replyCommentClick}
+            replyComment={replyComment}
+            handleInputChange={handleInputChange}
+            filteredEmails={filteredEmails}
+            handleEmailClick={handleEmailClick}
+            handleEmailMouseOver={handleEmailMouseOver}
+            ReplyAnnotation={ReplyAnnotation}
+          />
+        )}
       </div>
     </div>
   );

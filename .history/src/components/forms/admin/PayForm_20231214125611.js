@@ -245,7 +245,17 @@ export default function PayForm({ setApicall, data }) {
             Pay
           </button>
         )}
-        <PayPalButton amount={state.amount} />
+        <PayPalButton
+          createOrder={order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: state.amount,
+                },
+              },
+            ],
+          })}
+        />
       </div>
     </form>
   );

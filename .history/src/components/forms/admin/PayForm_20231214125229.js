@@ -245,7 +245,7 @@ export default function PayForm({ setApicall, data }) {
             Pay
           </button>
         )}
-        <PayPalButton amount={state.amount} />
+        <PayPalButton />
       </div>
     </form>
   );

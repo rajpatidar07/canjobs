@@ -2,13 +2,13 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const PayPalButton = ({ amount }) => {
+const PayPalButton = () => {
   const createOrder = (data, actions) => {
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: amount, // Example amount (update with your actual amount)
+            value: "10.00", // Example amount (update with your actual amount)
           },
         },
       ],
@@ -103,39 +103,37 @@ const PayPalButton = ({ amount }) => {
       <br />
 
       {/* token get ---------------------- */}
-      <div className="d-none">
-        <Link
-          onClick={() => {
-            getAccessToken()
-              .then((accessToken) => {
-                console.log("Access Token:", accessToken);
-                // Use this access token in your API requests
-              })
-              .catch((error) => {
-                console.error("Error getting access token:", error.message);
-              });
-          }}
-          type="buttton"
-        >
-          get token
-        </Link>
+      {/* <Link
+        onClick={() => {
+          getAccessToken()
+            .then((accessToken) => {
+              console.log("Access Token:", accessToken);
+              // Use this access token in your API requests
+            })
+            .catch((error) => {
+              console.error("Error getting access token:", error.message);
+            });
+        }}
+        type="buttton"
+      >
+        get token
+      </Link>
 
-        <Link
-          type="buttton"
-          onClick={() => {
-            getTransactionDetails("0WN30938H97935617")
-              .then((transactionDetails) => {
-                console.log("Transaction Details:", transactionDetails);
-                // Process and display the details as needed
-              })
-              .catch((error) => {
-                // Handle errors
-              });
-          }}
-        >
-          get payment detaile
-        </Link>
-      </div>
+      <Link
+        type="buttton"
+        onClick={() => {
+          getTransactionDetails("0WN30938H97935617")
+            .then((transactionDetails) => {
+              console.log("Transaction Details:", transactionDetails);
+              // Process and display the details as needed
+            })
+            .catch((error) => {
+              // Handle errors
+            });
+        }}
+      >
+        get payment detaile
+      </Link> */}
     </>
   );
 };
