@@ -126,10 +126,7 @@ function CompanyProfileDetail(props) {
                     <img
                       className="company_logo"
                       src={
-                        employerData.logo === null ||
-                        employerData.logo === null ||
-                        employerData.logo === undefined ||
-                        employerData.logo === "undefined"
+                        employerData.logo === null
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                           : employerData.logo
                       }
