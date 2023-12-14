@@ -26,14 +26,14 @@ export default function CommentBox({
   ReplyAnnotation,
 }) {
   return (
-    <div className="col-md-3 p-0 border-left">
+    <div className="col-md-3 p-0 py-7 border-left">
       <div
         style={
           docData.length === 0 ? { display: "none" } : { marginTop: "0px" }
         }
       >
-        <div className="row m-0">
-          <div className={"col mx-2 form_group"}>
+        <div className="row m-0 px-7">
+          <div className={"col mr-2 p-0 form_group"}>
             <p className="input_label">Filter by Admin:</p>
             <div className="select_div">
               <select
@@ -56,7 +56,7 @@ export default function CommentBox({
               </select>
             </div>
           </div>
-          <div className={"col mx-2 form_group"}>
+          <div className={"col ml-2 p-0 form_group"}>
             <p className="input_label">Filter by Status:</p>
             <div className="select_div">
               <select
@@ -121,7 +121,7 @@ export default function CommentBox({
                     <div class="d-flex profile_box gx-2">
                       <div class="media  align-items-center">
                         <div
-                          class={`circle-36 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                          class={`circle-30 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
                             commentItem
                           )}`}
                         >
@@ -143,7 +143,7 @@ export default function CommentBox({
                         </div>
                       </div>
                       <div class=" mb-0">
-                        <div class="font-size-5 font-weight-bold text-capitalize mb-1">
+                        <div class="font-size-4 font-weight-bold text-capitalize">
                           {commentItem.assined_to_user_id
                             ? allAdmin.find(
                                 (item) =>
@@ -166,7 +166,7 @@ export default function CommentBox({
                   </div>
 
                   {commentItem.subject_description && (
-                    <p className="card-title text-break m-0">
+                    <p className="card-title text-break m-0 font-size-4">
                       {commentItem.subject_description}
                     </p>
                   )}
@@ -199,8 +199,11 @@ export default function CommentBox({
                     commentItem={commentItem}
                   />
                 ) : (
-                  <Link onClick={() => setReplyCommentClick(commentItem.id)}>
-                    <FaReplyAll />
+                  <Link
+                    className="mx-5 mr-0 ml-auto"
+                    onClick={() => setReplyCommentClick(commentItem.id)}
+                  >
+                    Reply <FaReplyAll />
                   </Link>
                 )}
               </div>

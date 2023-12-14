@@ -1186,6 +1186,10 @@ select.form-control.select_document_type {
 
 
 /* DOCUMENT AND COMMENT DESIGN */
+.document_container .doc_list {
+  /* height: calc(100vh - 400px); */
+}
+
 .comment_box_card {
   position: relative;
 }
@@ -1206,4 +1210,24 @@ select.form-control.select_document_type {
   border: 2px solid blue;
   background-color: #f5f5f5 !important;
   z-index: 99;
+}
+
+.reply_box .comment-input {
+  width: calc(100% - 26px);
+}
+
+.reply_box .reply_btn {
+  position: absolute;
+  top: 0px;
+  background: #666;
+  right: 0px;
+  height: 35px;
+  line-height: 35px;
+  width: 24px;
+  text-align: center;
+  min-width: auto;
+}
+
+.reply_box_container {
+  transition: all .3s ease;
 }
