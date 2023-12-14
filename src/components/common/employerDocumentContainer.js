@@ -46,6 +46,7 @@ export default function EmployerDocumrentContainer(props) {
    * Annotation   */
   // Annotation State
   const [imageAnnotations, setImageAnnotations] = useState([]);
+  const [commenAapiCall, setCommentApiCall] = useState("");
   const [comments, setComments] = useState("");
   const [replyComment, setReplyComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
@@ -494,18 +495,25 @@ export default function EmployerDocumrentContainer(props) {
     // "refusal_letter",
   ];
 
-  /*Render method */
+  //UseEfect for document
   useEffect(() => {
     GetDocument();
     RenderNewDocFile();
-    setSelectedAnnotation(null);
-    getCommentsList();
-    getCommentsReplyList();
-    AdminData();
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall, docName, isAnnotationMode, docId, adminid, annotationStatus]);
+    setAnnotationMode(false);
+  }, [docId, apiCall, docName]);
+  //USeEffect foe commet replies list
+  useEffect(() => {
+    getCommentsReplyList();
+    AdminData();
+  }, []);
+  //USeEffect foe commet list
+  useEffect(() => {
+    setSelectedAnnotation(null);
+    getCommentsList();
+  }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   /*Function to change document type */
   const handleDocTypeChange = (e) => {
@@ -612,7 +620,7 @@ export default function EmployerDocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
-        setApiCall(true);
+        setCommentApiCall(true);
         setAnnotationMode(!isAnnotationMode);
       }
     } catch (err) {
@@ -624,7 +632,7 @@ export default function EmployerDocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
-        setApiCall(true);
+        setCommentApiCall(true);
         setAnnotationMode(!isAnnotationMode);
         setAddCommentFlag();
       }
@@ -652,7 +660,7 @@ export default function EmployerDocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
-        setApiCall(true);
+        setCommentApiCall(true);
       }
     } catch (err) {
       console.log(err);
@@ -725,7 +733,7 @@ export default function EmployerDocumrentContainer(props) {
         });
         setReplyCommentClick();
         setReplyComment("");
-        setApiCall(true);
+        getCommentsReplyList();
       }
     } catch (err) {
       console.log(err);

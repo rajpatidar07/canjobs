@@ -43,6 +43,7 @@ export default function DocumrentContainer(props) {
   let user_type = localStorage.getItem("userType");
   let admin_id = localStorage.getItem("admin_id");
   // Annotation State
+  const [commenAapiCall, setCommentApiCall] = useState("");
   const [imageAnnotations, setImageAnnotations] = useState([]);
   const [comments, setComments] = useState("");
   const [replyComment, setReplyComment] = useState("");
@@ -538,20 +539,25 @@ export default function DocumrentContainer(props) {
     "Representative Submission Letter",
     "Bank Statement",
   ];
+  //UseEfect for document
   useEffect(() => {
     GetDocument();
     RenderNewDocFile();
-  }, [docId]);
-
-  useEffect(() => {
-    setSelectedAnnotation(null);
-    getCommentsList();
-    getCommentsReplyList();
-    AdminData();
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall, docName, isAnnotationMode, adminid, annotationStatus]);
+    setAnnotationMode(false);
+  }, [docId, apiCall, docName]);
+  //USeEffect foe commet replies list
+  useEffect(() => {
+    getCommentsReplyList();
+    AdminData();
+  }, []);
+  //USeEffect foe commet list
+  useEffect(() => {
+    setSelectedAnnotation(null);
+    getCommentsList();
+  }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   const handleDocTypeChange = (e) => {
     const selectedValue = e.target.value;
@@ -637,7 +643,7 @@ export default function DocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
-        setApiCall(true);
+        setCommentApiCall(true);
         setAnnotationMode(!isAnnotationMode);
       }
     } catch (err) {
@@ -649,7 +655,7 @@ export default function DocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
-        setApiCall(true);
+        setCommentApiCall(true);
         setAnnotationMode(!isAnnotationMode);
         setAddCommentFlag();
       }
@@ -677,7 +683,7 @@ export default function DocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
-        setApiCall(true);
+        setCommentApiCall(true);
       }
     } catch (err) {
       console.log(err);
@@ -750,7 +756,8 @@ export default function DocumrentContainer(props) {
         });
         setReplyCommentClick();
         setReplyComment("");
-        setApiCall(true);
+        // setApiCall(true);
+        getCommentsReplyList();
       }
     } catch (err) {
       console.log(err);
