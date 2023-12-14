@@ -667,7 +667,6 @@ export default function EmployerDocumrentContainer(props) {
       "bg-secondary-opacity-7",
       "bg-danger-opacity-6",
       "bg-info-opacity-visible",
-      "bg-warning",
     ];
 
     const assignedUserId = commentItem.assigned_to_user_id;
