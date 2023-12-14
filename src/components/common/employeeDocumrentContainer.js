@@ -541,6 +541,9 @@ export default function DocumrentContainer(props) {
   useEffect(() => {
     GetDocument();
     RenderNewDocFile();
+  }, [docId]);
+
+  useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
     getCommentsReplyList();
@@ -548,7 +551,7 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall, docName, isAnnotationMode, docId, adminid, annotationStatus]);
+  }, [apiCall, docName, isAnnotationMode, adminid, annotationStatus]);
 
   const handleDocTypeChange = (e) => {
     const selectedValue = e.target.value;
@@ -758,12 +761,12 @@ export default function DocumrentContainer(props) {
       className={
         // props.page === "company_profile"
         //
-        "document_container bg-white py-7 mb-10"
+        "document_container bg-white mb-10"
         // : "container document_container bg-white p-5 mb-10"
       }
     >
       <div className="row m-0">
-        <div className="col-md-2 p-0 border-right">
+        <div className="col-md-2 p-0 border-right pb-7">
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
@@ -781,7 +784,7 @@ export default function DocumrentContainer(props) {
                 <th className="p-3" scope="col"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="doc_list">
               {docData.length === 0 ? (
                 <tr>
                   <th className="bg-white text-center" colSpan={5}>
@@ -910,7 +913,7 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
-        <div className="col-md-7">
+        <div className="col-md-7 py-7">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
