@@ -372,6 +372,9 @@ export default function DocumrentContainer(props) {
           autoClose: 1000,
         });
         if (commentsList.length > 0) {
+          OnHandleUpdateComment(
+            docData[0] === docTypData ? docTypData.id : docId
+          );
           // OnDeleteComment(docData[0] === docTypData ? docTypData.id : docId);
         }
         setShowMoreDocType(false);
@@ -653,13 +656,17 @@ export default function DocumrentContainer(props) {
   };
   /* Function to update comment and assign */
   const OnHandleUpdateComment = async (originalData) => {
-    try {
+    let updatedData;
+    if ((originalData === docData[0]) === docTypData ? docTypData.id : docId) {
+      updatedData = { doc_id: originalData, x_axis: 0, y_axis: 0 };
+    } else {
       // Clone the original data to avoid modifying the original object
-      const updatedData = { ...originalData };
+      updatedData = { ...originalData };
 
       // Update the 'status' property in the cloned data
       updatedData.status = originalData.status === "1" ? "0" : "1"; // Replace 'newStatus' with the desired value
-
+    }
+    try {
       // Call the API with the updated data
       let res = await UpdateDocuentcommentAssign(updatedData);
       if (res.message === "Task updated successfully!") {
