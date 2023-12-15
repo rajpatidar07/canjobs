@@ -26,6 +26,8 @@ export default function PayentForm({ data }) {
       }
     } catch (err) {
       console.log(err);
+      setPaytemList([]);
+      setLoading(false);
     }
   };
 

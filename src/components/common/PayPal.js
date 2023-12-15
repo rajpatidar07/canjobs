@@ -3,12 +3,14 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const PayPalButton = ({ amount }) => {
+  console.log(amount);
   const createOrder = (data, actions) => {
+    console.log(amount.toString());
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: amount, // Example amount (update with your actual amount)
+            value: amount.toString(), // Example amount (update with your actual amount)
           },
         },
       ],
