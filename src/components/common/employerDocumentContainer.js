@@ -152,7 +152,7 @@ export default function EmployerDocumrentContainer(props) {
 
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async () => {
-    if (docId || docData.find((item) => item.type === docName)) {
+    if (docId || (docData && docData.find((item) => item.type === docName))) {
       try {
         let res = await GetCommentsAndAssign(
           docId ? docId : docData.find((item) => item.type === docName).id,
@@ -332,6 +332,7 @@ export default function EmployerDocumrentContainer(props) {
         setDocId("");
         setShowSaveDoc(false);
         setApiCall(true);
+        setCommentApiCall(true);
         setHide(false);
       }
       if (response.data.message === "updated successfully") {
@@ -346,6 +347,7 @@ export default function EmployerDocumrentContainer(props) {
         }
         setShowMoreDocType(false);
         setApiCall(true);
+        setCommentApiCall(true);
         setHide(false);
         setDocTypData(
           docData.find(
@@ -558,6 +560,7 @@ export default function EmployerDocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        GetDocument();
         setDocFile("");
         setDocId("");
         setDocData("");
@@ -1086,7 +1089,8 @@ export default function EmployerDocumrentContainer(props) {
                                   : annotation.status === "1"
                                   ? "lightgreen"
                                   : "red",
-                              // color: "white",
+                              display:
+                                annotation.status === "1" ? "none" : "block",
                             }}
                           />
                         </div>
