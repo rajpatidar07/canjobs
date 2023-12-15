@@ -560,12 +560,13 @@ export default function EmployerDocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        GetDocument();
         setDocFile("");
         setDocId("");
         setDocData("");
         setDocTypData("");
+        setDocName("");
         setApiCall(true);
+        GetDocument();
       }
     } catch (err) {
       console.log(err);
