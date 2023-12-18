@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CreateRazorpay, AddRazorpay } from "../../../api/api";
+import { CreateRazorpay, AddRazorpay, AddStripePalpay } from "../../../api/api";
 import PayPalButton from "../../common/PayPal";
+import { SiRazorpay } from "react-icons/si";
+// import Stripe from "../../common/Stripe";
 export default function PayForm({ setApicall, data }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -14,7 +16,9 @@ export default function PayForm({ setApicall, data }) {
     // method: "",
   };
   let location = useLocation();
-
+  useEffect(() => {
+    PayForm();
+  }, []);
   /*Validation */
   const validators = {
     amount: [
@@ -92,6 +96,7 @@ export default function PayForm({ setApicall, data }) {
     }
   };
 
+  /*Function to send the amount to paypal component */
   function getAmt() {
     return new Promise((resolve, reject) => {
       var amount_value = document.getElementById("amount").value;
@@ -99,6 +104,15 @@ export default function PayForm({ setApicall, data }) {
       resolve(amount_value);
     });
   }
+
+  let PayForm = async () => {
+    try {
+      let res = await AddStripePalpay();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <form className="col-md-4 p-10">
@@ -251,7 +265,7 @@ export default function PayForm({ setApicall, data }) {
             className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
             type="button"
           >
-            Pay
+            <SiRazorpay />
           </button>
         )}
         <PayPalButton
@@ -263,6 +277,7 @@ export default function PayForm({ setApicall, data }) {
           setState={setState}
           state={state}
         />
+        {/* <Stripe /> */}
       </div>
     </form>
   );

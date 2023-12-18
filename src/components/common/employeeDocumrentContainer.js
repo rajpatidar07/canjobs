@@ -905,6 +905,7 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
+        {console.log(showMoreDocType ? "hey" : "bye")}
         <div className="col-md-7 py-7">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
@@ -928,7 +929,7 @@ export default function DocumrentContainer(props) {
             ) : (
               <button
                 className={
-                  user_type === "company" || user_type === "admin"
+                  user_type === "user" || user_type === "admin"
                     ? "btn btn-secondary btn-sm text-white mr-0"
                     : "d-none"
                 }

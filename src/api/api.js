@@ -2299,6 +2299,24 @@ export const AddPayPalpay = async (data, user_id, amount) => {
   );
   return response;
 };
+/*Stripe payment api */
+export const AddStripePalpay = async (amount, currency) => {
+  const response = await axios.post(
+    `${API_URL}payment/stripe-create-payment-intent`,
+    {
+      amount: 80,
+      currency: "usd",
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+  return response;
+};
+
 /*Api to get payment list */
 export const GetPaymentList = async (id, user) => {
   const response = await axios.post(
