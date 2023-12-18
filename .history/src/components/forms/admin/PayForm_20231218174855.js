@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CreateRazorpay, AddRazorpay, AddStripePalpay } from "../../../api/api";
 import PayPalButton from "../../common/PayPal";
 import { SiRazorpay } from "react-icons/si";
-import Stripe from "../../common/Stripe";
+// import Stripe from "../../common/Stripe";
 export default function PayForm({ setApicall, data }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -262,7 +262,7 @@ export default function PayForm({ setApicall, data }) {
         ) : (
           <button
             onClick={(e) => onPayentClick(e)}
-            className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
+            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
             type="button"
           >
             <SiRazorpay />
@@ -277,7 +277,7 @@ export default function PayForm({ setApicall, data }) {
           setState={setState}
           state={state}
         />
-        <Stripe />
+        {/* <Stripe /> */}
       </div>
     </form>
   );
