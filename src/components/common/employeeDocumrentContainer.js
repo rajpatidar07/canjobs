@@ -801,6 +801,7 @@ export default function DocumrentContainer(props) {
                       setHide(false);
                       setShowSaveDoc(false);
                       setAnnotationMode(!isAnnotationMode);
+                      setReplyCommentClick();
                       setDocFile(
                         item.document_url +
                           `?v=${

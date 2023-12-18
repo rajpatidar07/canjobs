@@ -775,6 +775,7 @@ export default function EmployerDocumrentContainer(props) {
                       setDocName(item.type);
                       setDocId(item.id);
                       setOtherDoc(false);
+                      setReplyCommentClick();
                       setHide(false);
                       setShowSaveDoc(false);
                       setAnnotationMode(!isAnnotationMode);
