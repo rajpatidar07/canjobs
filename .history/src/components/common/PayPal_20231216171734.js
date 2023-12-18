@@ -40,8 +40,6 @@ const PayPalButton = (props) => {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 5000,
             });
-            props.setApicall(true);
-            props.setState({ ...props.state, amount: "" });
           }
         } catch (err) {
           console.log(err);

@@ -260,8 +260,6 @@ export default function PayForm({ setApicall, data }) {
           setErrors={setErrors}
           error={errors}
           setApicall={setApicall}
-          setState={setState}
-          state={state}
         />
       </div>
     </form>

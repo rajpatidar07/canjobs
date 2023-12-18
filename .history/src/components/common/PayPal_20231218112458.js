@@ -41,7 +41,7 @@ const PayPalButton = (props) => {
               autoClose: 5000,
             });
             props.setApicall(true);
-            props.setState({ ...props.state, amount: "" });
+            props.setState("");
           }
         } catch (err) {
           console.log(err);
