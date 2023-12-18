@@ -1231,10 +1231,3 @@ select.form-control.select_document_type {
 .reply_box_container {
   transition: all .3s ease;
 }
-div#pg-photo-container img {
-  width: 100%!important;
-  height: auto!important;
-}
-.pg-viewer-wrapper .photo-viewer-container {
-  height: max-content!important;
-}
