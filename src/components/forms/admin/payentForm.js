@@ -17,6 +17,7 @@ export default function PayentForm({ data }) {
   const PaymentData = async () => {
     try {
       let Response = await GetPaymentList(data.employee_id, "employee");
+
       if (Response.data.data.length === 0) {
         setPaytemList([]);
         setLoading(false);
