@@ -251,6 +251,16 @@ export default function PayForm({ setApicall, data }) {
           />
         ) : (
           <>
+            {" "}
+            <PayPalButton
+              amount={Number(state.amount)}
+              getAmt={getAmt}
+              setErrors={setErrors}
+              error={errors}
+              setApicall={setApicall}
+              setState={setState}
+              state={state}
+            />
             {loading === true ? (
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -274,27 +284,18 @@ export default function PayForm({ setApicall, data }) {
                 <SiRazorpay />
               </button>
             )}
-            <button
-              type="button"
-              onClick={() => setStripePayment(true)}
-              className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase"
-              // disabled={!stripe || !elements}
-              // to="https://buy.stripe.com/test_6oE6pT0s67Dw3QY5kk"
-              title="Stripe pay"
-            >
-              <FaStripe style={{ fontSize: "-webkit-xxx-large" }} />
-            </button>
-            <PayPalButton
-              amount={Number(state.amount)}
-              getAmt={getAmt}
-              setErrors={setErrors}
-              error={errors}
-              setApicall={setApicall}
-              setState={setState}
-              state={state}
-            />
           </>
         )}
+        <button
+          type="button"
+          onClick={() => setStripePayment(true)}
+          className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase"
+          // disabled={!stripe || !elements}
+          // to="https://buy.stripe.com/test_6oE6pT0s67Dw3QY5kk"
+          title="Stripe pay"
+        >
+          <FaStripe style={{ fontSize: "-webkit-xxx-large" }} />
+        </button>
       </div>
     </form>
   );

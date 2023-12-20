@@ -2300,7 +2300,7 @@ export const AddPayPalpay = async (data, user_id, amount) => {
   return response;
 };
 /*Stripe payment api */
-export const AddStripePalpay = async (amount, currency) => {
+export const AddStripePalpay = async (amount) => {
   console.log(amount);
   const response = await axios.post(
     `${API_URL}payment/stripe-create-payment-intent`,
@@ -2316,9 +2316,7 @@ export const AddStripePalpay = async (amount, currency) => {
     }
   );
 
-  return new Promise((resolve, reject) => {
-    resolve(response);
-  });
+  return response;
 };
 
 /*Api to get payment list */

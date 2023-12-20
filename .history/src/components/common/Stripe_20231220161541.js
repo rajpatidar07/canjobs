@@ -42,20 +42,21 @@ const CheckoutForm = ({
     } else {
       let tokenData = await AddStripePalpay(amount);
       let clientSecret = tokenData.data.message;
-      const res_data = await stripe.confirmPayment({
-        //`Elements` instance that was used to create the Payment Element
+      // const res_data = await stripe.confirmPayment({
+      //   //`Elements` instance that was used to create the Payment Element
+      //   elements,
+      //   clientSecret,
+      //   confirmParams: {
+      //     return_url: "https://www.indiakinursery.com",
+      //   },
+      // });
+      const { res_data } = await stripe.confirmPayment({
         elements,
         clientSecret,
-        confirmParams: {
-          // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
-        },
-        // amount: amount,
+        payment_method_types: ["card"],
       });
       console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
-      }
+
       if (res_data.error) {
         setErrorMessage(res_data.error);
       } else {
@@ -94,7 +95,7 @@ const StripePay = ({
   setState,
   state,
 }) => {
-  const amountInCents = Math.round(amount * 100);
+  const amountInCents = Math.round(amount);
   const options = {
     mode: "payment",
     amount: amountInCents,

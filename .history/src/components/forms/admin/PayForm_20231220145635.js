@@ -5,12 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CreateRazorpay, AddRazorpay } from "../../../api/api";
 import PayPalButton from "../../common/PayPal";
 import { SiRazorpay } from "react-icons/si";
-import StripePay from "../../common/Stripe";
+// import StripePay from "../../common/Stripe";
 import { FaStripe } from "react-icons/fa";
 export default function PayForm({ setApicall, data }) {
   const [loading, setLoading] = useState(false);
-  const [stripePayment, setStripePayment] = useState(false);
-
   const navigate = useNavigate();
   let location = useLocation();
   // let name = localStorage.getItem("name")
@@ -106,6 +104,13 @@ export default function PayForm({ setApicall, data }) {
     });
   }
 
+  const handleButtonClick = () => {
+    // Construct the dynamic link with the amount
+    const stripeLink = `https://buy.stripe.com/test_6oE6pT0s67Dw3QY5kk#${state.amount}`;
+
+    // Open the link in a new window
+    window.open(stripeLink, "_blank");
+  };
   return (
     <form className="col-md-4 p-10">
       <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
@@ -238,63 +243,55 @@ export default function PayForm({ setApicall, data }) {
         </div>
       </div>
       <div className="form-group text-center">
-        {stripePayment && state.amount ? (
-          <StripePay
-            amount={state.amount}
-            getAmt={getAmt}
-            setErrors={setErrors}
-            errors={errors}
-            setApicall={setApicall}
-            setState={setState}
-            state={state}
-            setStripePayment={setStripePayment}
-          />
+        {/* <StripePay
+          amount={state.amount}
+          getAmt={getAmt}
+          setErrors={setErrors}
+          errors={errors}
+          setApicall={setApicall}
+          setState={setState}
+          state={state}
+        /> */}
+        <button
+          type="button"
+          className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase"
+          onClick={handleButtonClick}
+          title="Stripe pay"
+        >
+          <FaStripe style={{ fontSize: "-webkit-xxx-large" }} />
+        </button>
+        {loading === true ? (
+          <button
+            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+            type="button"
+            disabled
+          >
+            <span
+              className="spinner-border spinner-border-sm "
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span className="sr-only">Loading...</span>
+          </button>
         ) : (
-          <>
-            {loading === true ? (
-              <button
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                type="button"
-                disabled
-              >
-                <span
-                  className="spinner-border spinner-border-sm "
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                <span className="sr-only">Loading...</span>
-              </button>
-            ) : (
-              <button
-                onClick={(e) => onPayentClick(e)}
-                className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
-                type="button"
-                title="Razor pay"
-              >
-                <SiRazorpay />
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={() => setStripePayment(true)}
-              className="btn btn-info btn-small w-100 mb-5 rounded-5 text-uppercase"
-              // disabled={!stripe || !elements}
-              // to="https://buy.stripe.com/test_6oE6pT0s67Dw3QY5kk"
-              title="Stripe pay"
-            >
-              <FaStripe style={{ fontSize: "-webkit-xxx-large" }} />
-            </button>
-            <PayPalButton
-              amount={Number(state.amount)}
-              getAmt={getAmt}
-              setErrors={setErrors}
-              error={errors}
-              setApicall={setApicall}
-              setState={setState}
-              state={state}
-            />
-          </>
+          <button
+            onClick={(e) => onPayentClick(e)}
+            className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
+            type="button"
+            title="Razor pay"
+          >
+            <SiRazorpay />
+          </button>
         )}
+        <PayPalButton
+          amount={Number(state.amount)}
+          getAmt={getAmt}
+          setErrors={setErrors}
+          error={errors}
+          setApicall={setApicall}
+          setState={setState}
+          state={state}
+        />
       </div>
     </form>
   );

@@ -47,15 +47,13 @@ const CheckoutForm = ({
         elements,
         clientSecret,
         confirmParams: {
-          // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
+          save_payment_method: true,
+          return_url: "#",
         },
-        // amount: amount,
+        amount: amount,
       });
       console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
-      }
+
       if (res_data.error) {
         setErrorMessage(res_data.error);
       } else {

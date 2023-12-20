@@ -53,9 +53,7 @@ const CheckoutForm = ({
         // amount: amount,
       });
       console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
-      }
+      localStorage.setItem("data");
       if (res_data.error) {
         setErrorMessage(res_data.error);
       } else {

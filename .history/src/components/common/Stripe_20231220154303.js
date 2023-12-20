@@ -21,6 +21,7 @@ const CheckoutForm = ({
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState(null);
   const handleSubmit = async (event) => {
+    console.log(amount, state);
     event.preventDefault();
     if (elements == null) {
       return;
@@ -47,15 +48,11 @@ const CheckoutForm = ({
         elements,
         clientSecret,
         confirmParams: {
-          // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
+          return_url: "https://www.indiakinursery.com",
         },
-        // amount: amount,
       });
       console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
-      }
+
       if (res_data.error) {
         setErrorMessage(res_data.error);
       } else {
@@ -94,10 +91,9 @@ const StripePay = ({
   setState,
   state,
 }) => {
-  const amountInCents = Math.round(amount * 100);
   const options = {
     mode: "payment",
-    amount: amountInCents,
+    amount: amount,
     currency: "usd",
     // Fully customizable with appearance API.
     appearance: {
@@ -109,10 +105,10 @@ const StripePay = ({
       stripe={stripePromise}
       options={options}
       mode={"payment"}
-      amount={amountInCents}
+      amount={amount}
     >
       <CheckoutForm
-        amount={amountInCents}
+        amount={amount}
         getAmt={getAmt}
         setErrors={setErrors}
         errors={errors}

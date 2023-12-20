@@ -30,6 +30,7 @@ const CheckoutForm = ({
     const { error: submitError } = await elements.submit();
     if (submitError) {
       // Show error to your customer
+      console.log(submitError);
       setErrorMessage(submitError.message);
       return;
     }
@@ -46,16 +47,12 @@ const CheckoutForm = ({
         //`Elements` instance that was used to create the Payment Element
         elements,
         clientSecret,
-        confirmParams: {
-          // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
-        },
-        // amount: amount,
+        // confirmParams: {
+        //   return_url: "https://www.indiakinursery.com",
+        // },
       });
       console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
-      }
+
       if (res_data.error) {
         setErrorMessage(res_data.error);
       } else {
@@ -94,7 +91,7 @@ const StripePay = ({
   setState,
   state,
 }) => {
-  const amountInCents = Math.round(amount * 100);
+  const amountInCents = Math.round(amount);
   const options = {
     mode: "payment",
     amount: amountInCents,

@@ -20,6 +20,7 @@ const CheckoutForm = ({
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState(null);
+  console.log(window, window.location, window.location.pathname);
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (elements == null) {
@@ -47,15 +48,13 @@ const CheckoutForm = ({
         elements,
         clientSecret,
         confirmParams: {
-          // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
+          save_payment_method: true,
+          return_url: window.location.pathname,
         },
-        // amount: amount,
+        amount: amount,
       });
       console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
-      }
+
       if (res_data.error) {
         setErrorMessage(res_data.error);
       } else {

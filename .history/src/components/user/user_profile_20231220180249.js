@@ -16,7 +16,6 @@ import {
   GetEmployeeByLima,
   GetLimaSubStages,
   AddUpdateVisa,
-  AddPayPalpay,
 } from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
@@ -159,7 +158,7 @@ const NewUserProfile = (props) => {
       console.log(err);
     }
   };
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.href);
   const transactionId = params.get("payment_intent");
   /*Render function to get user Data */
   useEffect(async () => {
@@ -179,18 +178,16 @@ const NewUserProfile = (props) => {
       // }
     }
     if (transactionId) {
-      setPayment();
+      const response = await fetch(
+        `/api/order-details?paymentId=${transactionId}`
+      );
+      const data = await response.json();
+      console.log(data);
+      // let res = await AddPayPalpay()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
-  const setPayment = async () => {
-    // try {
-    //   let res = await AddPayPalpay();
-    //   console.log(res);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  };
+  console.log(window);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");

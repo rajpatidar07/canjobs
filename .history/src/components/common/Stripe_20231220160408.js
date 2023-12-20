@@ -42,24 +42,34 @@ const CheckoutForm = ({
     } else {
       let tokenData = await AddStripePalpay(amount);
       let clientSecret = tokenData.data.message;
-      const res_data = await stripe.confirmPayment({
-        //`Elements` instance that was used to create the Payment Element
+      // const res_data = await stripe.confirmPayment({
+      //   //`Elements` instance that was used to create the Payment Element
+      //   elements,
+      //   clientSecret,
+      //   confirmParams: {
+      //     return_url: "https://www.indiakinursery.com",
+      //   },
+      // });
+      const { paymentIntent, error } = await stripe.handleCardPayment(
         elements,
-        clientSecret,
-        confirmParams: {
-          // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
-        },
-        // amount: amount,
-      });
-      console.log("sdfssfs", res_data);
-      if (res_data) {
-        localStorage.setItem("data", res_data);
+        clientSecret
+      );
+      console.log(paymentIntent, "hello", error);
+      if (error) {
+        setErrorMessage(error.message);
+      } else if (paymentIntent) {
+        // Payment succeeded, you can show a success toaster here
+        console.log("Payment succeeded:", paymentIntent);
+        // Reset any error message
+        setErrorMessage(null);
+
+        // You can perform any additional actions here, such as updating UI or triggering further logic
       }
-      if (res_data.error) {
-        setErrorMessage(res_data.error);
-      } else {
-      }
+
+      // if (res_data.error) {
+      //   setErrorMessage(res_data.error);
+      // } else {
+      // }
     }
   };
 
@@ -94,7 +104,7 @@ const StripePay = ({
   setState,
   state,
 }) => {
-  const amountInCents = Math.round(amount * 100);
+  const amountInCents = Math.round(amount);
   const options = {
     mode: "payment",
     amount: amountInCents,

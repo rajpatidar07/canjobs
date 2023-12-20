@@ -184,12 +184,15 @@ const NewUserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
   const setPayment = async () => {
-    // try {
-    //   let res = await AddPayPalpay();
-    //   console.log(res);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      let res = await axios.get(
+        `/api/getOrderDetails?paymentIntentId=${transactionId}`
+      );
+      // await AddPayPalpay();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
