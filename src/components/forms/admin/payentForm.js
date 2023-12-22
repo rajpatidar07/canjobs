@@ -6,7 +6,7 @@ import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
 import Loader from "../../common/loader";
 import AddTransactionForm from "./addTransactionForm";
-export default function PayentForm({ data }) {
+export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
   const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
@@ -16,7 +16,7 @@ export default function PayentForm({ data }) {
   /*Function to get Payment list data */
   const PaymentData = async () => {
     try {
-      let Response = await GetPaymentList(data.employee_id, "employee");
+      let Response = await GetPaymentList(user_id, user_type);
 
       if (Response.data.data.length === 0) {
         setPaytemList([]);
@@ -116,10 +116,20 @@ export default function PayentForm({ data }) {
               )}
             </div>
           )}
-          {user === "user" ? (
-            <PayForm data={data} setApicall={setApicall} />
+          {user === "user" || user === "company" ? (
+            <PayForm
+              data={data}
+              setApicall={setApicall}
+              user_id={user_id}
+              user={user_type}
+            />
           ) : (
-            <AddTransactionForm data={data} setApicall={setApicall} />
+            <AddTransactionForm
+              data={data}
+              setApicall={setApicall}
+              user_id={user_id}
+              user={user}
+            />
           )}
         </div>
       </div>
