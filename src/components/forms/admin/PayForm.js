@@ -57,7 +57,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
         try {
           setLoading(true);
           // const total = userData.cart.reduce((a, b) => a + +b.price, 0).toFixed(0);
-          const result = await CreateRazorpay(state.amount, "INR");
+          const result = await CreateRazorpay(state.amount, "USD");
           const { amount, id: orderId, currency } = result.data.data;
           // const getkey = await axios.get("http://localhost:8080/payment/get-razorpay-key");
           const key = "rzp_test_m5J59Uvpq9YHDx";

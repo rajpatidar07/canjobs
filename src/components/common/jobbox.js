@@ -62,7 +62,11 @@ function JobBox({
           (path === "/response" && !category)
           ? categoryFilterValue
           : category,
-        token && location.pathname === "/" ? skill : SkillFilterValue,
+        skill || SkillFilterValue
+          ? token && location.pathname === "/"
+            ? skill
+            : SkillFilterValue
+          : "",
         jobSwapFilterValue,
         1,
         "10"
@@ -70,7 +74,10 @@ function JobBox({
       if (userData.data.data.length === 0) {
         setjobData([]);
       } else {
-        if (!token && location.pathname === "/") {
+        if (
+          (!token && location.pathname === "/") ||
+          (!skill && !SkillFilterValue)
+        ) {
           setjobData(
             userData.data.data.filter((item) => item.is_featured === "1")
           );
@@ -144,7 +151,11 @@ function JobBox({
         {/* <!-- Maped Job --> */}
         {noData === 0 || noData === "" || jobData.length === 0 ? (
           <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
-            <h4>No Data Found</h4>
+            <h4>
+              {skill || SkillFilterValue
+                ? "No jobs found for your skills"
+                : "No jobs found"}
+            </h4>
           </div>
         ) : (
           (jobData || []).map((job, i) => {

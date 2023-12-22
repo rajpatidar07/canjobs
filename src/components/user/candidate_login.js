@@ -89,7 +89,7 @@ export default function CandidateLoginForm(props) {
           });
           setLoading(false);
           Close();
-          navigate("/");
+          navigate(`/${updatedTodo.employee_id}`);
           window.location.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
@@ -169,7 +169,7 @@ export default function CandidateLoginForm(props) {
   //             autoClose: 1000,
   //           });
   //           Close();
-  //           navigate("/");
+  //           navigate(`/${}`);
   //           window.location.reload();
   //         }
   //       } catch (err) {
@@ -232,7 +232,7 @@ export default function CandidateLoginForm(props) {
               autoClose: 1000,
             });
             Close();
-            navigate("/");
+            navigate(`/${data.employee_id}`);
             window.location.reload();
           }
           if (
@@ -245,7 +245,7 @@ export default function CandidateLoginForm(props) {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            navigate("/");
+            navigate(`/`);
           }
         })
         .catch((err) => {
@@ -277,7 +277,7 @@ export default function CandidateLoginForm(props) {
   //         autoClose: 1000,
   //       });
   //       Close();
-  //       navigate("/");
+  //       navigate(`/${}`);
   //       window.location.reload();
   //     } catch (err) {
   //       setLoading(false);
