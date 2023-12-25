@@ -179,7 +179,7 @@ function JobDetailpageAdmim(props) {
                       </div>
                     ) : (
                       <>
-                        <div className="info_box text-left text-capitalize text-break">
+                        {/* <div className="info_box text-left text-capitalize text-break">
                           {jobData.location ? (
                             <span
                               className="font-size-3 text-smoke  mr-7"
@@ -197,7 +197,7 @@ function JobDetailpageAdmim(props) {
                           ) : (
                             ""
                           )}
-                        </div>
+                        </div> */}
                         <div className="info_box text-left text-capitalize text-break">
                           {jobData.language ? (
                             <span
@@ -359,7 +359,7 @@ function JobDetailpageAdmim(props) {
                                   ""
                                 ) : (
                                   <>
-                                    <div className="info_box text-left text-capitalize">
+                                    {/* <div className="info_box text-left text-capitalize">
                                       {jobData.location ? (
                                         <div
                                           className="font-size-3 text-smoke mr-7"
@@ -383,7 +383,7 @@ function JobDetailpageAdmim(props) {
                                       ) : (
                                         ""
                                       )}
-                                    </div>
+                                    </div> */}
                                     <div className="info_box text-left text-capitalize">
                                       {jobData.language ? (
                                         <div
