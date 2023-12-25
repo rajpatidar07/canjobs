@@ -529,7 +529,7 @@ function CompanyProfileDetail(props) {
                                           title="Website URL"
                                         >
                                           <i className="fas fa-globe mr-2"></i>
-                                          <Link className="text-dark">
+                                          <Link className="text-dark" to={""}>
                                             {employerData.website_url}
                                           </Link>
                                         </div>
