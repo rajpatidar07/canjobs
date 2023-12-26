@@ -349,7 +349,10 @@ function JobDetailpageAdmim(props) {
                             </div>
                             <div className="text_box text-left w-100 text-capitalize">
                               <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
-                                {jobData.job_title}
+                                {jobData.job_title}{" "}
+                                {jobData.employement
+                                  ? `(${jobData.employement})`
+                                  : ""}
                               </h3>
                               <hr className="my-3" />
                               <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">

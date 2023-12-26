@@ -63,6 +63,20 @@ export default function ExecutiveBox({ data, index }) {
                       </p>
                     </div>
                   </div>
+                  <div
+                    className="comment_status_update text-end"
+                    style={{
+                      cursor: "pointer",
+                      // color: commentItem.status === "0" ? "blue" : "white",
+                      // border: commentItem.status === "0" ? "solid 1px blue" : "",
+                      // backgroundColor: commentItem.status === "1" && "green",
+                    }}
+                    // onClick={(e) => {
+                    //   OnHandleUpdateComment(commentItem);
+                    // }}
+                  >
+                    &#x2713; {/* Checkmark symbol */}
+                  </div>
                 </div>
               </div>
               {/* <div className="btn-group button_group flex-shrink-1">
@@ -92,75 +106,6 @@ export default function ExecutiveBox({ data, index }) {
                   </span>
                 </button>
               </div> */}
-            </div>
-          </div>
-
-          <div
-            id={`collapseOne${index}`}
-            className={`collapse d-none`}
-            // {/*index === activeIndex ? "show" : ""*/}
-            aria-labelledby={`headingOne${index}`}
-            data-parent="#accordion"
-          >
-            <div className="card-body d-flex justify-content-between">
-              <div className="card-text row">
-                <div
-                  className={`sub-stage text-capitalize col-md-6`}
-                  // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                >
-                  <input
-                    type="checkbox"
-                    className="mx-2"
-                    // checked={(selectedStatus || []).some(
-                    //   (data) => data.substage === subStage
-                    // )}
-                    // readOnly
-                  />
-                  Lmia
-                </div>
-                <div
-                  className={`sub-stage text-capitalize col-md-6`}
-                  // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                >
-                  <input
-                    type="checkbox"
-                    className="mx-2"
-                    // checked={(selectedStatus || []).some(
-                    //   (data) => data.substage === subStage
-                    // )}
-                    // readOnly
-                  />
-                  Visa
-                </div>
-                <div
-                  className={`sub-stage text-capitalize col-md-6`}
-                  // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                >
-                  <input
-                    type="checkbox"
-                    className="mx-2"
-                    // checked={(selectedStatus || []).some(
-                    //   (data) => data.substage === subStage
-                    // )}
-                    // readOnly
-                  />
-                  Job
-                </div>
-                <div
-                  className={`sub-stage text-capitalize col-md-6`}
-                  // onClick={() => handleSubStageSelection(expandedStatus, subStage)}
-                >
-                  <input
-                    type="checkbox"
-                    className="mx-2"
-                    // checked={(selectedStatus || []).some(
-                    //   (data) => data.substage === subStage
-                    // )}
-                    // readOnly
-                  />
-                  Interview
-                </div>
-              </div>
             </div>
           </div>
         </div>
