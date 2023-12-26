@@ -11,9 +11,6 @@ import Loader from "../common/loader";
 import ExecutiveBox from "../common/executiveBox";
 import AdminTable from "../common/adminTable";
 import Executivelist from "../common/executivelist";
-import { BsEnvelope } from "react-icons/bs";
-import { BiPhoneCall } from "react-icons/bi";
-import { Link } from "react-router-dom";
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
@@ -332,32 +329,40 @@ function ManageAdmin() {
                                 </small>
                               </h5>
                             )}
+                            {managerData.email || managerData.contact_no ? (
+                              <div>
+                                <p className="text-gray font-size-3 m-0">
+                                  {managerData.email}
+                                </p>
+                                <p className="text-gray font-size-3 m-0">
+                                  {`+${managerData.contact_no}`}
+                                </p>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                       </div>
-                      <div className="col p-1 mb-3 d-flex mx-2">
-                        {!managerData.email ? null : (
-                          <div>
-                            <Link
-                              className="mx-2 font-size-3 text-break btn btn-outline-secondary btn-rounded "
-                              to={`mailto:${managerData.email}`}
-                            >
-                              <BsEnvelope className="font-size-3 mr-4" />
-                              {managerData.email}
-                            </Link>
-                          </div>
-                        )}
-                        {!managerData.contact_no ? null : (
-                          <div>
-                            <Link
-                              className="mx-2 font-size-3 text-break btn btn-outline-secondary btn-rounded "
-                              to={`tel:${managerData.contact_no}`}
-                            >
-                              <BiPhoneCall className="font-size-3 mr-4" />
-                              {managerData.contact_no}
-                            </Link>
-                          </div>
-                        )}
+                      <div className="col px-1 form_group mt-4 text-right">
+                        <CustomButton
+                          className={
+                            addTeamListShow === true
+                              ? "font-size-3 rounded-3 btn btn-light border-0"
+                              : "font-size-3 rounded-3 btn btn-primary border-0"
+                          }
+                          onClick={
+                            addTeamListShow === true
+                              ? () => {
+                                  setAddTeamListShow(false);
+                                  setExecutiveApiCall(true);
+                                }
+                              : () => setAddTeamListShow(true)
+                          }
+                          title={
+                            addTeamListShow === true ? "Cancel" : "Add Team"
+                          }
+                        >
+                          {addTeamListShow === true ? "Cancel" : "Add Team"}
+                        </CustomButton>
                       </div>
                     </div>
                   </div>
@@ -390,34 +395,9 @@ function ManageAdmin() {
                                 data={item}
                                 index={index}
                                 key={index}
-                                manager_id={managerData.admin_id}
-                                selected={managerExecutive}
-                                setExecutiveApiCall={setExecutiveApiCall}
                               />
                             ))
                           )}
-                          <div className="col px-1 form_group mt-4 text-center">
-                            <CustomButton
-                              className={
-                                addTeamListShow === true
-                                  ? "font-size-3 rounded-3 btn btn-light border-0"
-                                  : "font-size-3 rounded-3 btn btn-primary border-0"
-                              }
-                              onClick={
-                                addTeamListShow === true
-                                  ? () => {
-                                      setAddTeamListShow(false);
-                                      setExecutiveApiCall(true);
-                                    }
-                                  : () => setAddTeamListShow(true)
-                              }
-                              title={
-                                addTeamListShow === true ? "Cancel" : "Add Team"
-                              }
-                            >
-                              {addTeamListShow === true ? "Cancel" : "Add Team"}
-                            </CustomButton>
-                          </div>
                         </div>
                       )}
                     </div>

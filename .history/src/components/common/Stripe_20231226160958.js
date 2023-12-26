@@ -48,7 +48,7 @@ const CheckoutForm = ({
         clientSecret,
         confirmParams: {
           // save_payment_method: true,
-          return_url: `http://localhost:3000${window.location.pathname}`,
+          return_url: `https://canpathwaysjobs.com/${window.location.pathname}`,
         },
         // amount: amount,
       });

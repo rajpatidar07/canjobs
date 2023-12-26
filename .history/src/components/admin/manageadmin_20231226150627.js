@@ -390,9 +390,6 @@ function ManageAdmin() {
                                 data={item}
                                 index={index}
                                 key={index}
-                                manager_id={managerData.admin_id}
-                                selected={managerExecutive}
-                                setExecutiveApiCall={setExecutiveApiCall}
                               />
                             ))
                           )}

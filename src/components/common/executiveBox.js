@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 // import { MdOutlineAddTask, MdPersonRemove } from "react-icons/md";
 import { Link } from "react-router-dom";
-export default function ExecutiveBox({ data, index }) {
+import { toast } from "react-toastify";
+import { RemoveExecutiveTeam } from "../../api/api";
+export default function ExecutiveBox({
+  data,
+  index,
+  setExecutiveApiCall,
+  selected,
+}) {
   // const [activeIndex, setActiveIndex] = useState(null);
 
   /*Function to SHow hide the Tasks to assigned */
@@ -11,6 +18,27 @@ export default function ExecutiveBox({ data, index }) {
   /*Functo to remove assigned executive */
   // const RemoveAssined = async () => {
   // };
+  const [selectedStatus, setSelectedStatus] = useState(selected);
+
+  /*Function to remove asign memeber to the manager */
+  const HandleRemoveexecutive = async (Eid) => {
+    try {
+      let Response = await RemoveExecutiveTeam(Eid);
+      if (Response.message === "successfully") {
+        toast.success("Executive unassigned successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setSelectedStatus(
+          selectedStatus.filter((item) => item.admin_id !== Eid)
+        );
+        setExecutiveApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <div className="accordion mt-2">
@@ -67,15 +95,15 @@ export default function ExecutiveBox({ data, index }) {
                     className="comment_status_update text-end"
                     style={{
                       cursor: "pointer",
-                      // color: commentItem.status === "0" ? "blue" : "white",
-                      // border: commentItem.status === "0" ? "solid 1px blue" : "",
-                      // backgroundColor: commentItem.status === "1" && "green",
+                      color: "white",
+                      border: "solid 1px red",
+                      backgroundColor: "red",
                     }}
-                    // onClick={(e) => {
-                    //   OnHandleUpdateComment(commentItem);
-                    // }}
+                    onClick={(e) => {
+                      HandleRemoveexecutive(data.admin_id);
+                    }}
                   >
-                    &#x2713; {/* Checkmark symbol */}
+                    &times; {/* Chross symbol */}
                   </div>
                 </div>
               </div>
