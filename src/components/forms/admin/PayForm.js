@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate, Link } from "react-router-dom";
@@ -115,14 +115,8 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   }
   /*COde to set the sripe payment details to the database */
   let params = new URLSearchParams(window.location.search);
-  let piId;
-  useEffect(() => {
-    params = new URLSearchParams(window.location.search);
-    if (piId) {
-      GetStripeDetails();
-    }
-    piId = params.get("payment_intent");
-  }, []);
+  let piId = params.get("payment_intent");
+
   /*Function to get strie payment details */
   const GetStripeDetails = async () => {
     try {
@@ -146,6 +140,9 @@ export default function PayForm({ setApicall, data, user, user_id }) {
       console.log(err);
     }
   };
+  if (piId) {
+    GetStripeDetails();
+  }
   return (
     <form className="col-md-4 p-10">
       <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
