@@ -725,7 +725,8 @@ export default function JobTable(props) {
                                         <>
                                           <button
                                             className={
-                                              user_type === "admin"
+                                              user_type === "admin" &&
+                                              props.response === "lmia"
                                                 ? "btn btn-outline-info action_btn "
                                                 : "d-none"
                                             }
