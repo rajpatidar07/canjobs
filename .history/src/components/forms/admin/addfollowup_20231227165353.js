@@ -498,10 +498,7 @@ function Addfollowup(props) {
                               res.name === undefined ? (
                                 <p className="font-size-3 mb-0">N/A</p>
                               ) : (
-                                <p
-                                  className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                  title={res.name}
-                                >
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                   {res.name}
                                 </p>
                               )}
@@ -516,10 +513,7 @@ function Addfollowup(props) {
                         res.subject === undefined ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
-                          <p
-                            className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                            title={res.subject}
-                          >
+                          <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                             {res.subject}
                           </p>
                         )}

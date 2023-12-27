@@ -63,7 +63,7 @@ function BraintreeDropIn(props) {
                       let response = await AddPaymentToDataBase(
                         data,
                         props.user_id,
-                        amount,
+                        res.data.amount,
                         "Braintree",
                         props.user
                       );

@@ -466,111 +466,102 @@ function Addfollowup(props) {
               </tr>
             </thead>
             <tbody>
-              {(response || []).map(
-                (res) =>
-                  res.status === "1" && (
-                    <tr key={res.id}>
-                      <td>
-                        <Link
-                          className="d-flex align-items-center"
-                          to={`/${res.employee_id}`}
-                        >
-                          <div className="d-flex profile_box gx-2">
-                            <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto overflow-hidden">
-                                <img
-                                  src={
-                                    res.employee_profile_image === "" ||
-                                    res.employee_profile_image === null ||
-                                    res.employee_profile_image === undefined
-                                      ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                      : res.employee_profile_image
-                                  }
-                                  alt=""
-                                  className="w-100"
-                                />
-                              </div>
-                            </div>
-                            <div className=" mb-0">
-                              {res.name === "" ||
-                              res.name === "null" ||
-                              res.name === null ||
-                              res.name === undefined ? (
-                                <p className="font-size-3 mb-0">N/A</p>
-                              ) : (
-                                <p
-                                  className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                  title={res.name}
-                                >
-                                  {res.name}
-                                </p>
-                              )}
-                            </div>
+              {(response || []).map((res) => (
+                <tr key={res.id}>
+                  <td>
+                    <Link
+                      className="d-flex align-items-center"
+                      to={`/${res.employee_id}`}
+                    >
+                      <div className="d-flex profile_box gx-2">
+                        <div className="media  align-items-center">
+                          <div className="circle-36 mx-auto overflow-hidden">
+                            <img
+                              src={
+                                res.employee_profile_image === "" ||
+                                res.employee_profile_image === null ||
+                                res.employee_profile_image === undefined
+                                  ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  : res.employee_profile_image
+                              }
+                              alt=""
+                              className="w-100"
+                            />
                           </div>
-                        </Link>
-                      </td>
-                      <td>
-                        {res.subject === "" ||
-                        res.subject === "null" ||
-                        res.subject === null ||
-                        res.subject === undefined ? (
-                          <p className="font-size-3 mb-0">N/A</p>
-                        ) : (
-                          <p
-                            className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                            title={res.subject}
-                          >
-                            {res.subject}
-                          </p>
-                        )}
-                      </td>
-                      <td>
-                        {res.remark === "" ||
-                        res.remark === "null" ||
-                        res.remark === null ||
-                        res.remark === undefined ? (
-                          <p className="font-size-3 mb-0">N/A</p>
-                        ) : (
-                          <p className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate">
-                            <small>{res.remark}</small>
-                          </p>
-                        )}
-                      </td>
-                      <td>
-                        {res.created_at === "" ||
-                        res.created_at === "null" ||
-                        res.created_at === null ||
-                        res.created_at === undefined ? (
-                          <p className="font-size-3 mb-0">N/A</p>
-                        ) : (
-                          <small>{moment(res.created_at).calendar()}</small>
-                        )}
-                      </td>
-                      <td>
-                        {res.next_followup_date === "" ||
-                        res.next_followup_date === "null" ||
-                        res.next_followup_date === null ||
-                        res.next_followup_date === undefined ? (
-                          <p className="font-size-3 mb-0">N/A</p>
-                        ) : (
-                          <small>
-                            {moment(res.next_followup_date).format("MMM Do YY")}
-                          </small>
-                        )}
-                      </td>
-                      <td>
-                        {res.status === "" ||
-                        res.status === "null" ||
-                        res.status === null ||
-                        res.status === undefined ? (
-                          <p className="font-size-3 mb-0"></p>
-                        ) : (
-                          <small>{res.status === "1" ? "Private" : ""}</small>
-                        )}
-                      </td>
-                    </tr>
-                  )
-              )}
+                        </div>
+                        <div className=" mb-0">
+                          {res.name === "" ||
+                          res.name === "null" ||
+                          res.name === null ||
+                          res.name === undefined ? (
+                            <p className="font-size-3 mb-0">N/A</p>
+                          ) : (
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                              {res.name}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+                  </td>
+                  <td>
+                    {res.subject === "" ||
+                    res.subject === "null" ||
+                    res.subject === null ||
+                    res.subject === undefined ? (
+                      <p className="font-size-3 mb-0">N/A</p>
+                    ) : (
+                      <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                        {res.subject}
+                      </p>
+                    )}
+                  </td>
+                  <td>
+                    {res.remark === "" ||
+                    res.remark === "null" ||
+                    res.remark === null ||
+                    res.remark === undefined ? (
+                      <p className="font-size-3 mb-0">N/A</p>
+                    ) : (
+                      <p className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate">
+                        <small>{res.remark}</small>
+                      </p>
+                    )}
+                  </td>
+                  <td>
+                    {res.created_at === "" ||
+                    res.created_at === "null" ||
+                    res.created_at === null ||
+                    res.created_at === undefined ? (
+                      <p className="font-size-3 mb-0">N/A</p>
+                    ) : (
+                      <small>{moment(res.created_at).calendar()}</small>
+                    )}
+                  </td>
+                  <td>
+                    {res.next_followup_date === "" ||
+                    res.next_followup_date === "null" ||
+                    res.next_followup_date === null ||
+                    res.next_followup_date === undefined ? (
+                      <p className="font-size-3 mb-0">N/A</p>
+                    ) : (
+                      <small>
+                        {moment(res.next_followup_date).format("MMM Do YY")}
+                      </small>
+                    )}
+                  </td>
+                  <td>
+                    {res.status === "" ||
+                    res.status === "null" ||
+                    res.status === null ||
+                    res.status === undefined ? (
+                      <p className="font-size-3 mb-0"></p>
+                    ) : (
+                      <small>{res.status === "1" ? "Private" : ""}</small>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

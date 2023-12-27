@@ -351,7 +351,7 @@ function CompanyProfileDetail(props) {
                       Activity History
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li className="tab-menu-items nav-item d-none">
                     {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
 
                     <Link

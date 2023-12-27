@@ -146,7 +146,7 @@ export default function EmployerNotesTable({ search }) {
                       Date added
                     </Link>
                   </th>
-                  {/* <th
+                  <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
@@ -160,7 +160,7 @@ export default function EmployerNotesTable({ search }) {
                     >
                       Description
                     </Link>
-                  </th> */}
+                  </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
@@ -179,111 +179,92 @@ export default function EmployerNotesTable({ search }) {
                   </tr>
                 ) : (
                   (data || []).map((data, i) => (
-                    <>
-                      <tr className="text-capitalize" key={i}>
-                        <td className=" py-5">
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.company_id}
-                          </p>
-                        </td>
-                        <td className=" py-5">
-                          <Link
-                            to={`/company_detail`}
-                            title="Company Details"
-                            onClick={() =>
-                              localStorage.setItem(
-                                "company_id",
-                                data.company_id
-                              )
-                            }
-                          >
-                            <div className="d-flex profile_box gx-2">
-                              <div className="media  align-items-center">
-                                <div className="circle-36 mx-auto overflow-hidden">
-                                  {data.logo === null ? (
-                                    <img
-                                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                      alt=""
-                                      className="w-100"
-                                    />
-                                  ) : (
-                                    <img
-                                      src={data.logo}
-                                      alt=""
-                                      className="w-100"
-                                    />
-                                  )}
-                                </div>
-                              </div>
-
-                              <div className=" mb-0">
-                                {data.company_name === null ||
-                                data.company_name === undefined ||
-                                data.company_name === "undefined" ||
-                                data.company_name === "" ? (
-                                  <p className="font-size-3  mb-0">N/A</p>
+                    <tr className="text-capitalize" key={i}>
+                      <th className=" py-5">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {data.company_id}
+                        </p>
+                      </th>
+                      <th className=" py-5">
+                        <Link
+                          to={`/company_detail`}
+                          title="Company Details"
+                          onClick={() =>
+                            localStorage.setItem("company_id", data.company_id)
+                          }
+                        >
+                          <div className="d-flex profile_box gx-2">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto overflow-hidden">
+                                {data.logo === null ? (
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    alt=""
+                                    className="w-100"
+                                  />
                                 ) : (
-                                  <p
-                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={data.company_name}
-                                  >
-                                    {data.company_name}
-                                  </p>
+                                  <img
+                                    src={data.logo}
+                                    alt=""
+                                    className="w-100"
+                                  />
                                 )}
                               </div>
                             </div>
-                          </Link>
-                        </td>
-                        <td scope="row" className="py-5 ">
-                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {moment(data.created_at).format("DD MMMM, YYYY")}
+
+                            <div className=" mb-0">
+                              {data.company_name === null ||
+                              data.company_name === undefined ||
+                              data.company_name === "undefined" ||
+                              data.company_name === "" ? (
+                                <p className="font-size-3  mb-0">N/A</p>
+                              ) : (
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  {data.company_name}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                        </td>
-                        <td scope="row" className="py-5 ">
-                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {data.subject}
-                          </div>
-                        </td>
-                        {/* <td className=" py-5">
+                        </Link>
+                      </th>
+                      <th scope="row" className="py-5 ">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {moment(data.created_at).format("DD MMMM, YYYY")}
+                        </div>
+                      </th>
+                      <th scope="row" className="py-5 ">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {data.subject}
+                        </div>
+                      </th>
+                      <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate">
                           {data.remark}
                         </h3>
-                      </td> */}
-                        <td className="py-5 min-width-px-100 ">
-                          <div
-                            className="btn-group button_group d-flex"
-                            role="group"
-                          >
-                            <DropdownButton
-                              as={ButtonGroup}
-                              title={
-                                data.status === "1" ? "Private" : "Complete"
-                              }
-                              size="sm"
-                              className="user_status_btn btn-primary text-white ml-1"
-                              onSelect={(e) => OnStatusChange(e, data)}
-                            >
-                              <Dropdown.Item
-                                value={"2"}
-                                eventKey={2}
-                                className="text-capitalize"
-                              >
-                                Complete
-                              </Dropdown.Item>
-                            </DropdownButton>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        {" "}
-                        <td
-                          colSpan={5}
-                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
+                      </th>
+                      <th className="py-5 min-width-px-100 ">
+                        <div
+                          className="btn-group button_group d-flex"
+                          role="group"
                         >
-                          <b>Description:</b> {data.remark}
-                        </td>
-                      </tr>
-                    </>
+                          <DropdownButton
+                            as={ButtonGroup}
+                            title={data.status === "1" ? "Private" : "Complete"}
+                            size="sm"
+                            className="user_status_btn btn-primary text-white ml-1"
+                            onSelect={(e) => OnStatusChange(e, data)}
+                          >
+                            <Dropdown.Item
+                              value={"2"}
+                              eventKey={2}
+                              className="text-capitalize"
+                            >
+                              Complete
+                            </Dropdown.Item>
+                          </DropdownButton>
+                        </div>
+                      </th>
+                    </tr>
                   ))
                 )}
               </tbody>

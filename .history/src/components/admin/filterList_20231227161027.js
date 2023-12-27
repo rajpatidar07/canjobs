@@ -87,7 +87,7 @@ function FilterList() {
                   <h3 className="font-size-6 mb-0">Filter</h3>
                 </div>
               </div>
-              <div className="pt-7 rounded pb-9 px-5 ">
+              <div className="shadow-8 pt-7 rounded pb-9 px-5 ">
                 <div className="row">
                   {/* <!-- Skill Filter List --> */}
                   <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">

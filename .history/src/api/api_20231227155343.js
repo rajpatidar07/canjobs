@@ -2352,7 +2352,6 @@ export const AddPaymentToDataBase = async (
   mode,
   user
 ) => {
-  console.log(amount);
   const response = await axios.post(
     `${API_URL}payment/capturePayment`,
     {

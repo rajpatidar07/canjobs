@@ -278,7 +278,7 @@ export default function EmployerNotesTable({ search }) {
                         {" "}
                         <td
                           colSpan={5}
-                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
+                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate"
                         >
                           <b>Description:</b> {data.remark}
                         </td>

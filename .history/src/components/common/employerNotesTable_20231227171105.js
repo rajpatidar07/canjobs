@@ -223,10 +223,7 @@ export default function EmployerNotesTable({ search }) {
                                 data.company_name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
-                                  <p
-                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={data.company_name}
-                                  >
+                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                     {data.company_name}
                                   </p>
                                 )}
@@ -278,9 +275,9 @@ export default function EmployerNotesTable({ search }) {
                         {" "}
                         <td
                           colSpan={5}
-                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
+                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate"
                         >
-                          <b>Description:</b> {data.remark}
+                          {data.remark}
                         </td>
                       </tr>
                     </>

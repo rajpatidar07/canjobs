@@ -181,12 +181,12 @@ export default function EmployerNotesTable({ search }) {
                   (data || []).map((data, i) => (
                     <>
                       <tr className="text-capitalize" key={i}>
-                        <td className=" py-5">
+                        <th className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {data.company_id}
                           </p>
-                        </td>
-                        <td className=" py-5">
+                        </th>
+                        <th className=" py-5">
                           <Link
                             to={`/company_detail`}
                             title="Company Details"
@@ -223,33 +223,30 @@ export default function EmployerNotesTable({ search }) {
                                 data.company_name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
-                                  <p
-                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={data.company_name}
-                                  >
+                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                     {data.company_name}
                                   </p>
                                 )}
                               </div>
                             </div>
                           </Link>
-                        </td>
-                        <td scope="row" className="py-5 ">
+                        </th>
+                        <th scope="row" className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             {moment(data.created_at).format("DD MMMM, YYYY")}
                           </div>
-                        </td>
-                        <td scope="row" className="py-5 ">
+                        </th>
+                        <th scope="row" className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             {data.subject}
                           </div>
-                        </td>
-                        {/* <td className=" py-5">
+                        </th>
+                        {/* <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate">
                           {data.remark}
                         </h3>
-                      </td> */}
-                        <td className="py-5 min-width-px-100 ">
+                      </th> */}
+                        <th className="py-5 min-width-px-100 ">
                           <div
                             className="btn-group button_group d-flex"
                             role="group"
@@ -272,15 +269,12 @@ export default function EmployerNotesTable({ search }) {
                               </Dropdown.Item>
                             </DropdownButton>
                           </div>
-                        </td>
+                        </th>
                       </tr>
                       <tr>
                         {" "}
-                        <td
-                          colSpan={5}
-                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
-                        >
-                          <b>Description:</b> {data.remark}
+                        <td className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate">
+                          {data.remark}
                         </td>
                       </tr>
                     </>

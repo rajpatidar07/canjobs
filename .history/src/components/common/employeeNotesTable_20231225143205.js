@@ -146,7 +146,7 @@ export default function EmployeeNotesTable({ search }) {
                       Subject
                     </Link>
                   </th>
-                  {/* <th
+                  <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
@@ -160,7 +160,7 @@ export default function EmployeeNotesTable({ search }) {
                     >
                       Description
                     </Link>
-                  </th> */}
+                  </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
@@ -179,62 +179,57 @@ export default function EmployeeNotesTable({ search }) {
                   </tr>
                 ) : (
                   (data || []).map((data, i) => (
-                    <>
-                      <tr className="text-capitalize" key={i}>
-                        <th className=" py-5">
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.employee_id}
-                          </p>
-                        </th>
-                        <th className=" py-5">
-                          <Link
-                            to={`/${data.employee_id}`}
-                            // onClick={
-                            //   empdata.name !== null
-                            //     ? () => employeeDetails(empdata.employee_id)
-                            //     : null
-                            // }
-                            title="Employee Details"
-                          >
-                            <div className="d-flex profile_box gx-2">
-                              <div className="media  align-items-center">
-                                <div className="circle-36 mx-auto overflow-hidden">
-                                  {data.employee_profile_image === null ||
-                                  data.employee_profile_image === "" ||
-                                  data.employee_profile_image === undefined ||
-                                  data.employee_profile_image === "null" ||
-                                  data.employee_profile_image ===
-                                    "undefined" ? (
-                                    <img
-                                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                      alt=""
-                                      className="w-100"
-                                    />
-                                  ) : (
-                                    <img
-                                      src={data.employee_profile_image}
-                                      alt=""
-                                      className="w-100"
-                                    />
-                                  )}
-                                </div>
-                              </div>
-
-                              <div className=" mb-0">
-                                {data.name === null ||
-                                data.name === undefined ||
-                                data.name === "undefined" ||
-                                data.name === "" ? (
-                                  <p className="font-size-3  mb-0">N/A</p>
+                    <tr className="text-capitalize" key={i}>
+                      <th className=" py-5">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {data.employee_id}
+                        </p>
+                      </th>
+                      <th className=" py-5">
+                        <Link
+                          to={`/${data.employee_id}`}
+                          // onClick={
+                          //   empdata.name !== null
+                          //     ? () => employeeDetails(empdata.employee_id)
+                          //     : null
+                          // }
+                          title="Employee Details"
+                        >
+                          <div className="d-flex profile_box gx-2">
+                            <div className="media  align-items-center">
+                              <div className="circle-36 mx-auto overflow-hidden">
+                                {data.employee_profile_image === null ||
+                                data.employee_profile_image === "" ||
+                                data.employee_profile_image === undefined ||
+                                data.employee_profile_image === "null" ||
+                                data.employee_profile_image === "undefined" ? (
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    alt=""
+                                    className="w-100"
+                                  />
                                 ) : (
-                                  <p
-                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={data.name}
-                                  >
-                                    {data.name}
-                                  </p>
+                                  <img
+                                    src={data.employee_profile_image}
+                                    alt=""
+                                    className="w-100"
+                                  />
                                 )}
-                                {/* {empdata.gender || empdata.marital_status ? (
+                              </div>
+                            </div>
+
+                            <div className=" mb-0">
+                              {data.name === null ||
+                              data.name === undefined ||
+                              data.name === "undefined" ||
+                              data.name === "" ? (
+                                <p className="font-size-3  mb-0">N/A</p>
+                              ) : (
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  {data.name}
+                                </p>
+                              )}
+                              {/* {empdata.gender || empdata.marital_status ? (
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
                                   {empdata.gender === "female"
                                     ? "F"
@@ -242,7 +237,7 @@ export default function EmployeeNotesTable({ search }) {
                                       ? "M"
                                       : "O"}
                                   {/*Calculation of age from date of birth*/}
-                                {/* (
+                              {/* (
                                   {empdata.marital_status ||
                                     empdata.date_of_birth
                                     ? `${empdata.marital_status
@@ -254,7 +249,7 @@ export default function EmployeeNotesTable({ search }) {
                                   )
                                 </p>
                               ) : null} */}
-                                {/* {empdata.is_featured === "1" ||
+                              {/* {empdata.is_featured === "1" ||
                                 empdata.is_featured === 1 ? (
                                 <span className="bg-orange text-white featured_tag">
                                   Featured
@@ -266,63 +261,48 @@ export default function EmployeeNotesTable({ search }) {
                                   Web
                                 </span>
                               ) : null} */}
-                              </div>
                             </div>
-                          </Link>
-                        </th>
-                        <th className="py-5">
-                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {moment(data.created_at).format("DD MMMM, YYYY")}
                           </div>
-                        </th>
-                        <th className="py-5 ">
-                          <div
-                            className="font-size-3 mb-0 font-weight-semibold text-black-2 text-truncate"
-                            title={data.subject}
-                          >
-                            {data.subject}
-                          </div>
-                        </th>
-                        {/* <th className=" py-5">
+                        </Link>
+                      </th>
+                      <th className="py-5">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {moment(data.created_at).format("DD MMMM, YYYY")}
+                        </div>
+                      </th>
+                      <th className="py-5 ">
+                        <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          {data.subject}
+                        </div>
+                      </th>
+                      <th className=" py-5">
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0  text-truncate">
                           {data.remark}
                         </h3>
-                      </th> */}
-                        <th className="py-5 min-width-px-100 ">
-                          <div
-                            className="btn-group button_group d-flex"
-                            role="group"
-                          >
-                            <DropdownButton
-                              as={ButtonGroup}
-                              title={
-                                data.status === "1" ? "Private" : "Complete"
-                              }
-                              size="sm"
-                              className="user_status_btn btn-primary text-white ml-1"
-                              onSelect={(e) => OnStatusChange(e, data)}
-                            >
-                              <Dropdown.Item
-                                value={"2"}
-                                eventKey={2}
-                                className="text-capitalize"
-                              >
-                                Complete
-                              </Dropdown.Item>
-                            </DropdownButton>
-                          </div>
-                        </th>
-                      </tr>
-                      <tr>
-                        {" "}
-                        <td
-                          colSpan={5}
-                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
+                      </th>
+                      <th className="py-5 min-width-px-100 ">
+                        <div
+                          className="btn-group button_group d-flex"
+                          role="group"
                         >
-                          <b>Description:</b> {data.remark}
-                        </td>
-                      </tr>
-                    </>
+                          <DropdownButton
+                            as={ButtonGroup}
+                            title={data.status === "1" ? "Private" : "Complete"}
+                            size="sm"
+                            className="user_status_btn btn-primary text-white ml-1"
+                            onSelect={(e) => OnStatusChange(e, data)}
+                          >
+                            <Dropdown.Item
+                              value={"2"}
+                              eventKey={2}
+                              className="text-capitalize"
+                            >
+                              Complete
+                            </Dropdown.Item>
+                          </DropdownButton>
+                        </div>
+                      </th>
+                    </tr>
                   ))
                 )}
               </tbody>

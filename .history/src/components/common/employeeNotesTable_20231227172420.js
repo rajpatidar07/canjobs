@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
+import { AddFollowup, getSingleFollowup } from "../../api/api";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { toast } from "react-toastify";
 import Pagination from "./pagination";
 import { Link } from "react-router-dom";
-import Loader from "./loader";
 import moment from "moment";
-export default function EmployerNotesTable({ search }) {
+import Loader from "./loader";
+export default function EmployeeNotesTable({ search }) {
   let [isLoading, setIsLoading] = useState(true);
   let [apiCall, setApiCall] = useState(false);
   const [data, setData] = useState([]);
@@ -19,9 +19,9 @@ export default function EmployerNotesTable({ search }) {
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
   /*Function to get Employee's notes */
-  const EmployerNotes = async () => {
+  const EmployeeNotes = async () => {
     try {
-      let res = await getSingleCompanyFollowup(
+      let res = await getSingleFollowup(
         "",
         columnName,
         sortOrder,
@@ -40,7 +40,7 @@ export default function EmployerNotesTable({ search }) {
     }
   };
   useEffect(() => {
-    EmployerNotes();
+    EmployeeNotes();
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -59,11 +59,11 @@ export default function EmployerNotesTable({ search }) {
   const OnStatusChange = async (e, value) => {
     // e.preventDefault()
     let data = {
-      company_id: value.company_id,
+      employee_id: value.employee_id,
       status: e,
     };
     try {
-      let responseData = await AddCompanyFollowup(data);
+      let responseData = await AddFollowup(data);
       if (responseData.message === "follow up updated successfully") {
         toast.success("Followup Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -93,12 +93,12 @@ export default function EmployerNotesTable({ search }) {
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort("company_id");
+                        handleSort("employee_id");
                       }}
                       className="text-gray"
                       title="Sort by aadded date"
                     >
-                      CID
+                      EID
                     </Link>
                   </th>
                   <th
@@ -108,12 +108,27 @@ export default function EmployerNotesTable({ search }) {
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort("company_name");
+                        handleSort("name");
                       }}
                       className="text-gray"
                       title="Sort by aadded date"
                     >
                       Name
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("created_at");
+                      }}
+                      className="text-gray"
+                      title="Sort by aadded date"
+                    >
+                      Date added
                     </Link>
                   </th>
                   <th
@@ -129,21 +144,6 @@ export default function EmployerNotesTable({ search }) {
                       title="Sort by Subject"
                     >
                       Subject
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("created_at");
-                      }}
-                      className="text-gray"
-                      title="Sort by added date"
-                    >
-                      Date added
                     </Link>
                   </th>
                   {/* <th
@@ -181,26 +181,30 @@ export default function EmployerNotesTable({ search }) {
                   (data || []).map((data, i) => (
                     <>
                       <tr className="text-capitalize" key={i}>
-                        <td className=" py-5">
+                        <th className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.company_id}
+                            {data.employee_id}
                           </p>
-                        </td>
-                        <td className=" py-5">
+                        </th>
+                        <th className=" py-5">
                           <Link
-                            to={`/company_detail`}
-                            title="Company Details"
-                            onClick={() =>
-                              localStorage.setItem(
-                                "company_id",
-                                data.company_id
-                              )
-                            }
+                            to={`/${data.employee_id}`}
+                            // onClick={
+                            //   empdata.name !== null
+                            //     ? () => employeeDetails(empdata.employee_id)
+                            //     : null
+                            // }
+                            title="Employee Details"
                           >
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
                                 <div className="circle-36 mx-auto overflow-hidden">
-                                  {data.logo === null ? (
+                                  {data.employee_profile_image === null ||
+                                  data.employee_profile_image === "" ||
+                                  data.employee_profile_image === undefined ||
+                                  data.employee_profile_image === "null" ||
+                                  data.employee_profile_image ===
+                                    "undefined" ? (
                                     <img
                                       src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                       alt=""
@@ -208,7 +212,7 @@ export default function EmployerNotesTable({ search }) {
                                     />
                                   ) : (
                                     <img
-                                      src={data.logo}
+                                      src={data.employee_profile_image}
                                       alt=""
                                       className="w-100"
                                     />
@@ -217,39 +221,74 @@ export default function EmployerNotesTable({ search }) {
                               </div>
 
                               <div className=" mb-0">
-                                {data.company_name === null ||
-                                data.company_name === undefined ||
-                                data.company_name === "undefined" ||
-                                data.company_name === "" ? (
+                                {data.name === null ||
+                                data.name === undefined ||
+                                data.name === "undefined" ||
+                                data.name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <p
                                     className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={data.company_name}
+                                    title={data.name}
                                   >
-                                    {data.company_name}
+                                    {data.name}
                                   </p>
                                 )}
+                                {/* {empdata.gender || empdata.marital_status ? (
+                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                  {empdata.gender === "female"
+                                    ? "F"
+                                    : empdata.gender === "male"
+                                      ? "M"
+                                      : "O"}
+                                  {/*Calculation of age from date of birth*/}
+                                {/* (
+                                  {empdata.marital_status ||
+                                    empdata.date_of_birth
+                                    ? `${empdata.marital_status
+                                    },${moment().diff(
+                                      empdata.date_of_birth,
+                                      "years"
+                                    )} Y`
+                                    : null}
+                                  )
+                                </p>
+                              ) : null} */}
+                                {/* {empdata.is_featured === "1" ||
+                                empdata.is_featured === 1 ? (
+                                <span className="bg-orange text-white featured_tag">
+                                  Featured
+                                </span>
+                              ) : null}
+                              {empdata.created_by_admin === "0" ||
+                                empdata.created_by_admin === 0 ? (
+                                <span className="bg-info text-white web_tag">
+                                  Web
+                                </span>
+                              ) : null} */}
                               </div>
                             </div>
                           </Link>
-                        </td>
-                        <td scope="row" className="py-5 ">
+                        </th>
+                        <th className="py-5">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
                             {moment(data.created_at).format("DD MMMM, YYYY")}
                           </div>
-                        </td>
-                        <td scope="row" className="py-5 ">
-                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                        </th>
+                        <th className="py-5 ">
+                          <div
+                            className="font-size-3 mb-0 font-weight-semibold text-black-2 text-truncate"
+                            title={data.subject}
+                          >
                             {data.subject}
                           </div>
-                        </td>
-                        {/* <td className=" py-5">
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate">
+                        </th>
+                        {/* <th className=" py-5">
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0  text-truncate">
                           {data.remark}
                         </h3>
-                      </td> */}
-                        <td className="py-5 min-width-px-100 ">
+                      </th> */}
+                        <th className="py-5 min-width-px-100 ">
                           <div
                             className="btn-group button_group d-flex"
                             role="group"
@@ -272,13 +311,13 @@ export default function EmployerNotesTable({ search }) {
                               </Dropdown.Item>
                             </DropdownButton>
                           </div>
-                        </td>
+                        </th>
                       </tr>
                       <tr>
                         {" "}
                         <td
                           colSpan={5}
-                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
+                          className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate"
                         >
                           <b>Description:</b> {data.remark}
                         </td>
