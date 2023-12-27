@@ -115,15 +115,12 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   }
   /*COde to set the sripe payment details to the database */
   let params = new URLSearchParams(window.location.search);
-  let piId;
-  useEffect(() => {
-    params = new URLSearchParams(window.location.search);
-    if (piId) {
-      GetStripeDetails();
-    }
-    piId = params.get("payment_intent");
-  }, []);
-  /*Function to get strie payment details */
+  let piId = params.get("payment_intent");
+
+  params = new URLSearchParams(window.location.search);
+  if (piId) {
+    GetStripeDetails();
+  } /*Function to get strie payment details */
   const GetStripeDetails = async () => {
     try {
       let res = await GetStripePaymentDetails(piId, user_id, user, "success");
