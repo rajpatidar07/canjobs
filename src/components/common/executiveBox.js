@@ -79,20 +79,23 @@ export default function ExecutiveBox({
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-gray font-size-3 mb-1">
-                        <Link to={""} className="text-gray">
-                          {data.email}
+                      <p className="text-break font-size-3 mb-1">
+                        <Link to={`mailto:${data.email}`} className="">
+                          {data.email && `@${data.email}`}
                         </Link>
                       </p>
-                      <p className="text-gray font-size-3 m-0 text-capitalize">
-                        <Link to={""} className="text-gray">
-                          {data.contact_no}
+                      <p className="text-break font-size-3 m-0 text-capitalize">
+                        <Link
+                          to={`tel:${data.contact_no}`}
+                          className="text-info"
+                        >
+                          {data.contact_no && `+${data.contact_no}`}
                         </Link>
                       </p>
                     </div>
                   </div>
-                  <div
-                    className="comment_status_update text-end"
+                  <Link
+                    className="rounded-circle comment_status_update text-end p-1"
                     style={{
                       cursor: "pointer",
                       color: "white",
@@ -102,9 +105,10 @@ export default function ExecutiveBox({
                     onClick={(e) => {
                       HandleRemoveexecutive(data.admin_id);
                     }}
+                    title="Remove Executive"
                   >
                     &times; {/* Chross symbol */}
-                  </div>
+                  </Link>
                 </div>
               </div>
               {/* <div className="btn-group button_group flex-shrink-1">
