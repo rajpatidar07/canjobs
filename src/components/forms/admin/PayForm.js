@@ -16,6 +16,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   const [loading, setLoading] = useState(false);
   const [stripePayment, setStripePayment] = useState(false);
   const [braintreePayment, setBraintreePayment] = useState(false);
+  const [stopStripePayment, setStopStripePayment] = useState(true);
 
   const navigate = useNavigate();
   let location = useLocation();
@@ -116,14 +117,16 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   /*COde to set the sripe payment details to the database */
   let params = new URLSearchParams(window.location.search);
   let piId = params.get("payment_intent");
-
-  params = new URLSearchParams(window.location.search);
-  if (piId) {
-    GetStripeDetails();
-  } /*Function to get strie payment details */
+  /*Function to get strie payment details */
   const GetStripeDetails = async () => {
     try {
-      let res = await GetStripePaymentDetails(piId, user_id, user, "success");
+      let res = await GetStripePaymentDetails(
+        piId,
+        user_id,
+        user,
+        "Stripe pay",
+        "success"
+      );
       if (res.status === (200 || "200")) {
         setApicall(true);
         setStripePayment(false);
@@ -138,11 +141,15 @@ export default function PayForm({ setApicall, data, user, user_id }) {
         paramsToRemove.forEach((param) => url.searchParams.delete(param));
 
         window.history.replaceState({}, document.title, url.toString());
+        setStopStripePayment(false);
       }
     } catch (err) {
       console.log(err);
     }
   };
+  if (piId && stopStripePayment) {
+    GetStripeDetails();
+  }
   return (
     <form className="col-md-4 p-10">
       <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
