@@ -2321,8 +2321,8 @@ export const AddBrainTressPayment = async (amount, nonce, name) => {
 export const GetStripePaymentDetails = async (
   id,
   user_id,
-  mode,
   user,
+  mode,
   status
 ) => {
   const response = await axios.post(
