@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useValidation from "../common/useValidation";
+import useValidation from "./useValidation";
 // import { Modal } from "react-bootstrap";
 import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
 import { toast, ToastContainer } from "react-toastify";
@@ -131,7 +131,7 @@ function AddCompanyfollowup(props) {
               user_type === "company" ? "col-md-12" : "col-md-8 border-right"
             } p-10`}
           >
-            {response.length === 0 ? (
+            {response.length === (0 || "0") ? (
               <div className="single_note mb-5">
                 <div className="d-flex justify-content-center">
                   <p className="text-italic font-size-3 m-0">No Data Found</p>

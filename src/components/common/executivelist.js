@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AddExecutiveTeam, RemoveExecutiveTeam } from "../../api/api";
+import { AddExecutiveTeam /*, RemoveExecutiveTeam*/ } from "../../api/api";
 import { toast } from "react-toastify";
 export default function Executivelist({
   executiveData,

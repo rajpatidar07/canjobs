@@ -4,11 +4,11 @@ import { ToastContainer } from "react-toastify";
 // import { useParams } from "react-router-dom";
 import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
-import Loader from "../../common/loader";
+// import Loader from "../../common/loader";
 import AddTransactionForm from "./addTransactionForm";
 export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
 
   let user = localStorage.getItem("userType");
@@ -16,19 +16,23 @@ export default function PayentForm({ data, user_id, user_type }) {
   /*Function to get Payment list data */
   const PaymentData = async () => {
     try {
-      let Response = await GetPaymentList(user_id, user_type);
+      let Response = await GetPaymentList(
+        user_id,
+        user_type,
+        user === "admin" ? 1 : 0
+      );
 
       if (Response.data.data.length === 0) {
         setPaytemList([]);
-        setLoading(false);
+        // setLoading(false);
       } else {
-        setLoading(false);
+        // setLoading(false);
         setPaytemList(Response.data.data);
       }
     } catch (err) {
       console.log(err);
       setPaytemList([]);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -46,9 +50,10 @@ export default function PayentForm({ data, user_id, user_type }) {
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
-          {loading ? (
-            <Loader load={"yes"} />
-          ) : (
+          {
+            // loading ? (
+            //   <Loader load={"yes"} />
+            // ) :
             <div className="activity_container col-md-8 border-right">
               {paymentList.length === 0 ? (
                 <div className="single_note mb-5">
@@ -115,7 +120,7 @@ export default function PayentForm({ data, user_id, user_type }) {
                 ))
               )}
             </div>
-          )}
+          }
           {user === "user" || user === "company" ? (
             <PayForm
               data={data}
@@ -129,6 +134,7 @@ export default function PayentForm({ data, user_id, user_type }) {
               setApicall={setApicall}
               user_id={user_id}
               user={user}
+              user_type={user_type}
             />
           )}
         </div>

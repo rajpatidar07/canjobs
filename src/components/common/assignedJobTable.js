@@ -53,7 +53,11 @@ export default function AssignedJobTable(props) {
         } else {
           setJobData(Responses.data.data);
           setTotalData(Responses.data.total_rows);
-          props.setTotalJobs(Responses.data.total_rows);
+          // props.setTotalJobs(Responses.data.total_rows);
+          props.setTotalJobs((prevRecords) => [
+            ...(prevRecords || []),
+            { count: Responses.data.total_rows, managerId: props.manager_id },
+          ]);
           setIsLoading(false);
         }
       }
