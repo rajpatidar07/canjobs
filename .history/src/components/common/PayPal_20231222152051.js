@@ -93,6 +93,8 @@ const PayPalButton = (props) => {
             "AbYsUSCVrRqDtp4zlox3JSNxRHmmc-SRYVqaFc7GFQzfveGacibhiJCignxz418kGQgbjwwg_AAVvX6V",
         }}
       >
+        {console.log(props.amount)}
+
         <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
       </PayPalScriptProvider>
     </>

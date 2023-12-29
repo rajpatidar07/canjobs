@@ -2280,6 +2280,7 @@ export const AddRazorpay = async (amount, response, role) => {
 };
 /*Stripe payment api */
 export const AddStripePalpay = async (amount) => {
+  console.log(amount);
   const response = await axios.post(
     `${API_URL}payment/stripe-create-payment-intent`,
     {
@@ -2298,6 +2299,7 @@ export const AddStripePalpay = async (amount) => {
 };
 /*Braintree payment api */
 export const AddBrainTressPayment = async (amount, nonce, name) => {
+  console.log(amount);
   const response = await axios.post(
     `${API_URL}payment/payWithBraintree`,
     {
@@ -2351,6 +2353,7 @@ export const AddPaymentToDataBase = async (
   mode,
   user
 ) => {
+  console.log(amount);
   const response = await axios.post(
     `${API_URL}payment/capturePayment`,
     {

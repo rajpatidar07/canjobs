@@ -905,7 +905,6 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
-        {console.log(showMoreDocType ? "hey" : "bye")}
         <div className="col-md-7 py-7">
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
