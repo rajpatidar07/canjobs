@@ -71,8 +71,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
             description: "FIRST RAZOR PAY",
             order_id: orderId,
             handler: async function (response) {
-              await AddRazorpay(amount, response, user);
-              console.log(user);
+              await AddRazorpay(amount, response);
               // Perform any additional actions on successful payment here
               toast.success("Payment Successful.", {
                 position: toast.POSITION.TOP_RIGHT,

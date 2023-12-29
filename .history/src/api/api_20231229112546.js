@@ -2259,7 +2259,7 @@ export const CreateRazorpay = async (price, currency) => {
   return response;
 };
 /*Razor pay payment api */
-export const AddRazorpay = async (amount, response, role) => {
+export const AddRazorpay = async (amount, response) => {
   await axios.post(
     `${API_URL}payment/addRazorPayReciept`,
     {
@@ -2267,7 +2267,6 @@ export const AddRazorpay = async (amount, response, role) => {
       razorpayPaymentId: response.razorpay_payment_id,
       razorpay0rderId: response.razorpay_order_id,
       razorpaysighature: response.razorpay_signature,
-      user_role: role,
     },
     {
       headers: {

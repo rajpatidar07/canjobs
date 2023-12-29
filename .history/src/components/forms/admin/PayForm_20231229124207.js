@@ -49,7 +49,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   /*Function to made razor pay payment*/
   const onPayentClick = async (e) => {
     console.log(errors, data);
-    if (validate() && (data.name || data.company_name)) {
+    if (validate() && data.name) {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onerror = () => {
@@ -67,12 +67,11 @@ export default function PayForm({ setApicall, data, user, user_id }) {
             key: key,
             amount: amount.toString(),
             currency: currency,
-            name: user === "employee" ? data.name : data.company_name,
+            name: data.name,
             description: "FIRST RAZOR PAY",
             order_id: orderId,
             handler: async function (response) {
-              await AddRazorpay(amount, response, user);
-              console.log(user);
+              await AddRazorpay(amount, response);
               // Perform any additional actions on successful payment here
               toast.success("Payment Successful.", {
                 position: toast.POSITION.TOP_RIGHT,
@@ -83,10 +82,9 @@ export default function PayForm({ setApicall, data, user, user_id }) {
               navigate(location.pathname);
             },
             prefill: {
-              name: user === "employee" ? data.name : data.company_name,
+              name: data.name,
               email: data.email,
-              contact:
-                user === "employee" ? data.contact_contact_no : data.contact_no,
+              contact: data.contact_contact_no,
             },
           };
           setLoading(false);
