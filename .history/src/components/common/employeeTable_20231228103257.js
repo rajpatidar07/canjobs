@@ -727,11 +727,9 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p
                               className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                              title={
-                                empdata.agent_u_id + " " + empdata.agent_name
-                              }
+                              title={empdata.agent_u_id + empdata.agent_name}
                             >
-                              {empdata.agent_u_id} {"  "}
+                              {empdata.agent_u_id}
                               {empdata.agent_name}
                             </p>
                           )}

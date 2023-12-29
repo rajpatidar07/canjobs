@@ -731,8 +731,7 @@ export default function EmployeeTable(props) {
                                 empdata.agent_u_id + " " + empdata.agent_name
                               }
                             >
-                              {empdata.agent_u_id} {"  "}
-                              {empdata.agent_name}
+                              {empdata.agent_u_id} {empdata.agent_name}
                             </p>
                           )}
                         </td>
