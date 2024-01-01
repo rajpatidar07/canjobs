@@ -29,7 +29,6 @@ const CheckoutForm = ({
     // Trigger form validation and wallet collection
     try {
       const { error: submitError } = await elements.submit();
-      console.log(submitError);
       if (submitError) {
         // Show error to your customer
         setErrorMessage(submitError.message);
@@ -56,7 +55,7 @@ const CheckoutForm = ({
                 // amount: amount,
               });
               if (res_data.error) {
-                setErrorMessage(res_data.error.message);
+                setErrorMessage(res_data.error);
               } else {
               }
             } catch (Err) {
@@ -68,7 +67,7 @@ const CheckoutForm = ({
         }
       }
     } catch (err) {
-      console.log(err);
+      console.log(object);
     }
   };
 
@@ -85,7 +84,7 @@ const CheckoutForm = ({
         pay
       </button>
       {/* Show error message to your customers */}
-      {errorMessage && <div className="text-danger">{errorMessage}</div>}
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 };

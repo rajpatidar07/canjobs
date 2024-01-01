@@ -270,8 +270,7 @@ function EmployementDetails(props) {
                           <span className="font-size-4 text-gray w-100">
                             {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
-                            )}{" "}
-                            -
+                            )}
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
                               : moment(CareerDetails.end_date).format(
@@ -518,6 +517,7 @@ function EmployementDetails(props) {
                 )}
               </div>
             </div>
+
             <div className="row">
               <div className="form-group col-md-6">
                 <label

@@ -240,8 +240,8 @@ function EmployementDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
-            <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
-              {(employementData || []).map((CareerDetails) => (
+            {(employementData || []).map((CareerDetails) => (
+              <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
                 <div className="col-12 text-capitalize p-0">
                   <div
                     className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
@@ -268,10 +268,12 @@ function EmployementDetails(props) {
                       <div className="d-flex ">
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                           <span className="font-size-4 text-gray w-100">
+                            {" "}
                             {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
                             )}{" "}
-                            -
+                            -s
+                            {"  "}
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
                               : moment(CareerDetails.end_date).format(
@@ -318,9 +320,8 @@ function EmployementDetails(props) {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-
+              </div>
+            ))}
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
@@ -518,6 +519,7 @@ function EmployementDetails(props) {
                 )}
               </div>
             </div>
+
             <div className="row">
               <div className="form-group col-md-6">
                 <label

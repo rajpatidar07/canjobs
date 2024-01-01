@@ -56,7 +56,7 @@ const CheckoutForm = ({
                 // amount: amount,
               });
               if (res_data.error) {
-                setErrorMessage(res_data.error.message);
+                setErrorMessage(res_data.error);
               } else {
               }
             } catch (Err) {
@@ -85,7 +85,7 @@ const CheckoutForm = ({
         pay
       </button>
       {/* Show error message to your customers */}
-      {errorMessage && <div className="text-danger">{errorMessage}</div>}
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 };

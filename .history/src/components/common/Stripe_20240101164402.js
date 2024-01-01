@@ -27,48 +27,44 @@ const CheckoutForm = ({
     }
     // return false;
     // Trigger form validation and wallet collection
-    try {
-      const { error: submitError } = await elements.submit();
-      console.log(submitError);
-      if (submitError) {
-        // Show error to your customer
-        setErrorMessage(submitError.message);
-        return;
+    const { error: submitError } = await elements.submit();
+    console.log(submitError);
+    if (submitError) {
+      // Show error to your customer
+      setErrorMessage(submitError.message);
+      return;
+    } else {
+      if (amount === 0 || amount === "" || amount === "0") {
+        setErrors({
+          ...errors,
+          amount: "Please set the amount before payment",
+        });
       } else {
-        if (amount === 0 || amount === "" || amount === "0") {
-          setErrors({
-            ...errors,
-            amount: "Please set the amount before payment",
-          });
-        } else {
+        try {
+          let tokenData = await AddStripePalpay(amount);
+          let clientSecret = tokenData.data.message;
           try {
-            let tokenData = await AddStripePalpay(amount);
-            let clientSecret = tokenData.data.message;
-            try {
-              const res_data = await stripe.confirmPayment({
-                //`Elements` instance that was used to create the Payment Element
-                elements,
-                clientSecret,
-                confirmParams: {
-                  // save_payment_method: true,
-                  return_url: `http://localhost:3000${window.location.pathname}`,
-                },
-                // amount: amount,
-              });
-              if (res_data.error) {
-                setErrorMessage(res_data.error.message);
-              } else {
-              }
-            } catch (Err) {
-              console.log(Err);
+            const res_data = await stripe.confirmPayment({
+              //`Elements` instance that was used to create the Payment Element
+              elements,
+              clientSecret,
+              confirmParams: {
+                // save_payment_method: true,
+                return_url: `http://localhost:3000${window.location.pathname}`,
+              },
+              // amount: amount,
+            });
+            if (res_data.error) {
+              setErrorMessage(res_data.error);
+            } else {
             }
-          } catch (err) {
-            console.log(err);
+          } catch (Err) {
+            console.log(Err);
           }
+        } catch (err) {
+          console.log(err);
         }
       }
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -85,7 +81,7 @@ const CheckoutForm = ({
         pay
       </button>
       {/* Show error message to your customers */}
-      {errorMessage && <div className="text-danger">{errorMessage}</div>}
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 };

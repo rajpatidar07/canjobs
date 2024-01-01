@@ -32,7 +32,8 @@ const CheckoutForm = ({
       console.log(submitError);
       if (submitError) {
         // Show error to your customer
-        setErrorMessage(submitError.message);
+        console.log(submitError);
+        // setErrorMessage(submitError.message);
         return;
       } else {
         if (amount === 0 || amount === "" || amount === "0") {
@@ -56,7 +57,7 @@ const CheckoutForm = ({
                 // amount: amount,
               });
               if (res_data.error) {
-                setErrorMessage(res_data.error.message);
+                setErrorMessage(res_data.error);
               } else {
               }
             } catch (Err) {
@@ -85,7 +86,7 @@ const CheckoutForm = ({
         pay
       </button>
       {/* Show error message to your customers */}
-      {errorMessage && <div className="text-danger">{errorMessage}</div>}
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 };

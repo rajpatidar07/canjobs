@@ -11,6 +11,7 @@ import {
   LiaSearchLocationSolid,
   LiaBriefcaseSolid,
   LiaBusinessTimeSolid,
+  LiaDollarSignSolid,
 } from "react-icons/lia";
 import ApplyBeforeform from "../forms/user/applyBeforeform";
 function JobBox({
@@ -75,7 +76,7 @@ function JobBox({
       } else {
         if (
           (!token && location.pathname === "/") ||
-          (!skill && !SkillFilterValue && user_type === "user")
+          (!skill && !SkillFilterValue)
         ) {
           setjobData(
             userData.data.data.filter((item) => item.is_featured === "1")
@@ -89,6 +90,7 @@ function JobBox({
       console.log(err);
     }
   };
+  console.log(jobData);
 
   /*Render Function */
   useEffect(() => {
@@ -284,8 +286,11 @@ function JobBox({
                             className="mt-2 mr-8 font-size-small text-black-2 d-flex"
                             title="Salary"
                           >
+                            <span className="mr-4">
+                              <LiaDollarSignSolid />
+                            </span>
                             <span className="font-weight-semibold">
-                              $ {job.salary}
+                              {job.salary}
                             </span>
                           </li>
                         )}

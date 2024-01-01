@@ -61,9 +61,7 @@ function Skills(props) {
       let SkillDetails = await EmployeeSkillDetails(props.employeeId);
       try {
         let SkillList = await GetFilter();
-        if (SkillList.data.message === "Successful") {
-          setSkillList(SkillList.data.data.Skill);
-        }
+        // setSkillList(SkillList.data.data.Skill);
       } catch (err) {
         console.log(err);
       }
@@ -95,8 +93,8 @@ function Skills(props) {
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
     const options = (SkillList || []).map((option) => ({
-      value: option.value,
-      label: option.value,
+      value: option?.value,
+      label: option?.value,
     }));
 
     setSkillOption({ ...state, skill: options });

@@ -11,6 +11,7 @@ import {
   LiaSearchLocationSolid,
   LiaBriefcaseSolid,
   LiaBusinessTimeSolid,
+  LiaDollarSignSolid,
 } from "react-icons/lia";
 import ApplyBeforeform from "../forms/user/applyBeforeform";
 function JobBox({

@@ -240,14 +240,14 @@ function EmployementDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
-            <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
-              {(employementData || []).map((CareerDetails) => (
-                <div className="col-12 text-capitalize p-0">
+            {(employementData || []).map((CareerDetails) => (
+              <div class="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
+                <div class="col-12 text-capitalize p-0">
                   <div
                     className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
                     key={CareerDetails.career_id}
                   >
-                    <div className="d-flex align-items-center text-break  mb-1 flex-wrap flex-sm-nowrap justify-content-md-between ">
+                    <div className="d-flex align-items-center text-break pr-11 mb-1 flex-wrap flex-sm-nowrap justify-content-md-between ">
                       <div className="media align-items-center company_box  p-0">
                         <div className="text_box text-left w-100 mt-n2">
                           <span className="font-size-4 font-weight-semibold w-100">
@@ -257,7 +257,7 @@ function EmployementDetails(props) {
                                 ` - ${CareerDetails.functional_area}`}
                             </span>
                           </span>
-                          <span className="font-size-3 text-default-color text-break">
+                          <span class="font-size-3 text-default-color text-break">
                             {CareerDetails.company}
                             {CareerDetails.industry
                               ? `(${CareerDetails.industry})`
@@ -267,19 +267,22 @@ function EmployementDetails(props) {
                       </div>
                       <div className="d-flex ">
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <span className="font-size-4 text-gray w-100">
+                          <span class="font-size-4 text-gray w-100">
+                            {" "}
                             {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
                             )}{" "}
-                            -
+                            -s
+                            {"  "}
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
                               : moment(CareerDetails.end_date).format(
                                   "DD MMMM, YYYY"
                                 )}
                           </span>
-                          <span className="d-none font-size-3 text-gray w-100">
+                          <span class="d-none font-size-3 text-gray w-100">
                             <span
+                              class=""
                               className={`${
                                 CareerDetails.company_location === null
                                   ? "d-none"
@@ -318,9 +321,8 @@ function EmployementDetails(props) {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-
+              </div>
+            ))}
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
@@ -518,6 +520,7 @@ function EmployementDetails(props) {
                 )}
               </div>
             </div>
+
             <div className="row">
               <div className="form-group col-md-6">
                 <label

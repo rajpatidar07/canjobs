@@ -240,87 +240,62 @@ function EmployementDetails(props) {
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
-            <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
-              {(employementData || []).map((CareerDetails) => (
-                <div className="col-12 text-capitalize p-0">
-                  <div
-                    className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
-                    key={CareerDetails.career_id}
-                  >
-                    <div className="d-flex align-items-center text-break  mb-1 flex-wrap flex-sm-nowrap justify-content-md-between ">
-                      <div className="media align-items-center company_box  p-0">
-                        <div className="text_box text-left w-100 mt-n2">
-                          <span className="font-size-4 font-weight-semibold w-100">
-                            {CareerDetails.designation}
-                            <span className="font-size-4 text-break">
-                              {CareerDetails.functional_area &&
-                                ` - ${CareerDetails.functional_area}`}
-                            </span>
-                          </span>
-                          <span className="font-size-3 text-default-color text-break">
-                            {CareerDetails.company}
-                            {CareerDetails.industry
-                              ? `(${CareerDetails.industry})`
-                              : null}
+            {(employementData || []).map((CareerDetails) => (
+              <div
+                className="w-100 border mb-3 rounded-5 text-capitalize"
+                key={CareerDetails.career_id}
+              >
+                <div className="d-flex align-items-center text-break pr-11 mb-1 flex-wrap flex-sm-nowrap justify-content-md-between p-2">
+                  <div className="media align-items-center company_box col-md-6 p-0">
+                    <div className="text_box text-left w-100 mt-n2">
+                      <h3 className="mb-0">
+                        <div className="font-size-6 text-black-2 font-weight-semibold">
+                          {CareerDetails.designation}
+                          <span className="font-size-4">
+                            {CareerDetails.functional_area &&
+                              ` - ${CareerDetails.functional_area}`}
                           </span>
                         </div>
-                      </div>
-                      <div className="d-flex ">
-                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
-                          <span className="font-size-4 text-gray w-100">
-                            {moment(CareerDetails.start_date).format(
-                              "DD MMMM, YYYY"
-                            )}{" "}
-                            -
-                            {CareerDetails.currently_work_here === ("1" || 1)
-                              ? "Currently working"
-                              : moment(CareerDetails.end_date).format(
-                                  "DD MMMM, YYYY"
-                                )}
-                          </span>
-                          <span className="d-none font-size-3 text-gray w-100">
-                            <span
-                              className={`${
-                                CareerDetails.company_location === null
-                                  ? "d-none"
-                                  : "mr-2"
-                              } `}
-                            >
-                              <img
-                                src="image/svg/icon-loaction-pin-black.svg"
-                                alt=""
-                              />
-                            </span>
-                            {CareerDetails.company_location}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="w-auto education_btn_grp">
-                        <Link
-                          to=""
-                          onClick={() => EmployeementData(CareerDetails)}
-                        >
-                          <i
-                            className="fa fa-edit text-gray px-5"
-                            aria-hidden="true"
-                          ></i>
-                        </Link>
-                        <Link
-                          to=""
-                          onClick={() => ShowDeleteAlert(CareerDetails)}
-                        >
-                          <i
-                            className="fa fa-trash px-5"
-                            aria-hidden="true"
-                          ></i>
-                        </Link>
-                      </div>
+                      </h3>
+                      <span className="font-size-4 text-default-color line-height-2">
+                        {CareerDetails.company}
+                        {CareerDetails.industry
+                          ? `(${CareerDetails.industry})`
+                          : null}
+                      </span>
                     </div>
                   </div>
+                  <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
+                    <span className="font-size-4 text-gray w-100">
+                      {moment(CareerDetails.start_date).format("DD MMMM, YYYY")} -s
+                      {"  "}
+                      {CareerDetails.currently_work_here === ("1" || 1)
+                        ? "Currently working"
+                        : moment(CareerDetails.end_date).format("DD MMMM, YYYY")}
+                    </span>
+                    <span
+                      className={`${
+                        CareerDetails.company_location === null ? "d-none" : ""
+                      } font-size-3 text-gray w-100`}
+                    >
+                      <span className="mr-4" style={{ marginTop: "-2px" }}>
+                        <img
+                          src="image/svg/icon-loaction-pin-black.svg"
+                          alt=""
+                        />
+                      </span>
+                      {CareerDetails.company_location}
+                    </span>
+                  </div>
+                  <Link to="" onClick={() => ShowDeleteAlert(CareerDetails)}>
+                    <i className="fa fa-times-circle" aria-hidden="true"></i>
+                  </Link>
+                  <Link to="" onClick={() => EmployeementData(CareerDetails)}>
+                    <i className="fa fa-edit text-gray" aria-hidden="true"></i>
+                  </Link>
                 </div>
-              ))}
-            </div>
-
+              </div>
+            ))}
             <div className="row pt-5">
               <div className="form-group col-md-6">
                 <label
@@ -518,6 +493,7 @@ function EmployementDetails(props) {
                 )}
               </div>
             </div>
+
             <div className="row">
               <div className="form-group col-md-6">
                 <label

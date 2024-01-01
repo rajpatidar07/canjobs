@@ -61,9 +61,7 @@ function Skills(props) {
       let SkillDetails = await EmployeeSkillDetails(props.employeeId);
       try {
         let SkillList = await GetFilter();
-        if (SkillList.data.message === "Successful") {
-          setSkillList(SkillList.data.data.Skill);
-        }
+        setSkillList(SkillList.data.data.Skill);
       } catch (err) {
         console.log(err);
       }
