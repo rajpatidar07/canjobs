@@ -179,7 +179,7 @@ function Setting(props) {
           <h3 className="text-center">Settings</h3>
           <div>
             <h6 className="text-start mt-4 text-grey">
-              {userType === "user" ? "Employee's" : "Employer's"} Email
+              {userType === "user" ? "Employee's" : "Client's"} Email
               Preferences
             </h6>
             <ul className="list-unstyled row">
@@ -253,7 +253,7 @@ function Setting(props) {
               </li>
             </ul>
             <h6 className="text-start mt-4 text-grey">
-              {userType === "user" ? "Employee's" : "Employer's"} Notification
+              {userType === "user" ? "Employee's" : "Client's"} Notification
               Preferences
             </h6>
             <ul className="list-unstyled row">
