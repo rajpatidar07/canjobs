@@ -166,12 +166,12 @@ function SelfJob(props) {
                         : "col p-1 form_group"
                     }
                   >
-                    <p className="input_label">Company Name:</p>
+                    <p className="input_label">Client Name:</p>
                     <input
                       required
                       type="text"
                       className="form-control w-100"
-                      placeholder={"Company name"}
+                      placeholder={"Client name"}
                       value={company}
                       name={"compnay_name"}
                       onChange={(e) => {
