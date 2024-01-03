@@ -211,9 +211,7 @@ export const getallEmployeeData = async (
   agentId
 ) => {
   const response = await axios.post(
-    `${API_URL}${
-      user_type === "company" ? "company" : "admin"
-    }/getallEmployeeView`,
+    `${API_URL}${user_type}/getallEmployeeView`,
     {
       user_type: user_type,
       filter_experience: experience,

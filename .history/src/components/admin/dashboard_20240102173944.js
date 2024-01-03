@@ -435,7 +435,7 @@ const AdminDashboard = () => {
                 />
               </div>
             </div>
-            {/* <!-- Recent Companies --> */}
+            {/* <!-- Recent Companies- --> */}
             <div
               id="table2"
               className={openTable === 2 ? "col-md-12" : "col-md-6"}
@@ -443,7 +443,7 @@ const AdminDashboard = () => {
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
-                    Recently Added Clients
+                    Recently Added Companies
                   </h3>
                   <div className="d-flex justify-content-between p-0">
                     <div className="select_div mr-5">
@@ -469,7 +469,7 @@ const AdminDashboard = () => {
                       <Link
                         className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
                         to={"/employer"}
-                        title="View All Clients"
+                        title="View All Companies"
                       >
                         View All
                       </Link>

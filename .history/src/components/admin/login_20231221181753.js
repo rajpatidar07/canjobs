@@ -228,7 +228,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                     to={"/agentlogin"}
                     className="font-size-3 text-anger line-height-reset mb-3 mt-3 text-center "
                   >
-                    Partner Login
+                    Agent Login
                   </Link>
                 </div>
               </form>

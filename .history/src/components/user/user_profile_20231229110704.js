@@ -698,7 +698,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${
-                        user_type === "company" || user_type === "agent"
+                        user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }`}
@@ -744,9 +744,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "user" ||
-                        user_type === "company" ||
-                        user_type === "agent"
+                        user_type === "user" || user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }
@@ -769,7 +767,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "company" || user_type === "agent"
+                        user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }
@@ -810,9 +808,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`tab-menu-items nav-item ${
-                        user_type === "company" || user_type === "agent"
-                          ? "d-none"
-                          : ""
+                        user_type === "company" ? "d-none" : ""
                       }`}
                     >
                       <Link
@@ -841,9 +837,7 @@ const NewUserProfile = (props) => {
                     </li> */}
                     <li
                       className={
-                        user_type === "user" ||
-                        user_type === "company" ||
-                        user_type === "agent"
+                        user_type === "user" || user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item "
                       }
@@ -864,13 +858,7 @@ const NewUserProfile = (props) => {
                         Contact Us
                       </Link>
                     </li>
-                    <li
-                      className={
-                        user_type === "agent"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
-                      }
-                    >
+                    <li className={"tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "email"

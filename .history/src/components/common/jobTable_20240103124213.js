@@ -183,6 +183,7 @@ export default function JobTable(props) {
       setIsLoading(false);
     }
   };
+  console.log(responseId);
   /*Render function to get the job */
   useEffect(() => {
     JobData();
@@ -1040,40 +1041,40 @@ export default function JobTable(props) {
                             </td>
                           </tr>
                         )}
-                        {(responseId !== undefined ||
-                          responseId !== "undefined") &&
-                        job.job_id === responseId &&
+                        {job.job_id === responseId &&
                         job.total_applicants > 0 ? (
                           <tr>
                             <td colSpan={11}>
-                              <>
-                                {/* <!-- Job Responses --> */}
-                                <JobResponse
-                                  responseId={responseId}
-                                  apiCall={apiCall}
-                                  setApiCall={setApiCall}
-                                  heading={"Manage Jobs"}
-                                  self={props.selfJob}
-                                  total_applicants={job.total_applicants}
-                                  role_category={job.role_category}
-                                  status={
-                                    props.response === "response" ||
-                                    props.response === "visa" ||
-                                    props.response === "lmia" ||
-                                    props.response === "companyprofile"
-                                      ? "1"
-                                      : "0"
-                                  }
-                                  response={props.response}
-                                  employee_id={
-                                    location.state
-                                      ? location.state.employee_id
+                              {
+                                <>
+                                  {/* <!-- Job Responses --> */}
+                                  <JobResponse
+                                    responseId={responseId}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    heading={"Manage Jobs"}
+                                    self={props.selfJob}
+                                    total_applicants={job.total_applicants}
+                                    role_category={job.role_category}
+                                    status={
+                                      props.response === "response" ||
+                                      props.response === "visa" ||
+                                      props.response === "lmia" ||
+                                      props.response === "companyprofile"
+                                        ? "1"
+                                        : "0"
+                                    }
+                                    response={props.response}
+                                    employee_id={
+                                      location.state
                                         ? location.state.employee_id
+                                          ? location.state.employee_id
+                                          : ""
                                         : ""
-                                      : ""
-                                  }
-                                />
-                              </>
+                                    }
+                                  />
+                                </>
+                              }
                             </td>
                           </tr>
                         ) : null}

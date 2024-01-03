@@ -183,6 +183,7 @@ export default function JobTable(props) {
       setIsLoading(false);
     }
   };
+  console.log(responseId);
   /*Render function to get the job */
   useEffect(() => {
     JobData();
@@ -1040,9 +1041,7 @@ export default function JobTable(props) {
                             </td>
                           </tr>
                         )}
-                        {(responseId !== undefined ||
-                          responseId !== "undefined") &&
-                        job.job_id === responseId &&
+                        {job.job_id === responseId &&
                         job.total_applicants > 0 ? (
                           <tr>
                             <td colSpan={11}>

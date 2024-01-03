@@ -396,30 +396,30 @@ function ManageAdmin() {
                               />
                             ))
                           )}
+                          <div className="col px-1 form_group mt-4 text-center">
+                            <CustomButton
+                              className={
+                                addTeamListShow === true
+                                  ? "font-size-3 rounded-3 btn btn-light border-0"
+                                  : "font-size-3 rounded-3 btn btn-primary border-0"
+                              }
+                              onClick={
+                                addTeamListShow === true
+                                  ? () => {
+                                      setAddTeamListShow(false);
+                                      setExecutiveApiCall(true);
+                                    }
+                                  : () => setAddTeamListShow(true)
+                              }
+                              title={
+                                addTeamListShow === true ? "Cancel" : "Add Team"
+                              }
+                            >
+                              {addTeamListShow === true ? "Cancel" : "Add Team"}
+                            </CustomButton>
+                          </div>
                         </div>
                       )}
-                      <div className="col px-1 form_group mt-4 text-center">
-                        <CustomButton
-                          className={
-                            addTeamListShow === true
-                              ? "font-size-3 rounded-3 btn btn-light border-0"
-                              : "font-size-3 rounded-3 btn btn-primary border-0"
-                          }
-                          onClick={
-                            addTeamListShow === true
-                              ? () => {
-                                  setAddTeamListShow(false);
-                                  setExecutiveApiCall(true);
-                                }
-                              : () => setAddTeamListShow(true)
-                          }
-                          title={
-                            addTeamListShow === true ? "Cancel" : "Add Team"
-                          }
-                        >
-                          {addTeamListShow === true ? "Cancel" : "Add Team"}
-                        </CustomButton>
-                      </div>
                     </div>
                   </div>
                 </div>

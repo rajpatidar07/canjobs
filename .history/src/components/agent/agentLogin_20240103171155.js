@@ -63,8 +63,9 @@ export default function AgentLogin() {
           });
           setLoading(false);
           setIsLoading(false);
+          window.reload();
           navigate("/agent");
-          window.location.reload();
+          //   window.location.reload();
         } else if (
           updatedTodo.message === "Invalid Credentials" ||
           updatedTodo.message === "Invalid credentials !"

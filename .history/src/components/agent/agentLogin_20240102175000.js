@@ -51,12 +51,10 @@ export default function AgentLogin() {
           setIsLoading(true);
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("userType", "agent");
-          localStorage.setItem("admin", updatedTodo.agent_name);
+          localStorage.setItem("admin", updatedTodo.name);
           localStorage.setItem("agent_id", updatedTodo.id);
           localStorage.setItem("admin_type", updatedTodo.user_type);
           localStorage.setItem("email", updatedTodo.email);
-          localStorage.setItem("agent_u_id", updatedTodo.agent_u_id);
-
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -64,7 +62,7 @@ export default function AgentLogin() {
           setLoading(false);
           setIsLoading(false);
           navigate("/agent");
-          window.location.reload();
+          //   window.location.reload();
         } else if (
           updatedTodo.message === "Invalid Credentials" ||
           updatedTodo.message === "Invalid credentials !"

@@ -94,7 +94,7 @@ const AdminSidebar = (props) => {
             className={
               user_type === "agent"
                 ? "d-none"
-                : `${props.heading === "Manage Clients" ? "active" : ""}`
+                : `${props.heading === "Manage Companies" ? "active" : ""}`
             }
           >
             <Link
@@ -103,7 +103,7 @@ const AdminSidebar = (props) => {
             >
               {/* <i className="far fa-building mr-5"></i> */}
               <BsBuildings className="sidebar_icon" />
-              Manage Clients
+              Manage Companies
             </Link>
           </li>
           <li
@@ -302,13 +302,7 @@ const AdminSidebar = (props) => {
           </li> */}
 
           <li
-            className={
-              user_type === "agent"
-                ? "d-none"
-                : props.heading === "Manage Job Category"
-                ? "active"
-                : ""
-            }
+            className={props.heading === "Manage Job Category" ? "active" : ""}
           >
             <Link
               to="/category"

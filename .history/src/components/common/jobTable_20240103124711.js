@@ -183,6 +183,7 @@ export default function JobTable(props) {
       setIsLoading(false);
     }
   };
+  console.log(responseId);
   /*Render function to get the job */
   useEffect(() => {
     JobData();

@@ -634,7 +634,7 @@ function CompanyDetails(props) {
                           : "form-control"
                       }
                       id="about"
-                      placeholder="Client's Description"
+                      placeholder="Company Description"
                     ></textarea>
                     {/* <FroalaEditor
                       model={state.about}

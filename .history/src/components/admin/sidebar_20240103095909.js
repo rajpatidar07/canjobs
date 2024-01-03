@@ -302,13 +302,7 @@ const AdminSidebar = (props) => {
           </li> */}
 
           <li
-            className={
-              user_type === "agent"
-                ? "d-none"
-                : props.heading === "Manage Job Category"
-                ? "active"
-                : ""
-            }
+            className={props.heading === "Manage Job Category" ? "active" : ""}
           >
             <Link
               to="/category"
