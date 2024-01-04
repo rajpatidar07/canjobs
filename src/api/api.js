@@ -48,7 +48,7 @@ export const ChangePasswordApi = async (props) => {
   return response.data;
 };
 
-/*Sen Otp to email api */
+/*Send Otp to email api */
 export const SendOtp = async (props, type) => {
   const response = await axios.post(`${API_URL}common/generateOtp`, {
     email: props.email,
