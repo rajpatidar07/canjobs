@@ -1000,9 +1000,9 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      props.employeeId !== "0" || user_type === "agent"
-                        ? "d-none"
-                        : "form-group col-md-4 d-flex"
+                      props.employeeId === "0"
+                        ? "form-group col-md-4 d-flex"
+                        : "d-none"
                     }
                     style={{ position: "relative" }}
                   >

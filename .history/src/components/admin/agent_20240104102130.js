@@ -227,7 +227,6 @@ function Agent() {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 EditAgent={EditAgent}
-                user={user_type}
               />
               {showAddEAgentModal ? (
                 <AddAgent

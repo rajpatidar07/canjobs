@@ -211,8 +211,11 @@ export const getallEmployeeData = async (
   agentId
   // agent_u_id
 ) => {
+  console.log(job_id, categorye, inserted, candian, agentId);
   const response = await axios.post(
-    `${API_URL}${user_type}/getallEmployeeView`,
+    `${API_URL}${
+      user_type //=== "admin" ? "admin" : "company"
+    }/getallEmployeeView`,
     {
       user_type: user_type,
       filter_experience: experience,
@@ -230,6 +233,7 @@ export const getallEmployeeData = async (
       work_permit_canada: candian,
       interested_in: inserted,
       agent_id: agentId,
+      // agent_u_id: agent_u_id,
     },
     {
       headers: {

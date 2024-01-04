@@ -372,49 +372,48 @@ const NewUserProfile = (props) => {
                             )
                           })}
                         </DropdownButton> */}
-                        {user_type === "admin" ||
-                          (user_type === "agent" && (
-                            <DropdownButton
-                              as={ButtonGroup}
-                              title={
-                                status === "1"
-                                  ? "New"
-                                  : status === "2"
-                                  ? "Prospect"
-                                  : status === "3"
-                                  ? "Lead"
-                                  : status === "4"
-                                  ? "Retained"
-                                  : status === "5"
-                                  ? "Lost"
-                                  : status === "6"
-                                  ? "Dead"
-                                  : status === "7"
-                                  ? "Working on"
-                                  : status === "8"
-                                  ? "Submitted"
-                                  : status === "0"
-                                  ? "New"
-                                  : "status"
-                              }
-                              size="sm"
-                              className="user_status_btn btn-primary text-white ml-1"
-                              onSelect={OnStatusChange}
-                            >
-                              {(FilterJson.employee_status || []).map(
-                                (item, index) => (
-                                  <Dropdown.Item
-                                    key={index}
-                                    value={index + 1}
-                                    eventKey={index + 1}
-                                    className="text-capitalize"
-                                  >
-                                    {item}
-                                  </Dropdown.Item>
-                                )
-                              )}
-                            </DropdownButton>
-                          ))}
+                        {user_type === "admin" && (
+                          <DropdownButton
+                            as={ButtonGroup}
+                            title={
+                              status === "1"
+                                ? "New"
+                                : status === "2"
+                                ? "Prospect"
+                                : status === "3"
+                                ? "Lead"
+                                : status === "4"
+                                ? "Retained"
+                                : status === "5"
+                                ? "Lost"
+                                : status === "6"
+                                ? "Dead"
+                                : status === "7"
+                                ? "Working on"
+                                : status === "8"
+                                ? "Submitted"
+                                : status === "0"
+                                ? "New"
+                                : "status"
+                            }
+                            size="sm"
+                            className="user_status_btn btn-primary text-white ml-1"
+                            onSelect={OnStatusChange}
+                          >
+                            {(FilterJson.employee_status || []).map(
+                              (item, index) => (
+                                <Dropdown.Item
+                                  key={index}
+                                  value={index + 1}
+                                  eventKey={index + 1}
+                                  className="text-capitalize"
+                                >
+                                  {item}
+                                </Dropdown.Item>
+                              )
+                            )}
+                          </DropdownButton>
+                        )}
                         {/* <div className="d-flex">
                           {(visaStatus || []).map((item, index) => {
                             return (
@@ -975,49 +974,48 @@ const NewUserProfile = (props) => {
                                     Y
                                   </span>
                                 ) : null}
-                                {user_type === "admin" ||
-                                  (user_type === "agent" && (
-                                    <DropdownButton
-                                      as={ButtonGroup}
-                                      title={
-                                        status === "1"
-                                          ? "New"
-                                          : status === "2"
-                                          ? "Prospect"
-                                          : status === "3"
-                                          ? "Lead"
-                                          : status === "4"
-                                          ? "Retained"
-                                          : status === "5"
-                                          ? "Lost"
-                                          : status === "6"
-                                          ? "Dead"
-                                          : status === "7"
-                                          ? "Working on"
-                                          : status === "8"
-                                          ? "Submitted"
-                                          : status === "0"
-                                          ? "New"
-                                          : "status"
-                                      }
-                                      size="sm"
-                                      className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
-                                      onSelect={OnStatusChange}
-                                    >
-                                      {(FilterJson.employee_status || []).map(
-                                        (item, index) => (
-                                          <Dropdown.Item
-                                            key={index}
-                                            value={index + 1}
-                                            eventKey={index + 1}
-                                            className="text-capitalize"
-                                          >
-                                            {item}
-                                          </Dropdown.Item>
-                                        )
-                                      )}
-                                    </DropdownButton>
-                                  ))}
+                                {user_type === "admin" && (
+                                  <DropdownButton
+                                    as={ButtonGroup}
+                                    title={
+                                      status === "1"
+                                        ? "New"
+                                        : status === "2"
+                                        ? "Prospect"
+                                        : status === "3"
+                                        ? "Lead"
+                                        : status === "4"
+                                        ? "Retained"
+                                        : status === "5"
+                                        ? "Lost"
+                                        : status === "6"
+                                        ? "Dead"
+                                        : status === "7"
+                                        ? "Working on"
+                                        : status === "8"
+                                        ? "Submitted"
+                                        : status === "0"
+                                        ? "New"
+                                        : "status"
+                                    }
+                                    size="sm"
+                                    className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
+                                    onSelect={OnStatusChange}
+                                  >
+                                    {(FilterJson.employee_status || []).map(
+                                      (item, index) => (
+                                        <Dropdown.Item
+                                          key={index}
+                                          value={index + 1}
+                                          eventKey={index + 1}
+                                          className="text-capitalize"
+                                        >
+                                          {item}
+                                        </Dropdown.Item>
+                                      )
+                                    )}
+                                  </DropdownButton>
+                                )}
                               </div>
                               <hr className="my-3" />
                               <div className="d-flex align-items-center">

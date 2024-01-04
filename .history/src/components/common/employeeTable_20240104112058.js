@@ -51,7 +51,7 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
-  let agentId = localStorage.getItem("agent_id");
+  let agentId = localStorage.getItem("agent_u_id");
   let user_type = localStorage.getItem("userType");
   /* Function to get Employee data*/
   const EmpData = async () => {

@@ -74,6 +74,7 @@ export default function EmployeeTable(props) {
         "",
         "",
         "",
+        "",
         user_type === "agent" ? agentId : ""
       );
       if (userData.data.length === 0) {

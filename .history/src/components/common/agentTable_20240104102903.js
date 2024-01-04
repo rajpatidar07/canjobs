@@ -15,7 +15,7 @@ export default function AgentTable(props) {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [AgentId, setAgentId] = useState(
-    props.user === "agent" ? localStorage.getItem("agent_id") : ""
+    user === "agent" ? localStorage.getItem("agent_id") : ""
   );
   //   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   //   let [showVisaModal, setVisaModal] = useState(false);
@@ -44,7 +44,7 @@ export default function AgentTable(props) {
     setIsLoading(true);
     try {
       const userData = await GetAgent(
-        props.user === "agent" ? AgentId : "",
+        user === "agent" ? AgentId : "",
         props.search,
         props.pageNo,
         recordsPerPage,
@@ -64,7 +64,7 @@ export default function AgentTable(props) {
         //   props.heading === "Dashboard" ||
         //   location.pathname === "/employee" ||
         //   props.lima === "no" ||
-        //   props.user === "user"
+        //   user === "user"
         // ) {
         //   setresponseId();
         // } else {
@@ -95,7 +95,7 @@ export default function AgentTable(props) {
     if (props.apiCall === true || apiCall === true) {
       props.setApiCall(false);
       setApiCall(false);
-      if (props.user === "agent") {
+      if (user === "agent") {
         setAgentId(localStorage.getItem("agent_id"));
       } else {
         setAgentId("");
@@ -502,7 +502,7 @@ export default function AgentTable(props) {
                             </button>
                             <button
                               className={
-                                props.user === "agent"
+                                user === "agent"
                                   ? "d-none"
                                   : "btn btn-outline-info action_btn"
                               }

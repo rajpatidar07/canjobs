@@ -25,7 +25,7 @@ function Agent() {
   const [searcherror, setSearchError] = useState("");
   //   let [SkillList, setSkillList] = useState([]);
   //   let [EducationList, setEducationList] = useState([]);
-  let user_type = localStorage.getItem("userType");
+
   /*Function to get thejSon */
   //   const JsonData = async () => {
   //     try {
@@ -75,24 +75,16 @@ function Agent() {
     <>
       <div className={"site-wrapper overflow-hidden bg-default-2"}>
         {/* <!-- Header Area --> */}
-        <AdminHeader
-          heading={user_type === "agent" ? "Profile" : "Manage Partner"}
-        />
+        <AdminHeader heading={"Manage Partner"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar
-          heading={user_type === "agent" ? "Profile" : "Manage Partner"}
-        />
+        <AdminSidebar heading={"Manage Partner"} />
         <ToastContainer />
         {/* <!--Add Adgent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
-              <div
-                className={
-                  user_type === "agent" ? "d-none" : "mb-4 align-items-center"
-                }
-              >
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Partner's</h3>
                 </div>
@@ -227,7 +219,6 @@ function Agent() {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 EditAgent={EditAgent}
-                user={user_type}
               />
               {showAddEAgentModal ? (
                 <AddAgent

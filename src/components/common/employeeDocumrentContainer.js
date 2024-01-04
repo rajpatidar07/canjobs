@@ -757,7 +757,11 @@ export default function DocumrentContainer(props) {
       }
     >
       <div className="row m-0">
-        <div className="col-md-2 p-0 border-right pb-7">
+        <div
+          className={`${
+            user_type === "admin" ? "col-md-2" : "col-md-4"
+          } p-0 border-right pb-7`}
+        >
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
@@ -905,7 +909,9 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
-        <div className="col-md-7 py-7">
+        <div
+          className={`${user_type === "admin" ? "col-md-7" : "col-md-8"} py-7`}
+        >
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
             {showMoreDocType ? (
               <div className="doc_upload_col">
@@ -928,7 +934,9 @@ export default function DocumrentContainer(props) {
             ) : (
               <button
                 className={
-                  user_type === "user" || user_type === "admin"
+                  user_type === "user" ||
+                  user_type === "admin" ||
+                  user_type === "agent"
                     ? "btn btn-secondary btn-sm text-white mr-0"
                     : "d-none"
                 }

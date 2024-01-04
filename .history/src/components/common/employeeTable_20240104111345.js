@@ -70,8 +70,7 @@ export default function EmployeeTable(props) {
         props.filter_by_time,
         "",
         props.skill || props.heading === "Dashboard" ? "" : status,
-        props.job_id ? props.job_id : "",
-        "",
+        props.job_id,
         "",
         "",
         user_type === "agent" ? agentId : ""

@@ -71,11 +71,13 @@ export default function EmployeeTable(props) {
         "",
         props.skill || props.heading === "Dashboard" ? "" : status,
         props.job_id ? props.job_id : "",
-        "",
-        "",
-        "",
+        "1",
+        "2",
+        "3",
+        "4",
         user_type === "agent" ? agentId : ""
       );
+      console.log("lkjhg", user_type === "agent" ? agentId : "");
       if (userData.data.length === 0) {
         setemployeeData([]);
         setIsLoading(false);

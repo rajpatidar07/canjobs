@@ -281,11 +281,9 @@ const AdminSidebar = (props) => {
           </li>
           <li
             className={
-              (
-                user_type === "agent"
-                  ? props.heading === "Profile"
-                  : props.heading === "Manage Agent"
-              )
+              user_type === "agent"
+                ? props.heading === "Profile"
+                : props.heading === "Manage Agent"
                 ? "active"
                 : ""
             }

@@ -75,13 +75,9 @@ function Agent() {
     <>
       <div className={"site-wrapper overflow-hidden bg-default-2"}>
         {/* <!-- Header Area --> */}
-        <AdminHeader
-          heading={user_type === "agent" ? "Profile" : "Manage Partner"}
-        />
+        <AdminHeader heading={"Manage Partner"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar
-          heading={user_type === "agent" ? "Profile" : "Manage Partner"}
-        />
+        <AdminSidebar heading={"Manage Partner"} />
         <ToastContainer />
         {/* <!--Add Adgent Details Modal --> */}
 
@@ -227,7 +223,6 @@ function Agent() {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 EditAgent={EditAgent}
-                user={user_type}
               />
               {showAddEAgentModal ? (
                 <AddAgent

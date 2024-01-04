@@ -76,6 +76,7 @@ export default function EmployeeTable(props) {
         "",
         user_type === "agent" ? agentId : ""
       );
+      console.log("lkjhg", user_type === "agent" ? agentId : "");
       if (userData.data.length === 0) {
         setemployeeData([]);
         setIsLoading(false);

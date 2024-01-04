@@ -51,8 +51,6 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
-  let agentId = localStorage.getItem("agent_id");
-  let user_type = localStorage.getItem("userType");
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -70,11 +68,7 @@ export default function EmployeeTable(props) {
         props.filter_by_time,
         "",
         props.skill || props.heading === "Dashboard" ? "" : status,
-        props.job_id ? props.job_id : "",
-        "",
-        "",
-        "",
-        user_type === "agent" ? agentId : ""
+        props.job_id
       );
       if (userData.data.length === 0) {
         setemployeeData([]);

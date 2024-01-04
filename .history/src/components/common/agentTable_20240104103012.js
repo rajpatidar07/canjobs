@@ -15,7 +15,7 @@ export default function AgentTable(props) {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [AgentId, setAgentId] = useState(
-    props.user === "agent" ? localStorage.getItem("agent_id") : ""
+    user === "agent" ? localStorage.getItem("agent_id") : ""
   );
   //   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   //   let [showVisaModal, setVisaModal] = useState(false);

@@ -70,18 +70,16 @@ const AdminHeader = (props) => {
                   </div>
                   {/* <i className="fas fa-chevron-down heading-default-color px-3"></i> */}
                 </Link>
-                <div
+              {userType==="agent"?null:  <div
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  {userType === "agent" ? null : (
-                    <Link
-                      to={"/adminprofile"}
-                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                    >
-                      Edit Profile
-                    </Link>
-                  )}
+                  <Link
+                    to={"/adminprofile"}
+                    className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+                  >
+                    Edit Profile
+                  </Link>}
                   {AdminType === "super-admin" || AdminType === "admin" ? (
                     <Link
                       to={""}

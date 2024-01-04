@@ -12,7 +12,6 @@ import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
 import { FaNotesMedical } from "react-icons/fa";
-import { FaRegUser } from "react-icons/fa";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
@@ -279,34 +278,15 @@ const AdminSidebar = (props) => {
               Manage Admin
             </Link>
           </li>
-          <li
-            className={
-              (
-                user_type === "agent"
-                  ? props.heading === "Profile"
-                  : props.heading === "Manage Agent"
-              )
-                ? "active"
-                : ""
-            }
-          >
+          <li className={props.heading === "Manage Agent" ? "active" : ""}>
             <Link
               to="/agent"
               className={
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
             >
-              {user_type === "agent" ? (
-                <>
-                  <FaRegUser className="sidebar_icon" />
-                  Profile
-                </>
-              ) : (
-                <>
-                  <MdRealEstateAgent className="sidebar_icon" />
-                  Manage Partner
-                </>
-              )}
+              <MdRealEstateAgent className="sidebar_icon" />
+              Manage Partner
             </Link>
           </li>
           {/* <li className={user_type === "agent"?"d-none":props.heading === "Email" ? "active" : ""}>

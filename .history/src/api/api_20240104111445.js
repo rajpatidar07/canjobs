@@ -209,10 +209,12 @@ export const getallEmployeeData = async (
   inserted,
   candian,
   agentId
-  // agent_u_id
 ) => {
+  console.log(inserted, candian, agentId);
   const response = await axios.post(
-    `${API_URL}${user_type}/getallEmployeeView`,
+    `${API_URL}${
+      user_type //=== "admin" ? "admin" : "company"
+    }/getallEmployeeView`,
     {
       user_type: user_type,
       filter_experience: experience,

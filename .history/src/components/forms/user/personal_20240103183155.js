@@ -58,7 +58,7 @@ function PersonalDetails(props) {
     profile_photo: "",
     is_featured: "",
     status: props.employeeId === "0" ? "1" : "",
-    reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
+    reffer_by: "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
   };
 
@@ -1000,9 +1000,9 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      props.employeeId !== "0" || user_type === "agent"
-                        ? "d-none"
-                        : "form-group col-md-4 d-flex"
+                      props.employeeId === "0"
+                        ? "form-group col-md-4 d-flex"
+                        : "d-none"
                     }
                     style={{ position: "relative" }}
                   >

@@ -279,17 +279,7 @@ const AdminSidebar = (props) => {
               Manage Admin
             </Link>
           </li>
-          <li
-            className={
-              (
-                user_type === "agent"
-                  ? props.heading === "Profile"
-                  : props.heading === "Manage Agent"
-              )
-                ? "active"
-                : ""
-            }
-          >
+          <li className={props.heading === "Manage Agent" ? "active" : ""}>
             <Link
               to="/agent"
               className={
