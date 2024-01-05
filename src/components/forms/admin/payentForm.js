@@ -128,7 +128,7 @@ export default function PayentForm({ data, user_id, user_type }) {
               user_id={user_id}
               user={user_type}
             />
-          ) : (
+          ) : user === "agent" ? null : (
             <AddTransactionForm
               data={data}
               setApicall={setApicall}

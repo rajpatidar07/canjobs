@@ -27,7 +27,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                   <div
                     key={i + 1}
                     className={`${
-                      location.pathname === `/company_detail` ||
+                      location.pathname === `/client_detail` ||
                       location.pathname === "/job_detail"
                         ? `step text-capitalize ${
                             status.lmia_status === "advertisements" ||
@@ -48,7 +48,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                   <div
                     key={i + 2}
                     className={`${
-                      location.pathname === `/company_detail` ||
+                      location.pathname === `client_detail` ||
                       location.pathname === "/job_detail"
                         ? `step text-capitalize ${
                             status.lmia_status === "documentation" ||
@@ -68,7 +68,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                   <div
                     key={i + 3}
                     className={`${
-                      location.pathname === `/company_detail` ||
+                      location.pathname === `/client_detail` ||
                       location.pathname === "/job_detail"
                         ? `step text-capitalize ${
                             status.lmia_status === "candidate placement" ||
@@ -120,7 +120,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                         item === null ||
                         item === ""
                           ? null
-                          : location.pathname === "/company_detail" ||
+                          : location.pathname === "/client_detail" ||
                             location.pathname === "/job_detail"
                           ? item.job_id === status.job_id
                           : item.lmia_id === status.id
