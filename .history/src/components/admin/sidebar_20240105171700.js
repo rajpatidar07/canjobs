@@ -103,7 +103,7 @@ const AdminSidebar = (props) => {
             }
           >
             <Link
-              to="/adminclient"
+              to="/employer"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             >
               {/* <i className="far fa-building mr-5"></i> */}

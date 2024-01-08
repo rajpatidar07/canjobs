@@ -139,7 +139,7 @@ function MainLayout() {
             <Route path="/document" element={<Document />} />
             <Route path="/employee" element={<Employee />} />
             <Route path="/selfemployee" element={<SelfApplicat />} />
-            <Route path="/adminclient" element={<Employer />} />
+            <Route path="/client" element={<Employer />} />
             <Route path="/adminprofile" element={<ManageAdmin />} />
             <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
             <Route path="/:eid" element={<NewUserProfile />} />

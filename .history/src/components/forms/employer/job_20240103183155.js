@@ -285,7 +285,7 @@ function AddJobModal(props) {
         </button>
         <div className="bg-white rounded h-100 px-md-11 px-6 pt-7 overflow-y-hidden">
           <form onSubmit={onAddJobsClick}>
-            {props.jobdata === "0" || location.pathname === "/adminclient" ? (
+            {props.jobdata === "0" || location.pathname === "/employer" ? (
               <h5 className="text-center pt-2 mb-7">Add Jobs</h5>
             ) : (
               <h5 className="text-center pt-2 mb-7">Update Jobs</h5>
@@ -321,7 +321,7 @@ function AddJobModal(props) {
                 )}
               </div>
               {user_type !== "admin" ||
-              location.pathname === "/adminclient" ||
+              location.pathname === "/employer" ||
               location.pathname === "/dashboard" ? null : (
                 <div className="form-group col-md-4 px-0 pr-3">
                   <label

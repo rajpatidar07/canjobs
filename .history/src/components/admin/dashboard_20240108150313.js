@@ -468,7 +468,7 @@ const AdminDashboard = () => {
                     <div className="">
                       <Link
                         className="text-center  btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                        to={"/adminclient"}
+                        to={"/client"}
                         title="View All Clients"
                       >
                         View All

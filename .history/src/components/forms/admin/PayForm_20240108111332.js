@@ -12,6 +12,7 @@ import { SiRazorpay } from "react-icons/si";
 import StripePay from "../../common/Stripe";
 import { FaStripe } from "react-icons/fa";
 import BraintreeDropIn from "../../common/braintreepayment";
+import axios from "axios";
 export default function PayForm({ setApicall, data, user, user_id }) {
   const [loading, setLoading] = useState(false);
   const [stripePayment, setStripePayment] = useState(false);
@@ -152,6 +153,32 @@ export default function PayForm({ setApicall, data, user, user_id }) {
   if (piId && stopStripePayment) {
     GetStripeDetails();
   }
+  const processPayment = async () => {
+    try {
+      const response = await axios.post(
+        "https://sandbox-quickbooks.api.intuit.com/v3/company/4620816365380029130/payment?minorversion=69",
+        {
+          TotalAmt: state.amount,
+          // "CustomerRef": {
+          //   "value": "20"
+          // }
+        },
+        {
+          headers: {
+            Authorization: "Bearer YOUR_ACCESS_TOKEN",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Handle successful payment
+      console.log("Payment successful!", response);
+    } catch (error) {
+      // Handle errors
+      console.error("Payment failed:", error.message);
+      console.log("Payment failed.");
+    }
+  };
   return (
     <form className="col-md-4 p-10">
       <label className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
@@ -313,7 +340,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
           <>
             {loading === true ? (
               <button
-                className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                 type="button"
                 disabled
               >
@@ -326,7 +353,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
               </button>
             ) : (
               <button
-                onClick={(e) => onPayentClick(e)}
+                onClick={(e) => processPayment(e)}
                 className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
                 type="button"
                 title="Razor pay"

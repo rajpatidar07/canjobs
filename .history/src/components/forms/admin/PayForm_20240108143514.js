@@ -313,7 +313,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
           <>
             {loading === true ? (
               <button
-                className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                 type="button"
                 disabled
               >
@@ -327,7 +327,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
             ) : (
               <button
                 onClick={(e) => onPayentClick(e)}
-                className="btn btn-secondary btn-small w-100 mb-5 rounded-5 text-uppercase"
+                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                 type="button"
                 title="Razor pay"
               >
