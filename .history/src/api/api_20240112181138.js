@@ -5,7 +5,7 @@ const API_URL = "https://apnaorganicstore.in/canjobs/";
 // const API_URL = "http://51.20.6.80/canjobs/";
 // const API_URL = "http://192.168.29.92/canjobs_october/";
 // New AWS backend
-// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";-
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -1840,7 +1840,7 @@ export const TestEmail = async (props) => {
 export const GetPreviewEmail = async (emailType, id) => {
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/openEmail`,
-    `http://192.168.29.92/canjobs_latest/common/openSentEmail`,
+    `${API_URL}/canjobs_latest/common/openSentEmail`,
     {
       type: emailType,
       email_id: id,
@@ -1858,7 +1858,8 @@ export const GetPreviewEmail = async (emailType, id) => {
 
 export const ReadEmail = async (page, limit, search, email) => {
   const response = await axios.post(
-    `http://192.168.29.92/canjobs_latest/common/readEmail`,
+    // `http://192.168.29.92/canjobs_latest/common/readEmail`,
+    `${API_URL}/canjobs_latest/common/readEmail`,
     {
       // email_id: id,
       page: page,
@@ -1878,7 +1879,8 @@ export const ReadEmail = async (page, limit, search, email) => {
 /*Api to read Sent email */
 export const ReadSentEmail = async (page, limit, search, email) => {
   const response = await axios.post(
-    `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
+    // `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
+    `${API_URL}/canjobs_latest/common/readSentEmail`,
     {
       // email_id: id,
       page: page,
