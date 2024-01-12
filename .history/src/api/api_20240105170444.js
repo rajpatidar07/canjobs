@@ -1840,7 +1840,7 @@ export const TestEmail = async (props) => {
 export const GetPreviewEmail = async (emailType, id) => {
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/openEmail`,
-    `${API_URL}/canjobs_latest/common/openSentEmail`,
+    `http://192.168.29.92/canjobs_latest/common/openSentEmail`,
     {
       type: emailType,
       email_id: id,
@@ -1858,8 +1858,7 @@ export const GetPreviewEmail = async (emailType, id) => {
 
 export const ReadEmail = async (page, limit, search, email) => {
   const response = await axios.post(
-    // `http://192.168.29.92/canjobs_latest/common/readEmail`,
-    `${API_URL}/canjobs_latest/common/readEmail`,
+    `http://192.168.29.92/canjobs_latest/common/readEmail`,
     {
       // email_id: id,
       page: page,
@@ -1879,8 +1878,7 @@ export const ReadEmail = async (page, limit, search, email) => {
 /*Api to read Sent email */
 export const ReadSentEmail = async (page, limit, search, email) => {
   const response = await axios.post(
-    // `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
-    `${API_URL}/canjobs_latest/common/readSentEmail`,
+    `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
     {
       // email_id: id,
       page: page,
