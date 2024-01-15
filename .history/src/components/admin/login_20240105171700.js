@@ -52,7 +52,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           localStorage.setItem("admin", updatedTodo.name);
           localStorage.setItem("admin_id", updatedTodo.admin_id);
           localStorage.setItem("admin_type", updatedTodo.user_type);
-          localStorage.setItem("admin_email", updatedTodo.email);
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -60,7 +59,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           setLoading(false);
           setIsLoading(false);
           navigate("/dashboard");
-          // console.log(updatedTodo);
           window.location.reload();
         } else if (updatedTodo.message === "Invalid Credentials") {
           setLoading(false);

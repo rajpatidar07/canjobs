@@ -7,7 +7,9 @@ import {
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-
+const API_URL = "https://apnaorganicstore.in/canjobs/";
+// New AWS backend
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 export default function ResetPassword() {
   const location = useLocation();
   const path = location.pathname;
@@ -114,18 +116,18 @@ export default function ResetPassword() {
   return (
     <>
       {/* <!-- RESET PASSWORD --> */}
-      <link rel="stylesheet" href="http://localhost:3000/css/bootstrap.css" />
+      <link rel="stylesheet" href={`${API_URL}/css/bootstrap.css`} />
       <link
         rel="stylesheet"
-        href="http://localhost:3000/fonts/icon-font/css/style.css"
+        href={`${API_URL}/fonts/icon-font/css/style.css`}
       />
       <link
         rel="stylesheet"
-        href="http://localhost:3000/fonts/fontawesome-5/css/all.css"
+        href={`${API_URL}/fonts/fontawesome-5/css/all.css`}
       />
       <link
         rel="stylesheet"
-        href="http://localhost:3000/fonts/fontawesome-5/css/main.css"
+        href={`${API_URL}/fonts/fontawesome-5/css/main.css`}
       />
       <div className="d-flex justify-content-center pt-21">
         <ToastContainer />
@@ -133,7 +135,7 @@ export default function ResetPassword() {
           <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box ">
             <div className="pb-5 mb-5 text-center">
               <img
-                src="http://localhost:3000/image/logo-main-black.png"
+                src={`${API_URL}/image/logo-main-black.png`}
                 className="img-fluid "
                 height={200}
                 width={200}

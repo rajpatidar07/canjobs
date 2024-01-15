@@ -2,9 +2,9 @@ import React, { /*useEffect,*/ useState } from "react";
 import useValidation from "../../common/useValidation";
 import { SendEmail } from "../../../api/api";
 import { toast } from "react-toastify";
-function SendMailForm({ email }) {
+function SendMailForm({ email, AdminEmail }) {
   const [loading, setLoading] = useState(false);
-  let AdminEmail = localStorage.getItem("admin_email");
+
   /*Render function to get the Response*/
   // useEffect(() => {
   // }, []);

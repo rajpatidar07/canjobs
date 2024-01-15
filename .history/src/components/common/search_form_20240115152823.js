@@ -13,6 +13,7 @@ function SearchForm() {
   const country = searchParams.get("country");
   const user_type = localStorage.getItem("userType");
   let [Json, setJson] = useState([]);
+  let [apiCall, setApiCall] = useState(false);
   let [state, setState] = useState({
     search: search ? search : "",
     country: "",
@@ -57,6 +58,7 @@ function SearchForm() {
         ...state,
         search: "",
       });
+      setApiCall(true);
     } else {
       navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
       setState({
@@ -64,6 +66,7 @@ function SearchForm() {
         search: "",
         country: "",
       });
+      setApiCall(true);
     }
   };
   return (
@@ -109,6 +112,7 @@ function SearchForm() {
                 <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                   <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
                 </span> */}
+                {console.log(state.country)}
                 <select className="form-control" onChange={onSelectChange}>
                   <option value="">Select location</option>
                   {(state.country || []).map((item, index) => {

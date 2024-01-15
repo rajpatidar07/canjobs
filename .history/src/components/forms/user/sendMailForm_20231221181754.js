@@ -4,7 +4,7 @@ import { SendEmail } from "../../../api/api";
 import { toast } from "react-toastify";
 function SendMailForm({ email }) {
   const [loading, setLoading] = useState(false);
-  let AdminEmail = localStorage.getItem("admin_email");
+
   /*Render function to get the Response*/
   // useEffect(() => {
   // }, []);
@@ -14,7 +14,6 @@ function SendMailForm({ email }) {
     subject: "",
     description: "",
     email: email,
-    adminemail: AdminEmail,
   };
 
   /*Validation */

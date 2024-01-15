@@ -13,6 +13,7 @@ function SearchForm() {
   const country = searchParams.get("country");
   const user_type = localStorage.getItem("userType");
   let [Json, setJson] = useState([]);
+  let [call, setCall] = useState(false);
   let [state, setState] = useState({
     search: search ? search : "",
     country: "",
@@ -47,10 +48,11 @@ function SearchForm() {
       ...state,
       country: options,
     });
-  }, [states]);
+  }, [states, call]);
 
   /*Onclick Function to search */
   const Onsearch = () => {
+    setCall(true);
     if (user_type === "company") {
       navigate(`/empsearch?search=${state.search}`);
       setState({
@@ -109,6 +111,7 @@ function SearchForm() {
                 <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                   <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
                 </span> */}
+                {console.log(state.country)}
                 <select className="form-control" onChange={onSelectChange}>
                   <option value="">Select location</option>
                   {(state.country || []).map((item, index) => {

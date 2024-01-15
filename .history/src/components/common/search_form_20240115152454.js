@@ -109,6 +109,7 @@ function SearchForm() {
                 <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                   <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
                 </span> */}
+                {console.log(state.country)}
                 <select className="form-control" onChange={onSelectChange}>
                   <option value="">Select location</option>
                   {(state.country || []).map((item, index) => {
