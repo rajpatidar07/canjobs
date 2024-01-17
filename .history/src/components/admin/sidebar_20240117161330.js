@@ -292,6 +292,7 @@ const AdminSidebar = (props) => {
                 : ""
             }
           >
+            {console.log(props.heading)}
             <Link
               to="/partner"
               className={

@@ -82,7 +82,9 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={`${props.heading === "New Applicants" ? "active" : ""}`}
+            className={`${
+              props.heading === "Manage Self Applicants" ? "active" : ""
+            }`}
           >
             <Link
               to="/selfemployee"

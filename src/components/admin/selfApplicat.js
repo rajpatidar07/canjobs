@@ -93,9 +93,9 @@ function SelfApplicat(props) {
         Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"Manage Self Applicants"} />
+            <AdminHeader heading={"New Applicants"} />
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"Manage Self Applicants"} />
+            <AdminSidebar heading={"New Applicants"} />
           </>
         ) : null}
         <ToastContainer />
@@ -245,9 +245,9 @@ function SelfApplicat(props) {
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editEmployee("0")}
-                        title="Add Employee"
+                        title="Add Candidate"
                       >
-                        Add Employee
+                        Add Candidate
                       </CustomButton>
                     </div>
                   ) : null}

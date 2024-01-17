@@ -67,7 +67,7 @@ export default function AgentTable(props) {
           setAgentId();
         } else {
           // setAgentId 4: Get the First Item
-          setAgentId(filteredItems[0].id);
+          v(filteredItems[0].id);
         }
         setIsLoading(false);
         // if (
@@ -495,7 +495,6 @@ export default function AgentTable(props) {
                                 setAgentId(data.id);
                               }}
                               title="Employee's"
-                              disabled={data.agent_employee_count === "0" || 0}
                             >
                               <span className="text-gray px-2">
                                 <MdFormatListBulletedAdd />

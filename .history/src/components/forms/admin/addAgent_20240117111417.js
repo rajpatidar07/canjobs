@@ -300,7 +300,7 @@ function AddAgent(props) {
                   htmlFor="name"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Partner's Name <span className="text-danger">*</span>
+                  Agent Name <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"

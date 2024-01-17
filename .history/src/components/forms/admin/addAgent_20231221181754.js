@@ -258,9 +258,9 @@ function AddAgent(props) {
         </button>
         <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
           {props.agentId === "0" ? (
-            <h5 className="text-center pt-2 mb-7">Add Partner</h5>
+            <h5 className="text-center pt-2 mb-7">Add Agent</h5>
           ) : (
-            <h5 className="text-center pt-2 mb-7">Update Partner</h5>
+            <h5 className="text-center pt-2 mb-7">Update Agent</h5>
           )}
           <form onSubmit={onAgentProfileUpdateClick}>
             <div className="form-group mx-auto text-center">
@@ -300,7 +300,7 @@ function AddAgent(props) {
                   htmlFor="name"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Partner's Name <span className="text-danger">*</span>
+                  Agent Name <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"
