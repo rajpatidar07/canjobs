@@ -1835,25 +1835,7 @@ export const TestEmail = async (props) => {
   );
   return response.data;
 };
-/* Function to get get email authentication*/
-export const GeEmailAuthenticationData = async () => {
-  const response = await axios.get(
-    // `http://192.168.29.92/canjobs_latest/common/openEmail`,
-    // `http://192.168.29.92/canjobs_latest/common/openSentEmail`,
-    `${API_URL}common/outlookAuthUrl`,
-    {
-      // type: emailType,
-      // email_id: id,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response.data;
-};
+
 /*Api to get single  email preveiw */
 export const GetPreviewEmail = async (emailType, id) => {
   const response = await axios.post(

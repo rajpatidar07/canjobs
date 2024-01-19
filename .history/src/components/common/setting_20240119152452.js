@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { RiLockPasswordFill } from "react-icons/ri";
 import {
-  GetAdminrSetting,
-  AddAdminPermission,
+  GetEmployeeSetting,
+  GetEmployerSetting,
+  AddEmployeePermission,
+  AddEmployerPermission,
   GeEmailAuthenticationData,
-} from "../../../api/api";
+} from "../../api/api";
+import ChangePassword from "./changepassword";
 import { toast } from "react-toastify";
-import ParentSetting from "../../common/parentSetting";
-function AdminSetting(props) {
+function Setting(props) {
   const [apiCall, setApiCall] = useState(false);
+  const [showChangePass, setShowChangePass] = useState(false);
   const [email, setEmail] = useState({
     lmia: 0,
     job: 0,
@@ -23,11 +26,16 @@ function AdminSetting(props) {
     interview: 0,
     visa: 0,
   });
-  let [emailAauthenticationLink, setEmailAuthenticationLink] = useState("");
+  let userType = localStorage.getItem("userType");
   /*Function to get the permision data */
   const GetPermissionData = async () => {
     try {
-      let Response = await GetAdminrSetting();
+      let Response;
+      if (userType === "user") {
+        Response = await GetEmployeeSetting();
+      } else {
+        Response = await GetEmployerSetting();
+      }
       const email_permissions = JSON.parse(Response.data.email_permission);
       const notification_permission = JSON.parse(
         Response.data.notification_permission
@@ -42,16 +50,16 @@ function AdminSetting(props) {
   async function GeEmailAuthData() {
     try {
       let response = await GeEmailAuthenticationData();
-      if (response.status === 1 || "1") {
-        setEmailAuthenticationLink(response);
-      }
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
   }
   /*Render method */
   useEffect(() => {
-    GeEmailAuthData();
+    if (userType === "admin") {
+      GeEmailAuthData();
+    }
     GetPermissionData();
     if (apiCall === true) {
       setApiCall(false);
@@ -104,7 +112,12 @@ function AdminSetting(props) {
     };
 
     try {
-      let Response = await AddAdminPermission(updatedPermissions);
+      let Response;
+      if (userType === "user") {
+        Response = await AddEmployeePermission(updatedPermissions);
+      } else {
+        Response = await AddEmployerPermission(updatedPermissions);
+      }
       // conditions for the reponse toaster message
       if (
         Response.message === "successfully" &&
@@ -158,6 +171,7 @@ function AdminSetting(props) {
       console.log(err);
     }
   };
+
   return (
     <>
       <Modal
@@ -178,7 +192,8 @@ function AdminSetting(props) {
           <h3 className="text-center">Settings</h3>
           <div>
             <h6 className="text-start mt-4 text-grey">
-              Admin's Email Preferences
+              {userType === "user" ? "Employee's" : "Client's"} Email
+              Preferences
             </h6>
             <ul className="list-unstyled row">
               <li className="mb-3 col-6">
@@ -251,7 +266,8 @@ function AdminSetting(props) {
               </li>
             </ul>
             <h6 className="text-start mt-4 text-grey">
-              Admin's Notification Preferences
+              {userType === "user" ? "Employee's" : "Client's"} Notification
+              Preferences
             </h6>
             <ul className="list-unstyled row">
               <li className="mb-3 col-6">
@@ -324,41 +340,20 @@ function AdminSetting(props) {
               </li>
             </ul>
             <div className="mb-3">
-              {emailAauthenticationLink.is_already_authorized === "yes" ? (
-                <div>
-                  <h4 style={{ color: "#5be15b" }}>
-                    Mail already authorized !
-                  </h4>
-                </div>
-              ) : (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    window.open(
-                      emailAauthenticationLink.data,
-                      "_blank",
-                      "height=500,width=500%"
-                    );
-                    props.close();
-                  }}
-                >
-                  Authenticate Mail
-                </button>
+              <Link
+                to=""
+                onClick={() => setShowChangePass(true)}
+                className="btn btn-primary  d-flex align-items-center"
+              >
+                <RiLockPasswordFill className="mr-2" /> Change Password
+              </Link>
+              {showChangePass && (
+                <ChangePassword
+                  show={showChangePass}
+                  close={() => setShowChangePass(false)}
+                />
               )}
             </div>
-            <div className="mb-3">
-              <ParentSetting />
-            </div>
-            <Link
-              to=""
-              onClick={() => {
-                props.setShowChangePass(true);
-                props.close();
-              }}
-              className="btn btn-primary  d-flex align-items-center mb-3"
-            >
-              <RiLockPasswordFill className="mr-2" /> Change Password
-            </Link>
           </div>
         </div>
       </Modal>
@@ -366,4 +361,4 @@ function AdminSetting(props) {
   );
 }
 
-export default AdminSetting;
+export default Setting;

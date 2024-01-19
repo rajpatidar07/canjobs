@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { RiLockPasswordFill } from "react-icons/ri";
-import {
-  GetAdminrSetting,
-  AddAdminPermission,
-  GeEmailAuthenticationData,
-} from "../../../api/api";
+import { GetAdminrSetting, AddAdminPermission } from "../../../api/api";
 import { toast } from "react-toastify";
 import ParentSetting from "../../common/parentSetting";
 function AdminSetting(props) {
@@ -23,7 +19,7 @@ function AdminSetting(props) {
     interview: 0,
     visa: 0,
   });
-  let [emailAauthenticationLink, setEmailAuthenticationLink] = useState("");
+
   /*Function to get the permision data */
   const GetPermissionData = async () => {
     try {
@@ -38,20 +34,8 @@ function AdminSetting(props) {
       console.log(err);
     }
   };
-  /*Function get email Authentication Data */
-  async function GeEmailAuthData() {
-    try {
-      let response = await GeEmailAuthenticationData();
-      if (response.status === 1 || "1") {
-        setEmailAuthenticationLink(response);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
   /*Render method */
   useEffect(() => {
-    GeEmailAuthData();
     GetPermissionData();
     if (apiCall === true) {
       setApiCall(false);
@@ -323,29 +307,6 @@ function AdminSetting(props) {
                 </div>
               </li>
             </ul>
-            <div className="mb-3">
-              {emailAauthenticationLink.is_already_authorized === "yes" ? (
-                <div>
-                  <h4 style={{ color: "#5be15b" }}>
-                    Mail already authorized !
-                  </h4>
-                </div>
-              ) : (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    window.open(
-                      emailAauthenticationLink.data,
-                      "_blank",
-                      "height=500,width=500%"
-                    );
-                    props.close();
-                  }}
-                >
-                  Authenticate Mail
-                </button>
-              )}
-            </div>
             <div className="mb-3">
               <ParentSetting />
             </div>

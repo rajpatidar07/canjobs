@@ -1836,8 +1836,8 @@ export const TestEmail = async (props) => {
   return response.data;
 };
 /* Function to get get email authentication*/
-export const GeEmailAuthenticationData = async () => {
-  const response = await axios.get(
+export const GeEmailAuthenticationData = async (emailType, id) => {
+  const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/openEmail`,
     // `http://192.168.29.92/canjobs_latest/common/openSentEmail`,
     `${API_URL}common/outlookAuthUrl`,

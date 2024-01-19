@@ -42,9 +42,8 @@ function AdminSetting(props) {
   async function GeEmailAuthData() {
     try {
       let response = await GeEmailAuthenticationData();
-      if (response.status === 1 || "1") {
-        setEmailAuthenticationLink(response);
-      }
+      console.log(response);
+      setEmailAuthenticationLink(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -324,27 +323,18 @@ function AdminSetting(props) {
               </li>
             </ul>
             <div className="mb-3">
-              {emailAauthenticationLink.is_already_authorized === "yes" ? (
-                <div>
-                  <h4 style={{ color: "#5be15b" }}>
-                    Mail already authorized !
-                  </h4>
-                </div>
-              ) : (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    window.open(
-                      emailAauthenticationLink.data,
-                      "_blank",
-                      "height=500,width=500%"
-                    );
-                    props.close();
-                  }}
-                >
-                  Authenticate Mail
-                </button>
-              )}
+              <button
+                className="btn btn-secondary"
+                onClick={() =>
+                  window.open(
+                    emailAauthenticationLink,
+                    "_blank",
+                    "height=500,width=500%"
+                  )
+                }
+              >
+                Authenticate Mail
+              </button>
             </div>
             <div className="mb-3">
               <ParentSetting />

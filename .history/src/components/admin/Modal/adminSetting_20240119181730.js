@@ -346,6 +346,53 @@ function AdminSetting(props) {
                 </button>
               )}
             </div>
+            <div
+              style={{
+                fontFamily: "Arial, sans-serif",
+                backgroundColor: "#f0f0f0",
+                margin: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100vh",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: "#4CAF50",
+                  color: "#fff",
+                  textAlign: "center",
+                  padding: "20px",
+                  borderRadius: "10px",
+                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+                  maxWidth: "400px",
+                  width: "100%",
+                }}
+              >
+                <div style={{ fontSize: "48px", marginBottom: "20px" }}>
+                  &#10004;
+                </div>
+                <div style={{ fontSize: "18px", marginBottom: "20px" }}>
+                  <p>
+                    <strong>Success!</strong> Your request has been processed.
+                  </p>
+                </div>
+                <a
+                  href="index.html"
+                  style={{
+                    textDecoration: "none",
+                    color: "#fff",
+                    backgroundColor: "#333",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                    display: "inline-block",
+                    transition: "background-color 0.3s",
+                  }}
+                >
+                  Back to Home
+                </a>
+              </div>
+            </div>
             <div className="mb-3">
               <ParentSetting />
             </div>
