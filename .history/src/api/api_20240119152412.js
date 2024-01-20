@@ -1878,8 +1878,7 @@ export const GetPreviewEmail = async (emailType, id) => {
 export const ReadEmail = async (page, limit, search, email) => {
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readEmail`,
-    // `${API_URL}canjobs_latest/common/readEmail`,
-    `${API_URL}common/readOutlookEmail`,
+    `${API_URL}canjobs_latest/common/readEmail`,
     {
       // email_id: id,
       page: page,
@@ -1900,9 +1899,7 @@ export const ReadEmail = async (page, limit, search, email) => {
 export const ReadSentEmail = async (page, limit, search, email) => {
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
-    // `${API_URL}canjobs_latest/common/readSentEmail`,
-    `${API_URL}common/readSentOutlookEmail`,
-
+    `${API_URL}canjobs_latest/common/readSentEmail`,
     {
       // email_id: id,
       page: page,
