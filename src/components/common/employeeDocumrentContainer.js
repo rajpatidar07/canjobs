@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Form } from "react-bootstrap";
+import Loader from "./loader";
 import {
   UploadDocument,
   GetEmployeeDocumentList,
@@ -13,6 +14,7 @@ import {
   SendReplyCommit,
   GetReplyCommit,
 } from "../../api/api";
+import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
@@ -77,20 +79,23 @@ export default function DocumrentContainer(props) {
   const handleInputChange = (event, type) => {
     const value = event.target.value;
     if (value.startsWith("@")) {
-      // Filter admin emails based on input
-      const filteredAdminEmails = allAdmin.filter((admin) => {
-        // Check if admin and admin.email are defined
-        if (admin && admin.email) {
-          // Convert both to lowercase and check for inclusion
-          return admin.email
-            .toLowerCase()
-            .includes(value.slice(1).toLowerCase());
-        }
-        return false; // Handle the case where admin or admin.email is undefined
-      });
+      AdminData();
+      if (allAdmin) {
+        // Filter admin emails based on input
+        const filteredAdminEmails = allAdmin.filter((admin) => {
+          // Check if admin and admin.email are defined
+          if (admin && admin.email) {
+            // Convert both to lowercase and check for inclusion
+            return admin.email
+              .toLowerCase()
+              .includes(value.slice(1).toLowerCase());
+          }
+          return false; // Handle the case where admin or admin.email is undefined
+        });
 
-      // Update the filtered emails
-      setFilteredEmails(filteredAdminEmails);
+        // Update the filtered emails
+        setFilteredEmails(filteredAdminEmails);
+      }
     } else {
       // Reset filtered emails if input doesn't start with '@'
       setFilteredEmails([]);
@@ -159,6 +164,9 @@ export default function DocumrentContainer(props) {
         if (res.data.status === (1 || "1")) {
           setCommentsList(res.data.data);
           setImageAnnotations(res.data.data);
+        } else if (res.data.message === "Task data not found") {
+          setCommentsList([]);
+          setImageAnnotations([]);
         }
       } catch (err) {
         console.log(err);
@@ -432,19 +440,25 @@ export default function DocumrentContainer(props) {
               ref={fileViewerRef}
               onClick={handleFileViewerClick}
             >
-              <FileViewer
-                key={docTypData.id}
-                fileType={
-                  docFileExt
-                    ? docFileExt
-                    : docTypData.extension_type ===
-                      "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    ? "docx"
-                    : docTypData.extension_type
-                }
-                filePath={docFile}
-                errorComponent={() => <div>Error loading document</div>}
-              />
+              <LazyLoad
+                height={"100%"}
+                offsetVertical={"100%"}
+                debounce={false}
+              >
+                <FileViewer
+                  key={docTypData.id}
+                  fileType={
+                    docFileExt
+                      ? docFileExt
+                      : docTypData.extension_type ===
+                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      ? "docx"
+                      : docTypData.extension_type
+                  }
+                  filePath={docFile}
+                  errorComponent={() => <div>Error loading document</div>}
+                />
+              </LazyLoad>
             </div>
           </>
         ) : (
@@ -532,7 +546,7 @@ export default function DocumrentContainer(props) {
   }, [docId, apiCall, docName]);
   //USeEffect foe commet replies list
   useEffect(() => {
-    getCommentsReplyList();
+    // getCommentsReplyList();
     AdminData();
   }, [replyCommentClick]);
   //USeEffect foe commet list
@@ -1007,20 +1021,22 @@ export default function DocumrentContainer(props) {
           <div className="doc_preview_box p-5 bg-light rounded position-relative">
             {/* {docTypData ? ( */}
             <div className="doc_action_div">
-              {hide === false && docTypData && user_type === "admin" ? (
-                <div className="doc_upload_col">
-                  {docTypData.is_varify === "1" ? (
-                    <img className="verified_doc_img" src={Verified} alt="" />
-                  ) : (
-                    <button
-                      className="btn btn-info"
-                      disabled={docTypData.is_varify === "0" ? false : true}
-                      onClick={() => onVerifyDocuments(docTypData.id, 1)}
-                    >
-                      Verify document
-                    </button>
-                  )}
-                </div>
+              {docFile ? (
+                hide === false && docTypData && user_type === "admin" ? (
+                  <div className="doc_upload_col">
+                    {docTypData.is_varify === "1" ? (
+                      <img className="verified_doc_img" src={Verified} alt="" />
+                    ) : (
+                      <button
+                        className="btn btn-info"
+                        disabled={docTypData.is_varify === "0" ? false : true}
+                        onClick={() => onVerifyDocuments(docTypData.id, 1)}
+                      >
+                        Verify document
+                      </button>
+                    )}
+                  </div>
+                ) : null
               ) : null}
               {hide === false && docFile && docName && user_type === "admin" ? (
                 <div className="doc_upload_col flex-end">
@@ -1205,7 +1221,8 @@ export default function DocumrentContainer(props) {
                 </div>
               </div>
             ) : (
-              <div className="text-center mt-5">No document found</div>
+              <Loader />
+              // <div className="text-center mt-5">No document found</div>
             )}
             {/* Annotation Close */}
           </div>
@@ -1233,6 +1250,7 @@ export default function DocumrentContainer(props) {
             handleEmailClick={handleEmailClick}
             handleEmailMouseOver={handleEmailMouseOver}
             ReplyAnnotation={ReplyAnnotation}
+            getCommentsReplyList={getCommentsReplyList}
           />
         )}
       </div>

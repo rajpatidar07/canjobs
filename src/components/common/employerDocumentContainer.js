@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
+import Loader from "./loader";
+import LazyLoad from "react-lazy-load";
 import {
   UploadEmployerDocument,
   GetEmployerDocumentList,
@@ -162,6 +164,9 @@ export default function EmployerDocumrentContainer(props) {
         if (res.data.status === (1 || "1")) {
           setCommentsList(res.data.data);
           setImageAnnotations(res.data.data);
+        } else if (res.data.message === "Task data not found") {
+          setCommentsList([]);
+          setImageAnnotations([]);
         }
       } catch (err) {
         console.log(err);
@@ -398,19 +403,25 @@ export default function EmployerDocumrentContainer(props) {
               ref={fileViewerRef}
               onClick={handleFileViewerClick}
             >
-              <FileViewer
-                key={docTypData.id}
-                fileType={
-                  docFileExt
-                    ? docFileExt
-                    : docTypData.extension_type ===
-                      "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    ? "docx"
-                    : docTypData.extension_type
-                }
-                filePath={docFile}
-                errorComponent={() => <div>Error loading document</div>}
-              />
+              <LazyLoad
+                height={"100%"}
+                offsetVertical={"100%"}
+                debounce={false}
+              >
+                <FileViewer
+                  key={docTypData.id}
+                  fileType={
+                    docFileExt
+                      ? docFileExt
+                      : docTypData.extension_type ===
+                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      ? "docx"
+                      : docTypData.extension_type
+                  }
+                  filePath={docFile}
+                  errorComponent={() => <div>Error loading document</div>}
+                />
+              </LazyLoad>
             </div>
           </>
         ) : (
@@ -486,7 +497,7 @@ export default function EmployerDocumrentContainer(props) {
   }, [docId, apiCall, docName]);
   //USeEffect foe commet replies list
   useEffect(() => {
-    getCommentsReplyList();
+    // getCommentsReplyList();
     AdminData();
   }, [replyCommentClick]);
   //USeEffect foe commet list
@@ -976,20 +987,22 @@ export default function EmployerDocumrentContainer(props) {
           <div className="doc_preview_box p-5 bg-light rounded position-relative">
             {/* {docTypData ? ( */}
             <div className="doc_action_div">
-              {hide === false && docTypData && user_type === "admin" ? (
-                <div className="doc_upload_col">
-                  {docTypData.is_varify === "1" ? (
-                    <img className="verified_doc_img" src={Verified} alt="" />
-                  ) : (
-                    <button
-                      className="btn btn-info"
-                      disabled={docTypData.is_varify === "0" ? false : true}
-                      onClick={() => onVerifyDocuments(docTypData.id, 1)}
-                    >
-                      Verify document
-                    </button>
-                  )}
-                </div>
+              {docFile ? (
+                hide === false && docTypData && user_type === "admin" ? (
+                  <div className="doc_upload_col">
+                    {docTypData.is_varify === "1" ? (
+                      <img className="verified_doc_img" src={Verified} alt="" />
+                    ) : (
+                      <button
+                        className="btn btn-info"
+                        disabled={docTypData.is_varify === "0" ? false : true}
+                        onClick={() => onVerifyDocuments(docTypData.id, 1)}
+                      >
+                        Verify document
+                      </button>
+                    )}
+                  </div>
+                ) : null
               ) : null}
               {hide === false && docFile && docName && user_type === "admin" ? (
                 <div className="doc_upload_col flex-end">
@@ -1173,7 +1186,8 @@ export default function EmployerDocumrentContainer(props) {
                 </div>
               </div>
             ) : (
-              <div className="text-center mt-5">No document found</div>
+              <Loader />
+              // <div className="text-center mt-5">No document found</div>
             )}
             {/* Annotation Close */}
           </div>
@@ -1201,6 +1215,7 @@ export default function EmployerDocumrentContainer(props) {
             handleEmailClick={handleEmailClick}
             handleEmailMouseOver={handleEmailMouseOver}
             ReplyAnnotation={ReplyAnnotation}
+            getCommentsReplyList={getCommentsReplyList}
           />
         )}
       </div>
