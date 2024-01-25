@@ -129,6 +129,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     )}
                   </div>
                 ))} */}
+              {console.log(emailData)}
               {emailData.length === 0 ? (
                 <div className="col align-items-center p-3 m-3 rounded shadow bg-white position-relative htmlFileCls">
                   <div className="text-center">No Attachments Founds</div>

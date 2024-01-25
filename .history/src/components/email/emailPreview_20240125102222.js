@@ -12,7 +12,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
   /* states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [emailData, setemailData] = useState([]);
+  const [emailData, setemailData] = useState({});
   /* Function to get Employee visa data */
   const EmailData = async () => {
     setIsLoading(true);
@@ -25,7 +25,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
         Res.data.value === undefined ||
         Res.data.value.length === 0 // && JSON.parse(Res.data)[0])
       ) {
-        setemailData([]);
+        setemailData({});
         setIsLoading(false);
       } else {
         setemailData(Res.data.value);
@@ -35,7 +35,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
     } catch (err) {
       console.log(err);
       setIsLoading(false);
-      setemailData([]);
+      setemailData({});
     }
   };
 
@@ -129,6 +129,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     )}
                   </div>
                 ))} */}
+              {console.log(emailData)}
               {emailData.length === 0 ? (
                 <div className="col align-items-center p-3 m-3 rounded shadow bg-white position-relative htmlFileCls">
                   <div className="text-center">No Attachments Founds</div>

@@ -49,6 +49,7 @@ const MainEmailPage = ({ email }) => {
         // if (emailType === "SENT") {
         //   reversedData.reverse(); // Reverse the array if emailType is "SENT"
         // }
+        console.log(reversedData);
         setemailData(reversedData);
         // setemailData(userData.data);
         setTotalData(userData.total);

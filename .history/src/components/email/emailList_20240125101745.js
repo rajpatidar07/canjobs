@@ -60,10 +60,7 @@ const EmailList = ({
                     ? "btn btn-primary"
                     : "btn btn-outline-primary"
                 }
-                onClick={() => {
-                  setEmailType("SENT");
-                  setEmailId();
-                }}
+                onClick={() => setEmailType("SENT")}
               >
                 Sent
               </button>
@@ -74,10 +71,7 @@ const EmailList = ({
                     ? "btn btn-primary"
                     : "btn btn-outline-primary"
                 }
-                onClick={() => {
-                  setEmailType("INBOX");
-                  setEmailId();
-                }}
+                onClick={() => setEmailType("INBOX")}
               >
                 Inbox
               </button>
@@ -221,7 +215,8 @@ const EmailList = ({
                                         className="text-dark"
                                         to={`mailto:${email.Sender.EmailAddress.Address}`}
                                       >
-                                        {email.IsRead === true ? (
+                                        {email.seen === "1" ||
+                                        email.seen === 1 ? (
                                           email.Sender.EmailAddress.Name
                                         ) : (
                                           <b>
@@ -254,7 +249,7 @@ const EmailList = ({
                                     className="m-0 text-truncate"
                                     style={{ width: "170px" }}
                                   >
-                                    {email.IsRead === true ? (
+                                    {email.seen === "1" || email.seen === 1 ? (
                                       email.Subject.includes("=?UTF-8?Q?") ? (
                                         decodeEmailSubject(email.Subject)
                                       ) : (
@@ -281,10 +276,8 @@ const EmailList = ({
                                   <p className="font-size-2  mb-0">N/A</p>
                                 ) : (
                                   <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
-                                    {email.IsRead === true ? (
-                                      moment(email.SentDateTime).format(
-                                        "DD MMMM, YYYY"
-                                      )
+                                    {email.seen === "1" || email.seen === 1 ? (
+                                      moment(email.SentDateTime).format("DD MMMM, YYYY")
                                     ) : (
                                       <b>
                                         {moment(email.SentDateTime).format(

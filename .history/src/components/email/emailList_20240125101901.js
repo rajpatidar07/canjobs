@@ -60,10 +60,7 @@ const EmailList = ({
                     ? "btn btn-primary"
                     : "btn btn-outline-primary"
                 }
-                onClick={() => {
-                  setEmailType("SENT");
-                  setEmailId();
-                }}
+                onClick={() => setEmailType("SENT")}
               >
                 Sent
               </button>
@@ -74,10 +71,7 @@ const EmailList = ({
                     ? "btn btn-primary"
                     : "btn btn-outline-primary"
                 }
-                onClick={() => {
-                  setEmailType("INBOX");
-                  setEmailId();
-                }}
+                onClick={() => setEmailType("INBOX")}
               >
                 Inbox
               </button>
