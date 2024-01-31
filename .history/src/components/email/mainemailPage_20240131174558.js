@@ -3,10 +3,7 @@ import EmailList from "./emailList";
 import { ToastContainer } from "react-toastify";
 // import AdminHeader from "../admin/header";
 // import AdminSidebar from "../admin/sidebar";
-import {
-  ReadEmail,
-  ReadSentEmail /*, GetAllEmailPagination*/,
-} from "../../api/api";
+import { ReadEmail, ReadSentEmail, GetAllEmailPagination } from "../../api/api";
 const MainEmailPage = ({ email }) => {
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);

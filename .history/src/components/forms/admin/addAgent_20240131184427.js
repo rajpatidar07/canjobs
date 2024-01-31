@@ -75,7 +75,7 @@ function AddAgent(props) {
     // ],
     password: [
       (value) =>
-        state.agent_id || props.agentId
+        state.agent_id
           ? value === ""
           : value === ""
           ? "Password is required"
