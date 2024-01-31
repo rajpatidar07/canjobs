@@ -62,15 +62,15 @@ const MainEmailPage = ({ email }) => {
         // if (emailType === "SENT") {
         //   reversedData.reverse(); // Reverse the array if emailType is "SENT"
         // }
-        // try {
-        //   let PageRes = await GetAllEmailPagination(email);
-        //   setPageToken(
-        //     PageRes.data.paginationData.map((item) => item.split("=")[4])
-        //   );
-        //   setTotalData(PageRes.data.paginationDataCount || 0);
-        // } catch (err) {
-        //   console.log(err);
-        // }
+        try {
+          let PageRes = await GetAllEmailPagination(email);
+          setPageToken(
+            PageRes.data.paginationData.map((item) => item.split("=")[4])
+          );
+          setTotalData(PageRes.data.paginationDataCount || 0);
+        } catch (err) {
+          console.log(err);
+        }
         // setPageToken(
         //   userData.data.paginationData &&
         //     userData.data.paginationData.map((item) => item.split("=")[4])

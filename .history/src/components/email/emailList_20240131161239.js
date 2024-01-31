@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Pagination from "../common/pagination";
+// import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import PreviewEmail from "./emailPreview";
@@ -7,7 +7,7 @@ import SendMailForm from "../forms/user/sendMailForm";
 import { BsFillPencilFill } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import moment from "moment";
-// import MailPaination from "./mailPaination";
+import MailPaination from "./mailPaination";
 import { TiAttachment } from "react-icons/ti";
 const EmailList = ({
   data,
@@ -368,14 +368,14 @@ const EmailList = ({
               </>
             )}
             <div className="pt-2 mx-23">
-              <Pagination
+              {/* <Pagination
                 nPages={nPages}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 total={totalData}
                 count={data.length}
-              />
-              {/* {totalData === 0 || totalData === "0" ? null : (
+              /> */}
+              {totalData === 0 || totalData === "0" ? null : (
                 <MailPaination
                   nPages={nPages}
                   currentPage={currentPage}
@@ -385,7 +385,7 @@ const EmailList = ({
                   pageToken={pageToken}
                   setPageToken={setPageToken}
                 />
-              )} */}
+              )}
             </div>
           </div>
           <div className="table-responsive main_table_div col-md-6">

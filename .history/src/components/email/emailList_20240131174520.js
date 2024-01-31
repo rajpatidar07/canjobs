@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Pagination from "../common/pagination";
+// import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import PreviewEmail from "./emailPreview";
@@ -7,7 +7,7 @@ import SendMailForm from "../forms/user/sendMailForm";
 import { BsFillPencilFill } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import moment from "moment";
-// import MailPaination from "./mailPaination";
+import MailPaination from "./mailPaination";
 import { TiAttachment } from "react-icons/ti";
 const EmailList = ({
   data,

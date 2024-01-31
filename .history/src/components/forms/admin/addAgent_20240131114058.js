@@ -384,7 +384,8 @@ function AddAgent(props) {
                   </span>
                 )}
               </div>
-              {state.id ? null : (
+              {
+                //state.id ? null :
                 <div className="form-group col-md-6 ">
                   <label
                     htmlFor="password"
@@ -422,7 +423,7 @@ function AddAgent(props) {
                     </span>
                   )}
                 </div>
-              )}
+              }
               {/* <div className="form-group col-md-6 ">
                 <label
                   htmlFor="type"
