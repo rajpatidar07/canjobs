@@ -38,9 +38,11 @@ export default function EmployerDocumrentContainer(props) {
   const [docFileBase, setDocFileBase] = useState("");
   const [docFileExt, setDocFileExt] = useState("");
   const [docId, setDocId] = useState("");
+  const [documentName, setDocumentName] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   const [hide, setHide] = useState(false);
+  const [loading, setLoading] = useState(true);
   let encoded;
   let user_type = localStorage.getItem("userType");
   let admin_id = localStorage.getItem("admin_id");
@@ -208,10 +210,13 @@ export default function EmployerDocumrentContainer(props) {
         response.data.data === undefined ||
         response.data.data === "" ||
         response.data.data === null ||
-        response.data.data.length === 0
+        response.data.data.length === 0 ||
+        response.data.message === "No data found"
       ) {
         setDocData([]);
+        setLoading(false);
       } else {
+        setLoading(false);
         setDocData(response.data.data);
         // eslint-disable-next-line
         if (
@@ -248,6 +253,7 @@ export default function EmployerDocumrentContainer(props) {
       }
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -293,8 +299,8 @@ export default function EmployerDocumrentContainer(props) {
       return;
     }
     // Check file size
-    else if (file.size > 1024 * 4000) {
-      toast.error("Document size can't be more than 4 mb", {
+    else if (file.size > 1024 * 8000) {
+      toast.error("Document size can't be more than 8 mb", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
@@ -310,6 +316,8 @@ export default function EmployerDocumrentContainer(props) {
       }`;
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
+      setDocumentName(file.name.split(".")[0].replace(/ /g, "_"));
+      console.log(file.name.split(".")[0].replace(/ /g, "_"));
       setDocFileBase(DocFile);
       setShowSaveDoc(true);
     }
@@ -322,7 +330,8 @@ export default function EmployerDocumrentContainer(props) {
         props.employer_id,
         docData[0] === docTypData ? docTypData.type : docName,
         docFileBase,
-        docData[0] === docTypData ? docTypData.id : docId
+        docData[0] === docTypData ? docTypData.id : docId,
+        documentName
       );
       if (response.data.message === "inserted successfully") {
         toast.success("Document uploaded Successfully", {
@@ -532,7 +541,7 @@ export default function EmployerDocumrentContainer(props) {
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = docFile + docFileExt;
+    link.download = docTypData.document_name + "." + docTypData.extension_type;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1024,7 +1033,9 @@ export default function EmployerDocumrentContainer(props) {
               ) : null}
             </div>
             {/* Annotation */}
-            {docFile ? (
+            {loading === true ? (
+              <Loader />
+            ) : docFile ? (
               <div>
                 <div
                   id="annotation-container"
@@ -1186,8 +1197,7 @@ export default function EmployerDocumrentContainer(props) {
                 </div>
               </div>
             ) : (
-              <Loader />
-              // <div className="text-center mt-5">No document found</div>
+              <div className="text-center mt-5">No document found</div>
             )}
             {/* Annotation Close */}
           </div>

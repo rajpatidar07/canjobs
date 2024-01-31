@@ -221,7 +221,7 @@ export default function AdminTable({
                       <h3 className="font-size-3 font-weight-normal mb-0">
                         <p className="font-size-3 m-0">
                           <Link
-                            className="text-dark"
+                            className="text-dark  text-lowercase"
                             to={`mailto:${admin.email}`}
                           >
                             {admin.email}
