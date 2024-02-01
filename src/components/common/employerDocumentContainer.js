@@ -387,7 +387,10 @@ export default function EmployerDocumrentContainer(props) {
         setApiCall(true);
         setHide(false);
       }
-      if (response.data.message === "Invalid base64-encoded data !") {
+      if (
+        response.data.message === "Invalid base64-encoded data !" ||
+        response.data.message === "Unsupported file type !"
+      ) {
         toast.error("Document type is not valid", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
