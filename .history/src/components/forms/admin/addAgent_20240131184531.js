@@ -405,7 +405,6 @@ function AddAgent(props) {
                       onChange={onInputChange}
                       id="password"
                       name="password"
-                      placeholder="Enter password"
                     />
                     <span
                       className="password-icon"
