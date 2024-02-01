@@ -540,7 +540,7 @@ const AdminDashboard = () => {
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0  ">
-                    Recently Added Lmia
+                    Recently Added Lima
                   </h3>
                   <div className="d-flex justify-content-between p-0">
                     <div className="select_div mr-5">

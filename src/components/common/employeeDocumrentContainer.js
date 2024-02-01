@@ -451,19 +451,29 @@ export default function DocumrentContainer(props) {
                 offsetVertical={"100%"}
                 debounce={false}
               >
-                <FileViewer
-                  key={docTypData.id}
-                  fileType={
-                    docFileExt
-                      ? docFileExt
-                      : docTypData.extension_type ===
-                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      ? "docx"
-                      : docTypData.extension_type
-                  }
-                  filePath={docFile}
-                  errorComponent={() => <div>Error loading document</div>}
-                />
+                {docFileExt === "pdf" || docTypData.extension_type === "pdf" ? (
+                  <iframe
+                    src={docFile}
+                    width={"1000px"}
+                    height={"1000px"}
+                    className="text-center d-flex"
+                    title={documentName}
+                  ></iframe>
+                ) : (
+                  <FileViewer
+                    key={docTypData.id}
+                    fileType={
+                      docFileExt
+                        ? docFileExt
+                        : docTypData.extension_type ===
+                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        ? "docx"
+                        : docTypData.extension_type
+                    }
+                    filePath={docFile}
+                    errorComponent={() => <div>Error loading document</div>}
+                  />
+                )}
               </LazyLoad>
             </div>
           </>
