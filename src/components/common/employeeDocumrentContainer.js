@@ -56,6 +56,8 @@ export default function DocumrentContainer(props) {
   const [isAnnotationMode, setAnnotationMode] = useState(false);
   let [allAdmin, setAllAdmin] = useState([]);
   let [adminid, setAdminId] = useState();
+  const [selectedAdmin, setSelectedAdmin] = useState("");
+  const [selectedAdminReply, setSelectedAdminReplye] = useState("");
   const [addCommentFlag, setAddCommentFlag] = useState(false);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const fileViewerRef = useRef(null);
@@ -84,16 +86,9 @@ export default function DocumrentContainer(props) {
       AdminData();
       if (allAdmin) {
         // Filter admin emails based on input
-        const filteredAdminEmails = allAdmin.filter((admin) => {
-          // Check if admin and admin.email are defined
-          if (admin && admin.email) {
-            // Convert both to lowercase and check for inclusion
-            return admin.email
-              .toLowerCase()
-              .includes(value.slice(1).toLowerCase());
-          }
-          return false; // Handle the case where admin or admin.email is undefined
-        });
+        const filteredAdminEmails = allAdmin.filter((admin) =>
+          admin.email.toLowerCase().includes(value.slice(1).toLowerCase())
+        );
 
         // Update the filtered emails
         setFilteredEmails(filteredAdminEmails);
@@ -112,13 +107,14 @@ export default function DocumrentContainer(props) {
   };
   /*Function to get the email to assign */
   const handleEmailClick = (email, type) => {
-    // Set the selected email as the input value
+    // Set the selected admin and update the input value
     if (type === "reply") {
-      setReplyComment(email);
+      setSelectedAdminReplye(email);
+      setReplyComment(replyComment);
     } else {
-      setComments(email);
+      setSelectedAdmin(email);
+      setComments(comments);
     }
-    // Clear the filtered emails
     setFilteredEmails([]);
   };
   /*Function to get the email to input on hover */
@@ -164,7 +160,7 @@ export default function DocumrentContainer(props) {
           annotationStatus
         );
         if (res.data.status === (1 || "1")) {
-          setCommentsList(res.data.data);
+          setCommentsList(res.data.data.reverse());
           setImageAnnotations(res.data.data);
         } else if (res.data.message === "Task data not found") {
           setCommentsList([]);
@@ -181,7 +177,6 @@ export default function DocumrentContainer(props) {
     }
   };
 
-  /*Annotaton functionalites close */
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
     if (docId || docData.find((item) => item.type === docName)) {
@@ -192,7 +187,7 @@ export default function DocumrentContainer(props) {
           annotationStatus
         );
         if (res.data.status === (1 || "1")) {
-          setCommentsReplyList(res.data.data);
+          setCommentsReplyList(res.data.data.reverse());
         }
       } catch (err) {
         console.log(err);
@@ -202,6 +197,7 @@ export default function DocumrentContainer(props) {
       setCommentsReplyList([]);
     }
   };
+  /*Annotaton functionalites close */
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
@@ -454,29 +450,19 @@ export default function DocumrentContainer(props) {
                 offsetVertical={"100%"}
                 debounce={false}
               >
-                {docFileExt === "pdf" || docTypData.extension_type === "pdf" ? (
-                  <iframe
-                    src={docFile}
-                    width={"1000px"}
-                    height={"1000px"}
-                    className="text-center d-flex"
-                    title={documentName}
-                  ></iframe>
-                ) : (
-                  <FileViewer
-                    key={docTypData.id}
-                    fileType={
-                      docFileExt
-                        ? docFileExt
-                        : docTypData.extension_type ===
-                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        ? "docx"
-                        : docTypData.extension_type
-                    }
-                    filePath={docFile}
-                    errorComponent={() => <div>Error loading document</div>}
-                  />
-                )}
+                <FileViewer
+                  key={docTypData.id}
+                  fileType={
+                    docFileExt
+                      ? docFileExt
+                      : docTypData.extension_type ===
+                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      ? "docx"
+                      : docTypData.extension_type
+                  }
+                  filePath={docFile}
+                  errorComponent={() => <div>Error loading document</div>}
+                />
               </LazyLoad>
             </div>
           </>
@@ -638,9 +624,11 @@ export default function DocumrentContainer(props) {
     const assignedUserId = allAdmin.find((item) => item.email === comments)
       ? allAdmin.find((item) => item.email === comments).admin_id
       : admin_id;
-    const email = /\S+@\S+\.\S+/.test(comments) ? comments : "";
+    const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
-    const comment = /\S+@\S+\.\S+/.test(comments) ? "" : comments;
+    const comment = /\S+@\S+\.\S+/.test(comments)
+      ? comments.replace(/\S+@\S+\.\S+/g, "")
+      : comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docId
       ? docId
       : docData.find((item) => item.type === docName).id;
@@ -665,7 +653,9 @@ export default function DocumrentContainer(props) {
         setSelectedAnnotation(null);
         setComments("");
         setCommentApiCall(true);
+        setSelectedAdmin("");
         setAnnotationMode(!isAnnotationMode);
+        setFilteredEmails([]);
       }
     } catch (err) {
       console.log(err);
@@ -676,9 +666,11 @@ export default function DocumrentContainer(props) {
         });
         setSelectedAnnotation(null);
         setComments("");
+        setSelectedAdmin("");
         setCommentApiCall(true);
         setAnnotationMode(!isAnnotationMode);
         setAddCommentFlag();
+        setFilteredEmails([]);
       }
     }
     // Update state to include the new annotation
@@ -760,14 +752,16 @@ export default function DocumrentContainer(props) {
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {
     let emailrejex = /\S+@\S+\.\S+/;
-    let id = emailrejex.test(replyComment)
-      ? allAdmin.find((item) => item.email === replyComment).admin_id
+    let id = emailrejex.test(selectedAdminReply)
+      ? allAdmin.find((item) => item.email === selectedAdminReply).admin_id
       : data.assined_to_user_id;
     try {
       let res = await SendReplyCommit(
         data,
-        emailrejex.test(replyComment) ? replyComment : "",
-        !emailrejex.test(replyComment) ? replyComment : "",
+        selectedAdminReply || "", //emailrejex.test(replyComment) ? replyComment : "",
+        /\S+@\S+\.\S+/.test(replyComment)
+          ? replyComment.replace(/\S+@\S+\.\S+/g, "")
+          : replyComment, //!emailrejex.test(replyComment) ? replyComment : "",
         id
       );
       if (res.data.message === "message sent successfully!") {
@@ -777,9 +771,13 @@ export default function DocumrentContainer(props) {
         });
         setReplyComment("");
         getCommentsReplyList();
+        setSelectedAdminReplye("");
+        setFilteredEmails([]);
       }
     } catch (err) {
       console.log(err);
+      setSelectedAdminReplye("");
+      setFilteredEmails([]);
     }
   };
   return (
@@ -1032,6 +1030,7 @@ export default function DocumrentContainer(props) {
                     setShowSaveDoc(false);
                     setDocFile("");
                     setDocFileExt("");
+                    setFilteredEmails([]);
                   }}
                 >
                   Cancel
@@ -1117,6 +1116,7 @@ export default function DocumrentContainer(props) {
                       onClick={() => {
                         setAnnotationMode(!isAnnotationMode);
                         setComments("");
+                        setReplyCommentClick();
                       }}
                     >
                       {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
@@ -1205,8 +1205,7 @@ export default function DocumrentContainer(props) {
                                       }
                                       className="email-suggestion-item"
                                     >
-                                      <strong>{email.name}</strong>{" "}
-                                      {email.email}
+                                      <strong>{email.name}</strong>
                                     </li>
                                   ))}
                                 </ul>
@@ -1231,6 +1230,7 @@ export default function DocumrentContainer(props) {
                                   setSelectedAnnotation(null);
                                   setComments("");
                                   setAnnotationMode(!isAnnotationMode);
+                                  setFilteredEmails([]);
                                 }}
                               >
                                 Cancel
@@ -1273,6 +1273,8 @@ export default function DocumrentContainer(props) {
             handleEmailMouseOver={handleEmailMouseOver}
             ReplyAnnotation={ReplyAnnotation}
             getCommentsReplyList={getCommentsReplyList}
+            setAddCommentFlag={setAddCommentFlag}
+            setFilteredEmails={setFilteredEmails}
           />
         )}
       </div>
