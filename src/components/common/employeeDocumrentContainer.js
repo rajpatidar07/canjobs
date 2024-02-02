@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import { Form } from "react-bootstrap";
+// import { Form } from "react-bootstrap";
 import Loader from "./loader";
 import {
-  UploadDocument,
+  // UploadDocument,
+  UploadBulkDocument,
   GetEmployeeDocumentList,
   VarifyDocument,
   ADocAnnotation,
@@ -38,12 +39,13 @@ export default function DocumrentContainer(props) {
   const [docFileBase, setDocFileBase] = useState("");
   const [docFileExt, setDocFileExt] = useState("");
   const [docId, setDocId] = useState("");
-  const [documentName, setDocumentName] = useState("");
+  // const [documentName, setDocumentName] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   const [hide, setHide] = useState(false);
+  // const [bulkUpload, setBulkUpload] = useState("");
   const [loading, setLoading] = useState(true);
-  let encoded;
+  // let encoded;
   let user_type = localStorage.getItem("userType");
   let admin_id = localStorage.getItem("admin_id");
   // Annotation State
@@ -267,106 +269,276 @@ export default function DocumrentContainer(props) {
     });
   };
 
-  /*Onchange function of Logo */
-  const handleFileChange = async (event, id) => {
-    const file = event.target.files[0];
-    if (!file) {
-      toast.error("No file selected", {
+  /*Onchange function of SIngle update document */
+  // const handleFileChange = async (event, id) => {
+  //   const file = event.target.files[0];
+  //   if (!file) {
+  //     toast.error("No file selected", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
+  //     return;
+  //   }
+  //   // Check file type
+  //   const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+  //   const fileType = `.${file.name.split(".").pop()}`;
+  //   if (!allowedTypes.includes(fileType.toLowerCase())) {
+  //     toast.error(
+  //       "Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG",
+  //       {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       }
+  //     );
+  //     return;
+  //   }
+  //   // Check file size
+  //   else if (file.size > 1024 * 8000) {
+  //     toast.error("Document size can't be more than 8 mb", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
+  //     return;
+  //   } else {
+  //     const reader = new FileReader();
+  //     // Read the file as a data URL
+  //     reader.readAsDataURL(file);
+  //     encoded = await convertToBase64(file);
+  //     let base64Name = encoded.base64;
+  //     let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+  //       base64Name.split(";")[1]
+  //     }`;
+  // setDocFile(base64Name);
+  // setDocFileExt(fileType.slice(1));
+  // setDocumentName(file.name.split(".")[0].replace(/ /g, "_"));
+  // setDocFileBase(DocFile);
+  //     setShowSaveDoc(true);
+  //     // if (window.confirm("Are you sure you want to upload this document?")) {
+  //     //   let DocFile =
+  //     //     `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
+  //     //   //Api to upload document
+  //     //   let response = await UploadDocument(props.employee_id, docName, DocFile, id)
+  //     //   if (response.data.message === "inserted successfully") {
+  //     //     toast.success("Document uploaded Successfully", {
+  //     //       position: toast.POSITION.TOP_RIGHT,
+  //     //       autoClose: 1000,
+  //     //     });
+  //     //     setShowMoreDocType(false)
+  //     //     setDocName(docName)
+  //     //     setApiCall(true)
+  //     //   }
+  //     //   if (response.data.message === "updated successfully") {
+  //     //     toast.success("Document Updated Successfully", {
+  //     //       position: toast.POSITION.TOP_RIGHT,
+  //     //       autoClose: 1000,
+  //     //     });
+  //     //     setShowMoreDocType(false)
+  //     //     setApiCall(true)
+  //     //     setDocTypData(docData.find((item) => item.type === docName))
+  //     //     setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
+  //     //   }
+  //     //   if (response.data.message === "Invalid base64-encoded data !") {
+  //     //     toast.error("Document type is not valid", {
+  //     //       position: toast.POSITION.TOP_RIGHT,
+  //     //       autoClose: 1000,
+  //     //     });
+  //     //     setApiCall(true)
+  //     //   }
+  //     // } else {
+  //     //   toast.error("Document update denied.", {
+  //     //     position: toast.POSITION.TOP_RIGHT,
+  //     //     autoClose: 1000,
+  //     //   });
+  //     //   setApiCall(true);
+  //     // }
+  //   }
+  // };
+
+  /*On change fnction to upload bulk document in 1 array*/
+  const handleBulkFileChange = async (event, id) => {
+    const files = event.target.files;
+
+    // Check the number of files selected
+    if (files.length > 15) {
+      toast.error("You can only upload a maximum of 15 files at a time", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
       return;
     }
-    // Check file type
+
+    // Continue with file validation and processing
     const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
-    const fileType = `.${file.name.split(".").pop()}`;
-    if (!allowedTypes.includes(fileType.toLowerCase())) {
-      toast.error(
-        "Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG",
-        {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        }
-      );
-      return;
-    }
-    // Check file size
-    else if (file.size > 1024 * 8000) {
-      toast.error("Document size can't be more than 8 mb", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      return;
-    } else {
+    const maxSize = 1024 * 8000; // 8 MB
+
+    const fileList = {};
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Check file type
+      const fileType = `.${file.name.split(".").pop()}`;
+      if (!allowedTypes.includes(fileType.toLowerCase())) {
+        toast.error(
+          `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
+      }
+
+      // Check file size
+      if (file.size > maxSize) {
+        toast.error(
+          `Document size can't be more than 8 MB for file '${file.name}'`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
+      }
+
+      // Read file as data URL
       const reader = new FileReader();
-      // Read the file as a data URL
       reader.readAsDataURL(file);
-      encoded = await convertToBase64(file);
-      let base64Name = encoded.base64;
-      let DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+      const encoded = await convertToBase64(file);
+      const base64Name = encoded.base64;
+
+      // Construct file object with base64 data
+      const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
         base64Name.split(";")[1]
       }`;
-      setDocFile(base64Name);
-      setDocFileExt(fileType.slice(1));
-      setDocumentName(file.name.split(".")[0].replace(/ /g, "_"));
-      setDocFileBase(DocFile);
-      setShowSaveDoc(true);
-      // if (window.confirm("Are you sure you want to upload this document?")) {
-      //   let DocFile =
-      //     `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]}`
-      //   //Api to upload document
-      //   let response = await UploadDocument(props.employee_id, docName, DocFile, id)
-      //   if (response.data.message === "inserted successfully") {
-      //     toast.success("Document uploaded Successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     setShowMoreDocType(false)
-      //     setDocName(docName)
-      //     setApiCall(true)
-      //   }
-      //   if (response.data.message === "updated successfully") {
-      //     toast.success("Document Updated Successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     setShowMoreDocType(false)
-      //     setApiCall(true)
-      //     setDocTypData(docData.find((item) => item.type === docName))
-      //     setDocFile(docData.find((item) => item.type === docName).document_url + `?v=${new Date().getMinutes() + new Date().getSeconds()}`)
-      //   }
-      //   if (response.data.message === "Invalid base64-encoded data !") {
-      //     toast.error("Document type is not valid", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     setApiCall(true)
-      //   }
-      // } else {
-      //   toast.error("Document update denied.", {
-      //     position: toast.POSITION.TOP_RIGHT,
-      //     autoClose: 1000,
-      //   });
-      //   setApiCall(true);
-      // }
+
+      // Use DocRealName as the key for DocFile
+      const DocRealName = file.name.split(".")[0].replace(/ /g, "_");
+      fileList[DocRealName] = DocFile;
     }
+
+    // Store the object of files
+    setDocFileBase(fileList);
+    setShowSaveDoc(true);
   };
 
   /*Function to save document */
-  const SaveDocument = async () => {
+  // const SaveDocument = async () => {
+  //   try {
+  //     let response = await UploadDocument(
+  //       props.employee_id,
+  //       docData[0] === docTypData ? docTypData.type : docName,
+  //       docFileBase,
+  //       docData[0] === docTypData ? docTypData.id : docId,
+  //       documentName
+  //     );
+  //     if (response.data.message === "inserted successfully") {
+  //       toast.success("Document uploaded Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setShowMoreDocType(false);
+  //       setOtherDoc(false);
+  //       setDocName(docName);
+  //       setDocFileBase("");
+  //       setDocFileExt("");
+  //       setDocId("");
+  //       setShowSaveDoc(false);
+  //       setApiCall(true);
+  //       setCommentApiCall(true);
+  //       setHide(false);
+  //     }
+  // if (response.data.message === "updated successfully") {
+  //   toast.success("Document Updated Successfully", {
+  //     position: toast.POSITION.TOP_RIGHT,
+  //     autoClose: 1000,
+  //   });
+  //   if (commentsList.length > 0) {
+  //     OnHandleUpdateComment(
+  //       docData[0] === docTypData ? docTypData.id : docId
+  //     );
+  //     // OnDeleteComment(docData[0] === docTypData ? docTypData.id : docId);
+  //   }
+  //   setShowMoreDocType(false);
+  //   setApiCall(true);
+  //   setCommentApiCall(true);
+  //   setHide(false);
+  //   setDocTypData(
+  //     docData.find(
+  //       (item) =>
+  //         item.type ===
+  //         (docData[0] === docTypData ? docTypData.type : docName)
+  //     )
+  //   );
+  //   setDocFile(
+  //     docData.find(
+  //       (item) =>
+  //         item.type ===
+  //         (docData[0] === docTypData ? docTypData.type : docName)
+  //     ).document_url +
+  //       `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+  //   );
+  // }
+  //     if (response.data.message === "fields must not be empty !") {
+  //       toast.error("Document type is requried", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setApiCall(true);
+  //       setHide(false);
+  //     }
+
+  //     if (
+  //       response.data.message === "Invalid base64-encoded data !" ||
+  //       response.data.message === "Unsupported file type !"
+  //     ) {
+  //       toast.error("Document type is not valid", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setApiCall(true);
+  //       setHide(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setHide(false);
+  //   }
+  // };
+  /* Upload documents in bulk*/
+  let SaveBulkDocument = async () => {
     try {
-      let response = await UploadDocument(
+      let response = await UploadBulkDocument(
         props.employee_id,
-        docData[0] === docTypData ? docTypData.type : docName,
         docFileBase,
-        docData[0] === docTypData ? docTypData.id : docId,
-        documentName
+        docData[0] === docTypData ? docTypData.id : docId
       );
+
       if (response.data.message === "inserted successfully") {
-        toast.success("Document uploaded Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+        // Condition: If some file types are not supported and some are supported, then those that are supported will be uploaded while those that are not supported won't.
+        if (response.data.data) {
+          toast.success(" Documents uploaded successfully.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+          toast.error(
+            <>
+              Unsupported Files:
+              <ul>
+                {response.data.data.map((item, index) => (
+                  <li key={index}>{item.type}</li>
+                ))}
+              </ul>
+            </>,
+            {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000,
+            }
+          );
+        } else {
+          toast.success("Documents uploaded Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+        }
         setShowMoreDocType(false);
         setOtherDoc(false);
         setDocName(docName);
@@ -383,39 +555,38 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setDocId(docData[0] === docTypData ? docTypData.id : docId);
+        setShowMoreDocType(false);
+        setOtherDoc(false);
+        setApiCall(true);
+        setCommentApiCall(true);
+        setHide(false);
+        setShowSaveDoc(false);
+        setDocTypData(
+          docData.find(
+            (item) =>
+              item.id === (docData[0] === docTypData ? docTypData.id : docId)
+          )
+        );
+        console.log(
+          docData.find(
+            (item) =>
+              item.id === (docData[0] === docTypData ? docTypData.id : docId)
+          ).document_url
+        );
+        setDocFile(
+          docData.find(
+            (item) =>
+              item.id === (docData[0] === docTypData ? docTypData.id : docId)
+          ).document_url +
+            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+        );
         if (commentsList.length > 0) {
           OnHandleUpdateComment(
             docData[0] === docTypData ? docTypData.id : docId
           );
           // OnDeleteComment(docData[0] === docTypData ? docTypData.id : docId);
         }
-        setShowMoreDocType(false);
-        setApiCall(true);
-        setCommentApiCall(true);
-        setHide(false);
-        setDocTypData(
-          docData.find(
-            (item) =>
-              item.type ===
-              (docData[0] === docTypData ? docTypData.type : docName)
-          )
-        );
-        setDocFile(
-          docData.find(
-            (item) =>
-              item.type ===
-              (docData[0] === docTypData ? docTypData.type : docName)
-          ).document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-        );
-      }
-      if (response.data.message === "fields must not be empty !") {
-        toast.error("Document type is requried", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setApiCall(true);
-        setHide(false);
       }
 
       if (
@@ -428,9 +599,37 @@ export default function DocumrentContainer(props) {
         });
         setApiCall(true);
         setHide(false);
+        setShowSaveDoc(false);
+      }
+      if (
+        response.data.message === "all fields required !" ||
+        response.data.message === "fields must not be empty !"
+      ) {
+        toast.error("All fields are required !", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setShowSaveDoc(false);
+        setHide(false);
+      }
+      if (response.error === "Unauthorized") {
+        toast.error("Token expires, please log in again.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setHide(false);
+        setShowSaveDoc(false);
       }
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong try again later!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true);
+      setShowSaveDoc(false);
       setHide(false);
     }
   };
@@ -524,32 +723,32 @@ export default function DocumrentContainer(props) {
     }
   };
   /*Type array */
-  let DocTypeData = [
-    "passport",
-    "drivers_license",
-    "photograph",
-    "immigration_status",
-    "lmia",
-    "job_offer_letter",
-    "provincial_nominee_letter",
-    "proof_of_funds",
-    "proof_of_employment",
-    "marriage_certificate",
-    "education_metric",
-    "education_higher_secondary",
-    "education_graduation",
-    "education_post_graduation",
-    "resume_or_cv",
-    "ielts",
-    "medical",
-    "police_clearance",
-    "refusal_letter",
-    "Employment Contract",
-    "Reference Letters",
-    "Client Info",
-    "Representative Submission Letter",
-    "Bank Statement",
-  ];
+  // let DocTypeData = [
+  //   "passport",
+  //   "drivers_license",
+  //   "photograph",
+  //   "immigration_status",
+  //   "lmia",
+  //   "job_offer_letter",
+  //   "provincial_nominee_letter",
+  //   "proof_of_funds",
+  //   "proof_of_employment",
+  //   "marriage_certificate",
+  //   "education_metric",
+  //   "education_higher_secondary",
+  //   "education_graduation",
+  //   "education_post_graduation",
+  //   "resume_or_cv",
+  //   "ielts",
+  //   "medical",
+  //   "police_clearance",
+  //   "refusal_letter",
+  //   "Employment Contract",
+  //   "Reference Letters",
+  //   "Client Info",
+  //   "Representative Submission Letter",
+  //   "Bank Statement",
+  // ];
   //UseEfect for document
   useEffect(() => {
     GetDocument();
@@ -575,19 +774,19 @@ export default function DocumrentContainer(props) {
     }
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
-  const handleDocTypeChange = (e) => {
-    const selectedValue = e.target.value;
-    if (selectedValue === "other") {
-      setOtherDoc(true);
-      setShowMoreDocType(false);
-      setDocTypData("");
-      setDocId("");
-      setDocName("");
-    } else {
-      setOtherDoc(false);
-      setDocName(selectedValue);
-    }
-  };
+  // const handleDocTypeChange = (e) => {
+  //   const selectedValue = e.target.value;
+  //   if (selectedValue === "other") {
+  //     setOtherDoc(true);
+  //     setShowMoreDocType(false);
+  //     setDocTypData("");
+  //     setDocId("");
+  //     setDocName("");
+  //   } else {
+  //     setOtherDoc(false);
+  //     setDocName(selectedValue);
+  //   }
+  // };
   /*Function to download Document */
   const DownloadDocument = async () => {
     const response = await fetch(docFile);
@@ -838,7 +1037,7 @@ export default function DocumrentContainer(props) {
                     //   docTypData.type === item.type ||
                     //   (showMoreDocType === false && item.type === docName)
                     // }
-                    active={item.type === docName}
+                    active={item.id === docId}
                     onClick={() => {
                       setShowMoreDocType(false);
                       setDocTypData(item);
@@ -957,7 +1156,7 @@ export default function DocumrentContainer(props) {
           className={`${user_type === "admin" ? "col-md-7" : "col-md-8"} py-7`}
         >
           <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
-            {showMoreDocType ? (
+            {/* {showMoreDocType ? (
               <div className="doc_upload_col">
                 <Form.Select
                   className="form-control select_document_type"
@@ -996,7 +1195,7 @@ export default function DocumrentContainer(props) {
               >
                 + Add New Documents
               </button>
-            )}
+            )} */}
             {otherDoc === true ? (
               <div className="doc_upload_col">
                 <input
@@ -1008,26 +1207,42 @@ export default function DocumrentContainer(props) {
               </div>
             ) : null}
             <div className="">
-              <label className="btn btn-light">
+              <label className="btn btn-secondary">
                 <AiOutlineCloudUpload className="font-size-3 mr-2" />
                 <input
                   type="file"
                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                   style={{ display: "none" }}
                   onChange={(e) => {
-                    handleFileChange(e, docTypData.id);
+                    handleBulkFileChange(e, docTypData.id);
                     setHide(true);
                   }}
+                  multiple
                 />
-                {docTypData.id
-                  ? "Update Current Document"
-                  : "Upload New Document"}
+                Upload New Documents
               </label>
             </div>
+            {docTypData.id && (
+              <div className="">
+                <label className="btn btn-light">
+                  <AiOutlineCloudUpload className="font-size-3 mr-2" />
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      handleBulkFileChange(e, docTypData.id);
+                      setHide(true);
+                    }}
+                  />
+                  Update Current Document
+                </label>
+              </div>
+            )}
             {showSaveDoc ? (
               <div className="doc_upload_col">
-                <button className="btn btn-primary" onClick={SaveDocument}>
-                  Save Document
+                <button className="btn btn-primary" onClick={SaveBulkDocument}>
+                  Save Documents
                 </button>
               </div>
             ) : null}

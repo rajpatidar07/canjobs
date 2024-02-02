@@ -485,24 +485,6 @@ export const UploadDocument = async (id, type, doc, docId, docName) => {
   );
   return response;
 };
-/*Api to Upload bulk document */
-export const UploadBulkDocument = async (id, data, docId) => {
-  const response = await axios.put(
-    `${API_URL}user/bulkDocumentsUpload `,
-    {
-      employee_id: id,
-      id: docId,
-      data: data,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
-};
 
 /*Api to verify Applicants document */
 export const VarifyDocument = async (id, verify) => {

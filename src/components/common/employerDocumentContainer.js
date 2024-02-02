@@ -321,7 +321,73 @@ export default function EmployerDocumrentContainer(props) {
       setShowSaveDoc(true);
     }
   };
+  /*On change fnction to upload bulk document in 1 array*/
+  // const handleFileChange = async (event, id) => {
+  //     const files = event.target.files;
+  //     if (!files || files.length === 0) {
+  //       toast.error("No files selected", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       return;
+  //     }
 
+  //     // Check each selected file
+  //     const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+  //     const maxSize = 1024 * 8000; // 8 MB
+
+  //     for (let i = 0; i < files.length; i++) {
+  //       const file = files[i];
+
+  //       // Check file type
+  //       const fileType = `.${file.name.split(".").pop()}`;
+  //       if (!allowedTypes.includes(fileType.toLowerCase())) {
+  //         toast.error(
+  //           `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+  //           {
+  //             position: toast.POSITION.TOP_RIGHT,
+  //             autoClose: 1000,
+  //           }
+  //         );
+  //         return;
+  //       }
+
+  //       // Check file size
+  //       if (file.size > maxSize) {
+  //         toast.error(
+  //           `Document size can't be more than 8 MB for file '${file.name}'`,
+  //           {
+  //             position: toast.POSITION.TOP_RIGHT,
+  //             autoClose: 1000,
+  //           }
+  //         );
+  //         return;
+  //       }
+  //     }
+
+  //     // All files are valid, proceed with processing
+  //     // Assuming you want to store all files in an array
+  //     const fileList = [];
+  //     for (let i = 0; i < files.length; i++) {
+  //       const file = files[i];
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file);
+  //       const encoded = await convertToBase64(file);
+  //       const base64Name = encoded.base64;
+  //       const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+  //         base64Name.split(";")[1]
+  //       }`;
+  // const DocRealName = file.name.split(".")[0].replace(/ /g, "_");
+  // fileList.push({
+  //   DocRealName: DocFile,
+  // });
+  //     }
+
+  //     // Store the array of files
+  //     setDocFileBase(fileList);
+  //     console.log(fileList);
+  //     setShowSaveDoc(true);
+  //   };
   /*Function to save document */
   const SaveDocument = async () => {
     try {
@@ -402,7 +468,11 @@ export default function EmployerDocumrentContainer(props) {
       setHide(false);
     }
   };
-
+  /* Upload documents in bulk*/
+  // let SaveBulkDocument= async () =>{
+  //   try{let response = await UploadBulkDocument(props.employer_id,docFileBase)
+  //   console.log(response)}catch(err){console.log(err)}
+  // }
   /*Fuinction to render image */
   const RenderNewDocFile = () => {
     return (
@@ -999,6 +1069,9 @@ export default function EmployerDocumrentContainer(props) {
                 <button className="btn btn-primary" onClick={SaveDocument}>
                   Save Document
                 </button>
+                {/* <button className="btn btn-primary" onClick={SaveBulkDocument}>
+                  Save Documents
+                </button> */}
               </div>
             ) : null}
             {hide === true ? (

@@ -466,32 +466,37 @@ export const GetEmployeeDocumentList = async (id, type) => {
 
 /*Api to upload document*/
 export const UploadDocument = async (id, type, doc, docId, docName) => {
-  const response = await axios.put(
-    `${API_URL}user/documentsUpload `,
-    {
-      employee_id: id,
-      type: type,
-      document_file: doc,
-      is_varify: "0",
-      id: docId,
-      document_name: docName,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
+  let data;
+  data[docName] = doc;
+  console.log(data);
+  // const response = await axios.put(
+  //   `${API_URL}user/documentsUpload `,
+  //   {
+  //     employee_id: id,
+  //     // type: type,
+  //     // document_file: doc,
+  //     is_varify: "0",
+  //     id: docId,
+  //     data: data.docName,
+  //     // document_name: docName,
+  //   },
+  //   {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: Token,
+  //     },
+  //   }
+  // );
+  // return response;
 };
 /*Api to Upload bulk document */
-export const UploadBulkDocument = async (id, data, docId) => {
+export const UploadBulkDocument = async (id, data) => {
+  console.log(id, data);
   const response = await axios.put(
     `${API_URL}user/bulkDocumentsUpload `,
     {
       employee_id: id,
-      id: docId,
+      id: "",
       data: data,
     },
     {
