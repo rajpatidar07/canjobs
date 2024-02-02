@@ -7,9 +7,9 @@ import {
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
+const API_URL = "https://apnaorganicstore.in/canjobs/";
 // New AWS backend
-const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 export default function ResetPassword() {
   const location = useLocation();
   const path = location.pathname;

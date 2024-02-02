@@ -29,7 +29,7 @@ export default function CommentBox({
   ReplyAnnotation,
 }) {
   return (
-    <div className="col-md-3 p-0 py-7 border-left">
+    <div>
       <div
         style={
           docData.length === 0 ? { display: "none" } : { marginTop: "0px" }

@@ -419,19 +419,29 @@ export default function EmployerDocumrentContainer(props) {
                 offsetVertical={"100%"}
                 debounce={false}
               >
-                <FileViewer
-                  key={docTypData.id}
-                  fileType={
-                    docFileExt
-                      ? docFileExt
-                      : docTypData.extension_type ===
-                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      ? "docx"
-                      : docTypData.extension_type
-                  }
-                  filePath={docFile}
-                  errorComponent={() => <div>Error loading document</div>}
-                />
+                {docTypData.document_name &&
+                docTypData.document_name.toLowerCase().includes("imm") ? (
+                  <iframe
+                    src={docFile}
+                    height={"768px"}
+                    width={"768px"}
+                    title={docTypData.document_name}
+                  ></iframe>
+                ) : (
+                  <FileViewer
+                    key={docTypData.id}
+                    fileType={
+                      docFileExt
+                        ? docFileExt
+                        : docTypData.extension_type ===
+                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        ? "docx"
+                        : docTypData.extension_type
+                    }
+                    filePath={docFile}
+                    errorComponent={() => <div>Error loading document</div>}
+                  />
+                )}
               </LazyLoad>
             </div>
           </>
@@ -811,6 +821,7 @@ export default function EmployerDocumrentContainer(props) {
                       setOtherDoc(false);
                       setReplyCommentClick();
                       setHide(false);
+                      setFilteredEmails([]);
                       setShowSaveDoc(false);
                       setAnnotationMode(!isAnnotationMode);
                       setDocFile(
@@ -1087,6 +1098,15 @@ export default function EmployerDocumrentContainer(props) {
                         setAnnotationMode(!isAnnotationMode);
                         setComments("");
                         setReplyCommentClick();
+                        setAddCommentFlag(false);
+                        //condition if the pdf is of imm
+                        if (
+                          docTypData.document_name &&
+                          !isAnnotationMode &&
+                          docTypData.document_name.toLowerCase().includes("imm")
+                        ) {
+                          handleFlagClick({ x_axis: 1, y_axis: 1 });
+                        } else setSelectedAnnotation(null);
                       }}
                     >
                       {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
@@ -1138,7 +1158,7 @@ export default function EmployerDocumrentContainer(props) {
                         </div>
                       ))}
 
-                      {selectedAnnotation && addCommentFlag === true && (
+                      {/* {selectedAnnotation && addCommentFlag === true && (
                         <div
                           style={{
                             position: "absolute",
@@ -1207,7 +1227,7 @@ export default function EmployerDocumrentContainer(props) {
                             </div>
                           </form>
                         </div>
-                      )}
+                      )} */}
                     </>
                   )}
                 </div>
@@ -1218,34 +1238,121 @@ export default function EmployerDocumrentContainer(props) {
             {/* Annotation Close */}
           </div>
         </div>
-        {/* Comment box */}
-        {user_type === "admin" && (
-          <CommentBox
-            commentsReplyList={commentsReplyList}
-            docData={docData}
-            adminid={adminid}
-            setAdminId={setAdminId}
-            allAdmin={allAdmin}
-            annotationStatus={annotationStatus}
-            setAnnotationStatus={setAnnotationStatus}
-            commentsList={commentsList}
-            selectedAnnotation={selectedAnnotation}
-            setSelectedAnnotation={setSelectedAnnotation}
-            OnHandleUpdateComment={OnHandleUpdateComment}
-            determineBackgroundColor={determineBackgroundColor}
-            setReplyCommentClick={setReplyCommentClick}
-            replyCommentClick={replyCommentClick}
-            replyComment={replyComment}
-            handleInputChange={handleInputChange}
-            filteredEmails={filteredEmails}
-            handleEmailClick={handleEmailClick}
-            handleEmailMouseOver={handleEmailMouseOver}
-            ReplyAnnotation={ReplyAnnotation}
-            getCommentsReplyList={getCommentsReplyList}
-            setAddCommentFlag={setAddCommentFlag}
-            setFilteredEmails={setFilteredEmails}
-          />
-        )}
+        <div className="col-md-3 p-0 py-7 border-left">
+          {/* Add Annotation form */}
+
+          {!hide &&
+          docFile &&
+          docName &&
+          user_type === "admin" &&
+          selectedAnnotation && //condition for imm pdf
+          (docTypData.document_name &&
+          docTypData.document_name.toLowerCase().includes("imm")
+            ? replyCommentClick === undefined ||
+              replyCommentClick === "" ||
+              replyCommentClick === null
+            : addCommentFlag === true) ? (
+            <div
+              style={
+                {
+                  // position: "absolute",
+                  // left: selectedAnnotation.x_axis + 10,
+                  // top: selectedAnnotation.y_axis + 20,
+                  // zIndex: 1,
+                }
+              }
+              className="pt-5 pb-5"
+            >
+              <form
+                className="comment-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addAnnotation(selectedAnnotation);
+                }}
+              >
+                <div className="comment-input-container m-5">
+                  <label>
+                    <b> Add Annotation:</b>
+                  </label>
+                  <input
+                    type="text"
+                    value={comments || ""}
+                    onChange={handleInputChange}
+                    placeholder="Comments or add others with @"
+                    className="rounded-pill comment-input"
+                  />
+                  {filteredEmails.length > 0 && (
+                    <ul className="email-suggestions">
+                      {filteredEmails.map((email) => (
+                        <li
+                          key={email.email}
+                          onClick={() => handleEmailClick(email.email)}
+                          onMouseOver={() => handleEmailMouseOver(email.email)}
+                          className="email-suggestion-item"
+                        >
+                          <strong>{email.name}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <div className="button-container mx-4">
+                  <button
+                    type="submit"
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   addAnnotation(selectedAnnotation);
+
+                    // }}
+                    className="btn-sm btn-primary rounded-pill save-comment-btn"
+                  >
+                    Save Comment
+                  </button>
+                  <button
+                    className="btn-sm btn-info rounded-pill cancel-btn"
+                    onClick={() => {
+                      setAddCommentFlag();
+                      setSelectedAnnotation(null);
+                      setComments("");
+                      setAnnotationMode(!isAnnotationMode);
+                      setFilteredEmails([]);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : null}
+          {/* Comment box */}
+          {user_type === "admin" && (
+            <CommentBox
+              commentsReplyList={commentsReplyList}
+              docData={docData}
+              adminid={adminid}
+              setAdminId={setAdminId}
+              allAdmin={allAdmin}
+              annotationStatus={annotationStatus}
+              setAnnotationStatus={setAnnotationStatus}
+              commentsList={commentsList}
+              selectedAnnotation={selectedAnnotation}
+              setSelectedAnnotation={setSelectedAnnotation}
+              OnHandleUpdateComment={OnHandleUpdateComment}
+              determineBackgroundColor={determineBackgroundColor}
+              setReplyCommentClick={setReplyCommentClick}
+              replyCommentClick={replyCommentClick}
+              replyComment={replyComment}
+              handleInputChange={handleInputChange}
+              filteredEmails={filteredEmails}
+              handleEmailClick={handleEmailClick}
+              handleEmailMouseOver={handleEmailMouseOver}
+              ReplyAnnotation={ReplyAnnotation}
+              getCommentsReplyList={getCommentsReplyList}
+              setAddCommentFlag={setAddCommentFlag}
+              setFilteredEmails={setFilteredEmails}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
