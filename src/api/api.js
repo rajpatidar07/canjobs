@@ -2466,3 +2466,18 @@ export const AddCashpayment = async (data) => {
   );
   return response.data;
 };
+
+/*Global Search API */
+export const GlobalSearchResult = async (search) => {
+  const response = await axios.post(
+    `${API_URL}common/globalSearch`,
+    { search },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
