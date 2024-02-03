@@ -217,18 +217,12 @@ export default function DocumrentContainer(props) {
       } else {
         setDocData(response.data.data);
         setLoading(false);
-        console.log(
-          docName,
-          "object",
-          showMoreDocType === false,
-          response.data.data.find((item) => item.type === docName)
-        );
-        // eslint-disable-next-line
         if (
           docTypData === undefined ||
           docTypData === "undefined" ||
           (docTypData === "" && docName === "" && otherDoc === false)
         ) {
+          // eslint-disable-next-line
           setDocTypData(response.data.data[0]);
           setDocFile(
             response.data.data[0].document_url +
@@ -236,7 +230,6 @@ export default function DocumrentContainer(props) {
           );
           setDocName(response.data.data[0].type);
           setDocId(response.data.data[0].id);
-          console.log(response.data.data[0].document_url);
         } else if (
           showMoreDocType === false &&
           response.data.data.find((item) => item.type === docName)
@@ -245,11 +238,6 @@ export default function DocumrentContainer(props) {
             response.data.data.find((item) => item.type === docName).type ===
             docName
           ) {
-            console.log(
-              response.data.data.find((item) => item.type === docName)
-                .document_url,
-              "ppp"
-            );
             setDocTypData(
               response.data.data.find((item) => item.type === docName)
             );
@@ -1127,7 +1115,7 @@ export default function DocumrentContainer(props) {
                             onClick={() => setEditName(true)}
                             className="text-dark"
                           >
-                            {textReplaceFunction(item.type)}
+                            <span> {textReplaceFunction(item.type)}</span>
                           </Link>
                           <p className="font-size-2 m-0">
                             {moment(item.updated_at).format("DD-MMM-YYYY")}
@@ -1225,7 +1213,7 @@ export default function DocumrentContainer(props) {
           } p-2 bg-dark`}
         >
           <div className="row px-0 pt-0 pb-2 doc_upload_row m-0">
-            <div className="d-flex flex-wrap justify-content-start">
+            {/* <div className="d-flex flex-wrap justify-content-start">
               {otherDoc === true ? (
                 <div className="doc_upload_col">
                   <input
@@ -1296,7 +1284,7 @@ export default function DocumrentContainer(props) {
                   </button>
                 </div>
               ) : null}
-            </div>
+            </div> */}
             {/* {showMoreDocType ? (
               <div className="doc_upload_col">
                 <Form.Select
@@ -1348,7 +1336,7 @@ export default function DocumrentContainer(props) {
               </div>
             ) : null}
             <div className="">
-              <label className="btn btn-secondary">
+              <label className="btn btn-secondary doc_btn">
                 <AiOutlineCloudUpload className="font-size-3 mr-2" />
                 <input
                   type="file"
@@ -1358,13 +1346,14 @@ export default function DocumrentContainer(props) {
                     handleBulkFileChange(e, docTypData.id);
                     setHide(true);
                   }}
+                  multiple
                 />
                 Upload New Documents
               </label>
             </div>
             {docTypData.id && (
               <div className="">
-                <label className="btn btn-light">
+                <label className="btn btn-light doc_btn">
                   <AiOutlineCloudUpload className="font-size-3 mr-2" />
                   <input
                     type="file"
@@ -1382,7 +1371,10 @@ export default function DocumrentContainer(props) {
             )}
             {showSaveDoc ? (
               <div className="doc_upload_col">
-                <button className="btn btn-primary" onClick={SaveBulkDocument}>
+                <button
+                  className="btn btn-primary doc_btn"
+                  onClick={SaveBulkDocument}
+                >
                   Save Documents
                 </button>
               </div>
@@ -1390,7 +1382,7 @@ export default function DocumrentContainer(props) {
             {hide === true ? (
               <div className="doc_upload_col">
                 <button
-                  className="btn btn-light"
+                  className="btn btn-light doc_btn"
                   onClick={() => {
                     setHide(false);
                     setApiCall(true);
