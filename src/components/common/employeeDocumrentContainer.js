@@ -795,7 +795,7 @@ export default function DocumrentContainer(props) {
       className={
         // props.page === "company_profile"
         //
-        "document_container bg-white mb-10"
+        "document_container bg-white"
         // : "container document_container bg-white p-5 mb-10"
       }
     >
@@ -1097,9 +1097,7 @@ export default function DocumrentContainer(props) {
                   id="annotation-container"
                   style={{
                     position: "relative",
-                    overflow: "scroll",
                     width: "100%",
-                    height: "100vh",
                   }}
                 >
                   <div className="d-flex justify-content-center position-relative">

@@ -145,6 +145,8 @@ button.btn.action_btn {
   border-radius: 10px;
   /* background: #fff; */
   padding-bottom: 10px;
+  /* height: calc(100vh - 46px);
+  overflow: hidden; */
 }
 
 .table-responsive {
@@ -723,9 +725,13 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .doc_preview_box {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 243px);
   width: 100%;
   overflow-y: hidden;
+}
+
+#applieddocuments .document_container.bg-white {
+  max-height: calc(100vh - 235px);
 }
 
 .list-group {
@@ -768,19 +774,25 @@ select.form-control.select_document_type {
 }
 
 .verified_doc_img {
-  height: 35px;
+  height: 18px;
   width: auto;
 }
 
 .doc_action_div {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: absolute;
   width: 100%;
   top: 0;
   left: 0;
   padding: 5px 10px 0;
   z-index: 10;
+}
+
+.doc_upload_col button.btn {
+  min-width: unset;
+  height: auto;
+  line-height: 1;
 }
 
 .row.doc_upload_row {
