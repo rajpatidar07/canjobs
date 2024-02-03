@@ -91,7 +91,7 @@ function CompanyProfileDetail(props) {
     if (transactionId) {
       setTabActive("payment");
     }
-  }, [apiCall]);
+  }, [apiCall, company_id]);
 
   return (
     <div>

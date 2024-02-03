@@ -5,7 +5,7 @@ import GenerateToken from "./generateToken";
 import { getAllAdminNotification, ReadNotification } from "../../api/api";
 import AdminSetting from "./Modal/adminSetting";
 import ChangePassword from "../common/changepassword";
-// import GlobalSearch from "./globalSearch";
+import GlobalSearch from "./globalSearch";
 
 const AdminHeader = (props) => {
   /*States */

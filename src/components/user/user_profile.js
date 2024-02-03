@@ -162,6 +162,9 @@ const NewUserProfile = (props) => {
   const params = new URLSearchParams(window.location.search);
   const transactionId = params.get("payment_intent");
   /*Render function to get user Data */
+  // useEffect(() => {
+  //   UserData();
+  // }, [eid]);
   useEffect(() => {
     if (appliedJob) {
       AppliedJob();
@@ -183,7 +186,7 @@ const NewUserProfile = (props) => {
       setTabActive("payment");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall]);
+  }, [apiCall, eid]);
 
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
