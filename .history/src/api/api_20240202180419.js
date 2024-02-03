@@ -487,6 +487,7 @@ export const UploadDocument = async (id, type, doc, docId, docName) => {
 };
 /*Api to Upload bulk document */
 export const UploadBulkDocument = async (id, data, docId) => {
+  console.log(id, data);
   const response = await axios.put(
     `${API_URL}user/bulkDocumentsUpload `,
     {
@@ -2483,19 +2484,4 @@ export const AddCashpayment = async (data) => {
     }
   );
   return response.data;
-};
-
-/*Global Search API */
-export const GlobalSearchResult = async (search) => {
-  const response = await axios.post(
-    `${API_URL}common/globalSearch`,
-    { search },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
 };
