@@ -549,6 +549,7 @@ export const ADocAnnotation = async (
   type,
   adminType
 ) => {
+  console.log(adminType);
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
     // {
@@ -631,7 +632,6 @@ export const DeleteCommentsAndAssign = async (DocId, id) => {
 };
 /*Api to Send Reply for document comments */
 export const SendReplyCommit = async (data, email, msg, recid, adminType) => {
-  console.log(adminType);
   const response = await axios.post(
     `${API_URL}/admin/sendMsg`,
     {

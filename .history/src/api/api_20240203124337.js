@@ -549,6 +549,7 @@ export const ADocAnnotation = async (
   type,
   adminType
 ) => {
+  console.log(adminType);
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
     // {
@@ -585,13 +586,14 @@ export const ADocAnnotation = async (
   return response;
 };
 /*Api to get document comment list  */
-export const GetCommentsAndAssign = async (id, adminid, status) => {
+export const GetCommentsAndAssign = async (id, adminid, status, adminType) => {
   const response = await axios.post(
     `${API_URL}admin/searchDocTask`,
     {
       doc_id: id,
       assined_to_user_id: adminid,
       status: status,
+      receiver_type: adminType,
     },
     {
       headers: {
@@ -630,8 +632,7 @@ export const DeleteCommentsAndAssign = async (DocId, id) => {
   return response;
 };
 /*Api to Send Reply for document comments */
-export const SendReplyCommit = async (data, email, msg, recid, adminType) => {
-  console.log(adminType);
+export const SendReplyCommit = async (data, email, msg, recid) => {
   const response = await axios.post(
     `${API_URL}/admin/sendMsg`,
     {
@@ -641,7 +642,6 @@ export const SendReplyCommit = async (data, email, msg, recid, adminType) => {
       receiver_id: recid,
       mention: email,
       msg: msg,
-      receiver_type: adminType,
     },
     {
       headers: {

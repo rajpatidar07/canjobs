@@ -32,6 +32,7 @@ import CommentBox from "./CommentBox";
 export default function DocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
+  const [editName, setEditName] = useState(false);
   const [docData, setDocData] = useState([]);
   const [docTypData, setDocTypData] = useState("");
   const [apiCall, setApiCall] = useState("");
@@ -43,7 +44,7 @@ export default function DocumrentContainer(props) {
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   const [hide, setHide] = useState(false);
-  // const [bulkUpload, setBulkUpload] = useState("");
+  const [bulkUpload, setBulkUpload] = useState("");
   const [loading, setLoading] = useState(true);
   // let encoded;
   let user_type = localStorage.getItem("userType");
@@ -216,6 +217,12 @@ export default function DocumrentContainer(props) {
       } else {
         setDocData(response.data.data);
         setLoading(false);
+        console.log(
+          docName,
+          "object",
+          showMoreDocType === false,
+          response.data.data.find((item) => item.type === docName)
+        );
         // eslint-disable-next-line
         if (
           docTypData === undefined ||
@@ -229,6 +236,7 @@ export default function DocumrentContainer(props) {
           );
           setDocName(response.data.data[0].type);
           setDocId(response.data.data[0].id);
+          console.log(response.data.data[0].document_url);
         } else if (
           showMoreDocType === false &&
           response.data.data.find((item) => item.type === docName)
@@ -237,10 +245,20 @@ export default function DocumrentContainer(props) {
             response.data.data.find((item) => item.type === docName).type ===
             docName
           ) {
+            console.log(
+              response.data.data.find((item) => item.type === docName)
+                .document_url,
+              "ppp"
+            );
             setDocTypData(
               response.data.data.find((item) => item.type === docName)
             );
-
+            setDocName(
+              response.data.data.find((item) => item.type === docName).type
+            );
+            setDocId(
+              response.data.data.find((item) => item.type === docName).id
+            );
             setDocFile(
               response.data.data.find((item) => item.type === docName)
                 .document_url +
@@ -372,6 +390,7 @@ export default function DocumrentContainer(props) {
     const maxSize = 1024 * 8000; // 8 MB
 
     const fileList = {};
+    let DocRealName;
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
 
@@ -412,12 +431,13 @@ export default function DocumrentContainer(props) {
       }`;
 
       // Use DocRealName as the key for DocFile
-      const DocRealName = file.name.split(".")[0].replace(/ /g, "_");
+      DocRealName = file.name.split(".")[0].replace(/ /g, "_");
       fileList[DocRealName] = DocFile;
     }
 
     // Store the object of files
     setDocFileBase(fileList);
+    bulkUpload === "no" ? setDocName(DocRealName) : setDocName("");
     setShowSaveDoc(true);
   };
 
@@ -509,12 +529,16 @@ export default function DocumrentContainer(props) {
       let response = await UploadBulkDocument(
         props.employee_id,
         docFileBase,
-        docData[0] === docTypData ? docTypData.id : docId
+        bulkUpload === "no"
+          ? docData[0] === docTypData
+            ? docTypData.id
+            : docId
+          : ""
       );
 
       if (response.data.message === "inserted successfully") {
         // Condition: If some file types are not supported and some are supported, then those that are supported will be uploaded while those that are not supported won't.
-        if (response.data.data) {
+        if (response.data.data.length > 0) {
           toast.success(" Documents uploaded successfully.", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
@@ -542,6 +566,7 @@ export default function DocumrentContainer(props) {
         setShowMoreDocType(false);
         setOtherDoc(false);
         setDocName(docName);
+        setBulkUpload("");
         setDocFileBase("");
         setDocFileExt("");
         setDocId("");
@@ -555,32 +580,26 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setEditName(false);
         setDocId(docData[0] === docTypData ? docTypData.id : docId);
         setShowMoreDocType(false);
         setOtherDoc(false);
         setApiCall(true);
         setCommentApiCall(true);
+        setBulkUpload("");
         setHide(false);
+        setDocName(docName);
         setShowSaveDoc(false);
-        setDocTypData(
-          docData.find(
-            (item) =>
-              item.id === (docData[0] === docTypData ? docTypData.id : docId)
-          )
-        );
-        console.log(
-          docData.find(
-            (item) =>
-              item.id === (docData[0] === docTypData ? docTypData.id : docId)
-          ).document_url
-        );
-        setDocFile(
-          docData.find(
-            (item) =>
-              item.id === (docData[0] === docTypData ? docTypData.id : docId)
-          ).document_url +
-            `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-        );
+        // setDocTypData(docData.find((item) => item.type === docName));
+        // console.log(
+        //   docData.find((item) => item.type === docName),
+        //   docName,
+        //   docData
+        // );
+        // setDocFile(
+        //   docData.find((item) => item.type === docName).document_url +
+        //     `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+        // );
         if (commentsList.length > 0) {
           OnHandleUpdateComment(
             docData[0] === docTypData ? docTypData.id : docId
@@ -599,6 +618,7 @@ export default function DocumrentContainer(props) {
         });
         setApiCall(true);
         setHide(false);
+        setBulkUpload("");
         setShowSaveDoc(false);
       }
       if (
@@ -612,6 +632,7 @@ export default function DocumrentContainer(props) {
         setApiCall(true);
         setShowSaveDoc(false);
         setHide(false);
+        setBulkUpload("");
       }
       if (response.error === "Unauthorized") {
         toast.error("Token expires, please log in again.", {
@@ -621,6 +642,7 @@ export default function DocumrentContainer(props) {
         setApiCall(true);
         setHide(false);
         setShowSaveDoc(false);
+        setBulkUpload("");
       }
     } catch (err) {
       console.log(err);
@@ -631,6 +653,7 @@ export default function DocumrentContainer(props) {
       setApiCall(true);
       setShowSaveDoc(false);
       setHide(false);
+      setBulkUpload("");
     }
   };
   /*Fuinction to render image */
@@ -830,9 +853,12 @@ export default function DocumrentContainer(props) {
   const addAnnotation = async (annotation) => {
     setAddCommentFlag(false);
     // Retrieve data from local storage
-    const assignedUserId = allAdmin.find((item) => item.email === comments)
-      ? allAdmin.find((item) => item.email === comments).admin_id
+    const assignedUserId = allAdmin.find((item) => item.email === selectedAdmin)
+      ? allAdmin.find((item) => item.email === selectedAdmin).admin_id
       : admin_id;
+    const AdminType = allAdmin.find((item) => item.email === selectedAdmin)
+      ? allAdmin.find((item) => item.email === selectedAdmin).admin_type
+      : "admin";
     const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
     const comment = /\S+@\S+\.\S+/.test(comments)
@@ -852,7 +878,8 @@ export default function DocumrentContainer(props) {
         comment,
         annotation.x_axis,
         annotation.y_axis,
-        "employee"
+        "employee",
+        AdminType
       );
       if (res.data.message === "task inserted successfully!") {
         toast.success("Comment uploaded Successfully", {
@@ -964,6 +991,9 @@ export default function DocumrentContainer(props) {
     let id = emailrejex.test(selectedAdminReply)
       ? allAdmin.find((item) => item.email === selectedAdminReply).admin_id
       : data.assined_to_user_id;
+    let adminType = emailrejex.test(selectedAdminReply)
+      ? allAdmin.find((item) => item.email === selectedAdminReply).admin_type
+      : "admin";
     try {
       let res = await SendReplyCommit(
         data,
@@ -971,7 +1001,8 @@ export default function DocumrentContainer(props) {
         /\S+@\S+\.\S+/.test(replyComment)
           ? replyComment.replace(/\S+@\S+\.\S+/g, "")
           : replyComment, //!emailrejex.test(replyComment) ? replyComment : "",
-        id
+        id,
+        adminType
       );
       if (res.data.message === "message sent successfully!") {
         toast.success("Replied Successfully", {
@@ -1037,7 +1068,7 @@ export default function DocumrentContainer(props) {
                     //   docTypData.type === item.type ||
                     //   (showMoreDocType === false && item.type === docName)
                     // }
-                    active={item.id === docId}
+                    active={item.type === docName || docId === item.id}
                     onClick={() => {
                       setShowMoreDocType(false);
                       setDocTypData(item);
@@ -1057,16 +1088,51 @@ export default function DocumrentContainer(props) {
                       );
                     }}
                     className={
-                      item.type === docName
+                      item.type === docName || docId === item.id
                         ? "text-capitalize bg-primary text-white"
                         : "text-capitalize"
                     }
                   >
                     <td className="p-3">
-                      {textReplaceFunction(item.type)}
-                      <p className="font-size-2 m-0">
-                        {moment(item.updated_at).format("DD-MMM-YYYY")}
-                      </p>
+                      {editName === true && docId === item.id ? (
+                        <div className="reply_box position-relative">
+                          {" "}
+                          <input
+                            type="text"
+                            value={docName}
+                            className="font-size-2 m-3 bg-primary border-0 border-none"
+                            onChange={(e) => {
+                              const key = e.target.value;
+                              const newData = { [key]: "" };
+                              console.log(key, newData);
+                              setDocName(key);
+                              setDocFileBase(newData);
+                              setBulkUpload("no");
+                            }}
+                          />{" "}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              SaveBulkDocument();
+                            }}
+                            className="btn btn-info border-0 rounded reply_btn"
+                          >
+                            {">>"}
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <Link
+                            onClick={() => setEditName(true)}
+                            className="text-dark"
+                          >
+                            {textReplaceFunction(item.type)}
+                          </Link>
+                          <p className="font-size-2 m-0">
+                            {moment(item.updated_at).format("DD-MMM-YYYY")}
+                          </p>
+                        </>
+                      )}
                     </td>
                     {/* <td className="p-3">
                       {item.updated_by_name
@@ -1217,7 +1283,6 @@ export default function DocumrentContainer(props) {
                     handleBulkFileChange(e, docTypData.id);
                     setHide(true);
                   }}
-                  multiple
                 />
                 Upload New Documents
               </label>
@@ -1233,6 +1298,7 @@ export default function DocumrentContainer(props) {
                     onChange={(e) => {
                       handleBulkFileChange(e, docTypData.id);
                       setHide(true);
+                      setBulkUpload("no");
                     }}
                   />
                   Update Current Document

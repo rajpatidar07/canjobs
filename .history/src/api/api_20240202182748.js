@@ -546,30 +546,16 @@ export const ADocAnnotation = async (
   comment,
   x,
   y,
-  type,
-  adminType
+  type
 ) => {
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
-    // {
-    //   task_creator_user_id: id,
-    //   doc_id: docId,
-    //   assined_to_user_id: assineduserid,
-    //   assigned_to: email,
-    //   subject: subject,
-    //   subject_description: comment,
-    //   x_axis: x,
-    //   y_axis: y,
-    //   type: type,
-    // },
     {
       task_creator_user_id: id,
       doc_id: docId,
       assined_to_user_id: assineduserid,
       assigned_to: email,
-      assigned_to_id: assineduserid,
-      assigned_to_type: adminType,
-      subject: "",
+      subject: subject,
       subject_description: comment,
       x_axis: x,
       y_axis: y,
@@ -630,8 +616,7 @@ export const DeleteCommentsAndAssign = async (DocId, id) => {
   return response;
 };
 /*Api to Send Reply for document comments */
-export const SendReplyCommit = async (data, email, msg, recid, adminType) => {
-  console.log(adminType);
+export const SendReplyCommit = async (data, email, msg, recid) => {
   const response = await axios.post(
     `${API_URL}/admin/sendMsg`,
     {
@@ -641,7 +626,6 @@ export const SendReplyCommit = async (data, email, msg, recid, adminType) => {
       receiver_id: recid,
       mention: email,
       msg: msg,
-      receiver_type: adminType,
     },
     {
       headers: {
