@@ -12,7 +12,7 @@ export default function CommentReplyBox({
   ReplyAnnotation,
 }) {
   return (
-    <div className="reply_box_container mx-5 ">
+    <div className="reply_box_container mx-2">
       {/* Display replies only if task_id matches */}
       {(commentsReplyList || []).map(
         (replyItem, replyIndex) =>
@@ -21,9 +21,9 @@ export default function CommentReplyBox({
             <div key={replyIndex}>
               {/* Display reply message */}
               {
-                <div className="p-3 bg-white rounded mb-1">
+                <div className="p-2 bg-white rounded mb-1">
                   <div className="d-flex justify-content-between align-items-center text-dark">
-                    <h6 className="font-size-4 text-break m-0 text-capitalize">
+                    <h6 className="font-size-3 text-break m-0 text-capitalize">
                       {replyItem.receiver_name}
                     </h6>
                     <i className="font-size-2">
@@ -31,27 +31,19 @@ export default function CommentReplyBox({
                     </i>
                   </div>
                   {replyItem.msg && (
-                    <p className="m-0 font-size-4">{replyItem.msg}</p>
+                    <span className="m-0 font-size-3 text-dark">
+                      {replyItem.msg}
+                    </span>
                   )}
                   {/* Display mention */}
                   {replyItem.mention && (
-                    <div
-                      style={{
-                        borderRadius: "15px",
-                        // padding: "5px 10px",
-                        // margin: "5px 0",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
+                    <span
+                      className="text-break text-primary font-size-3"
+                      to={`mailto:${replyItem.mention}`}
+                      style={{ marginLeft: "5px" }}
                     >
-                      <Link
-                        className="text-break"
-                        to={`mailto:${replyItem.mention}`}
-                        style={{ marginLeft: "5px" }}
-                      >
-                        {`${replyItem.mention}`}
-                      </Link>
-                    </div>
+                      {`${replyItem.mention}`}
+                    </span>
                   )}
                 </div>
               }
@@ -65,7 +57,7 @@ export default function CommentReplyBox({
           ReplyAnnotation(commentItem);
         }}
       >
-        <div className="comment-input-container p-2 bg-white rounded">
+        <div className="comment-input-container rounded">
           <div className="reply_box position-relative">
             <input
               type="text"

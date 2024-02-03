@@ -998,7 +998,7 @@ export default function DocumrentContainer(props) {
         // : "container document_container bg-white p-5 mb-10"
       }
     >
-      <div className="row m-0">
+      <div className="row m-0 bg-white">
         <div
           className={`${
             user_type === "admin" ? "col-md-2" : "col-md-4"
@@ -1007,6 +1007,7 @@ export default function DocumrentContainer(props) {
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
             Document List
           </h5>
+
           {/* Documents type list */}
           <table className="table font-size-3">
             <thead>
@@ -1153,9 +1154,83 @@ export default function DocumrentContainer(props) {
         </ListGroup> */}
         </div>
         <div
-          className={`${user_type === "admin" ? "col-md-7" : "col-md-8"} py-7`}
+          className={`${
+            user_type === "admin" ? "col-md-7" : "col-md-8"
+          } p-2 bg-dark`}
         >
-          <div className="row px-0 pt-0 pb-5 doc_upload_row m-0">
+          <div className="row px-0 pt-0 pb-2 doc_upload_row m-0">
+            <div className="d-flex flex-wrap justify-content-start">
+              {otherDoc === true ? (
+                <div className="doc_upload_col">
+                  <input
+                    className="form-control"
+                    value={docName}
+                    onChange={(e) => setDocName(e.target.value)}
+                    placeholder="Document Name"
+                  />
+                </div>
+              ) : null}
+              <div className="">
+                <label className="btn btn-secondary doc_btn">
+                  <AiOutlineCloudUpload className="font-size-3 mr-2" />
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      handleBulkFileChange(e, docTypData.id);
+                      setHide(true);
+                    }}
+                    multiple
+                  />
+                  Upload New Documents
+                </label>
+              </div>
+              {docTypData.id && (
+                <div className="">
+                  <label className="btn btn-light doc_btn">
+                    <AiOutlineCloudUpload className="font-size-3 mr-2" />
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        handleBulkFileChange(e, docTypData.id);
+                        setHide(true);
+                      }}
+                    />
+                    Update Current Document
+                  </label>
+                </div>
+              )}
+              {showSaveDoc ? (
+                <div className="doc_upload_col">
+                  <button
+                    className="btn btn-primary doc_btn"
+                    onClick={SaveBulkDocument}
+                  >
+                    Save Documents
+                  </button>
+                </div>
+              ) : null}
+              {hide === true ? (
+                <div className="doc_upload_col">
+                  <button
+                    className="btn btn-light doc_btn"
+                    onClick={() => {
+                      setHide(false);
+                      setApiCall(true);
+                      setShowSaveDoc(false);
+                      setDocFile("");
+                      setDocFileExt("");
+                      setFilteredEmails([]);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : null}
+            </div>
             {/* {showMoreDocType ? (
               <div className="doc_upload_col">
                 <Form.Select
@@ -1196,85 +1271,18 @@ export default function DocumrentContainer(props) {
                 + Add New Documents
               </button>
             )} */}
-            {otherDoc === true ? (
-              <div className="doc_upload_col">
-                <input
-                  className="form-control"
-                  value={docName}
-                  onChange={(e) => setDocName(e.target.value)}
-                  placeholder="Document Name"
-                />
-              </div>
-            ) : null}
-            <div className="">
-              <label className="btn btn-secondary">
-                <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    handleBulkFileChange(e, docTypData.id);
-                    setHide(true);
-                  }}
-                  multiple
-                />
-                Upload New Documents
-              </label>
-            </div>
-            {docTypData.id && (
-              <div className="">
-                <label className="btn btn-light">
-                  <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      handleBulkFileChange(e, docTypData.id);
-                      setHide(true);
-                    }}
-                  />
-                  Update Current Document
-                </label>
-              </div>
-            )}
-            {showSaveDoc ? (
-              <div className="doc_upload_col">
-                <button className="btn btn-primary" onClick={SaveBulkDocument}>
-                  Save Documents
-                </button>
-              </div>
-            ) : null}
-            {hide === true ? (
-              <div className="doc_upload_col">
-                <button
-                  className="btn btn-light"
-                  onClick={() => {
-                    setHide(false);
-                    setApiCall(true);
-                    setShowSaveDoc(false);
-                    setDocFile("");
-                    setDocFileExt("");
-                    setFilteredEmails([]);
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : null}
           </div>
-          <div className="doc_preview_box p-5 bg-light rounded position-relative">
+          <div className="doc_preview_box p-0 bg-light rounded position-relative">
             {/* {docTypData ? ( */}
             <div className="doc_action_div">
-              {docFile ? (
+              {/* {docFile ? (
                 hide === false && docTypData && user_type === "admin" ? (
                   <div className="doc_upload_col">
                     {docTypData.is_varify === "1" ? (
                       <img className="verified_doc_img" src={Verified} alt="" />
                     ) : (
                       <button
-                        className="btn btn-info"
+                        className="btn btn-info doc_btn"
                         disabled={docTypData.is_varify === "0" ? false : true}
                         onClick={() => onVerifyDocuments(docTypData.id, 1)}
                       >
@@ -1283,18 +1291,29 @@ export default function DocumrentContainer(props) {
                     )}
                   </div>
                 ) : null
-              ) : null}
+              ) : null} */}
               {hide === false && docFile && docName && user_type === "admin" ? (
-                <div className="doc_upload_col flex-end">
+                <div className="doc_upload_col d-flex flex-end align-items-center">
+                  {docTypData.is_varify === "1" ? (
+                    <img className="verified_doc_img" src={Verified} alt="" />
+                  ) : (
+                    <button
+                      className="btn btn-info doc_btn"
+                      disabled={docTypData.is_varify === "0" ? false : true}
+                      onClick={() => onVerifyDocuments(docTypData.id, 1)}
+                    >
+                      Verify document
+                    </button>
+                  )}
                   <button
-                    className="p-1 rounded-3 btn-warning mx-3 w-auto"
+                    className="p-1 rounded-3 btn-warning mx-2 w-auto btn doc_btn"
                     onClick={PrintDocument}
                     title="Print Document"
                   >
                     <i className="fa fa-print" aria-hidden="true"></i>
                   </button>
                   <button
-                    className="p-1 rounded-3 btn-info w-auto"
+                    className="p-1 rounded-3 btn-info w-auto btn doc_btn"
                     onClick={DownloadDocument}
                     title="Download Document"
                   >
@@ -1324,7 +1343,7 @@ export default function DocumrentContainer(props) {
                         docFile &&
                         docName &&
                         user_type === "admin"
-                          ? `btn-sm mt-7 ${
+                          ? `btn-sm mt-7 doc_btn ${
                               isAnnotationMode
                                 ? "btn-primary "
                                 : "btn-secondary"
@@ -1482,7 +1501,7 @@ export default function DocumrentContainer(props) {
             {/* Annotation Close */}
           </div>
         </div>
-        <div className="col-md-3 p-0 py-7 border-left">
+        <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}
 
           {!hide &&
@@ -1505,7 +1524,7 @@ export default function DocumrentContainer(props) {
                   // zIndex: 1,
                 }
               }
-              className="pt-5 pb-5"
+              className="pt-0 pb-5"
             >
               <form
                 className="comment-form"
@@ -1514,8 +1533,8 @@ export default function DocumrentContainer(props) {
                   addAnnotation(selectedAnnotation);
                 }}
               >
-                <div className="comment-input-container m-5">
-                  <label>
+                <div className="comment-input-container m-0 mb-2">
+                  <label className="m-0">
                     <b> Add Annotation:</b>
                   </label>
                   <input
@@ -1523,7 +1542,7 @@ export default function DocumrentContainer(props) {
                     value={comments || ""}
                     onChange={handleInputChange}
                     placeholder="Comments or add others with @"
-                    className="rounded-pill comment-input"
+                    className="comment-input"
                   />
                   {filteredEmails.length > 0 && (
                     <ul className="email-suggestions">
@@ -1540,7 +1559,7 @@ export default function DocumrentContainer(props) {
                     </ul>
                   )}
                 </div>
-                <div className="button-container mx-4">
+                <div className="button-container mx-0">
                   <button
                     type="submit"
                     // onClick={(e) => {
@@ -1548,12 +1567,12 @@ export default function DocumrentContainer(props) {
                     //   addAnnotation(selectedAnnotation);
 
                     // }}
-                    className="btn-sm btn-primary rounded-pill save-comment-btn"
+                    className="btn-sm btn-primary save-comment-btn"
                   >
                     Save Comment
                   </button>
                   <button
-                    className="btn-sm btn-info rounded-pill cancel-btn"
+                    className="btn-sm btn-light cancel-btn"
                     onClick={() => {
                       setAddCommentFlag();
                       setSelectedAnnotation(null);

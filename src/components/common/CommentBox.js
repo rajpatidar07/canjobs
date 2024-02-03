@@ -35,7 +35,7 @@ export default function CommentBox({
           docData.length === 0 ? { display: "none" } : { marginTop: "0px" }
         }
       >
-        <div className="row m-0 px-7">
+        <div className="row m-0 px-2">
           <div className={"col mr-2 p-0 form_group"}>
             <p className="input_label">Filter by Admin:</p>
             <div className="select_div">
@@ -82,7 +82,7 @@ export default function CommentBox({
             </div>
           </div>
         </div>
-        <div className="row m-0 p-7 flex-column" style={{ overflow: "auto" }}>
+        <div className="row m-0 p-2 flex-column" style={{ overflow: "auto" }}>
           {commentsList.length === 0 ? (
             <div className="col text-center">
               <h5>No comments</h5>
@@ -127,14 +127,15 @@ export default function CommentBox({
                 >
                   &#x2713; {/* Checkmark symbol */}
                 </span>
-                <div className="card-body p-5">
-                  <div className="text-dark h4">
-                    <div class="d-flex profile_box gx-2">
+                <div className="card-body p-2">
+                  <div className="text-dark">
+                    <div class="d-flex profile_box gx-2 mb-1">
                       <div class="media  align-items-center">
                         <div
-                          class={`circle-30 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                          class={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
                             commentItem
                           )}`}
+                          style={{ fontSize: "20px" }}
                         >
                           {commentItem.assined_to_user_id
                             ? allAdmin.find(
@@ -154,7 +155,7 @@ export default function CommentBox({
                         </div>
                       </div>
                       <div class=" mb-0">
-                        <div class="font-size-4 font-weight-bold text-capitalize">
+                        <div class="font-size-3 font-weight-bold text-capitalize">
                           {commentItem.assined_to_user_id
                             ? allAdmin.find(
                                 (item) =>
@@ -177,23 +178,18 @@ export default function CommentBox({
                   </div>
 
                   {commentItem.subject_description && (
-                    <p className="card-title text-break m-0 font-size-4">
+                    <span className="card-title text-break text-dark m-0 font-size-3">
                       {commentItem.subject_description}
-                    </p>
+                    </span>
                   )}
                   {commentItem.assigned_to && (
-                    <div
-                      style={{
-                        display: "flex",
-                      }}
+                    <span
+                      className="text-break font-size-3 text-primary"
+                      to={`mailto:${commentItem.assigned_to}`}
+                      style={{ marginLeft: "5px" }}
                     >
-                      <Link
-                        className="text-break"
-                        to={`mailto:${commentItem.assigned_to}`}
-                      >
-                        {`${commentItem.assigned_to}`}
-                      </Link>
-                    </div>
+                      {`${commentItem.assigned_to}`}
+                    </span>
                   )}
                 </div>
                 {replyCommentClick === commentItem.id ? (
@@ -211,7 +207,7 @@ export default function CommentBox({
                   />
                 ) : (
                   <Link
-                    className="mx-5 mr-0 ml-auto"
+                    className="mx-5 mr-0 ml-auto font-size-3"
                     onClick={() => {
                       setReplyCommentClick(commentItem.id);
                       getCommentsReplyList();
