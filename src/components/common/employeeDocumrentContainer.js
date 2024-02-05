@@ -15,6 +15,7 @@ import {
   SendReplyCommit,
   GetReplyCommit,
 } from "../../api/api";
+import { CiEdit } from "react-icons/ci";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
@@ -32,6 +33,7 @@ import CommentBox from "./CommentBox";
 export default function DocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
+  const [editDocName, setEditDocName] = useState(docName);
   const [editName, setEditName] = useState(false);
   const [docData, setDocData] = useState([]);
   const [docTypData, setDocTypData] = useState("");
@@ -84,28 +86,52 @@ export default function DocumrentContainer(props) {
 
   /*onchange Function to set email or any other comment  */
   const handleInputChange = (event, type) => {
-    const value = event.target.value;
-    if (value.startsWith("@")) {
+    // const value = event.target.value;
+    // console.log(value.startsWith("@"), value.includes(" @"));
+    // if (value.startsWith("@")) {
+    // AdminData();
+    // if (allAdmin) {
+    //   // Filter admin emails based on input
+    //   let filteredAdminEmails = allAdmin.filter((admin) =>
+    //     admin.email.toLowerCase().includes(value.slice(1).toLowerCase())
+    //   );
+
+    //   // Update the filtered emails
+    //   setFilteredEmails(filteredAdminEmails);
+    // }
+    // } else {
+    //   // Reset filtered emails if input doesn't start with '@'
+    //   setFilteredEmails([]);
+    // }
+
+    // // Update the input value
+    // if (type === "reply") {
+    //   setReplyComment(value);
+    // } else {
+    //   setComments(value);
+    // }
+    const inputValue = event.target.value;
+    // Update the input value
+    if (type === "reply") {
+      setReplyComment(inputValue);
+    } else {
+      setComments(inputValue);
+    }
+
+    const lastChar = inputValue.slice(-1);
+    if (lastChar === "@") {
       AdminData();
       if (allAdmin) {
         // Filter admin emails based on input
-        const filteredAdminEmails = allAdmin.filter((admin) =>
-          admin.email.toLowerCase().includes(value.slice(1).toLowerCase())
+        let filteredAdminEmails = allAdmin.filter(
+          (admin) => admin.email.toLowerCase().includes
         );
 
         // Update the filtered emails
         setFilteredEmails(filteredAdminEmails);
       }
     } else {
-      // Reset filtered emails if input doesn't start with '@'
       setFilteredEmails([]);
-    }
-
-    // Update the input value
-    if (type === "reply") {
-      setReplyComment(value);
-    } else {
-      setComments(value);
     }
   };
   /*Function to get the email to assign */
@@ -113,20 +139,21 @@ export default function DocumrentContainer(props) {
     // Set the selected admin and update the input value
     if (type === "reply") {
       setSelectedAdminReplye(email);
-      setReplyComment(replyComment);
+      setReplyComment(email);
     } else {
       setSelectedAdmin(email);
-      setComments(comments);
+      setComments((prevValue) => `${prevValue} ${email} `);
     }
     setFilteredEmails([]);
   };
+  console.log(comments);
   /*Function to get the email to input on hover */
   const handleEmailMouseOver = (email, type) => {
     // Highlight the email on mouseover
     if (type === "reply") {
-      setReplyComment(email);
+      // setReplyComment(email);
     } else {
-      setComments(email);
+      // setComments(email);
     }
   };
   // Handle click event on the FileViewer to capture annotations
@@ -217,6 +244,7 @@ export default function DocumrentContainer(props) {
       } else {
         setDocData(response.data.data);
         setLoading(false);
+
         if (
           docTypData === undefined ||
           docTypData === "undefined" ||
@@ -253,6 +281,15 @@ export default function DocumrentContainer(props) {
                 `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
           }
+        } else {
+          //Condition for update
+          setDocTypData(response.data.data.find((item) => item.id === docId));
+          setDocFile(
+            response.data.data.find((item) => item.id === docId).document_url +
+              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+          );
+          setDocName(response.data.data.find((item) => item.id === docId).type);
+          setDocId(response.data.data.find((item) => item.id === docId).id);
         }
       }
     } catch (err) {
@@ -849,12 +886,18 @@ export default function DocumrentContainer(props) {
       : "admin";
     const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     const subject = "";
-    const comment = /\S+@\S+\.\S+/.test(comments)
-      ? comments.replace(/\S+@\S+\.\S+/g, "")
-      : comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
+    const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docId
       ? docId
       : docData.find((item) => item.type === docName).id;
+    let sender = allAdmin.find((item) => item.admin_id === admin_id)
+      ? allAdmin.find((item) => item.admin_id === admin_id).name
+      : "";
+    let assignedAdminName = allAdmin.find(
+      (item) => item.email === selectedAdmin
+    )
+      ? allAdmin.find((item) => item.email === selectedAdmin).name
+      : "";
     // Send data to the API
     try {
       let res = await ADocAnnotation(
@@ -866,8 +909,10 @@ export default function DocumrentContainer(props) {
         comment,
         annotation.x_axis,
         annotation.y_axis,
-        "employee",
-        AdminType
+        "document",
+        AdminType,
+        sender,
+        assignedAdminName
       );
       if (res.data.message === "task inserted successfully!") {
         toast.success("Comment uploaded Successfully", {
@@ -982,15 +1027,27 @@ export default function DocumrentContainer(props) {
     let adminType = emailrejex.test(selectedAdminReply)
       ? allAdmin.find((item) => item.email === selectedAdminReply).admin_type
       : "admin";
+    let sender = allAdmin.find(
+      (item) => item.admin_id === data.task_creator_user_id
+    )
+      ? allAdmin.find((item) => item.admin_id === data.task_creator_user_id)
+          .name
+      : "";
+    let assignedAdminName = allAdmin.find(
+      (item) => item.email === selectedAdminReply
+    )
+      ? allAdmin.find((item) => item.email === selectedAdminReply).name
+      : "";
     try {
       let res = await SendReplyCommit(
         data,
         selectedAdminReply || "", //emailrejex.test(replyComment) ? replyComment : "",
-        /\S+@\S+\.\S+/.test(replyComment)
-          ? replyComment.replace(/\S+@\S+\.\S+/g, "")
-          : replyComment, //!emailrejex.test(replyComment) ? replyComment : "",
+        replyComment, //!emailrejex.test(replyComment) ? replyComment : "",
         id,
-        adminType
+        adminType,
+        sender,
+        assignedAdminName,
+        "document"
       );
       if (res.data.message === "message sent successfully!") {
         toast.success("Replied Successfully", {
@@ -1085,20 +1142,19 @@ export default function DocumrentContainer(props) {
                     <td className="p-3">
                       {editName === true && docId === item.id ? (
                         <div className="reply_box position-relative">
-                          {" "}
                           <input
                             type="text"
-                            value={docName}
+                            value={editDocName}
                             className="font-size-2 m-3 bg-primary border-0 border-none"
                             onChange={(e) => {
                               const key = e.target.value;
+                              setEditDocName(key);
                               const newData = { [key]: "" };
-                              console.log(key, newData);
                               setDocName(key);
                               setDocFileBase(newData);
                               setBulkUpload("no");
                             }}
-                          />{" "}
+                          />
                           <button
                             type="button"
                             onClick={() => {
@@ -1111,12 +1167,7 @@ export default function DocumrentContainer(props) {
                         </div>
                       ) : (
                         <>
-                          <Link
-                            onClick={() => setEditName(true)}
-                            className="text-dark"
-                          >
-                            <span> {textReplaceFunction(item.type)}</span>
-                          </Link>
+                          <span> {textReplaceFunction(item.type)}</span>
                           <p className="font-size-2 m-0">
                             {moment(item.updated_at).format("DD-MMM-YYYY")}
                           </p>
@@ -1139,8 +1190,23 @@ export default function DocumrentContainer(props) {
                         ""
                       )}
                     </td>
-                    <td className="p-3">
-                      <Link onClick={() => OnDeleteDoc(item.id)}>
+                    <td className="p-3 d-flex">
+                      <Link
+                        onClick={() => setEditName(true)}
+                        className="text-dark"
+                        title="Edit Name"
+                      >
+                        <CiEdit
+                          style={{
+                            color: item.type === docName ? "white" : "black",
+                            fontSize: "18px",
+                          }}
+                        />
+                      </Link>
+                      <Link
+                        onClick={() => OnDeleteDoc(item.id)}
+                        title="Delete Document"
+                      >
                         <CiTrash
                           style={{
                             color: item.type === docName ? "white" : "black",
@@ -1713,7 +1779,7 @@ export default function DocumrentContainer(props) {
             </div>
           ) : null}
           {/* Comment box */}
-          {user_type === "admin" && (
+          {user_type === "admin" && commentsList.length > 0 ? (
             <CommentBox
               commentsReplyList={commentsReplyList}
               docData={docData}
@@ -1739,7 +1805,7 @@ export default function DocumrentContainer(props) {
               setAddCommentFlag={setAddCommentFlag}
               setFilteredEmails={setFilteredEmails}
             />
-          )}
+          ) : null}
         </div>
       </div>
     </div>
