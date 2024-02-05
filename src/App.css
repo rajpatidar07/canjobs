@@ -1289,14 +1289,13 @@ input::-webkit-inner-spin-button {
 .global_search_content.position-fixed {
   top: 0;
   right: 0;
-  background-color: #fff;
+  background-color: rgb(0 0 0 / 25%);
   height: 100vh;
-  max-width: 900px;
+  max-width: 100%;
   width: 0;
   transition: width .5s;
   z-index: -1;
   overflow: hidden;
-  box-shadow: 0 0 4px #333;
 }
 
 .global_search_content.position-fixed.show {
@@ -1305,4 +1304,22 @@ input::-webkit-inner-spin-button {
   z-index: 9999;
   overflow-y: auto;
 
+}
+
+.global_search_content.position-fixed .left_side {
+  max-width: calc(100% - 900px);
+  width: 100%;
+}
+
+.global_search_content.position-fixed .right_side {
+  max-width: 900px;
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 0 4px #333;
+}
+
+.global_search_content.position-fixed .right_side .global_search_result {
+  height: calc(100vh - 64px);
+  overflow: auto;
 }
