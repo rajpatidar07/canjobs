@@ -154,9 +154,15 @@ export default function CommentBox({
                             : ""}
                         </div>
                       </div>
+<<<<<<< HEAD
                       <div class=" mb-0">
                         <div class="font-size-3 font-weight-bold text-capitalize">
                           {commentItem.task_creator_user_id
+=======
+                      <div className=" mb-0">
+                        <div className="font-size-3 font-weight-bold text-capitalize">
+                          {commentItem.assined_to_user_id
+>>>>>>> 57e97222f2e73d98c87166dfcd5be7ee2c72a1af
                             ? allAdmin.find(
                                 (item) =>
                                   item.admin_id ===

@@ -289,7 +289,10 @@ export default function EmployerTable(props) {
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto">
+                              <div
+                                className="circle-30 mx-auto overflow-hidden"
+                                style={{ borderRadius: 0 }}
+                              >
                                 {empdata.logo === null ? (
                                   <img
                                     src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"

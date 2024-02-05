@@ -1,50 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
-import { getAllAdminNotification, ReadNotification } from "../../api/api";
+// import { getAllAdminNotification, ReadNotification } from "../../api/api";
 import AdminSetting from "./Modal/adminSetting";
 import ChangePassword from "../common/changepassword";
-// import GlobalSearch from "./globalSearch";
+import Notifications from "./notifications";
+import GlobalSearch from "./globalSearch";
 
 const AdminHeader = (props) => {
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
   const [showSettings, setSettings] = useState(false);
   const [showGeneratToken, setShowGenerateToken] = useState(false);
-  const [notification, setNotiication] = useState("");
-  const [apicall, setApicall] = useState(false);
+  // const [notification, setNotiication] = useState("");
+  // const [apicall, setApicall] = useState(false);
   let Admin = localStorage.getItem("admin");
   let AdminType = localStorage.getItem("admin_type");
   let userType = localStorage.getItem("userType");
 
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   /*Function to Call Notification Api */
-  const Notiication = async () => {
-    try {
-      let Response = await getAllAdminNotification();
-      setNotiication(Response.Data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  /*Render Mewthod to get Notification */
-  useEffect(() => {
-    Notiication();
-    if (apicall === true) {
-      setApicall(false);
-    }
-    if (
-      AdminType === undefined ||
-      AdminType === "" ||
-      AdminType === null ||
-      AdminType === "undefined" ||
-      AdminType === "company" ||
-      AdminType === "user"
-    ) {
-      navigate("/");
-    }
-  }, [apicall]);
+  // const Notiication = async () => {
+  //   try {
+  //     let Response = await getAllAdminNotification();
+  //     setNotiication(Response.Data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // /*Render Mewthod to get Notification */
+  // useEffect(() => {
+  //   Notiication();
+  //   if (apicall === true) {
+  //     setApicall(false);
+  //   }
+  //   if (
+  //     AdminType === undefined ||
+  //     AdminType === "" ||
+  //     AdminType === null ||
+  //     AdminType === "undefined" ||
+  //     AdminType === "company" ||
+  //     AdminType === "user"
+  //   ) {
+  //     navigate("/");
+  //   }
+  // }, [apicall]);
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute">
       <div className="container-fluid-fluid px-7">
@@ -52,7 +53,8 @@ const AdminHeader = (props) => {
           {/* <!-- Page Heading--> */}
           <h3 className="font-size-6 mb-0 text-capitalize">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
-          {/* <GlobalSearch /> */}
+          {/* <GlobalSearch />
+          <Notifications /> */}
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
               <div className="dropdown show-gr-dropdown py-5">
@@ -120,7 +122,7 @@ const AdminHeader = (props) => {
               </div>
             </div>
           </div>
-          <div className="dropdown show-gr-dropdown py-5">
+          {/* <div className="dropdown show-gr-dropdown py-5">
             <Link
               to={""}
               role="button"
@@ -183,7 +185,7 @@ const AdminHeader = (props) => {
                 )
               )}
             </ul>
-          </div>
+          </div> */}
         </nav>
       </div>
       {/* Setteings modal */}

@@ -199,7 +199,7 @@ export default function EmployerNotesTable({ search }) {
                           >
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
-                                <div className="circle-36 mx-auto overflow-hidden">
+                                <div className="circle-30 mx-auto overflow-hidden">
                                   {data.logo === null ? (
                                     <img
                                       src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
