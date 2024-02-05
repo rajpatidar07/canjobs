@@ -477,7 +477,7 @@ function Addfollowup(props) {
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
-                              <div className="circle-36 mx-auto overflow-hidden">
+                              <div className="circle-30 mx-auto overflow-hidden">
                                 <img
                                   src={
                                     res.employee_profile_image === "" ||

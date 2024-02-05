@@ -129,8 +129,8 @@ export default function CommentBox({
                 </span>
                 <div className="card-body p-2">
                   <div className="text-dark">
-                    <div class="d-flex profile_box gx-2 mb-1">
-                      <div class="media  align-items-center">
+                    <div className="d-flex profile_box gx-2 mb-1">
+                      <div className="media  align-items-center">
                         <div
                           class={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
                             commentItem
@@ -154,8 +154,8 @@ export default function CommentBox({
                             : ""}
                         </div>
                       </div>
-                      <div class=" mb-0">
-                        <div class="font-size-3 font-weight-bold text-capitalize">
+                      <div className=" mb-0">
+                        <div className="font-size-3 font-weight-bold text-capitalize">
                           {commentItem.assined_to_user_id
                             ? allAdmin.find(
                                 (item) =>
@@ -170,7 +170,7 @@ export default function CommentBox({
                               : ""
                             : ""}
                         </div>
-                        <div class="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
+                        <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
                           {moment(commentItem.created_on).format("HH:mm D MMM")}
                         </div>
                       </div>

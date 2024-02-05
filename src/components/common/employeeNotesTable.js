@@ -198,7 +198,7 @@ export default function EmployeeNotesTable({ search }) {
                           >
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
-                                <div className="circle-36 mx-auto overflow-hidden">
+                                <div className="circle-30 mx-auto overflow-hidden">
                                   {data.employee_profile_image === null ||
                                   data.employee_profile_image === "" ||
                                   data.employee_profile_image === undefined ||

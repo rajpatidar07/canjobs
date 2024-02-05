@@ -538,7 +538,7 @@ export default function LimiaStatusTable(props) {
                                 {res.name || res.gender || res.date_of_birth ? (
                                   <div className="d-flex profile_box gx-2">
                                     <div className="media  align-items-center">
-                                      <div className="circle-36 mx-auto overflow-hidden">
+                                      <div className="circle-30 mx-auto overflow-hidden">
                                         {/* {JSON.stringify(res.profile_photo)} */}
                                         {res.profile_photo === null ||
                                         res.profile_photo === undefined ||

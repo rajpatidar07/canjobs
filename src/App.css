@@ -192,7 +192,8 @@ button.btn.action_btn {
 
 .table.main_data_table th,
 .table.main_data_table td {
-  padding: 7px 7px !important;
+  padding: 4px 7px !important;
+  line-height: 1;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -1319,7 +1320,29 @@ input::-webkit-inner-spin-button {
   box-shadow: 0 0 4px #333;
 }
 
+.notification_box.global_search_content.position-fixed .left_side {
+  max-width: calc(100% - 500px);
+}
+
+.notification_box.global_search_content.position-fixed .right_side {
+  max-width: 500px;
+}
+
 .global_search_content.position-fixed .right_side .global_search_result {
   height: calc(100vh - 64px);
   overflow: auto;
+}
+
+.global_search_content.position-fixed .right_side .global_search_result.notofications_list {
+  height: calc(100vh);
+}
+
+.notification_count {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  font-size: 10px;
+  line-height: 1;
+  padding: 2px 3px;
+  border-radius: 50%;
 }
