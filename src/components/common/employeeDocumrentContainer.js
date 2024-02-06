@@ -701,8 +701,8 @@ export default function DocumrentContainer(props) {
                 docTypData.document_name.toLowerCase().includes("imm") ? (
                   <iframe
                     src={docFile}
-                    height={"768px"}
-                    width={"768px"}
+                    style={{ height: "calc(100vh - 200px)" }}
+                    width={"100%"}
                     title={docTypData.document_name}
                   ></iframe>
                 ) : (
@@ -1077,7 +1077,7 @@ export default function DocumrentContainer(props) {
       <div className="row m-0 bg-white">
         <div
           className={`${
-            user_type === "admin" ? "col-md-3" : "col-md-4"
+            user_type === "admin" ? "col-md-2" : "col-md-4"
           } p-0 border-right pb-7`}
         >
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
@@ -1139,7 +1139,7 @@ export default function DocumrentContainer(props) {
                         : "text-capitalize position-relative"
                     }
                   >
-                    <td className="p-3">
+                    <td className="p-3 doc_name_td">
                       {editName === true && docId === item.id ? (
                         <div className="reply_box position-relative d-flex w-100">
                           <input
@@ -1160,7 +1160,7 @@ export default function DocumrentContainer(props) {
                             onClick={() => {
                               SaveBulkDocument();
                             }}
-                            className="btn btn-secondary rounded reply_btn doc_btn"
+                            className="btn btn-secondary rounded reply_btn doc_btn my-0 mx-2"
                           >
                             &#x2713;
                           </button>
@@ -1169,7 +1169,7 @@ export default function DocumrentContainer(props) {
                             onClick={() => {
                               setEditName(false);
                             }}
-                            className="btn btn-light border-0 rounded reply_btn doc_btn"
+                            className="btn btn-light border-0 rounded reply_btn doc_btn my-0 mx-2"
                           >
                             x
                           </button>
@@ -1192,7 +1192,7 @@ export default function DocumrentContainer(props) {
                     <td className="p-3">
                      
                     </td> */}
-                    <td className="p-3 d-flex align-items-center">
+                    <td className="p-3 d-flex align-items-center justify-content-end">
                       {item.is_varify === "1" ? (
                         // <span className="verified_doc">
                         //   <img className="w-100" src={Verified} alt="" />

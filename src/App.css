@@ -1347,3 +1347,7 @@ input::-webkit-inner-spin-button {
   padding: 2px 3px;
   border-radius: 50%;
 }
+
+.doc_name_td span {
+  line-break: anywhere;
+}
