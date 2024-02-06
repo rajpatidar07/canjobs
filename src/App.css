@@ -821,6 +821,7 @@ select.form-control.select_document_type {
   padding: 3px 5px 3px 16px;
   min-width: auto;
   margin-right: 0px;
+  line-height: 1.5;
 }
 
 .arrow-wrapper.custome_arrow_wrapper .arrow-steps .step:after,
@@ -1246,8 +1247,8 @@ select.form-control.select_document_type {
   width: calc(100% - 26px);
 }
 
-.reply_box .reply_btn {
-  position: absolute;
+.reply_box {
+  /* position: absolute;
   top: 0px;
   background: #666;
   right: 0px;
@@ -1255,7 +1256,7 @@ select.form-control.select_document_type {
   line-height: 35px;
   width: 24px;
   text-align: center;
-  min-width: auto;
+  min-width: auto; */
 }
 
 .reply_box_container {

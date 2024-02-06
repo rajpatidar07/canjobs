@@ -327,7 +327,7 @@ export default function DocumrentContainer(props) {
   //   const fileType = `.${file.name.split(".").pop()}`;
   //   if (!allowedTypes.includes(fileType.toLowerCase())) {
   //     toast.error(
-  //       "Invalid document type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG",
+  //       "Invalid docum{ent type. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG",
   //       {
   //         position: toast.POSITION.TOP_RIGHT,
   //         autoClose: 1000,
@@ -805,7 +805,7 @@ export default function DocumrentContainer(props) {
       setApiCall(false);
     }
     setAnnotationMode(false);
-  }, [docId, apiCall, docName]);
+  }, [docId, apiCall]);
   //USeEffect foe commet replies list
   useEffect(() => {
     // getCommentsReplyList();
@@ -1077,7 +1077,7 @@ export default function DocumrentContainer(props) {
       <div className="row m-0 bg-white">
         <div
           className={`${
-            user_type === "admin" ? "col-md-2" : "col-md-4"
+            user_type === "admin" ? "col-md-3" : "col-md-4"
           } p-0 border-right pb-7`}
         >
           <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
@@ -1094,14 +1094,14 @@ export default function DocumrentContainer(props) {
                 {/* <th className="p-3" scope="col">
                   Date
                 </th> */}
-                <th className="p-3" scope="col"></th>
-                <th className="p-3" scope="col"></th>
+                {/* <th className="p-3" scope="col"></th>
+                <th className="p-3" scope="col"></th> */}
               </tr>
             </thead>
             <tbody className="doc_list">
               {docData.length === 0 ? (
                 <tr>
-                  <th className="bg-white text-center" colSpan={5}>
+                  <th className="bg-white text-center" colSpan={3}>
                     No Data Found
                   </th>
                 </tr>
@@ -1135,22 +1135,22 @@ export default function DocumrentContainer(props) {
                     }}
                     className={
                       item.type === docName || docId === item.id
-                        ? "text-capitalize bg-primary text-white"
-                        : "text-capitalize"
+                        ? "text-capitalize bg-primary text-white position-relative"
+                        : "text-capitalize position-relative"
                     }
                   >
                     <td className="p-3">
                       {editName === true && docId === item.id ? (
-                        <div className="reply_box position-relative">
+                        <div className="reply_box position-relative d-flex w-100">
                           <input
                             type="text"
                             value={editDocName}
-                            className="font-size-2 m-3 bg-primary border-0 border-none"
+                            className="form-control font-size-2 bg-primary bg-white"
                             onChange={(e) => {
                               const key = e.target.value;
                               setEditDocName(key);
                               const newData = { [key]: "" };
-                              setDocName(key);
+                              // setDocName(key);
                               setDocFileBase(newData);
                               setBulkUpload("no");
                             }}
@@ -1160,9 +1160,18 @@ export default function DocumrentContainer(props) {
                             onClick={() => {
                               SaveBulkDocument();
                             }}
-                            className="btn btn-info border-0 rounded reply_btn"
+                            className="btn btn-secondary rounded reply_btn doc_btn"
                           >
-                            {">>"}
+                            &#x2713;
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditName(false);
+                            }}
+                            className="btn btn-light border-0 rounded reply_btn doc_btn"
+                          >
+                            x
                           </button>
                         </div>
                       ) : (
@@ -1179,8 +1188,11 @@ export default function DocumrentContainer(props) {
                         ? item.updated_by_name
                         : item.created_by_name}
                     </td> */}
-                    <td className="p-3"></td>
+                    {/* <td className="p-3"></td>
                     <td className="p-3">
+                     
+                    </td> */}
+                    <td className="p-3 d-flex align-items-center">
                       {item.is_varify === "1" ? (
                         // <span className="verified_doc">
                         //   <img className="w-100" src={Verified} alt="" />
@@ -1189,10 +1201,11 @@ export default function DocumrentContainer(props) {
                       ) : (
                         ""
                       )}
-                    </td>
-                    <td className="p-3 d-flex">
                       <Link
-                        onClick={() => setEditName(true)}
+                        onClick={() => {
+                          setEditName(true);
+                          // setEditDocName(item.type);
+                        }}
                         className="text-dark"
                         title="Edit Name"
                       >
