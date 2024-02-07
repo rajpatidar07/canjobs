@@ -1145,7 +1145,7 @@ export default function DocumrentContainer(props) {
                         <div className="reply_box position-relative d-flex w-100">
                           <input
                             type="text"
-                            value={editDocName || docName}
+                            value={editDocName}
                             className="form-control font-size-2 bg-primary bg-white"
                             onChange={(e) => {
                               const key = e.target.value;
