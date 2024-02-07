@@ -158,18 +158,18 @@ function Addfollowup(props) {
               ) : (
                 (response || []).map((res) => (
                   <div className="single_note mb-5" key={res.id}>
-                    <div className="d-flex justify-content-between">
-                      <i className="font-size-3">
-                        Created on:
-                        {moment(res.created_at).format(
-                          "Do MMM YYYY, h:mm:ss a"
-                        )}
-                      </i>
-                    </div>
-                    <div className="card p-5">
-                      <p className="font-size-4 m-0">
-                        <b>{res.subject}</b>
-                      </p>
+                    <div className="card p-2">
+                      <div className="m-0 d-flex justify-content-between align-items-center">
+                        <b className="font-size-4 font-weight-bold text-dark">
+                          {res.subject}
+                        </b>
+                        <i className="font-size-2">
+                          Created on:
+                          {moment(res.created_at).format(
+                            "Do MMM YYYY, h:mm:ss a"
+                          )}
+                        </i>
+                      </div>
                       <p className="font-size-4 m-0">{res.remark}</p>
                     </div>
                   </div>

@@ -94,16 +94,20 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
         <div className="gmail-preview-container ">
           <div className="email-content">
             <div className="email-header">
-              <p>
-                <b>From:</b> {singleEmailData.Sender.EmailAddress.Address}
+              <p className="px-5 py-3 border-bottom">
+                <b className="font-size-2">FROM:</b>{" "}
+                {singleEmailData.Sender.EmailAddress.Address}
               </p>
-              <p>
-                <b>To:</b>{" "}
+              <p className="px-5 py-3 border-bottom">
+                <b className="font-size-2">TO:</b>{" "}
                 {singleEmailData.ToRecipients[0].EmailAddress.Address}
               </p>
-              <h2>{decodeEmailSubject(singleEmailData.Subject)}</h2>
+              <p className="font-size-3 font-weight-bold px-5 py-3 border-bottom">
+                <b className="font-size-2">SUBJECT:</b>{" "}
+                {decodeEmailSubject(singleEmailData.Subject)}
+              </p>
             </div>
-            <div className="email-body text-break">
+            <div className="email-body text-break px-5 py-3">
               {singleEmailData.Body.Content && (
                 <div
                   dangerouslySetInnerHTML={{
@@ -111,9 +115,8 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                   }}
                 />
               )}
-            </div>
-            <div className="attachments row">
-              {/* {emailData &&
+              <div className="attachments py-3 d-flex flex-wrap">
+                {/* {emailData &&
                 emailData.map((item, index) => (
                   <div
                     key={index}
@@ -129,88 +132,89 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     )}
                   </div>
                 ))} */}
-              {emailData.length === 0
-                ? null
-                : (emailData || []).map((item, index) => {
-                    let iconSrc = "";
-                    let title = "";
+                {emailData.length === 0
+                  ? null
+                  : (emailData || []).map((item, index) => {
+                      let iconSrc = "";
+                      let title = "";
 
-                    if (
-                      item.ContentType === "APPLICATION/PDF" ||
-                      item.ContentType === "application/pdf"
-                    ) {
-                      iconSrc =
-                        "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_3_pdf_x16.png";
-                      title = item.Name;
-                    } else if (
-                      item.ContentType === "TEXT/HTML" ||
-                      item.ContentType === "text/plain" ||
-                      item.ContentType === "text/html"
-                    ) {
-                      iconSrc =
-                        "//ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_text_x16.png";
-                      title = item.Name;
-                    } else if (
-                      item.ContentType.startsWith("IMAGE/") ||
-                      item.ContentType.startsWith("image/")
-                    ) {
-                      iconSrc = `data:${item.ContentType};base64,${item.ContentBytes}`;
-                      title = item.Name;
-                    } else if (
-                      item.ContentType ===
-                        "APPLICATION/VND.OPENXMLFORMATS-OFFICEDOCUMENT.WORDPROCESSINGML.DOCUMENT" ||
-                      item.ContentType ===
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    ) {
-                      iconSrc =
-                        "https://e7.pngegg.com/pngimages/18/655/png-clipart-computer-icons-microsoft-word-document-file-format-word-icon-blue-angle.png";
-                      title = item.Name;
-                    } else {
-                      iconSrc =
-                        "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
-                      title = item.Name;
-                    }
+                      if (
+                        item.ContentType === "APPLICATION/PDF" ||
+                        item.ContentType === "application/pdf"
+                      ) {
+                        iconSrc =
+                          "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_3_pdf_x16.png";
+                        title = item.Name;
+                      } else if (
+                        item.ContentType === "TEXT/HTML" ||
+                        item.ContentType === "text/plain" ||
+                        item.ContentType === "text/html"
+                      ) {
+                        iconSrc =
+                          "//ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_text_x16.png";
+                        title = item.Name;
+                      } else if (
+                        item.ContentType.startsWith("IMAGE/") ||
+                        item.ContentType.startsWith("image/")
+                      ) {
+                        iconSrc = `data:${item.ContentType};base64,${item.ContentBytes}`;
+                        title = item.Name;
+                      } else if (
+                        item.ContentType ===
+                          "APPLICATION/VND.OPENXMLFORMATS-OFFICEDOCUMENT.WORDPROCESSINGML.DOCUMENT" ||
+                        item.ContentType ===
+                          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      ) {
+                        iconSrc =
+                          "https://e7.pngegg.com/pngimages/18/655/png-clipart-computer-icons-microsoft-word-document-file-format-word-icon-blue-angle.png";
+                        title = item.Name;
+                      } else {
+                        iconSrc =
+                          "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
+                        title = item.Name;
+                      }
 
-                    return (
-                      <div
-                        key={index}
-                        className="col align-items-center p-3 m-3 rounded shadow bg-white position-relative htmlFileCls"
-                        title={item.Name}
-                      >
-                        <Link
-                        // onClick={() =>
-                        //   openBase64FileInNewWindow(item.data, item.ContentType)
-                        // }
+                      return (
+                        <div
+                          key={index}
+                          className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls text-center p-2"
+                          title={item.Name}
                         >
-                          <img
-                            src={iconSrc}
-                            alt={title}
-                            title={title}
-                            width={45}
-                            height={45}
-                            style={{ zIndex: "1" }}
-                          />
-                          <div>
-                            <small
-                              className="d-inline-block text-truncate font-weight-bold text-decoration-none text-dark"
-                              style={{ maxWidth: "60px" }}
-                            >
-                              {item.Name}
-                            </small>
-                          </div>
-                        </Link>
-                        <div className="download-icon">
                           <Link
-                            to={`data:${item.ContentType};base64,${item.ContentBytes}`}
-                            download={item.Name}
-                            className="text-dark"
+                          // onClick={() =>
+                          //   openBase64FileInNewWindow(item.data, item.ContentType)
+                          // }
                           >
-                            <AiOutlineDownload />
+                            <img
+                              src={iconSrc}
+                              alt={title}
+                              title={title}
+                              width={45}
+                              height={45}
+                              style={{ zIndex: "1" }}
+                            />
+                            <div>
+                              <small
+                                className="d-inline-block text-truncate text-decoration-none text-dark"
+                                style={{ maxWidth: "100%" }}
+                              >
+                                {item.Name}
+                              </small>
+                            </div>
                           </Link>
+                          <div className="download-icon">
+                            <Link
+                              to={`data:${item.ContentType};base64,${item.ContentBytes}`}
+                              download={item.Name}
+                              className="text-dark"
+                            >
+                              <AiOutlineDownload />
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+              </div>
             </div>
           </div>
         </div>

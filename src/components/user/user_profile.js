@@ -294,7 +294,7 @@ const NewUserProfile = (props) => {
               <Loader />
             </div>
           ) : (
-            <div className="row text-left mt-5 pt-0">
+            <div className="row text-left mt-5 pt-0 flex-wrap">
               <div className="col-12 mb-1 d-none">
                 <div className="bg-white shadow-9 d-flex">
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
@@ -638,7 +638,7 @@ const NewUserProfile = (props) => {
               <div
                 className={
                   // noLima==="1"?"d-none":
-                  "col-12"
+                  "visa_lmia_status_div px-6"
                 }
               >
                 {(lima && user_type === "admin") || user_type === "agent" ? (
@@ -651,7 +651,7 @@ const NewUserProfile = (props) => {
               <div
                 className={
                   // noLima==="1"?"d-none":
-                  "col-12"
+                  "visa_lmia_status_div px-6"
                 }
               >
                 {(visaStatus && user_type === "admin") ||
