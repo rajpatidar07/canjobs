@@ -176,8 +176,8 @@ function SendMailForm({ email, setApiCall }) {
   return (
     <div>
       <form>
-        <div className="row pt-7">
-          <div className="form-group col-12 p-0">
+        <div className="row pt-1">
+          <div className="mb-2 col-12">
             <label
               htmlFor="subject"
               className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
@@ -186,7 +186,7 @@ function SendMailForm({ email, setApiCall }) {
             </label>
             <div className="position-relative">
               <input
-                maxLength={30}
+                maxLength={100}
                 name="subject"
                 value={state.subject || ""}
                 onChange={onInputChange}
@@ -207,7 +207,7 @@ function SendMailForm({ email, setApiCall }) {
               </span>
             )}
           </div>
-          <div className="form-group col-12 p-0">
+          <div className="mb-2 col-12">
             <label
               htmlFor="description"
               className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
@@ -248,7 +248,7 @@ function SendMailForm({ email, setApiCall }) {
               )}
             </div>
           </div>
-          <div className="">
+          <div className="mb-2 col-12">
             <label className="btn btn-secondary ">
               <AiOutlineCloudUpload className="font-size-3 mr-2" />
               <input
@@ -258,12 +258,13 @@ function SendMailForm({ email, setApiCall }) {
                 onChange={(e) => {
                   handleBulkFileChange(e);
                 }}
+                placeholder="Attach file"
                 multiple
               />
               Attach Files
             </label>
           </div>
-          <div className="form-group col-12 text-center">
+          <div className="mb-2 col-12 text-center">
             {loading === true ? (
               <button
                 className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -280,7 +281,7 @@ function SendMailForm({ email, setApiCall }) {
             ) : (
               <button
                 onClick={(e) => onContactusClick(e)}
-                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                className="btn btn-primary btn-small rounded-5 text-uppercase w-100"
                 type="button"
               >
                 Submit

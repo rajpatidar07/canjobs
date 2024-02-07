@@ -41,84 +41,85 @@ const EmailList = ({
   return (
     <div className="emails">
       <div className="email-list">
-        <div
-          className={`btn-group mb-5 `}
-          role="group"
-          aria-label="Basic example"
-        >
+        <div className="bg-white shadow-8 datatable_div pt-7 pb-8 px-2 row m-0 p-5 h-100">
           <div
-            className={` ${
-              user_type === "user" || user_type === "company" ? "" : "row"
-            }`}
+            className="main_table_div col-md-6 border-right p-1"
+            style={{ height: "100%" }}
           >
             <div
-              className={` ${
-                user_type === "user" || user_type === "company" ? "" : "col-10"
-              }`}
+              className={`btn-group mb-1`}
+              role="group"
+              aria-label="Basic example"
             >
-              <button
-                type="button"
-                className={
-                  emailType === "SENT"
-                    ? "btn btn-primary"
-                    : "btn btn-outline-primary"
-                }
-                onClick={() => {
-                  setEmailType("SENT");
-                  setEmailId();
-                }}
+              <div
+                className={` ${
+                  user_type === "user" || user_type === "company"
+                    ? ""
+                    : "row m-0"
+                }`}
               >
-                Inbox
-              </button>
-              <button
-                type="button"
-                className={
-                  emailType === "INBOX"
-                    ? "btn btn-primary"
-                    : "btn btn-outline-primary"
-                }
-                onClick={() => {
-                  setEmailType("INBOX");
-                  setEmailId();
-                }}
-              >
-                Sent
-              </button>
-            </div>
-            <div
-              className={`${
-                user_type === "user" || user_type === "company" ? "d-none" : ""
-              } col-2`}
-            >
-              <button
-                type="button"
-                className={"btn btn-outline-primary "}
-                onClick={() => {
-                  sentEmail === "yes"
-                    ? setSentEmail("no")
-                    : setSentEmail("yes");
-                }}
-              >
-                {sentEmail === "yes" ? (
-                  <div>
-                    Cancel <ImCross />
+                <div
+                  className={` ${
+                    user_type === "user" || user_type === "company" ? "" : ""
+                  }`}
+                >
+                  <div
+                    class="btn-group w-100"
+                    role="group"
+                    aria-label="Basic example"
+                  >
+                    <button
+                      type="button"
+                      className={
+                        emailType === "SENT"
+                          ? "btn btn-sm btn-primary"
+                          : "btn btn-sm btn-outline-primary"
+                      }
+                      onClick={() => {
+                        setEmailType("SENT");
+                        setEmailId();
+                      }}
+                    >
+                      Inbox
+                    </button>
+                    <button
+                      type="button"
+                      className={
+                        emailType === "INBOX"
+                          ? "btn btn-sm btn-primary"
+                          : "btn btn-sm btn-outline-primary"
+                      }
+                      onClick={() => {
+                        setEmailType("INBOX");
+                        setEmailId();
+                      }}
+                    >
+                      Sent
+                    </button>
+                    <button
+                      type="button"
+                      className={`${
+                        user_type === "user" || user_type === "company"
+                          ? "d-none btn btn-outline-primary"
+                          : "btn btn-sm btn-outline-primary"
+                      }`}
+                      onClick={() => {
+                        sentEmail === "yes"
+                          ? setSentEmail("no")
+                          : setSentEmail("yes");
+                      }}
+                    >
+                      {sentEmail === "yes" ? "Cancel" : "Compose"}
+                    </button>
                   </div>
-                ) : (
-                  <div>
-                    Compose <BsFillPencilFill />
-                  </div>
-                )}
-              </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2 row m-0 p-5 ">
-          <div className="table-responsive main_table_div col-md-6 ">
             {isLoading ? (
               <Loader />
             ) : (
-              <>
-                <table className="table table-striped main_data_table ">
+              <div className="table-responsive email_list_table">
+                <table className="table table-striped main_data_table">
                   <thead>
                     <tr className="">
                       <th
@@ -175,7 +176,7 @@ const EmailList = ({
                           </Link>
                         </th>
                       }
-                      <th title="Attachment">ATCH</th>
+                      <th title="Attachment"></th>
                       {/*                     
                     {props.heading === "Dashboard" ||
                     user_type === "company" ? (
@@ -203,13 +204,19 @@ const EmailList = ({
                         (data || []).map((email, i) => (
                           <React.Fragment key={i}>
                             <tr
-                              className={` applicant_row`}
+                              className={`applicant_row`}
                               key={i}
                               style={
                                 emailId === email.Id
                                   ? { backgroundColor: "#f0f5f6" }
                                   : null
                               }
+                              onClick={() => {
+                                setEmailId(email.Id);
+                                setSingleEmailData(email);
+                                // setApiCall(true);
+                                setSentEmail("no");
+                              }}
                             >
                               {
                                 // props.heading === "Dashboard" ? (
@@ -217,24 +224,18 @@ const EmailList = ({
                                 // ) :
                                 <td className=" py-5 text-capitalize">
                                   {email.Sender === null ? (
-                                    <p className="font-size-3  mb-0">N/A</p>
+                                    <p className="font-size-4  mb-0">N/A</p>
                                   ) : (
-                                    <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 ">
-                                      <p className="text-gray font-size-2 m-0">
-                                        <Link
-                                          className="text-dark"
-                                          to={`mailto:${email.Sender.EmailAddress.Address}`}
-                                        >
-                                          {email.IsRead === true ? (
-                                            email.Sender.EmailAddress.Name
-                                          ) : (
-                                            <b>
-                                              {email.Sender.EmailAddress.Name}
-                                            </b>
-                                          )}
-                                        </Link>
-                                      </p>
-                                    </h3>
+                                    <p
+                                      className="text-dark font-size-4 m-0"
+                                      // to={`mailto:${email.Sender.EmailAddress.Address}`}
+                                    >
+                                      {email.IsRead === true ? (
+                                        email.Sender.EmailAddress.Name
+                                      ) : (
+                                        <b>{email.Sender.EmailAddress.Name}</b>
+                                      )}
+                                    </p>
                                   )}
                                 </td>
                               }
@@ -243,36 +244,31 @@ const EmailList = ({
                                 email.Subject === "" ||
                                 email.Subject === undefined ||
                                 email.Subject === "undefined" ? (
-                                  <p className="font-size-3 mb-0">N/A</p>
+                                  <p className="font-size-4 mb-0">N/A</p>
                                 ) : (
-                                  <Link
-                                    title="Emil Preview"
-                                    onClick={() => {
-                                      setEmailId(email.Id);
-                                      setSingleEmailData(email);
-                                      setApiCall(true);
-                                      setSentEmail("no");
-                                    }}
-                                  >
-                                    <p
-                                      className="m-0 text-truncate"
-                                      style={{ width: "170px" }}
-                                    >
-                                      {email.IsRead === true ? (
-                                        email.Subject.includes("=?UTF-8?Q?") ? (
-                                          decodeEmailSubject(email.Subject)
-                                        ) : (
-                                          email.Subject
-                                        )
+                                  <div title="Emil Preview">
+                                    {email.IsRead === true ? (
+                                      email.Subject.includes("=?UTF-8?Q?") ? (
+                                        decodeEmailSubject(email.Subject)
                                       ) : (
-                                        <b>
-                                          {email.Subject.includes("=?UTF-8?Q?")
-                                            ? decodeEmailSubject(email.Subject)
-                                            : email.Subject}
-                                        </b>
-                                      )}
-                                    </p>
-                                  </Link>
+                                        <p
+                                          className="m-0 text-truncate font-size-4"
+                                          style={{ width: "200px" }}
+                                        >
+                                          {email.Subject}
+                                        </p>
+                                      )
+                                    ) : (
+                                      <p
+                                        className="m-0 text-truncate font-weight-bold font-size-4"
+                                        style={{ width: "200px" }}
+                                      >
+                                        {email.Subject.includes("=?UTF-8?Q?")
+                                          ? decodeEmailSubject(email.Subject)
+                                          : email.Subject}
+                                      </p>
+                                    )}
+                                  </div>
                                 )}
                               </td>
 
@@ -323,7 +319,7 @@ const EmailList = ({
                             className={
                               user_type === "company"
                                 ? "d-none"
-                                : "btn btn-outline-info action_btn"
+                                : "btn btn-sm btn-outline-info action_btn"
                             }
                             onClick={() => editVisa(email)}
                             title="Update Visa status"
@@ -365,7 +361,7 @@ const EmailList = ({
                     }
                   </tbody>
                 </table>
-              </>
+              </div>
             )}
             <div className="pt-2 mx-23">
               {/* <Pagination
@@ -388,11 +384,11 @@ const EmailList = ({
               )} */}
             </div>
           </div>
-          <div className="table-responsive main_table_div col-md-6">
+          <div className="email_detail_div col-md-6 p-6">
             {sentEmail === "yes" ? (
               <div>
-                <h5 className="px-3">Send Email to User</h5>
-                <div className="p-10">
+                <h5 className="mb-0">Send Email to User</h5>
+                <div className="">
                   <SendMailForm email={email} setApiCall={setApiCall} />
                 </div>
               </div>

@@ -129,7 +129,7 @@ const MainEmailPage = ({ email }) => {
   };
   return (
     <>
-      <div className={"site-wrapper overflow-hidden bg-default-2"}>
+      <div className={"email_container overflow-hidden bg-default-2"}>
         {/* <!-- Header Area --> */}
         {/* <AdminHeader heading={"Email"} /> */}
         {/* <!-- navbar- --> */}
@@ -137,18 +137,16 @@ const MainEmailPage = ({ email }) => {
 
         <ToastContainer />
         <div
-          className={"container-fluid document_container bg-white py-7 px-0"}
+          className={"container-fluid document_container bg-white px-0"}
           id="dashboard-body"
           onScroll={(e) => handelScroll(e)}
         >
-          <div>
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
-                <div className={"page___heading"}>
-                  <h3 className="font-size-6 mb-0">Emails</h3>
-                </div>
-                {/* <!-- Email Search and Filter- --> */}
-                {/* <div
+          <div className="mb-4 align-items-center">
+            <div className={"page___heading"}>
+              <h3 className="font-size-6 mb-0">Emails</h3>
+            </div>
+            {/* <!-- Email Search and Filter- --> */}
+            {/* <div
                 className={
                   userType === "company"
                     ? "d-none"
@@ -241,8 +239,8 @@ const MainEmailPage = ({ email }) => {
                   </div>
                 </div>
               </div> */}
-                {/*<-- Email Search  -->*/}
-                {/* <div className={"row m-0 align-items-center"}>
+            {/*<-- Email Search  -->*/}
+            {/* <div className={"row m-0 align-items-center"}>
                   
                   <div className="col p-1 form_group mb-3">
                   <p className="input_label">Company Name:</p>
@@ -341,29 +339,27 @@ const MainEmailPage = ({ email }) => {
                   </div>
                 </div>
                 </div> */}
-                {/* <small className="text-danger">{searcherror}</small> */}
-              </div>
-              <div>
-                <EmailList
-                  apiCall={apiCall}
-                  setApiCall={setApiCall}
-                  isLoading={isLoading}
-                  data={emailData}
-                  // totalData={totalData}
-                  // nPages={nPages}
-                  currentPage={currentPage}
-                  // pageToken={pageToken}
-                  setCurrentPage={setCurrentPage}
-                  setEmailType={setEmailType}
-                  emailType={emailType}
-                  onSearch={onSearch}
-                  searcherror={searcherror}
-                  search={search}
-                  email={email}
-                  // setPageToken={setPageToken}
-                />
-              </div>
-            </div>
+            {/* <small className="text-danger">{searcherror}</small> */}
+          </div>
+          <div>
+            <EmailList
+              apiCall={apiCall}
+              setApiCall={setApiCall}
+              isLoading={isLoading}
+              data={emailData}
+              // totalData={totalData}
+              // nPages={nPages}
+              currentPage={currentPage}
+              // pageToken={pageToken}
+              setCurrentPage={setCurrentPage}
+              setEmailType={setEmailType}
+              emailType={emailType}
+              onSearch={onSearch}
+              searcherror={searcherror}
+              search={search}
+              email={email}
+              // setPageToken={setPageToken}
+            />
           </div>
         </div>
       </div>
