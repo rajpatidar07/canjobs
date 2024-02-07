@@ -1075,6 +1075,7 @@ export default function DocumrentContainer(props) {
       }
     >
       <div className="row m-0 bg-white">
+        {/* Document list */}
         <div
           className={`${
             user_type === "admin" ? "col-md-2" : "col-md-4"
@@ -1144,7 +1145,7 @@ export default function DocumrentContainer(props) {
                         <div className="reply_box position-relative d-flex w-100">
                           <input
                             type="text"
-                            value={editDocName}
+                            value={editDocName || docName}
                             className="form-control font-size-2 bg-primary bg-white"
                             onChange={(e) => {
                               const key = e.target.value;
@@ -1286,6 +1287,7 @@ export default function DocumrentContainer(props) {
           </ListGroup.Item>
         </ListGroup> */}
         </div>
+        {/* Document view */}
         <div
           className={`${
             user_type === "admin" ? "col-md-7" : "col-md-8"
@@ -1705,6 +1707,7 @@ export default function DocumrentContainer(props) {
             {/* Annotation Close */}
           </div>
         </div>
+        {/* Annotation  */}
         <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}
 
