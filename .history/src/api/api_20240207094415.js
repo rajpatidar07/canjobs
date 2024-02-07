@@ -447,13 +447,12 @@ export const GetJobDetail = async (props) => {
   return response;
 };
 /*Api to get list of the Document */
-export const GetEmployeeDocumentList = async (id, empType, type) => {
+export const GetEmployeeDocumentList = async (id, type) => {
   const response = await axios.post(
     `${API_URL}user/getDocumentsUploaded`,
     {
       employee_id: id,
       type: type,
-      employee_type: empType,
     },
     {
       headers: {
@@ -487,12 +486,11 @@ export const UploadDocument = async (id, type, doc, docId, docName) => {
   return response;
 };
 /*Api to Upload bulk document */
-export const UploadBulkDocument = async (id, data, docId, empType) => {
+export const UploadBulkDocument = async (id, data, docId) => {
   const response = await axios.put(
     `${API_URL}user/bulkDocumentsUpload `,
     {
       employee_id: id,
-      employee_type: empType,
       id: docId,
       data: data,
     },

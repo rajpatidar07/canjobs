@@ -15,34 +15,29 @@ import {
   SendReplyCommit,
   GetReplyCommit,
 } from "../../api/api";
-import { CiEdit } from "react-icons/ci";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
 import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
 import Verified from "../../media/verified.png";
-import { AiOutlineCloudUpload } from "react-icons/ai";
-import { CiTrash } from "react-icons/ci";
 /*Annotation */
-import { FaFlag } from "react-icons/fa";
-import { MdAddComment } from "react-icons/md";
-import { RxCrossCircled } from "react-icons/rx";
-import { Link } from "react-router-dom";
-import moment from "moment";
 import CommentBox from "./CommentBox";
+import DocumentList from "./DocumentList";
+import ViewDocument from "./ViewDocument";
 export default function DocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
   const [docName, setDocName] = useState("");
-  const [editDocName, setEditDocName] = useState(docName);
   const [editName, setEditName] = useState(false);
   const [docData, setDocData] = useState([]);
+  const [docAllTypes, setDocAllTypes] = useState([]);
   const [docTypData, setDocTypData] = useState("");
   const [apiCall, setApiCall] = useState("");
   const [docFile, setDocFile] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [docFileExt, setDocFileExt] = useState("");
   const [docId, setDocId] = useState("");
-  // const [documentName, setDocumentName] = useState("");
+  const [docTypeName, setDocTypeName] = useState("");
+  const [selectDocTypeName, setSelecttDocTypeName] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
   const [showSaveDoc, setShowSaveDoc] = useState(false);
   const [hide, setHide] = useState(false);
@@ -146,7 +141,6 @@ export default function DocumrentContainer(props) {
     }
     setFilteredEmails([]);
   };
-  console.log(comments);
   /*Function to get the email to input on hover */
   const handleEmailMouseOver = (email, type) => {
     // Highlight the email on mouseover
@@ -231,7 +225,11 @@ export default function DocumrentContainer(props) {
   /*Functo get Applicants Document */
   const GetDocument = async () => {
     try {
-      let response = await GetEmployeeDocumentList(props.employee_id);
+      let response = await GetEmployeeDocumentList(
+        props.employee_id,
+        "employee",
+        selectDocTypeName ? selectDocTypeName : ""
+      );
       if (
         response.data.data === undefined ||
         response.data.data === "" ||
@@ -242,54 +240,81 @@ export default function DocumrentContainer(props) {
         setDocData([]);
         setLoading(false);
       } else {
-        setDocData(response.data.data);
+        setDocData(response.data.data.allData);
+        setDocAllTypes(response.data.data.all_types);
         setLoading(false);
-
         if (
           docTypData === undefined ||
           docTypData === "undefined" ||
           (docTypData === "" && docName === "" && otherDoc === false)
         ) {
           // eslint-disable-next-line
-          setDocTypData(response.data.data[0]);
+          setDocTypData(response.data.data.allData[0]);
           setDocFile(
-            response.data.data[0].document_url +
+            response.data.data.allData[0].document_url +
               `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
-          setDocName(response.data.data[0].type);
-          setDocId(response.data.data[0].id);
+          setDocName(response.data.data.allData[0].document_name);
+          setDocId(response.data.data.allData[0].id);
+          setDocTypeName(response.data.data.allData[0].type);
         } else if (
           showMoreDocType === false &&
-          response.data.data.find((item) => item.type === docName)
+          response.data.data.allData.find(
+            (item) => item.document_name === docName
+          )
         ) {
           if (
-            response.data.data.find((item) => item.type === docName).type ===
-            docName
+            response.data.data.allData.find(
+              (item) => item.document_name === docName
+            ).document_name === docName
           ) {
             setDocTypData(
-              response.data.data.find((item) => item.type === docName)
+              response.data.data.allData.find(
+                (item) => item.document_name === docName
+              )
             );
             setDocName(
-              response.data.data.find((item) => item.type === docName).type
+              response.data.data.allData.find(
+                (item) => item.document_name === docName
+              ).document_name
             );
             setDocId(
-              response.data.data.find((item) => item.type === docName).id
+              response.data.data.allData.find(
+                (item) => item.document_name === docName
+              ).id
             );
             setDocFile(
-              response.data.data.find((item) => item.type === docName)
-                .document_url +
+              response.data.data.allData.find(
+                (item) => item.document_name === docName
+              ).document_url +
                 `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            );
+            setDocTypeName(
+              response.data.data.allData.find(
+                (item) => item.document_name === docName
+              ).type
             );
           }
         } else {
           //Condition for update
-          setDocTypData(response.data.data.find((item) => item.id === docId));
+          setDocTypData(
+            response.data.data.allData.find((item) => item.id === docId)
+          );
           setDocFile(
-            response.data.data.find((item) => item.id === docId).document_url +
+            response.data.data.allData.find((item) => item.id === docId)
+              .document_url +
               `?v=${new Date().getMinutes() + new Date().getSeconds()}`
           );
-          setDocName(response.data.data.find((item) => item.id === docId).type);
-          setDocId(response.data.data.find((item) => item.id === docId).id);
+          setDocName(
+            response.data.data.allData.find((item) => item.id === docId)
+              .document_name
+          );
+          setDocId(
+            response.data.data.allData.find((item) => item.id === docId).id
+          );
+          setDocTypeName(
+            response.data.data.allData.find((item) => item.id === docId).type
+          );
         }
       }
     } catch (err) {
@@ -400,70 +425,82 @@ export default function DocumrentContainer(props) {
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
-
-    // Check the number of files selected
-    if (files.length > 15) {
-      toast.error("You can only upload a maximum of 15 files at a time", {
+    if (docTypeName === "" && bulkUpload === "no") {
+      toast.error("Please select Document type!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      return;
-    }
-
-    // Continue with file validation and processing
-    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
-    const maxSize = 1024 * 8000; // 8 MB
-
-    const fileList = {};
-    let DocRealName;
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      // Check file type
-      const fileType = `.${file.name.split(".").pop()}`;
-      if (!allowedTypes.includes(fileType.toLowerCase())) {
-        toast.error(
-          `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          }
-        );
+    } else {
+      // Check the number of files selected
+      if (files.length > 15) {
+        toast.error("You can only upload a maximum of 15 files at a time", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         return;
       }
 
-      // Check file size
-      if (file.size > maxSize) {
-        toast.error(
-          `Document size can't be more than 8 MB for file '${file.name}'`,
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          }
-        );
-        return;
+      // Continue with file validation and processing
+      const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+      const maxSize = 1024 * 8000; // 8 MB
+
+      const fileList = [];
+      let DocRealName;
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        // Check file type
+        const fileType = `.${file.name.split(".").pop()}`;
+        if (!allowedTypes.includes(fileType.toLowerCase())) {
+          toast.error(
+            `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+            {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            }
+          );
+          return;
+        }
+
+        // Check file size
+        if (file.size > maxSize) {
+          toast.error(
+            `Document size can't be more than 8 MB for file '${file.name}'`,
+            {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            }
+          );
+          return;
+        }
+
+        // Read file as data URL
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        const encoded = await convertToBase64(file);
+        const base64Name = encoded.base64;
+
+        // Construct file object with base64 data
+        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+          base64Name.split(";")[1]
+        }`;
+
+        // Use DocRealName as the key for DocFile
+        DocRealName = file.name.split(".")[0].replace(/ /g, "_");
+        fileList.push({
+          type: docData[0] === docTypData ? docTypData.type : docTypeName,
+          docName: DocRealName,
+          docUrl: DocFile,
+        });
       }
-
-      // Read file as data URL
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      const encoded = await convertToBase64(file);
-      const base64Name = encoded.base64;
-
-      // Construct file object with base64 data
-      const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-        base64Name.split(";")[1]
-      }`;
-
-      // Use DocRealName as the key for DocFile
-      DocRealName = file.name.split(".")[0].replace(/ /g, "_");
-      fileList[DocRealName] = DocFile;
+      console.log(
+        docData[0] === docTypData ? docTypData.type + "8" : docTypeName + "!"
+      );
+      // Store the object of files
+      setDocFileBase(fileList);
+      bulkUpload === "no" ? setDocName(DocRealName) : setDocName("");
+      setShowSaveDoc(true);
     }
-
-    // Store the object of files
-    setDocFileBase(fileList);
-    bulkUpload === "no" ? setDocName(DocRealName) : setDocName("");
-    setShowSaveDoc(true);
   };
 
   /*Function to save document */
@@ -558,7 +595,8 @@ export default function DocumrentContainer(props) {
           ? docData[0] === docTypData
             ? docTypData.id
             : docId
-          : ""
+          : "",
+        "employee"
       );
 
       if (response.data.message === "inserted successfully") {
@@ -697,29 +735,30 @@ export default function DocumrentContainer(props) {
                 offsetVertical={"100%"}
                 debounce={false}
               >
-                {docTypData.document_name &&
-                docTypData.document_name.toLowerCase().includes("imm") ? (
-                  <iframe
-                    src={docFile}
-                    style={{ height: "calc(100vh - 200px)" }}
-                    width={"100%"}
-                    title={docTypData.document_name}
-                  ></iframe>
-                ) : (
-                  <FileViewer
-                    key={docTypData.id}
-                    fileType={
-                      docFileExt
-                        ? docFileExt
-                        : docTypData.extension_type ===
-                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        ? "docx"
-                        : docTypData.extension_type
-                    }
-                    filePath={docFile}
-                    errorComponent={() => <div>Error loading document</div>}
-                  />
-                )}
+                {docTypData &&
+                  (docTypData.document_name &&
+                  docTypData.document_name.toLowerCase().includes("imm") ? (
+                    <iframe
+                      src={docFile}
+                      style={{ height: "calc(100vh - 200px)" }}
+                      width={"100%"}
+                      title={docTypData.document_name}
+                    ></iframe>
+                  ) : (
+                    <FileViewer
+                      key={docTypData.id}
+                      fileType={
+                        docFileExt
+                          ? docFileExt
+                          : docTypData.extension_type ===
+                            "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                          ? "docx"
+                          : docTypData.extension_type
+                      }
+                      filePath={docFile}
+                      errorComponent={() => <div>Error loading document</div>}
+                    />
+                  ))}
               </LazyLoad>
             </div>
           </>
@@ -771,32 +810,32 @@ export default function DocumrentContainer(props) {
     }
   };
   /*Type array */
-  // let DocTypeData = [
-  //   "passport",
-  //   "drivers_license",
-  //   "photograph",
-  //   "immigration_status",
-  //   "lmia",
-  //   "job_offer_letter",
-  //   "provincial_nominee_letter",
-  //   "proof_of_funds",
-  //   "proof_of_employment",
-  //   "marriage_certificate",
-  //   "education_metric",
-  //   "education_higher_secondary",
-  //   "education_graduation",
-  //   "education_post_graduation",
-  //   "resume_or_cv",
-  //   "ielts",
-  //   "medical",
-  //   "police_clearance",
-  //   "refusal_letter",
-  //   "Employment Contract",
-  //   "Reference Letters",
-  //   "Client Info",
-  //   "Representative Submission Letter",
-  //   "Bank Statement",
-  // ];
+  let DocTypeData = [
+    "passport",
+    "drivers_license",
+    "photograph",
+    "immigration_status",
+    "lmia",
+    "job_offer_letter",
+    "provincial_nominee_letter",
+    "proof_of_funds",
+    "proof_of_employment",
+    "marriage_certificate",
+    "education_metric",
+    "education_higher_secondary",
+    "education_graduation",
+    "education_post_graduation",
+    "resume_or_cv",
+    "ielts",
+    "medical",
+    "police_clearance",
+    "refusal_letter",
+    "Employment Contract",
+    "Reference Letters",
+    "Client Info",
+    "Representative Submission Letter",
+    "Bank Statement",
+  ];
   //UseEfect for document
   useEffect(() => {
     GetDocument();
@@ -805,7 +844,7 @@ export default function DocumrentContainer(props) {
       setApiCall(false);
     }
     setAnnotationMode(false);
-  }, [docId, apiCall]);
+  }, [docId, apiCall, selectDocTypeName]);
   //USeEffect foe commet replies list
   useEffect(() => {
     // getCommentsReplyList();
@@ -822,19 +861,19 @@ export default function DocumrentContainer(props) {
     }
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
-  // const handleDocTypeChange = (e) => {
-  //   const selectedValue = e.target.value;
-  //   if (selectedValue === "other") {
-  //     setOtherDoc(true);
-  //     setShowMoreDocType(false);
-  //     setDocTypData("");
-  //     setDocId("");
-  //     setDocName("");
-  //   } else {
-  //     setOtherDoc(false);
-  //     setDocName(selectedValue);
-  //   }
-  // };
+  const handleDocTypeChange = (e) => {
+    const selectedValue = e.target.value;
+    if (selectedValue === "other") {
+      setOtherDoc(true);
+      setShowMoreDocType(false);
+      setDocTypData("");
+      setDocId("");
+      setDocName("");
+    } else {
+      setOtherDoc(false);
+      setDocTypeName(selectedValue);
+    }
+  };
   /*Function to download Document */
   const DownloadDocument = async () => {
     const response = await fetch(docFile);
@@ -1076,637 +1115,81 @@ export default function DocumrentContainer(props) {
     >
       <div className="row m-0 bg-white">
         {/* Document list */}
-        <div
-          className={`${
-            user_type === "admin" ? "col-md-2" : "col-md-4"
-          } p-0 border-right pb-7`}
-        >
-          <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
-            Document List
-          </h5>
-
-          {/* Documents type list */}
-          <table className="table font-size-3">
-            <thead>
-              <tr>
-                <th className="p-3" scope="col">
-                  Document
-                </th>
-                {/* <th className="p-3" scope="col">
-                  Date
-                </th> */}
-                {/* <th className="p-3" scope="col"></th>
-                <th className="p-3" scope="col"></th> */}
-              </tr>
-            </thead>
-            <tbody className="doc_list">
-              {docData.length === 0 ? (
-                <tr>
-                  <th className="bg-white text-center" colSpan={3}>
-                    No Data Found
-                  </th>
-                </tr>
-              ) : (
-                (docData || []).map((item, index) => (
-                  <tr
-                    key={index}
-                    action
-                    // active={
-                    //   docTypData.type === item.type ||
-                    //   (showMoreDocType === false && item.type === docName)
-                    // }
-                    active={item.type === docName || docId === item.id}
-                    onClick={() => {
-                      setShowMoreDocType(false);
-                      setDocTypData(item);
-                      setDocName(item.type);
-                      setDocId(item.id);
-                      setOtherDoc(false);
-                      setHide(false);
-                      setShowSaveDoc(false);
-                      setFilteredEmails([]);
-                      setAnnotationMode(!isAnnotationMode);
-                      setReplyCommentClick();
-                      setDocFile(
-                        item.document_url +
-                          `?v=${
-                            new Date().getMinutes() + new Date().getSeconds()
-                          }`
-                      );
-                    }}
-                    className={
-                      item.type === docName || docId === item.id
-                        ? "text-capitalize bg-primary text-white position-relative"
-                        : "text-capitalize position-relative"
-                    }
-                  >
-                    <td className="p-3 doc_name_td">
-                      {editName === true && docId === item.id ? (
-                        <div className="reply_box position-relative d-flex w-100">
-                          <input
-                            type="text"
-                            value={editDocName}
-                            className="form-control font-size-2 bg-primary bg-white"
-                            onChange={(e) => {
-                              const key = e.target.value;
-                              setEditDocName(key);
-                              const newData = { [key]: "" };
-                              // setDocName(key);
-                              setDocFileBase(newData);
-                              setBulkUpload("no");
-                            }}
-                          />
-                          <button
-                            type="button"
-                            onClick={() => {
-                              SaveBulkDocument();
-                            }}
-                            className="btn btn-secondary rounded reply_btn doc_btn my-0 mx-2"
-                          >
-                            &#x2713;
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setEditName(false);
-                            }}
-                            className="btn btn-light border-0 rounded reply_btn doc_btn my-0 mx-2"
-                          >
-                            x
-                          </button>
-                        </div>
-                      ) : (
-                        <>
-                          <span> {textReplaceFunction(item.type)}</span>
-                          <p className="font-size-2 m-0">
-                            {moment(item.updated_at).format("DD-MMM-YYYY")}
-                          </p>
-                        </>
-                      )}
-                    </td>
-                    {/* <td className="p-3">
-                      {item.updated_by_name
-                        ? item.updated_by_name
-                        : item.created_by_name}
-                    </td> */}
-                    {/* <td className="p-3"></td>
-                    <td className="p-3">
-                     
-                    </td> */}
-                    <td className="p-3 d-flex align-items-center justify-content-end">
-                      {item.is_varify === "1" ? (
-                        // <span className="verified_doc">
-                        //   <img className="w-100" src={Verified} alt="" />
-                        // </span>
-                        <span>&#x2713;</span>
-                      ) : (
-                        ""
-                      )}
-                      <Link
-                        onClick={() => {
-                          setEditName(true);
-                          // setEditDocName(item.type);
-                        }}
-                        className="text-dark"
-                        title="Edit Name"
-                      >
-                        <CiEdit
-                          style={{
-                            color: item.type === docName ? "white" : "black",
-                            fontSize: "18px",
-                          }}
-                        />
-                      </Link>
-                      <Link
-                        onClick={() => OnDeleteDoc(item.id)}
-                        title="Delete Document"
-                      >
-                        <CiTrash
-                          style={{
-                            color: item.type === docName ? "white" : "black",
-                            fontSize: "18px",
-                          }}
-                        />
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-          {/* <ListGroup defaultActiveKey="#link1">
-          {(docData || []).map((item, index) => (
-            <ListGroup.Item
-              key={index}
-              action
-              // active={
-              //   docTypData.type === item.type ||
-              //   (showMoreDocType === false && item.type === docName)
-              // }
-              active={item.type === docName}
-              onClick={() => {
-                setShowMoreDocType(false);
-                setDocTypData(item);
-                setDocName(item.type);
-                setDocId(item.id);
-                setOtherDoc(false);
-                setHide(false);
-                setShowSaveDoc(false);
-                setDocFile(
-                  item.document_url +
-                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-                );
-              }}
-              className="text-capitalize"
-            >
-              {textReplaceFunction(item.type)}
-              {item.is_varify === "1" ? (
-                <span className="verified_doc">
-                  <img className="w-100" src={Verified} alt="" />
-                </span>
-              ) : null}
-            </ListGroup.Item>
-          ))}
-          <ListGroup.Item
-            className={
-              user_type === "company" || user_type === "admin"
-                ? "bg-secondary text-white"
-                : "d-none"
-            }
-            onClick={() => {
-              setShowMoreDocType(true);
-              setDocTypData("");
-              setDocId("");
-              setOtherDoc(false);
-              setDocFile("");
-              setHide(false);
-              setShowSaveDoc(false);
-            }}
-          >
-            <b>+ Add New Documents</b>
-          </ListGroup.Item>
-        </ListGroup> */}
-        </div>
+        <DocumentList
+          user_type={user_type}
+          docData={docData}
+          setShowMoreDocType={setShowMoreDocType}
+          setDocTypData={setDocTypData}
+          setDocName={setDocName}
+          setDocId={setDocId}
+          setOtherDoc={setOtherDoc}
+          setHide={setHide}
+          setShowSaveDoc={setShowSaveDoc}
+          setFilteredEmails={setFilteredEmails}
+          setAnnotationMode={setAnnotationMode}
+          setReplyCommentClick={setReplyCommentClick}
+          setDocFile={setDocFile}
+          docName={docName}
+          docId={docId}
+          setEditName={setEditName}
+          OnDeleteDoc={OnDeleteDoc}
+          textReplaceFunction={textReplaceFunction}
+          setBulkUpload={setBulkUpload}
+          SaveBulkDocument={SaveBulkDocument}
+          editName={editName}
+          setDocFileBase={setDocFileBase}
+          isAnnotationMode={isAnnotationMode}
+          setApiCall={setApiCall}
+          setSelecttDocTypeName={setSelecttDocTypeName}
+          docAllTypes={docAllTypes}
+        />
         {/* Document view */}
-        <div
-          className={`${
-            user_type === "admin" ? "col-md-7" : "col-md-8"
-          } p-2 bg-dark`}
-        >
-          <div className="row px-0 pt-0 pb-2 doc_upload_row m-0">
-            {/* <div className="d-flex flex-wrap justify-content-start">
-              {otherDoc === true ? (
-                <div className="doc_upload_col">
-                  <input
-                    className="form-control"
-                    value={docName}
-                    onChange={(e) => setDocName(e.target.value)}
-                    placeholder="Document Name"
-                  />
-                </div>
-              ) : null}
-              <div className="">
-                <label className="btn btn-secondary doc_btn">
-                  <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      handleBulkFileChange(e, docTypData.id);
-                      setHide(true);
-                    }}
-                    multiple
-                  />
-                  Upload New Documents
-                </label>
-              </div>
-              {docTypData.id && (
-                <div className="">
-                  <label className="btn btn-light doc_btn">
-                    <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        handleBulkFileChange(e, docTypData.id);
-                        setHide(true);
-                      }}
-                    />
-                    Update Current Document
-                  </label>
-                </div>
-              )}
-              {showSaveDoc ? (
-                <div className="doc_upload_col">
-                  <button
-                    className="btn btn-primary doc_btn"
-                    onClick={SaveBulkDocument}
-                  >
-                    Save Documents
-                  </button>
-                </div>
-              ) : null}
-              {hide === true ? (
-                <div className="doc_upload_col">
-                  <button
-                    className="btn btn-light doc_btn"
-                    onClick={() => {
-                      setHide(false);
-                      setApiCall(true);
-                      setShowSaveDoc(false);
-                      setDocFile("");
-                      setDocFileExt("");
-                      setFilteredEmails([]);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : null}
-            </div> */}
-            {/* {showMoreDocType ? (
-              <div className="doc_upload_col">
-                <Form.Select
-                  className="form-control select_document_type"
-                  value={docName}
-                  onChange={(e) => handleDocTypeChange(e)}
-                >
-                  <option value={""}>Select document</option>
-                  {(DocTypeData || []).map((item, index) => {
-                    return (
-                      <option value={item} key={index}>
-                        {textReplaceFunction(item)}
-                      </option>
-                    );
-                  })}
-                  <option value={"other"}>Other</option>
-                </Form.Select>
-              </div>
-            ) : (
-              <button
-                className={
-                  user_type === "user" ||
-                  user_type === "admin" ||
-                  user_type === "agent"
-                    ? "btn btn-secondary btn-sm text-white mr-0"
-                    : "d-none"
-                }
-                onClick={() => {
-                  setShowMoreDocType(true);
-                  setDocTypData("");
-                  setDocId("");
-                  setOtherDoc(false);
-                  setDocFile("");
-                  setHide(false);
-                  setShowSaveDoc(false);
-                }}
-              >
-                + Add New Documents
-              </button>
-            )} */}
-            {otherDoc === true ? (
-              <div className="doc_upload_col">
-                <input
-                  className="form-control"
-                  value={docName}
-                  onChange={(e) => setDocName(e.target.value)}
-                  placeholder="Document Name"
-                />
-              </div>
-            ) : null}
-            <div className="">
-              <label className="btn btn-secondary doc_btn">
-                <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    handleBulkFileChange(e, docTypData.id);
-                    setHide(true);
-                  }}
-                  multiple
-                />
-                Upload New Documents
-              </label>
-            </div>
-            {docTypData.id && (
-              <div className="">
-                <label className="btn btn-light doc_btn">
-                  <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      handleBulkFileChange(e, docTypData.id);
-                      setHide(true);
-                      setBulkUpload("no");
-                    }}
-                  />
-                  Update Current Document
-                </label>
-              </div>
-            )}
-            {showSaveDoc ? (
-              <div className="doc_upload_col">
-                <button
-                  className="btn btn-primary doc_btn"
-                  onClick={SaveBulkDocument}
-                >
-                  Save Documents
-                </button>
-              </div>
-            ) : null}
-            {hide === true ? (
-              <div className="doc_upload_col">
-                <button
-                  className="btn btn-light doc_btn"
-                  onClick={() => {
-                    setHide(false);
-                    setApiCall(true);
-                    setShowSaveDoc(false);
-                    setDocFile("");
-                    setDocFileExt("");
-                    setFilteredEmails([]);
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : null}
-          </div>
-          <div className="doc_preview_box p-0 bg-light rounded position-relative">
-            {/* {docTypData ? ( */}
-            <div className="doc_action_div">
-              {/* {docFile ? (
-                hide === false && docTypData && user_type === "admin" ? (
-                  <div className="doc_upload_col">
-                    {docTypData.is_varify === "1" ? (
-                      <img className="verified_doc_img" src={Verified} alt="" />
-                    ) : (
-                      <button
-                        className="btn btn-info doc_btn"
-                        disabled={docTypData.is_varify === "0" ? false : true}
-                        onClick={() => onVerifyDocuments(docTypData.id, 1)}
-                      >
-                        Verify document
-                      </button>
-                    )}
-                  </div>
-                ) : null
-              ) : null} */}
-              {hide === false && docFile && docName && user_type === "admin" ? (
-                <div className="doc_upload_col d-flex flex-end align-items-center">
-                  {docTypData.is_varify === "1" ? (
-                    <img className="verified_doc_img" src={Verified} alt="" />
-                  ) : (
-                    <button
-                      className="btn btn-info doc_btn"
-                      disabled={docTypData.is_varify === "0" ? false : true}
-                      onClick={() => onVerifyDocuments(docTypData.id, 1)}
-                    >
-                      Verify document
-                    </button>
-                  )}
-                  <button
-                    className="p-1 rounded-3 btn-warning mx-2 w-auto btn doc_btn"
-                    onClick={PrintDocument}
-                    title="Print Document"
-                  >
-                    <i className="fa fa-print" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    className="p-1 rounded-3 btn-info w-auto btn doc_btn"
-                    onClick={DownloadDocument}
-                    title="Download Document"
-                  >
-                    <i className="fa fa-download" aria-hidden="true"></i>
-                  </button>
-                </div>
-              ) : null}
-            </div>
-            {/* Annotation */}
-            {loading === true ? (
-              <Loader />
-            ) : docFile ? (
-              <div>
-                <div
-                  id="annotation-container"
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                  }}
-                >
-                  <div className="d-flex justify-content-center position-relative">
-                    {/* <RenderNewDocFile /> */}
-                    {RenderNewDocFile()}
-                    <Link
-                      className={` ${
-                        hide === false &&
-                        docFile &&
-                        docName &&
-                        user_type === "admin"
-                          ? `btn-sm mt-7 doc_btn ${
-                              isAnnotationMode
-                                ? "btn-primary "
-                                : "btn-secondary"
-                            }`
-                          : "d-none"
-                      }`}
-                      style={{
-                        position: "fixed",
-                        bottom: "285px",
-                        right: "24%",
-                        zIndex: "99",
-                      }}
-                      onClick={() => {
-                        setAnnotationMode(!isAnnotationMode);
-                        setComments("");
-                        setReplyCommentClick();
-                        setAddCommentFlag(false);
-                        //condition if the pdf is of imm
-                        if (
-                          docTypData.document_name &&
-                          !isAnnotationMode &&
-                          docTypData.document_name.toLowerCase().includes("imm")
-                        ) {
-                          handleFlagClick({ x_axis: 1, y_axis: 1 });
-                        } else setSelectedAnnotation(null);
-                      }}
-                    >
-                      {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
-                    </Link>
-                  </div>
-                  {/* Transparent overlay for capturing click events */}
-                  {!hide && docFile && docName && user_type === "admin" && (
-                    <>
-                      {isAnnotationMode && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            pointerEvents: "none",
-                          }}
-                        />
-                      )}
-
-                      {imageAnnotations.map((annotation, index) => (
-                        <div
-                          key={index}
-                          style={{
-                            position: "absolute",
-                            left: annotation.x_axis - 5,
-                            top: annotation.y_axis - 5,
-                            cursor: "pointer",
-                          }}
-                          onClick={() => handleFlagClick(annotation)}
-                        >
-                          <FaFlag
-                            className=""
-                            style={{
-                              color:
-                                selectedAnnotation &&
-                                selectedAnnotation.x_axis ===
-                                  annotation.x_axis &&
-                                selectedAnnotation.y_axis === annotation.y_axis
-                                  ? "blue"
-                                  : annotation.status === "1"
-                                  ? "green"
-                                  : "red",
-                              display:
-                                annotation.status === "1" ? "none" : "block",
-                            }}
-                          />
-                        </div>
-                      ))}
-
-                      {/* {selectedAnnotation && addCommentFlag === true && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            left: selectedAnnotation.x_axis + 10,
-                            top: selectedAnnotation.y_axis + 20,
-                            zIndex: 1,
-                          }}
-                        >
-                          <form
-                            className="comment-form"
-                            onSubmit={(e) => {
-                              e.preventDefault();
-                              addAnnotation(selectedAnnotation);
-                            }}
-                          >
-                            <div className="comment-input-container">
-                              <input
-                                type="text"
-                                value={comments || ""}
-                                onChange={handleInputChange}
-                                placeholder="Comments or add others with @"
-                                className="rounded-pill comment-input"
-                              />
-                              {filteredEmails.length > 0 && (
-                                <ul className="email-suggestions">
-                                  {filteredEmails.map((email) => (
-                                    <li
-                                      key={email.email}
-                                      onClick={() =>
-                                        handleEmailClick(email.email)
-                                      }
-                                      onMouseOver={() =>
-                                        handleEmailMouseOver(email.email)
-                                      }
-                                      className="email-suggestion-item"
-                                    >
-                                      <strong>{email.name}</strong>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
-                            <div className="button-container mx-4">
-                              <button
-                                type="submit"
-                                // onClick={(e) => {
-                                //   e.preventDefault();
-                                //   addAnnotation(selectedAnnotation);
-
-                                // }}
-                                className="btn-sm btn-primary rounded-pill save-comment-btn"
-                              >
-                                Save Comment
-                              </button>
-                              <button
-                                className="btn-sm btn-info rounded-pill cancel-btn"
-                                onClick={() => {
-                                  setAddCommentFlag();
-                                  setSelectedAnnotation(null);
-                                  setComments("");
-                                  setAnnotationMode(!isAnnotationMode);
-                                  setFilteredEmails([]);
-                                }}
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      )} */}
-                    </>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center mt-5">No document found</div>
-            )}
-            {/* Annotation Close */}
-          </div>
-        </div>
+        <ViewDocument
+          handleBulkFileChange={handleBulkFileChange}
+          setBulkUpload={setBulkUpload}
+          showSaveDoc={showSaveDoc}
+          SaveBulkDocument={SaveBulkDocument}
+          setHide={setHide}
+          setApiCall={setApiCall}
+          setShowSaveDoc={setShowSaveDoc}
+          setDocFile={setDocFile}
+          setDocFileExt={setDocFileExt}
+          setFilteredEmails={setFilteredEmails}
+          docFile={docFile}
+          docName={docName}
+          Verified={Verified}
+          onVerifyDocuments={onVerifyDocuments}
+          PrintDocument={PrintDocument}
+          DownloadDocument={DownloadDocument}
+          loading={loading}
+          Loader={Loader}
+          RenderNewDocFile={RenderNewDocFile}
+          setAnnotationMode={setAnnotationMode}
+          setComments={setComments}
+          setReplyCommentClick={setReplyCommentClick}
+          setAddCommentFlag={setAddCommentFlag}
+          docTypData={docTypData}
+          handleFlagClick={handleFlagClick}
+          setSelectedAnnotation={setSelectedAnnotation}
+          hide={hide}
+          user_type={user_type}
+          isAnnotationMode={isAnnotationMode}
+          imageAnnotations={imageAnnotations}
+          selectedAnnotation={selectedAnnotation}
+          otherDoc={otherDoc}
+          setDocName={setDocName}
+          DocTypeData={DocTypeData}
+          textReplaceFunction={textReplaceFunction}
+          setShowMoreDocType={setShowMoreDocType}
+          setDocTypData={setDocTypData}
+          setDocId={setDocId}
+          setOtherDoc={setOtherDoc}
+          showMoreDocType={showMoreDocType}
+          handleDocTypeChange={handleDocTypeChange}
+          setDocTypeName={setDocTypeName}
+          docTypeName={docTypeName}
+          bulkUpload={bulkUpload}
+        />
         {/* Annotation  */}
         <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}

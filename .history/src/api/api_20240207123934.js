@@ -492,9 +492,9 @@ export const UploadBulkDocument = async (id, data, docId, empType) => {
     `${API_URL}user/bulkDocumentsUpload `,
     {
       employee_id: id,
-      employee_type: empType,
       id: docId,
       data: data,
+      employee_type: empType,
     },
     {
       headers: {
