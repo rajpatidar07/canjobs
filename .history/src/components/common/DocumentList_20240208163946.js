@@ -74,7 +74,7 @@ export default function DocumentList({
                   className="w-100 m-0 border-0 bg-white accordian_btn_design d-flex"
                   onClick={() => handleAccordionToggle(typeitem.type)}
                 >
-                  <span className="text-start text-left font-size-5 text-capitalize d-flex">
+                  <span className="text-start text-left font-size-5 text-capitalize">
                     {textReplaceFunction(typeitem.type)}
                   </span>
                 </Accordion.Header>

@@ -71,10 +71,11 @@ export default function DocumentList({
                 className="card w-100 rounded-6 overflow-hidden border-0"
               >
                 <Accordion.Header
-                  className="w-100 m-0 border-0 bg-white accordian_btn_design d-flex"
+                  className="w-100 m-0 border-0 bg-white accordian_btn_design "
                   onClick={() => handleAccordionToggle(typeitem.type)}
+                  style={{ alignContent: "start" }}
                 >
-                  <span className="text-start text-left font-size-5 text-capitalize d-flex">
+                  <span className="text-start text-left font-size-5 text-capitalize">
                     {textReplaceFunction(typeitem.type)}
                   </span>
                 </Accordion.Header>
