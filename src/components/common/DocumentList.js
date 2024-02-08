@@ -66,7 +66,7 @@ export default function DocumentList({
               className="card w-100 rounded-6 overflow-hidden border-0"
             >
               <Accordion.Header
-                className="w-100 border-0 bg-info accordian_btn_design font-size-3 text-left"
+                className="w-100 border-0 bg-info accordian_btn_design font-size-3  text-left"
                 onClick={() => handleAccordionToggle(typeitem.type)}
               >
                 {typeitem.type}
