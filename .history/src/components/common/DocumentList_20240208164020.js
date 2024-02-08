@@ -31,7 +31,6 @@ export default function DocumentList({
   setSelecttDocTypeName,
   setApiCall,
   docAllTypes,
-  setDocTypeName,
 }) {
   const [editDocName, setEditDocName] = useState(docName);
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -68,15 +67,14 @@ export default function DocumentList({
               className="w-100 p-0 m-0 border-0"
             >
               <Accordion.Item
-                className="w-100 border-0 bg-info accordian_btn_design font-size-3  text-left"
-                onClick={() => handleAccordionToggle(typeitem.type)}
+                eventKey={typeitem.type}
+                className="card w-100 rounded-6 overflow-hidden border-0"
               >
                 <Accordion.Header
-                  className="w-100 m-0 border-0 bg-white accordian_btn_design "
+                  className="w-100 m-0 border-0 bg-white accordian_btn_design d-flex"
                   onClick={() => handleAccordionToggle(typeitem.type)}
-                  style={{ alignContent: "start" }}
                 >
-                  <span className="text-start text-left font-size-5 text-capitalize">
+                  <span className="text-start text-left font-size-5 text-capitalize d-flex">
                     {textReplaceFunction(typeitem.type)}
                   </span>
                 </Accordion.Header>
@@ -106,8 +104,7 @@ export default function DocumentList({
                             onClick={() => {
                               setShowMoreDocType(false);
                               setDocTypData(item);
-                              setDocName(item.document_name);
-                              setDocTypeName(item.type);
+                              setDocName(item.type);
                               setDocId(item.id);
                               setOtherDoc(false);
                               setHide(false);
@@ -136,7 +133,9 @@ export default function DocumentList({
                                   <input
                                     type="text"
                                     value={
-                                      editDocName === "" ? docName : editDocName
+                                      editDocName === ""
+                                        ? item.document_name
+                                        : editDocName
                                     }
                                     className="form-control font-size-2 bg-primary bg-white"
                                     onChange={(e) => {

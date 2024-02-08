@@ -1214,6 +1214,7 @@ export default function DocumrentContainer(props) {
           setApiCall={setApiCall}
           setSelecttDocTypeName={setSelecttDocTypeName}
           docAllTypes={docAllTypes}
+          setDocTypeName={setDocTypeName}
         />
         {/* Document view */}
         <ViewDocument

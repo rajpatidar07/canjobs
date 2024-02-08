@@ -56,21 +56,88 @@ export default function DocumentList({
 
       {/* Documents type list */}
       <div className="doc_list">
-        {docAllTypes.length === 0 ? (
-          <div>
-            <p>No Data Found</p>
-          </div>
-        ) : (
-          (docAllTypes || []).map((typeitem, index) => (
-            <Accordion
-              key={index}
-              activeKey={activeAccordion}
-              className="w-100 p-0 m-0 border-0"
+        {(docAllTypes || []).map((typeitem, index) => (
+          <Accordion
+            key={index}
+            activeKey={activeAccordion}
+            className="w-100 p-0 m-0 border-0"
+          >
+            <Accordion.Item
+              eventKey={typeitem.type}
+              className="card w-100 rounded-6 overflow-hidden border-0"
             >
-              <Accordion.Item
-                className="w-100 border-0 bg-info accordian_btn_design font-size-3  text-left"
+              <Accordion.Header
+                className="w-100 m-0 border-0 bg-white accordian_btn_design d-flex"
                 onClick={() => handleAccordionToggle(typeitem.type)}
               >
+<<<<<<< Updated upstream
+                <span className="text-start text-left font-size-5 text-capitalize d-flex">
+                  {textReplaceFunction(typeitem.type)}
+                </span>
+              </Accordion.Header>
+              <Accordion.Body>
+                <table className="table font-size-3">
+                  <tbody className="doc_list">
+                    {docData.map((item) => (
+                      <tr
+                        key={item.id}
+                        action
+                        active={
+                          item.document_name === docName || docId === item.id
+                        }
+                        onClick={() => {
+                          setShowMoreDocType(false);
+                          setDocTypData(item);
+                          setDocName(item.type);
+                          setDocId(item.id);
+                          setOtherDoc(false);
+                          setHide(false);
+                          setShowSaveDoc(false);
+                          setFilteredEmails([]);
+                          setAnnotationMode(!isAnnotationMode);
+                          setReplyCommentClick();
+                          setDocFile(
+                            item.document_url +
+                              `?v=${
+                                new Date().getMinutes() +
+                                new Date().getSeconds()
+                              }`
+                          );
+                        }}
+                        className={
+                          item.document_name === docName || docId === item.id
+                            ? "text-capitalize bg-primary text-white position-relative"
+                            : "text-capitalize position-relative"
+                        }
+                      >
+                        <td className="p-3 doc_name_td">
+                          {editName === true && docId === item.id ? (
+                            <div className="reply_box position-relative d-flex w-100">
+                              <input
+                                type="text"
+                                value={
+                                  editDocName === ""
+                                    ? item.document_name
+                                    : editDocName
+                                }
+                                className="form-control font-size-2 bg-primary bg-white"
+                                onChange={(e) => {
+                                  const key = e.target.value;
+                                  setEditDocName(key);
+                                  const newData = [
+                                    {
+                                      type: item.type,
+                                      docName: key,
+                                      docUrl: "",
+                                    },
+                                  ];
+                                  setDocFileBase(newData);
+                                  setBulkUpload("no");
+                                }}
+                              />
+                              <button
+                                type="button"
+=======
                 <Accordion.Header
                   className="w-100 m-0 border-0 bg-white accordian_btn_design "
                   onClick={() => handleAccordionToggle(typeitem.type)}
@@ -192,43 +259,71 @@ export default function DocumentList({
                                 ""
                               )}
                               <Link
+>>>>>>> Stashed changes
                                 onClick={() => {
-                                  setEditName(true);
+                                  SaveBulkDocument();
                                 }}
-                                className="text-dark"
-                                title="Edit Name"
+                                className="btn btn-secondary rounded reply_btn doc_btn my-0 mx-2"
                               >
-                                <CiEdit
-                                  style={{
-                                    color:
-                                      item.type === docName ? "white" : "black",
-                                    fontSize: "18px",
-                                  }}
-                                />
-                              </Link>
-                              <Link
-                                onClick={() => OnDeleteDoc(item.id)}
-                                title="Delete Document"
+                                &#x2713;
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditName(false);
+                                }}
+                                className="btn btn-light border-0 rounded reply_btn doc_btn my-0 mx-2"
                               >
-                                <CiTrash
-                                  style={{
-                                    color:
-                                      item.type === docName ? "white" : "black",
-                                    fontSize: "18px",
-                                  }}
-                                />
-                              </Link>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          ))
-        )}
+                                x
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <span>{textReplaceFunction(item.type)}</span>
+                              <p className="font-size-2 m-0">
+                                {moment(item.updated_at).format("DD-MMM-YYYY")}
+                              </p>
+                            </>
+                          )}
+                        </td>
+                        <td className="p-3 d-flex align-items-center justify-content-end">
+                          {item.is_varify === "1" ? <span>&#x2713;</span> : ""}
+                          <Link
+                            onClick={() => {
+                              setEditName(true);
+                            }}
+                            className="text-dark"
+                            title="Edit Name"
+                          >
+                            <CiEdit
+                              style={{
+                                color:
+                                  item.type === docName ? "white" : "black",
+                                fontSize: "18px",
+                              }}
+                            />
+                          </Link>
+                          <Link
+                            onClick={() => OnDeleteDoc(item.id)}
+                            title="Delete Document"
+                          >
+                            <CiTrash
+                              style={{
+                                color:
+                                  item.type === docName ? "white" : "black",
+                                fontSize: "18px",
+                              }}
+                            />
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        ))}
       </div>
     </div>
   );
