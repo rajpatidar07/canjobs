@@ -1367,5 +1367,6 @@ input::-webkit-inner-spin-button {
   border-radius: 0 !important;
   text-transform: capitalize;
   color: #fff;
-
+  font-size: 14px;
+  line-height: 1;
 }
