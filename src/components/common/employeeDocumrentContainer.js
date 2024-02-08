@@ -133,10 +133,10 @@ export default function DocumrentContainer(props) {
   const handleEmailClick = (email, type) => {
     // Set the selected admin and update the input value
     if (type === "reply") {
-      setSelectedAdminReplye(email);
-      setReplyComment(email);
+      setSelectedAdminReplye((prevValue) => prevValue + email + ",");
+      setReplyComment((prevValue) => `${prevValue} ${email} `);
     } else {
-      setSelectedAdmin(email);
+      setSelectedAdmin((prevValue) => prevValue + email + ",");
       setComments((prevValue) => `${prevValue} ${email} `);
     }
     setFilteredEmails([]);
@@ -181,7 +181,8 @@ export default function DocumrentContainer(props) {
         let res = await GetCommentsAndAssign(
           docId ? docId : docData.find((item) => item.type === docName).id,
           adminid,
-          annotationStatus
+          annotationStatus,
+          "document"
         );
         if (res.data.status === (1 || "1")) {
           setCommentsList(res.data.data.reverse());
@@ -211,7 +212,7 @@ export default function DocumrentContainer(props) {
           annotationStatus
         );
         if (res.data.status === (1 || "1")) {
-          setCommentsReplyList(res.data.data.reverse());
+          setCommentsReplyList(res.data.data);
         }
       } catch (err) {
         console.log(err);
@@ -227,7 +228,7 @@ export default function DocumrentContainer(props) {
     try {
       let response = await GetEmployeeDocumentList(
         props.employee_id,
-        "employee",
+        props.emp_user_type,
         selectDocTypeName ? selectDocTypeName : ""
       );
       if (
@@ -605,7 +606,7 @@ export default function DocumrentContainer(props) {
             ? docTypData.id
             : docId
           : "",
-        "employee"
+        props.emp_user_type
       );
 
       if (response.data.message === "inserted successfully") {
@@ -726,6 +727,7 @@ export default function DocumrentContainer(props) {
       setShowSaveDoc(false);
       setHide(false);
       setBulkUpload("");
+      setShowMoreDocType(false);
     }
   };
   /*Fuinction to render image */
@@ -779,8 +781,12 @@ export default function DocumrentContainer(props) {
   };
   /* Function to replace the _ and correct the document type */
   const textReplaceFunction = (e) => {
-    let new_text = e.replaceAll("_", " ");
-    return new_text;
+    if (e && e.includes("_")) {
+      let new_text = e.replaceAll("_", " ");
+      return new_text;
+    } else {
+      return e;
+    }
   };
   /*Function to verify the applicants documents */
   const onVerifyDocuments = async (id, verify) => {
@@ -800,7 +806,7 @@ export default function DocumrentContainer(props) {
   /*Function to delete document  */
   const OnDeleteDoc = async (id) => {
     try {
-      let res = await DeleteDocument(id, "employee");
+      let res = await DeleteDocument(id, props.emp_user_type);
       if (res.data.message === "document deleted successfully!") {
         toast.success("Document deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -927,13 +933,7 @@ export default function DocumrentContainer(props) {
   const addAnnotation = async (annotation) => {
     setAddCommentFlag(false);
     // Retrieve data from local storage
-    const assignedUserId = allAdmin.find((item) => item.email === selectedAdmin)
-      ? allAdmin.find((item) => item.email === selectedAdmin).admin_id
-      : admin_id;
-    const AdminType = allAdmin.find((item) => item.email === selectedAdmin)
-      ? allAdmin.find((item) => item.email === selectedAdmin).admin_type
-      : "admin";
-    const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
+
     const subject = "";
     const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docId
@@ -942,53 +942,81 @@ export default function DocumrentContainer(props) {
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).name
       : "";
-    let assignedAdminName = allAdmin.find(
-      (item) => item.email === selectedAdmin
+    // Variables for mentionaing admins
+    const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
+    let assignedAdminName = allAdmin.filter((item) =>
+      selectedAdmin.includes(item.email)
     )
-      ? allAdmin.find((item) => item.email === selectedAdmin).name
+      ? allAdmin
+          .filter((item) => selectedAdmin.includes(item.email))
+          .map((admin) => admin.name)
+          .join(",")
+      : "";
+    const assignedUserId = allAdmin.filter((item) =>
+      selectedAdmin.includes(item.email)
+    )
+      ? allAdmin
+          .filter((item) => selectedAdmin.includes(item.email))
+          .map((admin) => admin.admin_id)
+          .join(",")
+      : "";
+    const AdminType = allAdmin.filter((item) =>
+      selectedAdmin.includes(item.email)
+    )
+      ? allAdmin
+          .filter((item) => selectedAdmin.includes(item.email))
+          .map((admin) => admin.admin_type)
+          .join(",")
       : "";
     // Send data to the API
-    try {
-      let res = await ADocAnnotation(
-        admin_id,
-        DocId,
-        assignedUserId,
-        email,
-        subject,
-        comment,
-        annotation.x_axis,
-        annotation.y_axis,
-        "document",
-        AdminType,
-        sender,
-        assignedAdminName
-      );
-      if (res.data.message === "task inserted successfully!") {
-        toast.success("Comment uploaded Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setSelectedAnnotation(null);
-        setComments("");
-        setCommentApiCall(true);
-        setSelectedAdmin("");
-        setAnnotationMode(!isAnnotationMode);
-        setFilteredEmails([]);
-      }
-    } catch (err) {
-      console.log(err);
-      if (err.response.data.message === "required fields cannot be blank") {
-        toast.error(" Please try again later.", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setSelectedAnnotation(null);
-        setComments("");
-        setSelectedAdmin("");
-        setCommentApiCall(true);
-        setAnnotationMode(!isAnnotationMode);
-        setAddCommentFlag();
-        setFilteredEmails([]);
+    if (comment === "" && email === "") {
+      toast.error("Comment or email cannot be empty!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    } else {
+      try {
+        let res = await ADocAnnotation(
+          admin_id,
+          DocId,
+          assignedUserId,
+          email,
+          subject,
+          comment,
+          annotation.x_axis,
+          annotation.y_axis,
+          "document",
+          AdminType,
+          sender,
+          assignedAdminName
+        );
+        if (res.data.message === "task inserted successfully!") {
+          toast.success("Comment uploaded Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setSelectedAnnotation(null);
+          setComments("");
+          setCommentApiCall(true);
+          setSelectedAdmin("");
+          setAnnotationMode(!isAnnotationMode);
+          setFilteredEmails([]);
+        }
+      } catch (err) {
+        console.log(err);
+        if (err.response.data.message === "required fields cannot be blank") {
+          toast.error(" Please try again later.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setSelectedAnnotation(null);
+          setComments("");
+          setSelectedAdmin("");
+          setCommentApiCall(true);
+          setAnnotationMode(!isAnnotationMode);
+          setAddCommentFlag();
+          setFilteredEmails([]);
+        }
       }
     }
     // Update state to include the new annotation
@@ -1069,49 +1097,83 @@ export default function DocumrentContainer(props) {
   };
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {
-    let emailrejex = /\S+@\S+\.\S+/;
-    let id = emailrejex.test(selectedAdminReply)
-      ? allAdmin.find((item) => item.email === selectedAdminReply).admin_id
-      : data.assined_to_user_id;
-    let adminType = emailrejex.test(selectedAdminReply)
-      ? allAdmin.find((item) => item.email === selectedAdminReply).admin_type
-      : "admin";
-    let sender = allAdmin.find(
-      (item) => item.admin_id === data.task_creator_user_id
-    )
-      ? allAdmin.find((item) => item.admin_id === data.task_creator_user_id)
-          .name
+    // let emailrejex = /\S+@\S+\.\S+/;
+    // let id = emailrejex.test(selectedAdminReply)
+    //   ? allAdmin.find((item) => item.email === selectedAdminReply).admin_id
+    //   : data.assined_to_user_id;
+    // let adminType = emailrejex.test(selectedAdminReply)
+    //   ? allAdmin.find((item) => item.email === selectedAdminReply).admin_type
+    //   : "admin";
+    let sender = allAdmin.find((item) => item.admin_id === admin_id)
+      ? allAdmin.find((item) => item.admin_id === admin_id).name
       : "";
-    let assignedAdminName = allAdmin.find(
-      (item) => item.email === selectedAdminReply
-    )
-      ? allAdmin.find((item) => item.email === selectedAdminReply).name
+    let senderId = allAdmin.find((item) => item.admin_id === admin_id)
+      ? allAdmin.find((item) => item.admin_id === admin_id).admin_id
       : "";
-    try {
-      let res = await SendReplyCommit(
-        data,
-        selectedAdminReply || "", //emailrejex.test(replyComment) ? replyComment : "",
-        replyComment, //!emailrejex.test(replyComment) ? replyComment : "",
-        id,
-        adminType,
-        sender,
-        assignedAdminName,
-        "document"
-      );
-      if (res.data.message === "message sent successfully!") {
-        toast.success("Replied Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setReplyComment("");
-        getCommentsReplyList();
+    // let assignedAdminName = allAdmin.find(
+    //   (item) => item.email === selectedAdminReply
+    // )
+    //   ? allAdmin.find((item) => item.email === selectedAdminReply).name
+    //   : "";
+    // Variables for mentioning admins
+    const email = selectedAdminReply || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
+    let assignedAdminName = allAdmin.filter((item) =>
+      selectedAdminReply.includes(item.email)
+    )
+      ? allAdmin
+          .filter((item) => selectedAdminReply.includes(item.email))
+          .map((admin) => admin.name)
+          .join(",")
+      : "";
+    const assignedUserId = allAdmin.filter((item) =>
+      selectedAdminReply.includes(item.email)
+    )
+      ? allAdmin
+          .filter((item) => selectedAdminReply.includes(item.email))
+          .map((admin) => admin.admin_id)
+          .join(",")
+      : "";
+    const AdminType = allAdmin.filter((item) =>
+      selectedAdminReply.includes(item.email)
+    )
+      ? allAdmin
+          .filter((item) => selectedAdminReply.includes(item.email))
+          .map((admin) => admin.admin_type)
+          .join(",")
+      : "";
+    if (replyComment === "" && email === "") {
+      toast.error("Comment or email cannot be empty!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    } else {
+      try {
+        let res = await SendReplyCommit(
+          data,
+          email,
+          replyComment,
+          assignedUserId,
+          AdminType,
+          sender,
+          assignedAdminName,
+          "document",
+          senderId
+        );
+        if (res.data.message === "message sent successfully!") {
+          toast.success("Replied Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setReplyComment("");
+          getCommentsReplyList();
+          setSelectedAdminReplye("");
+          setFilteredEmails([]);
+        }
+      } catch (err) {
+        console.log(err);
         setSelectedAdminReplye("");
         setFilteredEmails([]);
       }
-    } catch (err) {
-      console.log(err);
-      setSelectedAdminReplye("");
-      setFilteredEmails([]);
     }
   };
   return (
@@ -1288,7 +1350,7 @@ export default function DocumrentContainer(props) {
             </div>
           ) : null}
           {/* Comment box */}
-          {user_type === "admin" && commentsList.length > 0 ? (
+          {user_type === "admin" ? (
             <CommentBox
               commentsReplyList={commentsReplyList}
               docData={docData}
