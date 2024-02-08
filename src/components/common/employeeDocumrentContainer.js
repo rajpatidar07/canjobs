@@ -223,7 +223,7 @@ export default function DocumrentContainer(props) {
   };
   /*Annotaton functionalites close */
   /*Functo get Applicants Document */
-  const GetDocument = async () => {
+  const GetDocument = async (del) => {
     try {
       let response = await GetEmployeeDocumentList(
         props.employee_id,
@@ -246,7 +246,8 @@ export default function DocumrentContainer(props) {
         if (
           docTypData === undefined ||
           docTypData === "undefined" ||
-          (docTypData === "" && docName === "" && otherDoc === false)
+          (docTypData === "" && docName === "" && otherDoc === false) ||
+          del === true
         ) {
           // eslint-disable-next-line
           setDocTypData(response.data.data.allData[0]);
@@ -297,24 +298,32 @@ export default function DocumrentContainer(props) {
           }
         } else {
           //Condition for update
-          setDocTypData(
-            response.data.data.allData.find((item) => item.id === docId)
-          );
-          setDocFile(
-            response.data.data.allData.find((item) => item.id === docId)
-              .document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-          );
-          setDocName(
-            response.data.data.allData.find((item) => item.id === docId)
-              .document_name
-          );
-          setDocId(
-            response.data.data.allData.find((item) => item.id === docId).id
-          );
-          setDocTypeName(
-            response.data.data.allData.find((item) => item.id === docId).type
-          );
+          if (response.data.data.allData.find((item) => item.id === docId)) {
+            setDocTypData(
+              response.data.data.allData.find((item) => item.id === docId)
+            );
+            setDocFile(
+              response.data.data.allData.find((item) => item.id === docId)
+                .document_url +
+                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+            );
+            setDocName(
+              response.data.data.allData.find((item) => item.id === docId)
+                .document_name
+            );
+            setDocId(
+              response.data.data.allData.find((item) => item.id === docId).id
+            );
+            setDocTypeName(
+              response.data.data.allData.find((item) => item.id === docId).type
+            );
+          } else {
+            setDocTypData("");
+            setDocFile("");
+            setDocName("");
+            setDocId("");
+            setDocTypeName("");
+          }
         }
       }
     } catch (err) {
@@ -803,7 +812,8 @@ export default function DocumrentContainer(props) {
         setDocTypData("");
         setDocName("");
         setApiCall(true);
-        GetDocument();
+        setOtherDoc(false);
+        GetDocument(true);
       }
     } catch (err) {
       console.log(err);
