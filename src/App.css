@@ -1356,3 +1356,17 @@ input::-webkit-inner-spin-button {
   height: calc(100vh - 268px);
   overflow: auto;
 }
+
+.accordian_btn_design {
+  margin-bottom: 1px;
+  border-radius: 0 !important;
+}
+
+.accordian_btn_design button {
+  text-align: left;
+  border-radius: 0 !important;
+  text-transform: capitalize;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+}
