@@ -136,7 +136,9 @@ export default function DocumentList({
                                   <input
                                     type="text"
                                     value={
-                                      editDocName === "" ? docName : editDocName
+                                      editDocName === ""
+                                        ? item.document_name
+                                        : editDocName
                                     }
                                     className="form-control font-size-2 bg-primary bg-white"
                                     onChange={(e) => {

@@ -31,7 +31,6 @@ export default function DocumentList({
   setSelecttDocTypeName,
   setApiCall,
   docAllTypes,
-  setDocTypeName,
 }) {
   const [editDocName, setEditDocName] = useState(docName);
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -106,8 +105,7 @@ export default function DocumentList({
                             onClick={() => {
                               setShowMoreDocType(false);
                               setDocTypData(item);
-                              setDocName(item.document_name);
-                              setDocTypeName(item.type);
+                              setDocName(item.type);
                               setDocId(item.id);
                               setOtherDoc(false);
                               setHide(false);
@@ -136,7 +134,9 @@ export default function DocumentList({
                                   <input
                                     type="text"
                                     value={
-                                      editDocName === "" ? docName : editDocName
+                                      editDocName === ""
+                                        ? item.document_name
+                                        : editDocName
                                     }
                                     className="form-control font-size-2 bg-primary bg-white"
                                     onChange={(e) => {
