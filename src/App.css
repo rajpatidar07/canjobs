@@ -1368,6 +1368,6 @@ input::-webkit-inner-spin-button {
   text-transform: capitalize;
   font-size: 14px;
   line-height: 1;
-  color: #fff;
+  /* color: #fff; */
 
 }

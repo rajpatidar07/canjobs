@@ -68,7 +68,7 @@ export default function DocumentList({
               className="w-100 p-0 m-0 border-0"
             >
               <Accordion.Item
-                className="w-100 border-0 bg-info accordian_btn_design font-size-3  text-left"
+                className="w-100 border-0 bg-info accordian_btn_design font-size-3 text-left"
                 onClick={() => handleAccordionToggle(typeitem.type)}
               >
                 <Accordion.Header
