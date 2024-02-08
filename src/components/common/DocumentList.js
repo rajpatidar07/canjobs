@@ -66,20 +66,13 @@ export default function DocumentList({
               className="card w-100 rounded-6 overflow-hidden border-0"
             >
               <Accordion.Header
-                className="w-100 m-0 border-0 bg-white accordian_btn_design"
+                className="w-100 m-0 border-0 bg-white accordian_btn_design font-size-4 text-dark text-left"
                 onClick={() => handleAccordionToggle(typeitem.type)}
               >
                 {typeitem.type}
               </Accordion.Header>
               <Accordion.Body>
                 <table className="table font-size-3">
-                  <thead>
-                    <tr>
-                      <th className="p-3" scope="col">
-                        Document
-                      </th>
-                    </tr>
-                  </thead>
                   <tbody className="doc_list">
                     {docData.map((item) => (
                       <tr
