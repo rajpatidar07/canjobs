@@ -66,8 +66,8 @@ function Notifications() {
                     title={data.message}
                     className={
                       data.is_read === "1"
-                        ? "py-5 dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"
-                        : "py-5 font-weight-bold bg-light dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap text-capitalize"
+                        ? "py-5 dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap"
+                        : "py-5 font-weight-bold bg-light dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap"
                     }
                   >
                     <Link
@@ -91,7 +91,7 @@ function Notifications() {
                       }}
                       className="text-truncate-2 text-dark"
                     >
-                      {data.message}
+                      {data.message.replace("a", "Hi")}
                     </Link>
                   </li>
                 ))}

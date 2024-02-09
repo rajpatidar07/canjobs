@@ -84,23 +84,27 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
     <>
       {/* <!-- Login --> */}
 
-      <div className="d-flex justify-content-center pt-21">
+      <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
         <ToastContainer />
-        <div className="bg-white rounded-8 overflow-hidden pt-21">
+        <div
+          className="bg-white rounded"
+          style={{ maxWidth: "500px", width: "100%" }}
+        >
           {isLoading ? (
             <Loader />
           ) : (
-            <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
-              <div className="pb-5 mb-5 text-center">
+            <div className="bg-white-2 h-100 p-9 login_Modal_box border shadow">
+              <Link className="pb-5  text-center w-100" to={"/"}>
                 <img
                   src="image/00logo-main-black.png"
                   className="img-fluid "
-                  height={200}
+                  // height={200}
                   width={200}
                   alt="logo"
                 />
-              </div>
+              </Link>
               {/* user login form */}
+              <h5 className="text-center mb-7 font-size-4">Admin Login</h5>
               <form onSubmit={onUserLoginClick}>
                 <div className="form-group">
                   <label
@@ -208,7 +212,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                 )} */}
                 {/* </div> */}
 
-                <div className="form-group mb-8">
+                <div className="form-group mb-1">
                   {loading === true ? (
                     <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
                       <span
@@ -226,9 +230,12 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                       Log in
                     </button>
                   )}
+                  <p className="text-center mt-7 font-size-4 mb-1">
+                    Are you a partner?
+                  </p>
                   <Link
                     to={"/partnerlogin"}
-                    className="font-size-3 text-anger line-height-reset mb-3 mt-3 text-center "
+                    className="font-size-4 text-anger line-height-reset mb-3 text-center w-100"
                   >
                     Partner Login
                   </Link>

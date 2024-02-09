@@ -1371,3 +1371,8 @@ input::-webkit-inner-spin-button {
   /* color: #fff; */
 
 }
+
+.admin_login_page {
+  min-height: 350px;
+  height: 100vh;
+}

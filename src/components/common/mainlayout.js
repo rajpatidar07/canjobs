@@ -57,6 +57,7 @@ import BusinessVIsa from "../admin/businessVisa";
 import ExpressEntry from "../admin/expressEntry";
 import VisitorVisa from "../admin/visitorVisa";
 import Pnp from "../admin/pnp";
+import PartnerDashboard from "./partner_dashboard";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -148,6 +149,7 @@ function MainLayout() {
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
+            <Route path="/partner_dashboard" element={<PartnerDashboard />} />
             <Route path="/filter" element={<FilterList />} />
             <Route path="/interview" element={<ManageInterview />} />
             <Route path="/responses" element={<JobResponse />} />

@@ -53,8 +53,8 @@ const AdminHeader = (props) => {
           {/* <!-- Page Heading--> */}
           <h3 className="font-size-6 mb-0 text-capitalize">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
-          {/* <GlobalSearch />
-          <Notifications /> */}
+          {/* <GlobalSearch />*/}
+          <Notifications />
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
               <div className="dropdown show-gr-dropdown py-5">

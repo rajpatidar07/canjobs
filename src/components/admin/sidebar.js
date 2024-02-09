@@ -285,7 +285,7 @@ const AdminSidebar = (props) => {
             className={
               (
                 user_type === "agent"
-                  ? props.heading === "Profile"
+                  ? props.heading === "Partner Dashboard"
                   : props.heading === "Manage Partner"
               )
                 ? "active"
@@ -293,7 +293,7 @@ const AdminSidebar = (props) => {
             }
           >
             <Link
-              to="/partner"
+              to="/partner_dashboard"
               className={
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
@@ -301,7 +301,7 @@ const AdminSidebar = (props) => {
               {user_type === "agent" ? (
                 <>
                   <FaRegUser className="sidebar_icon" />
-                  Profile
+                  Partner Dashboard
                 </>
               ) : (
                 <>

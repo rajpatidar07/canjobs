@@ -93,25 +93,29 @@ export default function AgentLogin() {
   return (
     <>
       {/* <!-- Login --> */}
-      <div className="d-flex justify-content-center pt-21">
+      <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
         <ToastContainer />
-        <div className="bg-white rounded-8 overflow-hidden pt-21">
+        <div
+          className="bg-white rounded-8"
+          style={{ maxWidth: "500px", width: "100%" }}
+        >
           {isLoading ? (
             <Loader />
           ) : (
-            <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box border">
-              <div className="pb-5 mb-5 text-center">
-                <h4> Partner </h4>
+            <div className="bg-white-2 h-100 p-9 login_Modal_box border shadow">
+              <Link className="pb-5  text-center w-100" to={"/"}>
                 <img
                   src="image/00logo-main-black.png"
                   className="img-fluid "
-                  height={200}
+                  // height={200}
                   width={200}
                   alt="logo"
                 />
-              </div>
+              </Link>
               {/* user login form */}
-
+              <h5 className="text-center mb-7 font-size-4">
+                {singupApi === true ? "Partner Signup" : "Partner Login"}
+              </h5>
               {singupApi === true ? (
                 <AgentSignUp login={() => setSingupApi(false)} />
               ) : (
@@ -244,24 +248,28 @@ export default function AgentLogin() {
                       </button>
                     )}
                   </div>
-                  <p className="font-size-4 text-center heading-default-color">
-                    Don’t have an account?
-                    <Link
-                      className="text-primary"
-                      to={""}
-                      onClick={() => {
-                        setSingupApi(true);
-                        setErrors("");
-                      }}
-                    >
-                      Create a free account
-                    </Link>
+                  <p className="font-size-4 text-center heading-default-color m-0">
+                    Don’t have Partner account?
                   </p>
-                  <p className="font-size-4 text-center heading-default-color">
-                    <Link to="/adminlogin" className="text-primary">
-                      Admin Login
-                    </Link>
+                  <Link
+                    className="text-primary w-100 text-center mb-5"
+                    to={""}
+                    onClick={() => {
+                      setSingupApi(true);
+                      setErrors("");
+                    }}
+                  >
+                    Create a free account
+                  </Link>
+                  <p className="font-size-4 text-center heading-default-color m-0">
+                    Are you an admin?
                   </p>
+                  <Link
+                    to="/adminlogin"
+                    className="text-primary w-100 text-center"
+                  >
+                    Admin Login
+                  </Link>
                 </form>
               )}
             </div>
